@@ -1,0 +1,104 @@
+---
+- name: url
+  title: URL
+  short: Fields that let you store URLs in various forms.
+  description: >
+    URL fields provide support for complete or partial URLs, and supports the
+    breaking down into scheme, domain, path, and so on.
+  type: group
+  group: 2
+  fields:
+
+    - name: original
+      level: extended
+      type: keyword
+      short: Unmodified original url as seen in the event source.
+      description: >
+        Unmodified original url as seen in the event source.
+
+        Note that in network monitoring, the observed URL may be a full URL,
+        whereas in access logs, the URL is often just represented as a path.
+
+        This field is meant to represent the URL as it was observed, complete
+        or not.
+      example: >
+        https://www.elastic.co:443/search?q=elasticsearch#top or /search?q=elasticsearch
+
+    - name: full
+      level: extended
+      type: keyword
+      short: Full unparsed URL.
+      description: >
+        If full URLs are important to your use case, they should be stored in
+        `url.full`, whether this field is reconstructed or present in the
+        event source.
+      example: https://www.elastic.co:443/search?q=elasticsearch#top
+
+    - name: scheme
+      level: extended
+      type: keyword
+      short: Scheme of the url.
+      description: >
+        Scheme of the request, such as "https".
+
+        Note: The `:` is not part of the scheme.
+      example: https
+
+    - name: domain
+      level: extended
+      type: keyword
+      short: Domain of the url.
+      description: >
+        Domain of the url, such as "www.elastic.co".
+
+        In some cases a URL may refer to an IP and/or port directly, without a
+        domain name. In this case, the IP address would go to the `domain` field.
+      example: www.elastic.co
+
+    - name: port
+      format: string
+      level: extended
+      type: long
+      description: >
+        Port of the request, such as 443.
+      example: 443
+
+    - name: path
+      level: extended
+      type: keyword
+      description: >
+        Path of the request, such as "/search".
+
+    - name: query
+      level: extended
+      type: keyword
+      short: Query string of the request.
+      description: >
+        The query field describes the query string of the request,
+        such as "q=elasticsearch".
+
+        The `?` is excluded from the query string. If a URL contains
+        no `?`, there is no query field. If there is a `?` but no query,
+        the query field exists with an empty string. The `exists`
+        query can be used to differentiate between the two cases.
+
+    - name: fragment
+      level: extended
+      type: keyword
+      short: Portion of the url after the `#`.
+      description: >
+        Portion of the url after the `#`, such as "top".
+
+        The `#` is not part of the fragment.
+
+    - name: username
+      level: extended
+      type: keyword
+      description: >
+        Username of the request.
+
+    - name: password
+      level: extended
+      type: keyword
+      description: >
+        Password of the request.

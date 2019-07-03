@@ -1,0 +1,74 @@
+---
+- name: host
+  title: Host
+  group: 2
+  short: Fields describing the relevant computing instance.
+  description: >
+    A host is defined as a general computing instance.
+
+    ECS host.* fields should be populated with details about the host on which
+    the event happened, or from which the measurement was taken.
+    Host types include hardware, virtual machines, Docker containers, and Kubernetes nodes.
+  type: group
+  fields:
+
+    - name: hostname
+      level: core
+      type: keyword
+      short: Hostname of the host.
+      description: >
+        Hostname of the host.
+
+        It normally contains what the `hostname` command returns on the host machine.
+
+    - name: name
+      level: core
+      type: keyword
+      short: Name of the host.
+      description: >
+        Name of the host.
+
+        It can contain what `hostname` returns on Unix systems, the fully
+        qualified domain name, or a name specified by the user. The sender
+        decides which value to use.
+
+    - name: id
+      level: core
+      type: keyword
+      short: Unique host id.
+      description: >
+        Unique host id.
+
+        As hostname is not always unique, use values that are meaningful
+        in your environment.
+
+        Example: The current usage of `beat.name`.
+    - name: ip
+      level: core
+      type: ip
+      description: >
+        Host ip address.
+
+    - name: mac
+      level: core
+      type: keyword
+      description: >
+        Host mac address.
+
+    - name: type
+      level: core
+      type: keyword
+      short: Type of host.
+      description: >
+        Type of host.
+
+        For Cloud providers this can be the machine type like `t2.medium`.
+        If vm, this could be the container, for example, or other information
+        meaningful in your environment.
+
+    - name: architecture
+      level: core
+      type: keyword
+      example: "x86_64"
+      description: >
+        Operating system architecture.
