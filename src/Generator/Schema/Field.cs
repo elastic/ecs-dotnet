@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 
@@ -14,6 +15,41 @@ namespace Generator.Schema
         [JsonProperty("name", Required = Required.Always)]
         public string Name { get; set; }
 
+        public string ClrType
+        {
+            get
+            {
+                // Special cases.
+                if (Name == "args" && Type == FieldType.Keyword)
+                {
+                    return "string[]";
+                }
+                
+                switch (Type)
+                {
+                    case FieldType.Keyword:
+                    case FieldType.Text:
+                        return "string";
+                    case FieldType.Long:
+                        return "long?";
+                    case FieldType.Date:
+                        return "DateTimeOffset?";
+                    case FieldType.Ip:
+                        return "IPAddress";
+                    case FieldType.Object:
+                        return "object"; // TODO!
+                    case FieldType.Float:
+                        return "float?";
+                    case FieldType.Group:
+                        return "object"; // TODO!
+                    case FieldType.GeoPoint:
+                        return "object"; // TODO!
+                    default:
+                        throw new ArgumentOutOfRangeException();
+                }
+            }
+        }
+        
         /// <summary>
         ///     ECS Level of maturity of the field (required)
         /// </summary>
@@ -54,6 +90,8 @@ namespace Generator.Schema
         [JsonProperty("description", Required = Required.Always)]
         public string Description { get; set; }
 
+        public string DescriptionSanitized => Regex.Replace(Description, @"\r\n?|\n", string.Empty);
+        
         /// <summary>
         ///     A single value example of what can be expected in this field (optional)
         /// </summary>

@@ -24,8 +24,9 @@ namespace Generator
             }
         }
 
-        public static string LastDownloadedVersionFile { get; } = Path.Combine(Root, "last_downloaded_version.txt");
         public static string SpecificationFolder { get; } = $@"{Root}Specification\";
-        public static string ViewFolder { get; } = $@"{Root}Views\";
+        public static string ViewFolder { get; } = $@"{Root}Generator\Views\";
+        
+        public static string GeneratedFolder { get; } = $@"{Root}ECSDotnet\";
     }
 }

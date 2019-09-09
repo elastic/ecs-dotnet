@@ -1,0 +1,86 @@
+---
+- name: destination
+  title: Destination
+  group: 2
+  short: Fields about the destination side of a network connection, used with source.
+  description: >
+    Destination fields describe details about the destination of a packet/event.
+
+    Destination fields are usually populated in conjunction with source fields.
+  type: group
+  fields:
+
+    - name: address
+      level: extended
+      type: keyword
+      short: Destination network address.
+      description: >
+        Some event destination addresses are defined ambiguously. The event will
+        sometimes list an IP, a domain or a unix socket.  You should always
+        store the raw address in the `.address` field.
+
+        Then it should be duplicated to `.ip` or `.domain`, depending on which
+        one it is.
+
+    - name: ip
+      level: core
+      type: ip
+      short: IP address of the destination.
+      description: >
+        IP address of the destination.
+
+        Can be one or multiple IPv4 or IPv6 addresses.
+
+    - name: port
+      format: string
+      level: core
+      type: long
+      description: >
+        Port of the destination.
+
+    - name: mac
+      level: core
+      type: keyword
+      description: >
+        MAC address of the destination.
+
+    - name: domain
+      level: core
+      type: keyword
+      description: >
+        Destination domain.
+
+    # Metrics
+    - name: bytes
+      format: bytes
+      level: core
+      type: long
+      example: 184
+      description: >
+        Bytes sent from the destination to the source.
+
+    - name: packets
+      level: core
+      type: long
+      example: 12
+      description: >
+        Packets sent from the destination to the source.
+
+    - name: nat.ip
+      level: extended
+      type: ip
+      short: Destination NAT ip
+      description: >
+        Translated ip of destination based NAT sessions (e.g. internet to private DMZ)
+
+        Typically used with load balancers, firewalls, or routers.
+
+    - name: nat.port
+      format: string
+      level: extended
+      type: long
+      short: Destination NAT Port
+      description: >
+        Port the source session is translated to by NAT Device.
+
+        Typically used with load balancers, firewalls, or routers.

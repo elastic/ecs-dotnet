@@ -35,7 +35,7 @@ namespace Generator
             var specifications =
                 (from kv in OnlineSpecifications
                     let url = kv.Value.Replace("{version}", branch)
-                    select new Specification {FolderOnDisk = kv.Key, Branch = branch, GithubListingUrl = url}).ToList();
+                    select new Specification {FolderOnDisk = Path.Combine(branch, kv.Key), Branch = branch, GithubListingUrl = url}).ToList();
 
             using (var progress =
                 new ProgressBar(specifications.Count, "Downloading specifications", MainProgressBarOptions))
@@ -47,8 +47,6 @@ namespace Generator
                     progress.Tick($"Downloaded to {spec.FolderOnDisk} for branch {branch}");
                 }
             }
-
-            File.WriteAllText(CodeConfiguration.LastDownloadedVersionFile, branch);
         }
 
         public static void Download(string branch)

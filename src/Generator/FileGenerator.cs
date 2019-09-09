@@ -11,6 +11,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using RazorLight;
 using RazorLight.Extensions;
+using RazorLight.Razor;
 using ShellProgressBar;
 using YamlDotNet.Serialization;
 
@@ -18,18 +19,20 @@ namespace Generator
 {
     public class FileGenerator
     {
-//        private static readonly RazorLightEngine Razor = new RazorLightEngineBuilder()
-//                                                                .UseMemoryCachingProvider()
-//                                                                .Build();
+        private static readonly RazorLightEngine Razor = new RazorLightEngineBuilder()
+            .UseProject(new FileSystemRazorProject(Path.GetFullPath(CodeConfiguration.GeneratedFolder)))
+            .UseMemoryCachingProvider()
+            .Build();
+        
         private static List<string> Warnings { get; set; }
 
         public static void Generate(string downloadBranch, params string[] folders)
         {
             Warnings = new List<string>();
             var spec = CreateSpecModel(downloadBranch, folders);
-            var actions = new Dictionary<Action<object>, string>
+            var actions = new Dictionary<Action<IList<YamlSchema>>, string>
             {
-                { GenerateClientInterface, "Client interface" }
+                { GenerateDotnetTypes, "Dotnet types" }
             };
 
             using (var pbar = new ProgressBar(actions.Count, "Generating code",
@@ -60,8 +63,9 @@ namespace Generator
 
         private static IList<YamlSchema> CreateSpecModel(string downloadBranch, string[] folders)
         {
+            var specificationFolder = Path.Combine(CodeConfiguration.SpecificationFolder, downloadBranch);
             var directories = Directory
-                .GetDirectories(CodeConfiguration.SpecificationFolder, "*", SearchOption.AllDirectories)
+                .GetDirectories(specificationFolder, "*", SearchOption.AllDirectories)
                 .Where(f => folders == null || folders.Length == 0 || folders.Contains(new DirectoryInfo(f).Name))
                 .ToList();
 
@@ -154,18 +158,20 @@ namespace Generator
             }
         }
         
-        private static string DoRazor(string name, string template, object model)
+        private static string DoRazor(string name, string template, IList<YamlSchema> model)
         {
-            return "";
+            return Razor.CompileRenderStringAsync(name, template, model).GetAwaiter().GetResult();
         }
-        //Razor.CompileRenderAsync(name, template, model).GetAwaiter().GetResult();
 
-        private static void GenerateClientInterface(object model)
+        private static void GenerateDotnetTypes(IList<YamlSchema> model)
         {
-//            var targetFile = CodeConfiguration.EsNetFolder + @"IElasticLowLevelClient.Generated.cs";
-//            var source = DoRazor(nameof(GenerateClientInterface),
-//                File.ReadAllText(CodeConfiguration.ViewFolder + @"IElasticLowLevelClient.Generated.cshtml"), model);
-//            File.WriteAllText(targetFile, source);
+            var targetDir = Path.GetFullPath(CodeConfiguration.GeneratedFolder);
+            var targetFile = @"DotnetTypes.Generated.cs";
+            var outputFile = Path.Combine(targetDir, targetFile);
+            var path = CodeConfiguration.ViewFolder + @"DotnetTypes.Generated.cshtml";
+            var template = File.ReadAllText(path);
+            var source = DoRazor(nameof(GenerateDotnetTypes), template, model);
+            File.WriteAllText(outputFile, source);
         }
     }
 }

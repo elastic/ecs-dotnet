@@ -5,12 +5,12 @@ namespace Generator
 {
     public static class Program
     {
-        private const string DownloadBranch = "1.0";
+        private const string DefaultDownloadBranch = "1.0";
 
         private static void Main(string[] args)
         {
             var redownloadCoreSpecification = false;
-            var downloadBranch = DownloadBranch;
+            var downloadBranch = DefaultDownloadBranch;
 
             var answer = "invalid";
             while (answer != "y" && answer != "n" && answer != "")
@@ -20,21 +20,12 @@ namespace Generator
                 redownloadCoreSpecification = answer == "y";
             }
 
-            if (redownloadCoreSpecification)
-            {
-                Console.Write($"Branch to download specification from (default {downloadBranch}): ");
-                var readBranch = Console.ReadLine()?.Trim();
-                if (!string.IsNullOrEmpty(readBranch)) downloadBranch = readBranch;
-            }
-            else
-            {
-                // read last downloaded branch from file.
-                if (File.Exists(CodeConfiguration.LastDownloadedVersionFile))
-                    downloadBranch = File.ReadAllText(CodeConfiguration.LastDownloadedVersionFile);
-            }
+            Console.Write($"Branch to use (default {downloadBranch}): ");
+            var readBranch = Console.ReadLine()?.Trim();
+            if (!string.IsNullOrEmpty(readBranch)) downloadBranch = readBranch;
 
             if (string.IsNullOrEmpty(downloadBranch))
-                downloadBranch = DownloadBranch;
+                downloadBranch = DefaultDownloadBranch;
 
             if (redownloadCoreSpecification)
                 SpecificationDownloader.Download(downloadBranch);

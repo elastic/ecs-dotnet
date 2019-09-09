@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
 using Newtonsoft.Json;
 
 namespace Generator.Schema
@@ -27,7 +28,7 @@ namespace Generator.Schema
         /// <summary>
         ///     TBD. Just set it to 2, for now ;-)
         /// </summary>
-        [JsonProperty("group")] //, Required = Required.Always
+        [JsonProperty("group", Required = Required.Always)]
         public int Group { get; set; } = 2;
 
         /// <summary>
@@ -41,6 +42,8 @@ namespace Generator.Schema
         /// </summary>
         [JsonProperty("description", Required = Required.Always)]
         public string Description { get; set; }
+
+        public string DescriptionSanitized => Regex.Replace(Description, @"\r\n?|\n", string.Empty);
 
         /// <summary>
         ///     Additional footnote
