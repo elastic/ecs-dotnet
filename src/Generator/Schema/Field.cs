@@ -37,13 +37,11 @@ namespace Generator.Schema
                     case FieldType.Ip:
                         return "IPAddress";
                     case FieldType.Object:
-                        return "object"; // TODO!
+                        return "object";
                     case FieldType.Float:
                         return "float?";
-                    case FieldType.Group:
-                        return "object"; // TODO!
                     case FieldType.GeoPoint:
-                        return "object"; // TODO!
+                        return "GeoPoint";
                     default:
                         throw new ArgumentOutOfRangeException();
                 }

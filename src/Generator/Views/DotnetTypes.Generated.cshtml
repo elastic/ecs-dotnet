@@ -3,6 +3,7 @@
 @using System.Collections.Generic
 @using CsQuery.ExtensionMethods.Internal
 @using Generator
+@using Newtonsoft.Json
 @inherits Generator.CodeTemplatePage<IList<Generator.Schema.YamlSchema>>
 // Licensed to Elasticsearch B.V. under one or more contributor
 // license agreements. See the NOTICE file distributed with
@@ -53,8 +54,12 @@ namespace ECS
 <text>        ///<summary>
         /// @field.DescriptionSanitized
         ///</summary>
-        ///<example>@field.Example</example>
-        [DataMember(Name = "@field.Name")]
+        @if (field.Example != null)
+        {
+<text>        ///<example>@Raw(JsonConvert.SerializeObject(field.Example).Trim('"'))</example>
+</text> 
+        }
+        [DataMember(Name = "@Raw(field.Name)")]
         public @Raw(field.ClrType) @FileGenerator.PascalCase(field.Name) { get; set; }
 
 </text> 
