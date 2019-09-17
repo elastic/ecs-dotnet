@@ -4,13 +4,9 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using CsQuery.ExtensionMethods;
-using DiffMatchPatch;
 using Generator.Schema;
-using Microsoft.CodeAnalysis.Emit;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 using RazorLight;
-using RazorLight.Extensions;
 using RazorLight.Razor;
 using ShellProgressBar;
 using YamlDotNet.Serialization;
@@ -20,10 +16,10 @@ namespace Generator
     public class FileGenerator
     {
         private static readonly RazorLightEngine Razor = new RazorLightEngineBuilder()
-            .UseProject(new FileSystemRazorProject(Path.GetFullPath(CodeConfiguration.GeneratedFolder)))
+            .UseProject(new FileSystemRazorProject(Path.GetFullPath(CodeConfiguration.ECSDotnetGeneratedFolder)))
             .UseMemoryCachingProvider()
             .Build();
-        
+
         private static List<string> Warnings { get; set; }
 
         public static void Generate(string downloadBranch, params string[] folders)
@@ -32,7 +28,8 @@ namespace Generator
             var spec = CreateSpecModel(downloadBranch, folders);
             var actions = new Dictionary<Action<IList<YamlSchema>>, string>
             {
-                { GenerateDotnetTypes, "Dotnet types" }
+                {GenerateDotnetTypes, "Dotnet types"},
+                {GenerateDotnetMappings, "Dotnet mapping"},
             };
 
             using (var pbar = new ProgressBar(actions.Count, "Generating code",
@@ -127,22 +124,49 @@ namespace Generator
                     }
                 });
 
-            var differ = new JsonDiffPatchDotNet.JsonDiffPatch();    
+            var differ = new JsonDiffPatchDotNet.JsonDiffPatch();
             var diffs = differ.Diff(asJson, serialised);
-            if (diffs!=null)
-            {
+            if (diffs != null)
                 foreach (var diff in diffs)
                     Warnings.Add($"{file}:{diff}");
-            }
 
             return spec;
+        }
+
+        private static string DoRazor(string name, string template, IList<YamlSchema> model)
+        {
+            return Razor.CompileRenderStringAsync(name, template, model).GetAwaiter().GetResult();
+        }
+
+        private static void GenerateDotnetTypes(IList<YamlSchema> model)
+        {
+            var targetDir = Path.GetFullPath(CodeConfiguration.ECSDotnetGeneratedFolder);
+            var outputFile = Path.Combine(targetDir, @"DotnetTypes.Generated.cs");
+            var path = Path.Combine(CodeConfiguration.ViewFolder, @"DotnetTypes.Generated.cshtml");
+            var template = File.ReadAllText(path);
+            var source = DoRazor(nameof(GenerateDotnetTypes), template, model);
+            File.WriteAllText(outputFile, source);
+        }
+
+        private static void GenerateDotnetMappings(IList<YamlSchema> model)
+        {
+            var targetDir = Path.GetFullPath(CodeConfiguration.ECSDotnetNESTGeneratedFolder);
+            var outputFile = Path.Combine(targetDir, @"DotnetTypeMappings.Generated.cs");
+            var path = Path.Combine(CodeConfiguration.ViewFolder, @"DotnetTypeMappings.Generated.cshtml");
+            var template = File.ReadAllText(path);
+            var source = DoRazor(nameof(GenerateDotnetMappings), template, model);
+            File.WriteAllText(outputFile, source);
         }
 
         private sealed class FormatAsTextConverter<T> : JsonConverter
         {
             public override bool CanRead => false;
             public override bool CanWrite => true;
-            public override bool CanConvert(Type type) => type == typeof(T);
+
+            public override bool CanConvert(Type type)
+            {
+                return type == typeof(T);
+            }
 
             public override void WriteJson(
                 JsonWriter writer, object value, JsonSerializer serializer)
@@ -156,22 +180,6 @@ namespace Generator
             {
                 throw new NotSupportedException();
             }
-        }
-        
-        private static string DoRazor(string name, string template, IList<YamlSchema> model)
-        {
-            return Razor.CompileRenderStringAsync(name, template, model).GetAwaiter().GetResult();
-        }
-
-        private static void GenerateDotnetTypes(IList<YamlSchema> model)
-        {
-            var targetDir = Path.GetFullPath(CodeConfiguration.GeneratedFolder);
-            var targetFile = @"DotnetTypes.Generated.cs";
-            var outputFile = Path.Combine(targetDir, targetFile);
-            var path = CodeConfiguration.ViewFolder + @"DotnetTypes.Generated.cshtml";
-            var template = File.ReadAllText(path);
-            var source = DoRazor(nameof(GenerateDotnetTypes), template, model);
-            File.WriteAllText(outputFile, source);
         }
     }
 }

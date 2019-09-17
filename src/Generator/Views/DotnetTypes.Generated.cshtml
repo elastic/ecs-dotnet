@@ -31,9 +31,47 @@ using System.Linq;
 using System.Net;
 using System.Runtime.Serialization;
 
-namespace ECS
+namespace ElasticCommonSchema
 {
-    @foreach (var schema in Model)
+    ///<summary>
+    /// Elastic Common Schema type.
+    /// <para/>
+    /// The Elastic Common Schema (ECS) defines a common set of fields for ingesting data into Elasticsearch.
+    /// A common schema helps you correlate data from sources like logs and metrics or IT operations analytics
+    /// and security analytics.
+    /// <para/>
+    /// https://github.com/elastic/ecs
+    ///</summary>
+    public class ECS
+    {
+    @foreach (var schema in Model.Where(m => m.Name != "base"))
+    {
+<text>        ///<summary>
+        /// @schema.DescriptionSanitized
+        ///</summary>
+        [DataMember(Name = "@Raw(schema.Name)")]
+        public @FileGenerator.PascalCase(schema.Name) @FileGenerator.PascalCase(schema.Name) { get; set; }
+
+</text>
+    }
+@foreach (var field in Model.Single(m => m.Name == "base").Fields)
+{
+<text>        ///<summary>
+        /// @field.DescriptionSanitized
+        ///</summary>
+        @if (field.Example != null)
+        {
+<text>        ///<example>@Raw(JsonConvert.SerializeObject(field.Example).Trim('"'))</example>
+</text>
+        }
+        [DataMember(Name = "@Raw(field.Name)")]
+        public @Raw(field.ClrType) @FileGenerator.PascalCase(field.Name) { get; set; }
+
+</text> 
+}
+    }
+
+    @foreach (var schema in Model.Where(m => m.Name != "base"))
     {
 <text>    ///<summary>
     /// @schema.Title

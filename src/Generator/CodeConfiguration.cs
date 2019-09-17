@@ -26,7 +26,7 @@ namespace Generator
 
         public static string SpecificationFolder { get; } = $@"{Root}Specification\";
         public static string ViewFolder { get; } = $@"{Root}Generator\Views\";
-        
-        public static string GeneratedFolder { get; } = $@"{Root}ECSDotnet\";
+        public static string ECSDotnetGeneratedFolder { get; } = $@"{Root}ECSDotnet\";
+        public static string ECSDotnetNESTGeneratedFolder { get; } = $@"{Root}ECSDotnetNEST\";
     }
 }

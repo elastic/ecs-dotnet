@@ -43,7 +43,7 @@ namespace Generator.Schema
         [JsonProperty("description", Required = Required.Always)]
         public string Description { get; set; }
 
-        public string DescriptionSanitized => Regex.Replace(Description, @"\r\n?|\n", string.Empty);
+        public string DescriptionSanitized => Regex.Replace(Description, @"\r\n?|\n", " ");
 
         /// <summary>
         ///     Additional footnote
@@ -62,7 +62,7 @@ namespace Generator.Schema
         /// </summary>
         [JsonProperty("fields", Required = Required.Always)]
         public List<Field> Fields { get; set; }
-        
+
         /// <summary>
         ///     Optional
         /// </summary>

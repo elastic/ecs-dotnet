@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.RegularExpressions;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
@@ -15,16 +16,44 @@ namespace Generator.Schema
         [JsonProperty("name", Required = Required.Always)]
         public string Name { get; set; }
 
+        public string Extras
+        {
+            get
+            {
+                var builder = new StringBuilder();
+
+                if (Type == FieldType.Keyword)
+                {
+                    builder.AppendFormat(".IgnoreAbove(1024)");
+                }
+                
+                if (Indexed.HasValue)
+                {
+                    builder.AppendFormat(".Index({0})", Indexed.Value.ToString().ToLower());
+                }
+
+                if (DocValues.HasValue)
+                {
+                    builder.AppendFormat(".DocValues({0})", DocValues.Value.ToString().ToLower());
+                }
+
+                if (Type == FieldType.Long
+                    || Type == FieldType.Float)
+                {
+                    builder.AppendFormat(".Type(NumberType.{0:f})", Type);
+                }
+                
+                return builder.ToString();
+            }
+        }
+        
         public string ClrType
         {
             get
             {
                 // Special cases.
-                if (Name == "args" && Type == FieldType.Keyword)
-                {
-                    return "string[]";
-                }
-                
+                if (Name == "args" && Type == FieldType.Keyword) return "string[]";
+
                 switch (Type)
                 {
                     case FieldType.Keyword:
@@ -47,7 +76,35 @@ namespace Generator.Schema
                 }
             }
         }
-        
+
+        public string MappingType
+        {
+            get
+            {
+                switch(Type)
+                {
+                    case FieldType.Keyword:
+                        return "Keyword";
+                    case FieldType.Long:
+                        return "Number";
+                    case FieldType.Date:
+                        return "Date";
+                    case FieldType.Ip:
+                        return "Ip";
+                    case FieldType.Object:
+                        return "Object<" + ClrType + ">";
+                    case FieldType.Text:
+                        return "Text";
+                    case FieldType.Float:
+                        return "Number";
+                    case FieldType.GeoPoint:
+                        return "GeoPoint";
+                    default:
+                        throw new ArgumentOutOfRangeException();
+                }
+            }
+        }
+
         /// <summary>
         ///     ECS Level of maturity of the field (required)
         /// </summary>
@@ -88,8 +145,8 @@ namespace Generator.Schema
         [JsonProperty("description", Required = Required.Always)]
         public string Description { get; set; }
 
-        public string DescriptionSanitized => Regex.Replace(Description, @"\r\n?|\n", string.Empty);
-        
+        public string DescriptionSanitized => Regex.Replace(Description, @"\r\n?|\n", " ");
+
         /// <summary>
         ///     A single value example of what can be expected in this field (optional)
         /// </summary>
@@ -107,20 +164,15 @@ namespace Generator.Schema
         /// </summary>
         [JsonProperty("index")]
         public bool? Indexed { get; set; }
-        
-        [JsonProperty("doc_values")]
-        public bool? DocValues { get; set; }
-        
-        [JsonProperty("format")]
-        public string Format { get; set; }
-        
-        [JsonProperty("input_format")]
-        public string InputFormat { get; set; }
-        
-        [JsonProperty("output_format")]
-        public string OutputFormat { get; set; }
-        
-        [JsonProperty("output_precision")]
-        public int? OutputPrecision { get; set; }
+
+        [JsonProperty("doc_values")] public bool? DocValues { get; set; }
+
+        [JsonProperty("format")] public string Format { get; set; }
+
+        [JsonProperty("input_format")] public string InputFormat { get; set; }
+
+        [JsonProperty("output_format")] public string OutputFormat { get; set; }
+
+        [JsonProperty("output_precision")] public int? OutputPrecision { get; set; }
     }
 }

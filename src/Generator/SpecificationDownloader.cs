@@ -19,7 +19,7 @@ namespace Generator
 
         private static readonly Dictionary<string, string> OnlineSpecifications = new Dictionary<string, string>
         {
-            { Core, "https://github.com/elastic/ecs/tree/{version}/schemas" }
+            {Core, "https://github.com/elastic/ecs/tree/{version}/schemas"}
         };
 
         private static readonly ProgressBarOptions SubProgressBarOptions = new ProgressBarOptions
@@ -35,7 +35,9 @@ namespace Generator
             var specifications =
                 (from kv in OnlineSpecifications
                     let url = kv.Value.Replace("{version}", branch)
-                    select new Specification {FolderOnDisk = Path.Combine(branch, kv.Key), Branch = branch, GithubListingUrl = url}).ToList();
+                    select new Specification
+                        {FolderOnDisk = Path.Combine(branch, kv.Key), Branch = branch, GithubListingUrl = url})
+                .ToList();
 
             using (var progress =
                 new ProgressBar(specifications.Count, "Downloading specifications", MainProgressBarOptions))
@@ -63,7 +65,8 @@ namespace Generator
             }
         }
 
-        private static void FindFilesOnListing(Specification spec, string html, IProgressBar progress, string filenameMatch)
+        private static void FindFilesOnListing(Specification spec, string html, IProgressBar progress,
+            string filenameMatch)
         {
             if (!Directory.Exists(CodeConfiguration.SpecificationFolder))
                 Directory.CreateDirectory(CodeConfiguration.SpecificationFolder);
@@ -110,7 +113,8 @@ namespace Generator
 
             public string GithubDownloadUrl(string file)
             {
-                return $"{GithubListingUrl.Replace("github.com", "raw.githubusercontent.com").Replace("tree/", "")}/{file}";
+                return
+                    $"{GithubListingUrl.Replace("github.com", "raw.githubusercontent.com").Replace("tree/", "")}/{file}";
             }
         }
     }

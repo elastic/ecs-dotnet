@@ -1,0 +1,103 @@
+@using RazorLight
+@using System.Linq
+@using System.Collections.Generic
+@using CsQuery.ExtensionMethods.Internal
+@using Generator
+@using Newtonsoft.Json
+@inherits Generator.CodeTemplatePage<IList<Generator.Schema.YamlSchema>>
+// Licensed to Elasticsearch B.V. under one or more contributor
+// license agreements. See the NOTICE file distributed with
+// this work for additional information regarding copyright
+// ownership. Elasticsearch B.V. licenses this file to you under
+// the Apache License, Version 2.0 (the "License"); you may
+// not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing,
+// software distributed under the License is distributed on an
+// "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+// KIND, either express or implied.  See the License for the
+// specific language governing permissions and limitations
+// under the License.
+
+// ReSharper disable RedundantUsingDirective
+using System;
+using System.Collections.Generic;
+using System.Threading;
+using System.Threading.Tasks;
+using System.Linq;
+using System.Net;
+using System.Runtime.Serialization;
+using Nest;
+using ElasticCommonSchema;
+
+namespace ElasticCommonSchema
+{
+    public class ECSNamespace : NamespacedClientProxy
+    {
+        internal ECSNamespace(ElasticClient client) : base(client)
+        {
+           
+        }
+
+        public static PutIndexTemplateDescriptor GetIndexTemplate(Name name)
+        {
+            var indexTemplate = new PutIndexTemplateDescriptor(name);
+
+            indexTemplate.IndexPatterns("ecs-*");
+            indexTemplate.Order(1);
+            indexTemplate.Settings(s =>
+                s.Setting("index", 
+                    new
+                    {
+                        refresh_interval = "5s",
+                        mapping = new
+                        {
+                            total_fields = new
+                            {
+                                limit = 100000
+                            }
+                        }
+                    }));
+
+            indexTemplate.Map(GetTypeDescriptor());
+            
+            return indexTemplate;
+        }
+
+        private static Func<TypeMappingDescriptor<ECS>, ITypeMapping> GetTypeDescriptor()
+        {
+            return map =>
+                map.Meta(meta => meta.Add("version", "1.1.0"))
+                    .DateDetection(false)
+                    .DynamicTemplates(dynamicTemplate =>
+                        dynamicTemplate.DynamicTemplate("strings_as_keyword",
+                            template =>
+                                template.MatchMappingType("string")
+                                    .Mapping(mapping =>
+                                        mapping.Keyword(keyword =>
+                                            keyword.IgnoreAbove(1024)))))
+                    .Properties<ECS>(properties =>
+                        properties
+@foreach (var field in Model.Single(m => m.Name == "base").Fields)
+{
+<text>                            .@(Raw(field.MappingType))(p => p.Name(n => n.@FileGenerator.PascalCase(field.Name))@(field.Extras))
+</text> 
+}@foreach (var schema in Model.Where(m => m.Name != "base"))
+{
+<text>                            .Object<@FileGenerator.PascalCase(schema.Name)>(o =>
+                                o.Properties(a => a
+@foreach (var field in schema.Fields)
+{
+<text>                                    .@(Raw(field.MappingType))(p => p.Name(n => n.@FileGenerator.PascalCase(field.Name))@(field.Extras))
+</text> 
+}
+                            ))
+</text>
+}
+                        );
+        }
+    }
+}
