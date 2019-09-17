@@ -37,10 +37,7 @@ namespace ElasticCommonSchema
 {
     public class ECSNamespace : NamespacedClientProxy
     {
-        internal ECSNamespace(ElasticClient client) : base(client)
-        {
-           
-        }
+        internal ECSNamespace(ElasticClient client) : base(client) { }
 
         public static PutIndexTemplateDescriptor GetIndexTemplate(Name name)
         {
@@ -81,17 +78,17 @@ namespace ElasticCommonSchema
                                             keyword.IgnoreAbove(1024)))))
                     .Properties<ECS>(properties =>
                         properties
-@foreach (var field in Model.Single(m => m.Name == "base").Fields)
+@foreach (var field in Model.Single(m => m.Name == "base").GetFields())
 {
-<text>                            .@(Raw(field.MappingType))(p => p.Name(n => n.@FileGenerator.PascalCase(field.Name))@(field.Extras))
+<text>                            .@(Raw(field.MappingType))(p => p.Name(n => n.@(field.PropertyName))@(field.Extras))
 </text> 
 }@foreach (var schema in Model.Where(m => m.Name != "base"))
 {
 <text>                            .Object<@FileGenerator.PascalCase(schema.Name)>(o =>
                                 o.Properties(a => a
-@foreach (var field in schema.Fields)
+@foreach (var field in schema.GetFields())
 {
-<text>                                    .@(Raw(field.MappingType))(p => p.Name(n => n.@FileGenerator.PascalCase(field.Name))@(field.Extras))
+<text>                                    .@(Raw(field.MappingType))(p => p.Name(n => n.@(field.PropertyName))@(field.Extras))
 </text> 
 }
                             ))

@@ -30,10 +30,7 @@ namespace ElasticCommonSchema
 {
     public class ECSNamespace : NamespacedClientProxy
     {
-        internal ECSNamespace(ElasticClient client) : base(client)
-        {
-           
-        }
+        internal ECSNamespace(ElasticClient client) : base(client) { }
 
         public static PutIndexTemplateDescriptor GetIndexTemplate(Name name)
         {
@@ -74,10 +71,10 @@ namespace ElasticCommonSchema
                                             keyword.IgnoreAbove(1024)))))
                     .Properties<ECS>(properties =>
                         properties
-                            .Date(p => p.Name(n => n.@Timestamp))
-                            .Keyword(p => p.Name(n => n.Tags).IgnoreAbove(1024))
-                            .Object<object>(p => p.Name(n => n.Labels))
-                            .Text(p => p.Name(n => n.Message))
+                            .Date(p => p.Name(n => n.))
+                            .Keyword(p => p.Name(n => n.).IgnoreAbove(1024))
+                            .Object<object>(p => p.Name(n => n.))
+                            .Text(p => p.Name(n => n.))
                             .Object<Agent>(o =>
                                 o.Properties(a => a
                                     .Keyword(p => p.Name(n => n.Version).IgnoreAbove(1024))
@@ -89,12 +86,27 @@ namespace ElasticCommonSchema
                             .Object<Client>(o =>
                                 o.Properties(a => a
                                     .Keyword(p => p.Name(n => n.Address).IgnoreAbove(1024))
+                                    .GeoPoint(p => p.Name(n => n.GeoLocation))
+                                    .Keyword(p => p.Name(n => n.UserGroupId).IgnoreAbove(1024))
+                                    .Keyword(p => p.Name(n => n.UserId).IgnoreAbove(1024))
+                                    .Keyword(p => p.Name(n => n.GeoContinentName).IgnoreAbove(1024))
                                     .Ip(p => p.Name(n => n.Ip))
+                                    .Keyword(p => p.Name(n => n.UserGroupName).IgnoreAbove(1024))
+                                    .Keyword(p => p.Name(n => n.UserName).IgnoreAbove(1024))
+                                    .Keyword(p => p.Name(n => n.GeoCountryName).IgnoreAbove(1024))
                                     .Number(p => p.Name(n => n.Port).Type(NumberType.Long))
+                                    .Keyword(p => p.Name(n => n.UserFullName).IgnoreAbove(1024))
+                                    .Keyword(p => p.Name(n => n.GeoRegionName).IgnoreAbove(1024))
                                     .Keyword(p => p.Name(n => n.Mac).IgnoreAbove(1024))
+                                    .Keyword(p => p.Name(n => n.UserEmail).IgnoreAbove(1024))
                                     .Keyword(p => p.Name(n => n.Domain).IgnoreAbove(1024))
+                                    .Keyword(p => p.Name(n => n.GeoCityName).IgnoreAbove(1024))
+                                    .Keyword(p => p.Name(n => n.UserHash).IgnoreAbove(1024))
                                     .Number(p => p.Name(n => n.Bytes).Type(NumberType.Long))
+                                    .Keyword(p => p.Name(n => n.GeoCountryIsoCode).IgnoreAbove(1024))
+                                    .Keyword(p => p.Name(n => n.GeoRegionIsoCode).IgnoreAbove(1024))
                                     .Number(p => p.Name(n => n.Packets).Type(NumberType.Long))
+                                    .Keyword(p => p.Name(n => n.GeoName).IgnoreAbove(1024))
                             ))
                             .Object<Cloud>(o =>
                                 o.Properties(a => a
@@ -118,12 +130,27 @@ namespace ElasticCommonSchema
                             .Object<Destination>(o =>
                                 o.Properties(a => a
                                     .Keyword(p => p.Name(n => n.Address).IgnoreAbove(1024))
+                                    .GeoPoint(p => p.Name(n => n.GeoLocation))
+                                    .Keyword(p => p.Name(n => n.UserGroupId).IgnoreAbove(1024))
+                                    .Keyword(p => p.Name(n => n.UserId).IgnoreAbove(1024))
+                                    .Keyword(p => p.Name(n => n.GeoContinentName).IgnoreAbove(1024))
                                     .Ip(p => p.Name(n => n.Ip))
+                                    .Keyword(p => p.Name(n => n.UserGroupName).IgnoreAbove(1024))
+                                    .Keyword(p => p.Name(n => n.UserName).IgnoreAbove(1024))
+                                    .Keyword(p => p.Name(n => n.GeoCountryName).IgnoreAbove(1024))
                                     .Number(p => p.Name(n => n.Port).Type(NumberType.Long))
+                                    .Keyword(p => p.Name(n => n.UserFullName).IgnoreAbove(1024))
+                                    .Keyword(p => p.Name(n => n.GeoRegionName).IgnoreAbove(1024))
                                     .Keyword(p => p.Name(n => n.Mac).IgnoreAbove(1024))
+                                    .Keyword(p => p.Name(n => n.UserEmail).IgnoreAbove(1024))
                                     .Keyword(p => p.Name(n => n.Domain).IgnoreAbove(1024))
+                                    .Keyword(p => p.Name(n => n.GeoCityName).IgnoreAbove(1024))
+                                    .Keyword(p => p.Name(n => n.UserHash).IgnoreAbove(1024))
                                     .Number(p => p.Name(n => n.Bytes).Type(NumberType.Long))
+                                    .Keyword(p => p.Name(n => n.GeoCountryIsoCode).IgnoreAbove(1024))
+                                    .Keyword(p => p.Name(n => n.GeoRegionIsoCode).IgnoreAbove(1024))
                                     .Number(p => p.Name(n => n.Packets).Type(NumberType.Long))
+                                    .Keyword(p => p.Name(n => n.GeoName).IgnoreAbove(1024))
                             ))
                             .Object<Ecs>(o =>
                                 o.Properties(a => a
@@ -191,13 +218,34 @@ namespace ElasticCommonSchema
                             ))
                             .Object<Host>(o =>
                                 o.Properties(a => a
+                                    .GeoPoint(p => p.Name(n => n.GeoLocation))
                                     .Keyword(p => p.Name(n => n.Hostname).IgnoreAbove(1024))
+                                    .Keyword(p => p.Name(n => n.OsPlatform).IgnoreAbove(1024))
+                                    .Keyword(p => p.Name(n => n.UserGroupId).IgnoreAbove(1024))
+                                    .Keyword(p => p.Name(n => n.UserId).IgnoreAbove(1024))
+                                    .Keyword(p => p.Name(n => n.GeoContinentName).IgnoreAbove(1024))
                                     .Keyword(p => p.Name(n => n.Name).IgnoreAbove(1024))
+                                    .Keyword(p => p.Name(n => n.OsName).IgnoreAbove(1024))
+                                    .Keyword(p => p.Name(n => n.UserGroupName).IgnoreAbove(1024))
+                                    .Keyword(p => p.Name(n => n.UserName).IgnoreAbove(1024))
+                                    .Keyword(p => p.Name(n => n.GeoCountryName).IgnoreAbove(1024))
                                     .Keyword(p => p.Name(n => n.Id).IgnoreAbove(1024))
+                                    .Keyword(p => p.Name(n => n.OsFull).IgnoreAbove(1024))
+                                    .Keyword(p => p.Name(n => n.UserFullName).IgnoreAbove(1024))
+                                    .Keyword(p => p.Name(n => n.GeoRegionName).IgnoreAbove(1024))
                                     .Ip(p => p.Name(n => n.Ip))
+                                    .Keyword(p => p.Name(n => n.OsFamily).IgnoreAbove(1024))
+                                    .Keyword(p => p.Name(n => n.UserEmail).IgnoreAbove(1024))
+                                    .Keyword(p => p.Name(n => n.GeoCityName).IgnoreAbove(1024))
                                     .Keyword(p => p.Name(n => n.Mac).IgnoreAbove(1024))
+                                    .Keyword(p => p.Name(n => n.OsVersion).IgnoreAbove(1024))
+                                    .Keyword(p => p.Name(n => n.UserHash).IgnoreAbove(1024))
+                                    .Keyword(p => p.Name(n => n.GeoCountryIsoCode).IgnoreAbove(1024))
+                                    .Keyword(p => p.Name(n => n.OsKernel).IgnoreAbove(1024))
                                     .Keyword(p => p.Name(n => n.Type).IgnoreAbove(1024))
                                     .Keyword(p => p.Name(n => n.Architecture).IgnoreAbove(1024))
+                                    .Keyword(p => p.Name(n => n.GeoRegionIsoCode).IgnoreAbove(1024))
+                                    .Keyword(p => p.Name(n => n.GeoName).IgnoreAbove(1024))
                             ))
                             .Object<Http>(o =>
                                 o.Properties(a => a
@@ -233,13 +281,27 @@ namespace ElasticCommonSchema
                             ))
                             .Object<Observer>(o =>
                                 o.Properties(a => a
+                                    .GeoPoint(p => p.Name(n => n.GeoLocation))
                                     .Keyword(p => p.Name(n => n.Mac).IgnoreAbove(1024))
+                                    .Keyword(p => p.Name(n => n.OsPlatform).IgnoreAbove(1024))
+                                    .Keyword(p => p.Name(n => n.GeoContinentName).IgnoreAbove(1024))
                                     .Ip(p => p.Name(n => n.Ip))
+                                    .Keyword(p => p.Name(n => n.OsName).IgnoreAbove(1024))
+                                    .Keyword(p => p.Name(n => n.GeoCountryName).IgnoreAbove(1024))
                                     .Keyword(p => p.Name(n => n.Hostname).IgnoreAbove(1024))
+                                    .Keyword(p => p.Name(n => n.OsFull).IgnoreAbove(1024))
+                                    .Keyword(p => p.Name(n => n.GeoRegionName).IgnoreAbove(1024))
+                                    .Keyword(p => p.Name(n => n.OsFamily).IgnoreAbove(1024))
                                     .Keyword(p => p.Name(n => n.Vendor).IgnoreAbove(1024))
+                                    .Keyword(p => p.Name(n => n.GeoCityName).IgnoreAbove(1024))
+                                    .Keyword(p => p.Name(n => n.OsVersion).IgnoreAbove(1024))
                                     .Keyword(p => p.Name(n => n.Version).IgnoreAbove(1024))
+                                    .Keyword(p => p.Name(n => n.GeoCountryIsoCode).IgnoreAbove(1024))
+                                    .Keyword(p => p.Name(n => n.OsKernel).IgnoreAbove(1024))
                                     .Keyword(p => p.Name(n => n.SerialNumber).IgnoreAbove(1024))
+                                    .Keyword(p => p.Name(n => n.GeoRegionIsoCode).IgnoreAbove(1024))
                                     .Keyword(p => p.Name(n => n.Type).IgnoreAbove(1024))
+                                    .Keyword(p => p.Name(n => n.GeoName).IgnoreAbove(1024))
                             ))
                             .Object<Organization>(o =>
                                 o.Properties(a => a
@@ -274,12 +336,27 @@ namespace ElasticCommonSchema
                             .Object<Server>(o =>
                                 o.Properties(a => a
                                     .Keyword(p => p.Name(n => n.Address).IgnoreAbove(1024))
+                                    .GeoPoint(p => p.Name(n => n.GeoLocation))
+                                    .Keyword(p => p.Name(n => n.UserGroupId).IgnoreAbove(1024))
+                                    .Keyword(p => p.Name(n => n.UserId).IgnoreAbove(1024))
+                                    .Keyword(p => p.Name(n => n.GeoContinentName).IgnoreAbove(1024))
                                     .Ip(p => p.Name(n => n.Ip))
+                                    .Keyword(p => p.Name(n => n.UserGroupName).IgnoreAbove(1024))
+                                    .Keyword(p => p.Name(n => n.UserName).IgnoreAbove(1024))
+                                    .Keyword(p => p.Name(n => n.GeoCountryName).IgnoreAbove(1024))
                                     .Number(p => p.Name(n => n.Port).Type(NumberType.Long))
+                                    .Keyword(p => p.Name(n => n.UserFullName).IgnoreAbove(1024))
+                                    .Keyword(p => p.Name(n => n.GeoRegionName).IgnoreAbove(1024))
                                     .Keyword(p => p.Name(n => n.Mac).IgnoreAbove(1024))
+                                    .Keyword(p => p.Name(n => n.UserEmail).IgnoreAbove(1024))
                                     .Keyword(p => p.Name(n => n.Domain).IgnoreAbove(1024))
+                                    .Keyword(p => p.Name(n => n.GeoCityName).IgnoreAbove(1024))
+                                    .Keyword(p => p.Name(n => n.UserHash).IgnoreAbove(1024))
                                     .Number(p => p.Name(n => n.Bytes).Type(NumberType.Long))
+                                    .Keyword(p => p.Name(n => n.GeoCountryIsoCode).IgnoreAbove(1024))
+                                    .Keyword(p => p.Name(n => n.GeoRegionIsoCode).IgnoreAbove(1024))
                                     .Number(p => p.Name(n => n.Packets).Type(NumberType.Long))
+                                    .Keyword(p => p.Name(n => n.GeoName).IgnoreAbove(1024))
                             ))
                             .Object<Service>(o =>
                                 o.Properties(a => a
@@ -293,12 +370,27 @@ namespace ElasticCommonSchema
                             .Object<Source>(o =>
                                 o.Properties(a => a
                                     .Keyword(p => p.Name(n => n.Address).IgnoreAbove(1024))
+                                    .GeoPoint(p => p.Name(n => n.GeoLocation))
+                                    .Keyword(p => p.Name(n => n.UserGroupId).IgnoreAbove(1024))
+                                    .Keyword(p => p.Name(n => n.UserId).IgnoreAbove(1024))
+                                    .Keyword(p => p.Name(n => n.GeoContinentName).IgnoreAbove(1024))
                                     .Ip(p => p.Name(n => n.Ip))
+                                    .Keyword(p => p.Name(n => n.UserGroupName).IgnoreAbove(1024))
+                                    .Keyword(p => p.Name(n => n.UserName).IgnoreAbove(1024))
+                                    .Keyword(p => p.Name(n => n.GeoCountryName).IgnoreAbove(1024))
                                     .Number(p => p.Name(n => n.Port).Type(NumberType.Long))
+                                    .Keyword(p => p.Name(n => n.UserFullName).IgnoreAbove(1024))
+                                    .Keyword(p => p.Name(n => n.GeoRegionName).IgnoreAbove(1024))
                                     .Keyword(p => p.Name(n => n.Mac).IgnoreAbove(1024))
+                                    .Keyword(p => p.Name(n => n.UserEmail).IgnoreAbove(1024))
                                     .Keyword(p => p.Name(n => n.Domain).IgnoreAbove(1024))
+                                    .Keyword(p => p.Name(n => n.GeoCityName).IgnoreAbove(1024))
+                                    .Keyword(p => p.Name(n => n.UserHash).IgnoreAbove(1024))
                                     .Number(p => p.Name(n => n.Bytes).Type(NumberType.Long))
+                                    .Keyword(p => p.Name(n => n.GeoCountryIsoCode).IgnoreAbove(1024))
+                                    .Keyword(p => p.Name(n => n.GeoRegionIsoCode).IgnoreAbove(1024))
                                     .Number(p => p.Name(n => n.Packets).Type(NumberType.Long))
+                                    .Keyword(p => p.Name(n => n.GeoName).IgnoreAbove(1024))
                             ))
                             .Object<Url>(o =>
                                 o.Properties(a => a
@@ -315,7 +407,9 @@ namespace ElasticCommonSchema
                             ))
                             .Object<User>(o =>
                                 o.Properties(a => a
+                                    .Keyword(p => p.Name(n => n.GroupId).IgnoreAbove(1024))
                                     .Keyword(p => p.Name(n => n.Id).IgnoreAbove(1024))
+                                    .Keyword(p => p.Name(n => n.GroupName).IgnoreAbove(1024))
                                     .Keyword(p => p.Name(n => n.Name).IgnoreAbove(1024))
                                     .Keyword(p => p.Name(n => n.FullName).IgnoreAbove(1024))
                                     .Keyword(p => p.Name(n => n.Email).IgnoreAbove(1024))
@@ -324,9 +418,15 @@ namespace ElasticCommonSchema
                             .Object<UserAgent>(o =>
                                 o.Properties(a => a
                                     .Keyword(p => p.Name(n => n.Original).IgnoreAbove(1024))
+                                    .Keyword(p => p.Name(n => n.OsPlatform).IgnoreAbove(1024))
                                     .Keyword(p => p.Name(n => n.Name).IgnoreAbove(1024))
+                                    .Keyword(p => p.Name(n => n.OsName).IgnoreAbove(1024))
+                                    .Keyword(p => p.Name(n => n.OsFull).IgnoreAbove(1024))
                                     .Keyword(p => p.Name(n => n.Version).IgnoreAbove(1024))
                                     .Keyword(p => p.Name(n => n.DeviceName).IgnoreAbove(1024))
+                                    .Keyword(p => p.Name(n => n.OsFamily).IgnoreAbove(1024))
+                                    .Keyword(p => p.Name(n => n.OsVersion).IgnoreAbove(1024))
+                                    .Keyword(p => p.Name(n => n.OsKernel).IgnoreAbove(1024))
                             ))
                         );
         }

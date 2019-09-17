@@ -19,7 +19,7 @@ namespace Generator
 
         private static readonly Dictionary<string, string> OnlineSpecifications = new Dictionary<string, string>
         {
-            {Core, "https://github.com/elastic/ecs/tree/{version}/schemas"}
+            {Core, "https://github.com/elastic/ecs/tree/{version}/generated/ecs"}
         };
 
         private static readonly ProgressBarOptions SubProgressBarOptions = new ProgressBarOptions

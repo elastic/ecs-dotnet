@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using Newtonsoft.Json;
@@ -15,7 +16,22 @@ namespace Generator.Schema
         /// </summary>
         [JsonProperty("name", Required = Required.Always)]
         public string Name { get; set; }
+        
+        [JsonProperty("flat_name", Required = Required.Always)]
+        public string FlatName { get; set; }
 
+        [JsonIgnore]
+        public string PropertyName
+        {
+            get
+            {
+                var split = string.Join(".", FlatName.Split('.').Skip(1));
+                var propertyName = FileGenerator.PascalCase(split);
+                return propertyName;
+            }
+        }
+        
+        [JsonIgnore]
         public string Extras
         {
             get
@@ -47,6 +63,7 @@ namespace Generator.Schema
             }
         }
         
+        [JsonIgnore]
         public string ClrType
         {
             get
@@ -77,6 +94,7 @@ namespace Generator.Schema
             }
         }
 
+        [JsonIgnore]
         public string MappingType
         {
             get
@@ -144,7 +162,11 @@ namespace Generator.Schema
         /// </summary>
         [JsonProperty("description", Required = Required.Always)]
         public string Description { get; set; }
+        
+        [JsonProperty("order", Required = Required.Always)]
+        public int Order { get; set; }
 
+        [JsonIgnore]
         public string DescriptionSanitized => Regex.Replace(Description, @"\r\n?|\n", " ");
 
         /// <summary>

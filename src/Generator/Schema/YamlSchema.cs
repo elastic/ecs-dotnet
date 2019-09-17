@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using System.Text.RegularExpressions;
 using Newtonsoft.Json;
 
@@ -43,6 +44,7 @@ namespace Generator.Schema
         [JsonProperty("description", Required = Required.Always)]
         public string Description { get; set; }
 
+        [JsonIgnore]
         public string DescriptionSanitized => Regex.Replace(Description, @"\r\n?|\n", " ");
 
         /// <summary>
@@ -61,7 +63,12 @@ namespace Generator.Schema
         ///     Array of fields
         /// </summary>
         [JsonProperty("fields", Required = Required.Always)]
-        public List<Field> Fields { get; set; }
+        public Dictionary<string, Field> Fields { get; set; }
+
+        public IEnumerable<Field> GetFields()
+        {
+            return Fields.Select(f => f.Value).OrderBy(f => f.Order);
+        }
 
         /// <summary>
         ///     Optional

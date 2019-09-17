@@ -72,7 +72,7 @@ namespace Generator
             {
                 var folderFiles = directories.Select(dir =>
                     Directory.GetFiles(dir)
-                        .Where(f => f.EndsWith(".yml"))
+                        .Where(f => f.EndsWith("_nested.yml"))
                         .ToList()
                 );
 
@@ -110,7 +110,7 @@ namespace Generator
             var asJson = yamlObject.ToJSON();
 
             var jsonSerializer = JsonSerializer.Create();
-            var spec = jsonSerializer.Deserialize<List<YamlSchema>>(new JsonTextReader(new StringReader(asJson)));
+            var spec = jsonSerializer.Deserialize<Dictionary<string, YamlSchema>>(new JsonTextReader(new StringReader(asJson)));
 
             var serialised = JsonConvert.SerializeObject(spec,
                 new JsonSerializerSettings
@@ -130,7 +130,7 @@ namespace Generator
                 foreach (var diff in diffs)
                     Warnings.Add($"{file}:{diff}");
 
-            return spec;
+            return spec.Select(d => d.Value);
         }
 
         private static string DoRazor(string name, string template, IList<YamlSchema> model)

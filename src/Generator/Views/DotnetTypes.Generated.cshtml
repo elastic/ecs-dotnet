@@ -54,7 +54,7 @@ namespace ElasticCommonSchema
 
 </text>
     }
-@foreach (var field in Model.Single(m => m.Name == "base").Fields)
+@foreach (var field in Model.Single(m => m.Name == "base").GetFields())
 {
 <text>        ///<summary>
         /// @field.DescriptionSanitized
@@ -64,8 +64,8 @@ namespace ElasticCommonSchema
 <text>        ///<example>@Raw(JsonConvert.SerializeObject(field.Example).Trim('"'))</example>
 </text>
         }
-        [DataMember(Name = "@Raw(field.Name)")]
-        public @Raw(field.ClrType) @FileGenerator.PascalCase(field.Name) { get; set; }
+        [DataMember(Name = "@Raw(field.FlatName)")]
+        public @Raw(field.ClrType) @(field.PropertyName) { get; set; }
 
 </text> 
 }
@@ -87,7 +87,7 @@ namespace ElasticCommonSchema
     }
     public class @FileGenerator.PascalCase(schema.Name) 
     {
-    @foreach (var field in schema.Fields)
+    @foreach (var field in schema.GetFields())
     {
 <text>        ///<summary>
         /// @field.DescriptionSanitized
@@ -97,8 +97,8 @@ namespace ElasticCommonSchema
 <text>        ///<example>@Raw(JsonConvert.SerializeObject(field.Example).Trim('"'))</example>
 </text> 
         }
-        [DataMember(Name = "@Raw(field.Name)")]
-        public @Raw(field.ClrType) @FileGenerator.PascalCase(field.Name) { get; set; }
+        [DataMember(Name = "@Raw(field.FlatName)")]
+        public @Raw(field.ClrType) @(field.PropertyName) { get; set; }
 
 </text> 
     }
