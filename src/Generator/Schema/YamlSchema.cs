@@ -58,6 +58,12 @@ namespace Generator.Schema
         /// </summary>
         [JsonProperty("type")]
         public string Type { get; set; }
+        
+        [JsonProperty("prefix")]
+        public string Prefix { get; set; }
+        
+        [JsonProperty("nestings")]
+        public string[] Nestings { get; set; }
 
         /// <summary>
         ///     Array of fields
@@ -75,5 +81,8 @@ namespace Generator.Schema
         /// </summary>
         [JsonProperty("reusable")]
         public Reusable Reusable { get; set; }
+
+        [JsonIgnore]
+        public string DownloadBranch { get; set; }
     }
 }

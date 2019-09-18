@@ -28,10 +28,24 @@ using ElasticCommonSchema;
 
 namespace ElasticCommonSchema
 {
-    public class ECSNamespace : NamespacedClientProxy
+    ///<summary>
+    /// Elastic Common Schema 1.0 utilities.
+    /// To be used in conjunction with the NEST client.
+    /// <para/>
+    /// The Elastic Common Schema (ECS) defines a common set of fields for ingesting data into Elasticsearch.
+    /// A common schema helps you correlate data from sources like logs and metrics or IT operations analytics
+    /// and security analytics.
+    /// <para/>
+    /// https://github.com/elastic/ecs
+    ///</summary>
+    public class ECSUtilities
     {
-        internal ECSNamespace(ElasticClient client) : base(client) { }
-
+        /// <summary>
+        /// Get a Put Index Template Descriptor for use with <see cref="Nest.PutIndexTemplateRequest"/>
+        /// designed for use with ECS schema version 1.0.
+        /// </summary>
+        /// <param name="name">The name of the index template.</param>
+        /// <returns>An instance of <see cref="Nest.PutIndexTemplateDescriptor"/>.</returns>
         public static PutIndexTemplateDescriptor GetIndexTemplate(Name name)
         {
             var indexTemplate = new PutIndexTemplateDescriptor(name);
@@ -52,15 +66,20 @@ namespace ElasticCommonSchema
                         }
                     }));
 
-            indexTemplate.Map(GetTypeDescriptor());
+            indexTemplate.Map(GetTypeMappingDescriptor());
             
             return indexTemplate;
         }
 
-        private static Func<TypeMappingDescriptor<ECS>, ITypeMapping> GetTypeDescriptor()
+        /// <summary>
+        /// Get a type mapping descriptor for use with <see cref="Nest.PutIndexTemplateDescriptor"/>
+        /// designed for use with ECS schema version 1.0.
+        /// </summary>
+        /// <returns>An instance of <see cref="System.Func{Nest.TypeMappingDescriptor{ElasticCommonSchema.ECS}}{Nest.ITypeMapping}"/>.</returns>
+        public static Func<TypeMappingDescriptor<ECS>, ITypeMapping> GetTypeMappingDescriptor()
         {
             return map =>
-                map.Meta(meta => meta.Add("version", "1.1.0"))
+                 map.Meta(meta => meta.Add("version", "1.0"))
                     .DateDetection(false)
                     .DynamicTemplates(dynamicTemplate =>
                         dynamicTemplate.DynamicTemplate("strings_as_keyword",
@@ -71,10 +90,10 @@ namespace ElasticCommonSchema
                                             keyword.IgnoreAbove(1024)))))
                     .Properties<ECS>(properties =>
                         properties
-                            .Date(p => p.Name(n => n.))
-                            .Keyword(p => p.Name(n => n.).IgnoreAbove(1024))
-                            .Object<object>(p => p.Name(n => n.))
-                            .Text(p => p.Name(n => n.))
+                            .Date(p => p.Name(n => n.Timestamp))
+                            .Keyword(p => p.Name(n => n.Tags).IgnoreAbove(1024))
+                            .Object<object>(p => p.Name(n => n.Labels))
+                            .Text(p => p.Name(n => n.Message).Norms(false))
                             .Object<Agent>(o =>
                                 o.Properties(a => a
                                     .Keyword(p => p.Name(n => n.Version).IgnoreAbove(1024))
@@ -159,7 +178,7 @@ namespace ElasticCommonSchema
                             .Object<Error>(o =>
                                 o.Properties(a => a
                                     .Keyword(p => p.Name(n => n.Id).IgnoreAbove(1024))
-                                    .Text(p => p.Name(n => n.Message))
+                                    .Text(p => p.Name(n => n.Message).Norms(false))
                                     .Keyword(p => p.Name(n => n.Code).IgnoreAbove(1024))
                             ))
                             .Object<Event>(o =>

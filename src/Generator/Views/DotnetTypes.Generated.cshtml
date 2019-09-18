@@ -34,7 +34,7 @@ using System.Runtime.Serialization;
 namespace ElasticCommonSchema
 {
     ///<summary>
-    /// Elastic Common Schema type.
+    /// Elastic Common Schema @(Model.First().DownloadBranch) type.
     /// <para/>
     /// The Elastic Common Schema (ECS) defines a common set of fields for ingesting data into Elasticsearch.
     /// A common schema helps you correlate data from sources like logs and metrics or IT operations analytics
@@ -64,7 +64,7 @@ namespace ElasticCommonSchema
 <text>        ///<example>@Raw(JsonConvert.SerializeObject(field.Example).Trim('"'))</example>
 </text>
         }
-        [DataMember(Name = "@Raw(field.FlatName)")]
+        [DataMember(Name = "@Raw(field.JsonFieldName)")]
         public @Raw(field.ClrType) @(field.PropertyName) { get; set; }
 
 </text> 
@@ -97,12 +97,13 @@ namespace ElasticCommonSchema
 <text>        ///<example>@Raw(JsonConvert.SerializeObject(field.Example).Trim('"'))</example>
 </text> 
         }
-        [DataMember(Name = "@Raw(field.FlatName)")]
+        [DataMember(Name = "@Raw(field.JsonFieldName)")]
         public @Raw(field.ClrType) @(field.PropertyName) { get; set; }
 
 </text> 
     }
     }
+
 </text>
     }
 }

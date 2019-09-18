@@ -29,7 +29,7 @@ namespace Generator
             var actions = new Dictionary<Action<IList<YamlSchema>>, string>
             {
                 {GenerateDotnetTypes, "Dotnet types"},
-                {GenerateDotnetMappings, "Dotnet mapping"},
+                {GenerateDotnetMappings, "Dotnet mapping"}
             };
 
             using (var pbar = new ProgressBar(actions.Count, "Generating code",
@@ -83,7 +83,7 @@ namespace Generator
                     {
                         foreach (var file in files)
                         {
-                            var specifications = CreateSpecification(file);
+                            var specifications = CreateSpecification(downloadBranch, file);
                             specItems.AddRange(specifications);
                             fileProgress.Tick();
                         }
@@ -102,7 +102,7 @@ namespace Generator
             return textInfo.ToTitleCase(s.ToLowerInvariant()).Replace("_", string.Empty).Replace(".", string.Empty);
         }
 
-        private static IEnumerable<YamlSchema> CreateSpecification(string file)
+        private static IEnumerable<YamlSchema> CreateSpecification(string downloadBranch, string file)
         {
             var deserializer = new Deserializer();
             var contents = File.ReadAllText(file);
@@ -130,7 +130,11 @@ namespace Generator
                 foreach (var diff in diffs)
                     Warnings.Add($"{file}:{diff}");
 
-            return spec.Select(d => d.Value);
+            return spec.Select(d => d.Value).Select(s =>
+            {
+                s.DownloadBranch = downloadBranch;
+                return s;
+            });
         }
 
         private static string DoRazor(string name, string template, IList<YamlSchema> model)

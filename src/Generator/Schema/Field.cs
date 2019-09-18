@@ -21,16 +21,19 @@ namespace Generator.Schema
         public string FlatName { get; set; }
 
         [JsonIgnore]
-        public string PropertyName
+        public string JsonFieldName
         {
             get
             {
-                var split = string.Join(".", FlatName.Split('.').Skip(1));
-                var propertyName = FileGenerator.PascalCase(split);
-                return propertyName;
+                var flatName = FlatName.TrimStart('@');
+                var split = string.Join(".", flatName.Split('.').Skip(1));
+                return split == string.Empty ? flatName : split;
             }
         }
         
+        [JsonIgnore]
+        public string PropertyName => FileGenerator.PascalCase(JsonFieldName);
+
         [JsonIgnore]
         public string Extras
         {
@@ -38,9 +41,14 @@ namespace Generator.Schema
             {
                 var builder = new StringBuilder();
 
-                if (Type == FieldType.Keyword)
+                if (IgnoreAbove.HasValue)
                 {
-                    builder.AppendFormat(".IgnoreAbove(1024)");
+                    builder.AppendFormat(".IgnoreAbove({0})", IgnoreAbove.Value);
+                }
+                
+                if (Norms.HasValue)
+                {
+                    builder.AppendFormat(".Norms({0})", Norms.Value.ToString().ToLower());
                 }
                 
                 if (Indexed.HasValue)
@@ -187,7 +195,9 @@ namespace Generator.Schema
         [JsonProperty("index")]
         public bool? Indexed { get; set; }
 
-        [JsonProperty("doc_values")] public bool? DocValues { get; set; }
+        [JsonProperty("doc_values")] public bool? DocValues { get; set; } //
+        
+        [JsonProperty("norms")] public bool? Norms { get; set; } //
 
         [JsonProperty("format")] public string Format { get; set; }
 
@@ -196,5 +206,9 @@ namespace Generator.Schema
         [JsonProperty("output_format")] public string OutputFormat { get; set; }
 
         [JsonProperty("output_precision")] public int? OutputPrecision { get; set; }
+        
+        [JsonProperty("original_fieldset")] public string OriginalFieldset { get; set; }
+        
+        [JsonProperty("ignore_above")] public int? IgnoreAbove { get; set; } //
     }
 }
