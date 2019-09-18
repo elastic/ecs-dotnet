@@ -14,6 +14,7 @@ To be used in conjunction with the Elasticsearch.Net and NEST clients.
 - [x] Razor templating to generate C# ECS types
 - [x] NEST / Elasticsearch.Net extension methods
 - [ ] How do we allow extensions to the .NET types?
+- [ ] Index template visitor to create an `ITypeMapping`
 - [ ] Determine versioning approach
 - [ ] Complete build scripts
 - [ ] Testing?
