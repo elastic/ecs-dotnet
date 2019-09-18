@@ -12,7 +12,7 @@ To be used in conjunction with the Elasticsearch.Net and NEST clients.
 - [x] C# object model representation of YAML specification
 - [x] YAML -> C# validation 
 - [x] Razor templating to generate C# ECS types
-- [x] NEST / Elasticsearch.Net extenstion methods
+- [x] NEST / Elasticsearch.Net extension methods
 - [ ] Determine versioning approach
 - [ ] Complete build scripts
 - [ ] Testing?
