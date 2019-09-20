@@ -2,9 +2,9 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Generator", "Generator\Generator.csproj", "{18C57984-EDB9-41F7-9745-BDE1E7BAF449}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ECSDotnet", "ECSDotnet\ECSDotnet.csproj", "{70072EAB-C5DF-4100-B594-B9DC3169D604}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Elastic.CommonSchema", "Elastic.CommonSchema\Elastic.CommonSchema.csproj", "{70072EAB-C5DF-4100-B594-B9DC3169D604}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ECSDotnetNEST", "ECSDotnetNEST\ECSDotnetNEST.csproj", "{2A8F9106-B4FD-4721-B29D-24B93F72F101}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Elastic.CommonSchemaNEST", "Elastic.CommonSchemaNEST\Elastic.CommonSchemaNEST.csproj", "{2A8F9106-B4FD-4721-B29D-24B93F72F101}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

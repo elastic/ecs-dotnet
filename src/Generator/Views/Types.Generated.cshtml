@@ -31,24 +31,24 @@ using System.Linq;
 using System.Net;
 using System.Runtime.Serialization;
 
-namespace ElasticCommonSchema
+namespace Elastic
 {
-    ///<summary>
-    /// Elastic Common Schema @(Model.First().DownloadBranch) type.
+    /// <summary>
+    /// Elastic Common Schema for version @(Model.First().DownloadBranch).
     /// <para/>
     /// The Elastic Common Schema (ECS) defines a common set of fields for ingesting data into Elasticsearch.
     /// A common schema helps you correlate data from sources like logs and metrics or IT operations analytics
     /// and security analytics.
     /// <para/>
     /// https://github.com/elastic/ecs
-    ///</summary>
-    public class ECS
+    /// </summary>
+    public class CommonSchema
     {
     @foreach (var schema in Model.Where(m => m.Name != "base"))
     {
-<text>        ///<summary>
-        /// @schema.DescriptionSanitized
-        ///</summary>
+<text>        /// <summary>
+        /// @Raw(schema.DescriptionSanitized)
+        /// </summary>
         [DataMember(Name = "@Raw(schema.Name)")]
         public @FileGenerator.PascalCase(schema.Name) @FileGenerator.PascalCase(schema.Name) { get; set; }
 
@@ -56,12 +56,13 @@ namespace ElasticCommonSchema
     }
 @foreach (var field in Model.Single(m => m.Name == "base").GetFields())
 {
-<text>        ///<summary>
-        /// @field.DescriptionSanitized
-        ///</summary>
+<text>        /// <summary>
+        /// @Raw(field.DescriptionSanitized)
+        /// </summary>
+        /// <remarks>@field.Level.ToString("f")</remarks>
         @if (field.Example != null)
         {
-<text>        ///<example>@Raw(JsonConvert.SerializeObject(field.Example).Trim('"'))</example>
+<text>        /// <example>@Raw(JsonConvert.SerializeObject(field.Example).Trim('"'))</example>
 </text>
         }
         [DataMember(Name = "@Raw(field.JsonFieldName)")]
@@ -73,28 +74,27 @@ namespace ElasticCommonSchema
 
     @foreach (var schema in Model.Where(m => m.Name != "base"))
     {
-<text>    ///<summary>
-    /// @schema.Title
-    /// <para />
-    /// @schema.DescriptionSanitized
-    ///</summary>
+<text>    /// <summary>
+    /// @Raw(schema.DescriptionSanitized)
+    /// </summary>
     @if (!schema.Footnote.IsNullOrEmpty())
     {
-<text>    ///<remarks>
-    /// @schema.Footnote
-    ///</remarks>
+<text>    /// <remarks>
+    /// @Raw(schema.Footnote)
+    /// </remarks>
 </text>
     }
     public class @FileGenerator.PascalCase(schema.Name) 
     {
     @foreach (var field in schema.GetFields())
     {
-<text>        ///<summary>
-        /// @field.DescriptionSanitized
-        ///</summary>
+<text>        /// <summary>
+        /// @Raw(field.DescriptionSanitized)
+        /// </summary>
+        /// <remarks>@field.Level.ToString("f")</remarks>
         @if (field.Example != null)
         {
-<text>        ///<example>@Raw(JsonConvert.SerializeObject(field.Example).Trim('"'))</example>
+<text>        /// <example>@Raw(JsonConvert.SerializeObject(field.Example).Trim('"'))</example>
 </text> 
         }
         [DataMember(Name = "@Raw(field.JsonFieldName)")]

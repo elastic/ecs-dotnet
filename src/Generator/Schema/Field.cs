@@ -175,7 +175,7 @@ namespace Generator.Schema
         public int Order { get; set; }
 
         [JsonIgnore]
-        public string DescriptionSanitized => Regex.Replace(Description, @"\r\n?|\n", " ");
+        public string DescriptionSanitized => Regex.Replace(Description, @"\r\n?|\n", "<para/>");
 
         /// <summary>
         ///     A single value example of what can be expected in this field (optional)

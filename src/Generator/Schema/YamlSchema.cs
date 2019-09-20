@@ -45,7 +45,7 @@ namespace Generator.Schema
         public string Description { get; set; }
 
         [JsonIgnore]
-        public string DescriptionSanitized => Regex.Replace(Description, @"\r\n?|\n", " ");
+        public string DescriptionSanitized => Regex.Replace(Description, @"\r\n?|\n", "<para/>");
 
         /// <summary>
         ///     Additional footnote

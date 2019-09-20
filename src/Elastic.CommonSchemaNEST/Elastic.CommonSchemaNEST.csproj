@@ -2,7 +2,7 @@
 
     <PropertyGroup>
         <TargetFramework>netstandard2.0</TargetFramework>
-        <RootNamespace>ECSDotnet.NEST</RootNamespace>
+        <RootNamespace>Elastic.CommonSchema.NEST</RootNamespace>
         <LangVersion>latest</LangVersion>
     </PropertyGroup>
 
@@ -11,7 +11,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\ECSDotnet\ECSDotnet.csproj" />
+      <ProjectReference Include="..\Elastic.CommonSchema\Elastic.CommonSchema.csproj" />
     </ItemGroup>
 
 </Project>

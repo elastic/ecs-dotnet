@@ -16,7 +16,7 @@ namespace Generator
     public class FileGenerator
     {
         private static readonly RazorLightEngine Razor = new RazorLightEngineBuilder()
-            .UseProject(new FileSystemRazorProject(Path.GetFullPath(CodeConfiguration.ECSDotnetGeneratedFolder)))
+            .UseProject(new FileSystemRazorProject(Path.GetFullPath(CodeConfiguration.ElasticCommonSchemaGeneratedFolder)))
             .UseMemoryCachingProvider()
             .Build();
 
@@ -28,8 +28,8 @@ namespace Generator
             var spec = CreateSpecModel(downloadBranch, folders);
             var actions = new Dictionary<Action<IList<YamlSchema>>, string>
             {
-                {GenerateDotnetTypes, "Dotnet types"},
-                {GenerateDotnetMappings, "Dotnet mapping"}
+                {GenerateTypes, "Dotnet types"},
+                {GenerateTypeMappings, "Dotnet type mapping"}
             };
 
             using (var pbar = new ProgressBar(actions.Count, "Generating code",
@@ -142,23 +142,23 @@ namespace Generator
             return Razor.CompileRenderStringAsync(name, template, model).GetAwaiter().GetResult();
         }
 
-        private static void GenerateDotnetTypes(IList<YamlSchema> model)
+        private static void GenerateTypes(IList<YamlSchema> model)
         {
-            var targetDir = Path.GetFullPath(CodeConfiguration.ECSDotnetGeneratedFolder);
-            var outputFile = Path.Combine(targetDir, @"DotnetTypes.Generated.cs");
-            var path = Path.Combine(CodeConfiguration.ViewFolder, @"DotnetTypes.Generated.cshtml");
+            var targetDir = Path.GetFullPath(CodeConfiguration.ElasticCommonSchemaGeneratedFolder);
+            var outputFile = Path.Combine(targetDir, @"Types.Generated.cs");
+            var path = Path.Combine(CodeConfiguration.ViewFolder, @"Types.Generated.cshtml");
             var template = File.ReadAllText(path);
-            var source = DoRazor(nameof(GenerateDotnetTypes), template, model);
+            var source = DoRazor(nameof(GenerateTypes), template, model);
             File.WriteAllText(outputFile, source);
         }
 
-        private static void GenerateDotnetMappings(IList<YamlSchema> model)
+        private static void GenerateTypeMappings(IList<YamlSchema> model)
         {
-            var targetDir = Path.GetFullPath(CodeConfiguration.ECSDotnetNESTGeneratedFolder);
-            var outputFile = Path.Combine(targetDir, @"DotnetTypeMappings.Generated.cs");
-            var path = Path.Combine(CodeConfiguration.ViewFolder, @"DotnetTypeMappings.Generated.cshtml");
+            var targetDir = Path.GetFullPath(CodeConfiguration.ElasticCommonSchemaNESTGeneratedFolder);
+            var outputFile = Path.Combine(targetDir, @"TypeMappings.Generated.cs");
+            var path = Path.Combine(CodeConfiguration.ViewFolder, @"TypeMappings.Generated.cshtml");
             var template = File.ReadAllText(path);
-            var source = DoRazor(nameof(GenerateDotnetMappings), template, model);
+            var source = DoRazor(nameof(GenerateTypeMappings), template, model);
             File.WriteAllText(outputFile, source);
         }
 

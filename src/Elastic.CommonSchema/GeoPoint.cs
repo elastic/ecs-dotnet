@@ -2,7 +2,7 @@ using System;
 using System.Globalization;
 using System.Runtime.Serialization;
 
-namespace ElasticCommonSchema
+namespace Elastic
 {
     public class GeoPoint
     {

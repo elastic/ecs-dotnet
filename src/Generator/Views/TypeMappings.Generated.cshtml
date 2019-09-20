@@ -33,10 +33,10 @@ using System.Runtime.Serialization;
 using Nest;
 using ElasticCommonSchema;
 
-namespace ElasticCommonSchema
+namespace Elastic
 {
-    ///<summary>
-    /// Elastic Common Schema @(Model.First().DownloadBranch) utilities.
+    /// <summary>
+    /// Elastic Common Schema utilities for version @(Model.First().DownloadBranch).
     /// To be used in conjunction with the NEST client.
     /// <para/>
     /// The Elastic Common Schema (ECS) defines a common set of fields for ingesting data into Elasticsearch.
@@ -44,8 +44,8 @@ namespace ElasticCommonSchema
     /// and security analytics.
     /// <para/>
     /// https://github.com/elastic/ecs
-    ///</summary>
-    public class ECSUtilities
+    /// </summary>
+    public class CommonSchemaUtilities
     {
         /// <summary>
         /// Get a Put Index Template Descriptor for use with <see cref="Nest.PutIndexTemplateRequest"/>
