@@ -11,5 +11,12 @@ To be used in conjunction with the Elasticsearch.Net and NEST clients.
 - [x] YAML specification github file downloader
 - [x] C# object model representation of YAML specification
 - [x] YAML -> C# validation 
-- [ ] Razor templating to generate C# ECS types
-- [ ] NEST / Elasticsearch.Net extenstion methods
+- [x] Razor templating to generate C# ECS types
+- [x] NEST / Elasticsearch.Net extension methods
+- [ ] How do we allow extensions to the .NET types?
+- [ ] Index template visitor to create an `ITypeMapping`
+- [ ] Determine versioning approach
+- [ ] Complete build scripts
+- [ ] Testing?
+- [ ] Nuget packaging
+- [ ] Blog post
