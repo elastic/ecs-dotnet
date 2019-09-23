@@ -31,7 +31,6 @@ using System.Linq;
 using System.Net;
 using System.Runtime.Serialization;
 using Nest;
-using ElasticCommonSchema;
 
 namespace Elastic
 {
@@ -82,8 +81,8 @@ namespace Elastic
         /// Get a type mapping descriptor for use with <see cref="Nest.PutIndexTemplateDescriptor"/>
         /// designed for use with ECS schema version @(Model.First().DownloadBranch).
         /// </summary>
-        /// <returns>An instance of <see cref="System.Func{Nest.TypeMappingDescriptor{ElasticCommonSchema.ECS}}{Nest.ITypeMapping}"/>.</returns>
-        public static Func<TypeMappingDescriptor<ECS>, ITypeMapping> GetTypeMappingDescriptor()
+        /// <returns>An instance of <see cref="System.Func{Nest.TypeMappingDescriptor{Elastic.CommonSchema}}{Nest.ITypeMapping}"/>.</returns>
+        public static Func<TypeMappingDescriptor<CommonSchema>, ITypeMapping> GetTypeMappingDescriptor()
         {
             return map =>
                  map.Meta(meta => meta.Add("version", "@(Model.First().DownloadBranch)"))
@@ -95,7 +94,7 @@ namespace Elastic
                                     .Mapping(mapping =>
                                         mapping.Keyword(keyword =>
                                             keyword.IgnoreAbove(1024)))))
-                    .Properties<ECS>(properties =>
+                    .Properties<CommonSchema>(properties =>
                         properties
 @foreach (var field in Model.Single(m => m.Name == "base").GetFields())
 {

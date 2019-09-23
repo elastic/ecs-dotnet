@@ -76,7 +76,7 @@ namespace Elastic
         }
 
         /// <summary>
-        ///     Try to create a <see cref="GeoLocation" />.
+        ///     Try to create a <see cref="GeoPoint" />.
         ///     Return
         ///     <value>null</value>
         ///     if either <paramref name="latitude" /> or <paramref name="longitude" /> are invalid.

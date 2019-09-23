@@ -25,14 +25,14 @@ namespace Generator.Schema
         {
             get
             {
-                var flatName = FlatName.TrimStart('@');
+                var flatName = FlatName;
                 var split = string.Join(".", flatName.Split('.').Skip(1));
                 return split == string.Empty ? flatName : split;
             }
         }
         
         [JsonIgnore]
-        public string PropertyName => FileGenerator.PascalCase(JsonFieldName);
+        public string PropertyName => FileGenerator.PascalCase(JsonFieldName).TrimStart('@');
 
         [JsonIgnore]
         public string Extras

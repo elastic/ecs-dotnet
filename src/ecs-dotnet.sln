@@ -1,5 +1,17 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27130.2003
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "RelatedFiles", "RelatedFiles", "{432D5575-2347-4D3C-BF8C-3E38410C46CA}"
+	ProjectSection(SolutionItems) = preProject
+		..\src\PublishArtifacts.build.props = ..\src\PublishArtifacts.build.props
+		..\src\Artifacts.build.props = ..\src\Artifacts.build.props
+		..\src\Library.build.props = ..\src\Library.build.props
+		Directory.Build.props = Directory.Build.props
+		Tests.build.props = Tests.build.props
+	EndProjectSection
+EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Generator", "Generator\Generator.csproj", "{18C57984-EDB9-41F7-9745-BDE1E7BAF449}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Elastic.CommonSchema", "Elastic.CommonSchema\Elastic.CommonSchema.csproj", "{70072EAB-C5DF-4100-B594-B9DC3169D604}"

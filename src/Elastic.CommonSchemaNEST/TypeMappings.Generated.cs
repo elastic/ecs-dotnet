@@ -24,7 +24,6 @@ using System.Linq;
 using System.Net;
 using System.Runtime.Serialization;
 using Nest;
-using ElasticCommonSchema;
 
 namespace Elastic
 {
@@ -75,8 +74,8 @@ namespace Elastic
         /// Get a type mapping descriptor for use with <see cref="Nest.PutIndexTemplateDescriptor"/>
         /// designed for use with ECS schema version 1.0.
         /// </summary>
-        /// <returns>An instance of <see cref="System.Func{Nest.TypeMappingDescriptor{ElasticCommonSchema.ECS}}{Nest.ITypeMapping}"/>.</returns>
-        public static Func<TypeMappingDescriptor<ECS>, ITypeMapping> GetTypeMappingDescriptor()
+        /// <returns>An instance of <see cref="System.Func{Nest.TypeMappingDescriptor{Elastic.CommonSchema}}{Nest.ITypeMapping}"/>.</returns>
+        public static Func<TypeMappingDescriptor<CommonSchema>, ITypeMapping> GetTypeMappingDescriptor()
         {
             return map =>
                  map.Meta(meta => meta.Add("version", "1.0"))
@@ -88,7 +87,7 @@ namespace Elastic
                                     .Mapping(mapping =>
                                         mapping.Keyword(keyword =>
                                             keyword.IgnoreAbove(1024)))))
-                    .Properties<ECS>(properties =>
+                    .Properties<CommonSchema>(properties =>
                         properties
                             .Date(p => p.Name(n => n.Timestamp))
                             .Keyword(p => p.Name(n => n.Tags).IgnoreAbove(1024))

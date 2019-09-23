@@ -198,7 +198,7 @@ namespace Elastic
         /// </summary>
         /// <remarks>Core</remarks>
         /// <example>2016-05-23T08:05:34.853Z</example>
-        [DataMember(Name = "timestamp")]
+        [DataMember(Name = "@timestamp")]
         public DateTimeOffset? Timestamp { get; set; }
 
         /// <summary>

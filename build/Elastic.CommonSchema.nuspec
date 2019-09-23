@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
+	<metadata>
+		<id>Elastic.CommonSchema</id>
+		<version>$version$</version>
+		<title>Elastic Common Schema .NET types</title>
+		<authors>Elastic and contributors</authors>
+		<owners>Elastic</owners>
+		<license type="file">license.txt</license>
+		<projectUrl>https://github.com/elastic/ecs-dotnet</projectUrl>
+		<iconUrl>https://raw.githubusercontent.com/elastic/ecs-dotnet/master/build/nuget-icon.png</iconUrl>
+		<requireLicenseAcceptance>false</requireLicenseAcceptance>
+		<description>Elastic.CommonSchema</description>
+		<summary>The Elastic Common Schema (ECS) defines a common set of fields for ingesting data into Elasticsearch. A common schema helps you correlate data from sources like logs and metrics or IT operations analytics and security analytics. This package contains .NET types that conform to this schema.</summary>
+		<releaseNotes>See https://github.com/elastic/ecs-dotnet/releases/tag/$version$</releaseNotes>
+		<copyright>2018-$year$ Elasticsearch BV</copyright>
+		<tags>elasticsearch,elastic,ecs,elasticcommonschema</tags>
+		<dependencies>
+			<group targetFramework=".NETStandard2.0"></group>
+			<group targetFramework="net461"></group>
+		</dependencies>
+	</metadata>
+	<files>
+		<file src="..\license.txt" target="" />
+	
+		<file src="output\Elastic.CommonSchema\netstandard2.0\Elastic.CommonSchema.dll" target="lib\netstandard2.0"/>
+		<file src="output\Elastic.CommonSchema\netstandard2.0\Elastic.CommonSchema.xml" target="lib\netstandard2.0"/>
+
+		<file src="output\Elastic.CommonSchema\net461\Elastic.CommonSchema.dll" target="lib\net461"/>
+		<file src="output\Elastic.CommonSchema\net461\Elastic.CommonSchema.xml" target="lib\net461"/>
+	</files>
+</package>
