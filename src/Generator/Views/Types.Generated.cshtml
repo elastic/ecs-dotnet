@@ -4,7 +4,7 @@
 @using CsQuery.ExtensionMethods.Internal
 @using Generator
 @using Newtonsoft.Json
-@inherits Generator.CodeTemplatePage<IList<Generator.Schema.YamlSchema>>
+@inherits Generator.CodeTemplatePage<Generator.Schema.ECSSpecification>
 // Licensed to Elasticsearch B.V. under one or more contributor
 // license agreements. See the NOTICE file distributed with
 // this work for additional information regarding copyright
@@ -34,7 +34,7 @@ using System.Runtime.Serialization;
 namespace Elastic
 {
     /// <summary>
-    /// Elastic Common Schema for version @(Model.First().DownloadBranch).
+    /// Elastic Common Schema for version @(Model.YamlSchemas.First().DownloadBranch).
     /// <para/>
     /// The Elastic Common Schema (ECS) defines a common set of fields for ingesting data into Elasticsearch.
     /// A common schema helps you correlate data from sources like logs and metrics or IT operations analytics
@@ -44,7 +44,7 @@ namespace Elastic
     /// </summary>
     public class CommonSchema
     {
-    @foreach (var schema in Model.Where(m => m.Name != "base"))
+    @foreach (var schema in Model.YamlSchemas.Where(m => m.Name != "base"))
     {
 <text>        /// <summary>
         /// @Raw(schema.DescriptionSanitized)
@@ -54,7 +54,7 @@ namespace Elastic
 
 </text>
     }
-@foreach (var field in Model.Single(m => m.Name == "base").GetFields())
+@foreach (var field in Model.YamlSchemas.Single(m => m.Name == "base").GetFields())
 {
 <text>        /// <summary>
         /// @Raw(field.DescriptionSanitized)
@@ -72,7 +72,7 @@ namespace Elastic
 }
     }
 
-    @foreach (var schema in Model.Where(m => m.Name != "base"))
+    @foreach (var schema in Model.YamlSchemas.Where(m => m.Name != "base"))
     {
 <text>    /// <summary>
     /// @Raw(schema.DescriptionSanitized)
@@ -100,10 +100,25 @@ namespace Elastic
         [DataMember(Name = "@Raw(field.JsonFieldName)")]
         public @Raw(field.ClrType) @(field.PropertyName) { get; set; }
 
-</text> 
-    }
+</text>}
     }
 
 </text>
+    }
+    /// <summary>
+    /// Elastic Common Schema templates for version @(Model.YamlSchemas.First().DownloadBranch).
+    /// <para/>
+    /// These templates can be run against Elasticsearch to create index templates for ECS version @(Model.YamlSchemas.First().DownloadBranch).
+    /// </summary>
+    public class CommonSchemaTemplates
+    {
+@foreach (var template in Model.Templates)
+{
+<text>        /// <summary>
+        /// ECS Template for Elasticsearch @template.Key
+        /// </summary>
+        public static string GetIndexTemplateForElasticsearch@(template.Key)() { return "@Raw(System.Text.RegularExpressions.Regex.Replace(template.Value, @"\r\n?|\n", "").Replace("\"", "\\\""))"; }
+
+</text>}
     }
 }

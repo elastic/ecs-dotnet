@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Text.RegularExpressions;
 using CsQuery.ExtensionMethods;
 using Generator.Schema;
 using Newtonsoft.Json;
@@ -25,8 +26,8 @@ namespace Generator
         public static void Generate(string downloadBranch, params string[] folders)
         {
             Warnings = new List<string>();
-            var spec = CreateSpecModel(downloadBranch, folders);
-            var actions = new Dictionary<Action<IList<YamlSchema>>, string>
+            var spec = GetECSSpecification(downloadBranch, folders);
+            var actions = new Dictionary<Action<ECSSpecification>, string>
             {
                 {GenerateTypes, "Dotnet types"},
                 {GenerateTypeMappings, "Dotnet type mapping"}
@@ -58,7 +59,7 @@ namespace Generator
             Console.ResetColor();
         }
 
-        private static IList<YamlSchema> CreateSpecModel(string downloadBranch, string[] folders)
+        private static ECSSpecification GetECSSpecification(string downloadBranch, string[] folders)
         {
             var specificationFolder = Path.Combine(CodeConfiguration.SpecificationFolder, downloadBranch);
             var directories = Directory
@@ -66,26 +67,47 @@ namespace Generator
                 .Where(f => folders == null || folders.Length == 0 || folders.Contains(new DirectoryInfo(f).Name))
                 .ToList();
 
-            var specItems = new List<YamlSchema>();
+            var yamlSchemas = new List<YamlSchema>();
+            var templates = new Dictionary<int, string>();
+            
             using (var progressBar = new ProgressBar(directories.Count, $"Listing {directories.Count} directories",
                 new ProgressBarOptions {BackgroundColor = ConsoleColor.DarkGray}))
             {
-                var folderFiles = directories.Select(dir =>
-                    Directory.GetFiles(dir)
-                        .Where(f => f.EndsWith("_nested.yml"))
-                        .ToList()
+                var yamlFiles = directories.Select(dir =>
+                    Directory.GetFiles(dir).Where(f => f.EndsWith("_nested.yml")).ToList()
                 );
 
-                foreach (var files in folderFiles)
+                foreach (var files in yamlFiles)
                 {
                     using (var fileProgress = progressBar.Spawn(files.Count, $"Listing {files.Count} files",
                         new ProgressBarOptions {ProgressCharacter = '─', BackgroundColor = ConsoleColor.DarkGray}))
                     {
                         foreach (var file in files)
                         {
-                            var specifications = CreateSpecification(downloadBranch, file);
-                            specItems.AddRange(specifications);
+                            var specifications = GetYamlSchemas(downloadBranch, file);
+                            yamlSchemas.AddRange(specifications);
                             fileProgress.Tick();
+                        }
+                    }
+
+                    progressBar.Tick();
+                }
+                
+                var jsonFiles = directories.Select(dir =>
+                    Directory.GetFiles(dir).Where(f => f.EndsWith(".json")).ToList()
+                );
+
+                foreach (var files in jsonFiles)
+                {
+                    using (var fileProgress = progressBar.Spawn(files.Count, $"Listing {files.Count} files",
+                        new ProgressBarOptions {ProgressCharacter = '─', BackgroundColor = ConsoleColor.DarkGray}))
+                    {
+                        foreach (var file in files)
+                        {
+                            var versionString = Regex.Match(file, ".*Template(\\d).*").Groups.Skip(1).First().Value;
+                            var version = int.Parse(versionString);
+                            var contents = File.ReadAllText(file);
+                            templates.Add(version, contents);
                         }
                     }
 
@@ -93,7 +115,13 @@ namespace Generator
                 }
             }
 
-            return specItems;
+            var spec = new ECSSpecification
+            {
+                YamlSchemas = yamlSchemas,
+                Templates = templates
+            };
+
+            return spec;
         }
 
         public static string PascalCase(string s)
@@ -102,7 +130,7 @@ namespace Generator
             return textInfo.ToTitleCase(s.ToLowerInvariant()).Replace("_", string.Empty).Replace(".", string.Empty);
         }
 
-        private static IEnumerable<YamlSchema> CreateSpecification(string downloadBranch, string file)
+        private static IEnumerable<YamlSchema> GetYamlSchemas(string downloadBranch, string file)
         {
             var deserializer = new Deserializer();
             var contents = File.ReadAllText(file);
@@ -137,12 +165,12 @@ namespace Generator
             });
         }
 
-        private static string DoRazor(string name, string template, IList<YamlSchema> model)
+        private static string DoRazor(string name, string template, ECSSpecification model)
         {
             return Razor.CompileRenderStringAsync(name, template, model).GetAwaiter().GetResult();
         }
 
-        private static void GenerateTypes(IList<YamlSchema> model)
+        private static void GenerateTypes(ECSSpecification model)
         {
             var targetDir = Path.GetFullPath(CodeConfiguration.ElasticCommonSchemaGeneratedFolder);
             var outputFile = Path.Combine(targetDir, @"Types.Generated.cs");
@@ -152,7 +180,7 @@ namespace Generator
             File.WriteAllText(outputFile, source);
         }
 
-        private static void GenerateTypeMappings(IList<YamlSchema> model)
+        private static void GenerateTypeMappings(ECSSpecification model)
         {
             var targetDir = Path.GetFullPath(CodeConfiguration.ElasticCommonSchemaNESTGeneratedFolder);
             var outputFile = Path.Combine(targetDir, @"TypeMappings.Generated.cs");

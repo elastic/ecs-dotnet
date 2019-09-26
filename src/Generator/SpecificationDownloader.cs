@@ -11,6 +11,8 @@ namespace Generator
     public class SpecificationDownloader
     {
         private const string Core = "Core";
+        private const string Template6 = "Template6";
+        private const string Template7 = "Template7";
 
         private static readonly ProgressBarOptions MainProgressBarOptions = new ProgressBarOptions
         {
@@ -19,7 +21,10 @@ namespace Generator
 
         private static readonly Dictionary<string, string> OnlineSpecifications = new Dictionary<string, string>
         {
-            {Core, "https://github.com/elastic/ecs/tree/{version}/generated/ecs"}
+            {Core, "https://github.com/elastic/ecs/tree/{version}/generated/ecs"},
+            {Template6, "https://github.com/elastic/ecs/tree/{version}/generated/elasticsearch/6"},
+            {Template7, "https://github.com/elastic/ecs/tree/{version}/generated/elasticsearch/7"},
+            
         };
 
         private static readonly ProgressBarOptions SubProgressBarOptions = new ProgressBarOptions
@@ -46,6 +51,7 @@ namespace Generator
                 {
                     progress.Message = $"Downloading to {spec.FolderOnDisk} for branch {branch}";
                     DownloadDefinitions(spec, progress, ".yml");
+                    DownloadDefinitions(spec, progress, ".json");
                     progress.Tick($"Downloaded to {spec.FolderOnDisk} for branch {branch}");
                 }
             }

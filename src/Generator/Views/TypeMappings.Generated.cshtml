@@ -4,7 +4,7 @@
 @using CsQuery.ExtensionMethods.Internal
 @using Generator
 @using Newtonsoft.Json
-@inherits Generator.CodeTemplatePage<IList<Generator.Schema.YamlSchema>>
+@inherits Generator.CodeTemplatePage<Generator.Schema.ECSSpecification>
 // Licensed to Elasticsearch B.V. under one or more contributor
 // license agreements. See the NOTICE file distributed with
 // this work for additional information regarding copyright
@@ -35,7 +35,7 @@ using Nest;
 namespace Elastic
 {
     /// <summary>
-    /// Elastic Common Schema utilities for version @(Model.First().DownloadBranch).
+    /// Elastic Common Schema utilities for version @(Model.YamlSchemas.First().DownloadBranch).
     /// To be used in conjunction with the NEST client.
     /// <para/>
     /// The Elastic Common Schema (ECS) defines a common set of fields for ingesting data into Elasticsearch.
@@ -48,7 +48,7 @@ namespace Elastic
     {
         /// <summary>
         /// Get a Put Index Template Descriptor for use with <see cref="Nest.PutIndexTemplateRequest"/>
-        /// designed for use with ECS schema version @(Model.First().DownloadBranch).
+        /// designed for use with ECS schema version @(Model.YamlSchemas.First().DownloadBranch).
         /// </summary>
         /// <param name="name">The name of the index template.</param>
         /// <returns>An instance of <see cref="Nest.PutIndexTemplateDescriptor"/>.</returns>
@@ -79,13 +79,13 @@ namespace Elastic
 
         /// <summary>
         /// Get a type mapping descriptor for use with <see cref="Nest.PutIndexTemplateDescriptor"/>
-        /// designed for use with ECS schema version @(Model.First().DownloadBranch).
+        /// designed for use with ECS schema version @(Model.YamlSchemas.First().DownloadBranch).
         /// </summary>
         /// <returns>An instance of <see cref="System.Func{Nest.TypeMappingDescriptor{Elastic.CommonSchema}}{Nest.ITypeMapping}"/>.</returns>
         public static Func<TypeMappingDescriptor<CommonSchema>, ITypeMapping> GetTypeMappingDescriptor()
         {
             return map =>
-                 map.Meta(meta => meta.Add("version", "@(Model.First().DownloadBranch)"))
+                 map.Meta(meta => meta.Add("version", "@(Model.YamlSchemas.First().DownloadBranch)"))
                     .DateDetection(false)
                     .DynamicTemplates(dynamicTemplate =>
                         dynamicTemplate.DynamicTemplate("strings_as_keyword",
@@ -96,11 +96,11 @@ namespace Elastic
                                             keyword.IgnoreAbove(1024)))))
                     .Properties<CommonSchema>(properties =>
                         properties
-@foreach (var field in Model.Single(m => m.Name == "base").GetFields())
+@foreach (var field in Model.YamlSchemas.Single(m => m.Name == "base").GetFields())
 {
 <text>                            .@(Raw(field.MappingType))(p => p.Name(n => n.@(field.PropertyName))@(field.Extras))
 </text> 
-}@foreach (var schema in Model.Where(m => m.Name != "base"))
+}@foreach (var schema in Model.YamlSchemas.Where(m => m.Name != "base"))
 {
 <text>                            .Object<@FileGenerator.PascalCase(schema.Name)>(o =>
                                 o.Properties(a => a

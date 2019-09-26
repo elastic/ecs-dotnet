@@ -5,6 +5,13 @@ using Newtonsoft.Json;
 
 namespace Generator.Schema
 {
+    public class ECSSpecification
+    {
+        public IList<YamlSchema> YamlSchemas { get; set; }
+        
+        public IDictionary<int, string> Templates { get; set; }
+    }
+    
     [JsonObject(MemberSerialization.OptIn)]
     public class YamlSchema
     {
