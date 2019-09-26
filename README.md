@@ -17,6 +17,7 @@ To be used in conjunction with the Elasticsearch.Net and NEST clients.
 - [x] Index template visitor to create an `ITypeMapping`
 - [ ] Determine versioning approach (not needed for Elastic.CommonSchema nuget package)
 - [x] Complete build scripts
+- [x] Canary builds on appveyor
 - [ ] Testing?
 - [x] Nuget packaging
 - [ ] Blog post
