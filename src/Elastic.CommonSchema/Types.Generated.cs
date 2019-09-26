@@ -2517,7 +2517,7 @@ namespace Elastic
     /// <para/>
     /// These templates can be run against Elasticsearch to create index templates for ECS version 1.0.
     /// </summary>
-    public class CommonSchemaTemplates
+    public static class CommonSchemaTemplates
     {
         /// <summary>
         /// ECS Template for Elasticsearch 6
