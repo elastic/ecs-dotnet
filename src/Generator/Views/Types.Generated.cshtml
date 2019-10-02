@@ -3,6 +3,8 @@
 @using System.Collections.Generic
 @using CsQuery.ExtensionMethods.Internal
 @using Generator
+@using Generator.Schema
+@using Microsoft.CodeAnalysis.CSharp.Syntax
 @using Newtonsoft.Json
 @inherits Generator.CodeTemplatePage<Generator.Schema.ECSSpecification>
 // Licensed to Elasticsearch B.V. under one or more contributor
@@ -54,7 +56,7 @@ namespace Elastic
 
 </text>
     }
-@foreach (var field in Model.YamlSchemas.Single(m => m.Name == "base").GetFields())
+@foreach (var field in Model.YamlSchemas.Single(m => m.Name == "base").GetFieldsFlat())
 {
 <text>        /// <summary>
         /// @Raw(field.DescriptionSanitized)
@@ -74,6 +76,33 @@ namespace Elastic
 
     @foreach (var schema in Model.YamlSchemas.Where(m => m.Name != "base"))
     {
+    foreach (var nestedField in schema.GetFieldsNested())
+    {
+<text>    /// <summary>
+    /// @nestedField.ClassName, property of <see cref="@FileGenerator.PascalCase(schema.Name)" />
+    /// </summary>
+    public class @nestedField.ClassName
+    {
+    @foreach (var field in nestedField.Fields)
+    {
+<text>        /// <summary>
+        /// @Raw(field.DescriptionSanitized)
+        /// </summary>
+        /// <remarks>@field.Level.ToString("f")</remarks>
+        @if (field.Example != null)
+        {
+<text>        /// <example>@Raw(JsonConvert.SerializeObject(field.Example).Trim('"'))</example>
+</text> 
+        }
+        [DataMember(Name = "@Raw(field.Name.ToLower())")]
+        public @Raw(field.ClrType) @FileGenerator.PascalCase(field.Name) { get; set; }
+
+</text>}
+    }
+
+</text>
+    }
+
 <text>    /// <summary>
     /// @Raw(schema.DescriptionSanitized)
     /// </summary>
@@ -86,7 +115,29 @@ namespace Elastic
     }
     public class @FileGenerator.PascalCase(schema.Name) 
     {
-    @foreach (var field in schema.GetFields())
+    @if (schema.Nestings != null)
+    {
+        foreach (var nesting in schema.Nestings)
+        {
+<text>        /// <summary>
+        /// @FileGenerator.PascalCase(nesting) nested field.
+        /// <para/>
+        /// @Model.YamlSchemas.Single(y => y.Name == nesting).DescriptionSanitized
+        /// </summary>
+        [DataMember(Name = "@nesting")]
+        public @FileGenerator.PascalCase(nesting) @FileGenerator.PascalCase(nesting) { get; set; }
+
+</text>
+        }
+    }@foreach (var field in schema.GetFieldsNested())
+    {
+<text>        /// <summary>
+        /// @FileGenerator.PascalCase(field.ClassName) property.
+        /// </summary>
+        [DataMember(Name = "@Raw(field.ClassName.ToLower())")]
+        public @FileGenerator.PascalCase(field.ClassName) @FileGenerator.PascalCase(field.ClassName) { get; set; }
+
+</text>}@foreach (var field in schema.GetFieldsFlat())
     {
 <text>        /// <summary>
         /// @Raw(field.DescriptionSanitized)
@@ -95,7 +146,7 @@ namespace Elastic
         @if (field.Example != null)
         {
 <text>        /// <example>@Raw(JsonConvert.SerializeObject(field.Example).Trim('"'))</example>
-</text> 
+</text>
         }
         [DataMember(Name = "@Raw(field.JsonFieldName)")]
         public @Raw(field.ClrType) @(field.PropertyName) { get; set; }
@@ -105,6 +156,7 @@ namespace Elastic
 
 </text>
     }
+
     /// <summary>
     /// Elastic Common Schema templates for version @(Model.YamlSchemas.First().DownloadBranch).
     /// <para/>

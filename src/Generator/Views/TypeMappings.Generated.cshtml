@@ -96,7 +96,7 @@ namespace Elastic
                                             keyword.IgnoreAbove(1024)))))
                     .Properties<CommonSchema>(properties =>
                         properties
-@foreach (var field in Model.YamlSchemas.Single(m => m.Name == "base").GetFields())
+@foreach (var field in Model.YamlSchemas.Single(m => m.Name == "base").GetFieldsFlat())
 {
 <text>                            .@(Raw(field.MappingType))(p => p.Name(n => n.@(field.PropertyName))@(field.Extras))
 </text> 
@@ -104,7 +104,7 @@ namespace Elastic
 {
 <text>                            .Object<@FileGenerator.PascalCase(schema.Name)>(o =>
                                 o.Properties(a => a
-@foreach (var field in schema.GetFields())
+@foreach (var field in schema.GetFieldsFlat())
 {
 <text>                                    .@(Raw(field.MappingType))(p => p.Name(n => n.@(field.PropertyName))@(field.Extras))
 </text> 

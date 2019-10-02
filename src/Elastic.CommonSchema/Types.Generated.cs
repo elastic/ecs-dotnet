@@ -283,41 +283,27 @@ namespace Elastic
     public class Client 
     {
         /// <summary>
+        /// Geo nested field.
+        /// <para/>
+        /// Geo fields can carry data about a specific location related to an event.&lt;para/&gt;This geolocation information can be derived from techniques such as Geo IP, or be user-supplied.
+        /// </summary>
+        [DataMember(Name = "geo")]
+        public Geo Geo { get; set; }
+
+        /// <summary>
+        /// User nested field.
+        /// <para/>
+        /// The user fields describe information about the user that is relevant to the event.&lt;para/&gt;Fields can have one entry or multiple entries. If a user has more than one id, provide an array that includes all of them.
+        /// </summary>
+        [DataMember(Name = "user")]
+        public User User { get; set; }
+
+        /// <summary>
         /// Some event client addresses are defined ambiguously. The event will sometimes list an IP, a domain or a unix socket.  You should always store the raw address in the `.address` field.<para/>Then it should be duplicated to `.ip` or `.domain`, depending on which one it is.
         /// </summary>
         /// <remarks>Extended</remarks>
         [DataMember(Name = "address")]
         public string Address { get; set; }
-
-        /// <summary>
-        /// Longitude and latitude.
-        /// </summary>
-        /// <remarks>Core</remarks>
-        /// <example>{ \"lon\": -73.614830, \"lat\": 45.505918 }</example>
-        [DataMember(Name = "geo.location")]
-        public GeoPoint GeoLocation { get; set; }
-
-        /// <summary>
-        /// Unique identifier for the group on the system/platform.
-        /// </summary>
-        /// <remarks>Extended</remarks>
-        [DataMember(Name = "user.group.id")]
-        public string UserGroupId { get; set; }
-
-        /// <summary>
-        /// One or multiple unique identifiers of the user.
-        /// </summary>
-        /// <remarks>Core</remarks>
-        [DataMember(Name = "user.id")]
-        public string UserId { get; set; }
-
-        /// <summary>
-        /// Name of the continent.
-        /// </summary>
-        /// <remarks>Core</remarks>
-        /// <example>North America</example>
-        [DataMember(Name = "geo.continent_name")]
-        public string GeoContinentName { get; set; }
 
         /// <summary>
         /// IP address of the client.<para/>Can be one or multiple IPv4 or IPv6 addresses.
@@ -327,50 +313,11 @@ namespace Elastic
         public IPAddress Ip { get; set; }
 
         /// <summary>
-        /// Name of the group.
-        /// </summary>
-        /// <remarks>Extended</remarks>
-        [DataMember(Name = "user.group.name")]
-        public string UserGroupName { get; set; }
-
-        /// <summary>
-        /// Short name or login of the user.
-        /// </summary>
-        /// <remarks>Core</remarks>
-        /// <example>albert</example>
-        [DataMember(Name = "user.name")]
-        public string UserName { get; set; }
-
-        /// <summary>
-        /// Country name.
-        /// </summary>
-        /// <remarks>Core</remarks>
-        /// <example>Canada</example>
-        [DataMember(Name = "geo.country_name")]
-        public string GeoCountryName { get; set; }
-
-        /// <summary>
         /// Port of the client.
         /// </summary>
         /// <remarks>Core</remarks>
         [DataMember(Name = "port")]
         public long? Port { get; set; }
-
-        /// <summary>
-        /// User's full name, if available.
-        /// </summary>
-        /// <remarks>Extended</remarks>
-        /// <example>Albert Einstein</example>
-        [DataMember(Name = "user.full_name")]
-        public string UserFullName { get; set; }
-
-        /// <summary>
-        /// Region name.
-        /// </summary>
-        /// <remarks>Core</remarks>
-        /// <example>Quebec</example>
-        [DataMember(Name = "geo.region_name")]
-        public string GeoRegionName { get; set; }
 
         /// <summary>
         /// MAC address of the client.
@@ -380,33 +327,11 @@ namespace Elastic
         public string Mac { get; set; }
 
         /// <summary>
-        /// User email address.
-        /// </summary>
-        /// <remarks>Extended</remarks>
-        [DataMember(Name = "user.email")]
-        public string UserEmail { get; set; }
-
-        /// <summary>
         /// Client domain.
         /// </summary>
         /// <remarks>Core</remarks>
         [DataMember(Name = "domain")]
         public string Domain { get; set; }
-
-        /// <summary>
-        /// City name.
-        /// </summary>
-        /// <remarks>Core</remarks>
-        /// <example>Montreal</example>
-        [DataMember(Name = "geo.city_name")]
-        public string GeoCityName { get; set; }
-
-        /// <summary>
-        /// Unique user hash to correlate information for a user in anonymized form.<para/>Useful if `user.id` or `user.name` contain confidential information and cannot be used.
-        /// </summary>
-        /// <remarks>Extended</remarks>
-        [DataMember(Name = "user.hash")]
-        public string UserHash { get; set; }
 
         /// <summary>
         /// Bytes sent from the client to the server.
@@ -417,22 +342,6 @@ namespace Elastic
         public long? Bytes { get; set; }
 
         /// <summary>
-        /// Country ISO code.
-        /// </summary>
-        /// <remarks>Core</remarks>
-        /// <example>CA</example>
-        [DataMember(Name = "geo.country_iso_code")]
-        public string GeoCountryIsoCode { get; set; }
-
-        /// <summary>
-        /// Region ISO code.
-        /// </summary>
-        /// <remarks>Core</remarks>
-        /// <example>CA-QC</example>
-        [DataMember(Name = "geo.region_iso_code")]
-        public string GeoRegionIsoCode { get; set; }
-
-        /// <summary>
         /// Packets sent from the client to the server.
         /// </summary>
         /// <remarks>Core</remarks>
@@ -440,13 +349,57 @@ namespace Elastic
         [DataMember(Name = "packets")]
         public long? Packets { get; set; }
 
+    }
+
+    /// <summary>
+    /// Instance, property of <see cref="Cloud" />
+    /// </summary>
+    public class Instance
+    {
         /// <summary>
-        /// User-defined description of a location, at the level of granularity they care about.<para/>Could be the name of their data centers, the floor number, if this describes a local physical entity, city names.<para/>Not typically used in automated geolocation.
+        /// Instance ID of the host machine.
         /// </summary>
         /// <remarks>Extended</remarks>
-        /// <example>boston-dc</example>
-        [DataMember(Name = "geo.name")]
-        public string GeoName { get; set; }
+        /// <example>i-1234567890abcdef0</example>
+        [DataMember(Name = "instance.id")]
+        public string InstanceId { get; set; }
+
+        /// <summary>
+        /// Instance name of the host machine.
+        /// </summary>
+        /// <remarks>Extended</remarks>
+        [DataMember(Name = "instance.name")]
+        public string InstanceName { get; set; }
+
+    }
+
+    /// <summary>
+    /// Machine, property of <see cref="Cloud" />
+    /// </summary>
+    public class Machine
+    {
+        /// <summary>
+        /// Machine type of the host machine.
+        /// </summary>
+        /// <remarks>Extended</remarks>
+        /// <example>t2.medium</example>
+        [DataMember(Name = "machine.type")]
+        public string MachineType { get; set; }
+
+    }
+
+    /// <summary>
+    /// Account, property of <see cref="Cloud" />
+    /// </summary>
+    public class Account
+    {
+        /// <summary>
+        /// The cloud account or organization id used to identify different entities in a multi-tenant environment.<para/>Examples: AWS account id, Google Cloud ORG Id, or other unique identifier.
+        /// </summary>
+        /// <remarks>Extended</remarks>
+        /// <example>666777888999</example>
+        [DataMember(Name = "account.id")]
+        public string AccountId { get; set; }
 
     }
 
@@ -458,6 +411,24 @@ namespace Elastic
     /// </remarks>
     public class Cloud 
     {
+        /// <summary>
+        /// Instance property.
+        /// </summary>
+        [DataMember(Name = "instance")]
+        public Instance Instance { get; set; }
+
+        /// <summary>
+        /// Machine property.
+        /// </summary>
+        [DataMember(Name = "machine")]
+        public Machine Machine { get; set; }
+
+        /// <summary>
+        /// Account property.
+        /// </summary>
+        [DataMember(Name = "account")]
+        public Account Account { get; set; }
+
         /// <summary>
         /// Name of the cloud provider. Example values are aws, azure, gcp, or digitalocean.
         /// </summary>
@@ -482,36 +453,26 @@ namespace Elastic
         [DataMember(Name = "region")]
         public string Region { get; set; }
 
+    }
+
+    /// <summary>
+    /// Image, property of <see cref="Container" />
+    /// </summary>
+    public class Image
+    {
         /// <summary>
-        /// Instance ID of the host machine.
+        /// Name of the image the container was built on.
         /// </summary>
         /// <remarks>Extended</remarks>
-        /// <example>i-1234567890abcdef0</example>
-        [DataMember(Name = "instance.id")]
-        public string InstanceId { get; set; }
+        [DataMember(Name = "image.name")]
+        public string ImageName { get; set; }
 
         /// <summary>
-        /// Instance name of the host machine.
+        /// Container image tag.
         /// </summary>
         /// <remarks>Extended</remarks>
-        [DataMember(Name = "instance.name")]
-        public string InstanceName { get; set; }
-
-        /// <summary>
-        /// Machine type of the host machine.
-        /// </summary>
-        /// <remarks>Extended</remarks>
-        /// <example>t2.medium</example>
-        [DataMember(Name = "machine.type")]
-        public string MachineType { get; set; }
-
-        /// <summary>
-        /// The cloud account or organization id used to identify different entities in a multi-tenant environment.<para/>Examples: AWS account id, Google Cloud ORG Id, or other unique identifier.
-        /// </summary>
-        /// <remarks>Extended</remarks>
-        /// <example>666777888999</example>
-        [DataMember(Name = "account.id")]
-        public string AccountId { get; set; }
+        [DataMember(Name = "image.tag")]
+        public string ImageTag { get; set; }
 
     }
 
@@ -520,6 +481,12 @@ namespace Elastic
     /// </summary>
     public class Container 
     {
+        /// <summary>
+        /// Image property.
+        /// </summary>
+        [DataMember(Name = "image")]
+        public Image Image { get; set; }
+
         /// <summary>
         /// Runtime managing this container.
         /// </summary>
@@ -534,20 +501,6 @@ namespace Elastic
         /// <remarks>Core</remarks>
         [DataMember(Name = "id")]
         public string Id { get; set; }
-
-        /// <summary>
-        /// Name of the image the container was built on.
-        /// </summary>
-        /// <remarks>Extended</remarks>
-        [DataMember(Name = "image.name")]
-        public string ImageName { get; set; }
-
-        /// <summary>
-        /// Container image tag.
-        /// </summary>
-        /// <remarks>Extended</remarks>
-        [DataMember(Name = "image.tag")]
-        public string ImageTag { get; set; }
 
         /// <summary>
         /// Container name.
@@ -571,41 +524,27 @@ namespace Elastic
     public class Destination 
     {
         /// <summary>
+        /// Geo nested field.
+        /// <para/>
+        /// Geo fields can carry data about a specific location related to an event.&lt;para/&gt;This geolocation information can be derived from techniques such as Geo IP, or be user-supplied.
+        /// </summary>
+        [DataMember(Name = "geo")]
+        public Geo Geo { get; set; }
+
+        /// <summary>
+        /// User nested field.
+        /// <para/>
+        /// The user fields describe information about the user that is relevant to the event.&lt;para/&gt;Fields can have one entry or multiple entries. If a user has more than one id, provide an array that includes all of them.
+        /// </summary>
+        [DataMember(Name = "user")]
+        public User User { get; set; }
+
+        /// <summary>
         /// Some event destination addresses are defined ambiguously. The event will sometimes list an IP, a domain or a unix socket.  You should always store the raw address in the `.address` field.<para/>Then it should be duplicated to `.ip` or `.domain`, depending on which one it is.
         /// </summary>
         /// <remarks>Extended</remarks>
         [DataMember(Name = "address")]
         public string Address { get; set; }
-
-        /// <summary>
-        /// Longitude and latitude.
-        /// </summary>
-        /// <remarks>Core</remarks>
-        /// <example>{ \"lon\": -73.614830, \"lat\": 45.505918 }</example>
-        [DataMember(Name = "geo.location")]
-        public GeoPoint GeoLocation { get; set; }
-
-        /// <summary>
-        /// Unique identifier for the group on the system/platform.
-        /// </summary>
-        /// <remarks>Extended</remarks>
-        [DataMember(Name = "user.group.id")]
-        public string UserGroupId { get; set; }
-
-        /// <summary>
-        /// One or multiple unique identifiers of the user.
-        /// </summary>
-        /// <remarks>Core</remarks>
-        [DataMember(Name = "user.id")]
-        public string UserId { get; set; }
-
-        /// <summary>
-        /// Name of the continent.
-        /// </summary>
-        /// <remarks>Core</remarks>
-        /// <example>North America</example>
-        [DataMember(Name = "geo.continent_name")]
-        public string GeoContinentName { get; set; }
 
         /// <summary>
         /// IP address of the destination.<para/>Can be one or multiple IPv4 or IPv6 addresses.
@@ -615,50 +554,11 @@ namespace Elastic
         public IPAddress Ip { get; set; }
 
         /// <summary>
-        /// Name of the group.
-        /// </summary>
-        /// <remarks>Extended</remarks>
-        [DataMember(Name = "user.group.name")]
-        public string UserGroupName { get; set; }
-
-        /// <summary>
-        /// Short name or login of the user.
-        /// </summary>
-        /// <remarks>Core</remarks>
-        /// <example>albert</example>
-        [DataMember(Name = "user.name")]
-        public string UserName { get; set; }
-
-        /// <summary>
-        /// Country name.
-        /// </summary>
-        /// <remarks>Core</remarks>
-        /// <example>Canada</example>
-        [DataMember(Name = "geo.country_name")]
-        public string GeoCountryName { get; set; }
-
-        /// <summary>
         /// Port of the destination.
         /// </summary>
         /// <remarks>Core</remarks>
         [DataMember(Name = "port")]
         public long? Port { get; set; }
-
-        /// <summary>
-        /// User's full name, if available.
-        /// </summary>
-        /// <remarks>Extended</remarks>
-        /// <example>Albert Einstein</example>
-        [DataMember(Name = "user.full_name")]
-        public string UserFullName { get; set; }
-
-        /// <summary>
-        /// Region name.
-        /// </summary>
-        /// <remarks>Core</remarks>
-        /// <example>Quebec</example>
-        [DataMember(Name = "geo.region_name")]
-        public string GeoRegionName { get; set; }
 
         /// <summary>
         /// MAC address of the destination.
@@ -668,33 +568,11 @@ namespace Elastic
         public string Mac { get; set; }
 
         /// <summary>
-        /// User email address.
-        /// </summary>
-        /// <remarks>Extended</remarks>
-        [DataMember(Name = "user.email")]
-        public string UserEmail { get; set; }
-
-        /// <summary>
         /// Destination domain.
         /// </summary>
         /// <remarks>Core</remarks>
         [DataMember(Name = "domain")]
         public string Domain { get; set; }
-
-        /// <summary>
-        /// City name.
-        /// </summary>
-        /// <remarks>Core</remarks>
-        /// <example>Montreal</example>
-        [DataMember(Name = "geo.city_name")]
-        public string GeoCityName { get; set; }
-
-        /// <summary>
-        /// Unique user hash to correlate information for a user in anonymized form.<para/>Useful if `user.id` or `user.name` contain confidential information and cannot be used.
-        /// </summary>
-        /// <remarks>Extended</remarks>
-        [DataMember(Name = "user.hash")]
-        public string UserHash { get; set; }
 
         /// <summary>
         /// Bytes sent from the destination to the source.
@@ -705,36 +583,12 @@ namespace Elastic
         public long? Bytes { get; set; }
 
         /// <summary>
-        /// Country ISO code.
-        /// </summary>
-        /// <remarks>Core</remarks>
-        /// <example>CA</example>
-        [DataMember(Name = "geo.country_iso_code")]
-        public string GeoCountryIsoCode { get; set; }
-
-        /// <summary>
-        /// Region ISO code.
-        /// </summary>
-        /// <remarks>Core</remarks>
-        /// <example>CA-QC</example>
-        [DataMember(Name = "geo.region_iso_code")]
-        public string GeoRegionIsoCode { get; set; }
-
-        /// <summary>
         /// Packets sent from the destination to the source.
         /// </summary>
         /// <remarks>Core</remarks>
         /// <example>12</example>
         [DataMember(Name = "packets")]
         public long? Packets { get; set; }
-
-        /// <summary>
-        /// User-defined description of a location, at the level of granularity they care about.<para/>Could be the name of their data centers, the floor number, if this describes a local physical entity, city names.<para/>Not typically used in automated geolocation.
-        /// </summary>
-        /// <remarks>Extended</remarks>
-        /// <example>boston-dc</example>
-        [DataMember(Name = "geo.name")]
-        public string GeoName { get; set; }
 
     }
 
@@ -1129,12 +983,28 @@ namespace Elastic
     public class Host 
     {
         /// <summary>
-        /// Longitude and latitude.
+        /// Geo nested field.
+        /// <para/>
+        /// Geo fields can carry data about a specific location related to an event.&lt;para/&gt;This geolocation information can be derived from techniques such as Geo IP, or be user-supplied.
         /// </summary>
-        /// <remarks>Core</remarks>
-        /// <example>{ \"lon\": -73.614830, \"lat\": 45.505918 }</example>
-        [DataMember(Name = "geo.location")]
-        public GeoPoint GeoLocation { get; set; }
+        [DataMember(Name = "geo")]
+        public Geo Geo { get; set; }
+
+        /// <summary>
+        /// Os nested field.
+        /// <para/>
+        /// The OS fields contain information about the operating system.
+        /// </summary>
+        [DataMember(Name = "os")]
+        public Os Os { get; set; }
+
+        /// <summary>
+        /// User nested field.
+        /// <para/>
+        /// The user fields describe information about the user that is relevant to the event.&lt;para/&gt;Fields can have one entry or multiple entries. If a user has more than one id, provide an array that includes all of them.
+        /// </summary>
+        [DataMember(Name = "user")]
+        public User User { get; set; }
 
         /// <summary>
         /// Hostname of the host.<para/>It normally contains what the `hostname` command returns on the host machine.
@@ -1144,72 +1014,11 @@ namespace Elastic
         public string Hostname { get; set; }
 
         /// <summary>
-        /// Operating system platform (such centos, ubuntu, windows).
-        /// </summary>
-        /// <remarks>Extended</remarks>
-        /// <example>darwin</example>
-        [DataMember(Name = "os.platform")]
-        public string OsPlatform { get; set; }
-
-        /// <summary>
-        /// Unique identifier for the group on the system/platform.
-        /// </summary>
-        /// <remarks>Extended</remarks>
-        [DataMember(Name = "user.group.id")]
-        public string UserGroupId { get; set; }
-
-        /// <summary>
-        /// One or multiple unique identifiers of the user.
-        /// </summary>
-        /// <remarks>Core</remarks>
-        [DataMember(Name = "user.id")]
-        public string UserId { get; set; }
-
-        /// <summary>
-        /// Name of the continent.
-        /// </summary>
-        /// <remarks>Core</remarks>
-        /// <example>North America</example>
-        [DataMember(Name = "geo.continent_name")]
-        public string GeoContinentName { get; set; }
-
-        /// <summary>
         /// Name of the host.<para/>It can contain what `hostname` returns on Unix systems, the fully qualified domain name, or a name specified by the user. The sender decides which value to use.
         /// </summary>
         /// <remarks>Core</remarks>
         [DataMember(Name = "name")]
         public string Name { get; set; }
-
-        /// <summary>
-        /// Operating system name, without the version.
-        /// </summary>
-        /// <remarks>Extended</remarks>
-        /// <example>Mac OS X</example>
-        [DataMember(Name = "os.name")]
-        public string OsName { get; set; }
-
-        /// <summary>
-        /// Name of the group.
-        /// </summary>
-        /// <remarks>Extended</remarks>
-        [DataMember(Name = "user.group.name")]
-        public string UserGroupName { get; set; }
-
-        /// <summary>
-        /// Short name or login of the user.
-        /// </summary>
-        /// <remarks>Core</remarks>
-        /// <example>albert</example>
-        [DataMember(Name = "user.name")]
-        public string UserName { get; set; }
-
-        /// <summary>
-        /// Country name.
-        /// </summary>
-        /// <remarks>Core</remarks>
-        /// <example>Canada</example>
-        [DataMember(Name = "geo.country_name")]
-        public string GeoCountryName { get; set; }
 
         /// <summary>
         /// Unique host id.<para/>As hostname is not always unique, use values that are meaningful in your environment.<para/>Example: The current usage of `beat.name`.
@@ -1219,30 +1028,6 @@ namespace Elastic
         public string Id { get; set; }
 
         /// <summary>
-        /// Operating system name, including the version or code name.
-        /// </summary>
-        /// <remarks>Extended</remarks>
-        /// <example>Mac OS Mojave</example>
-        [DataMember(Name = "os.full")]
-        public string OsFull { get; set; }
-
-        /// <summary>
-        /// User's full name, if available.
-        /// </summary>
-        /// <remarks>Extended</remarks>
-        /// <example>Albert Einstein</example>
-        [DataMember(Name = "user.full_name")]
-        public string UserFullName { get; set; }
-
-        /// <summary>
-        /// Region name.
-        /// </summary>
-        /// <remarks>Core</remarks>
-        /// <example>Quebec</example>
-        [DataMember(Name = "geo.region_name")]
-        public string GeoRegionName { get; set; }
-
-        /// <summary>
         /// Host ip address.
         /// </summary>
         /// <remarks>Core</remarks>
@@ -1250,65 +1035,11 @@ namespace Elastic
         public IPAddress Ip { get; set; }
 
         /// <summary>
-        /// OS family (such as redhat, debian, freebsd, windows).
-        /// </summary>
-        /// <remarks>Extended</remarks>
-        /// <example>debian</example>
-        [DataMember(Name = "os.family")]
-        public string OsFamily { get; set; }
-
-        /// <summary>
-        /// User email address.
-        /// </summary>
-        /// <remarks>Extended</remarks>
-        [DataMember(Name = "user.email")]
-        public string UserEmail { get; set; }
-
-        /// <summary>
-        /// City name.
-        /// </summary>
-        /// <remarks>Core</remarks>
-        /// <example>Montreal</example>
-        [DataMember(Name = "geo.city_name")]
-        public string GeoCityName { get; set; }
-
-        /// <summary>
         /// Host mac address.
         /// </summary>
         /// <remarks>Core</remarks>
         [DataMember(Name = "mac")]
         public string Mac { get; set; }
-
-        /// <summary>
-        /// Operating system version as a raw string.
-        /// </summary>
-        /// <remarks>Extended</remarks>
-        /// <example>10.14.1</example>
-        [DataMember(Name = "os.version")]
-        public string OsVersion { get; set; }
-
-        /// <summary>
-        /// Unique user hash to correlate information for a user in anonymized form.<para/>Useful if `user.id` or `user.name` contain confidential information and cannot be used.
-        /// </summary>
-        /// <remarks>Extended</remarks>
-        [DataMember(Name = "user.hash")]
-        public string UserHash { get; set; }
-
-        /// <summary>
-        /// Country ISO code.
-        /// </summary>
-        /// <remarks>Core</remarks>
-        /// <example>CA</example>
-        [DataMember(Name = "geo.country_iso_code")]
-        public string GeoCountryIsoCode { get; set; }
-
-        /// <summary>
-        /// Operating system kernel version as a raw string.
-        /// </summary>
-        /// <remarks>Extended</remarks>
-        /// <example>4.4.0-112-generic</example>
-        [DataMember(Name = "os.kernel")]
-        public string OsKernel { get; set; }
 
         /// <summary>
         /// Type of host.<para/>For Cloud providers this can be the machine type like `t2.medium`. If vm, this could be the container, for example, or other information meaningful in your environment.
@@ -1325,53 +1056,46 @@ namespace Elastic
         [DataMember(Name = "architecture")]
         public string Architecture { get; set; }
 
-        /// <summary>
-        /// Region ISO code.
-        /// </summary>
-        /// <remarks>Core</remarks>
-        /// <example>CA-QC</example>
-        [DataMember(Name = "geo.region_iso_code")]
-        public string GeoRegionIsoCode { get; set; }
-
-        /// <summary>
-        /// User-defined description of a location, at the level of granularity they care about.<para/>Could be the name of their data centers, the floor number, if this describes a local physical entity, city names.<para/>Not typically used in automated geolocation.
-        /// </summary>
-        /// <remarks>Extended</remarks>
-        /// <example>boston-dc</example>
-        [DataMember(Name = "geo.name")]
-        public string GeoName { get; set; }
-
     }
 
+
+        
     /// <summary>
-    /// Fields related to HTTP activity. Use the `url` field set to store the url of the request.
+    /// Request, property of <see cref="Http" />
     /// </summary>
-    public class Http 
+    public class HttpRequest
     {
         /// <summary>
         /// HTTP request method.<para/>The field value must be normalized to lowercase for querying. See the documentation section "Implementing ECS".
         /// </summary>
         /// <remarks>Extended</remarks>
         /// <example>get, post, put</example>
-        [DataMember(Name = "request.method")]
-        public string RequestMethod { get; set; }
-
-        /// <summary>
-        /// The full HTTP request body.
-        /// </summary>
-        /// <remarks>Extended</remarks>
-        /// <example>Hello world</example>
-        [DataMember(Name = "request.body.content")]
-        public string RequestBodyContent { get; set; }
+        [DataMember(Name = "method")]
+        public string Method { get; set; }
 
         /// <summary>
         /// Referrer for this HTTP request.
         /// </summary>
         /// <remarks>Extended</remarks>
         /// <example>https://blog.example.com/</example>
-        [DataMember(Name = "request.referrer")]
-        public string RequestReferrer { get; set; }
+        [DataMember(Name = "referrer")]
+        public string Referrer { get; set; }
 
+        /// <summary>
+        /// Total size in bytes of the request (body and headers).
+        /// </summary>
+        /// <remarks>Extended</remarks>
+        /// <example>1437</example>
+        [DataMember(Name = "bytes")]
+        public long? Bytes { get; set; }
+
+    }
+
+    /// <summary>
+    /// Response, property of <see cref="Http" />
+    /// </summary>
+    public class HttpResponse
+    {
         /// <summary>
         /// HTTP response status code.
         /// </summary>
@@ -1381,12 +1105,32 @@ namespace Elastic
         public long? ResponseStatusCode { get; set; }
 
         /// <summary>
-        /// The full HTTP response body.
+        /// Total size in bytes of the response (body and headers).
         /// </summary>
         /// <remarks>Extended</remarks>
-        /// <example>Hello world</example>
-        [DataMember(Name = "response.body.content")]
-        public string ResponseBodyContent { get; set; }
+        /// <example>1437</example>
+        [DataMember(Name = "response.bytes")]
+        public long? ResponseBytes { get; set; }
+    }
+
+
+    /// <summary>
+    /// Fields related to HTTP activity. Use the `url` field set to store the url of the request.
+    /// </summary>
+    public class Http 
+    {
+        
+        /// <summary>
+        /// Request property.
+        /// </summary>
+        [DataMember(Name = "request")]
+        public HttpRequest Request { get; set; }
+
+        /// <summary>
+        /// Response property.
+        /// </summary>
+        [DataMember(Name = "response")]
+        public HttpResponse Response { get; set; }
 
         /// <summary>
         /// HTTP version.
@@ -1395,38 +1139,6 @@ namespace Elastic
         /// <example>1.1</example>
         [DataMember(Name = "version")]
         public string Version { get; set; }
-
-        /// <summary>
-        /// Total size in bytes of the request (body and headers).
-        /// </summary>
-        /// <remarks>Extended</remarks>
-        /// <example>1437</example>
-        [DataMember(Name = "request.bytes")]
-        public long? RequestBytes { get; set; }
-
-        /// <summary>
-        /// Size in bytes of the request body.
-        /// </summary>
-        /// <remarks>Extended</remarks>
-        /// <example>887</example>
-        [DataMember(Name = "request.body.bytes")]
-        public long? RequestBodyBytes { get; set; }
-
-        /// <summary>
-        /// Total size in bytes of the response (body and headers).
-        /// </summary>
-        /// <remarks>Extended</remarks>
-        /// <example>1437</example>
-        [DataMember(Name = "response.bytes")]
-        public long? ResponseBytes { get; set; }
-
-        /// <summary>
-        /// Size in bytes of the response body.
-        /// </summary>
-        /// <remarks>Extended</remarks>
-        /// <example>887</example>
-        [DataMember(Name = "response.body.bytes")]
-        public long? ResponseBodyBytes { get; set; }
 
     }
 
@@ -1554,12 +1266,20 @@ namespace Elastic
     public class Observer 
     {
         /// <summary>
-        /// Longitude and latitude.
+        /// Geo nested field.
+        /// <para/>
+        /// Geo fields can carry data about a specific location related to an event.&lt;para/&gt;This geolocation information can be derived from techniques such as Geo IP, or be user-supplied.
         /// </summary>
-        /// <remarks>Core</remarks>
-        /// <example>{ \"lon\": -73.614830, \"lat\": 45.505918 }</example>
-        [DataMember(Name = "geo.location")]
-        public GeoPoint GeoLocation { get; set; }
+        [DataMember(Name = "geo")]
+        public Geo Geo { get; set; }
+
+        /// <summary>
+        /// Os nested field.
+        /// <para/>
+        /// The OS fields contain information about the operating system.
+        /// </summary>
+        [DataMember(Name = "os")]
+        public Os Os { get; set; }
 
         /// <summary>
         /// MAC address of the observer
@@ -1569,43 +1289,11 @@ namespace Elastic
         public string Mac { get; set; }
 
         /// <summary>
-        /// Operating system platform (such centos, ubuntu, windows).
-        /// </summary>
-        /// <remarks>Extended</remarks>
-        /// <example>darwin</example>
-        [DataMember(Name = "os.platform")]
-        public string OsPlatform { get; set; }
-
-        /// <summary>
-        /// Name of the continent.
-        /// </summary>
-        /// <remarks>Core</remarks>
-        /// <example>North America</example>
-        [DataMember(Name = "geo.continent_name")]
-        public string GeoContinentName { get; set; }
-
-        /// <summary>
         /// IP address of the observer.
         /// </summary>
         /// <remarks>Core</remarks>
         [DataMember(Name = "ip")]
         public IPAddress Ip { get; set; }
-
-        /// <summary>
-        /// Operating system name, without the version.
-        /// </summary>
-        /// <remarks>Extended</remarks>
-        /// <example>Mac OS X</example>
-        [DataMember(Name = "os.name")]
-        public string OsName { get; set; }
-
-        /// <summary>
-        /// Country name.
-        /// </summary>
-        /// <remarks>Core</remarks>
-        /// <example>Canada</example>
-        [DataMember(Name = "geo.country_name")]
-        public string GeoCountryName { get; set; }
 
         /// <summary>
         /// Hostname of the observer.
@@ -1615,51 +1303,11 @@ namespace Elastic
         public string Hostname { get; set; }
 
         /// <summary>
-        /// Operating system name, including the version or code name.
-        /// </summary>
-        /// <remarks>Extended</remarks>
-        /// <example>Mac OS Mojave</example>
-        [DataMember(Name = "os.full")]
-        public string OsFull { get; set; }
-
-        /// <summary>
-        /// Region name.
-        /// </summary>
-        /// <remarks>Core</remarks>
-        /// <example>Quebec</example>
-        [DataMember(Name = "geo.region_name")]
-        public string GeoRegionName { get; set; }
-
-        /// <summary>
-        /// OS family (such as redhat, debian, freebsd, windows).
-        /// </summary>
-        /// <remarks>Extended</remarks>
-        /// <example>debian</example>
-        [DataMember(Name = "os.family")]
-        public string OsFamily { get; set; }
-
-        /// <summary>
         /// observer vendor information.
         /// </summary>
         /// <remarks>Core</remarks>
         [DataMember(Name = "vendor")]
         public string Vendor { get; set; }
-
-        /// <summary>
-        /// City name.
-        /// </summary>
-        /// <remarks>Core</remarks>
-        /// <example>Montreal</example>
-        [DataMember(Name = "geo.city_name")]
-        public string GeoCityName { get; set; }
-
-        /// <summary>
-        /// Operating system version as a raw string.
-        /// </summary>
-        /// <remarks>Extended</remarks>
-        /// <example>10.14.1</example>
-        [DataMember(Name = "os.version")]
-        public string OsVersion { get; set; }
 
         /// <summary>
         /// Observer version.
@@ -1669,35 +1317,11 @@ namespace Elastic
         public string Version { get; set; }
 
         /// <summary>
-        /// Country ISO code.
-        /// </summary>
-        /// <remarks>Core</remarks>
-        /// <example>CA</example>
-        [DataMember(Name = "geo.country_iso_code")]
-        public string GeoCountryIsoCode { get; set; }
-
-        /// <summary>
-        /// Operating system kernel version as a raw string.
-        /// </summary>
-        /// <remarks>Extended</remarks>
-        /// <example>4.4.0-112-generic</example>
-        [DataMember(Name = "os.kernel")]
-        public string OsKernel { get; set; }
-
-        /// <summary>
         /// Observer serial number.
         /// </summary>
         /// <remarks>Extended</remarks>
         [DataMember(Name = "serial_number")]
         public string SerialNumber { get; set; }
-
-        /// <summary>
-        /// Region ISO code.
-        /// </summary>
-        /// <remarks>Core</remarks>
-        /// <example>CA-QC</example>
-        [DataMember(Name = "geo.region_iso_code")]
-        public string GeoRegionIsoCode { get; set; }
 
         /// <summary>
         /// The type of the observer the data is coming from.<para/>There is no predefined list of observer types. Some examples are `forwarder`, `firewall`, `ids`, `ips`, `proxy`, `poller`, `sensor`, `APM server`.
@@ -1706,14 +1330,6 @@ namespace Elastic
         /// <example>firewall</example>
         [DataMember(Name = "type")]
         public string Type { get; set; }
-
-        /// <summary>
-        /// User-defined description of a location, at the level of granularity they care about.<para/>Could be the name of their data centers, the floor number, if this describes a local physical entity, city names.<para/>Not typically used in automated geolocation.
-        /// </summary>
-        /// <remarks>Extended</remarks>
-        /// <example>boston-dc</example>
-        [DataMember(Name = "geo.name")]
-        public string GeoName { get; set; }
 
     }
 
@@ -1794,10 +1410,31 @@ namespace Elastic
     }
 
     /// <summary>
+    /// Thread, property of <see cref="Process" />
+    /// </summary>
+    public class Thread
+    {
+        /// <summary>
+        /// Thread ID.
+        /// </summary>
+        /// <remarks>Extended</remarks>
+        /// <example>4242</example>
+        [DataMember(Name = "thread.id")]
+        public long? ThreadId { get; set; }
+
+    }
+
+    /// <summary>
     /// These fields contain information about a process.<para/>These fields can help you correlate metrics information with a process id/name from a log message.  The `process.pid` often stays in the metric itself and is copied to the global field for correlation.
     /// </summary>
     public class Process 
     {
+        /// <summary>
+        /// Thread property.
+        /// </summary>
+        [DataMember(Name = "thread")]
+        public Thread Thread { get; set; }
+
         /// <summary>
         /// Process id.
         /// </summary>
@@ -1846,14 +1483,6 @@ namespace Elastic
         public string Title { get; set; }
 
         /// <summary>
-        /// Thread ID.
-        /// </summary>
-        /// <remarks>Extended</remarks>
-        /// <example>4242</example>
-        [DataMember(Name = "thread.id")]
-        public long? ThreadId { get; set; }
-
-        /// <summary>
         /// The time the process started.
         /// </summary>
         /// <remarks>Extended</remarks>
@@ -1891,41 +1520,27 @@ namespace Elastic
     public class Server 
     {
         /// <summary>
+        /// Geo nested field.
+        /// <para/>
+        /// Geo fields can carry data about a specific location related to an event.&lt;para/&gt;This geolocation information can be derived from techniques such as Geo IP, or be user-supplied.
+        /// </summary>
+        [DataMember(Name = "geo")]
+        public Geo Geo { get; set; }
+
+        /// <summary>
+        /// User nested field.
+        /// <para/>
+        /// The user fields describe information about the user that is relevant to the event.&lt;para/&gt;Fields can have one entry or multiple entries. If a user has more than one id, provide an array that includes all of them.
+        /// </summary>
+        [DataMember(Name = "user")]
+        public User User { get; set; }
+
+        /// <summary>
         /// Some event server addresses are defined ambiguously. The event will sometimes list an IP, a domain or a unix socket.  You should always store the raw address in the `.address` field.<para/>Then it should be duplicated to `.ip` or `.domain`, depending on which one it is.
         /// </summary>
         /// <remarks>Extended</remarks>
         [DataMember(Name = "address")]
         public string Address { get; set; }
-
-        /// <summary>
-        /// Longitude and latitude.
-        /// </summary>
-        /// <remarks>Core</remarks>
-        /// <example>{ \"lon\": -73.614830, \"lat\": 45.505918 }</example>
-        [DataMember(Name = "geo.location")]
-        public GeoPoint GeoLocation { get; set; }
-
-        /// <summary>
-        /// Unique identifier for the group on the system/platform.
-        /// </summary>
-        /// <remarks>Extended</remarks>
-        [DataMember(Name = "user.group.id")]
-        public string UserGroupId { get; set; }
-
-        /// <summary>
-        /// One or multiple unique identifiers of the user.
-        /// </summary>
-        /// <remarks>Core</remarks>
-        [DataMember(Name = "user.id")]
-        public string UserId { get; set; }
-
-        /// <summary>
-        /// Name of the continent.
-        /// </summary>
-        /// <remarks>Core</remarks>
-        /// <example>North America</example>
-        [DataMember(Name = "geo.continent_name")]
-        public string GeoContinentName { get; set; }
 
         /// <summary>
         /// IP address of the server.<para/>Can be one or multiple IPv4 or IPv6 addresses.
@@ -1935,50 +1550,11 @@ namespace Elastic
         public IPAddress Ip { get; set; }
 
         /// <summary>
-        /// Name of the group.
-        /// </summary>
-        /// <remarks>Extended</remarks>
-        [DataMember(Name = "user.group.name")]
-        public string UserGroupName { get; set; }
-
-        /// <summary>
-        /// Short name or login of the user.
-        /// </summary>
-        /// <remarks>Core</remarks>
-        /// <example>albert</example>
-        [DataMember(Name = "user.name")]
-        public string UserName { get; set; }
-
-        /// <summary>
-        /// Country name.
-        /// </summary>
-        /// <remarks>Core</remarks>
-        /// <example>Canada</example>
-        [DataMember(Name = "geo.country_name")]
-        public string GeoCountryName { get; set; }
-
-        /// <summary>
         /// Port of the server.
         /// </summary>
         /// <remarks>Core</remarks>
         [DataMember(Name = "port")]
         public long? Port { get; set; }
-
-        /// <summary>
-        /// User's full name, if available.
-        /// </summary>
-        /// <remarks>Extended</remarks>
-        /// <example>Albert Einstein</example>
-        [DataMember(Name = "user.full_name")]
-        public string UserFullName { get; set; }
-
-        /// <summary>
-        /// Region name.
-        /// </summary>
-        /// <remarks>Core</remarks>
-        /// <example>Quebec</example>
-        [DataMember(Name = "geo.region_name")]
-        public string GeoRegionName { get; set; }
 
         /// <summary>
         /// MAC address of the server.
@@ -1988,33 +1564,11 @@ namespace Elastic
         public string Mac { get; set; }
 
         /// <summary>
-        /// User email address.
-        /// </summary>
-        /// <remarks>Extended</remarks>
-        [DataMember(Name = "user.email")]
-        public string UserEmail { get; set; }
-
-        /// <summary>
         /// Server domain.
         /// </summary>
         /// <remarks>Core</remarks>
         [DataMember(Name = "domain")]
         public string Domain { get; set; }
-
-        /// <summary>
-        /// City name.
-        /// </summary>
-        /// <remarks>Core</remarks>
-        /// <example>Montreal</example>
-        [DataMember(Name = "geo.city_name")]
-        public string GeoCityName { get; set; }
-
-        /// <summary>
-        /// Unique user hash to correlate information for a user in anonymized form.<para/>Useful if `user.id` or `user.name` contain confidential information and cannot be used.
-        /// </summary>
-        /// <remarks>Extended</remarks>
-        [DataMember(Name = "user.hash")]
-        public string UserHash { get; set; }
 
         /// <summary>
         /// Bytes sent from the server to the client.
@@ -2025,36 +1579,12 @@ namespace Elastic
         public long? Bytes { get; set; }
 
         /// <summary>
-        /// Country ISO code.
-        /// </summary>
-        /// <remarks>Core</remarks>
-        /// <example>CA</example>
-        [DataMember(Name = "geo.country_iso_code")]
-        public string GeoCountryIsoCode { get; set; }
-
-        /// <summary>
-        /// Region ISO code.
-        /// </summary>
-        /// <remarks>Core</remarks>
-        /// <example>CA-QC</example>
-        [DataMember(Name = "geo.region_iso_code")]
-        public string GeoRegionIsoCode { get; set; }
-
-        /// <summary>
         /// Packets sent from the server to the client.
         /// </summary>
         /// <remarks>Core</remarks>
         /// <example>12</example>
         [DataMember(Name = "packets")]
         public long? Packets { get; set; }
-
-        /// <summary>
-        /// User-defined description of a location, at the level of granularity they care about.<para/>Could be the name of their data centers, the floor number, if this describes a local physical entity, city names.<para/>Not typically used in automated geolocation.
-        /// </summary>
-        /// <remarks>Extended</remarks>
-        /// <example>boston-dc</example>
-        [DataMember(Name = "geo.name")]
-        public string GeoName { get; set; }
 
     }
 
@@ -2118,41 +1648,27 @@ namespace Elastic
     public class Source 
     {
         /// <summary>
+        /// Geo nested field.
+        /// <para/>
+        /// Geo fields can carry data about a specific location related to an event.&lt;para/&gt;This geolocation information can be derived from techniques such as Geo IP, or be user-supplied.
+        /// </summary>
+        [DataMember(Name = "geo")]
+        public Geo Geo { get; set; }
+
+        /// <summary>
+        /// User nested field.
+        /// <para/>
+        /// The user fields describe information about the user that is relevant to the event.&lt;para/&gt;Fields can have one entry or multiple entries. If a user has more than one id, provide an array that includes all of them.
+        /// </summary>
+        [DataMember(Name = "user")]
+        public User User { get; set; }
+
+        /// <summary>
         /// Some event source addresses are defined ambiguously. The event will sometimes list an IP, a domain or a unix socket.  You should always store the raw address in the `.address` field.<para/>Then it should be duplicated to `.ip` or `.domain`, depending on which one it is.
         /// </summary>
         /// <remarks>Extended</remarks>
         [DataMember(Name = "address")]
         public string Address { get; set; }
-
-        /// <summary>
-        /// Longitude and latitude.
-        /// </summary>
-        /// <remarks>Core</remarks>
-        /// <example>{ \"lon\": -73.614830, \"lat\": 45.505918 }</example>
-        [DataMember(Name = "geo.location")]
-        public GeoPoint GeoLocation { get; set; }
-
-        /// <summary>
-        /// Unique identifier for the group on the system/platform.
-        /// </summary>
-        /// <remarks>Extended</remarks>
-        [DataMember(Name = "user.group.id")]
-        public string UserGroupId { get; set; }
-
-        /// <summary>
-        /// One or multiple unique identifiers of the user.
-        /// </summary>
-        /// <remarks>Core</remarks>
-        [DataMember(Name = "user.id")]
-        public string UserId { get; set; }
-
-        /// <summary>
-        /// Name of the continent.
-        /// </summary>
-        /// <remarks>Core</remarks>
-        /// <example>North America</example>
-        [DataMember(Name = "geo.continent_name")]
-        public string GeoContinentName { get; set; }
 
         /// <summary>
         /// IP address of the source.<para/>Can be one or multiple IPv4 or IPv6 addresses.
@@ -2162,50 +1678,11 @@ namespace Elastic
         public IPAddress Ip { get; set; }
 
         /// <summary>
-        /// Name of the group.
-        /// </summary>
-        /// <remarks>Extended</remarks>
-        [DataMember(Name = "user.group.name")]
-        public string UserGroupName { get; set; }
-
-        /// <summary>
-        /// Short name or login of the user.
-        /// </summary>
-        /// <remarks>Core</remarks>
-        /// <example>albert</example>
-        [DataMember(Name = "user.name")]
-        public string UserName { get; set; }
-
-        /// <summary>
-        /// Country name.
-        /// </summary>
-        /// <remarks>Core</remarks>
-        /// <example>Canada</example>
-        [DataMember(Name = "geo.country_name")]
-        public string GeoCountryName { get; set; }
-
-        /// <summary>
         /// Port of the source.
         /// </summary>
         /// <remarks>Core</remarks>
         [DataMember(Name = "port")]
         public long? Port { get; set; }
-
-        /// <summary>
-        /// User's full name, if available.
-        /// </summary>
-        /// <remarks>Extended</remarks>
-        /// <example>Albert Einstein</example>
-        [DataMember(Name = "user.full_name")]
-        public string UserFullName { get; set; }
-
-        /// <summary>
-        /// Region name.
-        /// </summary>
-        /// <remarks>Core</remarks>
-        /// <example>Quebec</example>
-        [DataMember(Name = "geo.region_name")]
-        public string GeoRegionName { get; set; }
 
         /// <summary>
         /// MAC address of the source.
@@ -2215,33 +1692,11 @@ namespace Elastic
         public string Mac { get; set; }
 
         /// <summary>
-        /// User email address.
-        /// </summary>
-        /// <remarks>Extended</remarks>
-        [DataMember(Name = "user.email")]
-        public string UserEmail { get; set; }
-
-        /// <summary>
         /// Source domain.
         /// </summary>
         /// <remarks>Core</remarks>
         [DataMember(Name = "domain")]
         public string Domain { get; set; }
-
-        /// <summary>
-        /// City name.
-        /// </summary>
-        /// <remarks>Core</remarks>
-        /// <example>Montreal</example>
-        [DataMember(Name = "geo.city_name")]
-        public string GeoCityName { get; set; }
-
-        /// <summary>
-        /// Unique user hash to correlate information for a user in anonymized form.<para/>Useful if `user.id` or `user.name` contain confidential information and cannot be used.
-        /// </summary>
-        /// <remarks>Extended</remarks>
-        [DataMember(Name = "user.hash")]
-        public string UserHash { get; set; }
 
         /// <summary>
         /// Bytes sent from the source to the destination.
@@ -2252,36 +1707,12 @@ namespace Elastic
         public long? Bytes { get; set; }
 
         /// <summary>
-        /// Country ISO code.
-        /// </summary>
-        /// <remarks>Core</remarks>
-        /// <example>CA</example>
-        [DataMember(Name = "geo.country_iso_code")]
-        public string GeoCountryIsoCode { get; set; }
-
-        /// <summary>
-        /// Region ISO code.
-        /// </summary>
-        /// <remarks>Core</remarks>
-        /// <example>CA-QC</example>
-        [DataMember(Name = "geo.region_iso_code")]
-        public string GeoRegionIsoCode { get; set; }
-
-        /// <summary>
         /// Packets sent from the source to the destination.
         /// </summary>
         /// <remarks>Core</remarks>
         /// <example>12</example>
         [DataMember(Name = "packets")]
         public long? Packets { get; set; }
-
-        /// <summary>
-        /// User-defined description of a location, at the level of granularity they care about.<para/>Could be the name of their data centers, the floor number, if this describes a local physical entity, city names.<para/>Not typically used in automated geolocation.
-        /// </summary>
-        /// <remarks>Extended</remarks>
-        /// <example>boston-dc</example>
-        [DataMember(Name = "geo.name")]
-        public string GeoName { get; set; }
 
     }
 
@@ -2373,11 +1804,12 @@ namespace Elastic
     public class User 
     {
         /// <summary>
-        /// Unique identifier for the group on the system/platform.
+        /// Group nested field.
+        /// <para/>
+        /// The group fields are meant to represent groups that are relevant to the event.
         /// </summary>
-        /// <remarks>Extended</remarks>
-        [DataMember(Name = "group.id")]
-        public string GroupId { get; set; }
+        [DataMember(Name = "group")]
+        public Group Group { get; set; }
 
         /// <summary>
         /// One or multiple unique identifiers of the user.
@@ -2385,13 +1817,6 @@ namespace Elastic
         /// <remarks>Core</remarks>
         [DataMember(Name = "id")]
         public string Id { get; set; }
-
-        /// <summary>
-        /// Name of the group.
-        /// </summary>
-        /// <remarks>Extended</remarks>
-        [DataMember(Name = "group.name")]
-        public string GroupName { get; set; }
 
         /// <summary>
         /// Short name or login of the user.
@@ -2426,10 +1851,39 @@ namespace Elastic
     }
 
     /// <summary>
+    /// Device, property of <see cref="UserAgent" />
+    /// </summary>
+    public class Device
+    {
+        /// <summary>
+        /// Name of the device.
+        /// </summary>
+        /// <remarks>Extended</remarks>
+        /// <example>iPhone</example>
+        [DataMember(Name = "device.name")]
+        public string DeviceName { get; set; }
+
+    }
+
+    /// <summary>
     /// The user_agent fields normally come from a browser request.<para/>They often show up in web service logs coming from the parsed user agent string.
     /// </summary>
     public class UserAgent 
     {
+        /// <summary>
+        /// Os nested field.
+        /// <para/>
+        /// The OS fields contain information about the operating system.
+        /// </summary>
+        [DataMember(Name = "os")]
+        public Os Os { get; set; }
+
+        /// <summary>
+        /// Device property.
+        /// </summary>
+        [DataMember(Name = "device")]
+        public Device Device { get; set; }
+
         /// <summary>
         /// Unparsed version of the user_agent.
         /// </summary>
@@ -2437,14 +1891,6 @@ namespace Elastic
         /// <example>Mozilla/5.0 (iPhone; CPU iPhone OS 12_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/12.0 Mobile/15E148 Safari/604.1</example>
         [DataMember(Name = "original")]
         public string Original { get; set; }
-
-        /// <summary>
-        /// Operating system platform (such centos, ubuntu, windows).
-        /// </summary>
-        /// <remarks>Extended</remarks>
-        /// <example>darwin</example>
-        [DataMember(Name = "os.platform")]
-        public string OsPlatform { get; set; }
 
         /// <summary>
         /// Name of the user agent.
@@ -2455,22 +1901,6 @@ namespace Elastic
         public string Name { get; set; }
 
         /// <summary>
-        /// Operating system name, without the version.
-        /// </summary>
-        /// <remarks>Extended</remarks>
-        /// <example>Mac OS X</example>
-        [DataMember(Name = "os.name")]
-        public string OsName { get; set; }
-
-        /// <summary>
-        /// Operating system name, including the version or code name.
-        /// </summary>
-        /// <remarks>Extended</remarks>
-        /// <example>Mac OS Mojave</example>
-        [DataMember(Name = "os.full")]
-        public string OsFull { get; set; }
-
-        /// <summary>
         /// Version of the user agent.
         /// </summary>
         /// <remarks>Extended</remarks>
@@ -2478,39 +1908,8 @@ namespace Elastic
         [DataMember(Name = "version")]
         public string Version { get; set; }
 
-        /// <summary>
-        /// Name of the device.
-        /// </summary>
-        /// <remarks>Extended</remarks>
-        /// <example>iPhone</example>
-        [DataMember(Name = "device.name")]
-        public string DeviceName { get; set; }
-
-        /// <summary>
-        /// OS family (such as redhat, debian, freebsd, windows).
-        /// </summary>
-        /// <remarks>Extended</remarks>
-        /// <example>debian</example>
-        [DataMember(Name = "os.family")]
-        public string OsFamily { get; set; }
-
-        /// <summary>
-        /// Operating system version as a raw string.
-        /// </summary>
-        /// <remarks>Extended</remarks>
-        /// <example>10.14.1</example>
-        [DataMember(Name = "os.version")]
-        public string OsVersion { get; set; }
-
-        /// <summary>
-        /// Operating system kernel version as a raw string.
-        /// </summary>
-        /// <remarks>Extended</remarks>
-        /// <example>4.4.0-112-generic</example>
-        [DataMember(Name = "os.kernel")]
-        public string OsKernel { get; set; }
-
     }
+
 
     /// <summary>
     /// Elastic Common Schema templates for version 1.0.
