@@ -4,7 +4,7 @@ namespace Generator
 {
     public static class Program
     {
-        private const string DefaultDownloadBranch = "1.0";
+        private const string DefaultDownloadBranch = "1.2";
 
         private static void Main(string[] args)
         {

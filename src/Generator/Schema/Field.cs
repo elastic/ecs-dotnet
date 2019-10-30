@@ -62,6 +62,7 @@ namespace Generator.Schema
                 }
 
                 if (Type == FieldType.Long
+                    || Type == FieldType.Integer
                     || Type == FieldType.Float)
                 {
                     builder.AppendFormat(".Type(NumberType.{0:f})", Type);
@@ -86,6 +87,8 @@ namespace Generator.Schema
                         return "string";
                     case FieldType.Long:
                         return "long?";
+                    case FieldType.Integer:
+                        return "int?";
                     case FieldType.Date:
                         return "DateTimeOffset?";
                     case FieldType.Ip:
@@ -112,6 +115,8 @@ namespace Generator.Schema
                     case FieldType.Keyword:
                         return "Keyword";
                     case FieldType.Long:
+                        return "Number";
+                    case FieldType.Integer:
                         return "Number";
                     case FieldType.Date:
                         return "Date";

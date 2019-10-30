@@ -28,7 +28,7 @@ using Nest;
 namespace Elastic
 {
     /// <summary>
-    /// Elastic Common Schema utilities for version 1.0.
+    /// Elastic Common Schema utilities for version 1.2.
     /// To be used in conjunction with the NEST client.
     /// <para/>
     /// The Elastic Common Schema (ECS) defines a common set of fields for ingesting data into Elasticsearch.
@@ -41,7 +41,7 @@ namespace Elastic
     {
         /// <summary>
         /// Get a Put Index Template Descriptor for use with <see cref="Nest.PutIndexTemplateRequest"/>
-        /// designed for use with ECS schema version 1.0.
+        /// designed for use with ECS schema version 1.2.
         /// </summary>
         /// <param name="name">The name of the index template.</param>
         /// <returns>An instance of <see cref="Nest.PutIndexTemplateDescriptor"/>.</returns>
@@ -72,13 +72,13 @@ namespace Elastic
 
         /// <summary>
         /// Get a type mapping descriptor for use with <see cref="Nest.PutIndexTemplateDescriptor"/>
-        /// designed for use with ECS schema version 1.0.
+        /// designed for use with ECS schema version 1.2.
         /// </summary>
         /// <returns>An instance of <see cref="System.Func{Nest.TypeMappingDescriptor{Elastic.CommonSchema}}{Nest.ITypeMapping}"/>.</returns>
         public static Func<TypeMappingDescriptor<CommonSchema>, ITypeMapping> GetTypeMappingDescriptor()
         {
             return map =>
-                 map.Meta(meta => meta.Add("version", "1.0"))
+                 map.Meta(meta => meta.Add("version", "1.2"))
                     .DateDetection(false)
                     .DynamicTemplates(dynamicTemplate =>
                         dynamicTemplate.DynamicTemplate("strings_as_keyword",
@@ -101,6 +101,10 @@ namespace Elastic
                                     .Keyword(p => p.Name(n => n.Id).IgnoreAbove(1024))
                                     .Keyword(p => p.Name(n => n.EphemeralId).IgnoreAbove(1024))
                             ))
+                            .Object<As>(o =>
+                                o.Properties(a => a
+                                    .Number(p => p.Name(n => n.Number).Type(NumberType.Long))
+                            ))
                             .Object<Client>(o =>
                                 o.Properties(a => a
                                     .Keyword(p => p.Name(n => n.Address).IgnoreAbove(1024))
@@ -108,6 +112,8 @@ namespace Elastic
                                     .Number(p => p.Name(n => n.Port).Type(NumberType.Long))
                                     .Keyword(p => p.Name(n => n.Mac).IgnoreAbove(1024))
                                     .Keyword(p => p.Name(n => n.Domain).IgnoreAbove(1024))
+                                    .Keyword(p => p.Name(n => n.RegisteredDomain).IgnoreAbove(1024))
+                                    .Keyword(p => p.Name(n => n.TopLevelDomain).IgnoreAbove(1024))
                                     .Number(p => p.Name(n => n.Bytes).Type(NumberType.Long))
                                     .Number(p => p.Name(n => n.Packets).Type(NumberType.Long))
                             ))
@@ -131,8 +137,20 @@ namespace Elastic
                                     .Number(p => p.Name(n => n.Port).Type(NumberType.Long))
                                     .Keyword(p => p.Name(n => n.Mac).IgnoreAbove(1024))
                                     .Keyword(p => p.Name(n => n.Domain).IgnoreAbove(1024))
+                                    .Keyword(p => p.Name(n => n.RegisteredDomain).IgnoreAbove(1024))
+                                    .Keyword(p => p.Name(n => n.TopLevelDomain).IgnoreAbove(1024))
                                     .Number(p => p.Name(n => n.Bytes).Type(NumberType.Long))
                                     .Number(p => p.Name(n => n.Packets).Type(NumberType.Long))
+                            ))
+                            .Object<Dns>(o =>
+                                o.Properties(a => a
+                                    .Keyword(p => p.Name(n => n.Type).IgnoreAbove(1024))
+                                    .Keyword(p => p.Name(n => n.Id).IgnoreAbove(1024))
+                                    .Keyword(p => p.Name(n => n.OpCode).IgnoreAbove(1024))
+                                    .Keyword(p => p.Name(n => n.HeaderFlags).IgnoreAbove(1024))
+                                    .Keyword(p => p.Name(n => n.ResponseCode).IgnoreAbove(1024))
+                                    .Object<object>(p => p.Name(n => n.Answers))
+                                    .Ip(p => p.Name(n => n.ResolvedIp))
                             ))
                             .Object<Ecs>(o =>
                                 o.Properties(a => a
@@ -143,10 +161,13 @@ namespace Elastic
                                     .Keyword(p => p.Name(n => n.Id).IgnoreAbove(1024))
                                     .Text(p => p.Name(n => n.Message).Norms(false))
                                     .Keyword(p => p.Name(n => n.Code).IgnoreAbove(1024))
+                                    .Keyword(p => p.Name(n => n.Type).IgnoreAbove(1024))
+                                    .Keyword(p => p.Name(n => n.StackTrace).IgnoreAbove(1024).Index(false).DocValues(false))
                             ))
                             .Object<Event>(o =>
                                 o.Properties(a => a
                                     .Keyword(p => p.Name(n => n.Id).IgnoreAbove(1024))
+                                    .Keyword(p => p.Name(n => n.Code).IgnoreAbove(1024))
                                     .Keyword(p => p.Name(n => n.Kind).IgnoreAbove(1024))
                                     .Keyword(p => p.Name(n => n.Category).IgnoreAbove(1024))
                                     .Keyword(p => p.Name(n => n.Action).IgnoreAbove(1024))
@@ -154,10 +175,12 @@ namespace Elastic
                                     .Keyword(p => p.Name(n => n.Type).IgnoreAbove(1024))
                                     .Keyword(p => p.Name(n => n.Module).IgnoreAbove(1024))
                                     .Keyword(p => p.Name(n => n.Dataset).IgnoreAbove(1024))
+                                    .Keyword(p => p.Name(n => n.Provider).IgnoreAbove(1024))
                                     .Number(p => p.Name(n => n.Severity).Type(NumberType.Long))
                                     .Keyword(p => p.Name(n => n.Original).IgnoreAbove(1024).Index(false).DocValues(false))
                                     .Keyword(p => p.Name(n => n.Hash).IgnoreAbove(1024))
                                     .Number(p => p.Name(n => n.Duration).Type(NumberType.Long))
+                                    .Number(p => p.Name(n => n.Sequence).Type(NumberType.Long))
                                     .Keyword(p => p.Name(n => n.Timezone).IgnoreAbove(1024))
                                     .Date(p => p.Name(n => n.Created))
                                     .Date(p => p.Name(n => n.Start))
@@ -167,6 +190,8 @@ namespace Elastic
                             ))
                             .Object<File>(o =>
                                 o.Properties(a => a
+                                    .Keyword(p => p.Name(n => n.Name).IgnoreAbove(1024))
+                                    .Keyword(p => p.Name(n => n.Directory).IgnoreAbove(1024))
                                     .Keyword(p => p.Name(n => n.Path).IgnoreAbove(1024))
                                     .Keyword(p => p.Name(n => n.TargetPath).IgnoreAbove(1024))
                                     .Keyword(p => p.Name(n => n.Extension).IgnoreAbove(1024))
@@ -181,6 +206,8 @@ namespace Elastic
                                     .Number(p => p.Name(n => n.Size).Type(NumberType.Long))
                                     .Date(p => p.Name(n => n.Mtime))
                                     .Date(p => p.Name(n => n.Ctime))
+                                    .Date(p => p.Name(n => n.Created))
+                                    .Date(p => p.Name(n => n.Accessed))
                             ))
                             .Object<Geo>(o =>
                                 o.Properties(a => a
@@ -197,6 +224,14 @@ namespace Elastic
                                 o.Properties(a => a
                                     .Keyword(p => p.Name(n => n.Id).IgnoreAbove(1024))
                                     .Keyword(p => p.Name(n => n.Name).IgnoreAbove(1024))
+                                    .Keyword(p => p.Name(n => n.Domain).IgnoreAbove(1024))
+                            ))
+                            .Object<Hash>(o =>
+                                o.Properties(a => a
+                                    .Keyword(p => p.Name(n => n.Md5).IgnoreAbove(1024))
+                                    .Keyword(p => p.Name(n => n.Sha1).IgnoreAbove(1024))
+                                    .Keyword(p => p.Name(n => n.Sha256).IgnoreAbove(1024))
+                                    .Keyword(p => p.Name(n => n.Sha512).IgnoreAbove(1024))
                             ))
                             .Object<Host>(o =>
                                 o.Properties(a => a
@@ -206,6 +241,7 @@ namespace Elastic
                                     .Ip(p => p.Name(n => n.Ip))
                                     .Keyword(p => p.Name(n => n.Mac).IgnoreAbove(1024))
                                     .Keyword(p => p.Name(n => n.Type).IgnoreAbove(1024))
+                                    .Number(p => p.Name(n => n.Uptime).Type(NumberType.Long))
                                     .Keyword(p => p.Name(n => n.Architecture).IgnoreAbove(1024))
                             ))
                             .Object<Http>(o =>
@@ -216,6 +252,8 @@ namespace Elastic
                                 o.Properties(a => a
                                     .Keyword(p => p.Name(n => n.Level).IgnoreAbove(1024))
                                     .Keyword(p => p.Name(n => n.Original).IgnoreAbove(1024).Index(false).DocValues(false))
+                                    .Keyword(p => p.Name(n => n.Logger).IgnoreAbove(1024))
+                                    .Object<object>(p => p.Name(n => n.Syslog))
                             ))
                             .Object<Network>(o =>
                                 o.Properties(a => a
@@ -236,6 +274,8 @@ namespace Elastic
                                     .Keyword(p => p.Name(n => n.Mac).IgnoreAbove(1024))
                                     .Ip(p => p.Name(n => n.Ip))
                                     .Keyword(p => p.Name(n => n.Hostname).IgnoreAbove(1024))
+                                    .Keyword(p => p.Name(n => n.Name).IgnoreAbove(1024))
+                                    .Keyword(p => p.Name(n => n.Product).IgnoreAbove(1024))
                                     .Keyword(p => p.Name(n => n.Vendor).IgnoreAbove(1024))
                                     .Keyword(p => p.Name(n => n.Version).IgnoreAbove(1024))
                                     .Keyword(p => p.Name(n => n.SerialNumber).IgnoreAbove(1024))
@@ -255,15 +295,30 @@ namespace Elastic
                                     .Keyword(p => p.Name(n => n.Version).IgnoreAbove(1024))
                                     .Keyword(p => p.Name(n => n.Kernel).IgnoreAbove(1024))
                             ))
+                            .Object<Package>(o =>
+                                o.Properties(a => a
+                                    .Keyword(p => p.Name(n => n.Name).IgnoreAbove(1024))
+                                    .Keyword(p => p.Name(n => n.Version).IgnoreAbove(1024))
+                                    .Keyword(p => p.Name(n => n.Description).IgnoreAbove(1024))
+                                    .Number(p => p.Name(n => n.Size).Type(NumberType.Long))
+                                    .Date(p => p.Name(n => n.Installed))
+                                    .Keyword(p => p.Name(n => n.Path).IgnoreAbove(1024))
+                                    .Keyword(p => p.Name(n => n.Architecture).IgnoreAbove(1024))
+                                    .Keyword(p => p.Name(n => n.Checksum).IgnoreAbove(1024))
+                                    .Keyword(p => p.Name(n => n.InstallScope).IgnoreAbove(1024))
+                                    .Keyword(p => p.Name(n => n.License).IgnoreAbove(1024))
+                            ))
                             .Object<Process>(o =>
                                 o.Properties(a => a
                                     .Number(p => p.Name(n => n.Pid).Type(NumberType.Long))
                                     .Keyword(p => p.Name(n => n.Name).IgnoreAbove(1024))
                                     .Number(p => p.Name(n => n.Ppid).Type(NumberType.Long))
+                                    .Number(p => p.Name(n => n.Pgid).Type(NumberType.Long))
                                     .Keyword(p => p.Name(n => n.Args).IgnoreAbove(1024))
                                     .Keyword(p => p.Name(n => n.Executable).IgnoreAbove(1024))
                                     .Keyword(p => p.Name(n => n.Title).IgnoreAbove(1024))
                                     .Date(p => p.Name(n => n.Start))
+                                    .Number(p => p.Name(n => n.Uptime).Type(NumberType.Long))
                                     .Keyword(p => p.Name(n => n.WorkingDirectory).IgnoreAbove(1024))
                             ))
                             .Object<Related>(o =>
@@ -277,6 +332,8 @@ namespace Elastic
                                     .Number(p => p.Name(n => n.Port).Type(NumberType.Long))
                                     .Keyword(p => p.Name(n => n.Mac).IgnoreAbove(1024))
                                     .Keyword(p => p.Name(n => n.Domain).IgnoreAbove(1024))
+                                    .Keyword(p => p.Name(n => n.RegisteredDomain).IgnoreAbove(1024))
+                                    .Keyword(p => p.Name(n => n.TopLevelDomain).IgnoreAbove(1024))
                                     .Number(p => p.Name(n => n.Bytes).Type(NumberType.Long))
                                     .Number(p => p.Name(n => n.Packets).Type(NumberType.Long))
                             ))
@@ -296,8 +353,19 @@ namespace Elastic
                                     .Number(p => p.Name(n => n.Port).Type(NumberType.Long))
                                     .Keyword(p => p.Name(n => n.Mac).IgnoreAbove(1024))
                                     .Keyword(p => p.Name(n => n.Domain).IgnoreAbove(1024))
+                                    .Keyword(p => p.Name(n => n.RegisteredDomain).IgnoreAbove(1024))
+                                    .Keyword(p => p.Name(n => n.TopLevelDomain).IgnoreAbove(1024))
                                     .Number(p => p.Name(n => n.Bytes).Type(NumberType.Long))
                                     .Number(p => p.Name(n => n.Packets).Type(NumberType.Long))
+                            ))
+                            .Object<Threat>(o =>
+                                o.Properties(a => a
+                                    .Keyword(p => p.Name(n => n.Framework).IgnoreAbove(1024))
+                            ))
+                            .Object<Tracing>(o =>
+                                o.Properties(a => a
+                                    .Keyword(p => p.Name(n => n.Id).IgnoreAbove(1024))
+                                    .Keyword(p => p.Name(n => n.Id).IgnoreAbove(1024))
                             ))
                             .Object<Url>(o =>
                                 o.Properties(a => a
@@ -305,9 +373,12 @@ namespace Elastic
                                     .Keyword(p => p.Name(n => n.Full).IgnoreAbove(1024))
                                     .Keyword(p => p.Name(n => n.Scheme).IgnoreAbove(1024))
                                     .Keyword(p => p.Name(n => n.Domain).IgnoreAbove(1024))
+                                    .Keyword(p => p.Name(n => n.RegisteredDomain).IgnoreAbove(1024))
+                                    .Keyword(p => p.Name(n => n.TopLevelDomain).IgnoreAbove(1024))
                                     .Number(p => p.Name(n => n.Port).Type(NumberType.Long))
                                     .Keyword(p => p.Name(n => n.Path).IgnoreAbove(1024))
                                     .Keyword(p => p.Name(n => n.Query).IgnoreAbove(1024))
+                                    .Keyword(p => p.Name(n => n.Extension).IgnoreAbove(1024))
                                     .Keyword(p => p.Name(n => n.Fragment).IgnoreAbove(1024))
                                     .Keyword(p => p.Name(n => n.Username).IgnoreAbove(1024))
                                     .Keyword(p => p.Name(n => n.Password).IgnoreAbove(1024))
@@ -319,6 +390,7 @@ namespace Elastic
                                     .Keyword(p => p.Name(n => n.FullName).IgnoreAbove(1024))
                                     .Keyword(p => p.Name(n => n.Email).IgnoreAbove(1024))
                                     .Keyword(p => p.Name(n => n.Hash).IgnoreAbove(1024))
+                                    .Keyword(p => p.Name(n => n.Domain).IgnoreAbove(1024))
                             ))
                             .Object<UserAgent>(o =>
                                 o.Properties(a => a
