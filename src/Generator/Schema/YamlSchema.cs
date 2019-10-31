@@ -84,11 +84,6 @@ namespace Generator.Schema
             return Fields.Where(f => Nestings == null || !Nestings.Any(n => f.Key.StartsWith(n))).Select(f => f.Value).OrderBy(f => f.Order);
         }
 
-        public IEnumerable<Field> GetFieldsFlat()
-        {
-            return GetFilteredFields().Where(f => !f.JsonFieldName.Contains("."));
-        }
-
         public List<NestedFields> GetFieldsNested()
         {
             var nestedFields = new List<NestedFields>();
@@ -103,7 +98,7 @@ namespace Generator.Schema
                 }
                 else
                 {
-                    var newRoot = new NestedFields
+                    var newRoot = new NestedFields(this)
                     {
                         ClassName = split.First()
                     };
@@ -131,7 +126,7 @@ namespace Generator.Schema
             }
             else
             {
-                var newRoot = new NestedFields
+                var newRoot = new NestedFields(this)
                 {
                     ClassName = properties.First()
                 };
@@ -149,13 +144,62 @@ namespace Generator.Schema
 
         [JsonIgnore]
         public string DownloadBranch { get; set; }
+        
+        public IEnumerable<Field> GetFieldsFlat()
+        {
+            var filtered = GetFilteredFields().Where(f => !f.JsonFieldName.Contains("."));
+
+            // DNS Answers are handled as child objects
+            filtered = filtered.Where(f => f.FlatName != "dns.answers");
+            
+            // Sys logs are handled as child objects
+            filtered = filtered.Where(f => f.FlatName != "log.syslog");
+
+            return filtered;
+        }
     }
     
     public class NestedFields
     {
-        public string ClassName { get; set; }
-        public List<Field> Fields { get; set; } = new List<Field>();
+        private readonly YamlSchema _schema;
+
+        public NestedFields(YamlSchema schema)
+        {
+            _schema = schema;
+        }
         
+        public string ClassName { get; set; }
+        
+        public string ClassNameType
+        {
+            get
+            {
+                if (_schema.Name == "dns" && ClassName == "Answers")
+                    return FileGenerator.PascalCase(ClassName) + "[]";
+                
+                if (_schema.Name == "log" && ClassName == "Syslog")
+                    return FileGenerator.PascalCase(ClassName) + "[]";
+                
+                return FileGenerator.PascalCase(ClassName);
+            }
+        }
+
+        public List<Field> Fields { get; set; } = new List<Field>();
+
+        public string Description
+        {
+            get
+            {
+                if (_schema.Name == "dns" && ClassName == "Answers")
+                    return _schema.Fields.Single(f => f.Value.FlatName == "dns.answers").Value.DescriptionSanitized;
+                
+                if (_schema.Name == "log" && ClassName == "Syslog")
+                    return _schema.Fields.Single(f => f.Value.FlatName == "log.syslog").Value.DescriptionSanitized;
+                
+                return $"{FileGenerator.PascalCase(ClassName)} property.";
+            }
+        }
+
         public List<NestedFields> Children = new List<NestedFields>();
     }
 }

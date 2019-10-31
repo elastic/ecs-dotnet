@@ -149,7 +149,6 @@ namespace Elastic
                                     .Keyword(p => p.Name(n => n.OpCode).IgnoreAbove(1024))
                                     .Keyword(p => p.Name(n => n.HeaderFlags).IgnoreAbove(1024))
                                     .Keyword(p => p.Name(n => n.ResponseCode).IgnoreAbove(1024))
-                                    .Object<object>(p => p.Name(n => n.Answers))
                                     .Ip(p => p.Name(n => n.ResolvedIp))
                             ))
                             .Object<Ecs>(o =>
@@ -253,7 +252,6 @@ namespace Elastic
                                     .Keyword(p => p.Name(n => n.Level).IgnoreAbove(1024))
                                     .Keyword(p => p.Name(n => n.Original).IgnoreAbove(1024).Index(false).DocValues(false))
                                     .Keyword(p => p.Name(n => n.Logger).IgnoreAbove(1024))
-                                    .Object<object>(p => p.Name(n => n.Syslog))
                             ))
                             .Object<Network>(o =>
                                 o.Properties(a => a

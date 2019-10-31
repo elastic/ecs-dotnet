@@ -81,6 +81,11 @@ namespace Elastic
     {
     foreach (var child in nestedField.Children)
     {
+        if (child.Children.Count > 0)
+        {
+            throw new System.ArgumentException("Template does not support grandchildren fields.");
+        }
+        
 <text>    /// <summary>
     /// @nestedField.ClassName@child.ClassName, property of <see cref="@FileGenerator.PascalCase(schema.Name)@nestedField.ClassName" />
     /// </summary>
@@ -165,10 +170,10 @@ foreach (var nesting in schema.Nestings)
     }
 @foreach (var field in schema.GetFieldsNested())
     {<text>        /// <summary>
-        /// @FileGenerator.PascalCase(field.ClassName) property.
+        /// @Raw(field.Description)
         /// </summary>
         [DataMember(Name = "@Raw(field.ClassName.ToLower())")]
-        public @FileGenerator.PascalCase(schema.Name)@FileGenerator.PascalCase(field.ClassName) @FileGenerator.PascalCase(field.ClassName) { get; set; }
+        public @FileGenerator.PascalCase(schema.Name)@field.ClassNameType @FileGenerator.PascalCase(field.ClassName) { get; set; }
 
 </text>}
 @foreach (var field in schema.GetFieldsFlat())

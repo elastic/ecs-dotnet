@@ -880,10 +880,10 @@ namespace Elastic
         public DnsQuestion Question { get; set; }
 
         /// <summary>
-        /// Answers property.
+        /// An array containing an object for each answer section returned by the server.<para/>The main keys that should be present in these objects are defined by ECS. Records that have more information may contain more keys than what ECS defines.<para/>Not all DNS data sources give all details about DNS answers. At minimum, answer objects must contain the `data` key. If more information is available, map as much of it to ECS as possible, and add any additional fields to the answer objects as custom fields.
         /// </summary>
         [DataMember(Name = "answers")]
-        public DnsAnswers Answers { get; set; }
+        public DnsAnswers[] Answers { get; set; }
 
         /// <summary>
         /// The type of DNS event captured, query or answer.<para/>If your source of DNS events only gives you DNS queries, you should only create dns events of type `dns.type:query`.<para/>If your source of DNS events gives you answers as well, you should create one event per query (optionally as soon as the query is seen). And a second event containing all query details as well as an array of answers.
@@ -924,13 +924,6 @@ namespace Elastic
         /// <example>NOERROR</example>
         [DataMember(Name = "response_code")]
         public string ResponseCode { get; set; }
-
-        /// <summary>
-        /// An array containing an object for each answer section returned by the server.<para/>The main keys that should be present in these objects are defined by ECS. Records that have more information may contain more keys than what ECS defines.<para/>Not all DNS data sources give all details about DNS answers. At minimum, answer objects must contain the `data` key. If more information is available, map as much of it to ECS as possible, and add any additional fields to the answer objects as custom fields.
-        /// </summary>
-        /// <remarks>Extended</remarks>
-        [DataMember(Name = "answers")]
-        public object Answers { get; set; }
 
         /// <summary>
         /// Array containing all IPs seen in `answers.data`.<para/>The `answers` array can be difficult to use, because of the variety of data formats it can contain. Extracting all IP addresses seen in there to `dns.resolved_ip` makes it possible to index them as IP addresses, and makes them easier to visualize and query for.
@@ -1811,10 +1804,10 @@ namespace Elastic
         public LogOrigin Origin { get; set; }
 
         /// <summary>
-        /// Syslog property.
+        /// The Syslog metadata of the event, if the event was transmitted via Syslog. Please see RFCs 5424 or 3164.
         /// </summary>
         [DataMember(Name = "syslog")]
-        public LogSyslog Syslog { get; set; }
+        public LogSyslog[] Syslog { get; set; }
 
         /// <summary>
         /// Original log level of the log event.<para/>If the source of the event provides a log level or textual severity, this is the one that goes in `log.level`. If your source doesn't specify one, you may put your event transport's severity here (e.g. Syslog severity).<para/>Some examples are `warn`, `err`, `i`, `informational`.
@@ -1839,13 +1832,6 @@ namespace Elastic
         /// <example>org.elasticsearch.bootstrap.Bootstrap</example>
         [DataMember(Name = "logger")]
         public string Logger { get; set; }
-
-        /// <summary>
-        /// The Syslog metadata of the event, if the event was transmitted via Syslog. Please see RFCs 5424 or 3164.
-        /// </summary>
-        /// <remarks>Extended</remarks>
-        [DataMember(Name = "syslog")]
-        public object Syslog { get; set; }
 
     }
 
