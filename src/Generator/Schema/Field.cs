@@ -11,6 +11,8 @@ namespace Generator.Schema
     [JsonObject(MemberSerialization.OptIn)]
     public class Field
     {
+        public YamlSchema Schema { get; set; }
+        
         /// <summary>
         ///     Name of the field (required)
         /// </summary>
@@ -25,10 +27,24 @@ namespace Generator.Schema
         {
             get
             {
-                var flatName = FlatName;
-                var split = string.Join(".", flatName.Split('.').Skip(1));
-                return split == string.Empty ? flatName : split;
+                if (string.IsNullOrEmpty(Schema.Prefix))
+                    return FlatName;
+                
+                return TrimStart(FlatName, Schema.Prefix);
             }
+        }
+        
+        public static string TrimStart(string target, string trimString)
+        {
+            if (string.IsNullOrEmpty(trimString)) return target;
+
+            var result = target;
+            while (result.StartsWith(trimString))
+            {
+                result = result.Substring(trimString.Length);
+            }
+
+            return result;
         }
         
         [JsonIgnore]

@@ -2733,9 +2733,9 @@ namespace Elastic
     }
 
     /// <summary>
-    /// Distributed tracing makes it possible to analyze performance throughout a microservice architecture all in one view. This is accomplished by tracing all of the requests - from the initial web request in the front-end service - to queries made through multiple back-end services.
+    /// Trace, property of <see cref="Tracing" />
     /// </summary>
-    public class Tracing : ECSItemBase 
+    public class TracingTrace : ECSItemBase
     {
         /// <summary>
         /// Unique identifier of the trace.<para/>A trace groups multiple events like transactions that belong together. For example, a user request handled by multiple inter-connected services.
@@ -2745,6 +2745,13 @@ namespace Elastic
         [DataMember(Name = "id")]
         public string Id { get; set; }
 
+    }
+
+    /// <summary>
+    /// Transaction, property of <see cref="Tracing" />
+    /// </summary>
+    public class TracingTransaction : ECSItemBase
+    {
         /// <summary>
         /// Unique identifier of the transaction.<para/>A transaction is the highest level of work measured within a service, such as a request to a server.
         /// </summary>
@@ -2752,6 +2759,25 @@ namespace Elastic
         /// <example>00f067aa0ba902b7</example>
         [DataMember(Name = "id")]
         public string Id { get; set; }
+
+    }
+
+    /// <summary>
+    /// Distributed tracing makes it possible to analyze performance throughout a microservice architecture all in one view. This is accomplished by tracing all of the requests - from the initial web request in the front-end service - to queries made through multiple back-end services.
+    /// </summary>
+    public class Tracing : ECSItemBase 
+    {
+        /// <summary>
+        /// Trace property.
+        /// </summary>
+        [DataMember(Name = "trace")]
+        public TracingTrace Trace { get; set; }
+
+        /// <summary>
+        /// Transaction property.
+        /// </summary>
+        [DataMember(Name = "transaction")]
+        public TracingTransaction Transaction { get; set; }
 
     }
 

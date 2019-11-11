@@ -362,8 +362,6 @@ namespace Elastic
                             ))
                             .Object<Tracing>(o =>
                                 o.Properties(a => a
-                                    .Keyword(p => p.Name(n => n.Id).IgnoreAbove(1024))
-                                    .Keyword(p => p.Name(n => n.Id).IgnoreAbove(1024))
                             ))
                             .Object<Url>(o =>
                                 o.Properties(a => a
