@@ -161,6 +161,10 @@ namespace Generator
             return spec.Select(d => d.Value).Select(s =>
             {
                 s.DownloadBranch = downloadBranch;
+                foreach (var (_, field) in s.Fields)
+                {
+                    field.Schema = s;
+                }
                 return s;
             });
         }

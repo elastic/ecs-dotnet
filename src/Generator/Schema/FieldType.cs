@@ -6,6 +6,7 @@ namespace Generator.Schema
     {
         [EnumMember(Value = "keyword")] Keyword,
         [EnumMember(Value = "long")] Long,
+        [EnumMember(Value = "integer")] Integer,
         [EnumMember(Value = "date")] Date,
         [EnumMember(Value = "ip")] Ip,
         [EnumMember(Value = "object")] Object,

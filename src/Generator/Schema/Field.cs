@@ -11,6 +11,8 @@ namespace Generator.Schema
     [JsonObject(MemberSerialization.OptIn)]
     public class Field
     {
+        public YamlSchema Schema { get; set; }
+        
         /// <summary>
         ///     Name of the field (required)
         /// </summary>
@@ -25,10 +27,24 @@ namespace Generator.Schema
         {
             get
             {
-                var flatName = FlatName;
-                var split = string.Join(".", flatName.Split('.').Skip(1));
-                return split == string.Empty ? flatName : split;
+                if (string.IsNullOrEmpty(Schema.Prefix))
+                    return FlatName;
+                
+                return TrimStart(FlatName, Schema.Prefix);
             }
+        }
+        
+        public static string TrimStart(string target, string trimString)
+        {
+            if (string.IsNullOrEmpty(trimString)) return target;
+
+            var result = target;
+            while (result.StartsWith(trimString))
+            {
+                result = result.Substring(trimString.Length);
+            }
+
+            return result;
         }
         
         [JsonIgnore]
@@ -62,6 +78,7 @@ namespace Generator.Schema
                 }
 
                 if (Type == FieldType.Long
+                    || Type == FieldType.Integer
                     || Type == FieldType.Float)
                 {
                     builder.AppendFormat(".Type(NumberType.{0:f})", Type);
@@ -86,6 +103,8 @@ namespace Generator.Schema
                         return "string";
                     case FieldType.Long:
                         return "long?";
+                    case FieldType.Integer:
+                        return "int?";
                     case FieldType.Date:
                         return "DateTimeOffset?";
                     case FieldType.Ip:
@@ -95,7 +114,7 @@ namespace Generator.Schema
                     case FieldType.Float:
                         return "float?";
                     case FieldType.GeoPoint:
-                        return "GeoPoint";
+                        return "Location";
                     default:
                         throw new ArgumentOutOfRangeException();
                 }
@@ -112,6 +131,8 @@ namespace Generator.Schema
                     case FieldType.Keyword:
                         return "Keyword";
                     case FieldType.Long:
+                        return "Number";
+                    case FieldType.Integer:
                         return "Number";
                     case FieldType.Date:
                         return "Date";
