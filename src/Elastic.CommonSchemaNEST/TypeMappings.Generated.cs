@@ -25,19 +25,19 @@ using System.Net;
 using System.Runtime.Serialization;
 using Nest;
 
-namespace Elastic
+namespace Elastic.CommonSchema.Elasticsearch
 {
     /// <summary>
-    /// Elastic Common Schema utilities for version 1.2.
+    /// Utilities for Elastic Common Schema version 1.2.
     /// To be used in conjunction with the NEST client.
     /// <para/>
     /// The Elastic Common Schema (ECS) defines a common set of fields for ingesting data into Elasticsearch.
     /// A common schema helps you correlate data from sources like logs and metrics or IT operations analytics
     /// and security analytics.
     /// <para/>
-    /// https://github.com/elastic/ecs
+    /// See: https://github.com/elastic/ecs
     /// </summary>
-    public class CommonSchemaUtilities
+    public class NESTIndexTemplates
     {
         /// <summary>
         /// Get a Put Index Template Descriptor for use with <see cref="Nest.PutIndexTemplateRequest"/>
@@ -74,8 +74,8 @@ namespace Elastic
         /// Get a type mapping descriptor for use with <see cref="Nest.PutIndexTemplateDescriptor"/>
         /// designed for use with ECS schema version 1.2.
         /// </summary>
-        /// <returns>An instance of <see cref="System.Func{Nest.TypeMappingDescriptor{Elastic.CommonSchema}}{Nest.ITypeMapping}"/>.</returns>
-        public static Func<TypeMappingDescriptor<CommonSchema>, ITypeMapping> GetTypeMappingDescriptor()
+        /// <returns>An instance of <see cref="System.Func{Nest.TypeMappingDescriptor{Elastic.CommonSchema.Base}}{Nest.ITypeMapping}"/>.</returns>
+        public static Func<TypeMappingDescriptor<Base>, ITypeMapping> GetTypeMappingDescriptor()
         {
             return map =>
                  map.Meta(meta => meta.Add("version", "1.2"))
@@ -87,7 +87,7 @@ namespace Elastic
                                     .Mapping(mapping =>
                                         mapping.Keyword(keyword =>
                                             keyword.IgnoreAbove(1024)))))
-                    .Properties<CommonSchema>(properties =>
+                    .Properties<Base>(properties =>
                         properties
                             .Date(p => p.Name(n => n.Timestamp))
                             .Keyword(p => p.Name(n => n.Tags).IgnoreAbove(1024))

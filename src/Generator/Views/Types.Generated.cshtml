@@ -34,20 +34,26 @@ using System.Linq;
 using System.Net;
 using System.Runtime.Serialization;
 
-namespace Elastic
+namespace Elastic.CommonSchema
 {
     /// <summary>
-    /// Elastic Common Schema for version @(Model.YamlSchemas.First().DownloadBranch).
+    /// Elastic Common Schema version @(Model.YamlSchemas.First().DownloadBranch).
     /// <para/>
     /// The Elastic Common Schema (ECS) defines a common set of fields for ingesting data into Elasticsearch.
     /// A common schema helps you correlate data from sources like logs and metrics or IT operations analytics
     /// and security analytics.
     /// <para/>
-    /// https://github.com/elastic/ecs
+    /// See: https://github.com/elastic/ecs
     /// </summary>
-    public class CommonSchema : ECSItemBase
+    public class Base
     {
-    @foreach (var schema in Model.YamlSchemas.Where(m => m.Name != "base"))
+        /// <summary>
+        /// Container for additional metadata against this event.
+        /// </summary>
+        [DataMember(Name = "_metadata")]
+        public IDictionary<string, object> Metadata { get; set; }
+
+@foreach (var schema in Model.YamlSchemas.Where(m => m.Name != "base"))
     {
 <text>        /// <summary>
         /// @Raw(schema.DescriptionSanitized)
@@ -89,7 +95,7 @@ namespace Elastic
 <text>    /// <summary>
     /// @nestedField.ClassName@child.ClassName, property of <see cref="@FileGenerator.PascalCase(schema.Name)@nestedField.ClassName" />
     /// </summary>
-    public class @nestedField.ClassName@child.ClassName : ECSItemBase
+    public class @nestedField.ClassName@child.ClassName
     {
     @foreach (var field in child.Fields)
     {
@@ -114,7 +120,7 @@ namespace Elastic
 <text>    /// <summary>
     /// @nestedField.ClassName, property of <see cref="@FileGenerator.PascalCase(schema.Name)" />
     /// </summary>
-    public class @FileGenerator.PascalCase(schema.Name)@nestedField.ClassName : ECSItemBase
+    public class @FileGenerator.PascalCase(schema.Name)@nestedField.ClassName
     {
 @foreach (var child in nestedField.Children)
     {<text>        /// <summary>
@@ -153,7 +159,7 @@ namespace Elastic
     /// </remarks>
 </text>
     }
-    public class @FileGenerator.PascalCase(schema.Name) : ECSItemBase 
+    public class @FileGenerator.PascalCase(schema.Name) 
     {
     @if (schema.Nestings != null)
     {
@@ -192,19 +198,22 @@ foreach (var nesting in schema.Nestings)
     }
 
 </text>}
+}
 
+namespace Elastic.CommonSchema.Elasticsearch
+{
     /// <summary>
-    /// Elastic Common Schema templates for version @(Model.YamlSchemas.First().DownloadBranch).
-    /// <para/>
-    /// These templates can be run against Elasticsearch to create index templates for ECS version @(Model.YamlSchemas.First().DownloadBranch).
+    /// Elastic Common Schema version @(Model.YamlSchemas.First().DownloadBranch) index templates to be used with Elasticsearch.
     /// </summary>
-    public static class CommonSchemaTemplates
+    public static class IndexTemplates
     {
 @foreach (var template in Model.Templates)
 {<text>        /// <summary>
-        /// ECS Template for Elasticsearch @template.Key
+        /// Elastic Common Schema version @(Model.YamlSchemas.First().DownloadBranch) index template for Elasticsearch version @(template.Key)
+        /// See the Put Index Template API documentation: https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-templates.html
         /// </summary>
-        public static string GetIndexTemplateForElasticsearch@(template.Key)() { return "@Raw(System.Text.RegularExpressions.Regex.Replace(template.Value, @"\r\n?|\n", "").Replace("\"", "\\\""))"; }
+        /// <returns>Index template string that can be used with the Put Index Template API.</returns>
+        public static string GetIndexTemplateForElasticsearch@(template.Key)(string indexPattern = "ecs-*") { return "@Raw(System.Text.RegularExpressions.Regex.Replace(template.Value, @"\r\n?|\n", "").Replace("\"", "\\\"").Replace("ecs-*", "\" + indexPattern + \""))"; }
 
 </text>}
     }

@@ -114,7 +114,7 @@ namespace Generator.Schema
                     case FieldType.Float:
                         return "float?";
                     case FieldType.GeoPoint:
-                        return "GeoPoint";
+                        return "Location";
                     default:
                         throw new ArgumentOutOfRangeException();
                 }
