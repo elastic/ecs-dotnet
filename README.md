@@ -181,6 +181,18 @@ This can then be indexed into Elasticsearch:
 
 Congratulations, you are now using the Elastic Common Schema!
 
+#### A note on the `Metadata` property
+
+The C# `Base` type includes a property called `Metadata` with the signature:
+
+    /// <summary>
+    /// Container for additional metadata against this event.
+    /// </summary>
+    [DataMember(Name = "_metadata")]
+    public IDictionary<string, object> Metadata { get; set; }
+
+This property is not part of the ECS specification, but is included as a means to index supplementary information.
+
 ## Copyright and License
 
 This software is Copyright (c) 2014-2019 by Elasticsearch BV.
