@@ -67,10 +67,9 @@ We ship with different index templates for different major versions of Elasticse
     var template = Elastic.CommonSchema.Elasticsearch.IndexTemplates.GetIndexTemplateForElasticsearch7("ecs-*");
 
     // Send the template to the Elasticsearch server
-    var templateResponse = lowLevelClient.DoRequest<StringResponse>(
-                HttpMethod.PUT, 
-                "_template/ecs-template", 
-                template);
+	var templateResponse = lowLevelClient.Indices.PutTemplateForAll<StringResponse>(
+		"ecs-template", 
+		template);
    
     // Check everything was successful
     Debug.Assert(templateResponse.Success);
