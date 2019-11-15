@@ -95,6 +95,11 @@ namespace Generator.Schema
             {
                 // Special cases.
                 if (Name == "args" && Type == FieldType.Keyword) return "string[]";
+                if (Schema.Name == "dns" && Name == "header_flags") return "string[]";
+                if (Schema.Name == "dns" && Name == "resolved_ip") return "string[]";
+                if (Schema.Name == "user" && FlatName == "user.id") return "string[]";
+                if (Schema.Name == "base" && Name == "tags") return "string[]";
+                if (Schema.Name == "base" && Name == "labels") return "IDictionary<string, object>";
 
                 switch (Type)
                 {
@@ -108,7 +113,7 @@ namespace Generator.Schema
                     case FieldType.Date:
                         return "DateTimeOffset?";
                     case FieldType.Ip:
-                        return "IPAddress";
+                        return "string";
                     case FieldType.Object:
                         return "object";
                     case FieldType.Float:

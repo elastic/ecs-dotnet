@@ -91,7 +91,7 @@ namespace Elastic.CommonSchema.Elasticsearch
                         properties
                             .Date(p => p.Name(n => n.Timestamp))
                             .Keyword(p => p.Name(n => n.Tags).IgnoreAbove(1024))
-                            .Object<object>(p => p.Name(n => n.Labels))
+                            .Object<IDictionary<string, object>>(p => p.Name(n => n.Labels))
                             .Text(p => p.Name(n => n.Message).Norms(false))
                             .Object<Agent>(o =>
                                 o.Properties(a => a

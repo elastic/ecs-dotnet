@@ -249,7 +249,7 @@ namespace Elastic.CommonSchema
         /// <remarks>Core</remarks>
         /// <example>[\"production\", \"env2\"]</example>
         [DataMember(Name = "tags")]
-        public string Tags { get; set; }
+        public string[] Tags { get; set; }
 
         /// <summary>
         /// Custom key/value pairs.<para/>Can be used to add meta information to events. Should not contain nested objects. All values are stored as keyword.<para/>Example: `docker` and `k8s` labels.
@@ -257,7 +257,7 @@ namespace Elastic.CommonSchema
         /// <remarks>Core</remarks>
         /// <example>{"application":"foo-bar","env":"production"}</example>
         [DataMember(Name = "labels")]
-        public object Labels { get; set; }
+        public IDictionary<string, object> Labels { get; set; }
 
         /// <summary>
         /// For log events the message field contains the log message, optimized for viewing in a log viewer.<para/>For structured logs without an original message field, other fields can be concatenated to form a human-readable summary of the event.<para/>If multiple messages exist, they can be combined into one message.
@@ -365,7 +365,7 @@ namespace Elastic.CommonSchema
         /// </summary>
         /// <remarks>Extended</remarks>
         [DataMember(Name = "ip")]
-        public IPAddress Ip { get; set; }
+        public string Ip { get; set; }
 
         /// <summary>
         /// Translated port of source based NAT sessions (e.g. internal client to internet).<para/>Typically connections traversing load balancers, firewalls, or routers.
@@ -423,7 +423,7 @@ namespace Elastic.CommonSchema
         /// </summary>
         /// <remarks>Core</remarks>
         [DataMember(Name = "ip")]
-        public IPAddress Ip { get; set; }
+        public string Ip { get; set; }
 
         /// <summary>
         /// Port of the client.
@@ -657,7 +657,7 @@ namespace Elastic.CommonSchema
         /// </summary>
         /// <remarks>Extended</remarks>
         [DataMember(Name = "ip")]
-        public IPAddress Ip { get; set; }
+        public string Ip { get; set; }
 
         /// <summary>
         /// Port the source session is translated to by NAT Device.<para/>Typically used with load balancers, firewalls, or routers.
@@ -715,7 +715,7 @@ namespace Elastic.CommonSchema
         /// </summary>
         /// <remarks>Core</remarks>
         [DataMember(Name = "ip")]
-        public IPAddress Ip { get; set; }
+        public string Ip { get; set; }
 
         /// <summary>
         /// Port of the destination.
@@ -921,7 +921,7 @@ namespace Elastic.CommonSchema
         /// <remarks>Extended</remarks>
         /// <example>["RD","RA"]</example>
         [DataMember(Name = "header_flags")]
-        public string HeaderFlags { get; set; }
+        public string[] HeaderFlags { get; set; }
 
         /// <summary>
         /// The DNS response code.
@@ -937,7 +937,7 @@ namespace Elastic.CommonSchema
         /// <remarks>Extended</remarks>
         /// <example>["10.10.10.10","10.10.10.11"]</example>
         [DataMember(Name = "resolved_ip")]
-        public IPAddress ResolvedIp { get; set; }
+        public string[] ResolvedIp { get; set; }
 
     }
 
@@ -1508,7 +1508,7 @@ namespace Elastic.CommonSchema
         /// </summary>
         /// <remarks>Core</remarks>
         [DataMember(Name = "ip")]
-        public IPAddress Ip { get; set; }
+        public string Ip { get; set; }
 
         /// <summary>
         /// Host mac address.
@@ -1908,7 +1908,7 @@ namespace Elastic.CommonSchema
         /// <remarks>Core</remarks>
         /// <example>192.1.1.2</example>
         [DataMember(Name = "forwarded_ip")]
-        public IPAddress ForwardedIp { get; set; }
+        public string ForwardedIp { get; set; }
 
         /// <summary>
         /// A hash of source and destination IPs and ports, as well as the protocol used in a communication. This is a tool-agnostic standard to identify flows.<para/>Learn more at https://github.com/corelight/community-id-spec.
@@ -1969,7 +1969,7 @@ namespace Elastic.CommonSchema
         /// </summary>
         /// <remarks>Core</remarks>
         [DataMember(Name = "ip")]
-        public IPAddress Ip { get; set; }
+        public string Ip { get; set; }
 
         /// <summary>
         /// Hostname of the observer.
@@ -2320,7 +2320,7 @@ namespace Elastic.CommonSchema
         /// </summary>
         /// <remarks>Extended</remarks>
         [DataMember(Name = "ip")]
-        public IPAddress Ip { get; set; }
+        public string Ip { get; set; }
 
     }
 
@@ -2334,7 +2334,7 @@ namespace Elastic.CommonSchema
         /// </summary>
         /// <remarks>Extended</remarks>
         [DataMember(Name = "ip")]
-        public IPAddress Ip { get; set; }
+        public string Ip { get; set; }
 
         /// <summary>
         /// Translated port of destination based NAT sessions (e.g. internet to private DMZ)<para/>Typically used with load balancers, firewalls, or routers.
@@ -2392,7 +2392,7 @@ namespace Elastic.CommonSchema
         /// </summary>
         /// <remarks>Core</remarks>
         [DataMember(Name = "ip")]
-        public IPAddress Ip { get; set; }
+        public string Ip { get; set; }
 
         /// <summary>
         /// Port of the server.
@@ -2534,7 +2534,7 @@ namespace Elastic.CommonSchema
         /// </summary>
         /// <remarks>Extended</remarks>
         [DataMember(Name = "ip")]
-        public IPAddress Ip { get; set; }
+        public string Ip { get; set; }
 
         /// <summary>
         /// Translated port of source based NAT sessions. (e.g. internal client to internet)<para/>Typically used with load balancers, firewalls, or routers.
@@ -2592,7 +2592,7 @@ namespace Elastic.CommonSchema
         /// </summary>
         /// <remarks>Core</remarks>
         [DataMember(Name = "ip")]
-        public IPAddress Ip { get; set; }
+        public string Ip { get; set; }
 
         /// <summary>
         /// Port of the source.
@@ -2911,7 +2911,7 @@ namespace Elastic.CommonSchema
         /// </summary>
         /// <remarks>Core</remarks>
         [DataMember(Name = "id")]
-        public string Id { get; set; }
+        public string[] Id { get; set; }
 
         /// <summary>
         /// Short name or login of the user.
