@@ -46,49 +46,7 @@ module Release =
 
     let private nugetPackMain (_:DotNetProject) nugetId nuspec properties version = 
         pack nuspec nugetId properties version
-        
-    let private nugetPackVersionedUnfiltered (p:DotNetProject) nugetId nuspec properties version =
-        let currentMajorVersion = currentMajorVersion version
-        let newId = sprintf "%s.v%s" nugetId currentMajorVersion;
-        let nuspecVersioned = sprintf @"build/%s.nuspec" newId
-            
-        let xName n = XName.op_Implicit n
-        use stream = File.OpenRead <| nuspec 
-        let doc = XDocument.Load(stream) 
-        let nsManager = new XmlNamespaceManager(doc.CreateNavigator().NameTable);
-        nsManager.AddNamespace("x", "http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd")
 
-        doc.XPathSelectElement("/x:package/x:metadata/x:id", nsManager).Value <- newId
-        let titleNode = doc.XPathSelectElement("/x:package/x:metadata/x:title", nsManager) 
-        titleNode.Value <- sprintf "%s.x namespaced package, can be installed alongside %s" currentMajorVersion nugetId
-        let descriptionNode = doc.XPathSelectElement("/x:package/x:metadata/x:description", nsManager) 
-        descriptionNode.Value <- sprintf "%s.x namespaced package, can be installed alongside %s" currentMajorVersion nugetId
-        let iconNode = doc.XPathSelectElement("/x:package/x:metadata/x:iconUrl", nsManager) 
-        iconNode.Value <- iconNode.Value.Replace("icon", "icon-aux")
-        let xmlConfig = sprintf "/x:package//x:file[contains(@src, '%s.xml')]" p.Name
-        doc.XPathSelectElements(xmlConfig, nsManager).Remove();
-
-        let dll n = sprintf "%s.dll" n
-        let rewriteDllFile name = 
-            let d = dll name
-            let r = (dll (p.Versioned name (Some currentMajorVersion)))
-            let x = sprintf "/x:package//x:file[contains(@src, '%s')]" d
-            let dllNodes = doc.XPathSelectElements(x, nsManager)
-            dllNodes |> Seq.iter (fun e -> 
-                let src = e.Attribute(xName "src");
-                src.Value <- src.Value.Replace(d, r)
-            )
-
-        match p with 
-        | Project CommonSchema ->
-            rewriteDllFile p.Name
-            ignore()
-        | _ -> ignore()
-        doc.Save(nuspecVersioned) 
-
-        pack nuspecVersioned newId properties version 
-        File.Delete nuspecVersioned 
-    
     let private packProjects version callback  =
         Directory.CreateDirectory Paths.NugetOutput |> ignore
             
@@ -104,11 +62,6 @@ module Release =
 
             callback p nugetId nuspec properties version
         )
-        
-    let private nugetPackVersioned (p:DotNetProject) nugetId nuspec properties version =
-        match p with
-        | _ -> nugetPackVersionedUnfiltered p nugetId nuspec properties version
-            
-    let NugetPack (ArtifactsVersion(version)) = packProjects version nugetPackMain 
 
-    let NugetPackVersioned (ArtifactsVersion(version)) = packProjects version nugetPackVersioned
+    let NugetPack (ArtifactsVersion(version)) = packProjects version nugetPackMain
+

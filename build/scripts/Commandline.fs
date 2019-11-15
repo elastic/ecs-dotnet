@@ -48,9 +48,7 @@ Targets:
     let isMono =
         RuntimeInformation.IsOSPlatform(OSPlatform.Linux) || 
         RuntimeInformation.IsOSPlatform(System.Runtime.InteropServices.OSPlatform.OSX)
-        
-    let runningOnCi = Environment.hasEnvironVar "TF_BUILD" || Environment.hasEnvironVar "APPVEYOR_BUILD_VERSION"
-    
+
     let parse (args: string list) =
         
         let target = 

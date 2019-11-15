@@ -13,7 +13,6 @@
     <Compile Include="Versioning.fs" />
     <Compile Include="Releasing.fs" />
     <Compile Include="ReleaseNotes.fs" />
-    <Compile Include="XmlDocPatcher.fs" />
     <Compile Include="Building.fs" />
     <Compile Include="Differ.fs" />
     <Compile Include="Targets.fs" />
@@ -22,7 +21,6 @@
     <Content Include="..\..\build.sh"><Link>build.sh</Link></Content>
     <Content Include="..\..\build.bat"><Link>build.bat</Link></Content>
     <Content Include="..\..\appveyor.yml"><Link>appveyor.yml</Link></Content>
-    <Content Include="..\..\azure-pipelines.yml"><Link>azure-pipelines.yml</Link></Content>
   </ItemGroup>
   <!-- Type providers currently can't run inside the .NET Core 2.0 hosted compiler, see https://github.com/Microsoft/visualfsharp/pull/3658#issuecomment-334773415 -->
   <PropertyGroup>

@@ -47,8 +47,6 @@ module Main =
 
         target "nuget-pack" <| fun _ -> Release.NugetPack artifactsVersion
 
-        conditional (parsed.Target = "canary") "nuget-pack-versioned" <| fun _ -> Release.NugetPackVersioned artifactsVersion
-
         conditional (parsed.Target <> "canary") "generate-release-notes" <| fun _ -> ReleaseNotes.GenerateNotes buildVersions 
 
         target "validate-artifacts" <| fun _ -> Versioning.ValidateArtifacts artifactsVersion
@@ -62,7 +60,7 @@ module Main =
         command "canary" [ "version"; "release";] <| fun _ -> printfn "Finished Release Build %O" artifactsVersion
 
         command "release" [ 
-           "build"; "nuget-pack"; "nuget-pack-versioned"; "validate-artifacts"; "generate-release-notes"
+           "build"; "nuget-pack"; "validate-artifacts"; "generate-release-notes"
         ] (fun _ -> printfn "Finished Release Build %O" artifactsVersion)
 
         command "diff" [ "clean"; ] <| fun _ -> Differ.Run parsed
