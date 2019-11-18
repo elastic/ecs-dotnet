@@ -22,7 +22,7 @@ All branches push new nuget packages on successful CI builds to https://ci.appve
 
 The version of the package matches the published ECS schema version, with the same corresponding branch names.
 
-- Nested Schema *(C# types generated from this resource)*: `https://github.com/elastic/ecs/blob/{version}/generated/ecs/ecs_nested.yml`
+- Nested Schema *(C# types generated from this resource)*: `https://github.com/elastic/ecs/blob/v{version}/generated/ecs/ecs_nested.yml`
 - .NET types: `https://github.com/elastic/ecs-dotnet/tree/{version}`
 
 Where `{version}` is the ECS schema version, e.g. `1.2.0`.
