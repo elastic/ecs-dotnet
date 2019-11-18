@@ -25,13 +25,13 @@ The version of the package matches the published ECS schema version, with the sa
 - Nested Schema *(C# types generated from this resource)*: `https://github.com/elastic/ecs/blob/{version}/generated/ecs/ecs_nested.yml`
 - .NET types: `https://github.com/elastic/ecs-dotnet/tree/{version}`
 
-Where `{version}` is the ECS schema version, e.g. `1.2`.
+Where `{version}` is the ECS schema version, e.g. `1.2.0`.
 
 ### Further Compatibility Clarifications
 
 The version numbers of the nuget package must match the *exact* version of the ECS schema used within Elasticsearch.
 
-Attempting to use mismatched versions, for example; a nuget package with version `1.2` against an Elasticsearch index configured to use an ECS template with version `1.1` will result in indexing and data problems.
+Attempting to use mismatched versions, for example; a nuget package with version `1.2.0` against an Elasticsearch index configured to use an ECS template with version `1.1.0` will result in indexing and data problems.
 
 ## Getting started
 
