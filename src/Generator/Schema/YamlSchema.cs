@@ -144,7 +144,10 @@ namespace Generator.Schema
 
         [JsonIgnore]
         public string DownloadBranch { get; set; }
-        
+
+        [JsonIgnore]
+        public string FullVersion => DownloadBranch + ".0";
+
         public IEnumerable<Field> GetFieldsFlat()
         {
             var filtered = GetFilteredFields().Where(f => !f.JsonFieldName.Contains("."));

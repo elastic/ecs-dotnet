@@ -28,7 +28,7 @@ using Nest;
 namespace Elastic.CommonSchema.Elasticsearch
 {
     /// <summary>
-    /// Utilities for Elastic Common Schema version 1.2.
+    /// Utilities for Elastic Common Schema version 1.2.0
     /// To be used in conjunction with the NEST client.
     /// <para/>
     /// The Elastic Common Schema (ECS) defines a common set of fields for ingesting data into Elasticsearch.
@@ -41,7 +41,7 @@ namespace Elastic.CommonSchema.Elasticsearch
     {
         /// <summary>
         /// Get a Put Index Template Descriptor for use with <see cref="Nest.PutIndexTemplateRequest"/>
-        /// designed for use with ECS schema version 1.2.
+        /// designed for use with Elastic Common Schema version 1.2.0
         /// </summary>
         /// <param name="name">The name of the index template.</param>
         /// <returns>An instance of <see cref="Nest.PutIndexTemplateDescriptor"/>.</returns>
@@ -72,13 +72,13 @@ namespace Elastic.CommonSchema.Elasticsearch
 
         /// <summary>
         /// Get a type mapping descriptor for use with <see cref="Nest.PutIndexTemplateDescriptor"/>
-        /// designed for use with ECS schema version 1.2.
+        /// designed for use with Elastic Common Schema version 1.2.0
         /// </summary>
         /// <returns>An instance of <see cref="System.Func{Nest.TypeMappingDescriptor{Elastic.CommonSchema.Base}}{Nest.ITypeMapping}"/>.</returns>
         public static Func<TypeMappingDescriptor<Base>, ITypeMapping> GetTypeMappingDescriptor()
         {
             return map =>
-                 map.Meta(meta => meta.Add("version", "1.2"))
+                 map.Meta(meta => meta.Add("version", "1.2.0"))
                     .DateDetection(false)
                     .DynamicTemplates(dynamicTemplate =>
                         dynamicTemplate.DynamicTemplate("strings_as_keyword",
