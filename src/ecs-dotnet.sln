@@ -17,6 +17,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Elastic.CommonSchema", "Ela
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Elastic.CommonSchemaNEST", "Elastic.CommonSchemaNEST\Elastic.CommonSchemaNEST.csproj", "{2A8F9106-B4FD-4721-B29D-24B93F72F101}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Elastic.CommonSchema.Serilog", "Elastic.CommonSchema.Serilog\Elastic.CommonSchema.Serilog.csproj", "{45BC8315-6AD6-4F3C-B590-7B52D19ED401}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -35,5 +37,9 @@ Global
 		{2A8F9106-B4FD-4721-B29D-24B93F72F101}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2A8F9106-B4FD-4721-B29D-24B93F72F101}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2A8F9106-B4FD-4721-B29D-24B93F72F101}.Release|Any CPU.Build.0 = Release|Any CPU
+		{45BC8315-6AD6-4F3C-B590-7B52D19ED401}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{45BC8315-6AD6-4F3C-B590-7B52D19ED401}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{45BC8315-6AD6-4F3C-B590-7B52D19ED401}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{45BC8315-6AD6-4F3C-B590-7B52D19ED401}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

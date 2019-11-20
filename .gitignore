@@ -76,3 +76,4 @@ project.lock.json
 .idea/
 *.sln.iml
 /src/.vs/restore.dg
+src/packages/
