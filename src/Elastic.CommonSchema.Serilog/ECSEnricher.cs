@@ -113,10 +113,26 @@ namespace Elastic.CommonSchema.Serilog
                 Server = GetServer(e, request),
                 Url = GetUrl(request),
                 User = GetUser(currentUser),
-                UserAgent = GetUserAgent(request)
+                UserAgent = GetUserAgent(request),
+                Metadata = GetMetadata(e)
             };
 
             return ecsEvent;
+        }
+
+        private static IDictionary<string, object> GetMetadata(LogEvent logEvent)
+        {
+            return logEvent.Properties.ContainsKey("ActionPayload")
+                ? (logEvent.Properties["ActionPayload"] as SequenceValue)?.Elements
+                .Select(x => x.ToString()
+                    .Replace("\"", string.Empty)
+                    .Replace("\"", string.Empty)
+                    .Replace("[", string.Empty)
+                    .Replace("]", string.Empty)
+                    .Split(','))
+                .Select(value => new { Key = value[0].Trim(), Value = value[1].Trim() })
+                .ToDictionary(e => e.Key, e => e.Value as object)
+                : null;
         }
 
         private static UserAgent GetUserAgent(System.Web.HttpRequest request)
