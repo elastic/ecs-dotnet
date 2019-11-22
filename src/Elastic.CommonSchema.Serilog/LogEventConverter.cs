@@ -13,85 +13,11 @@ using Serilog.Events;
 namespace Elastic.CommonSchema.Serilog
 {
     /// <summary>
-    /// Elastic Common Schema Enricher that reformats the log message to incorporate.
-    /// https://github.com/serilog/serilog/wiki/Configuration-Basics#enrichers
+    /// Elastic Common Schema converter for LogEvent
     /// </summary>
-    public class ECSEnricher : ILogEventEnricher
+    public class LogEventConverter
     {
-        public void Enrich(LogEvent logEvent, ILogEventPropertyFactory propertyFactory)
-        {
-            if (logEvent == null) throw new ArgumentNullException(nameof(logEvent));
-
-            var ecsProperties = ConvertToEcs(logEvent, propertyFactory);
-
-            // Remove existing properties
-            foreach (var property in logEvent.Properties.Select(x => x.Key).ToList())
-                logEvent.RemovePropertyIfPresent(property);
-
-            // Add the ECS properties
-            foreach (var property in ecsProperties.OrderBy(x => x.Key))
-                logEvent.AddPropertyIfAbsent(property.Value);
-        }
-
-        private static Dictionary<string, LogEventProperty> ConvertToEcs(LogEvent e,
-            ILogEventPropertyFactory propertyFactory)
-        {
-            var ecsModel = ConvertToEcs(e);
-            var properties = MapToDictionary(ecsModel, null, propertyFactory);
-            return properties;
-        }
-
-        private static Dictionary<string, LogEventProperty> MapToDictionary(object source, string name,
-            ILogEventPropertyFactory propertyFactory)
-        {
-            var dictionary = new Dictionary<string, LogEventProperty>();
-            MapToDictionaryInternal(dictionary, source, name, propertyFactory);
-            return dictionary;
-        }
-
-        private static void MapToDictionaryInternal(
-            IDictionary<string, LogEventProperty> dictionary, object source, string name,
-            ILogEventPropertyFactory propertyFactory)
-        {
-            var properties = source.GetType().GetProperties();
-            foreach (var p in properties)
-            {
-                var value = p.GetValue(source, null);
-                if (value == null) continue;
-
-                var key = string.IsNullOrEmpty(name) ? p.Name : $"{name}.{p.Name}";
-
-                var valueType = value.GetType();
-
-                if (valueType.IsPrimitive || valueType == typeof(string) ||
-                    valueType == typeof(DateTime) || valueType == typeof(DateTimeOffset))
-                {
-                    dictionary[key] = propertyFactory.CreateProperty(key, value);
-                }
-                else if (value is IEnumerable enumerable)
-                {
-                    var index = 0;
-                    foreach (var o in enumerable)
-                    {
-                        if (o is string || o is DateTime || o is DateTimeOffset)
-                        {
-                            dictionary[$"{key}[{index}]"] = propertyFactory.CreateProperty($"{key}[{index}]", o);
-                            index++;
-                            continue;
-                        }
-
-                        MapToDictionaryInternal(dictionary, o, key + "[" + index + "]", propertyFactory);
-                        index++;
-                    }
-                }
-                else
-                {
-                    MapToDictionaryInternal(dictionary, value, key, propertyFactory);
-                }
-            }
-        }
-
-        private static Base ConvertToEcs(LogEvent e)
+        public static Base ConvertToEcs(LogEvent e)
         {
             var request = HttpContext.Current?.Request;
             var response = HttpContext.Current?.Response;
@@ -101,8 +27,8 @@ namespace Elastic.CommonSchema.Serilog
 
             var ecsEvent = new Base
             {
-                Ecs = new Ecs {Version = "1.2.0"},
                 Timestamp = e.Timestamp,
+                Ecs = new Ecs { Version = Base.Version },
                 Log = GetLog(e, exceptions),
                 Agent = GetAgent(e),
                 Client = GetClient(request, currentUser),
@@ -122,82 +48,115 @@ namespace Elastic.CommonSchema.Serilog
 
         private static IDictionary<string, object> GetMetadata(LogEvent logEvent)
         {
-            return logEvent.Properties.ContainsKey("ActionPayload")
-                ? (logEvent.Properties["ActionPayload"] as SequenceValue)?.Elements
-                .Select(x => x.ToString()
-                    .Replace("\"", string.Empty)
-                    .Replace("\"", string.Empty)
-                    .Replace("[", string.Empty)
-                    .Replace("]", string.Empty)
-                    .Split(','))
-                .Select(value => new { Key = value[0].Trim(), Value = value[1].Trim() })
-                .ToDictionary(e => e.Key, e => e.Value as object)
-                : null;
+            var dict = new Dictionary<string, object>();
+
+            // Add any MVC action information
+            if (logEvent.Properties.TryGetValue("ActionPayload", out var actionPayload))
+            {
+                foreach (var item in (actionPayload as SequenceValue)?.Elements
+                                      .Select(x => x.ToString()
+                                          .Replace("\"", string.Empty)
+                                          .Replace("\"", string.Empty)
+                                          .Replace("[", string.Empty)
+                                          .Replace("]", string.Empty)
+                                          .Split(','))
+                                      .Select(value => new {Key = value[0].Trim(), Value = value[1].Trim()}))
+                {
+                    dict.Add(item.Key, item.Value);
+                }
+            }
+
+            foreach (var logEventPropertyValue in logEvent.Properties)
+            {
+                if (logEventPropertyValue.Value is SequenceValue values)
+                {
+                    dict.Add(logEventPropertyValue.Key, values.Elements.Select(e => e.ToString()).ToArray());
+                    continue;
+                }
+                
+                dict.Add(logEventPropertyValue.Key, logEventPropertyValue.Value.ToString());
+            }
+                    
+                
+
+            return dict;
         }
 
         private static UserAgent GetUserAgent(System.Web.HttpRequest request)
         {
+            if (request == null)
+                return null;
+            
             return new UserAgent
             {
-                Device = new UserAgentDevice
-                {
-                    Name = request?.Browser?.MobileDeviceModel
-                },
-                Name = request?.UserAgent,
-                Original = request?.UserAgent,
-                Version = request?.Browser?.Version
+                Device = request.Browser != null
+                            ? new UserAgentDevice
+                            {
+                                Name = request.Browser?.MobileDeviceModel
+                            }
+                            : null,
+                Name = request.UserAgent,
+                Original = request.UserAgent,
+                Version = request.Browser?.Version
             };
         }
 
         private static User GetUser(IPrincipal currentUser)
         {
-            return string.IsNullOrEmpty(currentUser?.Identity?.Name)
-                ? null
-                : new User
-                {
-                    Id = new[] {currentUser?.Identity?.Name},
-                    Name = currentUser?.Identity?.Name,
-                    Email = currentUser?.Identity?.Name
-                };
+            if (currentUser?.Identity == null || string.IsNullOrEmpty(currentUser.Identity.Name))
+                return null;
+
+            return new User
+            {
+                Id = new[] { currentUser.Identity.Name },
+                Name = currentUser.Identity.Name
+            };
         }
 
         private static Url GetUrl(System.Web.HttpRequest request)
         {
+            if (request == null)
+                return null;
+            
             return new Url
             {
-                Original = request?.RawUrl,
-                Full = request?.Url.ToString(),
-                Path = request?.Path,
-                Scheme = request?.Url.Scheme,
-                Query = request?.Url?.Query,
-                Domain = request?.Url?.Authority,
-                Username = request?.LogonUserIdentity?.Name,
-                Port = request?.Url?.Port ?? 0
+                Original = request.RawUrl,
+                Full = request.Url.ToString(),
+                Path = request.Path,
+                Scheme = request.Url.Scheme,
+                Query = request.Url.Query,
+                Domain = request.Url.Authority,
+                Username = request.LogonUserIdentity?.Name,
+                Port = request.Url.Port
             };
         }
 
         private static Server GetServer(LogEvent e, System.Web.HttpRequest request)
         {
+            if (request == null)
+                return null;
+
+            var hasHost = e.Properties.TryGetValue("Host", out var host);
+            
             return new Server
             {
-                Domain = request?.Url?.Authority,
+                Domain = request.Url.Authority,
                 User = e.Properties.TryGetValue("EnvironmentUserName", out var environmentUserName)
                     ? new User
                     {
                         Name = environmentUserName.ToString()
                     }
                     : null,
-                Address = e.Properties.ContainsKey("Host")
-                    ? e.Properties["Host"].ToString()
-                    : null,
-                Ip = e.Properties.ContainsKey("Host")
-                    ? e.Properties["Host"].ToString()
-                    : null
+                Address = hasHost ? host.ToString() : null,
+                Ip = hasHost ? host.ToString() : null
             };
         }
 
         private static Process GetProcess(Thread currentThread)
         {
+            if (currentThread == null)
+                return null;
+            
             return new Process
             {
                 Title = currentThread.Name,
@@ -212,29 +171,36 @@ namespace Elastic.CommonSchema.Serilog
 
         private static Http GetHttp(System.Web.HttpRequest request, System.Web.HttpResponse response)
         {
+            if (request == null && response == null)
+                return null;
+            
             return new Http
             {
-                Request = new HttpRequest
-                {
-                    Method = request?.HttpMethod,
-                    Bytes = request?.TotalBytes ?? 0,
-                    Body = new RequestBody
+                Request = request != null 
+                    ? new HttpRequest
                     {
-                        Bytes = request?.TotalBytes ?? 0,
-                        Content = request?.InputStream.ToString()
-                    },
-                    Referrer = request?.UrlReferrer?.ToString()
-                },
-                Response = new HttpResponse
-                {
-                    // Bytes = 0, // response?.OutputStream.Length ?? 0,
-                    StatusCode = response?.StatusCode ?? 0,
-                    Body = new ResponseBody
-                    {
-                        // Bytes = 0, //response?.OutputStream.Length ?? 0,
-                        Content = response?.OutputStream.ToString()
+                        Method = request.HttpMethod,
+                        Bytes = request.TotalBytes,
+                        Body = new RequestBody
+                        {
+                            Bytes = request.TotalBytes,
+                            Content = request.InputStream.ToString()
+                        },
+                        Referrer = request.UrlReferrer?.ToString()
                     }
-                }
+                    : null,
+                Response = response != null
+                    ? new HttpResponse
+                    {
+                        // Bytes = 0, // response?.OutputStream.Length ?? 0,
+                        StatusCode = response.StatusCode,
+                        Body = new ResponseBody
+                        {
+                            // Bytes = 0, //response?.OutputStream.Length ?? 0,
+                            Content = response.OutputStream.ToString()
+                        }
+                    }
+                    : null
             };
         }
 
@@ -242,7 +208,7 @@ namespace Elastic.CommonSchema.Serilog
         {
             return new Log
             {
-                Level = e.Level.ToString("f"),
+                Level = e.Level.ToString("F"),
                 Logger = "Elastic.CommonSchema.Serilog"
                 // TODO - walk stack trace for other information
             };
@@ -264,7 +230,8 @@ namespace Elastic.CommonSchema.Serilog
         {
             return new Event
             {
-                Created = DateTime.UtcNow,
+                Created = e.Timestamp,
+                Timezone = TimeZone.CurrentTimeZone.StandardName,
                 Category = e.Properties.ContainsKey("ActionCategory")
                     ? e.Properties["ActionCategory"].ToString()
                     : null,
@@ -279,18 +246,20 @@ namespace Elastic.CommonSchema.Serilog
                     : null,
                 Severity = e.Properties.ContainsKey("ActionSeverity")
                     ? long.Parse(e.Properties["ActionSeverity"].ToString())
-                    : 0,
-                Timezone = TimeZone.CurrentTimeZone.StandardName
+                    : 0
             };
         }
 
         private static Client GetClient(System.Web.HttpRequest request, IPrincipal currentUser)
         {
+            if (request == null && currentUser == null)
+                return null;
+            
             return new Client
             {
                 Address = request?.UserHostAddress,
                 Ip = request?.UserHostAddress,
-                Bytes = request?.TotalBytes ?? 0,
+                Bytes = request?.TotalBytes,
                 User = string.IsNullOrEmpty(currentUser?.Identity?.Name)
                     ? null
                     : new User

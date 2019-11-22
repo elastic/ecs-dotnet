@@ -48,6 +48,11 @@ namespace Elastic.CommonSchema
     public class Base
     {
         /// <summary>
+        /// Elastic Common Schema version
+        /// </summary>
+        public static string Version => "@(Model.YamlSchemas.First().FullVersion)";
+
+        /// <summary>
         /// Container for additional metadata against this event.
         /// </summary>
         [DataMember(Name = "_metadata")]

@@ -38,6 +38,11 @@ namespace Elastic.CommonSchema
     public class Base
     {
         /// <summary>
+        /// Elastic Common Schema version
+        /// </summary>
+        public static string Version => "1.2.0";
+
+        /// <summary>
         /// Container for additional metadata against this event.
         /// </summary>
         [DataMember(Name = "_metadata")]
