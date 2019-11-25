@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Security.Principal;
 using System.Threading;
 using System.Web;
@@ -17,30 +18,30 @@ namespace Elastic.CommonSchema.Serilog
     /// </summary>
     public class LogEventConverter
     {
-        public static Base ConvertToEcs(LogEvent e)
+        public static Base ConvertToEcs(LogEvent logEvent, ECSJsonFormatterDescriptor descriptor)
         {
             var request = HttpContext.Current?.Request;
             var response = HttpContext.Current?.Response;
-            var exceptions = e.Exception != null ? new[] {e.Exception} : HttpContext.Current?.AllErrors;
+            var exceptions = logEvent.Exception != null ? new[] {logEvent.Exception} : HttpContext.Current?.AllErrors;
             var currentUser = HttpContext.Current?.User;
             var currentThread = Thread.CurrentThread;
 
             var ecsEvent = new Base
             {
-                Timestamp = e.Timestamp,
+                Timestamp = logEvent.Timestamp,
                 Ecs = new Ecs { Version = Base.Version },
-                Log = GetLog(e, exceptions),
-                Agent = GetAgent(e),
+                Log = GetLog(logEvent, exceptions),
+                Agent = GetAgent(logEvent),
                 Client = GetClient(request, currentUser),
-                Event = GetEvent(e),
+                Event = GetEvent(logEvent),
                 Error = GetError(exceptions),
                 Http = GetHttp(request, response),
                 Process = GetProcess(currentThread),
-                Server = GetServer(e, request),
+                Server = GetServer(logEvent, request),
                 Url = GetUrl(request),
                 User = GetUser(currentUser),
                 UserAgent = GetUserAgent(request),
-                Metadata = GetMetadata(e)
+                Metadata = GetMetadata(logEvent)
             };
 
             return ecsEvent;
@@ -50,19 +51,22 @@ namespace Elastic.CommonSchema.Serilog
         {
             var dict = new Dictionary<string, object>();
 
-            // Add any MVC action information
             if (logEvent.Properties.TryGetValue("ActionPayload", out var actionPayload))
             {
-                foreach (var item in (actionPayload as SequenceValue)?.Elements
-                                      .Select(x => x.ToString()
+                var logEventPropertyValues = (actionPayload as SequenceValue)?.Elements;
+
+                if (logEventPropertyValues != null)
+                {
+                    foreach (var item in logEventPropertyValues?.Select(x => x.ToString()
                                           .Replace("\"", string.Empty)
                                           .Replace("\"", string.Empty)
                                           .Replace("[", string.Empty)
                                           .Replace("]", string.Empty)
                                           .Split(','))
                                       .Select(value => new {Key = value[0].Trim(), Value = value[1].Trim()}))
-                {
-                    dict.Add(item.Key, item.Value);
+                    {
+                        dict.Add(item.Key, item.Value);
+                    }
                 }
             }
 
@@ -76,8 +80,6 @@ namespace Elastic.CommonSchema.Serilog
                 
                 dict.Add(logEventPropertyValue.Key, logEventPropertyValue.Value.ToString());
             }
-                    
-                
 
             return dict;
         }

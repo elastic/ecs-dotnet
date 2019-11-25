@@ -1,103 +1,15 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-    <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+<Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
-        <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-        <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-        <ProjectGuid>{F3EECF86-A950-4CDE-82DD-DF270AFE86E2}</ProjectGuid>
-        <OutputType>Exe</OutputType>
-        <AppDesignerFolder>Properties</AppDesignerFolder>
-        <RootNamespace>Elastic.CommonSchema.Serilog.Test</RootNamespace>
-        <AssemblyName>Elastic.CommonSchema.Serilog.Test</AssemblyName>
-        <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
-        <FileAlignment>512</FileAlignment>
-    </PropertyGroup>
-    <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-        <PlatformTarget>AnyCPU</PlatformTarget>
-        <DebugSymbols>true</DebugSymbols>
-        <DebugType>full</DebugType>
-        <Optimize>false</Optimize>
-        <OutputPath>bin\Debug\</OutputPath>
-        <DefineConstants>DEBUG;TRACE</DefineConstants>
-        <ErrorReport>prompt</ErrorReport>
-        <WarningLevel>4</WarningLevel>
-    </PropertyGroup>
-    <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-        <PlatformTarget>AnyCPU</PlatformTarget>
-        <DebugType>pdbonly</DebugType>
-        <Optimize>true</Optimize>
-        <OutputPath>bin\Release\</OutputPath>
-        <DefineConstants>TRACE</DefineConstants>
-        <ErrorReport>prompt</ErrorReport>
-        <WarningLevel>4</WarningLevel>
+        <TargetFrameworks>netstandard2.0;net461</TargetFrameworks>
+        <LangVersion>7.0</LangVersion>
     </PropertyGroup>
     <ItemGroup>
-        <Reference Include="Elasticsearch.Net, Version=7.0.0.0, Culture=neutral, PublicKeyToken=96c599bbe3e70f5d">
-          <HintPath>..\packages\Elasticsearch.Net.7.0.0\lib\net461\Elasticsearch.Net.dll</HintPath>
-          <Private>True</Private>
-        </Reference>
-        <Reference Include="Microsoft.CSharp" />
-        <Reference Include="mscorlib" />
-        <Reference Include="Serilog, Version=2.0.0.0, Culture=neutral, PublicKeyToken=24c2f752a8e58a10">
-          <HintPath>..\packages\Serilog.2.8.0\lib\net46\Serilog.dll</HintPath>
-          <Private>True</Private>
-        </Reference>
-        <Reference Include="Serilog.Formatting.Compact, Version=1.0.0.0, Culture=neutral, PublicKeyToken=24c2f752a8e58a10">
-          <HintPath>..\packages\Serilog.Formatting.Compact.1.0.0\lib\net45\Serilog.Formatting.Compact.dll</HintPath>
-          <Private>True</Private>
-        </Reference>
-        <Reference Include="Serilog.Formatting.Elasticsearch, Version=0.0.0.0, Culture=neutral, PublicKeyToken=24c2f752a8e58a10">
-          <HintPath>..\packages\Serilog.Formatting.Elasticsearch.8.1.0-alpha0005\lib\net45\Serilog.Formatting.Elasticsearch.dll</HintPath>
-          <Private>True</Private>
-        </Reference>
-        <Reference Include="Serilog.Sinks.Console, Version=3.1.2.0, Culture=neutral, PublicKeyToken=24c2f752a8e58a10">
-          <HintPath>..\packages\Serilog.Sinks.Console.3.1.2-dev-00824\lib\net45\Serilog.Sinks.Console.dll</HintPath>
-          <Private>True</Private>
-        </Reference>
-        <Reference Include="Serilog.Sinks.Elasticsearch, Version=8.1.0.0, Culture=neutral, PublicKeyToken=24c2f752a8e58a10">
-          <HintPath>..\packages\Serilog.Sinks.Elasticsearch.8.1.0-alpha0005\lib\net461\Serilog.Sinks.Elasticsearch.dll</HintPath>
-          <Private>True</Private>
-        </Reference>
-        <Reference Include="Serilog.Sinks.File, Version=2.0.0.0, Culture=neutral, PublicKeyToken=24c2f752a8e58a10">
-          <HintPath>..\packages\Serilog.Sinks.File.4.0.0\lib\net45\Serilog.Sinks.File.dll</HintPath>
-          <Private>True</Private>
-        </Reference>
-        <Reference Include="Serilog.Sinks.PeriodicBatching, Version=2.0.0.0, Culture=neutral, PublicKeyToken=24c2f752a8e58a10">
-          <HintPath>..\packages\Serilog.Sinks.PeriodicBatching.2.1.1\lib\net45\Serilog.Sinks.PeriodicBatching.dll</HintPath>
-          <Private>True</Private>
-        </Reference>
-        <Reference Include="System" />
-        <Reference Include="System.Buffers, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51">
-          <HintPath>..\packages\System.Buffers.4.5.0\lib\netstandard2.0\System.Buffers.dll</HintPath>
-          <Private>True</Private>
-        </Reference>
-        <Reference Include="System.Core" />
-        <Reference Include="System.Data" />
-        <Reference Include="System.Diagnostics.DiagnosticSource, Version=4.0.3.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51">
-          <HintPath>..\packages\System.Diagnostics.DiagnosticSource.4.5.1\lib\net46\System.Diagnostics.DiagnosticSource.dll</HintPath>
-          <Private>True</Private>
-        </Reference>
-        <Reference Include="System.Xml" />
+      <ProjectReference Include="..\Elastic.CommonSchema.Serilog\Elastic.CommonSchema.Serilog.csproj" />
     </ItemGroup>
     <ItemGroup>
-        <Compile Include="Program.cs" />
+        <PackageReference Include="Elasticsearch.Net" Version="7.4.0.0" />
+        <PackageReference Include="Serilog" Version="2.9.0.0" />
+        <PackageReference Include="Serilog.Sinks.Console" Version="3.1.1"/>
     </ItemGroup>
-    <ItemGroup>
-      <ProjectReference Include="..\Elastic.CommonSchema.Serilog\Elastic.CommonSchema.Serilog.csproj">
-        <Project>{45bc8315-6ad6-4f3c-b590-7b52d19ed401}</Project>
-        <Name>Elastic.CommonSchema.Serilog</Name>
-      </ProjectReference>
-    </ItemGroup>
-    <ItemGroup>
-      <None Include="packages.config" />
-    </ItemGroup>
-    <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-    <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
-         Other similar extension points exist, see Microsoft.Common.targets.
-    <Target Name="BeforeBuild">
-    </Target>
-    <Target Name="AfterBuild">
-    </Target>
-    -->
-
 </Project>

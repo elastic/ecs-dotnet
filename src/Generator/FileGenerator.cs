@@ -104,7 +104,8 @@ namespace Generator
                     {
                         foreach (var file in files)
                         {
-                            var versionString = Regex.Match(file, ".*Template(\\d).*").Groups.Skip(1).First().Value;
+                            var groupCollection = Regex.Match(file, ".*Template(\\d).*").Groups;
+                            var versionString = groupCollection[1].Value;
                             var version = int.Parse(versionString);
                             var contents = File.ReadAllText(file);
                             templates.Add(version, contents);
@@ -161,9 +162,9 @@ namespace Generator
             return spec.Select(d => d.Value).Select(s =>
             {
                 s.DownloadBranch = downloadBranch;
-                foreach (var (_, field) in s.Fields)
+                foreach (var kvp in s.Fields)
                 {
-                    field.Schema = s;
+                    kvp.Value.Schema = s;
                 }
                 return s;
             });
