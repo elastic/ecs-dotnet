@@ -13,10 +13,7 @@ namespace Elastic.CommonSchema.Serilog
     {
         private readonly ECSJsonFormatterConfiguration _configuration;
 
-        public ECSJsonFormatter()
-        {
-            _configuration = new ECSJsonFormatterConfiguration();
-        }
+        public ECSJsonFormatter() : this(new ECSJsonFormatterConfiguration()) { }
 
         public ECSJsonFormatter(ECSJsonFormatterConfiguration configuration)
         {

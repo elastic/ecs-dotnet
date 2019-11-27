@@ -4,9 +4,10 @@
         <LangVersion>7.0</LangVersion>
     </PropertyGroup>
     <ItemGroup>
-      <PackageReference Include="NEST" Version="7.4.0" />
+        <PackageReference Include="NEST" Version="7.4.0"/>
     </ItemGroup>
     <ItemGroup>
-      <ProjectReference Include="..\Elastic.CommonSchema\Elastic.CommonSchema.csproj" />
+        <ProjectReference Include="..\Elastic.CommonSchema\Elastic.CommonSchema.csproj"/>
     </ItemGroup>
+    <Import Project="$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildThisFileDirectory), build.bat))\src\Library.build.props"/>
 </Project>

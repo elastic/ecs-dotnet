@@ -1,7 +1,7 @@
 using System;
 using System.Runtime.CompilerServices;
 
-#if DOTNETCORE
+#if NETSTANDARD
 using Microsoft.AspNetCore.Http;
 #else
 using System.Web;
@@ -26,7 +26,7 @@ namespace Elastic.CommonSchema.Serilog
 
         Func<Base, Base> IECSJsonFormatterConfiguration.MapCustom { get; set; } = b => b;
 
-#if DOTNETCORE
+#if NETSTANDARD
         public ECSJsonFormatterConfiguration MapHttpContext(IHttpContextAccessor contextAccessor) => Assign(this, contextAccessor, (o, v) => o.MapHttpAdapter = new HttpAdapter(v));
 #else
         public ECSJsonFormatterConfiguration MapHttpContext(HttpContext httpContext) => Assign(this, httpContext, (o, v) => o.MapHttpAdapter = new HttpAdapter(v));

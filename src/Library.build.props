@@ -15,9 +15,6 @@
 		<TreatWarningsAsErrors>true</TreatWarningsAsErrors>
 
     	<DefineConstants Condition="'$(TargetFramework)'=='net461'">$(DefineConstants);FULLFRAMEWORK</DefineConstants>
-		<DefineConstants Condition="'$(TargetFramework)'=='netstandard2.0'">$(DefineConstants);DOTNETCORE</DefineConstants>
-		<DefineConstants Condition="'$(TargetFramework)'=='netcoreapp2.0'">$(DefineConstants);DOTNETCORE</DefineConstants>
-		<DefineConstants Condition="'$(TargetFramework)'=='netcoreapp2.1'">$(DefineConstants);DOTNETCORE</DefineConstants>
 
 		<RepoUri>https://raw.githubusercontent.com/elastic/ecs-dotnet</RepoUri>
 		<Authors>Elasticsearch BV</Authors>
@@ -29,4 +26,7 @@
     
 		<LangVersion>latest</LangVersion>
 	</PropertyGroup>
+	<ItemGroup>
+		<PackageReference Condition="$(DefineConstants.Contains(FULLFRAMEWORK))" Include="Microsoft.NETFramework.ReferenceAssemblies" PrivateAssets="All" Version="1.0.0-preview.2" />
+	</ItemGroup>
 </Project>

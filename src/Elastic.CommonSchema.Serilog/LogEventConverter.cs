@@ -6,7 +6,7 @@ using System.Linq;
 using System.Threading;
 using Serilog.Events;
 
-#if DOTNETCORE
+#if NETSTANDARD
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.Abstractions;
 #else
@@ -192,7 +192,7 @@ namespace Elastic.CommonSchema.Serilog
                     : 0
             };
 
-#if DOTNETCORE
+#if NETSTANDARD
             evnt.Timezone = TimeZoneInfo.Local.StandardName;
 #else
             evnt.Timezone = TimeZone.CurrentTimeZone.StandardName;
