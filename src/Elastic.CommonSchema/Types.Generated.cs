@@ -246,7 +246,6 @@ namespace Elastic.CommonSchema
         /// <remarks>Core</remarks>
         /// <example>2016-05-23T08:05:34.853Z</example>
         [DataMember(Name = "@timestamp")]
-        [IgnoreDataMember] //read and written by formatter
         public DateTimeOffset? Timestamp { get; set; }
 
         /// <summary>
@@ -271,7 +270,6 @@ namespace Elastic.CommonSchema
         /// <remarks>Core</remarks>
         /// <example>Hello World</example>
         [DataMember(Name = "message")]
-        [IgnoreDataMember] //read and written by formatter
         public string Message { get; set; }
 
     }
@@ -1808,7 +1806,7 @@ namespace Elastic.CommonSchema
     /// <summary>
     /// Details about the event's logging mechanism or logging transport.<para/>The log.* fields are typically populated with details about the logging mechanism used to create and/or transport the event. For example, syslog details belong under `log.syslog.*`.<para/>The details specific to your event source are typically not logged under `log.*`, but rather in `event.*` or in other ECS fields.
     /// </summary>
-    public class Log 
+    public partial class Log 
     {
         /// <summary>
         /// Origin property.
@@ -1828,7 +1826,6 @@ namespace Elastic.CommonSchema
         /// <remarks>Core</remarks>
         /// <example>error</example>
         [DataMember(Name = "level")]
-        [IgnoreDataMember] //read and written by formatter
         public string Level { get; set; }
 
         /// <summary>
