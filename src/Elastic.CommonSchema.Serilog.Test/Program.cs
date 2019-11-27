@@ -7,7 +7,7 @@ namespace Elastic.CommonSchema.Serilog.Test
         public static void Main(string[] args)
         {
             global::Serilog.Log.Logger = new LoggerConfiguration()
-                .WriteTo.Console(new ECSJsonFormatter())
+                .WriteTo.Console(new EcsTextFormatter())
                 .CreateLogger();
 
             global::Serilog.Log.Information("Hello, world {0} {1}!", new [] { "param1", "param2" });

@@ -41,6 +41,10 @@ namespace Elastic.CommonSchema.Serilog
                 Event = GetEvent(logEvent),
                 Metadata = GetMetadata(logEvent)
             };
+            
+            //TODO investigate
+            //Serilog sinks with default enrichments where do these end up?
+            //logEvent.Properties
 
             if (configuration.MapCurrentThread)
             {         

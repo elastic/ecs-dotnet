@@ -35,7 +35,7 @@ namespace Elastic.CommonSchema
     /// <para/>
     /// See: https://github.com/elastic/ecs
     /// </summary>
-    public class Base
+    public partial class Base
     {
         /// <summary>
         /// Elastic Common Schema version
@@ -246,6 +246,7 @@ namespace Elastic.CommonSchema
         /// <remarks>Core</remarks>
         /// <example>2016-05-23T08:05:34.853Z</example>
         [DataMember(Name = "@timestamp")]
+        [IgnoreDataMember] //read and written by formatter
         public DateTimeOffset? Timestamp { get; set; }
 
         /// <summary>
@@ -270,6 +271,7 @@ namespace Elastic.CommonSchema
         /// <remarks>Core</remarks>
         /// <example>Hello World</example>
         [DataMember(Name = "message")]
+        [IgnoreDataMember] //read and written by formatter
         public string Message { get; set; }
 
     }
@@ -1826,6 +1828,7 @@ namespace Elastic.CommonSchema
         /// <remarks>Core</remarks>
         /// <example>error</example>
         [DataMember(Name = "level")]
+        [IgnoreDataMember] //read and written by formatter
         public string Level { get; set; }
 
         /// <summary>
