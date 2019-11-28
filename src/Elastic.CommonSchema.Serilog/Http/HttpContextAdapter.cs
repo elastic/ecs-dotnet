@@ -26,12 +26,10 @@ namespace Elastic.CommonSchema.Serilog
     {
         private readonly HttpContext _httpContext;
 
-        public HttpAdapter(HttpContext httpContext)
-        {
-            _httpContext = httpContext;
-        }
+        public HttpAdapter(HttpContext httpContext) =>
+			_httpContext = httpContext;
 
-        public UserAgent UserAgent => new UserAgent
+		public UserAgent UserAgent => new UserAgent
         {
             Device = _httpContext.Request.Browser != null
                 ? new UserAgentDevice

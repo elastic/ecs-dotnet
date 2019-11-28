@@ -29,12 +29,10 @@ namespace Elastic.CommonSchema.Serilog
     {
         private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public HttpAdapter(IHttpContextAccessor httpContextAccessor)
-        {
-            _httpContextAccessor = httpContextAccessor;
-        }
+        public HttpAdapter(IHttpContextAccessor httpContextAccessor) =>
+			_httpContextAccessor = httpContextAccessor;
 
-        public UserAgent UserAgent
+		public UserAgent UserAgent
         {
             get
             {
@@ -43,10 +41,10 @@ namespace Elastic.CommonSchema.Serilog
                 {
                     Name = userAgent,
                     Original = userAgent
-                };                
+                };
             }
         }
-        
+
         public Http Http => new Http
         {
             Request = new HttpRequest
@@ -77,7 +75,7 @@ namespace Elastic.CommonSchema.Serilog
             get
             {
                 var uri = new Uri(_httpContextAccessor.HttpContext.Request.Path);
-                
+
                 return new Url
                 {
                     Path = _httpContextAccessor.HttpContext.Request.Path,
@@ -90,7 +88,7 @@ namespace Elastic.CommonSchema.Serilog
                 };
             }
         }
-        
+
         public Server Server => new Server
         {
             Domain = new Uri(_httpContextAccessor.HttpContext.Request.Path).Authority
@@ -110,7 +108,7 @@ namespace Elastic.CommonSchema.Serilog
                 };
             }
         }
-        
+
         public User User
         {
             get
@@ -122,7 +120,7 @@ namespace Elastic.CommonSchema.Serilog
                 var groupClaim = _httpContextAccessor.HttpContext.User.FindAll(ClaimTypes.GroupSid);
 
                 var groupId = groupClaim != null && groupClaim.Any() ? groupClaim.First().Value : null;
-                
+
                 return new User
                 {
                     Id = idClaim != null && idClaim.Any() ? new[] { idClaim.First().Value } : null,

@@ -54,16 +54,11 @@ namespace Elastic
             return Latitude.Equals(other.Latitude) && Longitude.Equals(other.Longitude);
         }
 
-        public string ToString(string format, IFormatProvider formatProvider)
-        {
-            return ToString();
-        }
+        public string ToString(string format, IFormatProvider formatProvider) => ToString();
 
-        public override string ToString()
-        {
-            return Latitude.ToString("#0.0#######", CultureInfo.InvariantCulture) + "," +
-                   Longitude.ToString("#0.0#######", CultureInfo.InvariantCulture);
-        }
+        public override string ToString() =>
+	        Latitude.ToString("#0.0#######", CultureInfo.InvariantCulture) + "," +
+	        Longitude.ToString("#0.0#######", CultureInfo.InvariantCulture);
 
         public override bool Equals(object obj)
         {
@@ -77,10 +72,7 @@ namespace Elastic
             return Equals((Location) obj);
         }
 
-        public override int GetHashCode()
-        {
-            return unchecked((Latitude.GetHashCode() * 397) ^ Longitude.GetHashCode());
-        }
+        public override int GetHashCode() => unchecked((Latitude.GetHashCode() * 397) ^ Longitude.GetHashCode());
 
         public static implicit operator Location(string latLon)
         {
@@ -97,11 +89,9 @@ namespace Elastic
             return new Location(lat, lon);
         }
 
-        public static implicit operator Location(double[] lonLat)
-        {
-            return lonLat.Length != 2
-                ? null
-                : new Location(lonLat[1], lonLat[0]);
-        }
+        public static implicit operator Location(double[] lonLat) =>
+	        lonLat.Length != 2
+		        ? null
+		        : new Location(lonLat[1], lonLat[0]);
     }
 }

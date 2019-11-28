@@ -31,11 +31,9 @@ namespace Elastic.CommonSchema.Serilog
 
         public EcsTextFormatter() : this(new EcsTextFormatterConfiguration()) { }
 
-        public EcsTextFormatter(EcsTextFormatterConfiguration configuration)
-        {
-            _configuration = configuration ?? new EcsTextFormatterConfiguration();
-        }
-        
+        public EcsTextFormatter(EcsTextFormatterConfiguration configuration) =>
+	        _configuration = configuration ?? new EcsTextFormatterConfiguration();
+
         public void Format(LogEvent logEvent, TextWriter output)
         {
             var ecsEvent = LogEventConverter.ConvertToEcs(logEvent, _configuration);

@@ -58,17 +58,17 @@ namespace Elastic.CommonSchema.Serilog
                 Event = GetEvent(logEvent),
                 Metadata = GetMetadata(logEvent)
             };
-            
+
             //TODO investigate
             //Serilog sinks with default enrichments where do these end up?
             //logEvent.Properties
 
             if (configuration.MapCurrentThread)
-            {         
+            {
                 var currentThread = Thread.CurrentThread;
                 ecsEvent.Process = GetProcess(currentThread);
             }
-            
+
             if (configuration.MapHttpAdapter != null)
             {
                 ecsEvent.Http = configuration.MapHttpAdapter.Http;
@@ -88,7 +88,7 @@ namespace Elastic.CommonSchema.Serilog
             {
                 ecsEvent = configuration.MapCustom(ecsEvent);
             }
-            
+
             return ecsEvent;
         }
 
@@ -122,7 +122,7 @@ namespace Elastic.CommonSchema.Serilog
                     dict.Add(logEventPropertyValue.Key, values.Elements.Select(e => e.ToString()).ToArray());
                     continue;
                 }
-                
+
                 dict.Add(logEventPropertyValue.Key, logEventPropertyValue.Value.ToString());
             }
 
@@ -139,7 +139,7 @@ namespace Elastic.CommonSchema.Serilog
                                 Name = environmentUserName.ToString()
                             }
                             : null;
-            
+
             var hasHost = e.Properties.TryGetValue("Host", out var host);
             server.Address = hasHost ? host.ToString() : null;
             server.Ip = hasHost ? host.ToString() : null;
@@ -150,7 +150,7 @@ namespace Elastic.CommonSchema.Serilog
         {
             if (currentThread == null)
                 return null;
-            
+
             return new Process
             {
                 Title = currentThread.Name,
@@ -179,17 +179,15 @@ namespace Elastic.CommonSchema.Serilog
             return log;
         }
 
-        private static Error GetError(IReadOnlyList<Exception> exceptions)
-        {
-            return exceptions != null && exceptions.Count > 0
-                ? new Error
-                {
-                    Message = exceptions[0].Message,
-                    StackTrace = CatchErrors(exceptions),
-                    Code = exceptions[0].GetType().ToString()
-                }
-                : null;
-        }
+        private static Error GetError(IReadOnlyList<Exception> exceptions) =>
+	        exceptions != null && exceptions.Count > 0
+		        ? new Error
+		        {
+			        Message = exceptions[0].Message,
+			        StackTrace = CatchErrors(exceptions),
+			        Code = exceptions[0].GetType().ToString()
+		        }
+		        : null;
 
         private static Event GetEvent(LogEvent e)
         {
@@ -222,29 +220,27 @@ namespace Elastic.CommonSchema.Serilog
             return evnt;
         }
 
-        private static Agent GetAgent(LogEvent e)
-        {
-            return e.Properties.ContainsKey("ApplicationId")
-                   || e.Properties.ContainsKey("ApplicationName")
-                   || e.Properties.ContainsKey("ApplicationType")
-                   || e.Properties.ContainsKey("ApplicationVersion")
-                ? new Agent
-                {
-                    Id = e.Properties.ContainsKey("ApplicationId")
-                        ? e.Properties["ApplicationId"].ToString()
-                        : null,
-                    Name = e.Properties.ContainsKey("ApplicationName")
-                        ? e.Properties["ApplicationName"].ToString()
-                        : null,
-                    Type = e.Properties.ContainsKey("ApplicationType")
-                        ? e.Properties["ApplicationType"].ToString()
-                        : null,
-                    Version = e.Properties.ContainsKey("ApplicationVersion")
-                        ? e.Properties["ApplicationVersion"].ToString()
-                        : null
-                }
-                : null;
-        }
+        private static Agent GetAgent(LogEvent e) =>
+	        e.Properties.ContainsKey("ApplicationId")
+	        || e.Properties.ContainsKey("ApplicationName")
+	        || e.Properties.ContainsKey("ApplicationType")
+	        || e.Properties.ContainsKey("ApplicationVersion")
+		        ? new Agent
+		        {
+			        Id = e.Properties.ContainsKey("ApplicationId")
+				        ? e.Properties["ApplicationId"].ToString()
+				        : null,
+			        Name = e.Properties.ContainsKey("ApplicationName")
+				        ? e.Properties["ApplicationName"].ToString()
+				        : null,
+			        Type = e.Properties.ContainsKey("ApplicationType")
+				        ? e.Properties["ApplicationType"].ToString()
+				        : null,
+			        Version = e.Properties.ContainsKey("ApplicationVersion")
+				        ? e.Properties["ApplicationVersion"].ToString()
+				        : null
+		        }
+		        : null;
 
         private static string CatchErrors(IReadOnlyCollection<Exception> errors)
         {

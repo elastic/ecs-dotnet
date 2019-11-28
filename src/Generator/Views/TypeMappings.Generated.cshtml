@@ -57,7 +57,7 @@ namespace Elastic.CommonSchema.Elasticsearch
         /// Get a Put Index Template Descriptor for use with <see cref="Nest.PutIndexTemplateRequest"/>
         /// designed for use with Elastic Common Schema version @(Model.YamlSchemas.First().FullVersion)
         /// </summary>
-        /// <param name="name">The name of the index template.</param>
+        /// @Raw("<param name=\"name\">The name of the index template.</param>")
         /// <returns>An instance of <see cref="Nest.PutIndexTemplateDescriptor"/>.</returns>
         public static PutIndexTemplateDescriptor GetIndexTemplate(Name name)
         {
@@ -89,7 +89,7 @@ namespace Elastic.CommonSchema.Elasticsearch
         /// designed for use with Elastic Common Schema version @(Model.YamlSchemas.First().FullVersion)
         /// </summary>
         /// <returns>An instance of <see cref="System.Func{Nest.TypeMappingDescriptor{Elastic.CommonSchema.Base}}{Nest.ITypeMapping}"/>.</returns>
-        public static Func<TypeMappingDescriptor<Base>, ITypeMapping> GetTypeMappingDescriptor()
+        public static Func@(Raw("<TypeMappingDescriptor<Base>, ITypeMapping>")) GetTypeMappingDescriptor()
         {
             return map =>
                  map.Meta(meta => meta.Add("version", "@(Model.YamlSchemas.First().FullVersion)"))

@@ -24,9 +24,6 @@ namespace Elastic.CommonSchema
     [JsonFormatter(typeof(BaseJsonFormatter))]
     public partial class Base
     {
-        public byte[] Serialize()
-        {
-            return JsonSerializer.Serialize(this, StandardResolver.ExcludeNull);
-        }
-    }
+        public byte[] Serialize() => JsonSerializer.Serialize(this, StandardResolver.ExcludeNull);
+	}
 }

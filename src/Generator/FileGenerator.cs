@@ -70,7 +70,7 @@ namespace Generator
 
             var yamlSchemas = new List<YamlSchema>();
             var templates = new Dictionary<int, string>();
-            
+
             using (var progressBar = new ProgressBar(directories.Count, $"Listing {directories.Count} directories",
                 new ProgressBarOptions {BackgroundColor = ConsoleColor.DarkGray}))
             {
@@ -93,7 +93,7 @@ namespace Generator
 
                     progressBar.Tick();
                 }
-                
+
                 var jsonFiles = directories.Select(dir =>
                     Directory.GetFiles(dir).Where(f => f.EndsWith(".json")).ToList()
                 );
@@ -171,12 +171,9 @@ namespace Generator
             });
         }
 
-        private static string DoRazor(string name, string template, EcsSpecification model)
-        {
-            return Razor.CompileRenderStringAsync(name, template, model).GetAwaiter().GetResult();
-        }
+        private static string DoRazor(string name, string template, EcsSpecification model) => Razor.CompileRenderStringAsync(name, template, model).GetAwaiter().GetResult();
 
-        private static void GenerateTypes(EcsSpecification model)
+		private static void GenerateTypes(EcsSpecification model)
         {
             var targetDir = Path.GetFullPath(CodeConfiguration.ElasticCommonSchemaGeneratedFolder);
             var outputFile = Path.Combine(targetDir, @"Types.Generated.cs");
@@ -211,12 +208,9 @@ namespace Generator
             public override bool CanRead => false;
             public override bool CanWrite => true;
 
-            public override bool CanConvert(Type type)
-            {
-                return type == typeof(T);
-            }
+            public override bool CanConvert(Type type) => type == typeof(T);
 
-            public override void WriteJson(
+			public override void WriteJson(
                 JsonWriter writer, object value, JsonSerializer serializer)
             {
                 var cast = (T) value;
@@ -224,10 +218,8 @@ namespace Generator
             }
 
             public override object ReadJson(
-                JsonReader reader, Type type, object existingValue, JsonSerializer serializer)
-            {
-                throw new NotSupportedException();
-            }
-        }
+                JsonReader reader, Type type, object existingValue, JsonSerializer serializer) =>
+				throw new NotSupportedException();
+		}
     }
 }

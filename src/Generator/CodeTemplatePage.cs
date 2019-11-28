@@ -9,14 +9,8 @@ namespace Generator
     /// </summary>
     public class CodeTemplatePage<TModel> : TemplatePage<TModel>
     {
-        public override Task ExecuteAsync()
-        {
-            throw new NotImplementedException();
-        }
+        public override Task ExecuteAsync() => throw new NotImplementedException();
 
-        public Task Execute()
-        {
-            return Task.CompletedTask;
-        }
-    }
+        public Task Execute() => Task.CompletedTask;
+	}
 }

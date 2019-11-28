@@ -63,7 +63,7 @@ namespace Elastic.CommonSchema
         /// Container for additional metadata against this event.
         /// </summary>
         [DataMember(Name = "_metadata")]
-        public IDictionary<string, object> Metadata { get; set; }
+        public @Raw("IDictionary<string, object>") Metadata { get; set; }
 
 @foreach (var schema in Model.YamlSchemas.Where(m => m.Name != "base"))
     {

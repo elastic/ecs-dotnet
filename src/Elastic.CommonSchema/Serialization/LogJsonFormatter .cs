@@ -22,19 +22,7 @@ namespace Elastic.CommonSchema.Serialization
 {
     internal class LogJsonFormatter : IJsonFormatter<Log>
     {
-        private static readonly IncrementingAutomataDictionary AutomataDictionary = new IncrementingAutomataDictionary
-        {
-            { "level" },
-            { "original"},
-            { "origin" },
-            { "syslog" },
-            { "logger" },
-        };
-
-        public Log Deserialize(ref JsonReader reader, IJsonFormatterResolver formatterResolver)
-        {
-            throw new NotImplementedException();
-        }
+        public Log Deserialize(ref JsonReader reader, IJsonFormatterResolver formatterResolver) => throw new NotImplementedException();
 
         public void Serialize(ref JsonWriter writer, Log value, IJsonFormatterResolver formatterResolver)
         {
@@ -48,7 +36,7 @@ namespace Elastic.CommonSchema.Serialization
             WriteProp(ref writer, "logger", value.Logger, formatterResolver, ref written);
             writer.WriteEndObject();
         }
-        
+
         private static void WriteProp<T>(ref JsonWriter writer, string key, T value, IJsonFormatterResolver formatterResolver, ref bool written)
         {
             if (value == null) return;

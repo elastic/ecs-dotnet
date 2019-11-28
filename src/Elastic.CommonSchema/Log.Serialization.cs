@@ -24,9 +24,6 @@ namespace Elastic.CommonSchema
     [JsonFormatter(typeof(LogJsonFormatter))]
     public partial class Log
     {
-        public byte[] Serialize()
-        {
-            return Utf8Json.JsonSerializer.Serialize(this, StandardResolver.ExcludeNull);
-        }
+        public byte[] Serialize() => JsonSerializer.Serialize(this, StandardResolver.ExcludeNull);
     }
 }

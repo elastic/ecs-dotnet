@@ -59,10 +59,10 @@ namespace Generator.Schema
         /// </summary>
         [JsonProperty("type")]
         public string Type { get; set; }
-        
+
         [JsonProperty("prefix")]
         public string Prefix { get; set; }
-        
+
         [JsonProperty("nestings")]
         public string[] Nestings { get; set; }
 
@@ -72,12 +72,13 @@ namespace Generator.Schema
         [JsonProperty("fields", Required = Required.Always)]
         public Dictionary<string, Field> Fields { get; set; }
 
-        public IEnumerable<Field> GetFilteredFields()
-        {
-            return Fields.Where(f => Nestings == null || !Nestings.Any(n => f.Key.StartsWith(n))).Select(f => f.Value).OrderBy(f => f.Order);
-        }
+        public IEnumerable<Field> GetFilteredFields() =>
+			Fields
+				.Where(f => Nestings == null || !Nestings.Any(n => f.Key.StartsWith(n)))
+				.Select(f => f.Value)
+				.OrderBy(f => f.Order);
 
-        public List<NestedFields> GetFieldsNested()
+		public List<NestedFields> GetFieldsNested()
         {
             var nestedFields = new List<NestedFields>();
             foreach (var nestedField in GetFilteredFields().Where(f => f.JsonFieldName.Contains(".")))
@@ -96,7 +97,7 @@ namespace Generator.Schema
                         ClassName = split.First()
                     };
                     nestedFields.Add(newRoot);
-            
+
                     Add(newRoot, split.Skip(1).ToArray(), nestedField);
                 }
             }
@@ -124,11 +125,11 @@ namespace Generator.Schema
                     ClassName = properties.First()
                 };
                 root.Children.Add(newRoot);
-            
+
                 Add(newRoot, properties.Skip(1).ToArray(), field);
             }
         }
-        
+
         /// <summary>
         ///     Optional
         /// </summary>
@@ -147,7 +148,7 @@ namespace Generator.Schema
 
             // DNS Answers are handled as child objects
             filtered = filtered.Where(f => f.FlatName != "dns.answers");
-            
+
             // Sys logs are handled as child objects
             filtered = filtered.Where(f => f.FlatName != "log.syslog");
 
