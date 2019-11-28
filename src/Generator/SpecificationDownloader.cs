@@ -99,7 +99,8 @@ namespace Generator
 		{
 			var f = Path.Combine(CodeConfiguration.SpecificationFolder, folder);
 			if (!Directory.Exists(f)) Directory.CreateDirectory(f);
-			File.WriteAllText(f + "\\" + filename, contents);
+			var path = Path.Combine(f, filename);
+			File.WriteAllText(path, contents);
 		}
 
 		private class Specification

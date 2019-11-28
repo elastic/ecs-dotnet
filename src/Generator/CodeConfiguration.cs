@@ -5,8 +5,8 @@ namespace Generator
 	public static class CodeConfiguration
 	{
 		private static string _root;
-		public static string ElasticCommonSchemaGeneratedFolder { get; } = $@"{Root}Elastic.CommonSchema\";
-		public static string ElasticCommonSchemaNESTGeneratedFolder { get; } = $@"{Root}Elastic.CommonSchemaNEST\";
+		public static string ElasticCommonSchemaGeneratedFolder { get; } = $@"{Root}Elastic.CommonSchema/";
+		public static string ElasticCommonSchemaNESTGeneratedFolder { get; } = $@"{Root}Elastic.CommonSchemaNEST/";
 
 		private static string Root
 		{
@@ -22,12 +22,12 @@ namespace Generator
 					directoryInfo.Parent != null &&
 					directoryInfo.Parent.Name == "ECS";
 
-				_root = runningAsDnx ? "" : @"..\..\..\..\";
+				_root = runningAsDnx ? "" : @"../../../../";
 				return _root;
 			}
 		}
 
-		public static string SpecificationFolder { get; } = $@"{Root}Specification\";
-		public static string ViewFolder { get; } = $@"{Root}Generator\Views\";
+		public static string SpecificationFolder { get; } = $@"{Root}Specification/";
+		public static string ViewFolder { get; } = $@"{Root}Generator/Views/";
 	}
 }

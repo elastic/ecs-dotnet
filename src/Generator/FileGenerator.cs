@@ -164,13 +164,7 @@ namespace Generator
 				});
 		}
 
-		private static string DoRazor(string name, string template, EcsSpecification model)
-		{
-			var contents = Razor.CompileRenderStringAsync(name, template, model).GetAwaiter().GetResult();
-			var tree = CSharpSyntaxTree.ParseText(contents);
-			var root = tree.GetRoot().NormalizeWhitespace(indentation:"\t", "\n");
-			return root.ToFullString();
-		}
+		private static string DoRazor(string name, string template, EcsSpecification model) => Razor.CompileRenderStringAsync(name, template, model).GetAwaiter().GetResult();
 
 		private static void GenerateTypes(EcsSpecification model)
 		{

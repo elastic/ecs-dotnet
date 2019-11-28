@@ -13,7 +13,7 @@
 // not use this file except in compliance with the License.
 // You may obtain a copy of the License at
 //
-//     http://www.apache.org/licenses/LICENSE-2.0
+//	 http://www.apache.org/licenses/LICENSE-2.0
 //
 // Unless required by applicable law or agreed to in writing,
 // software distributed under the License is distributed on an
@@ -41,85 +41,85 @@ using Nest;
 
 namespace Elastic.CommonSchema.Elasticsearch
 {
-    /// <summary>
-    /// Utilities for Elastic Common Schema version @(Model.YamlSchemas.First().FullVersion)
-    /// To be used in conjunction with the NEST client.
-    /// <para/>
-    /// The Elastic Common Schema (ECS) defines a common set of fields for ingesting data into Elasticsearch.
-    /// A common schema helps you correlate data from sources like logs and metrics or IT operations analytics
-    /// and security analytics.
-    /// <para/>
-    /// See: https://github.com/elastic/ecs
-    /// </summary>
-    public class NESTIndexTemplates
-    {
-        /// <summary>
-        /// Get a Put Index Template Descriptor for use with <see cref="Nest.PutIndexTemplateRequest"/>
-        /// designed for use with Elastic Common Schema version @(Model.YamlSchemas.First().FullVersion)
-        /// </summary>
-        /// @Raw("<param name=\"name\">The name of the index template.</param>")
-        /// <returns>An instance of <see cref="Nest.PutIndexTemplateDescriptor"/>.</returns>
-        public static PutIndexTemplateDescriptor GetIndexTemplate(Name name)
-        {
-            var indexTemplate = new PutIndexTemplateDescriptor(name);
+	/// <summary>
+	/// Utilities for Elastic Common Schema version @(Model.YamlSchemas.First().FullVersion)
+	/// To be used in conjunction with the NEST client.
+	/// <para/>
+	/// The Elastic Common Schema (ECS) defines a common set of fields for ingesting data into Elasticsearch.
+	/// A common schema helps you correlate data from sources like logs and metrics or IT operations analytics
+	/// and security analytics.
+	/// <para/>
+	/// See: https://github.com/elastic/ecs
+	/// </summary>
+	public class NESTIndexTemplates
+	{
+		/// <summary>
+		/// Get a Put Index Template Descriptor for use with <see cref="Nest.PutIndexTemplateRequest"/>
+		/// designed for use with Elastic Common Schema version @(Model.YamlSchemas.First().FullVersion)
+		/// </summary>
+		/// @Raw("<param name=\"name\">The name of the index template.</param>")
+		/// <returns>An instance of <see cref="Nest.PutIndexTemplateDescriptor"/>.</returns>
+		public static PutIndexTemplateDescriptor GetIndexTemplate(Name name)
+		{
+			var indexTemplate = new PutIndexTemplateDescriptor(name);
 
-            indexTemplate.IndexPatterns("ecs-*");
-            indexTemplate.Order(1);
-            indexTemplate.Settings(s =>
-                s.Setting("index", 
-                    new
-                    {
-                        refresh_interval = "5s",
-                        mapping = new
-                        {
-                            total_fields = new
-                            {
-                                limit = 100000
-                            }
-                        }
-                    }));
+			indexTemplate.IndexPatterns("ecs-*");
+			indexTemplate.Order(1);
+			indexTemplate.Settings(s =>
+				s.Setting("index", 
+					new
+					{
+						refresh_interval = "5s",
+						mapping = new
+						{
+							total_fields = new
+							{
+								limit = 100000
+							}
+						}
+					}));
 
-            indexTemplate.Map(GetTypeMappingDescriptor());
-            
-            return indexTemplate;
-        }
+			indexTemplate.Map(GetTypeMappingDescriptor());
+			
+			return indexTemplate;
+		}
 
-        /// <summary>
-        /// Get a type mapping descriptor for use with <see cref="Nest.PutIndexTemplateDescriptor"/>
-        /// designed for use with Elastic Common Schema version @(Model.YamlSchemas.First().FullVersion)
-        /// </summary>
-        /// <returns>An instance of <see cref="System.Func{Nest.TypeMappingDescriptor{Elastic.CommonSchema.Base}}{Nest.ITypeMapping}"/>.</returns>
-        public static Func@(Raw("<TypeMappingDescriptor<Base>, ITypeMapping>")) GetTypeMappingDescriptor()
-        {
-            return map =>
-                 map.Meta(meta => meta.Add("version", "@(Model.YamlSchemas.First().FullVersion)"))
-                    .DateDetection(false)
-                    .DynamicTemplates(dynamicTemplate =>
-                        dynamicTemplate.DynamicTemplate("strings_as_keyword",
-                            template =>
-                                template.MatchMappingType("string")
-                                    .Mapping(mapping =>
-                                        mapping.Keyword(keyword =>
-                                            keyword.IgnoreAbove(1024)))))
-                    .Properties<Base>(properties =>
-                        properties
+		/// <summary>
+		/// Get a type mapping descriptor for use with <see cref="Nest.PutIndexTemplateDescriptor"/>
+		/// designed for use with Elastic Common Schema version @(Model.YamlSchemas.First().FullVersion)
+		/// </summary>
+		/// <returns>An instance of <see cref="System.Func{Nest.TypeMappingDescriptor{Elastic.CommonSchema.Base}}{Nest.ITypeMapping}"/>.</returns>
+		public static Func@(Raw("<TypeMappingDescriptor<Base>, ITypeMapping>")) GetTypeMappingDescriptor()
+		{
+			return map =>
+				 map.Meta(meta => meta.Add("version", "@(Model.YamlSchemas.First().FullVersion)"))
+					.DateDetection(false)
+					.DynamicTemplates(dynamicTemplate =>
+						dynamicTemplate.DynamicTemplate("strings_as_keyword",
+							template =>
+								template.MatchMappingType("string")
+									.Mapping(mapping =>
+										mapping.Keyword(keyword =>
+											keyword.IgnoreAbove(1024)))))
+					.Properties<Base>(properties =>
+						properties
 @foreach (var field in Model.YamlSchemas.Single(m => m.Name == "base").GetFieldsFlat())
 {
-<text>                            .@(Raw(field.MappingType))(p => p.Name(n => n.@(field.PropertyName))@(field.Extras))
+<text>							.@(Raw(field.MappingType))(p => p.Name(n => n.@(field.PropertyName))@(field.Extras))
 </text> 
 }@foreach (var schema in Model.YamlSchemas.Where(m => m.Name != "base"))
 {
-<text>                            .Object<@FileGenerator.PascalCase(schema.Name)>(o =>
-                                o.Properties(a => a
+<text>							.Object<@FileGenerator.PascalCase(schema.Name)>(o =>
+								o.Properties(a => a
 @foreach (var field in schema.GetFieldsFlat())
 {
-<text>                                    .@(Raw(field.MappingType))(p => p.Name(n => n.@(field.PropertyName))@(field.Extras))
+<text>									.@(Raw(field.MappingType))(p => p.Name(n => n.@(field.PropertyName))@(field.Extras))
 </text> 
 }
-                            ))
+							))
 </text>
 }
-                        );
-        }
-    }
+						);
+		}
+	}
 }

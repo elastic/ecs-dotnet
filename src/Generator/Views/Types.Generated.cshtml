@@ -16,7 +16,7 @@
 // not use this file except in compliance with the License.
 // You may obtain a copy of the License at
 //
-//     http://www.apache.org/licenses/LICENSE-2.0
+//	 http://www.apache.org/licenses/LICENSE-2.0
 //
 // Unless required by applicable law or agreed to in writing,
 // software distributed under the License is distributed on an
@@ -43,190 +43,190 @@ using System.Runtime.Serialization;
 
 namespace Elastic.CommonSchema
 {
-    /// <summary>
-    /// Elastic Common Schema version @(Model.YamlSchemas.First().FullVersion)
-    /// <para/>
-    /// The Elastic Common Schema (ECS) defines a common set of fields for ingesting data into Elasticsearch.
-    /// A common schema helps you correlate data from sources like logs and metrics or IT operations analytics
-    /// and security analytics.
-    /// <para/>
-    /// See: https://github.com/elastic/ecs
-    /// </summary>
-    public partial class Base
-    {
-        /// <summary>
-        /// Elastic Common Schema version
-        /// </summary>
-        public static string Version => "@(Model.YamlSchemas.First().FullVersion)";
+	/// <summary>
+	/// Elastic Common Schema version @(Model.YamlSchemas.First().FullVersion)
+	/// <para/>
+	/// The Elastic Common Schema (ECS) defines a common set of fields for ingesting data into Elasticsearch.
+	/// A common schema helps you correlate data from sources like logs and metrics or IT operations analytics
+	/// and security analytics.
+	/// <para/>
+	/// See: https://github.com/elastic/ecs
+	/// </summary>
+	public partial class Base
+	{
+		/// <summary>
+		/// Elastic Common Schema version
+		/// </summary>
+		public static string Version => "@(Model.YamlSchemas.First().FullVersion)";
 
-        /// <summary>
-        /// Container for additional metadata against this event.
-        /// </summary>
-        [DataMember(Name = "_metadata")]
-        public @Raw("IDictionary<string, object>") Metadata { get; set; }
+		/// <summary>
+		/// Container for additional metadata against this event.
+		/// </summary>
+		[DataMember(Name = "_metadata")]
+		public @Raw("IDictionary<string, object>") Metadata { get; set; }
 
 @foreach (var schema in Model.YamlSchemas.Where(m => m.Name != "base"))
-    {
-<text>        /// <summary>
-        /// @Raw(schema.DescriptionSanitized)
-        /// </summary>
-        [DataMember(Name = "@Raw(schema.Name)")]
-        public @FileGenerator.PascalCase(schema.Name) @FileGenerator.PascalCase(schema.Name) { get; set; }
+	{
+<text>		/// <summary>
+		/// @Raw(schema.DescriptionSanitized)
+		/// </summary>
+		[DataMember(Name = "@Raw(schema.Name)")]
+		public @FileGenerator.PascalCase(schema.Name) @FileGenerator.PascalCase(schema.Name) { get; set; }
 
 </text>
-    }
+	}
 @foreach (var field in Model.YamlSchemas.Single(m => m.Name == "base").GetFieldsFlat())
 {
-<text>        /// <summary>
-        /// @Raw(field.DescriptionSanitized)
-        /// </summary>
-        /// <remarks>@field.Level.ToString("f")</remarks>
-        @if (field.Example != null)
-        {
-<text>        /// <example>@Raw(JsonConvert.SerializeObject(field.Example).Trim('"'))</example>
+<text>		/// <summary>
+		/// @Raw(field.DescriptionSanitized)
+		/// </summary>
+		/// <remarks>@field.Level.ToString("f")</remarks>
+		@if (field.Example != null)
+		{
+<text>		/// <example>@Raw(JsonConvert.SerializeObject(field.Example).Trim('"'))</example>
 </text>
-        }
-        [DataMember(Name = "@Raw(field.JsonFieldName)")]
-        public @Raw(field.ClrType) @(field.PropertyName) { get; set; }
+		}
+		[DataMember(Name = "@Raw(field.JsonFieldName)")]
+		public @Raw(field.ClrType) @(field.PropertyName) { get; set; }
 
 </text> 
 }
-    }
+	}
 
-    @foreach (var schema in Model.YamlSchemas.Where(m => m.Name != "base"))
-    {
-    foreach (var nestedField in schema.GetFieldsNested())
-    {
-    foreach (var child in nestedField.Children)
-    {
-        if (child.Children.Count > 0)
-        {
-            throw new System.ArgumentException("Template does not support grandchildren fields.");
-        }
-        
-<text>    /// <summary>
-    /// @nestedField.ClassName@child.ClassName, property of <see cref="@FileGenerator.PascalCase(schema.Name)@nestedField.ClassName" />
-    /// </summary>
-    public class @nestedField.ClassName@child.ClassName
-    {
-    @foreach (var field in child.Fields)
-    {
-<text>        /// <summary>
-        /// @nestedField.ClassName @Raw(field.DescriptionSanitized)
-        /// </summary>
-        /// <remarks>@field.Level.ToString("f")</remarks>
-        @if (field.Example != null)
-        {
-<text>        /// <example>@Raw(JsonConvert.SerializeObject(field.Example).Trim('"'))</example>
+	@foreach (var schema in Model.YamlSchemas.Where(m => m.Name != "base"))
+	{
+	foreach (var nestedField in schema.GetFieldsNested())
+	{
+	foreach (var child in nestedField.Children)
+	{
+		if (child.Children.Count > 0)
+		{
+			throw new System.ArgumentException("Template does not support grandchildren fields.");
+		}
+		
+<text>	/// <summary>
+	/// @nestedField.ClassName@child.ClassName, property of <see cref="@FileGenerator.PascalCase(schema.Name)@nestedField.ClassName" />
+	/// </summary>
+	public class @nestedField.ClassName@child.ClassName
+	{
+	@foreach (var field in child.Fields)
+	{
+<text>		/// <summary>
+		/// @nestedField.ClassName @Raw(field.DescriptionSanitized)
+		/// </summary>
+		/// <remarks>@field.Level.ToString("f")</remarks>
+		@if (field.Example != null)
+		{
+<text>		/// <example>@Raw(JsonConvert.SerializeObject(field.Example).Trim('"'))</example>
 </text> 
-        }
-        [DataMember(Name = "@Raw(string.Join(".", field.Name.ToLower().Split('.').Skip(2)))")]
-        public @Raw(field.ClrType) @FileGenerator.PascalCase(field.Name).Replace(nestedField.ClassName + child.ClassName, string.Empty) { get; set; }
+		}
+		[DataMember(Name = "@Raw(string.Join(".", field.Name.ToLower().Split('.').Skip(2)))")]
+		public @Raw(field.ClrType) @FileGenerator.PascalCase(field.Name).Replace(nestedField.ClassName + child.ClassName, string.Empty) { get; set; }
 
 </text>}
-    }
+	}
 
 </text>
-    }
-        
-<text>    /// <summary>
-    /// @nestedField.ClassName, property of <see cref="@FileGenerator.PascalCase(schema.Name)" />
-    /// </summary>
-    public class @FileGenerator.PascalCase(schema.Name)@nestedField.ClassName
-    {
+	}
+		
+<text>	/// <summary>
+	/// @nestedField.ClassName, property of <see cref="@FileGenerator.PascalCase(schema.Name)" />
+	/// </summary>
+	public class @FileGenerator.PascalCase(schema.Name)@nestedField.ClassName
+	{
 @foreach (var child in nestedField.Children)
-    {<text>        /// <summary>
-        /// @child.ClassName property.
-        /// </summary>           
-        [DataMember(Name = "@child.ClassName.ToLower()")]
-        public @nestedField.ClassName@child.ClassName @child.ClassName { get; set; }
+	{<text>		/// <summary>
+		/// @child.ClassName property.
+		/// </summary>		   
+		[DataMember(Name = "@child.ClassName.ToLower()")]
+		public @nestedField.ClassName@child.ClassName @child.ClassName { get; set; }
 
 </text>}
 @foreach (var field in nestedField.Fields)
-    {<text>        /// <summary>
-        /// @Raw(field.DescriptionSanitized)
-        /// </summary>
-        /// <remarks>@field.Level.ToString("f")</remarks>
-        @if (field.Example != null)
-        {
-<text>        /// <example>@Raw(JsonConvert.SerializeObject(field.Example).Trim('"'))</example>
+	{<text>		/// <summary>
+		/// @Raw(field.DescriptionSanitized)
+		/// </summary>
+		/// <remarks>@field.Level.ToString("f")</remarks>
+		@if (field.Example != null)
+		{
+<text>		/// <example>@Raw(JsonConvert.SerializeObject(field.Example).Trim('"'))</example>
 </text> 
-        }
-        [DataMember(Name = "@Raw(string.Join(".", field.Name.ToLower().Split('.').Skip(1)))")]
-        public @Raw(field.ClrType) @FileGenerator.PascalCase(field.Name).Replace(nestedField.ClassName, string.Empty) { get; set; }
+		}
+		[DataMember(Name = "@Raw(string.Join(".", field.Name.ToLower().Split('.').Skip(1)))")]
+		public @Raw(field.ClrType) @FileGenerator.PascalCase(field.Name).Replace(nestedField.ClassName, string.Empty) { get; set; }
 
 </text>}
-    }
+	}
 
 </text>
-    }
+	}
 
-<text>    /// <summary>
-    /// @Raw(schema.DescriptionSanitized)
-    /// </summary>
-    @if (!schema.Footnote.IsNullOrEmpty())
-    {
-<text>    /// <remarks>
-    /// @Raw(schema.Footnote)
-    /// </remarks>
+<text>	/// <summary>
+	/// @Raw(schema.DescriptionSanitized)
+	/// </summary>
+	@if (!schema.Footnote.IsNullOrEmpty())
+	{
+<text>	/// <remarks>
+	/// @Raw(schema.Footnote)
+	/// </remarks>
 </text>
-    }
-    public @(schema.Name == "log" ? "partial " : "")class @FileGenerator.PascalCase(schema.Name) 
-    {
-    @if (schema.Nestings != null)
-    {
+	}
+	public @(schema.Name == "log" ? "partial " : "")class @FileGenerator.PascalCase(schema.Name) 
+	{
+	@if (schema.Nestings != null)
+	{
 foreach (var nesting in schema.Nestings)
-{<text>        /// <summary>
-        /// @FileGenerator.PascalCase(nesting) nested field.
-        /// <para/>
-        /// @Model.YamlSchemas.Single(y => y.Name == nesting).DescriptionSanitized
-        /// </summary>
-        [DataMember(Name = "@nesting")]
-        public @FileGenerator.PascalCase(nesting) @FileGenerator.PascalCase(nesting) { get; set; }
+{<text>		/// <summary>
+		/// @FileGenerator.PascalCase(nesting) nested field.
+		/// <para/>
+		/// @Model.YamlSchemas.Single(y => y.Name == nesting).DescriptionSanitized
+		/// </summary>
+		[DataMember(Name = "@nesting")]
+		public @FileGenerator.PascalCase(nesting) @FileGenerator.PascalCase(nesting) { get; set; }
 
 </text>}
-    }
+	}
 @foreach (var field in schema.GetFieldsNested())
-    {<text>        /// <summary>
-        /// @Raw(field.Description)
-        /// </summary>
-        [DataMember(Name = "@Raw(field.ClassName.ToLower())")]
-        public @FileGenerator.PascalCase(schema.Name)@field.ClassNameType @FileGenerator.PascalCase(field.ClassName) { get; set; }
+	{<text>		/// <summary>
+		/// @Raw(field.Description)
+		/// </summary>
+		[DataMember(Name = "@Raw(field.ClassName.ToLower())")]
+		public @FileGenerator.PascalCase(schema.Name)@field.ClassNameType @FileGenerator.PascalCase(field.ClassName) { get; set; }
 
 </text>}
 @foreach (var field in schema.GetFieldsFlat())
-    {<text>        /// <summary>
-        /// @Raw(field.DescriptionSanitized)
-        /// </summary>
-        /// <remarks>@field.Level.ToString("f")</remarks>
-        @if (field.Example != null)
-        {
-<text>        /// <example>@Raw(JsonConvert.SerializeObject(field.Example).Trim('"'))</example>
+	{<text>		/// <summary>
+		/// @Raw(field.DescriptionSanitized)
+		/// </summary>
+		/// <remarks>@field.Level.ToString("f")</remarks>
+		@if (field.Example != null)
+		{
+<text>		/// <example>@Raw(JsonConvert.SerializeObject(field.Example).Trim('"'))</example>
 </text>}
-        [DataMember(Name = "@Raw(field.JsonFieldName)")]
-        public @Raw(field.ClrType) @(field.PropertyName) { get; set; }
+		[DataMember(Name = "@Raw(field.JsonFieldName)")]
+		public @Raw(field.ClrType) @(field.PropertyName) { get; set; }
 
 </text>}
-    }
+	}
 
 </text>}
 }
 
 namespace Elastic.CommonSchema.Elasticsearch
 {
-    /// <summary>
-    /// Elastic Common Schema version @(Model.YamlSchemas.First().FullVersion) index templates to be used with Elasticsearch.
-    /// </summary>
-    public static class IndexTemplates
-    {
+	/// <summary>
+	/// Elastic Common Schema version @(Model.YamlSchemas.First().FullVersion) index templates to be used with Elasticsearch.
+	/// </summary>
+	public static class IndexTemplates
+	{
 @foreach (var template in Model.Templates)
-{<text>        /// <summary>
-        /// Elastic Common Schema version @(Model.YamlSchemas.First().FullVersion) index template for Elasticsearch version @(template.Key)
-        /// See the Put Index Template API documentation: https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-templates.html
-        /// </summary>
-        /// <returns>Index template string that can be used with the Put Index Template API.</returns>
-        public static string GetIndexTemplateForElasticsearch@(template.Key)(string indexPattern = "ecs-*") { return "@Raw(System.Text.RegularExpressions.Regex.Replace(template.Value, @"\r\n?|\n", "").Replace("\"", "\\\"").Replace("ecs-*", "\" + indexPattern + \""))"; }
+{<text>		/// <summary>
+		/// Elastic Common Schema version @(Model.YamlSchemas.First().FullVersion) index template for Elasticsearch version @(template.Key)
+		/// See the Put Index Template API documentation: https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-templates.html
+		/// </summary>
+		/// <returns>Index template string that can be used with the Put Index Template API.</returns>
+		public static string GetIndexTemplateForElasticsearch@(template.Key)(string indexPattern = "ecs-*") { return "@Raw(System.Text.RegularExpressions.Regex.Replace(template.Value, @"\r\n?|\n", "").Replace("\"", "\\\"").Replace("ecs-*", "\" + indexPattern + \""))"; }
 
 </text>}
-    }
+	}
 }
