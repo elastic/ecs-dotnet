@@ -26,11 +26,12 @@ namespace Generator
         public static void Generate(string downloadBranch, params string[] folders)
         {
             Warnings = new List<string>();
-            var spec = GetECSSpecification(downloadBranch, folders);
-            var actions = new Dictionary<Action<ECSSpecification>, string>
+            var spec = GetEcsSpecification(downloadBranch, folders);
+            var actions = new Dictionary<Action<EcsSpecification>, string>
             {
                 {GenerateTypes, "Dotnet types"},
-                {GenerateTypeMappings, "Dotnet type mapping"}
+                {GenerateTypeMappings, "Dotnet type mapping"},
+                {GenerateBaseJsonFormatter, "Base Json Formatter"},
             };
 
             using (var pbar = new ProgressBar(actions.Count, "Generating code",
@@ -59,7 +60,7 @@ namespace Generator
             Console.ResetColor();
         }
 
-        private static ECSSpecification GetECSSpecification(string downloadBranch, string[] folders)
+        private static EcsSpecification GetEcsSpecification(string downloadBranch, string[] folders)
         {
             var specificationFolder = Path.Combine(CodeConfiguration.SpecificationFolder, downloadBranch);
             var directories = Directory
@@ -116,7 +117,7 @@ namespace Generator
                 }
             }
 
-            var spec = new ECSSpecification
+            var spec = new EcsSpecification
             {
                 YamlSchemas = yamlSchemas,
                 Templates = templates
@@ -170,12 +171,12 @@ namespace Generator
             });
         }
 
-        private static string DoRazor(string name, string template, ECSSpecification model)
+        private static string DoRazor(string name, string template, EcsSpecification model)
         {
             return Razor.CompileRenderStringAsync(name, template, model).GetAwaiter().GetResult();
         }
 
-        private static void GenerateTypes(ECSSpecification model)
+        private static void GenerateTypes(EcsSpecification model)
         {
             var targetDir = Path.GetFullPath(CodeConfiguration.ElasticCommonSchemaGeneratedFolder);
             var outputFile = Path.Combine(targetDir, @"Types.Generated.cs");
@@ -185,13 +186,23 @@ namespace Generator
             File.WriteAllText(outputFile, source);
         }
 
-        private static void GenerateTypeMappings(ECSSpecification model)
+        private static void GenerateTypeMappings(EcsSpecification model)
         {
             var targetDir = Path.GetFullPath(CodeConfiguration.ElasticCommonSchemaNESTGeneratedFolder);
             var outputFile = Path.Combine(targetDir, @"TypeMappings.Generated.cs");
             var path = Path.Combine(CodeConfiguration.ViewFolder, @"TypeMappings.Generated.cshtml");
             var template = File.ReadAllText(path);
             var source = DoRazor(nameof(GenerateTypeMappings), template, model);
+            File.WriteAllText(outputFile, source);
+        }
+
+        private static void GenerateBaseJsonFormatter(EcsSpecification model)
+        {
+            var targetDir = Path.GetFullPath(CodeConfiguration.ElasticCommonSchemaGeneratedFolder);
+            var outputFile = Path.Combine(targetDir, "Serialization", @"BaseJsonFormatter.Generated.cs");
+            var path = Path.Combine(CodeConfiguration.ViewFolder, @"BaseJsonFormatter.Generated.cshtml");
+            var template = File.ReadAllText(path);
+            var source = DoRazor(nameof(GenerateBaseJsonFormatter), template, model);
             File.WriteAllText(outputFile, source);
         }
 

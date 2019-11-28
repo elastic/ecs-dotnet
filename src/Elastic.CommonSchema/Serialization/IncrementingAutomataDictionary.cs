@@ -15,18 +15,15 @@
 // specific language governing permissions and limitations
 // under the License.
 
-using Elastic.CommonSchema.Serialization;
-using Utf8Json;
-using Utf8Json.Resolvers;
+using System.Threading;
+using Utf8Json.Internal;
 
-namespace Elastic.CommonSchema
+namespace Elastic.CommonSchema.Serialization
 {
-    [JsonFormatter(typeof(BaseJsonFormatter))]
-    public partial class Base
+    internal class IncrementingAutomataDictionary : AutomataDictionary
     {
-        public byte[] Serialize()
-        {
-            return JsonSerializer.Serialize(this, StandardResolver.ExcludeNull);
-        }
+        private int _propertiesCount;
+        
+        public void Add(string key) => Add(key, Interlocked.Increment(ref _propertiesCount));
     }
 }

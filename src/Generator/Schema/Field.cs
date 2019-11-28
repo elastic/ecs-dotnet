@@ -100,6 +100,7 @@ namespace Generator.Schema
                 if (Schema.Name == "user" && FlatName == "user.id") return "string[]";
                 if (Schema.Name == "base" && Name == "tags") return "string[]";
                 if (Schema.Name == "base" && Name == "labels") return "IDictionary<string, object>";
+                if (Schema.Name == "base" && Name == "_metadata") return "IDictionary<string, object>";
 
                 switch (Type)
                 {
