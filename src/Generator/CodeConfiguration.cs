@@ -12,14 +12,15 @@ namespace Generator
             {
                 if (_root != null) return _root;
 
-                var directoryInfo = new DirectoryInfo(Directory.GetCurrentDirectory());
+                var currentDirectory = Directory.GetCurrentDirectory();
+                var directoryInfo = new DirectoryInfo(currentDirectory);
 
                 var runningAsDnx =
                     directoryInfo.Name == "Generator" &&
                     directoryInfo.Parent != null &&
                     directoryInfo.Parent.Name == "ECS";
 
-                _root = runningAsDnx ? "" : @"..\";
+                _root = runningAsDnx ? "" : @"..\..\..\..\";
                 return _root;
             }
         }

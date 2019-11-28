@@ -17,6 +17,7 @@ module Projects =
 
     type Project =
         | CommonSchema
+        | CommonSchemaSerilog
         
     type PrivateProject =
         | Generator
@@ -28,18 +29,25 @@ module Projects =
         static member All = 
             seq [
                 Project Project.CommonSchema; 
+                Project Project.CommonSchemaSerilog; 
                 PrivateProject PrivateProject.Generator
             ]
-        static member AllPublishable = seq [Project Project.CommonSchema]
+        static member AllPublishable =
+            seq [
+                Project Project.CommonSchema
+                Project Project.CommonSchemaSerilog                
+            ]
 
         member this.Name =
             match this with
             | Project CommonSchema -> "Elastic.CommonSchema"
+            | Project CommonSchemaSerilog -> "Elastic.CommonSchema.Serilog"
             | PrivateProject Generator -> "Generator"
  
         member this.NugetId =
             match this with
             | Project CommonSchema -> "Elastic.CommonSchema"
+            | Project CommonSchemaSerilog -> "Elastic.CommonSchema.Serilog"
             | _ -> this.Name
                 
         member this.Versioned name version =

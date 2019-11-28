@@ -7,7 +7,7 @@
 @using Generator.Schema
 @using Microsoft.CodeAnalysis.CSharp.Syntax
 @using Newtonsoft.Json
-@inherits Generator.CodeTemplatePage<Generator.Schema.ECSSpecification>
+@inherits Generator.CodeTemplatePage<Generator.Schema.EcsSpecification>
 // Licensed to Elasticsearch B.V. under one or more contributor
 // license agreements. See the NOTICE file distributed with
 // this work for additional information regarding copyright
@@ -24,6 +24,13 @@
 // KIND, either express or implied.  See the License for the
 // specific language governing permissions and limitations
 // under the License.
+
+/*
+IMPORTANT NOTE
+==============
+This file has been generated. 
+If you wish to submit a PR please modify the original csharp file and submit the PR with that change. Thanks!
+*/
 
 // ReSharper disable RedundantUsingDirective
 using System;
@@ -45,8 +52,13 @@ namespace Elastic.CommonSchema
     /// <para/>
     /// See: https://github.com/elastic/ecs
     /// </summary>
-    public class Base
+    public partial class Base
     {
+        /// <summary>
+        /// Elastic Common Schema version
+        /// </summary>
+        public static string Version => "@(Model.YamlSchemas.First().FullVersion)";
+
         /// <summary>
         /// Container for additional metadata against this event.
         /// </summary>
@@ -159,7 +171,7 @@ namespace Elastic.CommonSchema
     /// </remarks>
 </text>
     }
-    public class @FileGenerator.PascalCase(schema.Name) 
+    public @(schema.Name == "log" ? "partial " : "")class @FileGenerator.PascalCase(schema.Name) 
     {
     @if (schema.Nestings != null)
     {
