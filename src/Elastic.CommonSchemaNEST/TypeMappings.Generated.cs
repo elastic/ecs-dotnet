@@ -22,7 +22,7 @@ using Nest;
 namespace Elastic.CommonSchema.Elasticsearch
 {
 	/// <summary>
-	/// Utilities for Elastic Common Schema version 1.2.0
+	/// Utilities for Elastic Common Schema version 1.3.0
 	/// To be used in conjunction with the NEST client.
 	/// <para/>
 	/// The Elastic Common Schema (ECS) defines a common set of fields for ingesting data into Elasticsearch.
@@ -35,7 +35,7 @@ namespace Elastic.CommonSchema.Elasticsearch
 	{
 		/// <summary>
 		/// Get a Put Index Template Descriptor for use with <see cref="Nest.PutIndexTemplateRequest"/>
-		/// designed for use with Elastic Common Schema version 1.2.0
+		/// designed for use with Elastic Common Schema version 1.3.0
 		/// </summary>
 		/// <param name="name">The name of the index template.</param>
 		/// <returns>An instance of <see cref="Nest.PutIndexTemplateDescriptor"/>.</returns>
@@ -66,13 +66,13 @@ namespace Elastic.CommonSchema.Elasticsearch
 
 		/// <summary>
 		/// Get a type mapping descriptor for use with <see cref="Nest.PutIndexTemplateDescriptor"/>
-		/// designed for use with Elastic Common Schema version 1.2.0
+		/// designed for use with Elastic Common Schema version 1.3.0
 		/// </summary>
 		/// <returns>An instance of <see cref="System.Func{Nest.TypeMappingDescriptor{Elastic.CommonSchema.Base}}{Nest.ITypeMapping}"/>.</returns>
 		public static Func<TypeMappingDescriptor<Base>, ITypeMapping> GetTypeMappingDescriptor()
 		{
 			return map =>
-				 map.Meta(meta => meta.Add("version", "1.2.0"))
+				 map.Meta(meta => meta.Add("version", "1.3.0"))
 					.DateDetection(false)
 					.DynamicTemplates(dynamicTemplate =>
 						dynamicTemplate.DynamicTemplate("strings_as_keyword",
@@ -180,6 +180,7 @@ namespace Elastic.CommonSchema.Elasticsearch
 									.Date(p => p.Name(n => n.End))
 									.Number(p => p.Name(n => n.RiskScore).Type(NumberType.Float))
 									.Number(p => p.Name(n => n.RiskScoreNorm).Type(NumberType.Float))
+									.Date(p => p.Name(n => n.Ingested))
 							))
 							.Object<File>(o =>
 								o.Properties(a => a
@@ -236,6 +237,7 @@ namespace Elastic.CommonSchema.Elasticsearch
 									.Keyword(p => p.Name(n => n.Type).IgnoreAbove(1024))
 									.Number(p => p.Name(n => n.Uptime).Type(NumberType.Long))
 									.Keyword(p => p.Name(n => n.Architecture).IgnoreAbove(1024))
+									.Keyword(p => p.Name(n => n.Domain).IgnoreAbove(1024))
 							))
 							.Object<Http>(o =>
 								o.Properties(a => a
@@ -291,6 +293,7 @@ namespace Elastic.CommonSchema.Elasticsearch
 								o.Properties(a => a
 									.Keyword(p => p.Name(n => n.Name).IgnoreAbove(1024))
 									.Keyword(p => p.Name(n => n.Version).IgnoreAbove(1024))
+									.Keyword(p => p.Name(n => n.BuildVersion).IgnoreAbove(1024))
 									.Keyword(p => p.Name(n => n.Description).IgnoreAbove(1024))
 									.Number(p => p.Name(n => n.Size).Type(NumberType.Long))
 									.Date(p => p.Name(n => n.Installed))
@@ -299,6 +302,8 @@ namespace Elastic.CommonSchema.Elasticsearch
 									.Keyword(p => p.Name(n => n.Checksum).IgnoreAbove(1024))
 									.Keyword(p => p.Name(n => n.InstallScope).IgnoreAbove(1024))
 									.Keyword(p => p.Name(n => n.License).IgnoreAbove(1024))
+									.Keyword(p => p.Name(n => n.Reference).IgnoreAbove(1024))
+									.Keyword(p => p.Name(n => n.Type).IgnoreAbove(1024))
 							))
 							.Object<Process>(o =>
 								o.Properties(a => a
@@ -306,12 +311,15 @@ namespace Elastic.CommonSchema.Elasticsearch
 									.Keyword(p => p.Name(n => n.Name).IgnoreAbove(1024))
 									.Number(p => p.Name(n => n.Ppid).Type(NumberType.Long))
 									.Number(p => p.Name(n => n.Pgid).Type(NumberType.Long))
+									.Keyword(p => p.Name(n => n.CommandLine).IgnoreAbove(1024))
 									.Keyword(p => p.Name(n => n.Args).IgnoreAbove(1024))
+									.Number(p => p.Name(n => n.ArgsCount).Type(NumberType.Long))
 									.Keyword(p => p.Name(n => n.Executable).IgnoreAbove(1024))
 									.Keyword(p => p.Name(n => n.Title).IgnoreAbove(1024))
 									.Date(p => p.Name(n => n.Start))
 									.Number(p => p.Name(n => n.Uptime).Type(NumberType.Long))
 									.Keyword(p => p.Name(n => n.WorkingDirectory).IgnoreAbove(1024))
+									.Number(p => p.Name(n => n.ExitCode).Type(NumberType.Long))
 							))
 							.Object<Related>(o =>
 								o.Properties(a => a
@@ -354,6 +362,16 @@ namespace Elastic.CommonSchema.Elasticsearch
 								o.Properties(a => a
 									.Keyword(p => p.Name(n => n.Framework).IgnoreAbove(1024))
 							))
+							.Object<Tls>(o =>
+								o.Properties(a => a
+									.Keyword(p => p.Name(n => n.Version).IgnoreAbove(1024))
+									.Keyword(p => p.Name(n => n.VersionProtocol).IgnoreAbove(1024))
+									.Keyword(p => p.Name(n => n.Cipher).IgnoreAbove(1024))
+									.Keyword(p => p.Name(n => n.Curve).IgnoreAbove(1024))
+									.Boolean(p => p.Name(n => n.Resumed))
+									.Boolean(p => p.Name(n => n.Established))
+									.Keyword(p => p.Name(n => n.NextProtocol).IgnoreAbove(1024))
+							))
 							.Object<Tracing>(o =>
 								o.Properties(a => a
 							))
@@ -387,6 +405,17 @@ namespace Elastic.CommonSchema.Elasticsearch
 									.Keyword(p => p.Name(n => n.Original).IgnoreAbove(1024))
 									.Keyword(p => p.Name(n => n.Name).IgnoreAbove(1024))
 									.Keyword(p => p.Name(n => n.Version).IgnoreAbove(1024))
+							))
+							.Object<Vulnerability>(o =>
+								o.Properties(a => a
+									.Keyword(p => p.Name(n => n.Classification).IgnoreAbove(1024))
+									.Keyword(p => p.Name(n => n.Enumeration).IgnoreAbove(1024))
+									.Keyword(p => p.Name(n => n.Reference).IgnoreAbove(1024))
+									.Keyword(p => p.Name(n => n.Category).IgnoreAbove(1024))
+									.Keyword(p => p.Name(n => n.Description).IgnoreAbove(1024))
+									.Keyword(p => p.Name(n => n.Id).IgnoreAbove(1024))
+									.Keyword(p => p.Name(n => n.Severity).IgnoreAbove(1024))
+									.Keyword(p => p.Name(n => n.ReportId).IgnoreAbove(1024))
 							))
 						);
 		}
