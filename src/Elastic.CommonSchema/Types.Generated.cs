@@ -5,7 +5,7 @@
 /*
 IMPORTANT NOTE
 ==============
-This file has been generated.
+This file has been generated. 
 If you wish to submit a PR please modify the original csharp file and submit the PR with that change. Thanks!
 */
 
@@ -274,7 +274,7 @@ namespace Elastic.CommonSchema
 	/// <remarks>
 	/// Examples: In the case of Beats for logs, the agent.name is filebeat. For APM, it is the agent running in the app/service. The agent information does not change if data is sent through queuing systems like Kafka, Redis, or processing systems such as Logstash or APM Server.
 	/// </remarks>
-	public class Agent
+	public class Agent 
 	{
 		/// <summary>
 		/// Version of the agent.
@@ -336,7 +336,7 @@ namespace Elastic.CommonSchema
 	/// <summary>
 	/// An autonomous system (AS) is a collection of connected Internet Protocol (IP) routing prefixes under the control of one or more network operators on behalf of a single administrative entity or domain that presents a common, clearly defined routing policy to the internet.
 	/// </summary>
-	public class As
+	public class As 
 	{
 		/// <summary>
 		/// Organization property.
@@ -378,7 +378,7 @@ namespace Elastic.CommonSchema
 	/// <summary>
 	/// A client is defined as the initiator of a network connection for events regarding sessions, connections, or bidirectional flow records.<para/>For TCP events, the client is the initiator of the TCP connection that sends the SYN packet(s). For other protocols, the client is generally the initiator or requestor in the network transaction. Some systems use the term "originator" to refer the client in TCP connections. The client fields describe details about the system acting as the client in the network event. Client fields are usually populated in conjunction with server fields. Client fields are generally not populated for packet-level events.<para/>Client / server representations can add semantic context to an exchange, which is helpful to visualize the data in certain situations. If your context falls in that category, you should still ensure that source and destination are filled appropriately.
 	/// </summary>
-	public class Client
+	public class Client 
 	{
 		/// <summary>
 		/// Geo nested field.
@@ -537,7 +537,7 @@ namespace Elastic.CommonSchema
 	/// <remarks>
 	/// Examples: If Metricbeat is running on an EC2 host and fetches data from its host, the cloud info contains the data about this machine. If Metricbeat runs on a remote machine outside the cloud and fetches data from a service running in the cloud, the field contains cloud data from the machine the service is running on.
 	/// </remarks>
-	public class Cloud
+	public class Cloud 
 	{
 		/// <summary>
 		/// Instance property.
@@ -607,7 +607,7 @@ namespace Elastic.CommonSchema
 	/// <summary>
 	/// Container fields are used for meta information about the specific container that is the source of information.<para/>These fields help correlate data based containers from any runtime.
 	/// </summary>
-	public class Container
+	public class Container 
 	{
 		/// <summary>
 		/// Image property.
@@ -670,7 +670,7 @@ namespace Elastic.CommonSchema
 	/// <summary>
 	/// Destination fields describe details about the destination of a packet/event.<para/>Destination fields are usually populated in conjunction with source fields.
 	/// </summary>
-	public class Destination
+	public class Destination 
 	{
 		/// <summary>
 		/// Geo nested field.
@@ -876,7 +876,7 @@ namespace Elastic.CommonSchema
 	/// <summary>
 	/// Fields describing DNS queries and answers.<para/>DNS events should either represent a single DNS query prior to getting answers (`dns.type:query`) or they should represent a full exchange and contain the query details as well as all of the answers that were provided for this query (`dns.type:answer`).
 	/// </summary>
-	public class Dns
+	public class Dns 
 	{
 		/// <summary>
 		/// Question property.
@@ -943,7 +943,7 @@ namespace Elastic.CommonSchema
 	/// <summary>
 	/// Meta-information specific to ECS.
 	/// </summary>
-	public class Ecs
+	public class Ecs 
 	{
 		/// <summary>
 		/// ECS version this event conforms to. `ecs.version` is a required field and must exist in all events.<para/>When querying across multiple indices -- which may conform to slightly different ECS versions -- this field lets integrations adjust to the schema version of the events.
@@ -958,7 +958,7 @@ namespace Elastic.CommonSchema
 	/// <summary>
 	/// These fields can represent errors of any kind.<para/>Use them for errors that happen while fetching events or in cases where the event itself contains an error.
 	/// </summary>
-	public class Error
+	public class Error 
 	{
 		/// <summary>
 		/// Unique identifier for the error.
@@ -1001,7 +1001,7 @@ namespace Elastic.CommonSchema
 	/// <summary>
 	/// The event fields are used for context information about the log or metric event itself.<para/>A log is defined as an event containing details of something that happened. Log events must include the time at which the thing happened. Examples of log events include a process starting on a host, a network packet being sent from a source to a destination, or a network connection between a client and a server being initiated or closed. A metric is defined as an event containing one or more numerical or categorical measurements and the time at which the measurement was taken. Examples of metric events include memory pressure measured on a host, or vulnerabilities measured on a scanned host.
 	/// </summary>
-	public class Event
+	public class Event 
 	{
 		/// <summary>
 		/// Unique ID to describe the event.
@@ -1167,7 +1167,7 @@ namespace Elastic.CommonSchema
 	/// <summary>
 	/// A file is defined as a set of information that has been created on, or has existed on a filesystem.<para/>File objects can be associated with host events, network events, and/or file events (e.g., those produced by File Integrity Monitoring [FIM] products or services). File fields provide details about the affected file associated with the event or metric.
 	/// </summary>
-	public class File
+	public class File 
 	{
 		/// <summary>
 		/// Hash nested field.
@@ -1321,7 +1321,7 @@ namespace Elastic.CommonSchema
 	/// <summary>
 	/// Geo fields can carry data about a specific location related to an event.<para/>This geolocation information can be derived from techniques such as Geo IP, or be user-supplied.
 	/// </summary>
-	public class Geo
+	public class Geo 
 	{
 		/// <summary>
 		/// Longitude and latitude.
@@ -1392,7 +1392,7 @@ namespace Elastic.CommonSchema
 	/// <summary>
 	/// The group fields are meant to represent groups that are relevant to the event.
 	/// </summary>
-	public class Group
+	public class Group 
 	{
 		/// <summary>
 		/// Unique identifier for the group on the system/platform.
@@ -1420,7 +1420,7 @@ namespace Elastic.CommonSchema
 	/// <summary>
 	/// The hash fields represent different hash algorithms and their values.<para/>Field names for common hashes (e.g. MD5, SHA1) are predefined. Add fields for other hashes by lowercasing the hash algorithm name and using underscore separators as appropriate (snake case, e.g. sha3_512).
 	/// </summary>
-	public class Hash
+	public class Hash 
 	{
 		/// <summary>
 		/// MD5 hash.
@@ -1455,7 +1455,7 @@ namespace Elastic.CommonSchema
 	/// <summary>
 	/// A host is defined as a general computing instance.<para/>ECS host.* fields should be populated with details about the host on which the event happened, or from which the measurement was taken. Host types include hardware, virtual machines, Docker containers, and Kubernetes nodes.
 	/// </summary>
-	public class Host
+	public class Host 
 	{
 		/// <summary>
 		/// Geo nested field.
@@ -1571,7 +1571,7 @@ namespace Elastic.CommonSchema
 	{
 		/// <summary>
 		/// Body property.
-		/// </summary>
+		/// </summary>		   
 		[DataMember(Name = "body")]
 		public RequestBody Body { get; set; }
 
@@ -1631,7 +1631,7 @@ namespace Elastic.CommonSchema
 	{
 		/// <summary>
 		/// Body property.
-		/// </summary>
+		/// </summary>		   
 		[DataMember(Name = "body")]
 		public ResponseBody Body { get; set; }
 
@@ -1656,7 +1656,7 @@ namespace Elastic.CommonSchema
 	/// <summary>
 	/// Fields related to HTTP activity. Use the `url` field set to store the url of the request.
 	/// </summary>
-	public class Http
+	public class Http 
 	{
 		/// <summary>
 		/// Request property.
@@ -1710,7 +1710,7 @@ namespace Elastic.CommonSchema
 	{
 		/// <summary>
 		/// File property.
-		/// </summary>
+		/// </summary>		   
 		[DataMember(Name = "file")]
 		public OriginFile File { get; set; }
 
@@ -1777,13 +1777,13 @@ namespace Elastic.CommonSchema
 	{
 		/// <summary>
 		/// Severity property.
-		/// </summary>
+		/// </summary>		   
 		[DataMember(Name = "severity")]
 		public SyslogSeverity Severity { get; set; }
 
 		/// <summary>
 		/// Facility property.
-		/// </summary>
+		/// </summary>		   
 		[DataMember(Name = "facility")]
 		public SyslogFacility Facility { get; set; }
 
@@ -1800,7 +1800,7 @@ namespace Elastic.CommonSchema
 	/// <summary>
 	/// Details about the event's logging mechanism or logging transport.<para/>The log.* fields are typically populated with details about the logging mechanism used to create and/or transport the event. For example, syslog details belong under `log.syslog.*`.<para/>The details specific to your event source are typically not logged under `log.*`, but rather in `event.*` or in other ECS fields.
 	/// </summary>
-	public partial class Log
+	public partial class Log 
 	{
 		/// <summary>
 		/// Origin property.
@@ -1843,7 +1843,7 @@ namespace Elastic.CommonSchema
 	/// <summary>
 	/// The network is defined as the communication path over which a host or network event happens.<para/>The network.* fields should be populated with details about the network activity associated with an event.
 	/// </summary>
-	public class Network
+	public class Network 
 	{
 		/// <summary>
 		/// Name given by operators to sections of their network.
@@ -1938,7 +1938,7 @@ namespace Elastic.CommonSchema
 	/// <summary>
 	/// An observer is defined as a special network, security, or application device used to detect, observe, or create network, security, or application-related events and metrics.<para/>This could be a custom hardware appliance or a server that has been configured to run special network, security, or application software. Examples include firewalls, web proxies, intrusion detection/prevention systems, network monitoring sensors, web application firewalls, data loss prevention systems, and APM servers. The observer.* fields shall be populated with details of the system, if any, that detects, observes and/or creates a network, security, or application event or metric. Message queues and ETL components used in processing events or metrics are not considered observers in ECS.
 	/// </summary>
-	public class Observer
+	public class Observer 
 	{
 		/// <summary>
 		/// Geo nested field.
@@ -2028,7 +2028,7 @@ namespace Elastic.CommonSchema
 	/// <summary>
 	/// The organization fields enrich data with information about the company or entity the data is associated with.<para/>These fields help you arrange or filter data stored in an index by one or multiple organizations.
 	/// </summary>
-	public class Organization
+	public class Organization 
 	{
 		/// <summary>
 		/// Organization name.
@@ -2049,7 +2049,7 @@ namespace Elastic.CommonSchema
 	/// <summary>
 	/// The OS fields contain information about the operating system.
 	/// </summary>
-	public class Os
+	public class Os 
 	{
 		/// <summary>
 		/// Operating system platform (such centos, ubuntu, windows).
@@ -2104,7 +2104,7 @@ namespace Elastic.CommonSchema
 	/// <summary>
 	/// These fields contain information about an installed software package. It contains general information about a package, such as name, version or size. It also contains installation details, such as time or location.
 	/// </summary>
-	public class Package
+	public class Package 
 	{
 		/// <summary>
 		/// Package name
@@ -2213,7 +2213,7 @@ namespace Elastic.CommonSchema
 	/// <summary>
 	/// These fields contain information about a process.<para/>These fields can help you correlate metrics information with a process id/name from a log message.  The `process.pid` often stays in the metric itself and is copied to the global field for correlation.
 	/// </summary>
-	public class Process
+	public class Process 
 	{
 		/// <summary>
 		/// Hash nested field.
@@ -2312,7 +2312,7 @@ namespace Elastic.CommonSchema
 	/// <summary>
 	/// This field set is meant to facilitate pivoting around a piece of data.<para/>Some pieces of information can be seen in many places in an ECS event. To facilitate searching for them, store an array of all seen values to their corresponding field in `related.`.<para/>A concrete example is IP addresses, which can be under host, observer, source, destination, client, server, and network.forwarded_ip. If you append all IPs to `related.ip`, you can then search for a given IP trivially, no matter where it appeared, by querying `related.ip:a.b.c.d`.
 	/// </summary>
-	public class Related
+	public class Related 
 	{
 		/// <summary>
 		/// All of the IPs seen on your event.
@@ -2347,7 +2347,7 @@ namespace Elastic.CommonSchema
 	/// <summary>
 	/// A Server is defined as the responder in a network connection for events regarding sessions, connections, or bidirectional flow records.<para/>For TCP events, the server is the receiver of the initial SYN packet(s) of the TCP connection. For other protocols, the server is generally the responder in the network transaction. Some systems actually use the term "responder" to refer the server in TCP connections. The server fields describe details about the system acting as the server in the network event. Server fields are usually populated in conjunction with client fields. Server fields are generally not populated for packet-level events.<para/>Client / server representations can add semantic context to an exchange, which is helpful to visualize the data in certain situations. If your context falls in that category, you should still ensure that source and destination are filled appropriately.
 	/// </summary>
-	public class Server
+	public class Server 
 	{
 		/// <summary>
 		/// Geo nested field.
@@ -2466,7 +2466,7 @@ namespace Elastic.CommonSchema
 	/// <summary>
 	/// The service fields describe the service for or from which the data was collected.<para/>These fields help you find and correlate logs for a specific service and version.
 	/// </summary>
-	public class Service
+	public class Service 
 	{
 		/// <summary>
 		/// Node property.
@@ -2547,7 +2547,7 @@ namespace Elastic.CommonSchema
 	/// <summary>
 	/// Source fields describe details about the source of a packet/event.<para/>Source fields are usually populated in conjunction with destination fields.
 	/// </summary>
-	public class Source
+	public class Source 
 	{
 		/// <summary>
 		/// Geo nested field.
@@ -2713,7 +2713,7 @@ namespace Elastic.CommonSchema
 	/// <summary>
 	/// Fields to classify events and alerts according to a threat taxonomy such as the Mitre ATT&CK framework.<para/>These fields are for users to classify alerts from all of their sources (e.g. IDS, NGFW, etc.) within a  common taxonomy. The threat.tactic.* are meant to capture the high level category of the threat  (e.g. "impact"). The threat.technique.* fields are meant to capture which kind of approach is used by  this detected threat, to accomplish the goal (e.g. "endpoint denial of service").
 	/// </summary>
-	public class Threat
+	public class Threat 
 	{
 		/// <summary>
 		/// Tactic property.
@@ -2770,7 +2770,7 @@ namespace Elastic.CommonSchema
 	/// <summary>
 	/// Distributed tracing makes it possible to analyze performance throughout a microservice architecture all in one view. This is accomplished by tracing all of the requests - from the initial web request in the front-end service - to queries made through multiple back-end services.
 	/// </summary>
-	public class Tracing
+	public class Tracing 
 	{
 		/// <summary>
 		/// Trace property.
@@ -2789,7 +2789,7 @@ namespace Elastic.CommonSchema
 	/// <summary>
 	/// URL fields provide support for complete or partial URLs, and supports the breaking down into scheme, domain, path, and so on.
 	/// </summary>
-	public class Url
+	public class Url 
 	{
 		/// <summary>
 		/// Unmodified original url as seen in the event source.<para/>Note that in network monitoring, the observed URL may be a full URL, whereas in access logs, the URL is often just represented as a path.<para/>This field is meant to represent the URL as it was observed, complete or not.
@@ -2895,7 +2895,7 @@ namespace Elastic.CommonSchema
 	/// <summary>
 	/// The user fields describe information about the user that is relevant to the event.<para/>Fields can have one entry or multiple entries. If a user has more than one id, provide an array that includes all of them.
 	/// </summary>
-	public class User
+	public class User 
 	{
 		/// <summary>
 		/// Group nested field.
@@ -2969,7 +2969,7 @@ namespace Elastic.CommonSchema
 	/// <summary>
 	/// The user_agent fields normally come from a browser request.<para/>They often show up in web service logs coming from the parsed user agent string.
 	/// </summary>
-	public class UserAgent
+	public class UserAgent 
 	{
 		/// <summary>
 		/// Os nested field.
