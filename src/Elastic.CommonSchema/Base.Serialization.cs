@@ -21,9 +21,9 @@ using Utf8Json.Resolvers;
 
 namespace Elastic.CommonSchema
 {
-    [JsonFormatter(typeof(BaseJsonFormatter))]
-    public partial class Base
-    {
-        public byte[] Serialize() => JsonSerializer.Serialize(this, StandardResolver.ExcludeNull);
+	[JsonFormatter(typeof(BaseJsonFormatter))]
+	public partial class Base
+	{
+		public byte[] Serialize() => JsonSerializer.Serialize(this, StandardResolver.ExcludeNull);
 	}
 }

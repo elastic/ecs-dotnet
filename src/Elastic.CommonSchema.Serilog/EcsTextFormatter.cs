@@ -22,23 +22,23 @@ using Serilog.Formatting;
 
 namespace Elastic.CommonSchema.Serilog
 {
-    /// <summary>
-    /// A serilog formatter that writes log events using the Elasticsearch Common Schema format
-    /// </summary>
-    public class EcsTextFormatter : ITextFormatter
-    {
-        private readonly EcsTextFormatterConfiguration _configuration;
+	/// <summary>
+	/// A serilog formatter that writes log events using the Elasticsearch Common Schema format
+	/// </summary>
+	public class EcsTextFormatter : ITextFormatter
+	{
+		private readonly EcsTextFormatterConfiguration _configuration;
 
-        public EcsTextFormatter() : this(new EcsTextFormatterConfiguration()) { }
+		public EcsTextFormatter() : this(new EcsTextFormatterConfiguration()) { }
 
-        public EcsTextFormatter(EcsTextFormatterConfiguration configuration) =>
-	        _configuration = configuration ?? new EcsTextFormatterConfiguration();
+		public EcsTextFormatter(EcsTextFormatterConfiguration configuration) =>
+			_configuration = configuration ?? new EcsTextFormatterConfiguration();
 
-        public void Format(LogEvent logEvent, TextWriter output)
-        {
-            var ecsEvent = LogEventConverter.ConvertToEcs(logEvent, _configuration);
-            var bytes = ecsEvent.Serialize();
-            output.Write(Encoding.UTF8.GetString(bytes));
-        }
-    }
+		public void Format(LogEvent logEvent, TextWriter output)
+		{
+			var ecsEvent = LogEventConverter.ConvertToEcs(logEvent, _configuration);
+			var bytes = ecsEvent.Serialize();
+			output.Write(Encoding.UTF8.GetString(bytes));
+		}
+	}
 }

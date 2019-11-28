@@ -21,9 +21,9 @@ using Utf8Json.Resolvers;
 
 namespace Elastic.CommonSchema
 {
-    [JsonFormatter(typeof(LogJsonFormatter))]
-    public partial class Log
-    {
-        public byte[] Serialize() => JsonSerializer.Serialize(this, StandardResolver.ExcludeNull);
-    }
+	[JsonFormatter(typeof(LogJsonFormatter))]
+	public partial class Log
+	{
+		public byte[] Serialize() => JsonSerializer.Serialize(this, StandardResolver.ExcludeNull);
+	}
 }

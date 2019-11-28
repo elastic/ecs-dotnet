@@ -20,10 +20,10 @@ using Utf8Json.Internal;
 
 namespace Elastic.CommonSchema.Serialization
 {
-    internal class IncrementingAutomataDictionary : AutomataDictionary
-    {
-        private int _propertiesCount;
-        
-        public void Add(string key) => Add(key, Interlocked.Increment(ref _propertiesCount));
-    }
+	internal class IncrementingAutomataDictionary : AutomataDictionary
+	{
+		private int _propertiesCount;
+
+		public void Add(string key) => Add(key, Interlocked.Increment(ref _propertiesCount));
+	}
 }

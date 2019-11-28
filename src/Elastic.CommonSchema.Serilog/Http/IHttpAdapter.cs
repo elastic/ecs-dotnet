@@ -20,14 +20,14 @@ using System.Collections.Generic;
 
 namespace Elastic.CommonSchema.Serilog
 {
-    public interface IHttpAdapter
-    {
-        UserAgent UserAgent { get; }
-        Http Http { get; }
-        Url Url { get; }
-        Server Server { get; }
-        Client Client { get; }
-        User User { get; }
-        IEnumerable<Exception> Exceptions { get; }
-    }
+	public interface IHttpAdapter
+	{
+		Client Client { get; }
+		IEnumerable<Exception> Exceptions { get; }
+		Http Http { get; }
+		Server Server { get; }
+		Url Url { get; }
+		User User { get; }
+		UserAgent UserAgent { get; }
+	}
 }

@@ -84,7 +84,7 @@ namespace Elastic.CommonSchema.Serilog
                     Scheme = uri.Scheme,
                     Query = uri.Query,
                     Domain = uri.Authority,
-                    Port =  uri.Port
+                    Port = uri.Port
                 };
             }
         }
