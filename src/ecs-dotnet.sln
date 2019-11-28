@@ -10,6 +10,14 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "RelatedFiles", "RelatedFile
 		..\src\Library.build.props = ..\src\Library.build.props
 		Directory.Build.props = Directory.Build.props
 		..\global.json = ..\global.json
+		..\.editorconfig = ..\.editorconfig
+		..\.gitattributes = ..\.gitattributes
+		..\.gitignore = ..\.gitignore
+		..\appveyor.yml = ..\appveyor.yml
+		..\build.bat = ..\build.bat
+		..\build.sh = ..\build.sh
+		..\README.md = ..\README.md
+		..\license.txt = ..\license.txt
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Generator", "Generator\Generator.csproj", "{18C57984-EDB9-41F7-9745-BDE1E7BAF449}"
