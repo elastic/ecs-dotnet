@@ -6,6 +6,8 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using CsQuery.ExtensionMethods;
 using Generator.Schema;
+using Microsoft.CodeAnalysis;
+using Microsoft.CodeAnalysis.CSharp;
 using Newtonsoft.Json;
 using RazorLight;
 using RazorLight.Razor;
@@ -162,8 +164,13 @@ namespace Generator
 				});
 		}
 
-		private static string DoRazor(string name, string template, EcsSpecification model) =>
-			Razor.CompileRenderStringAsync(name, template, model).GetAwaiter().GetResult();
+		private static string DoRazor(string name, string template, EcsSpecification model)
+		{
+			var contents = Razor.CompileRenderStringAsync(name, template, model).GetAwaiter().GetResult();
+			var tree = CSharpSyntaxTree.ParseText(contents);
+			var root = tree.GetRoot().NormalizeWhitespace(indentation:"\t", "\n");
+			return root.ToFullString();
+		}
 
 		private static void GenerateTypes(EcsSpecification model)
 		{
