@@ -3,5 +3,9 @@
   <Import Project="$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildThisFileDirectory), build.bat))\src\PublishArtifacts.build.props" />
     <PropertyGroup>
         <TargetFrameworks>netstandard2.0;netstandard2.1;net461</TargetFrameworks>
+        <LangVersion>8.0</LangVersion>
     </PropertyGroup>
+    <ItemGroup>
+        <PackageReference Include="Utf8Json" Version="1.3.7.0" />
+    </ItemGroup>
 </Project>

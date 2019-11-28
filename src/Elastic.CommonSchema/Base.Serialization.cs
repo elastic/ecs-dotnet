@@ -15,19 +15,18 @@
 // specific language governing permissions and limitations
 // under the License.
 
-using System;
-using System.Collections.Generic;
+using Elastic.CommonSchema.Serialization;
+using Utf8Json;
+using Utf8Json.Resolvers;
 
-namespace Elastic.CommonSchema.Serilog
+namespace Elastic.CommonSchema
 {
-    public interface IHttpAdapter
+    [JsonFormatter(typeof(BaseJsonFormatter))]
+    public partial class Base
     {
-        UserAgent UserAgent { get; }
-        Http Http { get; }
-        Url Url { get; }
-        Server Server { get; }
-        Client Client { get; }
-        User User { get; }
-        IEnumerable<Exception> Exceptions { get; }
+        public byte[] Serialize()
+        {
+            return JsonSerializer.Serialize(this, StandardResolver.ExcludeNull);
+        }
     }
 }

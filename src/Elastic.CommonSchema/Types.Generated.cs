@@ -15,6 +15,13 @@
 // specific language governing permissions and limitations
 // under the License.
 
+/*
+IMPORTANT NOTE
+==============
+This file has been generated. 
+If you wish to submit a PR please modify the original csharp file and submit the PR with that change. Thanks!
+*/
+
 // ReSharper disable RedundantUsingDirective
 using System;
 using System.Collections.Generic;
@@ -35,7 +42,7 @@ namespace Elastic.CommonSchema
     /// <para/>
     /// See: https://github.com/elastic/ecs
     /// </summary>
-    public class Base
+    public partial class Base
     {
         /// <summary>
         /// Elastic Common Schema version
@@ -1806,7 +1813,7 @@ namespace Elastic.CommonSchema
     /// <summary>
     /// Details about the event's logging mechanism or logging transport.<para/>The log.* fields are typically populated with details about the logging mechanism used to create and/or transport the event. For example, syslog details belong under `log.syslog.*`.<para/>The details specific to your event source are typically not logged under `log.*`, but rather in `event.*` or in other ECS fields.
     /// </summary>
-    public class Log 
+    public partial class Log 
     {
         /// <summary>
         /// Origin property.

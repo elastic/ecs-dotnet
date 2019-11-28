@@ -15,6 +15,13 @@
 // specific language governing permissions and limitations
 // under the License.
 
+/*
+IMPORTANT NOTE
+==============
+This file has been generated. 
+If you wish to submit a PR please modify the original csharp file and submit the PR with that change. Thanks!
+*/
+
 // ReSharper disable RedundantUsingDirective
 using System;
 using System.Collections.Generic;

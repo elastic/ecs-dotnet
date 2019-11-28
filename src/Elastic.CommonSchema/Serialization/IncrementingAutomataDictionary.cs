@@ -15,19 +15,15 @@
 // specific language governing permissions and limitations
 // under the License.
 
-using System;
-using System.Collections.Generic;
+using System.Threading;
+using Utf8Json.Internal;
 
-namespace Elastic.CommonSchema.Serilog
+namespace Elastic.CommonSchema.Serialization
 {
-    public interface IHttpAdapter
+    internal class IncrementingAutomataDictionary : AutomataDictionary
     {
-        UserAgent UserAgent { get; }
-        Http Http { get; }
-        Url Url { get; }
-        Server Server { get; }
-        Client Client { get; }
-        User User { get; }
-        IEnumerable<Exception> Exceptions { get; }
+        private int _propertiesCount;
+        
+        public void Add(string key) => Add(key, Interlocked.Increment(ref _propertiesCount));
     }
 }
