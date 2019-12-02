@@ -1,8 +1,6 @@
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using FluentAssertions;
-using Serilog.Events;
 using Xunit;
 using Xunit.Abstractions;
 
@@ -26,10 +24,13 @@ namespace Elastic.CommonSchema.Serilog.Tests
 			logEvents.Should().HaveCount(3);
 
 			var ecsEvents = ToEcsEvents(logEvents);
-			var error = ecsEvents.Last();
-			error.Base.Error.Should().NotBeNull();
-			var informational = ecsEvents.First();
-			informational.Base.Error.Should().BeNull();
+			var (_, error) = ecsEvents.Last();
+			error.Log.Level.Should().Be("Error");
+			error.Error.Should().NotBeNull();
+
+			var (_, info) = ecsEvents.First();
+			info.Log.Level.Should().Be("Information");
+			info.Error.Should().BeNull();
 		});
 	}
 }
