@@ -9,7 +9,7 @@ namespace Elastic.CommonSchema.Serialization
 {
 	internal class IncrementingAutomataDictionary : AutomataDictionary
 	{
-		private int _propertiesCount;
+		private int _propertiesCount = -1;
 
 		public void Add(string key) => Add(key, Interlocked.Increment(ref _propertiesCount));
 	}
