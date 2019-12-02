@@ -144,6 +144,8 @@ namespace Elastic.CommonSchema.Serilog
 			if (dict.Count == 0) return null;
 			return dict;
 		}
+
+		//TODO this should live in Log.MetaData as custom dictionary converter
 		private static string ToSnakeCase(string s)
 		{
 			if (string.IsNullOrEmpty(s)) return s;
