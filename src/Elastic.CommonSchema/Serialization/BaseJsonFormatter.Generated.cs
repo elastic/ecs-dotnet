@@ -54,10 +54,12 @@ namespace Elastic.CommonSchema.Serialization
 			{ "service" }, // 31
 			{ "source" }, // 32
 			{ "threat" }, // 33
-			{ "tracing" }, // 34
-			{ "url" }, // 35
-			{ "user" }, // 36
-			{ "user_agent" }, // 37
+			{ "tls" }, // 34
+			{ "tracing" }, // 35
+			{ "url" }, // 36
+			{ "user" }, // 37
+			{ "user_agent" }, // 38
+			{ "vulnerability" }, // 39
 		};
 
 		public Base Deserialize(ref JsonReader reader, IJsonFormatterResolver formatterResolver)
@@ -126,10 +128,12 @@ namespace Elastic.CommonSchema.Serialization
 						31 => Read<Service>(ref reader, ecsEvent, (b, v) => b.Service = v),
 						32 => Read<Source>(ref reader, ecsEvent, (b, v) => b.Source = v),
 						33 => Read<Threat>(ref reader, ecsEvent, (b, v) => b.Threat = v),
-						34 => Read<Tracing>(ref reader, ecsEvent, (b, v) => b.Tracing = v),
-						35 => Read<Url>(ref reader, ecsEvent, (b, v) => b.Url = v),
-						36 => Read<User>(ref reader, ecsEvent, (b, v) => b.User = v),
-						37 => Read<UserAgent>(ref reader, ecsEvent, (b, v) => b.UserAgent = v),
+						34 => Read<Tls>(ref reader, ecsEvent, (b, v) => b.Tls = v),
+						35 => Read<Tracing>(ref reader, ecsEvent, (b, v) => b.Tracing = v),
+						36 => Read<Url>(ref reader, ecsEvent, (b, v) => b.Url = v),
+						37 => Read<User>(ref reader, ecsEvent, (b, v) => b.User = v),
+						38 => Read<UserAgent>(ref reader, ecsEvent, (b, v) => b.UserAgent = v),
+						39 => Read<Vulnerability>(ref reader, ecsEvent, (b, v) => b.Vulnerability = v),
 						_ => false
 					};
 				}
@@ -181,10 +185,12 @@ namespace Elastic.CommonSchema.Serialization
 			WriteProp(ref writer, "service", value.Service, formatterResolver); // 31
 			WriteProp(ref writer, "source", value.Source, formatterResolver); // 32
 			WriteProp(ref writer, "threat", value.Threat, formatterResolver); // 33
-			WriteProp(ref writer, "tracing", value.Tracing, formatterResolver); // 34
-			WriteProp(ref writer, "url", value.Url, formatterResolver); // 35
-			WriteProp(ref writer, "user", value.User, formatterResolver); // 36
-			WriteProp(ref writer, "user_agent", value.UserAgent, formatterResolver); // 37
+			WriteProp(ref writer, "tls", value.Tls, formatterResolver); // 34
+			WriteProp(ref writer, "tracing", value.Tracing, formatterResolver); // 35
+			WriteProp(ref writer, "url", value.Url, formatterResolver); // 36
+			WriteProp(ref writer, "user", value.User, formatterResolver); // 37
+			WriteProp(ref writer, "user_agent", value.UserAgent, formatterResolver); // 38
+			WriteProp(ref writer, "vulnerability", value.Vulnerability, formatterResolver); // 39
 			writer.WriteEndObject();
 		}
 

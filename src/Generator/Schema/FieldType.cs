@@ -16,6 +16,7 @@ namespace Generator.Schema
 		[EnumMember(Value = "object")] Object,
 		[EnumMember(Value = "text")] Text,
 		[EnumMember(Value = "float")] Float,
-		[EnumMember(Value = "geo_point")] GeoPoint
+		[EnumMember(Value = "geo_point")] GeoPoint,
+		[EnumMember(Value = "boolean")] Boolean
 	}
 }

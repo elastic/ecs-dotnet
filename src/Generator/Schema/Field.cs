@@ -20,7 +20,10 @@ namespace Generator.Schema
 			get
 			{
 				// Special cases.
-				if (Name == "args" && Type == FieldType.Keyword) return "string[]";
+				if (Name == "args") return "string[]";
+				if (Name == "parent.args") return "string[]";
+				if (Name.Contains("certificate_chain")) return "string[]";
+				if (Name.Contains("supported_ciphers")) return "string[]";
 				if (Schema.Name == "dns" && Name == "header_flags") return "string[]";
 				if (Schema.Name == "dns" && Name == "resolved_ip") return "string[]";
 				if (Schema.Name == "user" && FlatName == "user.id") return "string[]";
@@ -47,6 +50,8 @@ namespace Generator.Schema
 						return "float?";
 					case FieldType.GeoPoint:
 						return "Location";
+					case FieldType.Boolean:
+						return "bool?";
 					default:
 						throw new ArgumentOutOfRangeException();
 				}
@@ -160,6 +165,8 @@ namespace Generator.Schema
 						return "Number";
 					case FieldType.GeoPoint:
 						return "GeoPoint";
+					case FieldType.Boolean:
+						return "Boolean";
 					default:
 						throw new ArgumentOutOfRangeException();
 				}
