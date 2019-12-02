@@ -80,6 +80,8 @@ namespace Elastic.CommonSchema.Serilog
 
 			if (configuration.MapCustom != null) ecsEvent = configuration.MapCustom(ecsEvent);
 
+			ecsEvent.Message = logEvent.RenderMessage();
+
 			return ecsEvent;
 		}
 
@@ -133,12 +135,16 @@ namespace Elastic.CommonSchema.Serilog
 					dict.Add(ToSnakeCase(logEventPropertyValue.Key), values.Elements.Select(e => e.ToString()).ToArray());
 					continue;
 				}
-
-				dict.Add(ToSnakeCase(logEventPropertyValue.Key), logEventPropertyValue.Value);
+				if (logEventPropertyValue.Value is ScalarValue sv)
+					dict.Add(ToSnakeCase(logEventPropertyValue.Key), sv.Value);
+				else
+					dict.Add(ToSnakeCase(logEventPropertyValue.Key), logEventPropertyValue.Value);
 			}
 			if (dict.Count == 0) return null;
 			return dict;
 		}
+
+		//TODO this should live in Log.MetaData as custom dictionary converter
 		private static string ToSnakeCase(string s)
 		{
 			if (string.IsNullOrEmpty(s)) return s;
