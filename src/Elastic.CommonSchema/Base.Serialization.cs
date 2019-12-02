@@ -11,9 +11,9 @@ namespace Elastic.CommonSchema
 	[JsonFormatter(typeof(BaseJsonFormatter))]
 	public partial class Base
 	{
-		public byte[] Serialize() => JsonSerializer.Serialize(this, StandardResolver.ExcludeNullSnakeCase);
+		public byte[] Serialize() => JsonSerializer.Serialize(this, StandardResolver.ExcludeNull);
 
 		public static Base Deserialize(string s) =>
-			JsonSerializer.Deserialize<Base>(s, StandardResolver.ExcludeNullSnakeCase);
+			JsonSerializer.Deserialize<Base>(s, StandardResolver.ExcludeNull);
 	}
 }
