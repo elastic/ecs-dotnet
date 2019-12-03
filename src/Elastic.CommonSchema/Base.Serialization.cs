@@ -21,17 +21,40 @@ namespace Elastic.CommonSchema
 		public static Base Deserialize(string s) =>
 			JsonSerializer.Deserialize<Base>(s, JsonConfiguration.SerializerOptions);
 
+		public static Base Deserialize(ReadOnlySpan<byte> json) =>
+			JsonSerializer.Deserialize<Base>(json, JsonConfiguration.SerializerOptions);
+
+		public static Base Deserialize(Stream s)
+		{
+			using var ms = new MemoryStream();
+			var buffer = ArrayPool<byte>.Shared.Rent(1024);
+			var total = 0;
+			int read;
+			while ((read = s.Read(buffer, 0, buffer.Length)) > 0)
+			{
+				ms.Write(buffer, 0, read);
+				total += read;
+			}
+			if (ms.TryGetBuffer(out var segment))
+				return Deserialize(new ReadOnlyMemory<byte>(segment.Array, segment.Offset, total).Span);
+			return Deserialize(new ReadOnlyMemory<byte>(ms.ToArray()).Span);
+		}
+
+		public static ValueTask<Base> DeserializeAsync(Stream s, CancellationToken cancellationToken = default) =>
+			JsonSerializer.DeserializeAsync<Base>(s, JsonConfiguration.SerializerOptions, cancellationToken);
+
 		public string Serialize() => JsonSerializer.Serialize(this, JsonConfiguration.SerializerOptions);
 
 		public byte[] SerializeToUtf8Bytes() => JsonSerializer.SerializeToUtf8Bytes(this, JsonConfiguration.SerializerOptions);
-
-		public Task SerializeAsync(Stream utf8Json, CancellationToken cancellationToken = default) =>
-			JsonSerializer.SerializeAsync(utf8Json, this, JsonConfiguration.SerializerOptions, cancellationToken);
 
 		public void Serialize(Stream s)
 		{
 			using var writer = new Utf8JsonWriter(s);
 			JsonSerializer.Serialize(writer, this, JsonConfiguration.SerializerOptions);
 		}
+
+		public Task SerializeAsync(Stream utf8Json, CancellationToken cancellationToken = default) =>
+			JsonSerializer.SerializeAsync(utf8Json, this, JsonConfiguration.SerializerOptions, cancellationToken);
+
 	}
 }

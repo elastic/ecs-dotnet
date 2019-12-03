@@ -1,4 +1,5 @@
 using System;
+using System.Buffers;
 using System.IO;
 using System.Linq;
 using FluentAssertions;
@@ -29,8 +30,16 @@ namespace Elastic.CommonSchema.Serilog.Tests
 			try
 			{
 				logger.Information("My log message!");
+
+
 				var jsonLines = System.IO.File.ReadAllLines(_path);
 				jsonLines.Should().NotBeEmpty();
+
+				using var fsSource = new FileStream(_path, FileMode.Open, FileAccess.Read);
+				//this only works because the filestream contains one event
+				var b = Base.Deserialize(fsSource);
+				b.Should().NotBeNull();
+				b.Log.Level.Should().Be("Information");
 			}
 			finally
 			{
