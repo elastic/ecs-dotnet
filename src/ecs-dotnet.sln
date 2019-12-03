@@ -32,6 +32,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Elastic.CommonSchema.Serilo
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Specification", "Specification\Specification.csproj", "{21FD7B39-5FDD-4432-B25E-8425D3EC46A3}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Elastic.Apm.SerilogEnricher", "Elastic.Apm.SerilogEnricher\Elastic.Apm.SerilogEnricher.csproj", "{240A3E16-78BF-4430-A3ED-C7479F12A6DE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Elastic.Apm.SerilogEnricher.Test", "Elastic.Apm.SerilogEnricher.Test\Elastic.Apm.SerilogEnricher.Test.csproj", "{1CA4DB2C-5DA9-474E-A394-4503A0DD112A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -60,6 +64,14 @@ Global
 		{F3EECF86-A950-4CDE-82DD-DF270AFE86E2}.Release|Any CPU.Build.0 = Release|Any CPU
 		{21FD7B39-5FDD-4432-B25E-8425D3EC46A3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{21FD7B39-5FDD-4432-B25E-8425D3EC46A3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{240A3E16-78BF-4430-A3ED-C7479F12A6DE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{240A3E16-78BF-4430-A3ED-C7479F12A6DE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{240A3E16-78BF-4430-A3ED-C7479F12A6DE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{240A3E16-78BF-4430-A3ED-C7479F12A6DE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1CA4DB2C-5DA9-474E-A394-4503A0DD112A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1CA4DB2C-5DA9-474E-A394-4503A0DD112A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1CA4DB2C-5DA9-474E-A394-4503A0DD112A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1CA4DB2C-5DA9-474E-A394-4503A0DD112A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{21FD7B39-5FDD-4432-B25E-8425D3EC46A3} = {432D5575-2347-4D3C-BF8C-3E38410C46CA}
