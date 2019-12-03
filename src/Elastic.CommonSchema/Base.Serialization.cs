@@ -5,7 +5,6 @@
 using System;
 using System.Buffers;
 using System.IO;
-using System.Text.Encodings.Web;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Threading;
