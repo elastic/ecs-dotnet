@@ -21,8 +21,8 @@ If you wish to submit a PR please modify the original csharp file and submit the
 
 using System;
 using System.Collections.Generic;
-using Utf8Json;
-@{ var index = 0; }
+using System.Text.Json;
+
 namespace Elastic.CommonSchema.Serialization
 {
 	internal partial class BaseJsonConverter : EcsJsonConverterBase@(Raw("<Base>"))
@@ -37,23 +37,24 @@ namespace Elastic.CommonSchema.Serialization
 			var propertyName = reader.GetString();
 			reader.Read();
 			return propertyName switch
+			{
 @foreach (var field in Model.BaseFieldsOrdered)
 {
 	var name = field.Item2.Name;
 	if (name == "@timestamp")
-{<text>			"@(name)" => ReadDateTime(ref reader, ref @(name)),
+{<text>				"@(name)" => ReadDateTime(ref reader, ref @(name)),
 </text>}
 	else if (name == "log.level")
-{<text>			"@(name)" => ReadString(ref reader, ref loglevel),
+{<text>				"@(name)" => ReadString(ref reader, ref loglevel),
 </text>}
 	else
-{<text>			"@(name)" => ReadProp<@(Raw(field.Item2.ClrType))>(ref reader, "@name", ecsEvent, (b, v) => b.@(FileGenerator.PascalCase(field.Item2.Name)) = v),
+{<text>				"@(name)" => ReadProp<@(Raw(field.Item2.ClrType))>(ref reader, "@name", ecsEvent, (b, v) => b.@(FileGenerator.PascalCase(field.Item2.Name)) = v),
 </text>}
 }
 @foreach (var schema in Model.YamlSchemasOrdered.Skip(1))
 {
 	var name = schema.Name;
-<text>			"@(name)" => Read<@(FileGenerator.PascalCase(schema.Name))>(ref reader, "@name", ecsEvent, (b, v) => b.@(FileGenerator.PascalCase(schema.Name)) = v),
+<text>				"@(name)" => ReadProp<@(FileGenerator.PascalCase(schema.Name))>(ref reader, "@name", ecsEvent, (b, v) => b.@(FileGenerator.PascalCase(schema.Name)) = v),
 </text>}
 				_ => false
 			};
@@ -71,10 +72,10 @@ namespace Elastic.CommonSchema.Serialization
 @foreach (var field in Model.BaseFieldsOrdered)
 {
 	if (field.Item1 != "WriteProp")
-	{<text>			@(field.Item1)(ref writer, value);
+	{<text>			@(field.Item1)(writer, value);
 </text>}
 	else
-	{<text>			@(field.Item1)(ref writer, "@field.Item2.Name", value.@FileGenerator.PascalCase(field.Item2.Name));
+	{<text>			@(field.Item1)(writer, "@field.Item2.Name", value.@FileGenerator.PascalCase(field.Item2.Name));
 </text>}
 }
 			// Complex types
