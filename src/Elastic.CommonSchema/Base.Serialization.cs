@@ -34,13 +34,4 @@ namespace Elastic.CommonSchema
 			JsonSerializer.Serialize(writer, this, JsonConfiguration.SerializerOptions);
 		}
 	}
-
-	internal class X : IBufferWriter<byte>
-	{
-		public void Advance(int count) => throw new NotImplementedException();
-
-		public Memory<byte> GetMemory(int sizeHint = 0) => throw new NotImplementedException();
-
-		public Span<byte> GetSpan(int sizeHint = 0) => throw new NotImplementedException();
-	}
 }
