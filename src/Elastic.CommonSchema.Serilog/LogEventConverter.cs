@@ -293,8 +293,8 @@ namespace Elastic.CommonSchema.Serilog
 					? actionKind.ToString().Replace("\"", "")
 					: null,
 				Severity = e.Properties.TryGetValue(SpecialKeys.ActionSeverity, out var actionSev)
-					? long.Parse(actionSev.ToString())
-					: 0,
+					? (long?)long.Parse(actionSev.ToString())
+					: null,
 				Timezone = TimeZoneInfo.Local.StandardName
 			};
 
