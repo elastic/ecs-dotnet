@@ -4,7 +4,7 @@ using System.Text.Json;
 
 namespace Elastic.CommonSchema.Serialization
 {
-	internal class BaseJsonConverter : EcsJsonConverterBase<Base>
+	internal partial class BaseJsonConverter : EcsJsonConverterBase<Base>
 	{
 		public override Base Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
 		{
@@ -18,7 +18,6 @@ namespace Elastic.CommonSchema.Serialization
 			var ecsEvent = new Base();
 
 			string loglevel = null;
-			string message = null;
 			DateTimeOffset? timestamp = default;
 			while (reader.Read())
 			{
@@ -28,32 +27,41 @@ namespace Elastic.CommonSchema.Serialization
 				if (reader.TokenType != JsonTokenType.PropertyName)
 					throw new JsonException();
 
-				var propertyName = reader.GetString();
-				reader.Read();
-				var read = propertyName switch
-				{
-					"@timestamp" => ReadDateTime(ref reader, ref @timestamp),
-					"log.level" => ReadString(ref reader, ref loglevel),
-					"message" => ReadString(ref reader, ref message),
-					"_metadata" => ReadProp<Dictionary<string, object>>(ref reader, "_metadata", ecsEvent, (b, v) => b.Metadata = v),
-					"labels" => ReadProp<Dictionary<string, object>>(ref reader, "labels", ecsEvent, (b, v) => b.Labels = v),
-					"tags" => ReadProp<string[]>(ref reader, "tags", ecsEvent, (b, v) => b.Tags = v),
-					"agent" => ReadProp<Agent>(ref reader, "agent", ecsEvent, (b, v) => b.Agent = v),
-					"ecs" => ReadProp<Ecs>(ref reader, "ecs", ecsEvent, (b, v) => b.Ecs = v),
-					"error" => ReadProp<Error>(ref reader, "error", ecsEvent, (b, v) => b.Error = v),
-					"event" => ReadProp<Event>(ref reader, "event", ecsEvent, (b, v) => b.Event = v),
-					"host" => ReadProp<Host>(ref reader, "host", ecsEvent, (b, v) => b.Host = v),
-					"log" => ReadProp<Log>(ref reader, "log", ecsEvent, (b, v) => b.Log = v),
-					"process" => ReadProp<Process>(ref reader, "process", ecsEvent, (b, v) => b.Process = v),
-					_ => false
-				};
+				var read = ReadProperties(ref reader, ecsEvent, ref timestamp, ref loglevel);
 			}
 			ecsEvent.Log ??= new Log();
 			ecsEvent.Log.Level = loglevel;
-			ecsEvent.Message = message;
 			ecsEvent.Timestamp = timestamp;
 
 			return ecsEvent;
+		}
+
+		private static bool ReadProperties(
+			ref Utf8JsonReader reader,
+			Base ecsEvent,
+			ref DateTimeOffset? timestamp,
+			ref string loglevel
+		)
+		{
+			var propertyName = reader.GetString();
+			reader.Read();
+			return propertyName switch
+			{
+				"@timestamp" => ReadDateTime(ref reader, ref timestamp),
+				"log.level" => ReadString(ref reader, ref loglevel),
+				"message" => ReadProp<string>(ref reader, "message", ecsEvent, (b, v) => b.Message = v),
+				"_metadata" => ReadProp<Dictionary<string, object>>(ref reader, "_metadata", ecsEvent, (b, v) => b.Metadata = v),
+				"labels" => ReadProp<Dictionary<string, object>>(ref reader, "labels", ecsEvent, (b, v) => b.Labels = v),
+				"tags" => ReadProp<string[]>(ref reader, "tags", ecsEvent, (b, v) => b.Tags = v),
+				"agent" => ReadProp<Agent>(ref reader, "agent", ecsEvent, (b, v) => b.Agent = v),
+				"ecs" => ReadProp<Ecs>(ref reader, "ecs", ecsEvent, (b, v) => b.Ecs = v),
+				"error" => ReadProp<Error>(ref reader, "error", ecsEvent, (b, v) => b.Error = v),
+				"event" => ReadProp<Event>(ref reader, "event", ecsEvent, (b, v) => b.Event = v),
+				"host" => ReadProp<Host>(ref reader, "host", ecsEvent, (b, v) => b.Host = v),
+				"log" => ReadProp<Log>(ref reader, "log", ecsEvent, (b, v) => b.Log = v),
+				"process" => ReadProp<Process>(ref reader, "process", ecsEvent, (b, v) => b.Process = v),
+				_ => false
+			};
 		}
 
 		public override void Write(Utf8JsonWriter writer, Base value, JsonSerializerOptions options)
@@ -65,13 +73,10 @@ namespace Elastic.CommonSchema.Serialization
 			}
 			writer.WriteStartObject();
 
-			writer.WritePropertyName("@timestamp");
-			if (value.Timestamp.HasValue)
-				JsonConfiguration.DateTimeOffsetConverter.Write(writer, value.Timestamp.Value, options);
-			else writer.WriteNullValue();
+			WriteTimestamp(writer, value, options);
 
-			writer.WriteString("log.level", value.Log?.Level);
-			writer.WriteString("message", value.Message);
+			WriteLogLevel(writer, value);
+			WriteMessage(writer, value);
 
 			WriteProp(writer, "_metadata", value.Metadata); // 3
 			WriteProp(writer, "labels", value.Labels); // 4
@@ -113,6 +118,18 @@ namespace Elastic.CommonSchema.Serialization
 			WriteProp(writer, "vulnerability", value.Vulnerability); // 39
 
 			writer.WriteEndObject();
+		}
+
+		private static void WriteMessage(Utf8JsonWriter writer, Base value) => writer.WriteString("message", value.Message);
+
+		private static void WriteLogLevel(Utf8JsonWriter writer, Base value) => writer.WriteString("log.level", value.Log?.Level);
+
+		private static void WriteTimestamp(Utf8JsonWriter writer, Base value, JsonSerializerOptions options)
+		{
+			writer.WritePropertyName("@timestamp");
+			if (value.Timestamp.HasValue)
+				JsonConfiguration.DateTimeOffsetConverter.Write(writer, value.Timestamp.Value, options);
+			else writer.WriteNullValue();
 		}
 	}
 }

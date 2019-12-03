@@ -25,137 +25,63 @@ using Utf8Json;
 @{ var index = 0; }
 namespace Elastic.CommonSchema.Serialization
 {
-	internal class BaseJsonFormatter : IJsonFormatter@(Raw("<Base>"))
+	internal partial class BaseJsonConverter : EcsJsonConverterBase@(Raw("<Base>"))
 	{
-		private static readonly IncrementingAutomataDictionary AutomataDictionary = new IncrementingAutomataDictionary
+		private static bool ReadProperties(
+			ref Utf8JsonReader reader, 
+			Base ecsEvent, 
+			ref DateTimeOffset? timestamp, 
+			ref string loglevel
+		)
 		{
-			// Base fields
-@foreach (var field in Model.BaseFieldsOrdered)
-{<text>			{ "@(field.Item2.Name)" }, // @(index++)
-</text>}
-			// Complex types
-@foreach (var schema in Model.YamlSchemasOrdered.Skip(1))
-{<text>			{ "@(schema.Name)" }, // @(index++)
-</text>}
-		};
-
-		public Base Deserialize(ref JsonReader reader, IJsonFormatterResolver formatterResolver)
-		{
-			if (reader.ReadIsNull()) return null;
-			var count = 0;
-			var ecsEvent = new Base();
-			string loglevel = null;
-			string message = null;
-			DateTimeOffset? timestamp = null;
-			bool ReadRef@(Raw("<T>")) (ref JsonReader reader, ref T set)
-			{
-				var formatter = formatterResolver.GetFormatter@(Raw("<T>"))();
-				set = formatter.Deserialize(ref reader, formatterResolver);
-				return true;
-			}
-			bool Read@(Raw("<T>")) (ref JsonReader reader, Base b, Action@(Raw("<Base, T>")) set)
-			{
-				var formatter = formatterResolver.GetFormatter@(Raw("<T>"))();
-				set(b, formatter.Deserialize(ref reader, formatterResolver));
-				return true;
-			}
-			static bool ReadString(ref JsonReader reader, ref string stringProp)
-			{
-				stringProp = reader.ReadString();
-				return true;
-			}
-			
-			while (reader.ReadIsInObject(ref count))
-			{
-				var propertyName = reader.ReadPropertyNameSegmentRaw();
-				if (AutomataDictionary.TryGetValue(propertyName, out var value))
-				{
-					@{ index = 0; }
-					_ = value switch
-					{
+			var propertyName = reader.GetString();
+			reader.Read();
+			return propertyName switch
 @foreach (var field in Model.BaseFieldsOrdered)
 {
-	if (field.Item1 != "WriteProp" && field.Item2.ClrType == "string")
-{<text>						@(index++) => ReadString(ref reader, ref @(field.Item2.Name.Replace(".",""))),
+	var name = field.Item2.Name;
+	if (name == "@timestamp")
+{<text>			"@(name)" => ReadDateTime(ref reader, ref @(name)),
 </text>}
-	else if (field.Item1 != "WriteProp")
-{<text>						@(index++) => ReadRef<@(Raw(field.Item2.ClrType))>(ref reader, ref @(field.Item2.Name.Replace(".",""))),
+	else if (name == "log.level")
+{<text>			"@(name)" => ReadString(ref reader, ref loglevel),
 </text>}
 	else
-{<text>						@(index++) => Read<@(Raw(field.Item2.ClrType))>(ref reader, ecsEvent, (b, v) => b.@(FileGenerator.PascalCase(field.Item2.Name)) = v),
+{<text>			"@(name)" => ReadProp<@(Raw(field.Item2.ClrType))>(ref reader, "@name", ecsEvent, (b, v) => b.@(FileGenerator.PascalCase(field.Item2.Name)) = v),
 </text>}
 }
 @foreach (var schema in Model.YamlSchemasOrdered.Skip(1))
-{<text>						@(index++) => Read<@(FileGenerator.PascalCase(schema.Name))>(ref reader, ecsEvent, (b, v) => b.@(FileGenerator.PascalCase(schema.Name)) = v),
+{
+	var name = schema.Name;
+<text>			"@(name)" => Read<@(FileGenerator.PascalCase(schema.Name))>(ref reader, "@name", ecsEvent, (b, v) => b.@(FileGenerator.PascalCase(schema.Name)) = v),
 </text>}
-						_ => false
-					};
-					if (!read)
-						reader.ReadNext();
-				}
-				else reader.ReadNext();
-			}
-			ecsEvent.Log ??= new Log();
-			ecsEvent.Log.Level = loglevel;
-			ecsEvent.Message = message;
-			ecsEvent.Timestamp = timestamp;
-			return ecsEvent;
+				_ => false
+			};
 		}
 
-		public void Serialize(ref JsonWriter writer, Base value, IJsonFormatterResolver formatterResolver)
+		public override void Write(Utf8JsonWriter writer, Base value, JsonSerializerOptions options)
 		{
-			if (value == null) return;
-			writer.WriteBeginObject();
-@{ index = 0; }
+			if (value == null)
+			{
+				writer.WriteNullValue();
+				return;
+			}
+			writer.WriteStartObject();
 			// Base fields
 @foreach (var field in Model.BaseFieldsOrdered)
 {
 	if (field.Item1 != "WriteProp")
-	{<text>			@(field.Item1)(ref writer, value, formatterResolver); // @(index++)
+	{<text>			@(field.Item1)(ref writer, value);
 </text>}
 	else
-	{<text>			@(field.Item1)(ref writer, "@field.Item2.Name", value.@FileGenerator.PascalCase(field.Item2.Name), formatterResolver); // @(index++)
+	{<text>			@(field.Item1)(ref writer, "@field.Item2.Name", value.@FileGenerator.PascalCase(field.Item2.Name));
 </text>}
 }
 			// Complex types
 @foreach (var schema in Model.YamlSchemasOrdered.Skip(1))
-{<text>			WriteProp(ref writer, "@(schema.Name)", value.@(FileGenerator.PascalCase(schema.Name)), formatterResolver); // @(index++)
+{<text>			WriteProp(writer, "@(schema.Name)", value.@(FileGenerator.PascalCase(schema.Name)));
 </text>}
 			writer.WriteEndObject();
-		}
-
-		private static void WriteMessage(ref JsonWriter writer, Base value, IJsonFormatterResolver formatterResolver)
-		{
-			writer.WritePropertyName("message");
-			if (value.Message != null)
-				writer.WriteString(value.Message);
-			else writer.WriteNull();
-		}
-
-		private static void WriteLogLevel(ref JsonWriter writer, Base value, IJsonFormatterResolver formatterResolver)
-		{
-			writer.WritePropertyName("log.level");
-			if (value.Log?.Level != null)
-				writer.WriteString(value.Log.Level);
-			else writer.WriteNull();
-			writer.WriteValueSeparator();
-		}
-		
-		private static void WriteTimestamp(ref JsonWriter writer, Base value, IJsonFormatterResolver formatterResolver)
-		{
-			writer.WritePropertyName("@(Raw("@"))timestamp)");
-			var formatter = formatterResolver.GetFormatter@(Raw("<DateTimeOffset?>"))();
-			formatter.Serialize(ref writer, value.Timestamp, formatterResolver);
-			writer.WriteValueSeparator();
-		}
-		
-		private static void WriteProp@(Raw("<T>"))(ref JsonWriter writer, string key, T value, IJsonFormatterResolver formatterResolver)
-		{
-			if (value == null) return;
-			writer.WriteValueSeparator();
-			writer.WritePropertyName(key);
-			var formatter = formatterResolver.GetFormatter@(Raw("<T>"))();
-			formatter.Serialize(ref writer, value, formatterResolver);
 		}
 	}
 }
