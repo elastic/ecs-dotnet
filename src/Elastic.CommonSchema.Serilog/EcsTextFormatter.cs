@@ -21,7 +21,7 @@ namespace Elastic.CommonSchema.Serilog
 		public EcsTextFormatter(EcsTextFormatterConfiguration configuration) =>
 			_configuration = configuration ?? new EcsTextFormatterConfiguration();
 
-		public void Format(LogEvent logEvent, TextWriter output)
+		public virtual void Format(LogEvent logEvent, TextWriter output)
 		{
 			var ecsEvent = LogEventConverter.ConvertToEcs(logEvent, _configuration);
 			var bytes = ecsEvent.Serialize();

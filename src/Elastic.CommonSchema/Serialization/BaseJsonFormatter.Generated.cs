@@ -5,18 +5,19 @@
 /*
 IMPORTANT NOTE
 ==============
-This file has been generated. 
+This file has been generated.
 If you wish to submit a PR please modify the original csharp file and submit the PR with that change. Thanks!
 */
 
 using System;
 using System.Collections.Generic;
+using System.Text;
 using Utf8Json;
 namespace Elastic.CommonSchema.Serialization
 {
 	internal class BaseJsonFormatter : IJsonFormatter<Base>
 	{
-		private static readonly IncrementingAutomataDictionary AutomataDictionary = new IncrementingAutomataDictionary
+		private static IncrementingAutomataDictionary AutomataDictionary { get; } = new IncrementingAutomataDictionary
 		{
 			// Base fields
 			{ "@timestamp" }, // 0
@@ -86,13 +87,13 @@ namespace Elastic.CommonSchema.Serialization
 				stringProp = reader.ReadString();
 				return true;
 			}
-			
+
 			while (reader.ReadIsInObject(ref count))
 			{
 				var propertyName = reader.ReadPropertyNameSegmentRaw();
 				if (AutomataDictionary.TryGetValue(propertyName, out var value))
 				{
-					_ = value switch
+					var read = _ = value switch
 					{
 						0 => ReadRef<DateTimeOffset?>(ref reader, ref @timestamp),
 						1 => ReadString(ref reader, ref loglevel),
@@ -136,7 +137,12 @@ namespace Elastic.CommonSchema.Serialization
 						39 => Read<Vulnerability>(ref reader, ecsEvent, (b, v) => b.Vulnerability = v),
 						_ => false
 					};
+					if (!read)
+					{
+						reader.ReadNext();
+					}
 				}
+				else reader.ReadNext();
 			}
 			ecsEvent.Log ??= new Log();
 			ecsEvent.Log.Level = loglevel;
@@ -200,7 +206,6 @@ namespace Elastic.CommonSchema.Serialization
 			if (value.Message != null)
 				writer.WriteString(value.Message);
 			else writer.WriteNull();
-			writer.WriteValueSeparator();
 		}
 
 		private static void WriteLogLevel(ref JsonWriter writer, Base value, IJsonFormatterResolver formatterResolver)
@@ -211,19 +216,19 @@ namespace Elastic.CommonSchema.Serialization
 			else writer.WriteNull();
 			writer.WriteValueSeparator();
 		}
-		
+
 		private static void WriteTimestamp(ref JsonWriter writer, Base value, IJsonFormatterResolver formatterResolver)
 		{
-			writer.WritePropertyName("timestamp");
+			writer.WritePropertyName("@timestamp");
 			var formatter = formatterResolver.GetFormatter<DateTimeOffset?>();
 			formatter.Serialize(ref writer, value.Timestamp, formatterResolver);
 			writer.WriteValueSeparator();
 		}
-		
+
 		private static void WriteProp<T>(ref JsonWriter writer, string key, T value, IJsonFormatterResolver formatterResolver)
 		{
 			if (value == null) return;
-			writer.WriteNameSeparator();
+			writer.WriteValueSeparator();
 			writer.WritePropertyName(key);
 			var formatter = formatterResolver.GetFormatter<T>();
 			formatter.Serialize(ref writer, value, formatterResolver);

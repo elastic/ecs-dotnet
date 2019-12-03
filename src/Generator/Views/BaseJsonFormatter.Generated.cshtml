@@ -41,6 +41,7 @@ namespace Elastic.CommonSchema.Serialization
 
 		public Base Deserialize(ref JsonReader reader, IJsonFormatterResolver formatterResolver)
 		{
+			if (reader.ReadIsNull()) return null;
 			var count = 0;
 			var ecsEvent = new Base();
 			string loglevel = null;
@@ -89,7 +90,10 @@ namespace Elastic.CommonSchema.Serialization
 </text>}
 						_ => false
 					};
+					if (!read)
+						reader.ReadNext();
 				}
+				else reader.ReadNext();
 			}
 			ecsEvent.Log ??= new Log();
 			ecsEvent.Log.Level = loglevel;
@@ -126,7 +130,6 @@ namespace Elastic.CommonSchema.Serialization
 			if (value.Message != null)
 				writer.WriteString(value.Message);
 			else writer.WriteNull();
-			writer.WriteValueSeparator();
 		}
 
 		private static void WriteLogLevel(ref JsonWriter writer, Base value, IJsonFormatterResolver formatterResolver)
@@ -140,7 +143,7 @@ namespace Elastic.CommonSchema.Serialization
 		
 		private static void WriteTimestamp(ref JsonWriter writer, Base value, IJsonFormatterResolver formatterResolver)
 		{
-			writer.WritePropertyName("timestamp");
+			writer.WritePropertyName("@(Raw("@"))timestamp)");
 			var formatter = formatterResolver.GetFormatter@(Raw("<DateTimeOffset?>"))();
 			formatter.Serialize(ref writer, value.Timestamp, formatterResolver);
 			writer.WriteValueSeparator();
@@ -149,7 +152,7 @@ namespace Elastic.CommonSchema.Serialization
 		private static void WriteProp@(Raw("<T>"))(ref JsonWriter writer, string key, T value, IJsonFormatterResolver formatterResolver)
 		{
 			if (value == null) return;
-			writer.WriteNameSeparator();
+			writer.WriteValueSeparator();
 			writer.WritePropertyName(key);
 			var formatter = formatterResolver.GetFormatter@(Raw("<T>"))();
 			formatter.Serialize(ref writer, value, formatterResolver);
