@@ -24,8 +24,14 @@ namespace Elastic.CommonSchema.Serilog
 		public virtual void Format(LogEvent logEvent, TextWriter output)
 		{
 			var ecsEvent = LogEventConverter.ConvertToEcs(logEvent, _configuration);
-			var bytes = ecsEvent.Serialize();
-			output.Write(Encoding.UTF8.GetString(bytes));
+			if (output is StreamWriter sw)
+				ecsEvent.Serialize(sw.BaseStream);
+			else
+			{
+				var bytes = ecsEvent.SerializeToUtf8Bytes();
+				output.Write(Encoding.UTF8.GetString(bytes));
+			}
 		}
 	}
+
 }

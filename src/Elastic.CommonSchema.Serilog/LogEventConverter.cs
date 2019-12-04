@@ -135,6 +135,7 @@ namespace Elastic.CommonSchema.Serilog
 					dict.Add(ToSnakeCase(logEventPropertyValue.Key), values.Elements.Select(e => e.ToString()).ToArray());
 					continue;
 				}
+
 				if (logEventPropertyValue.Value is ScalarValue sv)
 					dict.Add(ToSnakeCase(logEventPropertyValue.Key), sv.Value);
 				else
@@ -144,33 +145,7 @@ namespace Elastic.CommonSchema.Serilog
 			return dict;
 		}
 
-		//TODO this should live in Log.MetaData as custom dictionary converter
-		private static string ToSnakeCase(string s)
-		{
-			if (string.IsNullOrEmpty(s)) return s;
-
-			var sb = new StringBuilder();
-			for (var i = 0; i < s.Length; i++)
-			{
-				var c = s[i];
-				if (!char.IsUpper(c))
-				{
-					sb.Append(c);
-					continue;
-				}
-				// first
-				if (i == 0)
-					sb.Append(char.ToLowerInvariant(c));
-				else if (char.IsUpper(s[i - 1])) // WriteIO => write_io
-					sb.Append(char.ToLowerInvariant(c));
-				else
-				{
-					sb.Append("_");
-					sb.Append(char.ToLowerInvariant(c));
-				}
-			}
-			return sb.ToString();
-		}
+		private static string ToSnakeCase(string key) => key;
 
 		private static Host GetHost(LogEvent e)
 		{

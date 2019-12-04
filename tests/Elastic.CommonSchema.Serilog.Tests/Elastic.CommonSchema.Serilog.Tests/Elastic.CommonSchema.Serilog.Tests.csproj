@@ -13,6 +13,7 @@
         <PackageReference Include="Serilog.Enrichers.Process" Version="2.0.1" />
         <PackageReference Include="Serilog.Enrichers.Thread" Version="3.2.0-dev-00747" />
         <PackageReference Include="Serilog.Sinks.ColoredConsole" Version="3.0.1" />
+        <PackageReference Include="Serilog.Sinks.File" Version="4.1.0" />
         <PackageReference Include="Serilog.Sinks.TestCorrelator" Version="3.2.0" />
         <PackageReference Include="Serilog.Sinks.XUnit" Version="1.0.21" />
         <PackageReference Include="xunit" Version="2.4.0" />
