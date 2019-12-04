@@ -26,7 +26,7 @@ namespace Elastic.Apm.SerilogEnricher.Test
 		public void SerilogEnricherWithSimpleSyncTransaction()
 		{
 			var logger = new LoggerConfiguration()
-				.Enrich.WithElasticApmTraceId()
+				.Enrich.WithElasticApmCorrelationInfo()
 				.WriteTo.InMemory()
 				.CreateLogger();
 
@@ -81,7 +81,7 @@ namespace Elastic.Apm.SerilogEnricher.Test
 		public async Task SerilogEnricherWithSimpleAsyncTransaction()
 		{
 			var logger = new LoggerConfiguration()
-				.Enrich.WithElasticApmTraceId()
+				.Enrich.WithElasticApmCorrelationInfo()
 				.WriteTo.InMemory()
 				.CreateLogger();
 
