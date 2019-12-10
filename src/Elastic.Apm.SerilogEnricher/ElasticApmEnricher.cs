@@ -15,9 +15,9 @@ namespace Elastic.Apm.SerilogEnricher
 			if (Agent.Tracer.CurrentTransaction == null) return;
 
 			logEvent.AddPropertyIfAbsent(propertyFactory.CreateProperty(
-				"TransactionId", Agent.Tracer.CurrentTransaction.Id));
+				"ElasticApmTransactionId", Agent.Tracer.CurrentTransaction.Id));
 			logEvent.AddPropertyIfAbsent(propertyFactory.CreateProperty(
-				"TraceId", Agent.Tracer.CurrentTransaction.TraceId));
+				"ElasticApmTraceId", Agent.Tracer.CurrentTransaction.TraceId));
 		}
 	}
 }
