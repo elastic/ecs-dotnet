@@ -14,10 +14,6 @@ These types can be used in either as-is, or in conjunction with, the [Elasticsea
 
 The .NET assemblies are published to nuget under the package name [Elastic.CommonSchema](http://nuget.org/packages/Elastic.CommonSchema).
 
-*Preview builds*
-
-All branches push new nuget packages on successful CI builds to https://ci.appveyor.com/nuget/ecs-dotnet
-
 ## Versioning
 
 The version of the package matches the published ECS schema version, with the same corresponding branch names.
