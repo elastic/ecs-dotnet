@@ -14,7 +14,7 @@
 		<summary>The Elastic Common Schema (ECS) defines a common set of fields for ingesting data into Elasticsearch. A common schema helps you correlate data from sources like logs and metrics or IT operations analytics and security analytics. This package contains a Serilog integration for formatting errors in ECS JSON format.</summary>
 		<releaseNotes>See https://github.com/elastic/ecs-dotnet/releases/tag/$version$</releaseNotes>
 		<copyright>2018-$year$ Elasticsearch BV</copyright>
-		<tags>elasticsearch,elastic,ecs,elasticcommonschema</tags>
+		<tags>elasticsearch,elastic,ecs,elasticcommonschema,serilog,logging</tags>
         <frameworkAssemblies>
             <frameworkAssembly assemblyName="System.Web" targetFramework="net461" />
         </frameworkAssemblies>
