@@ -24,7 +24,7 @@ namespace Elastic.CommonSchema.Serilog.Tests
 
 		//TODO not a unit test does IO
 		//Run only on CI with a skip attribute
-		[Fact]
+		[Fact(Skip = "This does actual IO and will fail on CI")]
 		public void WritesToFileUsingStream() => TestLogger((logger, getLogEvents) =>
 		{
 			try
