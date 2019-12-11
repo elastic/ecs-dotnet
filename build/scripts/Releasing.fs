@@ -63,5 +63,11 @@ module Release =
             callback p nugetId nuspec properties version
         )
 
-    let NugetPack (ArtifactsVersion(version)) = packProjects version nugetPackMain
-
+    let NugetPack (ArtifactsVersion(version)) = 
+    
+        Tooling.DotNet.ExecIn "src" [ "pack"; 
+            "-c"; "Release";
+            "--no-build";
+             (sprintf "-p:Version=%s" <| version.Full.ToString()); 
+             "--output"; (sprintf "../%s" <| Paths.BuildOutput)
+        ] |> ignore

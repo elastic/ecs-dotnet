@@ -11,6 +11,7 @@
     <AllowedOutputExtensionsInPackageBuildOutputFolder>$(AllowedOutputExtensionsInPackageBuildOutputFolder);.pdb</AllowedOutputExtensionsInPackageBuildOutputFolder>
     <PublishRepositoryUrl>true</PublishRepositoryUrl>
 
+    <PackageIconUrl>https://raw.githubusercontent.com/elastic/ecs-dotnet/master/build/nuget-icon.png</PackageIconUrl>
     <PackageIcon>nuget-icon.png</PackageIcon>
   </PropertyGroup>
   <ItemGroup>
