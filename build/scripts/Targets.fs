@@ -53,9 +53,11 @@ module Main =
         
         // the following are expected to be called as targets directly        
         let buildChain = [
-            "clean"; "version"; "restore"; "full-build"; 
+            "clean"; "version"; "restore"; "full-build"; "test"
         ]
         command "build" buildChain <| fun _ -> printfn "STARTING BUILD"
+        
+        target "test" Tests.TestAll
 
         command "canary" [ "version"; "release";] <| fun _ -> printfn "Finished Release Build %O" artifactsVersion
 

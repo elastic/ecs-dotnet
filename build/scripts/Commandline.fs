@@ -18,6 +18,8 @@ Targets:
   - default target if non provided.
 * clean
   - cleans build output folders
+* tests
+  - tests all the projects under /tests
 * release <version>
   - 0 create a release worthy nuget packages for [version] under build\output
 * canary 
@@ -88,6 +90,7 @@ Targets:
         match arguments with
         | [] | ["build"] | ["clean"] | ["touch"; ] | ["temp"; ] | ["canary"; ] -> parsed
         | "diff" :: tail -> { parsed with RemainingArguments = tail }
+        | "test" :: tail -> { parsed with RemainingArguments = tail }
         | ["release"; version] -> { parsed with CommandArguments = SetVersion { Version = version }  }
 
         | _ ->

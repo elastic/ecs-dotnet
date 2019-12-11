@@ -1,6 +1,5 @@
 ﻿namespace Scripts
 
-open Elastic.Managed.ConsoleWriters
 open System
 open System.IO
 open ProcNet
@@ -17,7 +16,7 @@ module Tooling =
         if (Option.isSome workinDir) then
             startArgs.WorkingDirectory <- Option.defaultValue "" workinDir
         if Commandline.isMono then startArgs.WaitForStreamReadersTimeout <- Nullable<TimeSpan>()
-        let result = Proc.StartRedirected(startArgs, timeout, LineHighlightWriter())
+        let result = Proc.StartRedirected(startArgs, timeout)
         if not result.Completed then failwithf "process failed to complete within %O: %s" timeout bin
         if not result.ExitCode.HasValue then failwithf "process yielded no exit code: %s" bin
         { ExitCode = result.ExitCode.Value; Output = seq []}

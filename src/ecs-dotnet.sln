@@ -38,6 +38,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Elastic.Apm.SerilogEnricher
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Elastic.Apm.SerilogEnricher.Test", "..\tests\Elastic.Apm.SerilogEnricher.Test\Elastic.Apm.SerilogEnricher.Test.csproj", "{D8117E06-8856-4D61-A02E-570E9B6C3646}"
 EndProject
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "scripts", "..\build\scripts\scripts.fsproj", "{4779DD6F-AE49-4A80-9F67-D9F2DB05E557}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -78,6 +80,10 @@ Global
 		{D8117E06-8856-4D61-A02E-570E9B6C3646}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D8117E06-8856-4D61-A02E-570E9B6C3646}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D8117E06-8856-4D61-A02E-570E9B6C3646}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4779DD6F-AE49-4A80-9F67-D9F2DB05E557}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4779DD6F-AE49-4A80-9F67-D9F2DB05E557}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4779DD6F-AE49-4A80-9F67-D9F2DB05E557}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4779DD6F-AE49-4A80-9F67-D9F2DB05E557}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{21FD7B39-5FDD-4432-B25E-8425D3EC46A3} = {432D5575-2347-4D3C-BF8C-3E38410C46CA}
