@@ -9,7 +9,8 @@ open Commandline
 open Versioning
 
 module Tests =
-
+    let private buildingOnAzurePipeline = Environment.environVarAsBool "TF_BUILD"
+    
     let TestAll () =
         Directory.CreateDirectory Paths.BuildOutput |> ignore
         let command = 
@@ -26,7 +27,7 @@ module Tests =
             // https://github.com/tonerdo/coverlet/issues/110
             // Bites us here as well a PR is up already but not merged will try again afterwards
             // https://github.com/tonerdo/coverlet/pull/329
-            match false with
+            match buildingOnAzurePipeline with
             | true -> [ "--logger"; "trx"; "--collect"; "\"Code Coverage\""; "-v"; "m"] |> List.append command
             | _  -> command
         
