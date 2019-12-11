@@ -38,8 +38,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Build", "Build", "{2A5FBCFE
 ProjectSection(SolutionItems) = preProject
 	Library.build.props = Library.build.props
 	PublishArtifacts.build.props = PublishArtifacts.build.props
-	..\build\Elastic.CommonSchema.nuspec = ..\build\Elastic.CommonSchema.nuspec
-	..\build\Elastic.CommonSchema.Serilog.nuspec = ..\build\Elastic.CommonSchema.Serilog.nuspec
 EndProjectSection
 EndProject
 Global
