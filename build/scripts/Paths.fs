@@ -1,7 +1,5 @@
 ﻿namespace Scripts
 
-open Projects
-
 module Paths =
 
     let OwnerName = "elastic"
@@ -12,9 +10,6 @@ module Paths =
     let TargetsFolder = "build/scripts"
     let BuildOutput = sprintf "%s/output" BuildFolder
     
-    let ProjectOutputFolder (project:DotNetProject) (framework:DotNetFramework) = 
-        sprintf "%s/%s/%s" BuildOutput project.Name framework.Identifier.Nuget
-  
     let Tool tool = sprintf "packages/build/%s" tool
     let CheckedInToolsFolder = "build/tools"
     let KeysFolder = sprintf "%s/keys" BuildFolder
@@ -28,9 +23,6 @@ module Paths =
     let Output(folder) = sprintf "%s/%s" BuildOutput folder
     let Source(folder) = sprintf "%s/%s" SourceFolder folder
     
-    let ProjFile(project:DotNetProject) =
-        sprintf "%s/%s/%s.csproj" SourceFolder project.Name project.Name
-
     let BinFolder (folder:string) = 
         let f = folder.Replace(@"\", "/")
         sprintf "%s/%s/bin/Release" SourceFolder f

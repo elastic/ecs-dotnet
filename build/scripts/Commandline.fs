@@ -41,7 +41,6 @@ Targets:
         ValidMonoTarget: bool;
         NeedsFullBuild: bool;
         NeedsClean: bool;
-        DoSourceLink: bool;
 
         CommandArguments: CommandArguments;
     }
@@ -77,7 +76,6 @@ Targets:
                 | ("diff") -> false
                 | _ -> true;
             CommandArguments = Unknown
-            DoSourceLink = false
         }
             
         let arguments =

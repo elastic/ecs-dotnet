@@ -8,7 +8,6 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Commandline.fs" />
-    <Compile Include="Projects.fs" />
     <Compile Include="Paths.fs" />
     <Compile Include="Tooling.fs" />
     <Compile Include="Versioning.fs" />
