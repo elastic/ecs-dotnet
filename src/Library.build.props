@@ -1,7 +1,14 @@
 <Project>
-  <!-- Sets up the common properties for all Elastic assemblies -->
+  <!-- Project file defaults -->
+  <PropertyGroup>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <NoWarn>1591,1572,1571,1573,1587,1570</NoWarn>
+    <Prefer32Bit>false</Prefer32Bit>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>portable</DebugType>
+  </PropertyGroup>
+  <!-- Versioning -->
 	<PropertyGroup>
-		<!-- Default Version numbers -->
 		<CurrentVersion>1.0.0</CurrentVersion>
 		<CurrentAssemblyVersion>1.0.0</CurrentAssemblyVersion>
 		<CurrentAssemblyFileVersion>1.0.0</CurrentAssemblyFileVersion>
@@ -14,15 +21,20 @@
 		<FileVersion>$(CurrentAssemblyFileVersion)</FileVersion>
 		<TreatWarningsAsErrors>true</TreatWarningsAsErrors>
 
-    	<DefineConstants Condition="'$(TargetFramework)'=='net461'">$(DefineConstants);FULLFRAMEWORK</DefineConstants>
+    <DefineConstants Condition="'$(TargetFramework)'=='net461'">$(DefineConstants);FULLFRAMEWORK</DefineConstants>
 
+  </PropertyGroup>
+  <!-- Metadata -->
+  <PropertyGroup>
+    <IsPackable>false</IsPackable>
 		<RepoUri>https://raw.githubusercontent.com/elastic/ecs-dotnet</RepoUri>
-		<Authors>Elasticsearch BV</Authors>
+    <Authors>Elastic and contributors</Authors>
 		<Copyright>Elasticsearch BV</Copyright>
+    <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
+    <PackageOutputPath Condition="'$(OutputPathBaseDir)' != ''">$(OutputPathBaseDir)</PackageOutputPath>
+    
 		<PackageProjectUrl>https://github.com/elastic/ecs-dotnet</PackageProjectUrl>
-		<PackageLicenseUrl>https://github.com/elastic/ecs-dotnet/blob/master/license.txt</PackageLicenseUrl>
 		<ReleaseNotes>See https://github.com/elastic/ecs-dotnet/releases</ReleaseNotes>
-		<PackageIconUrl>https://raw.githubusercontent.com/elastic/ecs-dotnet/master/build/nuget-icon.png</PackageIconUrl>
     
 		<LangVersion>latest</LangVersion>
 	</PropertyGroup>

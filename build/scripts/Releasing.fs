@@ -32,10 +32,10 @@ module Release =
         |> addKeyValue "year" year
 
     let pack file n properties version  = 
-        Tooling.Nuget.Exec [ "pack"; file; 
+        Tooling.DotNet.Exec [ "pack"; file; 
+            "--no-build";
              "-version"; version.Full.ToString(); 
-             "-outputdirectory"; Paths.BuildOutput; 
-             "-properties"; properties; 
+             "-output"; Paths.BuildOutput; 
         ] |> ignore
         printfn "%s" Paths.BuildOutput
         let file = sprintf "%s.%O.nupkg" n version.Full
