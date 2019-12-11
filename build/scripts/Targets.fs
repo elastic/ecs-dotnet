@@ -57,7 +57,7 @@ module Main =
         ]
         command "build" buildChain <| fun _ -> printfn "STARTING BUILD"
         
-        target "test" Tests.TestAll
+        target "test" <| fun _ -> Tests.TestAll artifactsVersion
 
         command "canary" [ "version"; "release";] <| fun _ -> printfn "Finished Release Build %O" artifactsVersion
 

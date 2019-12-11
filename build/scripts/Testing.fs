@@ -11,10 +11,13 @@ open Versioning
 module Tests =
     let private buildingOnAzurePipeline = Environment.environVarAsBool "TF_BUILD"
     
-    let TestAll () =
+    let TestAll (ArtifactsVersion(version)) =
         Directory.CreateDirectory Paths.BuildOutput |> ignore
         let command = 
-            let p = ["test"; "."; "-c"; "RELEASE"]
+            let p = [
+                "test"; "."; "-c"; "RELEASE";
+                (sprintf "-p:Version=%s" <| version.Full.ToString()); 
+            ]
             //make sure we only test netcoreapp on linux or requested on the command line to only test-one
             match Environment.isLinux with 
             | true ->
