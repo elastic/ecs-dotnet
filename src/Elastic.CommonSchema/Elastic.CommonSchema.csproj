@@ -1,11 +1,14 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project Sdk="Microsoft.NET.Sdk">
-  <Import Project="$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildThisFileDirectory), build.bat))\src\PublishArtifacts.build.props" />
-    <PropertyGroup>
-        <TargetFrameworks>netstandard2.0;netstandard2.1;net461</TargetFrameworks>
-        <LangVersion>8.0</LangVersion>
-    </PropertyGroup>
-    <ItemGroup>
-        <PackageReference Include="System.Text.Json" Version="4.7.0-preview3.19551.4" />
-    </ItemGroup>
+  <Import Project="$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildThisFileDirectory), build.bat))\src\PublishArtifacts.build.props"/>
+  <PropertyGroup>
+    <TargetFrameworks>netstandard2.0;netstandard2.1;net461</TargetFrameworks>
+    
+    <Title>Elastic Common Schema (ECS) Types</Title>
+    <Description>Maps ECS to .NET types including (de)serialization using System.Text.Json</Description>
+  </PropertyGroup>
+  <ItemGroup>
+    <!-- TODO do we care to ilmerge this? -->
+    <PackageReference Include="System.Text.Json" Version="4.7.0-preview3.19551.4"/>
+  </ItemGroup>
 </Project>

@@ -135,8 +135,8 @@ module Versioning =
 
     let ValidateArtifacts (ArtifactsVersion(version)) =
         let fileVersion = version.AssemblyFile
-        let tmp = "build/output/_packages/tmp"
-        !! "build/output/_packages/*.nupkg"
+        let tmp = "build/output/tmp"
+        !! "build/output/*.nupkg"
         |> Seq.iter(fun f -> 
            Zip.unzip tmp f
            !! (sprintf "%s/**/*.dll" tmp)

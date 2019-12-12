@@ -75,7 +75,6 @@ namespace Elastic.CommonSchema.Elasticsearch
 		/// Get a type mapping descriptor for use with <see cref="Nest.PutIndexTemplateDescriptor"/>
 		/// designed for use with Elastic Common Schema version @(Model.YamlSchemasOrdered.First().FullVersion)
 		/// </summary>
-		/// <returns>An instance of <see cref="System.Func{Nest.TypeMappingDescriptor{Elastic.CommonSchema.Base}}{Nest.ITypeMapping}"/>.</returns>
 		public static Func@(Raw("<TypeMappingDescriptor<Base>, ITypeMapping>")) GetTypeMappingDescriptor()
 		{
 			return map =>

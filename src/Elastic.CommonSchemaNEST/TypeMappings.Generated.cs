@@ -5,7 +5,7 @@
 /*
 IMPORTANT NOTE
 ==============
-This file has been generated. 
+This file has been generated.
 If you wish to submit a PR please modify the original csharp file and submit the PR with that change. Thanks!
 */
 
@@ -46,7 +46,7 @@ namespace Elastic.CommonSchema.Elasticsearch
 			indexTemplate.IndexPatterns("ecs-*");
 			indexTemplate.Order(1);
 			indexTemplate.Settings(s =>
-				s.Setting("index", 
+				s.Setting("index",
 					new
 					{
 						refresh_interval = "5s",
@@ -60,7 +60,7 @@ namespace Elastic.CommonSchema.Elasticsearch
 					}));
 
 			indexTemplate.Map(GetTypeMappingDescriptor());
-			
+
 			return indexTemplate;
 		}
 
@@ -68,7 +68,6 @@ namespace Elastic.CommonSchema.Elasticsearch
 		/// Get a type mapping descriptor for use with <see cref="Nest.PutIndexTemplateDescriptor"/>
 		/// designed for use with Elastic Common Schema version 1.3.0
 		/// </summary>
-		/// <returns>An instance of <see cref="System.Func{Nest.TypeMappingDescriptor{Elastic.CommonSchema.Base}}{Nest.ITypeMapping}"/>.</returns>
 		public static Func<TypeMappingDescriptor<Base>, ITypeMapping> GetTypeMappingDescriptor()
 		{
 			return map =>

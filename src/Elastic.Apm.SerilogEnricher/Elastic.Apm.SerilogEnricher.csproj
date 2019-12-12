@@ -1,12 +1,16 @@
 <Project Sdk="Microsoft.NET.Sdk">
-<Import Project="$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildThisFileDirectory), build.bat))\src\PublishArtifacts.build.props" />
+  <Import Project="$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildThisFileDirectory), build.bat))\src\PublishArtifacts.build.props"/>
 
-<PropertyGroup>
-  <TargetFrameworks>netstandard2.0;net461</TargetFrameworks>
-</PropertyGroup>
+  <PropertyGroup>
+    <TargetFrameworks>netstandard2.0;net461</TargetFrameworks>
 
-<ItemGroup>
-  <PackageReference Include="Serilog" Version="2.0.0" />
-  <PackageReference Include="Elastic.Apm" Version="1.2.0" />
-</ItemGroup>
+    <Title>Elastic APM Serilog Enricher</Title>
+    <Description>Enrich your logs with APM TraceId and TransactionId automatically</Description>
+
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Serilog" Version="2.0.0"/>
+    <PackageReference Include="Elastic.Apm" Version="1.2.0"/>
+  </ItemGroup>
 </Project>
