@@ -2,7 +2,7 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <!-- This file sets up common properties and targets for projects we intend to publish -->
 
-  <Import Project="$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildThisFileDirectory), build.bat))\src\Library.build.props" />
+  <Import Project="$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildThisFileDirectory), build.bat))\src\Library.build.props"/>
   <PropertyGroup>
     <IsPackable>true</IsPackable>
     <SignAssembly>true</SignAssembly>
