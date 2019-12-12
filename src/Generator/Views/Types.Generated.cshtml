@@ -31,7 +31,7 @@ using System.Runtime.Serialization;
 namespace Elastic.CommonSchema
 {
 	/// <summary>
-	/// Elastic Common Schema version @(Model.YamlSchemas.First().FullVersion)
+	/// Elastic Common Schema version @(Model.YamlSchemasOrdered.First().FullVersion)
 	/// <para/>
 	/// The Elastic Common Schema (ECS) defines a common set of fields for ingesting data into Elasticsearch.
 	/// A common schema helps you correlate data from sources like logs and metrics or IT operations analytics
@@ -44,7 +44,7 @@ namespace Elastic.CommonSchema
 		/// <summary>
 		/// Elastic Common Schema version
 		/// </summary>
-		public static string Version => "@(Model.YamlSchemas.First().FullVersion)";
+		public static string Version => "@(Model.YamlSchemasOrdered.First().FullVersion)";
 
 		/// <summary>
 		/// Container for additional metadata against this event.
@@ -52,7 +52,7 @@ namespace Elastic.CommonSchema
 		[DataMember(Name = "_metadata")]
 		public @Raw("IDictionary<string, object>") Metadata { get; set; }
 
-@foreach (var schema in Model.YamlSchemas.Where(m => m.Name != "base"))
+@foreach (var schema in Model.NonBaseYamlSchemas())
 	{
 <text>		/// <summary>
 		/// @Raw(schema.DescriptionSanitized)
@@ -62,7 +62,7 @@ namespace Elastic.CommonSchema
 
 </text>
 	}
-@foreach (var field in Model.YamlSchemas.Single(m => m.Name == "base").GetFieldsFlat())
+@foreach (var field in Model.BaseYamlSchema().GetFieldsFlat())
 {
 <text>		/// <summary>
 		/// @Raw(field.DescriptionSanitized)
@@ -78,10 +78,86 @@ namespace Elastic.CommonSchema
 
 </text> 
 }
+@foreach (var field in Model.BaseYamlSchema().GetFieldsNested())
+{
+<text>		/// <summary>
+		/// @Raw(field.Description)
+		/// </summary>
+		[DataMember(Name = "@Raw(field.ClassName.ToLower())")]
+		public @field.ClassNameType @FileGenerator.PascalCase(field.ClassName) { get; set; }
+
+</text> 
+}
+    }
+
+@foreach (var nestedField in Model.BaseYamlSchema().GetFieldsNested())
+	{
+	foreach (var child in nestedField.Children)
+	{
+		if (child.Children.Count > 0)
+		{
+			throw new System.ArgumentException("Template does not support grandchildren fields.");
+		}
+		
+<text>	/// <summary>
+	/// @nestedField.ClassName@child.ClassName, property of <see cref="@FileGenerator.PascalCase(Model.BaseYamlSchema().Name)@nestedField.ClassName" />
+	/// </summary>
+	public class @child.ClassName
+	{
+	@foreach (var field in child.Fields)
+	{
+<text>		/// <summary>
+		/// @nestedField.ClassName @Raw(field.DescriptionSanitized)
+		/// </summary>
+		/// <remarks>@field.Level.ToString("f")</remarks>
+		@if (field.Example != null)
+		{
+<text>		/// <example>@Raw(JsonConvert.SerializeObject(field.Example).Trim('"'))</example>
+</text> 
+		}
+		[DataMember(Name = "@Raw(string.Join(".", field.Name.ToLower().Split('.').Skip(2)))")]
+		public @Raw(field.ClrType) @FileGenerator.PascalCase(field.Name).Replace(nestedField.ClassName + child.ClassName, string.Empty) { get; set; }
+
+</text>}
 	}
 
-	@foreach (var schema in Model.YamlSchemas.Where(m => m.Name != "base"))
+</text>
+	}
+		
+<text>	/// <summary>
+	/// @nestedField.ClassName, property of <see cref="@FileGenerator.PascalCase(Model.BaseYamlSchema().Name)" />
+	/// </summary>
+	public class @nestedField.ClassName
 	{
+@foreach (var child in nestedField.Children)
+	{<text>		/// <summary>
+		/// @child.ClassName property.
+		/// </summary>		   
+		[DataMember(Name = "@child.ClassName.ToLower()")]
+		public @nestedField.ClassName@child.ClassName @child.ClassName { get; set; }
+
+</text>}
+@foreach (var field in nestedField.Fields)
+	{<text>		/// <summary>
+		/// @Raw(field.DescriptionSanitized)
+		/// </summary>
+		/// <remarks>@field.Level.ToString("f")</remarks>
+		@if (field.Example != null)
+		{
+<text>		/// <example>@Raw(JsonConvert.SerializeObject(field.Example).Trim('"'))</example>
+</text> 
+		}
+		[DataMember(Name = "@Raw(string.Join(".", field.Name.ToLower().Split('.').Skip(1)))")]
+		public @Raw(field.ClrType) @FileGenerator.PascalCase(field.Name).Replace(nestedField.ClassName, string.Empty) { get; set; }
+
+</text>}
+	}
+
+</text>
+	}
+
+@foreach (var schema in Model.NonBaseYamlSchemas())
+{
 	foreach (var nestedField in schema.GetFieldsNested())
 	{
 	foreach (var child in nestedField.Children)
@@ -202,13 +278,13 @@ foreach (var nesting in schema.Nestings)
 namespace Elastic.CommonSchema.Elasticsearch
 {
 	/// <summary>
-	/// Elastic Common Schema version @(Model.YamlSchemas.First().FullVersion) index templates to be used with Elasticsearch.
+	/// Elastic Common Schema version @(Model.YamlSchemasOrdered.First().FullVersion) index templates to be used with Elasticsearch.
 	/// </summary>
 	public static class IndexTemplates
 	{
 @foreach (var template in Model.Templates)
 {<text>		/// <summary>
-		/// Elastic Common Schema version @(Model.YamlSchemas.First().FullVersion) index template for Elasticsearch version @(template.Key)
+		/// Elastic Common Schema version @(Model.YamlSchemasOrdered.First().FullVersion) index template for Elasticsearch version @(template.Key)
 		/// See the Put Index Template API documentation: https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-templates.html
 		/// </summary>
 		/// <returns>Index template string that can be used with the Put Index Template API.</returns>

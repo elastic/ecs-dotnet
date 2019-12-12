@@ -51,10 +51,11 @@ namespace Elastic.CommonSchema.Serialization
 {<text>				"@(name)" => ReadProp<@(Raw(field.Item2.ClrType))>(ref reader, "@name", ecsEvent, (b, v) => b.@(FileGenerator.PascalCase(field.Item2.Name)) = v),
 </text>}
 }
-@foreach (var schema in Model.YamlSchemasOrdered.Skip(1))
-{
-	var name = schema.Name;
-<text>				"@(name)" => ReadProp<@(FileGenerator.PascalCase(schema.Name))>(ref reader, "@name", ecsEvent, (b, v) => b.@(FileGenerator.PascalCase(schema.Name)) = v),
+@foreach (var schema in Model.BaseYamlSchema().GetFieldsNested())
+{<text>				"@schema.Name" => ReadProp<@(FileGenerator.PascalCase(schema.ClassName))>(ref reader, "@schema.Name", ecsEvent, (b, v) => b.@(FileGenerator.PascalCase(schema.ClassName)) = v),
+</text>}
+@foreach (var schema in Model.NonBaseYamlSchemas())
+{<text>				"@schema.Name" => ReadProp<@(FileGenerator.PascalCase(schema.Name))>(ref reader, "@schema.Name", ecsEvent, (b, v) => b.@(FileGenerator.PascalCase(schema.Name)) = v),
 </text>}
 				_ => false
 			};
@@ -79,6 +80,10 @@ namespace Elastic.CommonSchema.Serialization
 </text>}
 }
 			// Complex types
+@foreach (var schema in Model.BaseYamlSchema().GetFieldsNested())
+{
+<text>			WriteProp(writer, "@(schema.Name)", value.@(FileGenerator.PascalCase(schema.Name)));
+</text>}
 @foreach (var schema in Model.YamlSchemasOrdered.Skip(1))
 {<text>			WriteProp(writer, "@(schema.Name)", value.@(FileGenerator.PascalCase(schema.Name)));
 </text>}

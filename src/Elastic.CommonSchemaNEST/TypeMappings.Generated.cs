@@ -372,9 +372,6 @@ namespace Elastic.CommonSchema.Elasticsearch
 									.Boolean(p => p.Name(n => n.Established))
 									.Keyword(p => p.Name(n => n.NextProtocol).IgnoreAbove(1024))
 							))
-							.Object<Tracing>(o =>
-								o.Properties(a => a
-							))
 							.Object<Url>(o =>
 								o.Properties(a => a
 									.Keyword(p => p.Name(n => n.Original).IgnoreAbove(1024))

@@ -10,36 +10,60 @@ namespace Generator.Schema
 {
 	public class EcsSpecification
 	{
+		private YamlSchema _baseRoot;
+
+		public YamlSchema BaseYamlSchema()
+		{
+			if (_baseRoot != null)
+				return _baseRoot;
+
+			var otherRoots = YamlSchemas.Where(s => string.IsNullOrWhiteSpace(s.Prefix) && s.Name != "base").ToArray();
+			var baseRoot = YamlSchemas.Single(s => s.Name == "base");
+
+			foreach (var otherRoot in otherRoots)
+			{
+				foreach (var otherRootField in otherRoot.Fields)
+				{
+					if (!baseRoot.Fields.ContainsKey(otherRootField.Key))
+						baseRoot.Fields.Add(otherRootField.Key, otherRootField.Value);
+				}
+			}
+			_baseRoot = baseRoot;
+			return _baseRoot;
+		}
+
+		public IEnumerable<YamlSchema> NonBaseYamlSchemas() => YamlSchemas.Where(s => !string.IsNullOrWhiteSpace(s.Prefix)).OrderBy(s => s.Name);
+
 		public IEnumerable<Tuple<string, Field>> BaseFieldsOrdered
 		{
 			get
 			{
-				var baseClass = YamlSchemas.Single(s => s.Name == "base");
+				var baseRootObject = BaseYamlSchema();
 				var list = new List<Tuple<string, Field>>();
-				list.Add(Tuple.Create("WriteTimestamp", baseClass.Fields.Single(f => f.Key == "@timestamp").Value));
+				list.Add(Tuple.Create("WriteTimestamp", baseRootObject.Fields.Single(f => f.Key == "@timestamp").Value));
 
 				// HACK in the log.level
-				list.Add(Tuple.Create("WriteLogLevel", new Field { Name = "log.level", Schema = baseClass }));
-				list.Add(Tuple.Create("WriteMessage", baseClass.Fields.Single(f => f.Key == "message").Value));
+				list.Add(Tuple.Create("WriteLogLevel", new Field { Name = "log.level", Schema = baseRootObject }));
+				list.Add(Tuple.Create("WriteMessage", baseRootObject.Fields.Single(f => f.Key == "message").Value));
 
 				// HACK in _metadata
-				list.Add(Tuple.Create("WriteProp", new Field { Name = "_metadata", Schema = baseClass }));
-				list.AddRange(baseClass.Fields.Values.Where(f => f.Name != "@timestamp" && f.Name != "message")
+				list.Add(Tuple.Create("WriteProp", new Field { Name = "_metadata", Schema = baseRootObject }));
+				list.AddRange(baseRootObject.GetFieldsFlat().Where(f => f.Name != "@timestamp" && f.Name != "message")
 					.Select(f => Tuple.Create("WriteProp", f)));
 				return list;
 			}
 		}
 
 		public IDictionary<int, string> Templates { get; set; }
+
 		public IList<YamlSchema> YamlSchemas { get; set; }
 
 		public IEnumerable<YamlSchema> YamlSchemasOrdered
 		{
 			get
 			{
-				var list = new List<YamlSchema>();
-				list.Add(YamlSchemas.Single(s => s.Name == "base"));
-				list.AddRange(YamlSchemas.Where(s => s.Name != "base").OrderBy(s => s.Name));
+				var list = new List<YamlSchema> { BaseYamlSchema() };
+				list.AddRange(NonBaseYamlSchemas());
 				return list;
 			}
 		}
