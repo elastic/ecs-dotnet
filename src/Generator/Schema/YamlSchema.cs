@@ -88,24 +88,23 @@ namespace Generator.Schema
 		public string Type { get; set; }
 
 		public IEnumerable<Field> GetFilteredFields() =>
-			Fields
-				.Where(f => Nestings == null || !Nestings.Any(n => f.Key.StartsWith(n)))
-				.Select(f => f.Value)
-				.OrderBy(f => f.Order);
+			Fields.Where(f => Nestings == null || !Nestings.Any(n => f.Key.StartsWith(n)))
+				  .Select(f => f.Value)
+				  .OrderBy(f => f.Order);
 
 		public List<NestedFields> GetFieldsNested()
 		{
 			var nestedFields = new List<NestedFields>();
 			foreach (var nestedField in GetFilteredFields().Where(f => f.JsonFieldName.Contains(".")))
 			{
-				var split = nestedField.JsonFieldName.Split('.').Select(FileGenerator.PascalCase).ToArray();
-				var current = nestedFields.SingleOrDefault(n => n.ClassName == split.First());
+				var split = nestedField.JsonFieldName.Split('.').ToArray();
+				var current = nestedFields.SingleOrDefault(n => n.Name == split.First());
 
 				if (current != null)
 					Add(current, split.Skip(1).ToArray(), nestedField);
 				else
 				{
-					var newRoot = new NestedFields(this) { ClassName = split.First() };
+					var newRoot = new NestedFields(this) { Name = split.First() };
 					nestedFields.Add(newRoot);
 
 					Add(newRoot, split.Skip(1).ToArray(), nestedField);
@@ -123,12 +122,12 @@ namespace Generator.Schema
 				return;
 			}
 
-			var existingRoot = root.Children.SingleOrDefault(c => c.ClassName == properties.First());
+			var existingRoot = root.Children.SingleOrDefault(c => c.Name == properties.First());
 			if (existingRoot != null)
 				Add(existingRoot, properties.Skip(1).ToArray(), field);
 			else
 			{
-				var newRoot = new NestedFields(this) { ClassName = properties.First() };
+				var newRoot = new NestedFields(this) { Name = properties.First() };
 				root.Children.Add(newRoot);
 
 				Add(newRoot, properties.Skip(1).ToArray(), field);

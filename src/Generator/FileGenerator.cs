@@ -166,7 +166,8 @@ namespace Generator
 				});
 		}
 
-		private static string DoRazor(string name, string template, EcsSpecification model) => Razor.CompileRenderStringAsync(name, template, model).GetAwaiter().GetResult();
+		private static string DoRazor(string name, string template, EcsSpecification model) =>
+			Razor.CompileRenderStringAsync(name, template, model).GetAwaiter().GetResult();
 
 		private static void GenerateTypes(EcsSpecification model)
 		{

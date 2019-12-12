@@ -32,8 +32,10 @@ namespace Elastic.CommonSchema.Serialization
 				"log.level" => ReadString(ref reader, ref loglevel),
 				"message" => ReadProp<string>(ref reader, "message", ecsEvent, (b, v) => b.Message = v),
 				"_metadata" => ReadProp<IDictionary<string, object>>(ref reader, "_metadata", ecsEvent, (b, v) => b.Metadata = v),
-				"labels" => ReadProp<IDictionary<string, object>>(ref reader, "labels", ecsEvent, (b, v) => b.Labels = v),
 				"tags" => ReadProp<string[]>(ref reader, "tags", ecsEvent, (b, v) => b.Tags = v),
+				"labels" => ReadProp<IDictionary<string, object>>(ref reader, "labels", ecsEvent, (b, v) => b.Labels = v),
+				"trace" => ReadProp<Trace>(ref reader, "trace", ecsEvent, (b, v) => b.Trace = v),
+				"transaction" => ReadProp<Transaction>(ref reader, "transaction", ecsEvent, (b, v) => b.Transaction = v),
 				"agent" => ReadProp<Agent>(ref reader, "agent", ecsEvent, (b, v) => b.Agent = v),
 				"as" => ReadProp<As>(ref reader, "as", ecsEvent, (b, v) => b.As = v),
 				"client" => ReadProp<Client>(ref reader, "client", ecsEvent, (b, v) => b.Client = v),
@@ -63,7 +65,6 @@ namespace Elastic.CommonSchema.Serialization
 				"source" => ReadProp<Source>(ref reader, "source", ecsEvent, (b, v) => b.Source = v),
 				"threat" => ReadProp<Threat>(ref reader, "threat", ecsEvent, (b, v) => b.Threat = v),
 				"tls" => ReadProp<Tls>(ref reader, "tls", ecsEvent, (b, v) => b.Tls = v),
-				"tracing" => ReadProp<Tracing>(ref reader, "tracing", ecsEvent, (b, v) => b.Tracing = v),
 				"url" => ReadProp<Url>(ref reader, "url", ecsEvent, (b, v) => b.Url = v),
 				"user" => ReadProp<User>(ref reader, "user", ecsEvent, (b, v) => b.User = v),
 				"user_agent" => ReadProp<UserAgent>(ref reader, "user_agent", ecsEvent, (b, v) => b.UserAgent = v),
@@ -85,9 +86,11 @@ namespace Elastic.CommonSchema.Serialization
 			WriteLogLevel(writer, value);
 			WriteMessage(writer, value);
 			WriteProp(writer, "_metadata", value.Metadata);
-			WriteProp(writer, "labels", value.Labels);
 			WriteProp(writer, "tags", value.Tags);
+			WriteProp(writer, "labels", value.Labels);
 			// Complex types
+			WriteProp(writer, "trace", value.Trace);
+			WriteProp(writer, "transaction", value.Transaction);
 			WriteProp(writer, "agent", value.Agent);
 			WriteProp(writer, "as", value.As);
 			WriteProp(writer, "client", value.Client);
@@ -117,7 +120,6 @@ namespace Elastic.CommonSchema.Serialization
 			WriteProp(writer, "source", value.Source);
 			WriteProp(writer, "threat", value.Threat);
 			WriteProp(writer, "tls", value.Tls);
-			WriteProp(writer, "tracing", value.Tracing);
 			WriteProp(writer, "url", value.Url);
 			WriteProp(writer, "user", value.User);
 			WriteProp(writer, "user_agent", value.UserAgent);

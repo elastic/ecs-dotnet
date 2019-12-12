@@ -15,7 +15,9 @@ namespace Generator.Schema
 
 		public List<NestedFields> Children = new List<NestedFields>();
 
-		public string ClassName { get; set; }
+		public string Name { get; set; }
+
+		public string ClassName => FileGenerator.PascalCase(Name);
 
 		public string ClassNameType
 		{
