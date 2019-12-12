@@ -10,14 +10,14 @@ install:
 build_script:
     - cmd: build.bat canary
 
-#nuget:
-#    disable_publish_on_pr: true
+nuget:
+    disable_publish_on_pr: true
 
 for:
 
     - branches:
           only:
-              - /^(master|\d+\.x|feature\/ci)$/
+              - /^(master|\d+\.x)$/
       artifacts:
           - path: .\build\output\_packages\*.nupkg
             name: NuGet
