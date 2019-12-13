@@ -38,3 +38,9 @@ An example of the output is given below:
   }
 }
 ```
+
+## Copyright and License
+
+This software is Copyright (c) 2014-2019 by Elasticsearch BV.
+
+This is free software, licensed under: [The Apache License Version 2.0](https://github.com/elastic/ecs-dotnet/blob/master/license.txt).
