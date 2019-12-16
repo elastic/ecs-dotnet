@@ -64,7 +64,8 @@ namespace Elastic.CommonSchema.Serilog
 				Metadata = GetMetadata(logEvent),
 				Process = GetProcess(logEvent, configuration.MapCurrentThread),
 				Host = GetHost(logEvent),
-				Tracing = GetTracing(logEvent)
+				Trace = GetTrace(logEvent),
+				Transaction = GetTransaction(logEvent)
 			};
 
 			if (configuration.MapHttpAdapter != null)
@@ -86,20 +87,14 @@ namespace Elastic.CommonSchema.Serilog
 			return ecsEvent;
 		}
 
-		private static Tracing GetTracing(LogEvent logEvent)
-		{
-			Tracing tracing = null;
+		private static Trace GetTrace(LogEvent logEvent) => !logEvent.Properties.TryGetValue("ElasticApmTraceId", out var traceId)
+			? null
+			: new Trace { Id = traceId.ToString().Replace("\"", string.Empty) };
 
-			if (logEvent.Properties.TryGetValue("ElasticApmTransactionId", out var transactionId))
-				tracing = new Tracing { Transaction = new TracingTransaction { Id = transactionId.ToString().Replace("\"", string.Empty) } };
-
-			if (!logEvent.Properties.TryGetValue("ElasticApmTraceId", out var traceId)) return tracing;
-
-			tracing ??= new Tracing();
-			tracing.Trace = new TracingTrace { Id = traceId.ToString().Replace("\"", string.Empty) };
-
-			return tracing;
-		}
+		private static Transaction GetTransaction(LogEvent logEvent) =>
+			!logEvent.Properties.TryGetValue("ElasticApmTransactionId", out var transactionId)
+				? null
+				: new Transaction { Id = transactionId.ToString().Replace("\"", string.Empty) };
 
 		private static IDictionary<string, object> GetMetadata(LogEvent logEvent)
 		{
