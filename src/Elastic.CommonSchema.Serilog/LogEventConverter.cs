@@ -64,6 +64,8 @@ namespace Elastic.CommonSchema.Serilog
 				Metadata = GetMetadata(logEvent),
 				Process = GetProcess(logEvent, configuration.MapCurrentThread),
 				Host = GetHost(logEvent),
+				Trace = GetTrace(logEvent),
+				Transaction = GetTransaction(logEvent)
 			};
 
 			if (configuration.MapHttpAdapter != null)
@@ -85,6 +87,14 @@ namespace Elastic.CommonSchema.Serilog
 			return ecsEvent;
 		}
 
+		private static Trace GetTrace(LogEvent logEvent) => !logEvent.Properties.TryGetValue("ElasticApmTraceId", out var traceId)
+			? null
+			: new Trace { Id = traceId.ToString().Replace("\"", string.Empty) };
+
+		private static Transaction GetTransaction(LogEvent logEvent) =>
+			!logEvent.Properties.TryGetValue("ElasticApmTransactionId", out var transactionId)
+				? null
+				: new Transaction { Id = transactionId.ToString().Replace("\"", string.Empty) };
 
 		private static IDictionary<string, object> GetMetadata(LogEvent logEvent)
 		{

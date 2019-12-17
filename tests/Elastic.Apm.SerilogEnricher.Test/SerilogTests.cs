@@ -55,14 +55,14 @@ namespace Elastic.Apm.SerilogEnricher.Test
 
 			InMemorySink.Instance
 				.LogEvents.ElementAt(1)
-				.Properties["TraceId"]
+				.Properties["ElasticApmTraceId"]
 				.ToString()
 				.Should()
 				.Be($"\"{traceId}\"");
 
 			InMemorySink.Instance
 				.LogEvents.ElementAt(1)
-				.Properties["TransactionId"]
+				.Properties["ElasticApmTransactionId"]
 				.ToString()
 				.Should()
 				.Be($"\"{transactionId}\"");
@@ -119,28 +119,28 @@ namespace Elastic.Apm.SerilogEnricher.Test
 
 			InMemorySink.Instance
 				.LogEvents.ElementAt(1)
-				.Properties["TraceId"]
+				.Properties["ElasticApmTraceId"]
 				.ToString()
 				.Should()
 				.Be($"\"{traceId}\"");
 
 			InMemorySink.Instance
 				.LogEvents.ElementAt(1)
-				.Properties["TransactionId"]
+				.Properties["ElasticApmTransactionId"]
 				.ToString()
 				.Should()
 				.Be($"\"{transactionId}\"");
 
 			InMemorySink.Instance
 				.LogEvents.ElementAt(2)
-				.Properties["TraceId"]
+				.Properties["ElasticApmTraceId"]
 				.ToString()
 				.Should()
 				.Be($"\"{traceId}\"");
 
 			InMemorySink.Instance
 				.LogEvents.ElementAt(2)
-				.Properties["TransactionId"]
+				.Properties["ElasticApmTransactionId"]
 				.ToString()
 				.Should()
 				.Be($"\"{transactionId}\"");

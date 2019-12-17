@@ -19,9 +19,11 @@
         <PackageReference Include="xunit" Version="2.4.0" />
         <PackageReference Include="xunit.runner.visualstudio" Version="2.4.0" />
         <PackageReference Include="coverlet.collector" Version="1.0.1" />
+        <PackageReference Include="Elastic.Apm" Version="1.2.0" />
     </ItemGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\..\..\src\Elastic.Apm.SerilogEnricher\Elastic.Apm.SerilogEnricher.csproj" />
       <ProjectReference Include="..\..\..\src\Elastic.CommonSchema.Serilog\Elastic.CommonSchema.Serilog.csproj" />
     </ItemGroup>
 

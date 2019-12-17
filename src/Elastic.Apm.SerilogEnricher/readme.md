@@ -7,13 +7,13 @@ This enricher adds transaction id and trace id to every Serilog log message that
 ```
 var logger = new LoggerConfiguration()
    .Enrich.WithElasticApmCorrelationInfo()
-   .WriteTo.Console(outputTemplate: "[{TraceId} {TransactionId} {Message:lj} {NewLine}{Exception}")
+   .WriteTo.Console(outputTemplate: "[{ElasticApmTraceId} {ElasticApmTransactionId} {Message:lj} {NewLine}{Exception}")
    .CreateLogger();
 ```
 
 In the code snippet above `Enrich.WithElasticApmCorrelationInfo()` enables the enricher from this project, which will set 2 properties for log lines that are created during a transaction:
-- `TransactionId`
-- `TraceId`
+- `ElasticApmTransactionId`
+- `ElasticApmTraceId`
 
 As you can see, in the `outputTemplate` of the Console sink these two properties are printed. Of course they can be used with any other sink.
 
