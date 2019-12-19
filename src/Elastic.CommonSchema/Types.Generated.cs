@@ -273,13 +273,13 @@ namespace Elastic.CommonSchema
 		public string Message { get; set; }
 
 		/// <summary>
-		/// Trace property.
+		/// Distributed tracing makes it possible to analyze performance throughout a microservice architecture all in one view. This is accomplished by tracing all of the requests - from the initial web request in the front-end service - to queries made through multiple back-end services.<para/>Trace property.
 		/// </summary>
 		[DataMember(Name = "trace")]
 		public Trace Trace { get; set; }
 
 		/// <summary>
-		/// Transaction property.
+		/// Distributed tracing makes it possible to analyze performance throughout a microservice architecture all in one view. This is accomplished by tracing all of the requests - from the initial web request in the front-end service - to queries made through multiple back-end services.<para/>Transaction property.
 		/// </summary>
 		[DataMember(Name = "transaction")]
 		public Transaction Transaction { get; set; }
