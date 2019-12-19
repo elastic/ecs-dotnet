@@ -49,26 +49,27 @@ In this example, we will also install the [Elasticsearch.net Low Level Client](h
 
 #### Connecting to Elasticsearch
 
-    var node = new Uri("http://localhost:9200");
-    var config = new ConnectionConfiguration(node);
-    var lowLevelClient = new ElasticLowLevelClient(config);
-
+```csharp
+var node = new Uri("http://localhost:9200");
+var config = new ConnectionConfiguration(node);
+var lowLevelClient = new ElasticLowLevelClient(config);
+```
 #### Creating an Index Template
 
 Now we need to put an index template, so that any new indices that match our configured index name pattern are to use the ECS schema.
 
 We ship with different index templates for different major versions of Elasticsearch within the `Elastic.CommonSchema.Elasticsearch` namespace.
 
-    // We are using Elasticsearch version 7.4.0, lets use a 7 version index template
-    var template = Elastic.CommonSchema.Elasticsearch.IndexTemplates.GetIndexTemplateForElasticsearch7("ecs-*");
+```csharp
+// We are using Elasticsearch version 7.4.0, lets use a 7 version index template
+var template = Elastic.CommonSchema.Elasticsearch.IndexTemplates.GetIndexTemplateForElasticsearch7("ecs-*");
 
-    // Send the template to the Elasticsearch server
-	var templateResponse = lowLevelClient.Indices.PutTemplateForAll<StringResponse>(
-		"ecs-template", 
-		template);
+// Send the template to the Elasticsearch server
+var templateResponse = lowLevelClient.Indices.PutTemplateForAll<StringResponse>("ecs-template", template);
    
-    // Check everything was successful
-    Debug.Assert(templateResponse.Success);
+// Check everything was successful
+Debug.Assert(templateResponse.Success);
+```
 
 Now that we have applied the index template, any indices that match the pattern `ecs-*` will use the ECS schema.
 
@@ -78,101 +79,105 @@ NOTE: We only need to apply the index template once.
 
 Creating a new ECS event is as simple as newing up an instance:
 
-    var ecsEvent = new Base
+```csharp
+var ecsEvent = new Base
+{
+    Timestamp = DateTimeOffset.Parse("2019-10-23T19:44:38.485Z"),
+    Dns = new Dns
     {
-        Timestamp = DateTimeOffset.Parse("2019-10-23T19:44:38.485Z"),
-        Dns = new Dns
+        Id = "23666",
+        OpCode = "QUERY",
+        Type = "answer",
+        Question = new DnsQuestion
         {
-            Id = "23666",
-            OpCode = "QUERY",
-            Type = "answer",
-            Question = new DnsQuestion
+             Name   = "www.example.com",
+             Type = "A",
+             Class = "IN",
+             RegisteredDomain = "example.com"
+        },
+        HeaderFlags = new [] { "RD", "RA" },
+        ResponseCode = "NOERROR",
+        ResolvedIp = new [] { "10.0.190.47", "10.0.190.117" },
+        Answers = new []
+        {
+            new DnsAnswers
             {
-                 Name   = "www.example.com",
-                 Type = "A",
-                 Class = "IN",
-                 RegisteredDomain = "example.com"
+                Data = "10.0.190.47",
+                Name = "www.example.com",
+                Type = "A",
+                Class = "IN",
+                Ttl = 59
             },
-            HeaderFlags = new [] { "RD", "RA" },
-            ResponseCode = "NOERROR",
-            ResolvedIp = new [] { "10.0.190.47", "10.0.190.117" },
-            Answers = new []
+            new DnsAnswers
             {
-                new DnsAnswers
-                {
-                    Data = "10.0.190.47",
-                    Name = "www.example.com",
-                    Type = "A",
-                    Class = "IN",
-                    Ttl = 59
-                },
-                new DnsAnswers
-                {
-                    Data = "10.0.190.117",
-                    Name = "www.example.com",
-                    Type = "A",
-                    Class = "IN",
-                    Ttl = 59
-                }
+                Data = "10.0.190.117",
+                Name = "www.example.com",
+                Type = "A",
+                Class = "IN",
+                Ttl = 59
             }
-        },
-        Network = new Network
-        {
-            Type = "ipv4",
-            Transport = "udp",
-            Protocol = "dns",
-            Direction = "outbound",
-            CommunityId = "1:19beef+RWVW9+BEEF/Q45VFU+2Y=",
-            Bytes = 126
-        },
-        Source = new Source
-        {
-            Ip = "192.168.86.26",
-            Port = 5785,
-            Bytes = 31
-        },
-        Destination = new Destination
-        {
-            Ip = "8.8.4.4",
-            Port = 53,
-            Bytes = 95
-        },
-        Client = new Client
-        {
-            Ip = "192.168.86.26",
-            Port = 5785,
-            Bytes = 31
-        },
-        Server = new Server
-        {
-            Ip = "8.8.4.4",
-            Port = 53,
-            Bytes = 95
-        },
-        Event = new Event
-        {
-            Duration = 122433000,
-            Start = DateTimeOffset.Parse("2019-10-23T19:44:38.485Z"),
-            End = DateTimeOffset.Parse("2019-10-23T19:44:38.607Z"),
-            Kind = "event",
-            Category = "network_traffic"
-        },
-        Ecs = new Ecs
-        {
-            Version = "1.2.0"
-        },
-        Metadata = new Dictionary<string, object>
-        {
-            { "client", "ecs-dotnet" }
         }
-    };
+    },
+    Network = new Network
+    {
+        Type = "ipv4",
+        Transport = "udp",
+        Protocol = "dns",
+        Direction = "outbound",
+        CommunityId = "1:19beef+RWVW9+BEEF/Q45VFU+2Y=",
+        Bytes = 126
+    },
+    Source = new Source
+    {
+        Ip = "192.168.86.26",
+        Port = 5785,
+        Bytes = 31
+    },
+    Destination = new Destination
+    {
+        Ip = "8.8.4.4",
+        Port = 53,
+        Bytes = 95
+    },
+    Client = new Client
+    {
+        Ip = "192.168.86.26",
+        Port = 5785,
+        Bytes = 31
+    },
+    Server = new Server
+    {
+        Ip = "8.8.4.4",
+        Port = 53,
+        Bytes = 95
+    },
+    Event = new Event
+    {
+        Duration = 122433000,
+        Start = DateTimeOffset.Parse("2019-10-23T19:44:38.485Z"),
+        End = DateTimeOffset.Parse("2019-10-23T19:44:38.607Z"),
+        Kind = "event",
+        Category = "network_traffic"
+    },
+    Ecs = new Ecs
+    {
+        Version = "1.2.0"
+    },
+    Metadata = new Dictionary<string, object>
+    {
+        { "client", "ecs-dotnet" }
+    }
+};
+```
 
 This can then be indexed into Elasticsearch:
 
-    var indexResponse = lowLevelClient.Index<StringResponse>(index,PostData.Serializable(ecsEvent));
+```csharp
+var indexResponse = lowLevelClient.Index<StringResponse>(index,PostData.Serializable(ecsEvent));
 
-    // Check everything was successful
-    Debug.Assert(indexResponse.Success);
+// Check everything was successful
+Debug.Assert(indexResponse.Success);
+```
 
 Congratulations, you are now using the Elastic Common Schema!
 
@@ -180,11 +185,13 @@ Congratulations, you are now using the Elastic Common Schema!
 
 The C# `Base` type includes a property called `Metadata` with the signature:
 
-    /// <summary>
-    /// Container for additional metadata against this event.
-    /// </summary>
-    [DataMember(Name = "_metadata")]
-    public IDictionary<string, object> Metadata { get; set; }
+```csharp
+/// <summary>
+/// Container for additional metadata against this event.
+/// </summary>
+[DataMember(Name = "_metadata")]
+public IDictionary<string, object> Metadata { get; set; }
+```
 
 This property is not part of the ECS specification, but is included as a means to index supplementary information.
 
