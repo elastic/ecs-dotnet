@@ -2,9 +2,7 @@
 
 ## Introduction
 
-The Elastic Common Schema (ECS) defines a common set of fields for ingesting data into Elasticsearch. A common schema helps you correlate data from sources like logs and metrics or IT operations analytics and security analytics. Further information on ECS can be found in the official [github repository](https://github.com/elastic/ecs) or [Elastic documentation](https://www.elastic.co/guide/en/ecs/current/index.html).
-
-The `Elastic.CommonSchema` project contains a full C# representation of the ECS YAML schema.
+The `Elastic.CommonSchema` project contains a full C# representation of the [Elastic Common Schema](https://github.com/elastic/ecs) (ECS) YAML schema - see [documentation](https://www.elastic.co/guide/en/ecs/current/index.html).
 
 The intention is that this library forms a reliable and correct basis for integrations into Elasticsearch, that use both Microsoft .NET and the ECS schema.
 
@@ -12,7 +10,9 @@ These types can be used in either as-is, or in conjunction with, the [Elasticsea
 
 ## Packages
 
-The .NET assemblies are published to nuget under the package name [Elastic.CommonSchema](http://nuget.org/packages/Elastic.CommonSchema).
+The .NET assemblies are published to nuget under the package name [Elastic.CommonSchema](http://nuget.org/packages/Elastic.CommonSchema)
+
+The master branch pushes new nuget packages on successful CI builds to https://ci.appveyor.com/nuget/ecs-dotnet
 
 ## Versioning
 

@@ -1,20 +1,20 @@
-# Elastic Serilog Text Formatter
+# Elastic Common Schema Serilog Text Formatter
 
 This `ITextFormatter` implementation formats a Serilog event into a JSON representation that adheres to the Elastic Common Schema specification.
 
-## How to enable it
+## How to Enable
 
-```
+```csharp
 var logger = new LoggerConfiguration()
                 .WriteTo.Console(new EcsTextFormatter())
                 .CreateLogger();
 ```
 
-In the code snippet above `new EcsTextFormatter()` enables the text formatter and instructs Serilog to format the event as JSON. The sample above uses the Console sink, but you are free to use any.
+In the code snippet above `new EcsTextFormatter()` enables the text formatter and instructs Serilog to format the event as JSON. The sample above uses the Console sink, but you are free to use any sink of your choice.
 
 An example of the output is given below:
 
-```
+```json
 {
   "@timestamp": "2019-11-22T14:59:02.5903135+11:00",
   "message": "Log message",
