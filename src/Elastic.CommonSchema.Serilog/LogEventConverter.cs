@@ -78,7 +78,7 @@ namespace Elastic.CommonSchema.Serilog
 
 			if (configuration.MapExceptions) ecsEvent.Error = GetError(exceptions);
 
-			if (configuration.MapCustom != null) ecsEvent = configuration.MapCustom(ecsEvent);
+			if (configuration.MapCustom != null) ecsEvent = configuration.MapCustom(ecsEvent, logEvent);
 
 			ecsEvent.Message = logEvent.RenderMessage();
 
