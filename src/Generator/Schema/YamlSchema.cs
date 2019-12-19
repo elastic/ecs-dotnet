@@ -12,6 +12,8 @@ namespace Generator.Schema
 	[JsonObject(MemberSerialization.OptIn)]
 	public class YamlSchema
 	{
+		public EcsSpecification Specification { get; set; }
+
 		/// <summary>
 		///     Description of the field set
 		/// </summary>

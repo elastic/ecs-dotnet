@@ -43,6 +43,12 @@ namespace Generator.Schema
 				if (_schema.Name == "log" && ClassName == "Syslog")
 					return _schema.Fields.Single(f => f.Value.FlatName == "log.syslog").Value.DescriptionSanitized;
 
+				if (ClassName == "Trace" || ClassName == "Transaction")
+				{
+					var tracingSchema = _schema.Specification.YamlSchemas.Single(f => f.Name == "tracing");
+					return $"{tracingSchema.DescriptionSanitized}<para/>{FileGenerator.PascalCase(Name)} property.";
+				}
+
 				return $"{FileGenerator.PascalCase(ClassName)} property.";
 			}
 		}

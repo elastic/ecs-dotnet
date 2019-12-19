@@ -121,7 +121,16 @@ namespace Generator
 				}
 			}
 
-			var spec = new EcsSpecification { YamlSchemas = yamlSchemas, Templates = templates };
+			var spec = new EcsSpecification
+			{
+				YamlSchemas = yamlSchemas,
+				Templates = templates
+			};
+
+			foreach (var specYamlSchema in spec.YamlSchemas)
+			{
+				specYamlSchema.Specification = spec;
+			}
 
 			return spec;
 		}
