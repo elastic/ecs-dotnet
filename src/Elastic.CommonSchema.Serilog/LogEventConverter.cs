@@ -265,17 +265,21 @@ namespace Elastic.CommonSchema.Serilog
 
 		private static Event GetEvent(LogEvent e)
 		{
+			var hasActionCategory = e.Properties.TryGetValue(SpecialKeys.ActionCategory, out var actionCategoryProperty);
+			var hasActionKind = e.Properties.TryGetValue(SpecialKeys.ActionKind, out var actionKindProperty);
+
+		    var actionCategoryIsEnum =	Enum.TryParse(actionCategoryProperty.ToString().Replace("\"", ""), out EventCategory actionCategory);
+		    var actionKindIsEnum =	Enum.TryParse(actionKindProperty.ToString().Replace("\"", ""), out EventKind actionKind);
+
 			var evnt = new Event
 			{
 				Created = e.Timestamp,
-				Category = e.Properties.TryGetValue(SpecialKeys.ActionCategory, out var c) ? c.ToString() : null,
+				Category = hasActionCategory && actionCategoryIsEnum ? actionCategory : (EventCategory?)null,
 				Action = e.Properties.TryGetValue(SpecialKeys.ActionName, out var action) ? action.ToString().Replace("\"", "") : null,
 				Id = e.Properties.TryGetValue(SpecialKeys.ActionId, out var actionId)
 					? actionId.ToString().Replace("\"", "")
 					: null,
-				Kind = e.Properties.TryGetValue(SpecialKeys.ActionKind, out var actionKind)
-					? actionKind.ToString().Replace("\"", "")
-					: null,
+				Kind = hasActionKind && actionKindIsEnum ? actionKind : (EventKind?)null,
 				Severity = e.Properties.TryGetValue(SpecialKeys.ActionSeverity, out var actionSev)
 					? long.Parse(actionSev.ToString())
 					: (int)e.Level,

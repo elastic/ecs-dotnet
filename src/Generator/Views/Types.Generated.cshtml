@@ -2,6 +2,7 @@
 @using System.Linq
 @using System.Collections.Generic
 @using System.Reflection.Metadata
+@using System.Security.Cryptography.X509Certificates
 @using CsQuery.ExtensionMethods.Internal
 @using Generator
 @using Generator.Schema
@@ -53,7 +54,7 @@ namespace Elastic.CommonSchema
 		public @Raw("IDictionary<string, object>") Metadata { get; set; }
 
 @foreach (var schema in Model.NonBaseYamlSchemas())
-	{
+{
 <text>		/// <summary>
 		/// @Raw(schema.DescriptionSanitized)
 		/// </summary>
@@ -61,7 +62,7 @@ namespace Elastic.CommonSchema
 		public @FileGenerator.PascalCase(schema.Name) @FileGenerator.PascalCase(schema.Name) { get; set; }
 
 </text>
-	}
+}
 @foreach (var field in Model.BaseYamlSchema().GetFieldsFlat())
 {
 <text>		/// <summary>
@@ -91,7 +92,7 @@ namespace Elastic.CommonSchema
     }
 
 @foreach (var nestedField in Model.BaseYamlSchema().GetFieldsNested())
-	{
+{
 	foreach (var child in nestedField.Children)
 	{
 		if (child.Children.Count > 0)
@@ -154,7 +155,7 @@ namespace Elastic.CommonSchema
 	}
 
 </text>
-	}
+}
 
 @foreach (var schema in Model.NonBaseYamlSchemas())
 {
@@ -224,6 +225,28 @@ namespace Elastic.CommonSchema
 </text>
 	}
 
+foreach (var field in schema.Fields.Where(f => f.Value.IsCustomEnum))
+{
+<text>	/// <summary>
+	/// @Raw(field.Value.DescriptionSanitized)
+    /// </summary>
+	public enum @field.Value.GetEnumClrTypeName
+	{
+	@foreach (var value in field.Value.AllowedValues)
+	{
+<text>        /// <summary>
+        /// @Raw(value.DescriptionSanitized)
+		/// </summary>
+		[EnumMember(Value = "@value.Name")]
+		@FileGenerator.PascalCase(value.Name),
+
+</text>
+	}
+	}
+
+</text>
+}
+	
 <text>	/// <summary>
 	/// @Raw(schema.DescriptionSanitized)
 	/// </summary>

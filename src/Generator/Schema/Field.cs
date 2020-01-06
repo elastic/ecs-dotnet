@@ -4,6 +4,8 @@
 
 using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using Newtonsoft.Json;
@@ -14,6 +16,15 @@ namespace Generator.Schema
 	[JsonObject(MemberSerialization.OptIn)]
 	public class Field
 	{
+		[JsonProperty("allowed_values")]
+		public List<AllowedValue> AllowedValues { get; set; }
+
+		[JsonIgnore]
+		public string GetEnumClrTypeName => FileGenerator.PascalCase(FlatName);
+
+		[JsonIgnore]
+		public bool IsCustomEnum => AllowedValues != null && AllowedValues.Any();
+
 		[JsonIgnore]
 		public string ClrType
 		{
@@ -21,15 +32,22 @@ namespace Generator.Schema
 			{
 				// Special cases.
 				if (Name == "args") return "string[]";
+				if (Name == "data.strings") return "string[]";
 				if (Name == "parent.args") return "string[]";
 				if (Name.Contains("certificate_chain")) return "string[]";
 				if (Name.Contains("supported_ciphers")) return "string[]";
+				if (Schema.Name == "vulnerability" && Name == "category") return "string[]";
+				if (Schema.Name == "file" && Name == "attributes") return "string[]";
 				if (Schema.Name == "dns" && Name == "header_flags") return "string[]";
 				if (Schema.Name == "dns" && Name == "resolved_ip") return "string[]";
 				if (Schema.Name == "user" && FlatName == "user.id") return "string[]";
 				if (Schema.Name == "base" && Name == "tags") return "string[]";
 				if (Schema.Name == "base" && Name == "labels") return "IDictionary<string, object>";
 				if (Schema.Name == "base" && Name == "_metadata") return "IDictionary<string, object>";
+
+				// Custom Enums (Allowed Values)
+				if (IsCustomEnum)
+					return $"{GetEnumClrTypeName}?";
 
 				switch (Type)
 				{
@@ -58,6 +76,9 @@ namespace Generator.Schema
 			}
 		}
 
+		[JsonProperty("dashed_name")]
+		public string DashedName { get; set; }
+
 		/// <summary>
 		///     Description of the field (required)
 		/// </summary>
@@ -65,9 +86,10 @@ namespace Generator.Schema
 		public string Description { get; set; }
 
 		[JsonIgnore]
-		public string DescriptionSanitized => Regex.Replace(Description, @"\r\n?|\n", "<para/>");
+		public string DescriptionSanitized => Regex.Replace(Description.TrimEnd(), @"\r\n?|\n", "<para/>");
 
-		[JsonProperty("doc_values")] public bool? DocValues { get; set; } //
+		[JsonProperty("doc_values")]
+		public bool? DocValues { get; set; }
 
 		/// <summary>
 		///     A single value example of what can be expected in this field (optional)
