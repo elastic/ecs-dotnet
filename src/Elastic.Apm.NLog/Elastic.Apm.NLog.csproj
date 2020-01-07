@@ -6,6 +6,13 @@
     <Description>Inject APM TraceId and TransactionId automatically into your NLog logs</Description>
   </PropertyGroup>
   <ItemGroup>
+    <!-- 
+      We use NLog's ThreadSafe attribute which was introduced in 4.5.4 
+      We have not evaluated the impact of removing this attribute but with 4.5.4
+      being a year and a half old we feel we don't need to drop lower for the time being.
+      Feel free to open an issue on our repos to discuss if you feel you need to target 
+      a lower NLog version
+    -->
     <PackageReference Include="NLog" Version="4.5.4" />
     <PackageReference Include="Elastic.Apm" Version="1.2.0" />
   </ItemGroup>
