@@ -1062,196 +1062,168 @@ namespace Elastic.CommonSchema
 	/// <summary>
 	/// This is one of four ECS Categorization Fields, and indicates the second level in the ECS category hierarchy.<para/>`event.category` represents the "big buckets" of ECS categories. For example, filtering on `event.category:process` yields all events relating to process activity. This field is closely related to `event.type`, which is used as a subcategory.<para/>This field is an array. This will allow proper categorization of some events that fall in multiple categories.
     /// </summary>
-	public enum EventCategory
+	public class EventCategory
 	{
         /// <summary>
         /// Events in this category are related to the challenge and response process in which credentials are supplied and verified to allow the creation of a session. Common sources for these logs are Windows event logs and ssh logs. Visualize and analyze events in this category to look for failed logins, and other authentication-related activity.
 		/// </summary>
-		[EnumMember(Value = "authentication")]
-		Authentication,
+		public const string Authentication = "authentication";
 
         /// <summary>
         /// The database category denotes events and metrics relating to a data storage and retrieval system. Note that use of this category is not limited to relational database systems. Examples include event logs from MS SQL, MySQL, Elasticsearch, MongoDB, etc. Use this category to visualize and analyze database activity such as accesses and changes.
 		/// </summary>
-		[EnumMember(Value = "database")]
-		Database,
+		public const string Database = "database";
 
         /// <summary>
         /// Events in the driver category have to do with operating system device drivers and similar software entities such as Windows drivers, kernel extensions, kernel modules, etc.<para/>Use events and metrics in this category to visualize and analyze driver-related activity and status on hosts.
 		/// </summary>
-		[EnumMember(Value = "driver")]
-		Driver,
+		public const string Driver = "driver";
 
         /// <summary>
         /// Relating to a set of information that has been created on, or has existed on a filesystem. Use this category of events to visualize and analyze the creation, access, and deletions of files. Events in this category can come from both host-based and network-based sources. An example source of a network-based detection of a file transfer would be the Zeek file.log.
 		/// </summary>
-		[EnumMember(Value = "file")]
-		File,
+		public const string File = "file";
 
         /// <summary>
         /// Use this category to visualize and analyze information such as host inventory or host lifecycle events.<para/>Most of the events in this category can usually be observed from the outside, such as from a hypervisor or a control plane's point of view. Some can also be seen from within, such as "start" or "end".<para/>Note that this category is for information about hosts themselves; it is not meant to capture activity "happening on a host".
 		/// </summary>
-		[EnumMember(Value = "host")]
-		Host,
+		public const string Host = "host";
 
         /// <summary>
         /// Relating to intrusion detections from IDS/IPS systems and functions, both network and host-based. Use this category to visualize and analyze intrusion detection alerts from systems such as Snort, Suricata, and Palo Alto threat detections.
 		/// </summary>
-		[EnumMember(Value = "intrusion_detection")]
-		IntrusionDetection,
+		public const string IntrusionDetection = "intrusion_detection";
 
         /// <summary>
         /// Malware detection events and alerts. Use this category to visualize and analyze malware detections from EDR/EPP systems such as Elastic Endpoint Security, Symantec Endpoint Protection, Crowdstrike, and network IDS/IPS systems such as Suricata, or other sources of malware-related events such as Palo Alto Networks threat logs and Wildfire logs.
 		/// </summary>
-		[EnumMember(Value = "malware")]
-		Malware,
+		public const string Malware = "malware";
 
         /// <summary>
         /// Relating to software packages installed on hosts. Use this category to visualize and analyze inventory of software installed on various hosts, or to determine host vulnerability in the absence of vulnerability scan data.
 		/// </summary>
-		[EnumMember(Value = "package")]
-		Package,
+		public const string Package = "package";
 
         /// <summary>
         /// Use this category of events to visualize and analyze process-specific information such as lifecycle events or process ancestry.
 		/// </summary>
-		[EnumMember(Value = "process")]
-		Process,
+		public const string Process = "process";
 
         /// <summary>
         /// Relating to web server access. Use this category to create a dashboard of web server/proxy activity from apache, IIS, nginx web servers, etc. Note: events from network observers such as Zeek http log may also be included in this category.
 		/// </summary>
-		[EnumMember(Value = "web")]
-		Web,
+		public const string Web = "web";
 
 	}
 
 	/// <summary>
 	/// This is one of four ECS Categorization Fields, and indicates the highest level in the ECS category hierarchy.<para/>`event.kind` gives high-level information about what type of information the event contains, without being specific to the contents of the event. For example, values of this field distinguish alert events from metric events.<para/>The value of this field can be used to inform how these kinds of events should be handled. They may warrant different retention, different access control, it may also help understand whether the data coming in at a regular interval or not.
     /// </summary>
-	public enum EventKind
+	public class EventKind
 	{
         /// <summary>
         /// This value indicates an event that describes an alert or notable event, triggered by a detection rule.<para/>`event.kind:alert` is often populated for events coming from firewalls, intrusion detection systems, endpoint detection and response systems, and so on.
 		/// </summary>
-		[EnumMember(Value = "alert")]
-		Alert,
+		public const string Alert = "alert";
 
         /// <summary>
         /// This value is the most general and most common value for this field. It is used to represent events that indicate that something happened.
 		/// </summary>
-		[EnumMember(Value = "event")]
-		Event,
+		public const string Event = "event";
 
         /// <summary>
         /// This value is used to indicate that this event that a numeric measurement was taken at given point in time.<para/>Examples include CPU utilization, memory usage, or a vulnerability scan result.<para/>Metric events are often collected on a predictable frequency, such as once every few seconds, or once a minute.
 		/// </summary>
-		[EnumMember(Value = "metric")]
-		Metric,
+		public const string Metric = "metric";
 
         /// <summary>
         /// This value is similar to metric, except that the entity being measured does not provide a numeric metric value, but rather one of a fixed set of conditions or states. For example a periodic event reporting a "fin_wait" state of a TCP connection on a host might use `event.type:state`.
 		/// </summary>
-		[EnumMember(Value = "state")]
-		State,
+		public const string State = "state";
 
         /// <summary>
         /// This value indicates that an error occurred during the ingestion of this event, and that event data may be missing, inconsistent, or incorrect. `event.kind:pipeline_error` is often associated with parsing errors.
 		/// </summary>
-		[EnumMember(Value = "pipeline_error")]
-		PipelineError,
+		public const string PipelineError = "pipeline_error";
 
         /// <summary>
         /// This value is used by the Elastic SIEM app to denote an Elasticsearch document that was created by a SIEM detection engine rule.<para/>A signal will typically trigger a notification that something meaningful happened and should be investigated.<para/>Usage of this value is reserved, and pipelines should not populate `event.kind` with the value "signal".
 		/// </summary>
-		[EnumMember(Value = "signal")]
-		Signal,
+		public const string Signal = "signal";
 
 	}
 
 	/// <summary>
 	/// This is one of four ECS Categorization Fields, and indicates the lowest level in the ECS category hierarchy.<para/>`event.outcome` simply denotes whether the event represent a success or a failure. Note that not all events will have an associated outcome. For example, this field is generally not populated for metric events or events with `event.type:info`.
     /// </summary>
-	public enum EventOutcome
+	public class EventOutcome
 	{
         /// <summary>
         /// Indicates that this event describes a failed result. A common example is `event.category:file AND event.type:access AND event.outcome:failure` to indicate that a file access was attempted, but was not successful.
 		/// </summary>
-		[EnumMember(Value = "failure")]
-		Failure,
+		public const string Failure = "failure";
 
         /// <summary>
         /// Indicates that this event describes a successful result.  A common example is `event.category:file AND event.type:create AND event.outcome:success` to indicate that a file was successfully created.
 		/// </summary>
-		[EnumMember(Value = "success")]
-		Success,
+		public const string Success = "success";
 
         /// <summary>
         /// Indicates that this event describes only an attempt for which the result is unknown. For example, if the event contains information only about a request in an entity transaction that usually results in a response, populating `event.outcome:unknown` is appropriate.
 		/// </summary>
-		[EnumMember(Value = "unknown")]
-		Unknown,
+		public const string Unknown = "unknown";
 
 	}
 
 	/// <summary>
 	/// This is one of four ECS Categorization Fields, and indicates the third level in the ECS category hierarchy.<para/>`event.type` represents a categorization "sub-bucket" that, when used along with the `event.category` field values, enables filtering events down to a level appropriate for single visualization.<para/>This field is an array. This will allow proper categorization of some events that fall in multiple event types.
     /// </summary>
-	public enum EventType
+	public class EventType
 	{
         /// <summary>
         /// The access event type is used for the subset of events within a category that indicate that something was accessed. Common examples include `event.category:database AND event.type:access`, or `event.category:file AND event.type:access`. Note for file access, both directory listings and file opens should be included in this subcategory. You can further distinguish access operations using the ECS `event.action` field.
 		/// </summary>
-		[EnumMember(Value = "access")]
-		Access,
+		public const string Access = "access";
 
         /// <summary>
         /// The change event type is used for the subset of events within a category that indicate that something has changed. If semantics best describe an event as modified, then include them in this subcategory. Common examples include `event.category:process AND event.type:change`, and `event.category:file AND event.type:change`. You can further distinguish change operations using the ECS `event.action` field.
 		/// </summary>
-		[EnumMember(Value = "change")]
-		Change,
+		public const string Change = "change";
 
         /// <summary>
         /// The "creation" event type is used for the subset of events within a category that indicate that something was created. A common example is `event.category:file AND event.type:creation`.
 		/// </summary>
-		[EnumMember(Value = "creation")]
-		Creation,
+		public const string Creation = "creation";
 
         /// <summary>
         /// The deletion event type is used for the subset of events within a category that indicate that something was deleted. A common example is `event.category:file AND event.type:deletion` to indicate that a file has been deleted.
 		/// </summary>
-		[EnumMember(Value = "deletion")]
-		Deletion,
+		public const string Deletion = "deletion";
 
         /// <summary>
         /// The end event type is used for the subset of events within a category that indicate something has ended. A common example is `event.category:process AND event.type:end`.
 		/// </summary>
-		[EnumMember(Value = "end")]
-		End,
+		public const string End = "end";
 
         /// <summary>
         /// The error event type is used for the subset of events within a category that indicate or describe an error. A common example is `event.category:database AND event.type:error`. Note that pipeline errors that occur during the event ingestion process should not use this `event.type` value. Instead, they should use `event.kind:pipeline_error`.
 		/// </summary>
-		[EnumMember(Value = "error")]
-		Error,
+		public const string Error = "error";
 
         /// <summary>
         /// The info event type is used for the subset of events within a category that indicate that they are purely informational, and don't report a state change, or any type of action. For example, an initial run of a file integrity monitoring system (FIM), where an agent reports all files under management, would fall into the "info" subcategory. Similarly, an event containing a dump of all currently running processes (as opposed to reporting that a process started/ended) would fall into the "info" subcategory. An additional common examples is `event.category:intrusion_detection AND event.type:info`.
 		/// </summary>
-		[EnumMember(Value = "info")]
-		Info,
+		public const string Info = "info";
 
         /// <summary>
         /// The installation event type is used for the subset of events within a category that indicate that something was installed. A common example is `event.category:package` AND `event.type:installation`.
 		/// </summary>
-		[EnumMember(Value = "installation")]
-		Installation,
+		public const string Installation = "installation";
 
         /// <summary>
         /// The start event type is used for the subset of events within a category that indicate something has started. A common example is `event.category:process AND event.type:start`.
 		/// </summary>
-		[EnumMember(Value = "start")]
-		Start,
+		public const string Start = "start";
 
 	}
 
@@ -1282,7 +1254,7 @@ namespace Elastic.CommonSchema
 		/// <remarks>Core</remarks>
 		/// <example>alert</example>
 		[DataMember(Name = "kind")]
-		public EventKind? Kind { get; set; }
+		public string Kind { get; set; }
 
 		/// <summary>
 		/// This is one of four ECS Categorization Fields, and indicates the second level in the ECS category hierarchy.<para/>`event.category` represents the "big buckets" of ECS categories. For example, filtering on `event.category:process` yields all events relating to process activity. This field is closely related to `event.type`, which is used as a subcategory.<para/>This field is an array. This will allow proper categorization of some events that fall in multiple categories.
@@ -1290,7 +1262,7 @@ namespace Elastic.CommonSchema
 		/// <remarks>Core</remarks>
 		/// <example>authentication</example>
 		[DataMember(Name = "category")]
-		public EventCategory? Category { get; set; }
+		public string Category { get; set; }
 
 		/// <summary>
 		/// The action captured by the event.<para/>This describes the information in the event. It is more specific than `event.category`. Examples are `group-add`, `process-started`, `file-created`. The value is normally defined by the implementer.
@@ -1306,14 +1278,14 @@ namespace Elastic.CommonSchema
 		/// <remarks>Core</remarks>
 		/// <example>success</example>
 		[DataMember(Name = "outcome")]
-		public EventOutcome? Outcome { get; set; }
+		public string Outcome { get; set; }
 
 		/// <summary>
 		/// This is one of four ECS Categorization Fields, and indicates the third level in the ECS category hierarchy.<para/>`event.type` represents a categorization "sub-bucket" that, when used along with the `event.category` field values, enables filtering events down to a level appropriate for single visualization.<para/>This field is an array. This will allow proper categorization of some events that fall in multiple event types.
 		/// </summary>
 		/// <remarks>Core</remarks>
 		[DataMember(Name = "type")]
-		public EventType? Type { get; set; }
+		public string Type { get; set; }
 
 		/// <summary>
 		/// Name of the module this data is coming from.<para/>If your monitoring agent supports the concept of modules or plugins to process events of a given source (e.g. Apache logs), `event.module` should contain the name of this module.

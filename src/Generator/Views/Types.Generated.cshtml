@@ -230,15 +230,14 @@ foreach (var field in schema.Fields.Where(f => f.Value.IsCustomEnum))
 <text>	/// <summary>
 	/// @Raw(field.Value.DescriptionSanitized)
     /// </summary>
-	public enum @field.Value.GetEnumClrTypeName
+	public class @field.Value.GetEnumClrTypeName
 	{
 	@foreach (var value in field.Value.AllowedValues)
 	{
 <text>        /// <summary>
         /// @Raw(value.DescriptionSanitized)
 		/// </summary>
-		[EnumMember(Value = "@value.Name")]
-		@FileGenerator.PascalCase(value.Name),
+		public const string @FileGenerator.PascalCase(value.Name) = "@value.Name";
 
 </text>
 	}

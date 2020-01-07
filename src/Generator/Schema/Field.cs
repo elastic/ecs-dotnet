@@ -45,10 +45,6 @@ namespace Generator.Schema
 				if (Schema.Name == "base" && Name == "labels") return "IDictionary<string, object>";
 				if (Schema.Name == "base" && Name == "_metadata") return "IDictionary<string, object>";
 
-				// Custom Enums (Allowed Values)
-				if (IsCustomEnum)
-					return $"{GetEnumClrTypeName}?";
-
 				switch (Type)
 				{
 					case FieldType.Keyword:
