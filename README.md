@@ -50,10 +50,10 @@ var logger = new LoggerConfiguration()
 ### [Elastic.Apm.NLog](https://github.com/elastic/ecs-dotnet/tree/master/src/Elastic.Apm.NLog)
 
 Introduce two special place holder variables (`ElasticApmTraceId`, `ElasticApmTransactionId`) easily into your NLog templates.
-[Learn more...](https://github.com/elastic/ecs-dotnet/tree/master/src/Elastic.Apm.SerilogEnricher)
+[Learn more...](https://github.com/elastic/ecs-dotnet/tree/master/src/Elastic.Apm.NLog)
 
 ## Copyright and License
 
-This software is Copyright (c) 2014-2019 by Elasticsearch BV.
+This software is Copyright (c) 2014-2020 by Elasticsearch BV.
 
 This is free software, licensed under: [The Apache License Version 2.0](https://github.com/elastic/ecs-dotnet/blob/master/license.txt).
