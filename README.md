@@ -37,6 +37,21 @@ var logger = new LoggerConfiguration()
     .CreateLogger();
 ```
 
+When combined with `Elastic.CommonSchema.Serilog` the trace and transaction id will automatically appear in ECS format as well.
+
+```csharp
+var logger = new LoggerConfiguration()
+    .Enrich.WithElasticApmCorrelationInfo()
+    // will have APM information persisted in ECS format
+    .WriteTo.Console(new EcsTextFormatter())
+    .CreateLogger();
+```
+
+### [Elastic.Apm.NLog](https://github.com/elastic/ecs-dotnet/tree/master/src/Elastic.Apm.NLog)
+
+Introduce two special place holder variables (`ElasticApmTraceId`, `ElasticApmTransactionId`) easily into your NLog templates.
+[Learn more...](https://github.com/elastic/ecs-dotnet/tree/master/src/Elastic.Apm.SerilogEnricher)
+
 ## Copyright and License
 
 This software is Copyright (c) 2014-2019 by Elasticsearch BV.
