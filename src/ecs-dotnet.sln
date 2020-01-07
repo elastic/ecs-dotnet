@@ -3,19 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27130.2003
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "RelatedFiles", "RelatedFiles", "{432D5575-2347-4D3C-BF8C-3E38410C46CA}"
-	ProjectSection(SolutionItems) = preProject
-		..\src\PublishArtifacts.build.props = ..\src\PublishArtifacts.build.props
-		..\src\Artifacts.build.props = ..\src\Artifacts.build.props
-		..\src\Library.build.props = ..\src\Library.build.props
-		..\global.json = ..\global.json
-		..\.editorconfig = ..\.editorconfig
-		..\.gitattributes = ..\.gitattributes
-		..\.gitignore = ..\.gitignore
-		..\README.md = ..\README.md
-		..\license.txt = ..\license.txt
-	EndProjectSection
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Generator", "Generator\Generator.csproj", "{18C57984-EDB9-41F7-9745-BDE1E7BAF449}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Elastic.CommonSchema", "Elastic.CommonSchema\Elastic.CommonSchema.csproj", "{70072EAB-C5DF-4100-B594-B9DC3169D604}"
@@ -34,17 +21,32 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Elastic.Apm.SerilogEnricher
 EndProject
 Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "scripts", "..\build\scripts\scripts.fsproj", "{4779DD6F-AE49-4A80-9F67-D9F2DB05E557}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Build", "Build", "{2A5FBCFE-1BDB-47DC-B577-387F950F5AFB}"
-ProjectSection(SolutionItems) = preProject
-	Library.build.props = Library.build.props
-	PublishArtifacts.build.props = PublishArtifacts.build.props
-EndProjectSection
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Elastic.Apm.NLog", "Elastic.Apm.NLog\Elastic.Apm.NLog.csproj", "{A1DEDE4E-0876-41E8-8DF0-8F85EAF3FAFA}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Elastic.Apm.NLog.Test", "..\tests\Elastic.Apm.NLog.Test\Elastic.Apm.NLog.Test.csproj", "{4755093F-5A27-4EF4-BC7F-DB8676E9B81A}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Elastic.Apm.Test.Common", "..\tests\Elastic.Apm.Test.Common\Elastic.Apm.Test.Common.csproj", "{4E0D951B-FEC5-4043-913A-BED795892405}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{7610B796-BB3E-4CB2-8296-79BBFF6D23FC}"
+ProjectSection(SolutionItems) = preProject
+	Library.build.props = Library.build.props
+	PublishArtifacts.build.props = PublishArtifacts.build.props
+EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{3582B07D-C2B0-49CC-B676-EAF806EB010E}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "build", "build", "{441B3323-3651-4B6E-95B3-7CD43E5E223A}"
+ProjectSection(SolutionItems) = preProject
+	..\.editorconfig = ..\.editorconfig
+	..\.gitattributes = ..\.gitattributes
+	..\.gitignore = ..\.gitignore
+	..\global.json = ..\global.json
+	..\license.txt = ..\license.txt
+	..\README.md = ..\README.md
+	..\appveyor.yml = ..\appveyor.yml
+	..\build.bat = ..\build.bat
+	..\build.sh = ..\build.sh
+EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -100,8 +102,17 @@ Global
 		{4E0D951B-FEC5-4043-913A-BED795892405}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{21FD7B39-5FDD-4432-B25E-8425D3EC46A3} = {432D5575-2347-4D3C-BF8C-3E38410C46CA}
-		{2A5FBCFE-1BDB-47DC-B577-387F950F5AFB} = {432D5575-2347-4D3C-BF8C-3E38410C46CA}
-		{4779DD6F-AE49-4A80-9F67-D9F2DB05E557} = {2A5FBCFE-1BDB-47DC-B577-387F950F5AFB}
+		{A1DEDE4E-0876-41E8-8DF0-8F85EAF3FAFA} = {7610B796-BB3E-4CB2-8296-79BBFF6D23FC}
+		{4755093F-5A27-4EF4-BC7F-DB8676E9B81A} = {3582B07D-C2B0-49CC-B676-EAF806EB010E}
+		{240A3E16-78BF-4430-A3ED-C7479F12A6DE} = {7610B796-BB3E-4CB2-8296-79BBFF6D23FC}
+		{D8117E06-8856-4D61-A02E-570E9B6C3646} = {3582B07D-C2B0-49CC-B676-EAF806EB010E}
+		{4E0D951B-FEC5-4043-913A-BED795892405} = {3582B07D-C2B0-49CC-B676-EAF806EB010E}
+		{70072EAB-C5DF-4100-B594-B9DC3169D604} = {7610B796-BB3E-4CB2-8296-79BBFF6D23FC}
+		{45BC8315-6AD6-4F3C-B590-7B52D19ED401} = {7610B796-BB3E-4CB2-8296-79BBFF6D23FC}
+		{D7BA6070-909F-402E-A6F4-1CE54A7BE0B7} = {3582B07D-C2B0-49CC-B676-EAF806EB010E}
+		{2A8F9106-B4FD-4721-B29D-24B93F72F101} = {7610B796-BB3E-4CB2-8296-79BBFF6D23FC}
+		{18C57984-EDB9-41F7-9745-BDE1E7BAF449} = {7610B796-BB3E-4CB2-8296-79BBFF6D23FC}
+		{21FD7B39-5FDD-4432-B25E-8425D3EC46A3} = {7610B796-BB3E-4CB2-8296-79BBFF6D23FC}
+		{4779DD6F-AE49-4A80-9F67-D9F2DB05E557} = {441B3323-3651-4B6E-95B3-7CD43E5E223A}
 	EndGlobalSection
 EndGlobal
