@@ -52,7 +52,8 @@ namespace Elastic.CommonSchema.Serilog
 				? new List<Exception> { logEvent.Exception }
 				: new List<Exception>();
 
-			if (configuration.MapHttpAdapter != null) exceptions.AddRange(configuration.MapHttpAdapter.Exceptions);
+			if (configuration.MapHttpAdapter != null)
+				exceptions.AddRange(configuration.MapHttpAdapter.Exceptions);
 
 			var ecsEvent = new Base
 			{
@@ -78,9 +79,11 @@ namespace Elastic.CommonSchema.Serilog
 				ecsEvent.User = configuration.MapHttpAdapter.User;
 			}
 
-			if (configuration.MapExceptions) ecsEvent.Error = GetError(exceptions);
+			if (configuration.MapExceptions)
+				ecsEvent.Error = GetError(exceptions);
 
-			if (configuration.MapCustom != null) ecsEvent = configuration.MapCustom(ecsEvent, logEvent);
+			if (configuration.MapCustom != null)
+				ecsEvent = configuration.MapCustom(ecsEvent, logEvent);
 
 			ecsEvent.Message = logEvent.RenderMessage();
 
@@ -268,14 +271,16 @@ namespace Elastic.CommonSchema.Serilog
 			var evnt = new Event
 			{
 				Created = e.Timestamp,
-				Category = e.Properties.TryGetValue(SpecialKeys.ActionCategory, out var c) ? c.ToString() : null,
-				Action = e.Properties.TryGetValue(SpecialKeys.ActionName, out var action) ? action.ToString().Replace("\"", "") : null,
+				Category = e.Properties.TryGetValue(SpecialKeys.ActionCategory, out var actionCategoryProperty)
+					? actionCategoryProperty.ToString()
+					: null,
+				Action = e.Properties.TryGetValue(SpecialKeys.ActionName, out var action)
+					? action.ToString().Replace("\"", "")
+					: null,
 				Id = e.Properties.TryGetValue(SpecialKeys.ActionId, out var actionId)
 					? actionId.ToString().Replace("\"", "")
 					: null,
-				Kind = e.Properties.TryGetValue(SpecialKeys.ActionKind, out var actionKind)
-					? actionKind.ToString().Replace("\"", "")
-					: null,
+				Kind = e.Properties.TryGetValue(SpecialKeys.ActionKind, out var actionKindProperty) ? actionKindProperty.ToString() : null,
 				Severity = e.Properties.TryGetValue(SpecialKeys.ActionSeverity, out var actionSev)
 					? long.Parse(actionSev.ToString())
 					: (int)e.Level,

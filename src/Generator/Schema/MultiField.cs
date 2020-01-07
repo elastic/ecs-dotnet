@@ -20,5 +20,11 @@ namespace Generator.Schema
 		/// </summary>
 		[JsonProperty("type", Required = Required.Always)]
 		public string Type { get; set; }
+
+		[JsonProperty("flat_name")]
+		public string FlatName { get; set; }
+
+		[JsonProperty("norms")]
+		public bool? Norms { get; set; }
 	}
 }

@@ -21,7 +21,7 @@ namespace Generator.Schema
 		public string Description { get; set; }
 
 		[JsonIgnore]
-		public string DescriptionSanitized => Regex.Replace(Description, @"\r\n?|\n", "<para/>");
+		public string DescriptionSanitized => Regex.Replace(Description.TrimEnd(), @"\r\n?|\n", "<para/>");
 
 		[JsonIgnore]
 		public string DownloadBranch { get; set; }

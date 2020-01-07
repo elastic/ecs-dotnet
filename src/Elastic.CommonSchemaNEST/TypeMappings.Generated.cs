@@ -5,7 +5,7 @@
 /*
 IMPORTANT NOTE
 ==============
-This file has been generated.
+This file has been generated. 
 If you wish to submit a PR please modify the original csharp file and submit the PR with that change. Thanks!
 */
 
@@ -22,7 +22,7 @@ using Nest;
 namespace Elastic.CommonSchema.Elasticsearch
 {
 	/// <summary>
-	/// Utilities for Elastic Common Schema version 1.3.0
+	/// Utilities for Elastic Common Schema version 1.4.0
 	/// To be used in conjunction with the NEST client.
 	/// <para/>
 	/// The Elastic Common Schema (ECS) defines a common set of fields for ingesting data into Elasticsearch.
@@ -35,7 +35,7 @@ namespace Elastic.CommonSchema.Elasticsearch
 	{
 		/// <summary>
 		/// Get a Put Index Template Descriptor for use with <see cref="Nest.PutIndexTemplateRequest"/>
-		/// designed for use with Elastic Common Schema version 1.3.0
+		/// designed for use with Elastic Common Schema version 1.4.0
 		/// </summary>
 		/// <param name="name">The name of the index template.</param>
 		/// <returns>An instance of <see cref="Nest.PutIndexTemplateDescriptor"/>.</returns>
@@ -46,7 +46,7 @@ namespace Elastic.CommonSchema.Elasticsearch
 			indexTemplate.IndexPatterns("ecs-*");
 			indexTemplate.Order(1);
 			indexTemplate.Settings(s =>
-				s.Setting("index",
+				s.Setting("index", 
 					new
 					{
 						refresh_interval = "5s",
@@ -60,18 +60,18 @@ namespace Elastic.CommonSchema.Elasticsearch
 					}));
 
 			indexTemplate.Map(GetTypeMappingDescriptor());
-
+			
 			return indexTemplate;
 		}
 
 		/// <summary>
 		/// Get a type mapping descriptor for use with <see cref="Nest.PutIndexTemplateDescriptor"/>
-		/// designed for use with Elastic Common Schema version 1.3.0
+		/// designed for use with Elastic Common Schema version 1.4.0
 		/// </summary>
 		public static Func<TypeMappingDescriptor<Base>, ITypeMapping> GetTypeMappingDescriptor()
 		{
 			return map =>
-				 map.Meta(meta => meta.Add("version", "1.3.0"))
+				 map.Meta(meta => meta.Add("version", "1.4.0"))
 					.DateDetection(false)
 					.DynamicTemplates(dynamicTemplate =>
 						dynamicTemplate.DynamicTemplate("strings_as_keyword",
@@ -184,7 +184,9 @@ namespace Elastic.CommonSchema.Elasticsearch
 							.Object<File>(o =>
 								o.Properties(a => a
 									.Keyword(p => p.Name(n => n.Name).IgnoreAbove(1024))
+									.Keyword(p => p.Name(n => n.Attributes).IgnoreAbove(1024))
 									.Keyword(p => p.Name(n => n.Directory).IgnoreAbove(1024))
+									.Keyword(p => p.Name(n => n.DriveLetter).IgnoreAbove(1))
 									.Keyword(p => p.Name(n => n.Path).IgnoreAbove(1024))
 									.Keyword(p => p.Name(n => n.TargetPath).IgnoreAbove(1024))
 									.Keyword(p => p.Name(n => n.Extension).IgnoreAbove(1024))
@@ -320,9 +322,28 @@ namespace Elastic.CommonSchema.Elasticsearch
 									.Keyword(p => p.Name(n => n.WorkingDirectory).IgnoreAbove(1024))
 									.Number(p => p.Name(n => n.ExitCode).Type(NumberType.Long))
 							))
+							.Object<Registry>(o =>
+								o.Properties(a => a
+									.Keyword(p => p.Name(n => n.Hive).IgnoreAbove(1024))
+									.Keyword(p => p.Name(n => n.Key).IgnoreAbove(1024))
+									.Keyword(p => p.Name(n => n.Value).IgnoreAbove(1024))
+									.Keyword(p => p.Name(n => n.Path).IgnoreAbove(1024))
+							))
 							.Object<Related>(o =>
 								o.Properties(a => a
 									.Ip(p => p.Name(n => n.Ip))
+									.Keyword(p => p.Name(n => n.User).IgnoreAbove(1024))
+							))
+							.Object<Rule>(o =>
+								o.Properties(a => a
+									.Keyword(p => p.Name(n => n.Id).IgnoreAbove(1024))
+									.Keyword(p => p.Name(n => n.Uuid).IgnoreAbove(1024))
+									.Keyword(p => p.Name(n => n.Version).IgnoreAbove(1024))
+									.Keyword(p => p.Name(n => n.Name).IgnoreAbove(1024))
+									.Keyword(p => p.Name(n => n.Description).IgnoreAbove(1024))
+									.Keyword(p => p.Name(n => n.Category).IgnoreAbove(1024))
+									.Keyword(p => p.Name(n => n.Ruleset).IgnoreAbove(1024))
+									.Keyword(p => p.Name(n => n.Reference).IgnoreAbove(1024))
 							))
 							.Object<Server>(o =>
 								o.Properties(a => a

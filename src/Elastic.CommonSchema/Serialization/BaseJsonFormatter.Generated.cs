@@ -59,7 +59,9 @@ namespace Elastic.CommonSchema.Serialization
 				"os" => ReadProp<Os>(ref reader, "os", ecsEvent, (b, v) => b.Os = v),
 				"package" => ReadProp<Package>(ref reader, "package", ecsEvent, (b, v) => b.Package = v),
 				"process" => ReadProp<Process>(ref reader, "process", ecsEvent, (b, v) => b.Process = v),
+				"registry" => ReadProp<Registry>(ref reader, "registry", ecsEvent, (b, v) => b.Registry = v),
 				"related" => ReadProp<Related>(ref reader, "related", ecsEvent, (b, v) => b.Related = v),
+				"rule" => ReadProp<Rule>(ref reader, "rule", ecsEvent, (b, v) => b.Rule = v),
 				"server" => ReadProp<Server>(ref reader, "server", ecsEvent, (b, v) => b.Server = v),
 				"service" => ReadProp<Service>(ref reader, "service", ecsEvent, (b, v) => b.Service = v),
 				"source" => ReadProp<Source>(ref reader, "source", ecsEvent, (b, v) => b.Source = v),
@@ -114,7 +116,9 @@ namespace Elastic.CommonSchema.Serialization
 			WriteProp(writer, "os", value.Os);
 			WriteProp(writer, "package", value.Package);
 			WriteProp(writer, "process", value.Process);
+			WriteProp(writer, "registry", value.Registry);
 			WriteProp(writer, "related", value.Related);
+			WriteProp(writer, "rule", value.Rule);
 			WriteProp(writer, "server", value.Server);
 			WriteProp(writer, "service", value.Service);
 			WriteProp(writer, "source", value.Source);
