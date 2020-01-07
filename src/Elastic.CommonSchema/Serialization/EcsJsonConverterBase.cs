@@ -10,7 +10,10 @@ namespace Elastic.CommonSchema.Serialization
 		protected static bool ReadDateTime(ref Utf8JsonReader reader, ref DateTimeOffset? set)
 		{
 			if (reader.TokenType == JsonTokenType.Null)
-				return reader.Read();
+			{
+				set = null;
+				return true;
+			}
 
 			set = JsonConfiguration.DateTimeOffsetConverter.Read(ref reader, typeof(DateTimeOffset), JsonConfiguration.SerializerOptions);
 			return true;
@@ -37,13 +40,14 @@ namespace Elastic.CommonSchema.Serialization
 			else
 				JsonSerializer.Serialize(writer, value, type, options);
 		}
-		protected static object ReadPropDeserialize(ref Utf8JsonReader reader, string key)
+
+		internal static object ReadPropDeserialize(ref Utf8JsonReader reader, Type type)
 		{
 			if (reader.TokenType == JsonTokenType.Null) return null;
 
 			var options = JsonConfiguration.SerializerOptions;
 
-			return JsonSerializer.Deserialize<object>(ref reader, options);
+			return JsonSerializer.Deserialize(ref reader, type, options);
 		}
 
 		protected static TValue ReadProp<TValue>(ref Utf8JsonReader reader, string key)

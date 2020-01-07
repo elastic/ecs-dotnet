@@ -15,9 +15,15 @@ namespace Elastic.CommonSchema.Tests
 			var b = new Base { Agent = new Agent { Name = "some-agent" }, Log =  _log};
 
 			var serialized = b.Serialize();
-
 			serialized.Should().NotBeNullOrWhiteSpace();
 			serialized.Should().Contain("log.level\":\"debug\"");
+
+			var deserialized = Base.Deserialize(serialized);
+			deserialized.Agent.Should().NotBeNull();
+			deserialized.Agent.Name.Should().Be("some-agent");
+			deserialized.Log.Should().NotBeNull();
+			deserialized.Log.Level.Should().Be("debug");
+
 		}
 
 		public class SubclassedBase : Base
@@ -25,16 +31,26 @@ namespace Elastic.CommonSchema.Tests
 			[DataMember(Name = "agent2")]
 			public Agent Agent2 { get; set; }
 
-			protected override bool TryRead(string propertyName, object readProperty)
+			protected override bool TryRead(string propertyName, out Type type)
 			{
-				if (propertyName != "agent2") return false;
-
-				Agent2 = readProperty as Agent;
-				return true;
+				type = propertyName switch
+				{
+					"agent2" => typeof(Agent),
+					_ => null
+				};
+				return type != null;
 			}
+
+			protected override bool ReceiveProperty(string propertyName, object value) =>
+				propertyName switch
+				{
+					"agent2" => null != (Agent2 = value as Agent),
+					_ => false
+				};
 
 			protected override void WriteAdditionalProperties(Action<string, object> write) => write("agent2", Agent2);
 		}
+
 		public class SubClassedAgent : Agent
 		{
 			[DataMember(Name = "another_name")]
@@ -44,13 +60,18 @@ namespace Elastic.CommonSchema.Tests
 		[Fact]
 		public void SerializesSubClass()
 		{
-			var b = new SubclassedBase { Agent2 = new Agent { Name = "some-agent" }, Log =  _log};
+			var b = new SubclassedBase { Timestamp = DateTimeOffset.Now, Agent2 = new Agent { Name = "some-agent" }, Log =  _log};
 
 			var serialized = b.Serialize();
 
 			serialized.Should().NotBeNullOrWhiteSpace();
 			serialized.Should().Contain("agent2");
 			serialized.Should().Contain("log.level\":\"debug\"");
+
+			var deserialized = EcsSerializerFactory<SubclassedBase>.Deserialize(serialized);
+			deserialized.Log.Should().NotBeNull();
+			deserialized.Agent2.Should().NotBeNull();
+
 		}
 
 		[Fact]
@@ -59,10 +80,14 @@ namespace Elastic.CommonSchema.Tests
 			var b = new Base { Agent = new SubClassedAgent { Name2 = "some-agent" }, Log =  _log};
 
 			var serialized = b.Serialize();
-
 			serialized.Should().NotBeNullOrWhiteSpace();
 			serialized.Should().Contain("some-agent");
 			serialized.Should().Contain("log.level\":\"debug\"");
+
+			var deserialized = EcsSerializerFactory<SubclassedBase>.Deserialize(serialized);
+			deserialized.Log.Should().NotBeNull();
+			deserialized.Log.Level.Should().Be("debug");
+			deserialized.Agent.Should().NotBeNull();
 		}
 
 		[Fact]
@@ -70,7 +95,7 @@ namespace Elastic.CommonSchema.Tests
 		{
 			var b = new SubclassedBase
 			{
-				Agent = new SubClassedAgent { Name2 = "some-agent" },
+				Agent = new SubClassedAgent { Name2 = "some-agent", Id = "X"},
 				Agent2 = new Agent { Name = "some-agent" },
 				Log =  _log
 			};
@@ -80,6 +105,14 @@ namespace Elastic.CommonSchema.Tests
 			serialized.Should().NotBeNullOrWhiteSpace();
 			serialized.Should().Contain("some-agent");
 			serialized.Should().Contain("log.level\":\"debug\"");
+
+			var deserialized = EcsSerializerFactory<SubclassedBase>.Deserialize(serialized);
+			deserialized.Log.Should().NotBeNull();
+			deserialized.Log.Level.Should().Be("debug");
+			deserialized.Agent.Should().NotBeNull();
+			deserialized.Agent.Id.Should().Be("X");
+			deserialized.Agent2.Should().NotBeNull();
+			deserialized.Agent2.Name.Should().Be("some-agent");
 		}
 
 	}

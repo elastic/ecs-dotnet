@@ -18,6 +18,9 @@ namespace Elastic.CommonSchema.Serialization
 		public override bool CanConvert(Type typeToConvert) => typeof(Base).IsAssignableFrom(typeToConvert);
 
 		public override JsonConverter CreateConverter(Type typeToConvert, JsonSerializerOptions options) =>
-			JsonConfiguration.BaseConverter;
+			typeToConvert == typeof(Base)
+				? JsonConfiguration.BaseConverter
+				// TODO validate this is only called once
+				: Activator.CreateInstance(typeof(BaseJsonConverter<>).MakeGenericType(typeToConvert)) as JsonConverter;
 	}
 }

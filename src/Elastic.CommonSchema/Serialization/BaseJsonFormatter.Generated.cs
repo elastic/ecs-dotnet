@@ -15,11 +15,12 @@ using System.Text.Json;
 
 namespace Elastic.CommonSchema.Serialization
 {
-	internal partial class BaseJsonConverter : EcsJsonConverterBase<Base>
+	internal partial class BaseJsonConverter<TBase> : EcsJsonConverterBase<TBase>
+		where TBase : Base, new()
 	{
 		private static bool ReadProperties(
 			ref Utf8JsonReader reader,
-			Base ecsEvent,
+			TBase ecsEvent,
 			ref DateTimeOffset? timestamp,
 			ref string loglevel
 		)
@@ -74,11 +75,13 @@ namespace Elastic.CommonSchema.Serialization
 				_ =>
 					typeof(Base) == ecsEvent.GetType()
 						? false
-						: ecsEvent.TryRead(propertyName, ReadPropDeserialize(ref reader, propertyName))
+						: ecsEvent.TryRead(propertyName, out var t)
+							? ecsEvent.ReceiveProperty(propertyName, ReadPropDeserialize(ref reader, t))
+							: false
 			};
 		}
 
-		public override void Write(Utf8JsonWriter writer, Base value, JsonSerializerOptions options)
+		public override void Write(Utf8JsonWriter writer, TBase value, JsonSerializerOptions options)
 		{
 			if (value == null)
 			{

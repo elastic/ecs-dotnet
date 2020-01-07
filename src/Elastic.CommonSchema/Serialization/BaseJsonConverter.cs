@@ -3,9 +3,10 @@ using System.Text.Json;
 
 namespace Elastic.CommonSchema.Serialization
 {
-	internal partial class BaseJsonConverter : EcsJsonConverterBase<Base>
+	internal partial class BaseJsonConverter<TBase> : EcsJsonConverterBase<TBase>
+		where TBase : Base, new()
 	{
-		public override Base Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+		public override TBase Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
 		{
 			if (reader.TokenType == JsonTokenType.Null)
 			{
@@ -14,7 +15,7 @@ namespace Elastic.CommonSchema.Serialization
 			}
 			if (reader.TokenType != JsonTokenType.StartObject) throw new JsonException();
 
-			var ecsEvent = new Base();
+			var ecsEvent = new TBase();
 
 			string loglevel = null;
 			DateTimeOffset? timestamp = default;
@@ -46,5 +47,10 @@ namespace Elastic.CommonSchema.Serialization
 				JsonConfiguration.DateTimeOffsetConverter.Write(writer, value.Timestamp.Value, JsonConfiguration.SerializerOptions);
 			else writer.WriteNullValue();
 		}
+	}
+
+
+	internal partial class BaseJsonConverter : BaseJsonConverter<Base>
+	{
 	}
 }
