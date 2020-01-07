@@ -2,7 +2,7 @@
 using System.Linq;
 using System.Threading.Tasks;
 using Elastic.Apm.Api;
-using Elastic.Apm.Report;
+using Elastic.Apm.Test.Common;
 using FluentAssertions;
 using Serilog;
 using Serilog.Sinks.InMemory;
@@ -152,16 +152,5 @@ namespace Elastic.Apm.SerilogEnricher.Test
 		}
 
 		public void Dispose() => InMemorySink.Instance.Dispose();
-	}
-
-	internal class NoopPayloadSender : IPayloadSender
-	{
-		public void QueueError(IError error) { }
-
-		public void QueueMetrics(IMetricSet metrics) { }
-
-		public void QueueSpan(ISpan span) { }
-
-		public void QueueTransaction(ITransaction transaction) { }
 	}
 }
