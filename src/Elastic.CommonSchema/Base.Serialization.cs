@@ -16,6 +16,8 @@ namespace Elastic.CommonSchema
 	[JsonConverter(typeof(BaseJsonConverter))]
 	public partial class Base
 	{
+		public static TBase Deserialize<TBase>(string s) =>
+			JsonSerializer.Deserialize<TBase>(s, JsonConfiguration.SerializerOptions);
 
 		public static Base Deserialize(string s) =>
 			JsonSerializer.Deserialize<Base>(s, JsonConfiguration.SerializerOptions);
@@ -42,18 +44,21 @@ namespace Elastic.CommonSchema
 		public static ValueTask<Base> DeserializeAsync(Stream s, CancellationToken cancellationToken = default) =>
 			JsonSerializer.DeserializeAsync<Base>(s, JsonConfiguration.SerializerOptions, cancellationToken);
 
-		public string Serialize() => JsonSerializer.Serialize(this, JsonConfiguration.SerializerOptions);
+		public string Serialize() => JsonSerializer.Serialize(this, GetType(), JsonConfiguration.SerializerOptions);
 
-		public byte[] SerializeToUtf8Bytes() => JsonSerializer.SerializeToUtf8Bytes(this, JsonConfiguration.SerializerOptions);
+		public byte[] SerializeToUtf8Bytes() => JsonSerializer.SerializeToUtf8Bytes(this, GetType(), JsonConfiguration.SerializerOptions);
 
 		public void Serialize(Stream s)
 		{
 			using var writer = new Utf8JsonWriter(s);
-			JsonSerializer.Serialize(writer, this, JsonConfiguration.SerializerOptions);
+			JsonSerializer.Serialize(writer, this, GetType(), JsonConfiguration.SerializerOptions);
 		}
 
 		public Task SerializeAsync(Stream utf8Json, CancellationToken cancellationToken = default) =>
-			JsonSerializer.SerializeAsync(utf8Json, this, JsonConfiguration.SerializerOptions, cancellationToken);
+			JsonSerializer.SerializeAsync(utf8Json, this, GetType(), JsonConfiguration.SerializerOptions, cancellationToken);
 
+		protected internal virtual bool TryRead(string propertyName, object readProperty) => false;
+
+		protected internal virtual void WriteAdditionalProperties(Action<string, object> write) { }
 	}
 }

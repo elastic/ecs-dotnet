@@ -31,10 +31,19 @@ namespace Elastic.CommonSchema.Serialization
 			writer.WritePropertyName(key);
 			// Attempt to use existing converter first before re-entering through JsonSerializer.Serialize().
 			// The default converter for object does not support writing.
-			if (typeof(TValue) != typeof(object) && (options?.GetConverter(typeof(TValue)) is JsonConverter<TValue> keyConverter))
+			var type = value.GetType();
+			if (typeof(TValue) != typeof(object) && type == typeof(TValue) && (options?.GetConverter(typeof(TValue)) is JsonConverter<TValue> keyConverter))
 				keyConverter.Write(writer, value, options);
 			else
-				JsonSerializer.Serialize<TValue>(writer, value, options);
+				JsonSerializer.Serialize(writer, value, type, options);
+		}
+		protected static object ReadPropDeserialize(ref Utf8JsonReader reader, string key)
+		{
+			if (reader.TokenType == JsonTokenType.Null) return null;
+
+			var options = JsonConfiguration.SerializerOptions;
+
+			return JsonSerializer.Deserialize<object>(ref reader, options);
 		}
 
 		protected static TValue ReadProp<TValue>(ref Utf8JsonReader reader, string key)

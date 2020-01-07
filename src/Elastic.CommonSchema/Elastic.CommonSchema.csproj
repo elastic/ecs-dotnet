@@ -6,6 +6,7 @@
     
     <Title>Elastic Common Schema (ECS) Types</Title>
     <Description>Maps ECS to .NET types including (de)serialization using System.Text.Json</Description>
+    <LangVersion>latest</LangVersion>
   </PropertyGroup>
   <ItemGroup>
     <!-- TODO do we care to ilmerge this? -->
