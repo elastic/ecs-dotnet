@@ -25,7 +25,7 @@ Which will be replaced with the appropriate Elastic APM variables if available
 
 ## Prerequisite
 
-The prerequisite for this to work is a configured [Elastic APM Agent](https://github.com/elastic/apm-agent-dotnet). If the agent is not configured the enricher won't add anything to the logs.
+The prerequisite for this to work is a configured [Elastic APM Agent](https://github.com/elastic/apm-agent-dotnet). If the agent is not configured the APM place holders will be empty.
 
 ## Copyright and License
 
