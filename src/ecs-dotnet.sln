@@ -46,9 +46,14 @@ ProjectSection(SolutionItems) = preProject
 	..\appveyor.yml = ..\appveyor.yml
 	..\build.bat = ..\build.bat
 	..\build.sh = ..\build.sh
+	..\nuget.config = ..\nuget.config
 EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Elastic.CommonSchema.Tests", "..\tests\Elastic.CommonSchema.Tests\Elastic.CommonSchema.Tests.csproj", "{EE4EA2DE-411D-400C-9BF6-8F6AFC17697C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Elastic.CommonSchema.BenchmarkDotNetExporter", "Elastic.CommonSchema.BenchmarkDotNetExporter\Elastic.CommonSchema.BenchmarkDotNetExporter.csproj", "{6BE3084A-D84D-4782-9915-6E41575712C7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Elastic.CommonSchema.BenchmarkDotNetExporter.IntegrationTests", "..\tests\Elastic.CommonSchema.BenchmarkDotNetExporter.IntegrationTests\Elastic.CommonSchema.BenchmarkDotNetExporter.IntegrationTests.csproj", "{4138E98A-4714-4139-BD89-D9FF4F2A3A73}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -106,6 +111,14 @@ Global
 		{EE4EA2DE-411D-400C-9BF6-8F6AFC17697C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EE4EA2DE-411D-400C-9BF6-8F6AFC17697C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EE4EA2DE-411D-400C-9BF6-8F6AFC17697C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6BE3084A-D84D-4782-9915-6E41575712C7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6BE3084A-D84D-4782-9915-6E41575712C7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6BE3084A-D84D-4782-9915-6E41575712C7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6BE3084A-D84D-4782-9915-6E41575712C7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4138E98A-4714-4139-BD89-D9FF4F2A3A73}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4138E98A-4714-4139-BD89-D9FF4F2A3A73}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4138E98A-4714-4139-BD89-D9FF4F2A3A73}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4138E98A-4714-4139-BD89-D9FF4F2A3A73}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{A1DEDE4E-0876-41E8-8DF0-8F85EAF3FAFA} = {7610B796-BB3E-4CB2-8296-79BBFF6D23FC}
@@ -121,5 +134,7 @@ Global
 		{21FD7B39-5FDD-4432-B25E-8425D3EC46A3} = {7610B796-BB3E-4CB2-8296-79BBFF6D23FC}
 		{4779DD6F-AE49-4A80-9F67-D9F2DB05E557} = {441B3323-3651-4B6E-95B3-7CD43E5E223A}
 		{EE4EA2DE-411D-400C-9BF6-8F6AFC17697C} = {3582B07D-C2B0-49CC-B676-EAF806EB010E}
+		{6BE3084A-D84D-4782-9915-6E41575712C7} = {7610B796-BB3E-4CB2-8296-79BBFF6D23FC}
+		{4138E98A-4714-4139-BD89-D9FF4F2A3A73} = {3582B07D-C2B0-49CC-B676-EAF806EB010E}
 	EndGlobalSection
 EndGlobal
