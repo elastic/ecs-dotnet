@@ -178,7 +178,7 @@ namespace Elastic.CommonSchema.BenchmarkDotNetExporter
 						Module = r.BenchmarkCase.Descriptor.Type.Namespace,
 						Category = summary.Title,
 						Type = FullNameProvider.GetTypeName(r.BenchmarkCase.Descriptor.Type),
-						//Duration = summary.TotalTime,
+						Duration = summary.TotalTime.Ticks * 100,
 						Original = r.BenchmarkCase.DisplayInfo,
 						JobConfig = jobConfig,
 						Method = FullNameProvider.GetBenchmarkName(r.BenchmarkCase),
