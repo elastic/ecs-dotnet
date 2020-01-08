@@ -118,7 +118,8 @@ namespace Elastic.CommonSchema.BenchmarkDotNetExporter.IntegrationTests
 
 			doc.Benchmark.Max.Should().BeGreaterThan(0);
 
-			throw new Exception(searchResponse.DebugInformation);
+			doc.Event.Duration.Should().BeGreaterThan(0);
+
 		}
 	}
 
