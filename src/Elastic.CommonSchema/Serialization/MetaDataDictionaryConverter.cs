@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
@@ -52,7 +53,12 @@ namespace Elastic.CommonSchema.Serialization
 
 			foreach (var kvp in value)
 			{
-				writer.WritePropertyName(SnakeCaseJsonNamingPolicy.ToSnakeCase(kvp.Key));
+				// Skip writing null values
+				if (kvp.Value == null)
+					continue;
+
+				var propertyName = SnakeCaseJsonNamingPolicy.ToSnakeCase(kvp.Key);
+				writer.WritePropertyName(propertyName);
 				var t = kvp.Value.GetType();
 
 				//TODO prevent reentry and cache get converters

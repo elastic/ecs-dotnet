@@ -11,7 +11,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Elastic.CommonSchemaNEST", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Elastic.CommonSchema.Serilog", "Elastic.CommonSchema.Serilog\Elastic.CommonSchema.Serilog.csproj", "{45BC8315-6AD6-4F3C-B590-7B52D19ED401}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Elastic.CommonSchema.Serilog.Tests", "..\tests\Elastic.CommonSchema.Serilog.Tests\Elastic.CommonSchema.Serilog.Tests\Elastic.CommonSchema.Serilog.Tests.csproj", "{D7BA6070-909F-402E-A6F4-1CE54A7BE0B7}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Elastic.CommonSchema.Serilog.Tests", "..\tests\Elastic.CommonSchema.Serilog.Tests\Elastic.CommonSchema.Serilog.Tests.csproj", "{D7BA6070-909F-402E-A6F4-1CE54A7BE0B7}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Specification", "Specification\Specification.csproj", "{21FD7B39-5FDD-4432-B25E-8425D3EC46A3}"
 EndProject
@@ -47,6 +47,8 @@ ProjectSection(SolutionItems) = preProject
 	..\build.bat = ..\build.bat
 	..\build.sh = ..\build.sh
 EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Elastic.CommonSchema.Tests", "..\tests\Elastic.CommonSchema.Tests\Elastic.CommonSchema.Tests.csproj", "{25A9F461-2418-4FE0-880B-566406AEA19C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -100,6 +102,10 @@ Global
 		{4E0D951B-FEC5-4043-913A-BED795892405}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4E0D951B-FEC5-4043-913A-BED795892405}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4E0D951B-FEC5-4043-913A-BED795892405}.Release|Any CPU.Build.0 = Release|Any CPU
+		{25A9F461-2418-4FE0-880B-566406AEA19C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{25A9F461-2418-4FE0-880B-566406AEA19C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{25A9F461-2418-4FE0-880B-566406AEA19C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{25A9F461-2418-4FE0-880B-566406AEA19C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{A1DEDE4E-0876-41E8-8DF0-8F85EAF3FAFA} = {7610B796-BB3E-4CB2-8296-79BBFF6D23FC}
@@ -114,5 +120,6 @@ Global
 		{18C57984-EDB9-41F7-9745-BDE1E7BAF449} = {7610B796-BB3E-4CB2-8296-79BBFF6D23FC}
 		{21FD7B39-5FDD-4432-B25E-8425D3EC46A3} = {7610B796-BB3E-4CB2-8296-79BBFF6D23FC}
 		{4779DD6F-AE49-4A80-9F67-D9F2DB05E557} = {441B3323-3651-4B6E-95B3-7CD43E5E223A}
+		{25A9F461-2418-4FE0-880B-566406AEA19C} = {3582B07D-C2B0-49CC-B676-EAF806EB010E}
 	EndGlobalSection
 EndGlobal

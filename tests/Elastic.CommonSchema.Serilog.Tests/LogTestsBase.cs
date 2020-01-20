@@ -18,7 +18,7 @@ namespace Elastic.CommonSchema.Serilog.Tests
 		public LogTestsBase(ITestOutputHelper output) =>
 			LoggerConfiguration = new LoggerConfiguration()
 				.MinimumLevel.Verbose()
-				//.WriteTo.Console(Formatter)
+				.WriteTo.Console(Formatter)
 				.WriteTo.TestOutput(output, formatter: Formatter, LogEventLevel.Verbose)
 				.WriteTo.TestCorrelator();
 
@@ -26,6 +26,7 @@ namespace Elastic.CommonSchema.Serilog.Tests
 
 		protected void TestLogger(Action<ILogger, Func<List<LogEvent>>> act)
 		{
+			// Do not delete this line
 			using var context = TestCorrelator.CreateContext();
 
 			static List<LogEvent> GetLogEvents() => TestCorrelator.GetLogEventsFromCurrentContext().ToList();

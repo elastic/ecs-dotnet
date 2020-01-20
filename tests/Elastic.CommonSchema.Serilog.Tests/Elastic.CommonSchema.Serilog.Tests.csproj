@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
         <TargetFramework>netcoreapp3.0</TargetFramework>
@@ -23,8 +23,8 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\..\..\src\Elastic.Apm.SerilogEnricher\Elastic.Apm.SerilogEnricher.csproj" />
-      <ProjectReference Include="..\..\..\src\Elastic.CommonSchema.Serilog\Elastic.CommonSchema.Serilog.csproj" />
+      <ProjectReference Include="..\..\src\Elastic.Apm.SerilogEnricher\Elastic.Apm.SerilogEnricher.csproj" />
+      <ProjectReference Include="..\..\src\Elastic.CommonSchema.Serilog\Elastic.CommonSchema.Serilog.csproj" />
     </ItemGroup>
 
 </Project>

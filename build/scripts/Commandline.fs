@@ -18,7 +18,7 @@ Targets:
   - default target if non provided.
 * clean
   - cleans build output folders
-* tests
+* test
   - tests all the projects under /tests
 * release <version>
   - 0 create a release worthy nuget packages for [version] under build\output
