@@ -2,32 +2,26 @@
 
 ## Introduction
 
-The `Elastic.CommonSchema` project contains a full C# representation of the [Elastic Common Schema](https://github.com/elastic/ecs) (ECS) YAML schema - see [documentation](https://www.elastic.co/guide/en/ecs/current/index.html).
+The `Elastic.CommonSchema` project contains a full C# representation of [Elastic Common Schema](https://github.com/elastic/ecs) (ECS) - see [documentation](https://www.elastic.co/guide/en/ecs/current/index.html).
 
-The intention is that this library forms a reliable and correct basis for integrations into Elasticsearch, that use both Microsoft .NET and the ECS schema.
+The intention is that this library forms a reliable and correct basis for integrations into Elasticsearch, that use both Microsoft .NET and ECS.
 
 These types can be used in either as-is, or in conjunction with, the [Elasticsearch.net client libraries](https://github.com/elastic/elasticsearch-net). The types are annotated with the corresponding `DataMember` attributes, enabling out-of-the-box serialisation support with the Elasticsearch.net clients.
 
 ## Packages
 
-The .NET assemblies are published to nuget under the package name [Elastic.CommonSchema](http://nuget.org/packages/Elastic.CommonSchema)
+The .NET assemblies are published to NuGet under the package name [Elastic.CommonSchema](http://nuget.org/packages/Elastic.CommonSchema)
 
-The master branch pushes new nuget packages on successful CI builds to https://ci.appveyor.com/nuget/ecs-dotnet
+The master branch pushes new NuGet packages on successful CI builds to https://ci.appveyor.com/nuget/ecs-dotnet
 
 ## Versioning
 
-The version of the package matches the published ECS schema version, with the same corresponding branch names.
+The version of the Elastic.CommonSchema package matches the published ECS version, with the same corresponding branch names:
 
-- Nested Schema *(C# types generated from this resource)*: `https://github.com/elastic/ecs/blob/v{version}/generated/ecs/ecs_nested.yml`
-- .NET types: `https://github.com/elastic/ecs-dotnet/tree/{version}`
+ - Nested Schema (The C# types are generated from this YAML file): https://github.com/elastic/ecs/blob/v1.4.0/generated/ecs/ecs_nested.yml
+ - .NET types: https://github.com/elastic/ecs-dotnet/tree/1.4.0
 
-Where `{version}` is the ECS schema version, e.g. `1.2.0`.
-
-### Further Compatibility Clarifications
-
-The version numbers of the nuget package must match the *exact* version of the ECS schema used within Elasticsearch.
-
-Attempting to use mismatched versions, for example; a nuget package with version `1.2.0` against an Elasticsearch index configured to use an ECS template with version `1.1.0` will result in indexing and data problems.
+The version numbers of the NuGet package must match the exact version of ECS used within Elasticsearch. Attempting to use mismatched versions, for example a NuGet package with version 1.2.0 against an Elasticsearch index configured to use an ECS template with version 1.1.0, will result in indexing and data problems.
 
 ## Getting started
 
@@ -56,7 +50,7 @@ var lowLevelClient = new ElasticLowLevelClient(config);
 ```
 #### Creating an Index Template
 
-Now we need to put an index template, so that any new indices that match our configured index name pattern are to use the ECS schema.
+Now we need to put an index template, so that any new indices that match our configured index name pattern are to use ECS.
 
 We ship with different index templates for different major versions of Elasticsearch within the `Elastic.CommonSchema.Elasticsearch` namespace.
 
@@ -71,7 +65,7 @@ var templateResponse = lowLevelClient.Indices.PutTemplateForAll<StringResponse>(
 Debug.Assert(templateResponse.Success);
 ```
 
-Now that we have applied the index template, any indices that match the pattern `ecs-*` will use the ECS schema.
+Now that we have applied the index template, any indices that match the pattern `ecs-*` will use ECS.
 
 NOTE: We only need to apply the index template once.
 
