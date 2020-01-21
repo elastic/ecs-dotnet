@@ -53,9 +53,9 @@ namespace Elastic.CommonSchema
 	public partial class Base
 	{
 		/// <summary>
-		/// If implemented in a subclass this allows you to hook into <see cref="BaseJsonConverter"/>
+		/// If implemented in a subclass, this allows you to hook into <see cref="BaseJsonConverter"/>
 		/// and make it aware of properties on a subclass of <see cref="Base"/>.
-		/// If <paramref name="propertyName"/> is known set <paramref name="type"/> to the correct type and return true
+		/// If <paramref name="propertyName"/> is known, set <paramref name="type"/> to the correct type and return true
 		/// </summary>
 		/// <param name="propertyName"> The additional property <see cref="BaseJsonConverter"/> encountered</param>
 		/// <param name="type">Set this to the type you wish to deserialize to</param>
