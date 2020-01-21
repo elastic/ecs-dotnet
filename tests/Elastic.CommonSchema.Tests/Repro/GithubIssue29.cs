@@ -10,8 +10,8 @@ namespace Elastic.CommonSchema.Tests.Repro
 		[Fact]
 		public void Reproduce()
 		{
-			// Metadata properties with null values should not be serialised
-			var uniqueName = new Guid().ToString();
+			// Metadata properties with null values should be serialised
+			var uniqueName = Guid.NewGuid().ToString();
 			var root = new Base
 			{
 				Metadata = new Dictionary<string, object>
@@ -21,7 +21,7 @@ namespace Elastic.CommonSchema.Tests.Repro
 			};
 
 			var serialised = root.Serialize();
-			serialised.Should().NotContain(uniqueName);
+			serialised.Should().Contain($"\"{uniqueName}\":null");
 		}
 	}
 }

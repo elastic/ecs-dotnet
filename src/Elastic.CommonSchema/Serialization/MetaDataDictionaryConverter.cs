@@ -53,16 +53,17 @@ namespace Elastic.CommonSchema.Serialization
 
 			foreach (var kvp in value)
 			{
-				// Skip writing null values
-				if (kvp.Value == null)
-					continue;
-
 				var propertyName = SnakeCaseJsonNamingPolicy.ToSnakeCase(kvp.Key);
 				writer.WritePropertyName(propertyName);
-				var inputType = kvp.Value.GetType();
 
-				//TODO prevent reentry and cache get converters
-				JsonSerializer.Serialize(writer, kvp.Value, inputType, options);
+				if (kvp.Value == null)
+					writer.WriteNullValue();
+				else
+				{
+					var inputType = kvp.Value.GetType();
+					//TODO prevent reentry and cache get converters
+					JsonSerializer.Serialize(writer, kvp.Value, inputType, options);
+				}
 			}
 
 			writer.WriteEndObject();
