@@ -5,6 +5,7 @@
 using System;
 using System.Buffers;
 using System.IO;
+using System.Text.Encodings.Web;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Threading;
@@ -16,7 +17,6 @@ namespace Elastic.CommonSchema
 	[JsonConverter(typeof(BaseJsonConverter))]
 	public partial class Base
 	{
-
 		public static Base Deserialize(string s) =>
 			JsonSerializer.Deserialize<Base>(s, JsonConfiguration.SerializerOptions);
 
@@ -48,7 +48,11 @@ namespace Elastic.CommonSchema
 
 		public void Serialize(Stream s)
 		{
-			using var writer = new Utf8JsonWriter(s);
+			using var writer = new Utf8JsonWriter(s, new JsonWriterOptions
+			{
+				Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
+				Indented = false
+			});
 			JsonSerializer.Serialize(writer, this, JsonConfiguration.SerializerOptions);
 		}
 
