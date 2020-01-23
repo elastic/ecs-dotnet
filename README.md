@@ -51,6 +51,38 @@ var logger = new LoggerConfiguration()
 Introduce two special place holder variables (`ElasticApmTraceId`, `ElasticApmTransactionId`) easily into your NLog templates.
 [Learn more...](https://github.com/elastic/ecs-dotnet/tree/master/src/Elastic.Apm.NLog)
 
+```csharp
+var target = new MemoryTarget();
+target.Layout = "${ElasticApmTraceId}|${ElasticApmTransactionId}|${message}";
+Agent.Tracer.CaptureTransaction("TestTransaction", "Test", t =>
+{
+	traceId = "trace-id";
+	transactionId = "transaction-id";
+	logger.Debug("InTransaction");
+});
+// Logged message will be in format of `trace-id|transation-id|InTransaction`
+// or `||InTransaction` if the place holders are not available
+```
+
+## Benchmarking
+
+### [Elastic.CommonSchema.BenchmarkDotNetExporter](https://github.com/elastic/ecs-dotnet/tree/master/src/Elastic.CommonSchema.BenchmarkDotNetExporter)
+
+An exporter for [BenchmarkDotnet](https://github.com/dotnet/BenchmarkDotNet) that can index benchmarking result output directly into Elasticsearch. [Learn more...](https://github.com/elastic/ecs-dotnet/tree/master/src/Elastic.CommonSchema.BenchmarkDotNetExporter)
+
+```csharp
+var options = new ElasticsearchBenchmarkExporterOptions(url)
+{
+	GitBranch = "externally-provided-branch",
+	GitCommitMessage = "externally provided git commit message",
+	GitRepositoryIdentifier = "repository"
+};
+var exporter = new ElasticsearchBenchmarkExporter(options);
+
+var config = CreateDefaultConfig().With(exporter);
+BenchmarkRunner.Run(typeof(Md5VsSha256), config);
+```
+
 ## Copyright and License
 
 This software is Copyright (c) 2014-2020 by Elasticsearch BV.
