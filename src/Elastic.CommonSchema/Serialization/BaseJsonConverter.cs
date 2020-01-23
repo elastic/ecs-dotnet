@@ -1,10 +1,13 @@
+// Licensed to Elasticsearch B.V under one or more agreements.
+// Elasticsearch B.V licenses this file to you under the Apache 2.0 License.
+// See the LICENSE file in the project root for more information
+
 using System;
 using System.Text.Json;
 
 namespace Elastic.CommonSchema.Serialization
 {
-	internal partial class BaseJsonConverter<TBase> : EcsJsonConverterBase<TBase>
-		where TBase : Base, new()
+	internal partial class BaseJsonConverter<TBase> where TBase : Base, new()
 	{
 		public override TBase Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
 		{
@@ -48,7 +51,6 @@ namespace Elastic.CommonSchema.Serialization
 			else writer.WriteNullValue();
 		}
 	}
-
 
 	internal partial class BaseJsonConverter : BaseJsonConverter<Base>
 	{
