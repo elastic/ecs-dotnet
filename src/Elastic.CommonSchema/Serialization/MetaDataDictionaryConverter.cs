@@ -4,6 +4,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
@@ -21,7 +22,7 @@ namespace Elastic.CommonSchema.Serialization
 				case JsonTokenType.String when reader.TryGetDateTime(out var datetime): return datetime;
 				case JsonTokenType.String: return reader.GetString();
 				default: {
-					using var document = System.Text.Json.JsonDocument.ParseValue(ref reader);
+					using var document = JsonDocument.ParseValue(ref reader);
 					return document.RootElement.Clone();
 				}
 			}
@@ -56,11 +57,17 @@ namespace Elastic.CommonSchema.Serialization
 
 			foreach (var kvp in value)
 			{
-				writer.WritePropertyName(SnakeCaseJsonNamingPolicy.ToSnakeCase(kvp.Key));
-				var t = kvp.Value.GetType();
+				var propertyName = SnakeCaseJsonNamingPolicy.ToSnakeCase(kvp.Key);
+				writer.WritePropertyName(propertyName);
 
-				//TODO prevent reentry and cache get converters
-				System.Text.Json.JsonSerializer.Serialize(writer, kvp.Value, t, options);
+				if (kvp.Value == null)
+					writer.WriteNullValue();
+				else
+				{
+					var inputType = kvp.Value.GetType();
+					//TODO prevent reentry and cache get converters
+					JsonSerializer.Serialize(writer, kvp.Value, inputType, options);
+				}
 			}
 
 			writer.WriteEndObject();

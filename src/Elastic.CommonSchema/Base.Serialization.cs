@@ -5,6 +5,7 @@
 using System;
 using System.Buffers;
 using System.IO;
+using System.Text.Encodings.Web;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
@@ -92,8 +93,12 @@ namespace Elastic.CommonSchema
 
 		public void Serialize(Stream stream)
 		{
-			using var writer = new Utf8JsonWriter(stream);
-			JsonSerializer.Serialize(writer, this, GetType(), SerializerOptions);
+			using var writer = new Utf8JsonWriter(stream, new JsonWriterOptions
+			{
+				Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
+				Indented = false
+			});
+			JsonSerializer.Serialize(writer, this, JsonConfiguration.SerializerOptions);
 		}
 
 		public Task SerializeAsync(Stream stream, CancellationToken ctx = default) =>

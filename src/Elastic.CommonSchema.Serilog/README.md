@@ -10,17 +10,17 @@ var logger = new LoggerConfiguration()
                 .CreateLogger();
 ```
 
-In the code snippet above `new EcsTextFormatter()` enables the text formatter and instructs Serilog to format the event as JSON. The sample above uses the Console sink, but you are free to use any sink of your choice.
+In the code snippet above `new EcsTextFormatter()` enables the text formatter and instructs Serilog to format the event as JSON. The sample above uses the Console sink, but you are free to use any sink of your choice, perhaps consider using a filesystem sink and [Elastic Filebeat](https://www.elastic.co/downloads/beats/filebeat) for durable and reliable ingestion.
 
 An example of the output is given below:
 
 ```json
 {
   "@timestamp": "2019-11-22T14:59:02.5903135+11:00",
-  "message": "Log message",
   "log.level": "Information",
+  "message": "Log message",
   "ecs": {
-    "version": "1.3.0"
+    "version": "1.4.0"
   },
   "event": {
     "severity": 0,
