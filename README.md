@@ -6,7 +6,7 @@ The Elastic Common Schema defines a common set of fields for ingesting data into
 
 Contributions are welcome, please read our [guidelines](https://github.com/elastic/ecs-dotnet/tree/master/contributing.md).
 
-## Integrations
+# Integrations
 
 ### [Elastic.CommonSchema](https://github.com/elastic/ecs-dotnet/tree/master/src/Elastic.CommonSchema)
 
