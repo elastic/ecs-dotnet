@@ -189,6 +189,12 @@ public IDictionary<string, object> Metadata { get; set; }
 
 This property is not part of the ECS specification, but is included as a means to index supplementary information.
 
+#### Advanced metadata storage
+
+In instances where using the `IDictionary<string, object> Metadata` property is not sufficient, or there is a clearer definition of the structure of the ECS-compatible document you would like to index, it is possible to subclass the `Base` object and provide your own property definitions.
+
+The Elastic.CommonSchema.BenchmarkDotNetExporter project takes this approach, in the [Domain source directory](https://github.com/elastic/ecs-dotnet/tree/master/src/Elastic.CommonSchema.BenchmarkDotNetExporter), where the BenchmarkDocument subclasses Base.
+
 ## Copyright and License
 
 This software is Copyright (c) 2014-2020 by Elasticsearch BV.
