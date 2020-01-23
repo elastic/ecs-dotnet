@@ -1,10 +1,16 @@
-﻿using System;
+﻿// Licensed to Elasticsearch B.V under one or more agreements.
+// Elasticsearch B.V licenses this file to you under the Apache 2.0 License.
+// See the LICENSE file in the project root for more information
+
+using System;
 using System.Linq;
 using Elasticsearch.Net;
 
 namespace Elastic.CommonSchema.BenchmarkDotNetExporter
 {
-	/// <summary> Configure the Elasticsearch BenchmarkDotNet exporter</summary>
+	/// <summary>
+	/// Configure the Elasticsearch BenchmarkDotNet exporter.
+	/// </summary>
 	public class ElasticsearchBenchmarkExporterOptions
 	{
 		/// <summary>
@@ -32,7 +38,6 @@ namespace Elastic.CommonSchema.BenchmarkDotNetExporter
 			if (Nodes.Length == 0)
 				throw new ArgumentException($"No nodes were passed to {nameof(ElasticsearchBenchmarkExporterOptions)}", nameof(nodes));
 		}
-
 
 		public Uri[] Nodes { get; }
 

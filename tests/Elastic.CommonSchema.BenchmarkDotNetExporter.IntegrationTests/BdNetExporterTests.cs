@@ -1,3 +1,7 @@
+// Licensed to Elasticsearch B.V under one or more agreements.
+// Elasticsearch B.V licenses this file to you under the Apache 2.0 License.
+// See the LICENSE file in the project root for more information
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,6 +31,7 @@ namespace Elastic.CommonSchema.BenchmarkDotNetExporter.IntegrationTests
 	{
 		public BenchmarkCluster() : base(new XunitClusterConfiguration("7.5.0")) { }
 	}
+
 	public class Md5VsSha256
 	{
 		private readonly SHA256 _sha256 = SHA256.Create();
@@ -87,8 +92,7 @@ namespace Elastic.CommonSchema.BenchmarkDotNetExporter.IntegrationTests
 				GitRepositoryIdentifier = "repository"
 			};
 			var exporter = new ElasticsearchBenchmarkExporter(options);
-			var config = CreateDefaultConfig()
-				.With(exporter);
+			var config = CreateDefaultConfig().With(exporter);
 			BenchmarkRunner.Run(typeof(Md5VsSha256), config);
 
 			var pipeline = Client.Ingest.GetPipeline(p => p.Id(options.PipelineName));
@@ -119,8 +123,6 @@ namespace Elastic.CommonSchema.BenchmarkDotNetExporter.IntegrationTests
 			doc.Benchmark.Max.Should().BeGreaterThan(0);
 
 			doc.Event.Duration.Should().BeGreaterThan(0);
-
 		}
 	}
-
 }
