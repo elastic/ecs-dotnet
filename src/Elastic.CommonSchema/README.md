@@ -6,7 +6,7 @@ The `Elastic.CommonSchema` project contains a full C# representation of [Elastic
 
 The intention is that this library forms a reliable and correct basis for integrations into Elasticsearch, that use both Microsoft .NET and ECS.
 
-These types can be used in either as-is, or in conjunction with, the [Elasticsearch.net client libraries](https://github.com/elastic/elasticsearch-net). The types are annotated with the corresponding `DataMember` attributes, enabling out-of-the-box serialisation support with the Elasticsearch.net clients.
+These types can be used in either as-is, or in conjunction with, the [Official .NET clients for Elasticsearch](https://github.com/elastic/elasticsearch-net). The types are annotated with the corresponding `DataMember` attributes, enabling out-of-the-box serialisation support with the Elasticsearch.net clients.
 
 ## Packages
 
