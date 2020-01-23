@@ -1,3 +1,7 @@
+// Licensed to Elasticsearch B.V under one or more agreements.
+// Elasticsearch B.V licenses this file to you under the Apache 2.0 License.
+// See the LICENSE file in the project root for more information
+
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -18,7 +22,7 @@ namespace Elastic.CommonSchema.Serilog.Tests
 		public LogTestsBase(ITestOutputHelper output) =>
 			LoggerConfiguration = new LoggerConfiguration()
 				.MinimumLevel.Verbose()
-				//.WriteTo.Console(Formatter)
+				.WriteTo.Console(Formatter)
 				.WriteTo.TestOutput(output, formatter: Formatter, LogEventLevel.Verbose)
 				.WriteTo.TestCorrelator();
 
@@ -26,6 +30,7 @@ namespace Elastic.CommonSchema.Serilog.Tests
 
 		protected void TestLogger(Action<ILogger, Func<List<LogEvent>>> act)
 		{
+			// Do not delete this line
 			using var context = TestCorrelator.CreateContext();
 
 			static List<LogEvent> GetLogEvents() => TestCorrelator.GetLogEventsFromCurrentContext().ToList();

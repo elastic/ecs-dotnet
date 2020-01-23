@@ -1,3 +1,7 @@
+// Licensed to Elasticsearch B.V under one or more agreements.
+// Elasticsearch B.V licenses this file to you under the Apache 2.0 License.
+// See the LICENSE file in the project root for more information
+
 using System;
 using System.Text.Encodings.Web;
 using System.Text.Json;
@@ -7,7 +11,7 @@ namespace Elastic.CommonSchema.Serialization
 {
 	internal static class JsonConfiguration
 	{
-		internal static readonly JsonSerializerOptions SerializerOptions = new JsonSerializerOptions()
+		internal static readonly JsonSerializerOptions SerializerOptions = new JsonSerializerOptions
 		{
 			IgnoreNullValues = true,
 			Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping,

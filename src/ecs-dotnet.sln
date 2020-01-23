@@ -11,7 +11,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Elastic.CommonSchemaNEST", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Elastic.CommonSchema.Serilog", "Elastic.CommonSchema.Serilog\Elastic.CommonSchema.Serilog.csproj", "{45BC8315-6AD6-4F3C-B590-7B52D19ED401}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Elastic.CommonSchema.Serilog.Tests", "..\tests\Elastic.CommonSchema.Serilog.Tests\Elastic.CommonSchema.Serilog.Tests\Elastic.CommonSchema.Serilog.Tests.csproj", "{D7BA6070-909F-402E-A6F4-1CE54A7BE0B7}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Elastic.CommonSchema.Serilog.Tests", "..\tests\Elastic.CommonSchema.Serilog.Tests\Elastic.CommonSchema.Serilog.Tests.csproj", "{D7BA6070-909F-402E-A6F4-1CE54A7BE0B7}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Specification", "Specification\Specification.csproj", "{21FD7B39-5FDD-4432-B25E-8425D3EC46A3}"
 EndProject

@@ -16,7 +16,7 @@ In the code snippet above `Enrich.WithElasticApmCorrelationInfo()` enables the e
 - `ElasticApmTransactionId`
 - `ElasticApmTraceId`
 
-In the `outputTemplate` of the Console sink these two properties are printed, of course they can be used with any sink.
+These two properties are printed to the Console using the `outputTemplate` parameter, of course they can be used with any sink, you could consider using a filesystem sink and [Elastic Filebeat](https://www.elastic.co/downloads/beats/filebeat) for durable and reliable ingestion. This enricher is also compatible with the [Elastic.CommonSchema.Serilog](https://www.nuget.org/packages/Elastic.CommonSchema.Serilog) package.
 
 ## Prerequisite
 

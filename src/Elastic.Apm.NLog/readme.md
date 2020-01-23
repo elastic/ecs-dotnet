@@ -1,12 +1,11 @@
 # Elastic APM NLog Layout Renderer
 
-Allows you to add the following place holders in your NLog templates
+Allows you to add the following place holders in your NLog templates:
 
 * `ElasticApmTraceId`
 * `ElasticApmTransactionId`
 
 Which will be replaced with the appropriate Elastic APM variables if available
-
 
 ## How to Enable
 

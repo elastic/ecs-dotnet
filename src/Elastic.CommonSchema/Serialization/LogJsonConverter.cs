@@ -57,7 +57,7 @@ namespace Elastic.CommonSchema.Serialization
 			writer.WriteStartObject();
 
 			writer.WriteString("logger", value.Logger);
-			writer.WriteString("original", value.Logger);
+			writer.WriteString("original", value.Original);
 
 			WriteProp(writer, "origin", value.Origin); // 3
 			WriteProp(writer, "syslog", value.Syslog); // 4

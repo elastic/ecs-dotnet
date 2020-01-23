@@ -5,6 +5,7 @@
 using System;
 using System.Buffers;
 using System.IO;
+using System.Text.Encodings.Web;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
@@ -14,13 +15,12 @@ using static Elastic.CommonSchema.Serialization.JsonConfiguration;
 namespace Elastic.CommonSchema
 {
 	/// <summary>
-	/// <para>This static class allows you to deserialize subclasses of <see cref="Base"/></para>
-	/// <para>If you are dealing with <see cref="Base"/> directly you do not need to call this class.</para>
-	/// <para>Use <see cref="Base.Deserialize(string)"/> and overloads instead.</para>
-	/// <para></para>
-	/// Note this class should only be used for advanced use cases
+	/// This static class allows you to deserialize subclasses of <see cref="Base"/>
+	/// If you are dealing with <see cref="Base"/> directly you do not need to use this class.
+	/// Use <see cref="Base.Deserialize(string)"/> and the overloads instead.
+	/// Note this class should only be used for advanced use cases, for simpler use cases you can utilise the <see cref="Base.Metadata"/> property.
 	/// </summary>
-	/// <typeparam name="TBase"></typeparam>
+	/// <typeparam name="TBase">Type of the <see cref="Base"/> subclass</typeparam>
 	public static class EcsSerializerFactory<TBase> where TBase : Base, new()
 	{
 		public static ValueTask<TBase> DeserializeAsync(Stream stream, CancellationToken ctx = default) =>
@@ -46,18 +46,16 @@ namespace Elastic.CommonSchema
 				: new ReadOnlyMemory<byte>(ms.ToArray()).Span;
 			return Deserialize(span);
 		}
-
 	}
-
 
 	public partial class Base
 	{
 		/// <summary>
-		/// If implemented in a subclass this allows you to hook into <see cref="BaseJsonConverter"/>
+		/// If implemented in a subclass, this allows you to hook into <see cref="BaseJsonConverter"/>
 		/// and make it aware of properties on a subclass of <see cref="Base"/>.
-		/// If <paramref name="propertyName"/> is known set <paramref name="type"/> to the correct type and return true
+		/// If <paramref name="propertyName"/> is known, set <paramref name="type"/> to the correct type and return true.
 		/// </summary>
-		/// <param name="propertyName"> The additional property <see cref="BaseJsonConverter"/> encountered</param>
+		/// <param name="propertyName">The additional property that <see cref="BaseJsonConverter"/> encountered</param>
 		/// <param name="type">Set this to the type you wish to deserialize to</param>
 		/// <returns>Return true if <paramref name="propertyName"/> is handled</returns>
 		protected internal virtual bool TryRead(string propertyName, out Type type)
@@ -67,10 +65,10 @@ namespace Elastic.CommonSchema
 		}
 
 		/// <summary>
-		/// If <see cref="TryRead"/> return <c>true</c> this will be called with the deserialized <paramref name="value"/>
+		/// If <see cref="TryRead"/> returns <c>true</c> this will be called with the deserialized <paramref name="value"/>
 		/// </summary>
 		/// <param name="propertyName">The additional property <see cref="BaseJsonConverter"/> encountered</param>
-		/// <param name="value">The deserialized boxed value you will manually have to unbox to the type <see cref="TryRead"/> set</param>
+		/// <param name="value">The deserialized boxed value you will have to manually unbox to the type that <see cref="TryRead"/> set</param>
 		/// <returns></returns>
 		protected internal virtual bool ReceiveProperty(string propertyName, object value) => false;
 
@@ -95,12 +93,15 @@ namespace Elastic.CommonSchema
 
 		public void Serialize(Stream stream)
 		{
-			using var writer = new Utf8JsonWriter(stream);
-			JsonSerializer.Serialize(writer, this, GetType(), SerializerOptions);
+			using var writer = new Utf8JsonWriter(stream, new JsonWriterOptions
+			{
+				Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
+				Indented = false
+			});
+			JsonSerializer.Serialize(writer, this, JsonConfiguration.SerializerOptions);
 		}
 
 		public Task SerializeAsync(Stream stream, CancellationToken ctx = default) =>
 			JsonSerializer.SerializeAsync(stream, this, GetType(), SerializerOptions, ctx);
-
 	}
 }
