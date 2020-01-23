@@ -18,7 +18,7 @@ module Versioning =
 
     let parse (v:string) = SemVer.parse(v)
 
-    //Versions in form of e.g 1.0.0 is inferred as datetime so we bake the json shape into the provider like this
+    // Versions in form of e.g 1.0.0 is inferred as datetime so we bake the json shape into the provider like this
     type SdkVersion = { version:string;  }
     type GlobalJson = { sdk: SdkVersion; version:string; }
         
@@ -48,6 +48,7 @@ module Versioning =
         | _ -> None
 
     type AnchoredVersion = { Full: SemVerInfo; Assembly:SemVerInfo; AssemblyFile:SemVerInfo }
+
     type BuildVersions =
         | Update of New: AnchoredVersion * Old: AnchoredVersion 
         | NoChange of Current: AnchoredVersion
@@ -55,7 +56,7 @@ module Versioning =
     type ArtifactsVersion = ArtifactsVersion of AnchoredVersion
 
     let AnchoredVersion version = 
-        let av v = parse (sprintf "%s.0.0" (v.Major.ToString()))
+        let av v = parse (sprintf "%s.%s.0" (v.Major.ToString()) (v.Minor.ToString()))
         let fv v = parse (sprintf "%s.%s.%s.0" (v.Major.ToString()) (v.Minor.ToString()) (v.Patch.ToString()))
         { Full = version; Assembly = av version; AssemblyFile = fv version }
     
@@ -144,7 +145,7 @@ module Versioning =
                 let fv = FileVersionInfo.GetVersionInfo(f)
                 let a = AssemblyName.GetAssemblyName(f).Version
                 printfn "Assembly: %A File: %s Product: %s => %s" a fv.FileVersion fv.ProductVersion f
-                if (a.Minor > 0 || a.Revision > 0 || a.Build > 0) then failwith (sprintf "%s assembly version is not sticky to its major component" f)
+                if (a.Revision > 0 || a.Build > 0) then failwith (sprintf "%s assembly version is not sticky to its minor component" f)
                 if (parse (fv.ProductVersion) <> version.Full) then
                     failwith (sprintf "Expected product info %s to match new version %O " fv.ProductVersion fileVersion)
 
