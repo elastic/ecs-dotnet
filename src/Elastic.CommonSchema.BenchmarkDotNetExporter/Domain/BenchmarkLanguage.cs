@@ -22,7 +22,7 @@ namespace Elastic.CommonSchema.BenchmarkDotNetExporter.Domain
 		[DataMember(Name = "benchmarkdotnet_version")]
 		public string BenchmarkDotNetVersion { get; set; }
 
-		[DataMember(Name = "benchmarkdotnet_version")]
+		[DataMember(Name = "benchmarkdotnet_caption")]
 		public string BenchmarkDotNetCaption { get; set; }
 
 		[DataMember(Name = "jit_info")]

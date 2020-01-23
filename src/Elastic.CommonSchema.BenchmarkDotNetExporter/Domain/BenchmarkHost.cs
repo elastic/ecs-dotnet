@@ -22,8 +22,8 @@ namespace Elastic.CommonSchema.BenchmarkDotNetExporter.Domain
 		[DataMember(Name = "hardware_timer_kind")]
 		public string HardwareTimerKind { get; set; }
 
-		[DataMember(Name = "chronometer_frequency_herz")]
-		public double ChronometerFrequencyHerz { get; set; }
+		[DataMember(Name = "chronometer_frequency_hertz")]
+		public double ChronometerFrequencyHertz { get; set; }
 
 		[DataMember(Name = "vm_hypervisor")]
 		public string VirtualMachineHypervisor { get; set; }

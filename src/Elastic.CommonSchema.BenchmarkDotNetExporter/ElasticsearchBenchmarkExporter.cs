@@ -257,7 +257,7 @@ namespace Elastic.CommonSchema.BenchmarkDotNetExporter
 				VirtualMachineHypervisor = summary.HostEnvironmentInfo.VirtualMachineHypervisor.Value?.Name,
 				InDocker = summary.HostEnvironmentInfo.InDocker,
 				HasAttachedDebugger = summary.HostEnvironmentInfo.HasAttachedDebugger,
-				ChronometerFrequencyHerz = summary.HostEnvironmentInfo.ChronometerFrequency.Hertz,
+				ChronometerFrequencyHertz = summary.HostEnvironmentInfo.ChronometerFrequency.Hertz,
 				HardwareTimerKind = summary.HostEnvironmentInfo.HardwareTimerKind.ToString()
 			};
 			return environmentInfo;

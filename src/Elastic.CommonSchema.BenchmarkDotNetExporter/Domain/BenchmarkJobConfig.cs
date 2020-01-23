@@ -4,7 +4,7 @@ namespace Elastic.CommonSchema.BenchmarkDotNetExporter.Domain
 {
 	public class BenchmarkJobConfig
 	{
-		[DataMember(Name = "platfom")]
+		[DataMember(Name = "platform")]
 		public string Platform { get; set; }
 
 		[DataMember(Name = "runtime")]

@@ -62,14 +62,14 @@ namespace Elastic.CommonSchema.BenchmarkDotNetExporter
 		/// <summary> (Optional) Report the repository, does not have to be a complete URI</summary>
 		public string GitRepositoryIdentifier { get; set; }
 
-		internal static readonly string DefaultMonniker = "benchmarks-dotnet";
+		internal static readonly string DefaultMoniker = "benchmarks-dotnet";
 		/// <summary>
 		/// The prefix for the indices being created, indices will be suffixed with <code>-DATE</code>
 		/// see <see cref="IndexStrategy"/> how to control the DATE rounding.
 		/// </summary>
-		public string IndexName { get; set; } = DefaultMonniker;
-		public string TemplateName { get; set; } = DefaultMonniker;
-		public string PipelineName { get; set; } = DefaultMonniker;
+		public string IndexName { get; set; } = DefaultMoniker;
+		public string TemplateName { get; set; } = DefaultMoniker;
+		public string PipelineName { get; set; } = DefaultMoniker;
 		public TimeSeriesStrategy IndexStrategy { get; set; } = TimeSeriesStrategy.Default;
 
 		private static Uri[] Parse(string urls)
