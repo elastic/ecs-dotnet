@@ -25,11 +25,12 @@ using System.Text.Json;
 
 namespace Elastic.CommonSchema.Serialization
 {
-	internal partial class BaseJsonConverter : EcsJsonConverterBase@(Raw("<Base>"))
+	internal partial class BaseJsonConverter@(Raw("<TBase>")) : EcsJsonConverterBase@(Raw("<TBase>"))
+		where TBase : Base, new()
 	{
 		private static bool ReadProperties(
 			ref Utf8JsonReader reader, 
-			Base ecsEvent, 
+			TBase ecsEvent, 
 			ref DateTimeOffset? timestamp, 
 			ref string loglevel
 		)
@@ -57,7 +58,12 @@ namespace Elastic.CommonSchema.Serialization
 @foreach (var schema in Model.NonBaseYamlSchemas())
 {<text>				"@schema.Name" => ReadProp<@(FileGenerator.PascalCase(schema.Name))>(ref reader, "@schema.Name", ecsEvent, (b, v) => b.@(FileGenerator.PascalCase(schema.Name)) = v),
 </text>}
-				_ => false
+				_ =>
+					typeof(Base) == ecsEvent.GetType()
+						? false
+						: ecsEvent.TryRead(propertyName, out var t)
+							? ecsEvent.ReceiveProperty(propertyName, ReadPropDeserialize(ref reader, t))
+							: false
 			};
 		}
 
@@ -87,6 +93,8 @@ namespace Elastic.CommonSchema.Serialization
 @foreach (var schema in Model.YamlSchemasOrdered.Skip(1))
 {<text>			WriteProp(writer, "@(schema.Name)", value.@(FileGenerator.PascalCase(schema.Name)));
 </text>}
+			if (typeof(Base) != value.GetType())
+				value.WriteAdditionalProperties((k, v) => WriteProp(writer, k, v));
 			writer.WriteEndObject();
 		}
 	}

@@ -5,7 +5,7 @@
 /*
 IMPORTANT NOTE
 ==============
-This file has been generated. 
+This file has been generated.
 If you wish to submit a PR please modify the original csharp file and submit the PR with that change. Thanks!
 */
 
@@ -15,12 +15,13 @@ using System.Text.Json;
 
 namespace Elastic.CommonSchema.Serialization
 {
-	internal partial class BaseJsonConverter : EcsJsonConverterBase<Base>
+	internal partial class BaseJsonConverter<TBase> : EcsJsonConverterBase<TBase>
+		where TBase : Base, new()
 	{
 		private static bool ReadProperties(
-			ref Utf8JsonReader reader, 
-			Base ecsEvent, 
-			ref DateTimeOffset? timestamp, 
+			ref Utf8JsonReader reader,
+			TBase ecsEvent,
+			ref DateTimeOffset? timestamp,
 			ref string loglevel
 		)
 		{
@@ -71,11 +72,16 @@ namespace Elastic.CommonSchema.Serialization
 				"user" => ReadProp<User>(ref reader, "user", ecsEvent, (b, v) => b.User = v),
 				"user_agent" => ReadProp<UserAgent>(ref reader, "user_agent", ecsEvent, (b, v) => b.UserAgent = v),
 				"vulnerability" => ReadProp<Vulnerability>(ref reader, "vulnerability", ecsEvent, (b, v) => b.Vulnerability = v),
-				_ => false
+				_ =>
+					typeof(Base) == ecsEvent.GetType()
+						? false
+						: ecsEvent.TryRead(propertyName, out var t)
+							? ecsEvent.ReceiveProperty(propertyName, ReadPropDeserialize(ref reader, t))
+							: false
 			};
 		}
 
-		public override void Write(Utf8JsonWriter writer, Base value, JsonSerializerOptions options)
+		public override void Write(Utf8JsonWriter writer, TBase value, JsonSerializerOptions options)
 		{
 			if (value == null)
 			{
@@ -128,6 +134,8 @@ namespace Elastic.CommonSchema.Serialization
 			WriteProp(writer, "user", value.User);
 			WriteProp(writer, "user_agent", value.UserAgent);
 			WriteProp(writer, "vulnerability", value.Vulnerability);
+			if (typeof(Base) != value.GetType())
+				value.WriteAdditionalProperties((k, v) => WriteProp(writer, k, v));
 			writer.WriteEndObject();
 		}
 	}

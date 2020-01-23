@@ -1,3 +1,7 @@
+// Licensed to Elasticsearch B.V under one or more agreements.
+// Elasticsearch B.V licenses this file to you under the Apache 2.0 License.
+// See the LICENSE file in the project root for more information
+
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
@@ -10,7 +14,10 @@ namespace Elastic.CommonSchema.Serialization
 		protected static bool ReadDateTime(ref Utf8JsonReader reader, ref DateTimeOffset? set)
 		{
 			if (reader.TokenType == JsonTokenType.Null)
-				return reader.Read();
+			{
+				set = null;
+				return true;
+			}
 
 			set = JsonConfiguration.DateTimeOffsetConverter.Read(ref reader, typeof(DateTimeOffset), JsonConfiguration.SerializerOptions);
 			return true;
@@ -31,10 +38,20 @@ namespace Elastic.CommonSchema.Serialization
 			writer.WritePropertyName(key);
 			// Attempt to use existing converter first before re-entering through JsonSerializer.Serialize().
 			// The default converter for object does not support writing.
-			if (typeof(TValue) != typeof(object) && (options?.GetConverter(typeof(TValue)) is JsonConverter<TValue> keyConverter))
+			var type = value.GetType();
+			if (typeof(TValue) != typeof(object) && type == typeof(TValue) && (options?.GetConverter(typeof(TValue)) is JsonConverter<TValue> keyConverter))
 				keyConverter.Write(writer, value, options);
 			else
-				JsonSerializer.Serialize<TValue>(writer, value, options);
+				JsonSerializer.Serialize(writer, value, type, options);
+		}
+
+		internal static object ReadPropDeserialize(ref Utf8JsonReader reader, Type type)
+		{
+			if (reader.TokenType == JsonTokenType.Null) return null;
+
+			var options = JsonConfiguration.SerializerOptions;
+
+			return JsonSerializer.Deserialize(ref reader, type, options);
 		}
 
 		protected static TValue ReadProp<TValue>(ref Utf8JsonReader reader, string key)
