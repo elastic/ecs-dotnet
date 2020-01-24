@@ -3,9 +3,8 @@
   <Import Project="$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildThisFileDirectory), build.bat))\src\PublishArtifacts.build.props"/>
   <PropertyGroup>
     <TargetFrameworks>netstandard2.0;netstandard2.1;net461</TargetFrameworks>
-    
     <Title>Elastic Common Schema (ECS) Types</Title>
-    <Description>Maps ECS to .NET types including (de)serialization using System.Text.Json</Description>
+    <Description>Maps Elastic Common Schema (ECS) to .NET types including (de)serialization using System.Text.Json</Description>
     <LangVersion>latest</LangVersion>
   </PropertyGroup>
   <ItemGroup>
