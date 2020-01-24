@@ -6,7 +6,7 @@ using System;
 using System.Globalization;
 using System.Runtime.Serialization;
 
-namespace Elastic
+namespace Elastic.CommonSchema
 {
 	public class Location
 	{

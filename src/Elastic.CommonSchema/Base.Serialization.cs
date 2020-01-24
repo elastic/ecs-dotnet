@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 using Elastic.CommonSchema.Serialization;
 using static Elastic.CommonSchema.Serialization.JsonConfiguration;
 
-namespace Elastic.CommonSchema
+namespace Elastic.CommonSchema.Serialization
 {
 	/// <summary>
 	/// This static class allows you to deserialize subclasses of <see cref="Base"/>
@@ -47,7 +47,10 @@ namespace Elastic.CommonSchema
 			return Deserialize(span);
 		}
 	}
+}
 
+namespace Elastic.CommonSchema
+{
 	public partial class Base
 	{
 		/// <summary>
