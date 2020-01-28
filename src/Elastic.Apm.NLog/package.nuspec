@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
+  <metadata>
+    <id>Elastic.Apm.NLog</id>
+    <version>$Version$</version>
+    <title>Elastic APM NLog Layout Renderers</title>
+    <authors>Elastic and contributors</authors>
+    <owners>Elastic and contributors</owners>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <license type="expression">Apache-2.0</license>
+    <licenseUrl>https://licenses.nuget.org/Apache-2.0</licenseUrl>
+    <icon>nuget-icon.png</icon>
+    <projectUrl>https://github.com/elastic/ecs-dotnet</projectUrl>
+    <iconUrl>https://raw.githubusercontent.com/elastic/ecs-dotnet/master/build/nuget-icon.png</iconUrl>
+    <description>Enrich NLog logs with APM TraceId and TransactionId.</description>
+    <copyright>Elasticsearch BV</copyright>
+    <repository type="git" url="https://github.com/elastic/ecs-dotnet.git" />
+    <dependencies>
+      <group targetFramework=".NETStandard2.0">
+        <dependency id="Elastic.Apm" version="1.2.0" exclude="Build,Analyzers" />
+        <dependency id="NLog" version="4.5.4" exclude="Build,Analyzers" />
+      </group>
+    </dependencies>
+  </metadata>
+  <files>
+    <file src="bin\Release\netstandard2.0\Elastic.Apm.NLog.pdb" target="lib\netstandard2.0\Elastic.Apm.NLog.pdb" />
+    <file src="bin\Release\netstandard2.0\Elastic.Apm.NLog.dll" target="lib\netstandard2.0\Elastic.Apm.NLog.dll" />
+    <file src="bin\Release\netstandard2.0\Elastic.Apm.NLog.xml" target="lib\netstandard2.0\Elastic.Apm.NLog.xml" />
+    <file src="..\..\build\nuget-icon.png" target="nuget-icon.png" />
+    <file src="..\..\license.txt" target="license.txt" />
+  </files>
+</package>

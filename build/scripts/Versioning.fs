@@ -131,7 +131,7 @@ module Versioning =
     let private validateDllStrongName dll name =
         match File.Exists dll with
         | true -> validate dll name 
-        | _ -> failwithf "Attemped to verify signature of %s but it was not found!" dll
+        | _ -> failwithf "Attempted to verify signature of %s but it was not found!" dll
 
     let ValidateArtifacts (ArtifactsVersion(version)) =
         let fileVersion = version.AssemblyFile

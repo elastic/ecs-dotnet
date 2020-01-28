@@ -1,0 +1,51 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
+  <metadata>
+    <id>Elastic.CommonSchema.Serilog</id>
+    <version>$Version$</version>
+    <title>Elastic Common Schema (ECS) Serilog Formatter</title>
+    <authors>Elastic and contributors</authors>
+    <owners>Elastic and contributors</owners>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <license type="expression">Apache-2.0</license>
+    <licenseUrl>https://licenses.nuget.org/Apache-2.0</licenseUrl>
+    <icon>nuget-icon.png</icon>
+    <projectUrl>https://github.com/elastic/ecs-dotnet</projectUrl>
+    <iconUrl>https://raw.githubusercontent.com/elastic/ecs-dotnet/master/build/nuget-icon.png</iconUrl>
+    <description>Serilog TextFormatter that emits Elastic Common Schema (ECS) JSON.</description>
+    <copyright>Elasticsearch BV</copyright>
+    <repository type="git" url="https://github.com/elastic/ecs-dotnet.git" />
+    <dependencies>
+      <group targetFramework=".NETFramework4.6.1">
+        <dependency id="Elastic.CommonSchema" version="1.4.0" exclude="Build,Analyzers" />
+        <dependency id="Serilog" version="2.9.0" exclude="Build,Analyzers" />
+      </group>
+      <group targetFramework=".NETStandard2.0">
+        <dependency id="Elastic.CommonSchema" version="1.4.0" exclude="Build,Analyzers" />
+        <dependency id="Microsoft.AspNetCore.Http.Abstractions" version="2.2.0" exclude="Build,Analyzers" />
+        <dependency id="Serilog" version="2.9.0" exclude="Build,Analyzers" />
+      </group>
+      <group targetFramework=".NETStandard2.1">
+        <dependency id="Elastic.CommonSchema" version="1.4.0" exclude="Build,Analyzers" />
+        <dependency id="Microsoft.AspNetCore.Http.Abstractions" version="2.2.0" exclude="Build,Analyzers" />
+        <dependency id="Serilog" version="2.9.0" exclude="Build,Analyzers" />
+      </group>
+    </dependencies>
+    <frameworkAssemblies>
+      <frameworkAssembly assemblyName="System.Web" targetFramework=".NETFramework4.6.1" />
+    </frameworkAssemblies>
+  </metadata>
+  <files>
+    <file src="bin\Release\net461\Elastic.CommonSchema.Serilog.pdb" target="lib\net461\Elastic.CommonSchema.Serilog.pdb" />
+    <file src="bin\Release\netstandard2.0\Elastic.CommonSchema.Serilog.pdb" target="lib\netstandard2.0\Elastic.CommonSchema.Serilog.pdb" />
+    <file src="bin\Release\netstandard2.1\Elastic.CommonSchema.Serilog.pdb" target="lib\netstandard2.1\Elastic.CommonSchema.Serilog.pdb" />
+    <file src="bin\Release\net461\Elastic.CommonSchema.Serilog.dll" target="lib\net461\Elastic.CommonSchema.Serilog.dll" />
+    <file src="bin\Release\net461\Elastic.CommonSchema.Serilog.xml" target="lib\net461\Elastic.CommonSchema.Serilog.xml" />
+    <file src="bin\Release\netstandard2.0\Elastic.CommonSchema.Serilog.dll" target="lib\netstandard2.0\Elastic.CommonSchema.Serilog.dll" />
+    <file src="bin\Release\netstandard2.0\Elastic.CommonSchema.Serilog.xml" target="lib\netstandard2.0\Elastic.CommonSchema.Serilog.xml" />
+    <file src="bin\Release\netstandard2.1\Elastic.CommonSchema.Serilog.dll" target="lib\netstandard2.1\Elastic.CommonSchema.Serilog.dll" />
+    <file src="bin\Release\netstandard2.1\Elastic.CommonSchema.Serilog.xml" target="lib\netstandard2.1\Elastic.CommonSchema.Serilog.xml" />
+    <file src="..\..\build\nuget-icon.png" target="nuget-icon.png" />
+    <file src="..\..\license.txt" target="license.txt" />
+  </files>
+</package>
