@@ -3,7 +3,7 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <Title>Elastic APM NLog Layout Renderers</Title>
-    <Description>Enrich NLog logs with APM TraceId and TransactionId.</Description>
+    <Description>Enrich NLog log messages with APM TraceId and TransactionId.</Description>
   </PropertyGroup>
   <ItemGroup>
     <!-- 
