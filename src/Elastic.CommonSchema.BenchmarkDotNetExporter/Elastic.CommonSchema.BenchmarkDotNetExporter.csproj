@@ -3,7 +3,7 @@
   <PropertyGroup>
     <TargetFrameworks>netstandard2.0;netstandard2.1;net461</TargetFrameworks>
     <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
-    <Title>Elastic Common Schema (ECS) BencharkDotNet exporter</Title>
+    <Title>Elastic Common Schema (ECS) BenchmarkDotNet exporter</Title>
     <Description>Exports BenchmarkDotNet benchmarks to Elastic Common Schema (ECS) format</Description>
     <LangVersion>latest</LangVersion>
   </PropertyGroup>
