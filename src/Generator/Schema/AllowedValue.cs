@@ -5,7 +5,8 @@
 using System.Text.RegularExpressions;
 using Newtonsoft.Json;
 
-namespace Generator.Schema {
+namespace Generator.Schema
+{
 	public class AllowedValue
 	{
 		[JsonProperty("name")]

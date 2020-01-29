@@ -4,6 +4,7 @@
 
 using System;
 using System.Runtime.Serialization;
+using Elastic.CommonSchema.Serialization;
 using FluentAssertions;
 using Xunit;
 
