@@ -661,7 +661,7 @@ namespace Elastic.CommonSchema
 		/// </summary>
 		/// <remarks>Extended</remarks>
 		[DataMember(Name = "tag")]
-		public string Tag { get; set; }
+		public string[] Tag { get; set; }
 
 	}
 
@@ -1262,7 +1262,7 @@ namespace Elastic.CommonSchema
 		/// <remarks>Core</remarks>
 		/// <example>authentication</example>
 		[DataMember(Name = "category")]
-		public string Category { get; set; }
+		public string[] Category { get; set; }
 
 		/// <summary>
 		/// The action captured by the event.<para/>This describes the information in the event. It is more specific than `event.category`. Examples are `group-add`, `process-started`, `file-created`. The value is normally defined by the implementer.
@@ -1285,7 +1285,7 @@ namespace Elastic.CommonSchema
 		/// </summary>
 		/// <remarks>Core</remarks>
 		[DataMember(Name = "type")]
-		public string Type { get; set; }
+		public string[] Type { get; set; }
 
 		/// <summary>
 		/// Name of the module this data is coming from.<para/>If your monitoring agent supports the concept of modules or plugins to process events of a given source (e.g. Apache logs), `event.module` should contain the name of this module.
@@ -1761,14 +1761,14 @@ namespace Elastic.CommonSchema
 		/// </summary>
 		/// <remarks>Core</remarks>
 		[DataMember(Name = "ip")]
-		public string Ip { get; set; }
+		public string[] Ip { get; set; }
 
 		/// <summary>
 		/// Host mac address.
 		/// </summary>
 		/// <remarks>Core</remarks>
 		[DataMember(Name = "mac")]
-		public string Mac { get; set; }
+		public string[] Mac { get; set; }
 
 		/// <summary>
 		/// Type of host.<para/>For Cloud providers this can be the machine type like `t2.medium`. If vm, this could be the container, for example, or other information meaningful in your environment.
@@ -2223,14 +2223,14 @@ namespace Elastic.CommonSchema
 		/// </summary>
 		/// <remarks>Core</remarks>
 		[DataMember(Name = "mac")]
-		public string Mac { get; set; }
+		public string[] Mac { get; set; }
 
 		/// <summary>
 		/// IP address of the observer.
 		/// </summary>
 		/// <remarks>Core</remarks>
 		[DataMember(Name = "ip")]
-		public string Ip { get; set; }
+		public string[] Ip { get; set; }
 
 		/// <summary>
 		/// Hostname of the observer.
@@ -2849,14 +2849,14 @@ namespace Elastic.CommonSchema
 		/// </summary>
 		/// <remarks>Extended</remarks>
 		[DataMember(Name = "ip")]
-		public string Ip { get; set; }
+		public string[] Ip { get; set; }
 
 		/// <summary>
 		/// All the user names seen on your event.
 		/// </summary>
 		/// <remarks>Extended</remarks>
 		[DataMember(Name = "user")]
-		public string User { get; set; }
+		public string[] User { get; set; }
 
 	}
 
@@ -3267,7 +3267,7 @@ namespace Elastic.CommonSchema
 		/// <remarks>Extended</remarks>
 		/// <example>impact</example>
 		[DataMember(Name = "name")]
-		public string Name { get; set; }
+		public string[] Name { get; set; }
 
 		/// <summary>
 		/// The id of tactic used by this threat. You can use the Mitre ATT&CK Matrix Tactic categorization, for example. (ex. https://attack.mitre.org/tactics/TA0040/ )
@@ -3275,7 +3275,7 @@ namespace Elastic.CommonSchema
 		/// <remarks>Extended</remarks>
 		/// <example>TA0040</example>
 		[DataMember(Name = "id")]
-		public string Id { get; set; }
+		public string[] Id { get; set; }
 
 		/// <summary>
 		/// The reference url of tactic used by this threat. You can use the Mitre ATT&CK Matrix Tactic categorization, for example. (ex. https://attack.mitre.org/tactics/TA0040/ )
@@ -3283,7 +3283,7 @@ namespace Elastic.CommonSchema
 		/// <remarks>Extended</remarks>
 		/// <example>https://attack.mitre.org/tactics/TA0040/</example>
 		[DataMember(Name = "reference")]
-		public string Reference { get; set; }
+		public string[] Reference { get; set; }
 
 	}
 
@@ -3298,7 +3298,7 @@ namespace Elastic.CommonSchema
 		/// <remarks>Extended</remarks>
 		/// <example>endpoint denial of service</example>
 		[DataMember(Name = "name")]
-		public string Name { get; set; }
+		public string[] Name { get; set; }
 
 		/// <summary>
 		/// The id of technique used by this tactic. You can use the Mitre ATT&CK Matrix Tactic categorization, for example. (ex. https://attack.mitre.org/techniques/T1499/ )
@@ -3306,7 +3306,7 @@ namespace Elastic.CommonSchema
 		/// <remarks>Extended</remarks>
 		/// <example>T1499</example>
 		[DataMember(Name = "id")]
-		public string Id { get; set; }
+		public string[] Id { get; set; }
 
 		/// <summary>
 		/// The reference url of technique used by this tactic. You can use the Mitre ATT&CK Matrix Tactic categorization, for example. (ex. https://attack.mitre.org/techniques/T1499/ )
@@ -3314,7 +3314,7 @@ namespace Elastic.CommonSchema
 		/// <remarks>Extended</remarks>
 		/// <example>https://attack.mitre.org/techniques/T1499/</example>
 		[DataMember(Name = "reference")]
-		public string Reference { get; set; }
+		public string[] Reference { get; set; }
 
 	}
 

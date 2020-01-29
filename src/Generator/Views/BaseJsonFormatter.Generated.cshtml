@@ -67,7 +67,7 @@ namespace Elastic.CommonSchema.Serialization
 			};
 		}
 
-		public override void Write(Utf8JsonWriter writer, Base value, JsonSerializerOptions options)
+		public override void Write(Utf8JsonWriter writer, TBase value, JsonSerializerOptions options)
 		{
 			if (value == null)
 			{
