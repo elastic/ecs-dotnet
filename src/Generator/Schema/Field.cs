@@ -31,6 +31,22 @@ namespace Generator.Schema
 			get
 			{
 				// Special cases.
+				if (FlatName == "container.image.tag") return "string[]";
+				if (FlatName == "host.ip") return "string[]";
+				if (FlatName == "host.mac") return "string[]";
+				if (FlatName == "observer.ip") return "string[]";
+				if (FlatName == "observer.mac") return "string[]";
+				if (FlatName == "related.ip") return "string[]";
+				if (FlatName == "related.user") return "string[]";
+				if (FlatName == "threat.tactic.name") return "string[]";
+				if (FlatName == "threat.tactic.id") return "string[]";
+				if (FlatName == "threat.tactic.reference") return "string[]";
+				if (FlatName == "threat.technique.name") return "string[]";
+				if (FlatName == "threat.technique.id") return "string[]";
+				if (FlatName == "threat.technique.reference") return "string[]";
+				if (FlatName == "event.category") return "string[]";
+				if (FlatName == "event.type") return "string[]";
+
 				if (Name == "args") return "string[]";
 				if (Name == "data.strings") return "string[]";
 				if (Name == "parent.args") return "string[]";
