@@ -46,20 +46,23 @@ namespace Generator.Schema
 				if (FlatName == "threat.technique.reference") return "string[]";
 				if (FlatName == "event.category") return "string[]";
 				if (FlatName == "event.type") return "string[]";
+				if (FlatName == "process.args") return "string[]";
+				if (FlatName == "process.parent.args") return "string[]";
+				if (FlatName == "registry.data.strings") return "string[]";
+				if (FlatName == "tls.server.certificate_chain") return "string[]";
+				if (FlatName == "tls.server.supported_ciphers") return "string[]";
+				if (FlatName == "tls.client.certificate_chain") return "string[]";
+				if (FlatName == "tls.client.supported_ciphers") return "string[]";
+				if (FlatName == "vulnerability.category") return "string[]";
+				if (FlatName == "file.attributes") return "string[]";
+				if (FlatName == "dns.header_flags") return "string[]";
+				if (FlatName == "dns.resolved_ip") return "string[]";
+				if (FlatName == "user.id") return "string[]";
+				if (FlatName == "tags") return "string[]";
+				if (FlatName == "labels") return "IDictionary<string, object>";
 
-				if (Name == "args") return "string[]";
-				if (Name == "data.strings") return "string[]";
-				if (Name == "parent.args") return "string[]";
-				if (Name.Contains("certificate_chain")) return "string[]";
-				if (Name.Contains("supported_ciphers")) return "string[]";
-				if (Schema.Name == "vulnerability" && Name == "category") return "string[]";
-				if (Schema.Name == "file" && Name == "attributes") return "string[]";
-				if (Schema.Name == "dns" && Name == "header_flags") return "string[]";
-				if (Schema.Name == "dns" && Name == "resolved_ip") return "string[]";
-				if (Schema.Name == "user" && FlatName == "user.id") return "string[]";
-				if (Schema.Name == "base" && Name == "tags") return "string[]";
-				if (Schema.Name == "base" && Name == "labels") return "IDictionary<string, object>";
-				if (Schema.Name == "base" && Name == "_metadata") return "IDictionary<string, object>";
+				// C# custom property
+				if (Name == "_metadata") return "IDictionary<string, object>";
 
 				switch (Type)
 				{
