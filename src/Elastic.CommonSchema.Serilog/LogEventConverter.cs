@@ -274,7 +274,7 @@ namespace Elastic.CommonSchema.Serilog
 			{
 				Created = e.Timestamp,
 				Category = e.TryGetScalarPropertyValue(SpecialKeys.ActionCategory, out var actionCategoryProperty)
-					? actionCategoryProperty.Value.ToString()
+					? new [] { actionCategoryProperty.Value.ToString() }
 					: null,
 				Action = e.TryGetScalarPropertyValue(SpecialKeys.ActionName, out var action)
 					? action.Value.ToString()
