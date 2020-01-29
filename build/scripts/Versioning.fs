@@ -56,8 +56,8 @@ module Versioning =
     type ArtifactsVersion = ArtifactsVersion of AnchoredVersion
 
     let AnchoredVersion version = 
-        let av v = parse (sprintf "%s.%s.0" (v.Major.ToString()) (v.Minor.ToString()))
-        let fv v = parse (sprintf "%s.%s.%s.0" (v.Major.ToString()) (v.Minor.ToString()) (v.Patch.ToString()))
+        let av v = parse (sprintf "%i.%i.0" v.Major v.Minor)
+        let fv v = parse (sprintf "%i.%i.%i.0" v.Major v.Minor v.Patch)
         { Full = version; Assembly = av version; AssemblyFile = fv version }
     
     let BuildVersioning args =
