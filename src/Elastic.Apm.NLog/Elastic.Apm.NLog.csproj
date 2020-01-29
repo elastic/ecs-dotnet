@@ -2,8 +2,8 @@
   <Import Project="$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildThisFileDirectory), build.bat))\src\PublishArtifacts.build.props" />
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
-    <Title>Elastic APM NLog LayourRendrers</Title>
-    <Description>Inject APM TraceId and TransactionId automatically into your NLog logs</Description>
+    <Title>Elastic APM NLog Layout Renderers</Title>
+    <Description>Enrich NLog log messages with APM TraceId and TransactionId.</Description>
   </PropertyGroup>
   <ItemGroup>
     <!-- 
