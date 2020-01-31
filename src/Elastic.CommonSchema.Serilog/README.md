@@ -2,6 +2,10 @@
 
 This `ITextFormatter` implementation formats a Serilog event into a JSON representation that adheres to the Elastic Common Schema specification.
 
+## Packages
+
+The .NET assemblies are published to NuGet under the package name [Elastic.CommonSchema.Serilog](http://nuget.org/packages/Elastic.CommonSchema.Serilog)
+
 ## How to Enable
 
 ```csharp
