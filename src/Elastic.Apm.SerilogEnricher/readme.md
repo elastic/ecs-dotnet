@@ -2,6 +2,10 @@
 
 This enricher adds the transaction id and trace id to every Serilog log message that is created during a transaction. 
 
+## Packages
+
+The .NET assemblies are published to NuGet under the package name [Elastic.Apm.SerilogEnricher](http://nuget.org/packages/Elastic.Apm.SerilogEnricher)
+
 ## How to Enable
 
 ```csharp
