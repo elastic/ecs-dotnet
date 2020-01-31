@@ -2,6 +2,10 @@
 
 An exporter for [BenchmarkDotnet](https://github.com/dotnet/BenchmarkDotNet) that can index benchmarking result output directly into Elasticsearch.
 
+## Packages
+
+The .NET assemblies are published to NuGet under the package name [Elastic.CommonSchema.BenchmarkDotNetExporter](http://nuget.org/packages/Elastic.CommonSchema.BenchmarkDotNetExporter)
+
 ## How to Enable
 
 ```csharp
