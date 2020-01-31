@@ -6,6 +6,10 @@ In fact many of our most awesome features/fixes have been provided to us by [the
 
 It's usually best to open an issue first to discuss a feature or bug, before opening a pull request. Doing so can save time and help further determine the fundamentals of an issue.
 
+## Code of Conduct
+
+Please read the Elastic [Community Code of Conduct](https://www.elastic.co/community/codeofconduct) to understand our stance on community engagement.
+
 ## Sign the CLA
 
 We do ask that you sign the [Elasticsearch CLA](https://www.elastic.co/contributor-agreement) before we can accept pull requests from you. 
