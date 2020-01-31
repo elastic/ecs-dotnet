@@ -1,7 +1,5 @@
 # Elastic Common Schema .NET
 
-## Introduction
-
 The `Elastic.CommonSchema` project contains a full C# representation of [Elastic Common Schema](https://github.com/elastic/ecs) (ECS) - see [documentation](https://www.elastic.co/guide/en/ecs/current/index.html).
 
 The intention is that this library forms a reliable and correct basis for integrations into Elasticsearch, that use both Microsoft .NET and ECS.
