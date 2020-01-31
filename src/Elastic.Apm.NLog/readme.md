@@ -7,6 +7,10 @@ Allows you to add the following place holders in your NLog templates:
 
 Which will be replaced with the appropriate Elastic APM variables if available
 
+## Packages
+
+The .NET assemblies are published to NuGet under the package name [Elastic.Apm.NLog](http://nuget.org/packages/Elastic.Apm.NLog)
+
 ## How to Enable
 
 ```csharp
