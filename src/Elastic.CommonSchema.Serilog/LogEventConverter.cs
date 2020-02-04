@@ -58,6 +58,7 @@ namespace Elastic.CommonSchema.Serilog
 			var ecsEvent = new Base
 			{
 				Timestamp = logEvent.Timestamp,
+				Message = logEvent.RenderMessage(),
 				Ecs = new Ecs { Version = Base.Version },
 				Log = GetLog(logEvent, exceptions, configuration),
 				Agent = GetAgent(logEvent),
@@ -84,8 +85,6 @@ namespace Elastic.CommonSchema.Serilog
 
 			if (configuration.MapCustom != null)
 				ecsEvent = configuration.MapCustom(ecsEvent, logEvent);
-
-			ecsEvent.Message = logEvent.RenderMessage();
 
 			return ecsEvent;
 		}
@@ -160,8 +159,6 @@ namespace Elastic.CommonSchema.Serilog
 
 		private static string ToSnakeCase(string key) => key;
 
-
-
 		private static Host GetHost(LogEvent e)
 		{
 			if (!e.TryGetScalarPropertyValue(SpecialKeys.MachineName, out var machineName))
@@ -171,6 +168,7 @@ namespace Elastic.CommonSchema.Serilog
 			{
 				Name = machineName.Value.ToString()
 			};
+
 			//todo map more uptime etc
 			return host;
 		}
