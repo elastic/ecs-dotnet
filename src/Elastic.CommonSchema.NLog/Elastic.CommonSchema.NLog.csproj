@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project Sdk="Microsoft.NET.Sdk">
+    <Import Project="$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildThisFileDirectory), build.bat))\src\PublishArtifacts.build.props" />
+    <PropertyGroup>
+      <TargetFrameworks>netstandard2.0;netstandard2.1;net461</TargetFrameworks>
+      <Title>Elastic Common Schema (ECS) NLog Layout Renderer</Title>
+      <Description>NLog LayoutRenderer that formats log events in accordance with Elastic Common Schema (ECS).</Description>
+    </PropertyGroup>
+    <ItemGroup>
+      <ProjectReference Include="..\Elastic.CommonSchema\Elastic.CommonSchema.csproj" />
+    </ItemGroup>
+    <ItemGroup>
+    <PackageReference Include="NLog" Version="4.5.4" />
+        <PackageReference Condition="$(DefineConstants.Contains(NETSTANDARD))" Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.2.0.0" />
+        <Reference Condition="$(DefineConstants.Contains(FULLFRAMEWORK))" Include="System.Web" />
+    </ItemGroup>
+</Project>
