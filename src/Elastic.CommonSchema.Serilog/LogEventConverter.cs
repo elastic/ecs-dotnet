@@ -22,7 +22,7 @@ namespace Elastic.CommonSchema.Serilog
 	/// <summary>
 	/// Elastic Common Schema converter for LogEvent
 	/// </summary>
-	public class LogEventConverter
+	public static class LogEventConverter
 	{
 		private static class SpecialKeys
 		{
