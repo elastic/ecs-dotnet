@@ -4,6 +4,7 @@
 
 using System.Text;
 using NLog;
+using NLog.Config;
 using NLog.LayoutRenderers;
 
 namespace Elastic.CommonSchema
@@ -11,29 +12,9 @@ namespace Elastic.CommonSchema
 	[LayoutRenderer("ecs")]
 	public class EcsLayoutRenderer : LayoutRenderer
 	{
-		/// <summary>
-		/// Application Identifier
-		/// </summary>
-		public string ApplicationId { get; set; }
-
-		/// <summary>
-		/// Application Name
-		/// </summary>
-		public string ApplicationName { get; set; }
-
-		/// <summary>
-		/// Application Type
-		/// </summary>
-		public string ApplicationType { get; set; }
-
-		/// <summary>
-		/// Application Version
-		/// </summary>
-		public string ApplicationVersion { get; set; }
-
 		protected override void Append(StringBuilder builder, LogEventInfo logEvent)
 		{
-			var ecs = LogEventConverter.ConvertToEcs(logEvent, this);
+			var ecs = LogEventConverter.ConvertToEcs(logEvent);
 			var output = ecs.Serialize();
 			builder.Append(output);
 		}

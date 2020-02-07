@@ -19,7 +19,7 @@ namespace Elastic.CommonSchema
 			public const string DefaultLogger = "Elastic.CommonSchema.NLog";
 		}
 
-		public static Base ConvertToEcs(LogEventInfo logEvent, EcsLayoutRenderer ecsLayoutRenderer)
+		public static Base ConvertToEcs(LogEventInfo logEvent)
 		{
 			var exceptions = logEvent.Exception != null
 				? new List<Exception> { logEvent.Exception }
@@ -31,7 +31,6 @@ namespace Elastic.CommonSchema
 				Message = logEvent.FormattedMessage,
 				Ecs = new Ecs { Version = Base.Version },
 				Log = GetLog(logEvent, exceptions),
-				Agent = GetAgent(ecsLayoutRenderer),
 				Event = GetEvent(logEvent),
 				Metadata = GetMetadata(logEvent),
 				Process = GetProcess(logEvent),
@@ -115,23 +114,6 @@ namespace Elastic.CommonSchema
 			evnt.Timezone = TimeZone.CurrentTimeZone.StandardName;
 #endif
 			return evnt;
-		}
-
-		private static Agent GetAgent(EcsLayoutRenderer ecsLayoutRenderer)
-		{
-			if (ecsLayoutRenderer.ApplicationId == null
-				&& ecsLayoutRenderer.ApplicationName == null
-				&& ecsLayoutRenderer.ApplicationType == null
-				&& ecsLayoutRenderer.ApplicationVersion == null)
-				return null;
-
-			return new Agent
-			{
-				Id = ecsLayoutRenderer.ApplicationId,
-				Name = ecsLayoutRenderer.ApplicationName,
-				Type = ecsLayoutRenderer.ApplicationType,
-				Version = ecsLayoutRenderer.ApplicationVersion,
-			};
 		}
 
 		private static Log GetLog(LogEventInfo e, IReadOnlyList<Exception> exceptions)
