@@ -33,5 +33,4 @@ namespace Elastic.CommonSchema.Serilog
 			}
 		}
 	}
-
 }

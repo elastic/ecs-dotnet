@@ -1,0 +1,95 @@
+@using RazorLight
+@using System.Linq
+@using System.Collections.Generic
+@using System.Reflection.Metadata
+@using CsQuery.ExtensionMethods.Internal
+@using Generator
+@using Generator.Schema
+@using Microsoft.CodeAnalysis.CSharp.Syntax
+@using Newtonsoft.Json
+@inherits Generator.CodeTemplatePage<Generator.Schema.EcsSpecification>
+// Licensed to Elasticsearch B.V under one or more agreements.
+// Elasticsearch B.V licenses this file to you under the Apache 2.0 License.
+// See the LICENSE file in the project root for more information
+
+/*
+IMPORTANT NOTE
+==============
+This file has been generated.
+If you wish to submit a PR please modify the original csharp file and submit the PR with that change. Thanks!
+*/
+
+using NLog.Layouts;
+
+namespace Elastic.CommonSchema
+{
+	[Layout("ecs-jsonlayout")]
+    public class EcsJsonLayout : JsonLayout
+    {
+        private readonly JsonLayout _jsonLayoutForMessageProperties;
+
+        public EcsJsonLayout()
+        {
+            SuppressSpaces = true;
+            RenderEmptyObject = false;
+            MaxRecursionLimit = 3;
+
+@foreach (var field in Model.BaseYamlSchema().GetFieldsFlat())
+{<text>			Attributes.Add(new JsonAttribute("@field.Name", "@NLogMappings.GetMapping(field)", true));
+</text>}
+@foreach (var schema in Model.NonBaseYamlSchemas())
+{<text>			Attributes.Add(new JsonAttribute("@schema.Name", new JsonLayout
+			{
+				Attributes =
+				{
+@foreach (var field in schema.GetFieldsFlat())
+{<text>					new JsonAttribute("@field.Name", "@NLogMappings.GetMapping(field)", true),
+</text>}				}
+			}));
+</text>
+}
+
+            // Nesting json objects like this works fine and will lead to message properties
+            // that look like message.property.ErrorMessage in the UI.
+
+            _jsonLayoutForMessageProperties = new JsonLayout()
+            {
+                IncludeAllProperties = true,
+                IncludeMdc = false,
+                //IncludeGdc = false, // GDC not supported in NLog 4.5
+                IncludeMdlc = false,
+                RenderEmptyObject = false,
+                SuppressSpaces = true,
+                MaxRecursionLimit = 1, // See https://github.com/newrelic/newrelic-logenricher-dotnet/issues/43
+                ExcludeProperties = ExcludeProperties
+            };
+
+            Attributes.Add(new JsonAttribute("Message Properties", _jsonLayoutForMessageProperties, false));
+        }
+
+        //This prevents changing the properties that we don't want changed
+        protected override void InitializeLayout()
+        {
+            // This reads XML configuration
+            base.InitializeLayout();
+
+            // At this point, the value of MaxRecursionLimit in this instance of NewRelicJsonLayout is either
+            // what we initialized it to be in the constructor, or a value supplied by the user.  Either way,
+            // we should set the value of MaxRecursionLimit on the message properties sub-layout to be the same.
+            _jsonLayoutForMessageProperties.MaxRecursionLimit = MaxRecursionLimit;
+
+            // Now we set things to how we want them configured finally
+
+            // By not overriding the attributes collection here customers can add additional attributes
+            // to the data, in a similar manner to how they would have added data via custom layout strings.
+            // By default we will only support the data directly related to structured logging.
+            // Note that any message properties will also be present in the Gdc, Mdc, and Mdlc contexts.
+            IncludeAllProperties = false;
+            //IncludeGdc = false; // GDC not supported in NLog 4.5
+            IncludeMdc = false;
+            IncludeMdlc = false;
+            RenderEmptyObject = false;
+            SuppressSpaces = true;
+        }
+    }
+}
