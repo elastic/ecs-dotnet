@@ -29,9 +29,8 @@ namespace Elastic.CommonSchema.Serilog
 			else
 			{
 				var bytes = ecsEvent.SerializeToUtf8Bytes();
-				output.Write(Encoding.UTF8.GetString(bytes));
+				output.WriteLine(Encoding.UTF8.GetString(bytes));
 			}
 		}
 	}
-
 }
