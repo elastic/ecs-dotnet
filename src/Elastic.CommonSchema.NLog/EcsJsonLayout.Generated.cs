@@ -493,7 +493,7 @@ namespace Elastic.CommonSchema
                 IncludeMdlc = false,
                 RenderEmptyObject = false,
                 SuppressSpaces = true,
-                MaxRecursionLimit = 1, // See https://github.com/newrelic/newrelic-logenricher-dotnet/issues/43
+                MaxRecursionLimit = 1,
                 ExcludeProperties = ExcludeProperties
             };
 
@@ -506,7 +506,7 @@ namespace Elastic.CommonSchema
             // This reads XML configuration
             base.InitializeLayout();
 
-            // At this point, the value of MaxRecursionLimit in this instance of NewRelicJsonLayout is either
+            // At this point, the value of MaxRecursionLimit in this instance is either
             // what we initialized it to be in the constructor, or a value supplied by the user.  Either way,
             // we should set the value of MaxRecursionLimit on the message properties sub-layout to be the same.
             _jsonLayoutForMessageProperties.MaxRecursionLimit = MaxRecursionLimit;
