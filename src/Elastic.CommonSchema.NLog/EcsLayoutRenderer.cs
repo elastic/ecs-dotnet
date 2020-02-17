@@ -7,7 +7,7 @@ using System.Text;
 using NLog;
 using NLog.LayoutRenderers;
 
-namespace Elastic.CommonSchema
+namespace Elastic.CommonSchema.NLog
 {
 	[LayoutRenderer("ecs")]
 	public class EcsLayoutRenderer : LayoutRenderer

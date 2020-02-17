@@ -10,7 +10,7 @@ using System.Linq;
 using System.Threading;
 using NLog;
 
-namespace Elastic.CommonSchema
+namespace Elastic.CommonSchema.NLog
 {
 	public static class LogEventConverter
 	{
@@ -64,8 +64,7 @@ namespace Elastic.CommonSchema
 				fullText.WriteLine($"Message: {error.Message}");
 				fullText.WriteLine($"Trace: {error.StackTrace}");
 				fullText.WriteLine($"Location: {frame.GetFileName()}");
-				fullText.WriteLine(
-					$"Method: {frame.GetMethod()} ({frame.GetFileLineNumber()}, {frame.GetFileColumnNumber()})");
+				fullText.WriteLine($"Method: {frame.GetMethod()} ({frame.GetFileLineNumber()}, {frame.GetFileColumnNumber()})");
 
 				var exception = error.InnerException;
 				while (exception != null)
@@ -76,8 +75,7 @@ namespace Elastic.CommonSchema
 					fullText.WriteLine($"\tSource: {exception.TargetSite?.DeclaringType?.AssemblyQualifiedName}");
 					fullText.WriteLine($"\tMessage: {exception.Message}");
 					fullText.WriteLine($"\tLocation: {frame.GetFileName()}");
-					fullText.WriteLine(
-						$"\tMethod: {frame.GetMethod()} ({frame.GetFileLineNumber()}, {frame.GetFileColumnNumber()})");
+					fullText.WriteLine($"\tMethod: {frame.GetMethod()} ({frame.GetFileLineNumber()}, {frame.GetFileColumnNumber()})");
 
 					exception = exception.InnerException;
 				}
@@ -135,10 +133,10 @@ namespace Elastic.CommonSchema
 
 			return new Process
 			{
-				Title = string.IsNullOrEmpty(process?.MainWindowTitle) ? null : process?.MainWindowTitle,
-				Name = process?.ProcessName,
-				Pid = process?.Id,
-				Executable = process?.ProcessName,
+				Title = string.IsNullOrEmpty(process.MainWindowTitle) ? null : process.MainWindowTitle,
+				Name = process.ProcessName,
+				Pid = process.Id,
+				Executable = process.ProcessName,
 				Thread = new ProcessThread { Id = currentThread.ManagedThreadId }
 			};
 		}

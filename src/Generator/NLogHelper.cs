@@ -1,9 +1,24 @@
+using System.Text;
 using Generator.Schema;
 
 namespace Generator
 {
-	public static class NLogMappings
+	public static class NLogHelper
 	{
+		public static bool Encode(this Field field)
+		{
+			switch (field.ObjectType)
+			{
+				case FieldType.Boolean:
+				case FieldType.Float:
+				case FieldType.Integer:
+				case FieldType.Long:
+					return false;
+				default:
+					return true;
+			}
+		}
+
 		public static string GetMapping(Field field)
 		{
 			switch (field.FlatName)
