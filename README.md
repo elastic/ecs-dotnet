@@ -1,3 +1,5 @@
+<img align="right" width="auto" height="auto" src="https://www.elastic.co/static-res/images/elastic-logo-200.png">
+
 # Elastic Common Schema .NET
 
 This repository contains .NET integrations that use the Elastic Common Schema (ECS), including popular .NET logging frameworks.
@@ -7,6 +9,33 @@ The Elastic Common Schema defines a common set of fields for ingesting data into
 Contributions are welcome, please read our [guidelines](https://github.com/elastic/ecs-dotnet/tree/master/contributing.md).
 
 # Integrations
+
+Official NuGet packages can be referenced from [NuGet.org](https://www.nuget.org).
+
+| Package Name            | Purpose          | Download         |
+| ----------------------- | ---------------- | -----------------|
+| `Elastic.CommonSchema`           |  Foundational project that contains a full C# representation of ECS, used by the other integrations listed. | [![NuGet Release][ElasticCommonSchema-image]][ElasticCommonSchema-nuget-url]  |
+| `Elastic.CommonSchema.Serilog`           |  Formats a Serilog log message into a JSON representation that can be indexed into Elasticsearch. | [![NuGet Release][ElasticCommonSchemaSerilog-image]][ElasticCommonSchemaSerilog-nuget-url]  |
+| `Elastic.Apm.SerilogEnricher`           |  Adds transaction id and trace id to every Serilog log message that is created during a transaction. This works in conjunction with the Elastic.CommonSchema.Serilog package and forms a solution to distributed tracing with Serilog. | [![NuGet Release][ElasticApmSerilogEnricher-image]][ElasticApmSerilogEnricher-nuget-url]  |
+| `Elastic.Apm.NLog`           |  Introduces two special placeholder variables (ElasticApmTraceId and ElasticApmTransactionId) for use within your NLog templates. | [![NuGet Release][ElasticApmNLog-image]][ElasticApmNLog-nuget-url]  |
+| `Elastic.CommonSchema.BenchmarkDotNetExporter`           |  An exporter for BenchmarkDotnet that can index benchmarking results directly into Elasticsearch, which can be helpful for detecting code-related performance problems over time. | [![NuGet Release][ElasticBenchmarkDotNetExporter-image]][ElasticBenchmarkDotNetExporter-nuget-url]  |
+
+[ElasticCommonSchema-nuget-url]:https://www.nuget.org/packages/Elastic.CommonSchema/
+[ElasticCommonSchema-image]:https://img.shields.io/nuget/v/Elastic.CommonSchema.svg
+
+[ElasticCommonSchemaSerilog-nuget-url]:https://www.nuget.org/packages/Elastic.CommonSchema.Serilog/
+[ElasticCommonSchemaSerilog-image]:https://img.shields.io/nuget/v/Elastic.CommonSchema.Serilog.svg
+
+[ElasticApmSerilogEnricher-nuget-url]:https://www.nuget.org/packages/Elastic.Apm.SerilogEnricher/
+[ElasticApmSerilogEnricher-image]:https://img.shields.io/nuget/v/Elastic.Apm.SerilogEnricher.svg
+
+[ElasticApmNLog-nuget-url]:https://www.nuget.org/packages/Elastic.Apm.NLog/
+[ElasticApmNLog-image]:https://img.shields.io/nuget/v/Elastic.Apm.NLog.svg
+
+[ElasticBenchmarkDotNetExporter-nuget-url]:https://www.nuget.org/packages/Elastic.CommonSchema.BenchmarkDotNetExporter/
+[ElasticBenchmarkDotNetExporter-image]:https://img.shields.io/nuget/v/Elastic.CommonSchema.BenchmarkDotNetExporter.svg
+
+## Foundation Library
 
 ### [Elastic.CommonSchema](https://github.com/elastic/ecs-dotnet/tree/master/src/Elastic.CommonSchema)
 
