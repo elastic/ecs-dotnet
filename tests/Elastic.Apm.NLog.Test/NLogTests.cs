@@ -2,11 +2,15 @@
 // Elasticsearch B.V licenses this file to you under the Apache 2.0 License.
 // See the LICENSE file in the project root for more information
 
+using System.Collections.Generic;
 using Elastic.Apm.Test.Common;
+using Elastic.CommonSchema.NLog;
 using FluentAssertions;
 using NLog;
+using NLog.Layouts;
 using NLog.Targets;
 using Xunit;
+using Config=NLog.Config;
 
 namespace Elastic.Apm.NLog.Test
 {

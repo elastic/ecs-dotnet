@@ -169,7 +169,6 @@ namespace Elastic.CommonSchema.Serilog
 				Name = machineName.Value.ToString()
 			};
 
-			//todo map more uptime etc
 			return host;
 		}
 
@@ -287,10 +286,6 @@ namespace Elastic.CommonSchema.Serilog
 				Timezone = TimeZoneInfo.Local.StandardName
 			};
 
-			//Why does this get overriden in full framework?
-#if FULLFRAMEWORK
-			evnt.Timezone = TimeZone.CurrentTimeZone.StandardName;
-#endif
 			return evnt;
 		}
 

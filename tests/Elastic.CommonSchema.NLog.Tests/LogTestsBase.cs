@@ -7,7 +7,6 @@ using System.Collections.Generic;
 using System.Linq;
 using NLog;
 using Config=NLog.Config;
-using NLog.LayoutRenderers;
 using NLog.Layouts;
 using NLog.Targets;
 
@@ -23,7 +22,7 @@ namespace Elastic.CommonSchema.NLog.Tests
 
 		protected List<string> ToFormattedStrings(IEnumerable<LogEventInfo> logEvents) =>
 			logEvents
-				.Select(l => new EcsLayoutRenderer().Render(l))
+				.Select(l => new EcsLayout().Render(l))
 				.ToList();
 
 		protected List<(string Json, Base Base)> ToEcsEvents(IEnumerable<LogEventInfo> logEvents) =>
@@ -33,7 +32,7 @@ namespace Elastic.CommonSchema.NLog.Tests
 
 		protected void TestLogger(Action<ILogger, Func<List<LogEventInfo>>> act)
 		{
-			LayoutRenderer.Register<EcsLayoutRenderer>("ecs");
+			Layout.Register<EcsLayout>("ecs");
 			var config = new Config.LoggingConfiguration();
 			var memoryTarget = new EventInfoMemoryTarget { Layout = Layout.FromString("${ecs}") };
 			config.AddRule(LogLevel.Debug, LogLevel.Fatal, memoryTarget);

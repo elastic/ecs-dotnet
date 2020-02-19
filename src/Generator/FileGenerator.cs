@@ -36,7 +36,6 @@ namespace Generator
 				{ GenerateTypes, "Dotnet types" },
 				{ GenerateTypeMappings, "Dotnet type mapping" },
 				{ GenerateBaseJsonFormatter, "Base Json Formatter" },
-				{ GenerateNLogJsonLayout, "NLog Json Layout" },
 			};
 
 			using (var pbar = new ProgressBar(actions.Count, "Generating code",
@@ -206,16 +205,6 @@ namespace Generator
 			var path = Path.Combine(CodeConfiguration.ViewFolder, @"BaseJsonFormatter.Generated.cshtml");
 			var template = File.ReadAllText(path);
 			var source = DoRazor(nameof(GenerateBaseJsonFormatter), template, model);
-			File.WriteAllText(outputFile, source);
-		}
-
-		private static void GenerateNLogJsonLayout(EcsSpecification model)
-		{
-			var targetDir = Path.GetFullPath(CodeConfiguration.ElasticNLogGeneratedFolder);
-			var outputFile = Path.Combine(targetDir, @"EcsJsonLayout.Generated.cs");
-			var path = Path.Combine(CodeConfiguration.ViewFolder, @"EcsJsonLayout.Generated.cshtml");
-			var template = File.ReadAllText(path);
-			var source = DoRazor(nameof(GenerateNLogJsonLayout), template, model);
 			File.WriteAllText(outputFile, source);
 		}
 
