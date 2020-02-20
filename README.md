@@ -14,17 +14,21 @@ Official NuGet packages can be referenced from [NuGet.org](https://www.nuget.org
 
 | Package Name            | Purpose          | Download         |
 | ----------------------- | ---------------- | -----------------|
-| `Elastic.CommonSchema`           |  Foundational project that contains a full C# representation of ECS, used by the other integrations listed. | [![NuGet Release][ElasticCommonSchema-image]][ElasticCommonSchema-nuget-url]  |
-| `Elastic.CommonSchema.Serilog`           |  Formats a Serilog log message into a JSON representation that can be indexed into Elasticsearch. | [![NuGet Release][ElasticCommonSchemaSerilog-image]][ElasticCommonSchemaSerilog-nuget-url]  |
-| `Elastic.Apm.SerilogEnricher`           |  Adds transaction id and trace id to every Serilog log message that is created during a transaction. This works in conjunction with the Elastic.CommonSchema.Serilog package and forms a solution to distributed tracing with Serilog. | [![NuGet Release][ElasticApmSerilogEnricher-image]][ElasticApmSerilogEnricher-nuget-url]  |
-| `Elastic.Apm.NLog`           |  Introduces two special placeholder variables (ElasticApmTraceId and ElasticApmTransactionId) for use within your NLog templates. | [![NuGet Release][ElasticApmNLog-image]][ElasticApmNLog-nuget-url]  |
-| `Elastic.CommonSchema.BenchmarkDotNetExporter`           |  An exporter for BenchmarkDotnet that can index benchmarking results directly into Elasticsearch, which can be helpful for detecting code-related performance problems over time. | [![NuGet Release][ElasticBenchmarkDotNetExporter-image]][ElasticBenchmarkDotNetExporter-nuget-url]  |
+| `Elastic.CommonSchema`  |  Foundational project that contains a full C# representation of ECS, used by the other integrations listed. | [![NuGet Release][ElasticCommonSchema-image]][ElasticCommonSchema-nuget-url]  |
+| `Elastic.CommonSchema.Serilog`  |  Formats a Serilog log message into a JSON representation that can be indexed into Elasticsearch. | [![NuGet Release][ElasticCommonSchemaSerilog-image]][ElasticCommonSchemaSerilog-nuget-url]  |
+| `Elastic.CommonSchema.NLog`  |  Formats an NLog message into a JSON representation that can be indexed into Elasticsearch. | [![NuGet Release][ElasticCommonSchemaNLog-image]][ElasticCommonSchemaNLog-nuget-url]  |
+| `Elastic.Apm.SerilogEnricher`   |  Adds transaction id and trace id to every Serilog log message that is created during a transaction. This works in conjunction with the Elastic.CommonSchema.Serilog package and forms a solution to distributed tracing with Serilog. | [![NuGet Release][ElasticApmSerilogEnricher-image]][ElasticApmSerilogEnricher-nuget-url]  |
+| `Elastic.Apm.NLog`              |  Introduces two special placeholder variables (ElasticApmTraceId and ElasticApmTransactionId) for use within your NLog templates. | [![NuGet Release][ElasticApmNLog-image]][ElasticApmNLog-nuget-url]  |
+| `Elastic.CommonSchema.BenchmarkDotNetExporter`  |  An exporter for BenchmarkDotnet that can index benchmarking results directly into Elasticsearch, which can be helpful for detecting code-related performance problems over time. | [![NuGet Release][ElasticBenchmarkDotNetExporter-image]][ElasticBenchmarkDotNetExporter-nuget-url]  |
 
 [ElasticCommonSchema-nuget-url]:https://www.nuget.org/packages/Elastic.CommonSchema/
 [ElasticCommonSchema-image]:https://img.shields.io/nuget/v/Elastic.CommonSchema.svg
 
 [ElasticCommonSchemaSerilog-nuget-url]:https://www.nuget.org/packages/Elastic.CommonSchema.Serilog/
 [ElasticCommonSchemaSerilog-image]:https://img.shields.io/nuget/v/Elastic.CommonSchema.Serilog.svg
+
+[ElasticCommonSchemaNLog-nuget-url]:https://www.nuget.org/packages/Elastic.CommonSchema.NLog/
+[ElasticCommonSchemaNLog-image]:https://img.shields.io/nuget/v/Elastic.CommonSchema.NLog.svg
 
 [ElasticApmSerilogEnricher-nuget-url]:https://www.nuget.org/packages/Elastic.Apm.SerilogEnricher/
 [ElasticApmSerilogEnricher-image]:https://img.shields.io/nuget/v/Elastic.Apm.SerilogEnricher.svg
@@ -51,6 +55,19 @@ Formats a Serilog event into a JSON representation that adheres to the Elastic C
 var logger = new LoggerConfiguration()
     .WriteTo.Console(new EcsTextFormatter())
     .CreateLogger();
+```
+
+### [Elastic.CommonSchema.NLog](https://github.com/elastic/ecs-dotnet/tree/master/src/Elastic.CommonSchema.NLog)
+
+Formats an NLog event into a JSON representation that adheres to the Elastic Common Schema. [Learn more...](https://github.com/elastic/ecs-dotnet/tree/master/src/Elastic.CommonSchema.NLog)
+
+```csharp
+Layout.Register<EcsLayout>("EcsLayout"); // Register the ECS layout.
+var config = new Config.LoggingConfiguration();
+var memoryTarget = new EventInfoMemoryTarget { Layout = Layout.FromString("EcsLayout") }; // Use the layout.
+config.AddRule(LogLevel.Debug, LogLevel.Fatal, memoryTarget);
+var factory = new LogFactory(config);
+var logger = factory.GetCurrentClassLogger();
 ```
 
 ## APM
