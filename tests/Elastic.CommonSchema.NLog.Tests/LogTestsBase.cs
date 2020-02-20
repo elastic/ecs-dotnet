@@ -20,21 +20,21 @@ namespace Elastic.CommonSchema.NLog.Tests
 			protected override void Write(LogEventInfo logEvent) => Events.Add(logEvent);
 		}
 
-		protected List<string> ToFormattedStrings(IEnumerable<LogEventInfo> logEvents) =>
+		private IEnumerable<string> ToFormattedStrings(IEnumerable<LogEventInfo> logEvents) =>
 			logEvents
 				.Select(l => new EcsLayout().Render(l))
 				.ToList();
 
-		protected List<(string Json, Base Base)> ToEcsEvents(IEnumerable<LogEventInfo> logEvents) =>
+		protected IEnumerable<(string Json, Base Base)> ToEcsEvents(IEnumerable<LogEventInfo> logEvents) =>
 			ToFormattedStrings(logEvents)
 				.Select(s => (s, Base.Deserialize(s)))
 				.ToList();
 
-		protected void TestLogger(Action<ILogger, Func<List<LogEventInfo>>> act)
+		protected static void TestLogger(Action<ILogger, Func<List<LogEventInfo>>> act)
 		{
-			Layout.Register<EcsLayout>("ecs");
+			Layout.Register<EcsLayout>("EcsLayout");
 			var config = new Config.LoggingConfiguration();
-			var memoryTarget = new EventInfoMemoryTarget { Layout = Layout.FromString("${ecs}") };
+			var memoryTarget = new EventInfoMemoryTarget { Layout = Layout.FromString("EcsLayout") };
 			config.AddRule(LogLevel.Debug, LogLevel.Fatal, memoryTarget);
 			var factory = new LogFactory(config);
 			List<LogEventInfo> GetLogEvents() => memoryTarget.Events.ToList();

@@ -17,11 +17,10 @@ namespace Elastic.Apm.SerilogEnricher
 		/// <param name="enrichmentConfiguration">Logger enrichment configuration.</param>
 		/// <returns>Configuration object allowing method chaining.</returns>
 		/// <exception cref="ArgumentNullException">If <paramref name="enrichmentConfiguration" /> is null.</exception>
-		public static LoggerConfiguration WithElasticApmCorrelationInfo(
-			this LoggerEnrichmentConfiguration enrichmentConfiguration
-		)
+		public static LoggerConfiguration WithElasticApmCorrelationInfo(this LoggerEnrichmentConfiguration enrichmentConfiguration)
 		{
-			if (enrichmentConfiguration == null) throw new ArgumentNullException(nameof(enrichmentConfiguration));
+			if (enrichmentConfiguration == null)
+				throw new ArgumentNullException(nameof(enrichmentConfiguration));
 
 			return enrichmentConfiguration.With<ElasticApmEnricher>();
 		}

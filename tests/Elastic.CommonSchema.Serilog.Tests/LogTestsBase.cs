@@ -19,7 +19,7 @@ namespace Elastic.CommonSchema.Serilog.Tests
 
 		protected EcsTextFormatter Formatter { get; } = new EcsTextFormatter();
 
-		public LogTestsBase(ITestOutputHelper output) =>
+		protected LogTestsBase(ITestOutputHelper output) =>
 			LoggerConfiguration = new LoggerConfiguration()
 				.MinimumLevel.Verbose()
 				.WriteTo.Console(Formatter)
@@ -37,7 +37,7 @@ namespace Elastic.CommonSchema.Serilog.Tests
 			act(LoggerConfiguration.CreateLogger().ForContext(GetType()), GetLogEvents);
 		}
 
-		protected List<string> ToFormattedStrings(List<LogEvent> logEvents) =>
+		private IEnumerable<string> ToFormattedStrings(List<LogEvent> logEvents) =>
 			logEvents
 				.Select(l =>
 				{
@@ -47,7 +47,7 @@ namespace Elastic.CommonSchema.Serilog.Tests
 				})
 				.ToList();
 
-		protected List<(string Json, Base Base)> ToEcsEvents(List<LogEvent> logEvents) =>
+		protected IEnumerable<(string Json, Base Base)> ToEcsEvents(List<LogEvent> logEvents) =>
 			ToFormattedStrings(logEvents)
 				.Select(s => (s, Base.Deserialize(s)))
 				.ToList();

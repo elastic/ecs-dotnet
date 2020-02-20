@@ -14,8 +14,13 @@ using NLog.Targets;
 
 namespace Elastic.CommonSchema.NLog
 {
+	[Layout("EcsLayout")]
+	[ThreadSafe]
+	[ThreadAgnostic]
 	public class EcsLayout : Layout
 	{
+		private readonly Layout _disableThreadAgnostic = "${threadid:cached=true}";
+
 		public EcsLayout()
 		{
 			IncludeAllProperties = true;
@@ -45,8 +50,15 @@ namespace Elastic.CommonSchema.NLog
 		public Layout AgentName { get; set; }
 		public Layout AgentType { get; set; }
 		public Layout AgentVersion { get; set; }
+
 		public Layout ApmTraceId { get; set; }
 		public Layout ApmTransactionId { get; set; }
+
+		/// <summary>
+		/// Allow dynamically disabling <see cref="ThreadAgnosticAttribute" /> to
+		/// ensure correct async context capture when necessary
+		/// </summary>
+		public Layout DisableThreadAgnostic => IncludeMdlc ? _disableThreadAgnostic : null;
 
 		public Layout EventAction { get; set; }
 		public Layout EventCategory { get; set; }
@@ -60,11 +72,13 @@ namespace Elastic.CommonSchema.NLog
 
 		public bool IncludeAllProperties { get; set; }
 
+		public bool IncludeMdlc { get; set; }
+
 		[ArrayParameter(typeof(TargetPropertyWithContext), "label")]
-		public IList<TargetPropertyWithContext> Labels { get; private set; } = new List<TargetPropertyWithContext>();
+		public IList<TargetPropertyWithContext> Labels { get; } = new List<TargetPropertyWithContext>();
 
 		[ArrayParameter(typeof(TargetPropertyWithContext), "metadata")]
-		public IList<TargetPropertyWithContext> MetaData { get; private set; } = new List<TargetPropertyWithContext>();
+		public IList<TargetPropertyWithContext> Metadata { get; } = new List<TargetPropertyWithContext>();
 
 		public Layout ProcessExecutable { get; set; }
 		public Layout ProcessId { get; set; }
@@ -77,31 +91,27 @@ namespace Elastic.CommonSchema.NLog
 		public Layout ServerUser { get; set; }
 
 		[ArrayParameter(typeof(TargetPropertyWithContext), "tag")]
-		public IList<TargetPropertyWithContext> Tags { get; private set; } = new List<TargetPropertyWithContext>();
+		public IList<TargetPropertyWithContext> Tags { get; } = new List<TargetPropertyWithContext>();
 
 		protected override void RenderFormattedMessage(LogEventInfo logEventInfo, StringBuilder target)
 		{
-			var exceptions = logEventInfo.Exception != null
-				? new List<Exception> { logEventInfo.Exception }
-				: new List<Exception>();
-
 			var ecsEvent = new Base
 			{
 				Timestamp = logEventInfo.TimeStamp,
 				Message = logEventInfo.FormattedMessage,
 				Ecs = new Ecs { Version = Base.Version },
-				Log = GetLog(logEventInfo, exceptions),
+				Log = GetLog(logEventInfo),
 				Event = GetEvent(logEventInfo),
 				Metadata = GetMetadata(logEventInfo),
 				Process = GetProcess(logEventInfo),
 				Trace = GetTrace(logEventInfo),
 				Transaction = GetTransaction(logEventInfo),
-				Error = GetError(exceptions),
+				Error = GetError(logEventInfo.Exception),
 				Tags = GetTags(logEventInfo),
 				Labels = GetLabels(logEventInfo),
 				Agent = GetAgent(logEventInfo),
 				Server = GetServer(logEventInfo),
-				Host = GetHost(logEventInfo),
+				Host = GetHost(logEventInfo)
 			};
 
 			var output = ecsEvent.Serialize();
@@ -115,43 +125,45 @@ namespace Elastic.CommonSchema.NLog
 			return sb.ToString();
 		}
 
-		private static Error GetError(IReadOnlyList<Exception> exceptions) =>
-			exceptions != null && exceptions.Count > 0
-				? new Error { Message = exceptions[0].Message, StackTrace = CatchErrors(exceptions), Code = exceptions[0].GetType().ToString() }
+		private static Error GetError(Exception exception) =>
+			exception != null
+				? new Error
+				{
+					Message = exception.Message,
+					StackTrace = CatchError(exception),
+					Code = exception.GetType().ToString()
+				}
 				: null;
 
-		private static string CatchErrors(IReadOnlyCollection<Exception> errors)
+		private static string CatchError(Exception error)
 		{
-			if (errors == null || errors.Count <= 0)
+			if (error == null)
 				return string.Empty;
 
 			var i = 1;
 			var fullText = new StringWriter();
-			foreach (var error in errors)
+			var frame = new StackTrace(error, true).GetFrame(0);
+
+			fullText.WriteLine($"Exception {i++:D2} ===================================");
+			fullText.WriteLine($"Type: {error.GetType()}");
+			fullText.WriteLine($"Source: {error.TargetSite?.DeclaringType?.AssemblyQualifiedName}");
+			fullText.WriteLine($"Message: {error.Message}");
+			fullText.WriteLine($"Trace: {error.StackTrace}");
+			fullText.WriteLine($"Location: {frame.GetFileName()}");
+			fullText.WriteLine($"Method: {frame.GetMethod()} ({frame.GetFileLineNumber()}, {frame.GetFileColumnNumber()})");
+
+			var exception = error.InnerException;
+			while (exception != null)
 			{
-				var frame = new StackTrace(error, true).GetFrame(0);
+				frame = new StackTrace(exception, true).GetFrame(0);
+				fullText.WriteLine($"\tException {i:D2} inner --------------------------");
+				fullText.WriteLine($"\tType: {exception.GetType()}");
+				fullText.WriteLine($"\tSource: {exception.TargetSite?.DeclaringType?.AssemblyQualifiedName}");
+				fullText.WriteLine($"\tMessage: {exception.Message}");
+				fullText.WriteLine($"\tLocation: {frame.GetFileName()}");
+				fullText.WriteLine($"\tMethod: {frame.GetMethod()} ({frame.GetFileLineNumber()}, {frame.GetFileColumnNumber()})");
 
-				fullText.WriteLine($"Exception {i++:D2} ===================================");
-				fullText.WriteLine($"Type: {error.GetType()}");
-				fullText.WriteLine($"Source: {error.TargetSite?.DeclaringType?.AssemblyQualifiedName}");
-				fullText.WriteLine($"Message: {error.Message}");
-				fullText.WriteLine($"Trace: {error.StackTrace}");
-				fullText.WriteLine($"Location: {frame.GetFileName()}");
-				fullText.WriteLine($"Method: {frame.GetMethod()} ({frame.GetFileLineNumber()}, {frame.GetFileColumnNumber()})");
-
-				var exception = error.InnerException;
-				while (exception != null)
-				{
-					frame = new StackTrace(exception, true).GetFrame(0);
-					fullText.WriteLine($"\tException {i:D2} inner --------------------------");
-					fullText.WriteLine($"\tType: {exception.GetType()}");
-					fullText.WriteLine($"\tSource: {exception.TargetSite?.DeclaringType?.AssemblyQualifiedName}");
-					fullText.WriteLine($"\tMessage: {exception.Message}");
-					fullText.WriteLine($"\tLocation: {frame.GetFileName()}");
-					fullText.WriteLine($"\tMethod: {frame.GetMethod()} ({frame.GetFileLineNumber()}, {frame.GetFileColumnNumber()})");
-
-					exception = exception.InnerException;
-				}
+				exception = exception.InnerException;
 			}
 
 			return fullText.ToString();
@@ -159,33 +171,52 @@ namespace Elastic.CommonSchema.NLog
 
 		private IDictionary<string, object> GetMetadata(LogEventInfo e)
 		{
-			if ((!IncludeAllProperties || !e.HasProperties) && MetaData?.Count == 0)
+			if ((!IncludeAllProperties || !e.HasProperties) && Metadata?.Count == 0 && !IncludeMdlc)
 				return null;
 
-			var metaData = new Dictionary<string, object>();
-			if (e.HasProperties)
+			var metadata = new Dictionary<string, object>();
+
+			if (IncludeAllProperties && e.HasProperties)
 			{
 				foreach (var prop in e.Properties)
-					Populate(metaData, prop.Key?.ToString(), prop.Value);
+					Populate(metadata, prop.Key?.ToString(), prop.Value);
 			}
-			if (MetaData?.Count > 0)
+
+			if (IncludeMdlc)
 			{
-				for (var i = 0; i < MetaData?.Count; ++i)
+				foreach (var key in MappedDiagnosticsLogicalContext.GetNames())
 				{
-					var value = MetaData[i].Layout?.Render(e);
-					if (!string.IsNullOrEmpty(value) || MetaData[i].IncludeEmptyValue)
-						Populate(metaData, MetaData[i].Name, value);
+					if (string.IsNullOrEmpty(key))
+						continue;
+
+					var propertyValue = MappedDiagnosticsLogicalContext.GetObject(key);
+					Populate(metadata, key, propertyValue);
 				}
 			}
-			if (metaData.Count > 0)
-				return metaData;
 
-			return null;
+			if (Metadata?.Count > 0)
+			{
+				foreach (var targetPropertyWithContext in Metadata)
+				{
+					var value = targetPropertyWithContext.Layout?.Render(e);
+					if (!string.IsNullOrEmpty(value) || targetPropertyWithContext.IncludeEmptyValue)
+						Populate(metadata, targetPropertyWithContext.Name, value);
+				}
+			}
+
+			return metadata.Count > 0
+				? metadata
+				: null;
 		}
 
-		private static Log GetLog(LogEventInfo logEventInfo, IReadOnlyList<Exception> exceptions)
+		private static Log GetLog(LogEventInfo logEventInfo)
 		{
-			var log = new Log { Level = logEventInfo.Level.ToString(), Logger = SpecialKeys.DefaultLogger, Original = logEventInfo.Message };
+			var log = new Log
+			{
+				Level = logEventInfo.Level.ToString(),
+				Logger = SpecialKeys.DefaultLogger,
+				Original = logEventInfo.Message
+			};
 
 			return log;
 		}
@@ -202,9 +233,9 @@ namespace Elastic.CommonSchema.NLog
 			}
 
 			var tags = new List<string>(Tags.Count);
-			foreach (var t in Tags)
+			foreach (var targetPropertyWithContext in Tags)
 			{
-				var tag = t.Layout.Render(e);
+				var tag = targetPropertyWithContext.Layout.Render(e);
 				tags.AddRange(GetTagsSplit(tag));
 			}
 			return tags.ToArray();
@@ -247,7 +278,7 @@ namespace Elastic.CommonSchema.NLog
 				Severity = !string.IsNullOrEmpty(eventSeverity)
 					? long.Parse(eventSeverity)
 					: GetSysLogSeverity(logEventInfo.Level),
-				Timezone = TimeZoneInfo.Local.StandardName,
+				Timezone = TimeZoneInfo.Local.StandardName
 			};
 
 			return evnt;
@@ -268,7 +299,10 @@ namespace Elastic.CommonSchema.NLog
 
 			var agent = new Agent
 			{
-				Id = agentId, Name = agentName, Type = agentType, Version = agentVersion,
+				Id = agentId,
+				Name = agentName,
+				Type = agentType,
+				Version = agentVersion
 			};
 
 			return agent;
@@ -295,7 +329,7 @@ namespace Elastic.CommonSchema.NLog
 				Name = processName,
 				Pid = !string.IsNullOrEmpty(processId) ? long.Parse(processId) : 0,
 				Executable = processExecutable,
-				Thread = !string.IsNullOrEmpty(processId) ? new ProcessThread { Id = long.Parse(processId) } : null,
+				Thread = !string.IsNullOrEmpty(processId) ? new ProcessThread { Id = long.Parse(processId) } : null
 			};
 		}
 
@@ -310,13 +344,10 @@ namespace Elastic.CommonSchema.NLog
 			return new Server
 			{
 				User = !string.IsNullOrEmpty(serverUser)
-					? new User
-					{
-						Name = serverUser
-					}
+					? new User { Name = serverUser }
 					: null,
 				Address = serverAddress,
-				Ip = serverIp,
+				Ip = serverIp
 			};
 		}
 
@@ -359,7 +390,7 @@ namespace Elastic.CommonSchema.NLog
 			{
 				Id = hostId,
 				Name = hostName,
-				Ip = new[] { hostIp },
+				Ip = new[] { hostIp }
 			};
 
 			return host;
@@ -389,7 +420,8 @@ namespace Elastic.CommonSchema.NLog
 
 			if (propertyBag.ContainsKey(key))
 			{
-				if (string.Equals(value.ToString(), propertyBag[key].ToString(), StringComparison.Ordinal)) return;
+				if (string.Equals(value.ToString(), propertyBag[key].ToString(), StringComparison.Ordinal))
+					return;
 
 				key += "_1";
 			}
