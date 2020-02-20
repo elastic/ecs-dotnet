@@ -138,7 +138,7 @@ namespace Elastic.CommonSchema.BenchmarkDotNetExporter
 							MinWarmupIterationCount = run.MinWarmupIterationCount,
 							IterationTimeInMilliseconds = run.IterationTime.ToMilliseconds(),
 						},
-						RunTime = r.BenchmarkCase.Job.Environment.Runtime.Name,
+						RunTime = r.BenchmarkCase.Job.Environment.Runtime?.Name,
 						Jit = Enum.GetName(typeof(Jit), r.BenchmarkCase.Job.Environment.Jit),
 						Gc = new BenchmarkGcInfo
 						{
