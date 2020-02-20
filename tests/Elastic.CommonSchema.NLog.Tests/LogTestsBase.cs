@@ -20,12 +20,12 @@ namespace Elastic.CommonSchema.NLog.Tests
 			protected override void Write(LogEventInfo logEvent) => Events.Add(logEvent);
 		}
 
-		private IEnumerable<string> ToFormattedStrings(IEnumerable<LogEventInfo> logEvents) =>
+		protected List<string> ToFormattedStrings(IEnumerable<LogEventInfo> logEvents) =>
 			logEvents
 				.Select(l => new EcsLayout().Render(l))
 				.ToList();
 
-		protected IEnumerable<(string Json, Base Base)> ToEcsEvents(IEnumerable<LogEventInfo> logEvents) =>
+		protected List<(string Json, Base Base)> ToEcsEvents(IEnumerable<LogEventInfo> logEvents) =>
 			ToFormattedStrings(logEvents)
 				.Select(s => (s, Base.Deserialize(s)))
 				.ToList();

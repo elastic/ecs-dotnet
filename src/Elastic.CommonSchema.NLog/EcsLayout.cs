@@ -390,7 +390,7 @@ namespace Elastic.CommonSchema.NLog
 			{
 				Id = hostId,
 				Name = hostName,
-				Ip = new[] { hostIp }
+				Ip = string.IsNullOrEmpty(hostIp) ? null : new[] { hostIp }
 			};
 
 			return host;
