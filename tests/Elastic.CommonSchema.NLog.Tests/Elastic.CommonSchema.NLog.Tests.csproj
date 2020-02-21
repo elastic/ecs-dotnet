@@ -15,9 +15,11 @@
         <PackageReference Include="xunit.NLog" Version="1.1.1" />
         <PackageReference Include="xunit.runner.visualstudio" Version="2.4.0" />
         <PackageReference Include="coverlet.collector" Version="1.0.1" />
+        <PackageReference Include="Elastic.Apm" Version="1.2.0" />
     </ItemGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\..\src\Elastic.Apm.NLog\Elastic.Apm.NLog.csproj" />
       <ProjectReference Include="..\..\src\Elastic.CommonSchema.NLog\Elastic.CommonSchema.NLog.csproj" />
     </ItemGroup>
 

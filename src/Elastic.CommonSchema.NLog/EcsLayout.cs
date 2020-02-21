@@ -14,11 +14,13 @@ using NLog.Targets;
 
 namespace Elastic.CommonSchema.NLog
 {
-	[Layout("EcsLayout")]
+	[Layout(Name)]
 	[ThreadSafe]
 	[ThreadAgnostic]
 	public class EcsLayout : Layout
 	{
+		public const string Name = nameof(EcsLayout);
+
 		private readonly Layout _disableThreadAgnostic = "${threadid:cached=true}";
 
 		public EcsLayout()

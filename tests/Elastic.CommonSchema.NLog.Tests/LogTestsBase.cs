@@ -5,6 +5,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
+using Elastic.Apm.NLog;
 using NLog;
 using Config=NLog.Config;
 using NLog.Layouts;
@@ -14,7 +16,7 @@ namespace Elastic.CommonSchema.NLog.Tests
 {
 	public abstract class LogTestsBase
 	{
-		private class EventInfoMemoryTarget : TargetWithLayout
+		private class EventInfoMemoryTarget : TargetWithContext
 		{
 			public readonly IList<LogEventInfo> Events = new List<LogEventInfo>();
 			protected override void Write(LogEventInfo logEvent) => Events.Add(logEvent);
@@ -32,11 +34,20 @@ namespace Elastic.CommonSchema.NLog.Tests
 
 		protected static void TestLogger(Action<ILogger, Func<List<LogEventInfo>>> act)
 		{
-			Layout.Register<EcsLayout>("EcsLayout");
-			var config = new Config.LoggingConfiguration();
-			var memoryTarget = new EventInfoMemoryTarget { Layout = Layout.FromString("EcsLayout") };
-			config.AddRule(LogLevel.Debug, LogLevel.Fatal, memoryTarget);
-			var factory = new LogFactory(config);
+			var configurationItemFactory = new Config.ConfigurationItemFactory();
+			configurationItemFactory.LayoutRenderers.RegisterDefinition("ElasticApmTraceId", typeof(ApmTraceIdLayoutRenderer));
+			configurationItemFactory.LayoutRenderers.RegisterDefinition("ElasticApmTransactionId", typeof(ApmTransactionIdLayoutRenderer));
+			configurationItemFactory.RegisterItemsFromAssembly(Assembly.GetAssembly(typeof(EcsLayout)));
+
+			var layout = new SimpleLayout(EcsLayout.Name, configurationItemFactory);
+
+			var memoryTarget = new EventInfoMemoryTarget { Layout = layout };
+
+			var loggingConfiguration = new Config.LoggingConfiguration();
+			loggingConfiguration.AddRule(LogLevel.Trace, LogLevel.Fatal, memoryTarget);
+
+			var factory = new LogFactory(loggingConfiguration);
+
 			List<LogEventInfo> GetLogEvents() => memoryTarget.Events.ToList();
 			var logger = factory.GetCurrentClassLogger();
 			act(logger, GetLogEvents);
