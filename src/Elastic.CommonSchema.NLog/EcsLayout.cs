@@ -156,7 +156,7 @@ namespace Elastic.CommonSchema.NLog
 			while (exception != null)
 			{
 				frame = new StackTrace(exception, true).GetFrame(0);
-				fullText.WriteLine($"\tException {i:D2} inner --------------------------");
+				fullText.WriteLine($"\tException {i++:D2} inner --------------------------");
 				fullText.WriteLine($"\tType: {exception.GetType()}");
 				fullText.WriteLine($"\tSource: {exception.TargetSite?.DeclaringType?.AssemblyQualifiedName}");
 				fullText.WriteLine($"\tMessage: {exception.Message}");
@@ -418,7 +418,7 @@ namespace Elastic.CommonSchema.NLog
 			if (string.IsNullOrEmpty(key))
 				return;
 
-			if (propertyBag.ContainsKey(key))
+			while (propertyBag.ContainsKey(key))
 			{
 				if (string.Equals(value.ToString(), propertyBag[key].ToString(), StringComparison.Ordinal))
 					return;
