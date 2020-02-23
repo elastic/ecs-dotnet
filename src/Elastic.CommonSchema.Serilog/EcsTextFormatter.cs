@@ -25,7 +25,10 @@ namespace Elastic.CommonSchema.Serilog
 		{
 			var ecsEvent = LogEventConverter.ConvertToEcs(logEvent, _configuration);
 			if (output is StreamWriter sw)
+			{
 				ecsEvent.Serialize(sw.BaseStream);
+				sw.WriteLine();
+			}
 			else
 			{
 				var bytes = ecsEvent.SerializeToUtf8Bytes();
