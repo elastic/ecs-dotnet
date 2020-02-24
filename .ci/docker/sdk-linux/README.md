@@ -27,5 +27,5 @@ docker run --rm -ti \
        -w /src \
        -e HOME=/tmp \
        sdk:latest \
-       /bin/bash -c './test.sh'
+       /bin/bash -c '.ci/scripts/test.sh'
 ```
