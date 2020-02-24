@@ -51,6 +51,9 @@ pipeline {
       parallel {
         stage('Linux') {
           options { skipDefaultCheckout() }
+          environment {
+            MSBUILDDEBUGPATH = "${env.WORKSPACE}"
+          }
           steps {
             withGithubNotify(context: 'Build-Linux') {
               deleteDir()
@@ -60,6 +63,11 @@ pipeline {
                   sh 'build.sh'
                 }
               }
+            }
+          }
+          post {
+            unsuccessful {
+              archiveArtifacts(allowEmptyArchive: true, artifacts: "${MSBUILDDEBUGPATH}/**/MSBuild_*.failure.txt")
             }
           }
         }
@@ -88,18 +96,11 @@ pipeline {
                 withGithubNotify(context: 'Test-Windows') {
                   dir("${BASE_DIR}"){
                     powershell label: 'Install test tools', script: '.ci\\scripts\\test-tools.ps1'
-                    bat label: 'Test & coverage', script: '.ci/scripts/test.bat'
-                    powershell label: 'Convert Test Results to junit format', script: '.ci\\windows\\convert.ps1'
+                    bat label: 'Test', script: '.ci/scripts/test.bat'
                   }
                 }
               }
               post {
-                always {
-                  dir("${BASE_DIR}"){
-                    archiveArtifacts(allowEmptyArchive: true, artifacts: '/target/diag.log,target/TestResults.xml')
-                    junit(allowEmptyResults: true, keepLongStdio: true,testResults: '**/junit-*.xml')
-                  }
-                }
                 unsuccessful {
                   archiveArtifacts(allowEmptyArchive: true, artifacts: "${MSBUILDDEBUGPATH}/**/MSBuild_*.failure.txt")
                 }
