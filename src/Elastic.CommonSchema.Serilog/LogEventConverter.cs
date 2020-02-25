@@ -101,7 +101,10 @@ namespace Elastic.CommonSchema.Serilog
 
 		private static IDictionary<string, object> GetMetadata(LogEvent logEvent)
 		{
-			var dict = new Dictionary<string, object>();
+			var dict = new Dictionary<string, object>
+			{
+				{ ToSnakeCase("MessageTemplate"), logEvent.MessageTemplate.Text }
+			};
 
 			//TODO what does this do and where does it come from?
 			if (logEvent.Properties.TryGetValue("ActionPayload", out var actionPayload))
@@ -143,19 +146,31 @@ namespace Elastic.CommonSchema.Serilog
 						continue;
 				}
 
-				if (logEventPropertyValue.Value is SequenceValue values)
-				{
-					dict.Add(ToSnakeCase(logEventPropertyValue.Key), values.Elements.Select(e => e.ToString()).ToArray());
-					continue;
-				}
-
-				if (logEventPropertyValue.Value is ScalarValue sv)
-					dict.Add(ToSnakeCase(logEventPropertyValue.Key), sv.Value);
-				else
-					dict.Add(ToSnakeCase(logEventPropertyValue.Key), logEventPropertyValue.Value);
+				dict.Add(ToSnakeCase(logEventPropertyValue.Key), PropertyValueToObject(logEventPropertyValue.Value));
 			}
 			if (dict.Count == 0) return null;
 			return dict;
+		}
+
+		private static object PropertyValueToObject(LogEventPropertyValue propertyValue)
+		{
+			if (propertyValue is SequenceValue values)
+			{
+				return values.Elements.Select(e => PropertyValueToObject(e)).ToArray();
+			}
+
+			if (propertyValue is ScalarValue sv)
+				return sv.Value;
+			else if (propertyValue is DictionaryValue dv)
+				return dv.Elements.ToDictionary(keySelector: (kvp) => ToSnakeCase(kvp.Key.Value.ToString()), elementSelector: (kvp) => PropertyValueToObject(kvp.Value));
+			else if (propertyValue is StructureValue ov)
+			{
+				var dict = ov.Properties.ToDictionary(p => p.Name, p => PropertyValueToObject(p.Value));
+				if (ov.TypeTag != null) dict.Add("$type", ov.TypeTag);
+				return dict;
+			}
+			else
+				return propertyValue;
 		}
 
 		private static string ToSnakeCase(string key) => key;
@@ -254,7 +269,7 @@ namespace Elastic.CommonSchema.Serilog
 				 : SpecialKeys.DefaultLogger ;
 
 			var log = new Log { Level = e.Level.ToString("F"), Logger = source};
-
+			
 			if (configuration.MapExceptions)
 			{
 				// TODO - walk stack trace for other information
@@ -343,6 +358,7 @@ namespace Elastic.CommonSchema.Serilog
 					fullText.WriteLine($"\tType: {exception.GetType()}");
 					fullText.WriteLine($"\tSource: {exception.TargetSite?.DeclaringType?.AssemblyQualifiedName}");
 					fullText.WriteLine($"\tMessage: {exception.Message}");
+					fullText.WriteLine($"\tTrace: {exception.StackTrace}");
 					fullText.WriteLine($"\tLocation: {frame.GetFileName()}");
 					fullText.WriteLine(
 						$"\tMethod: {frame.GetMethod()} ({frame.GetFileLineNumber()}, {frame.GetFileColumnNumber()})");
