@@ -43,11 +43,11 @@ namespace Generator.Schema
 				list.Add(Tuple.Create("WriteTimestamp", baseRootObject.Fields.Single(f => f.Key == "@timestamp").Value));
 
 				// HACK in the log.level
-				list.Add(Tuple.Create("WriteLogLevel", new Field { Name = "log.level", Schema = baseRootObject }));
+				list.Add(Tuple.Create("WriteLogLevel", new Field { Name = "log.level", Schema = baseRootObject, FlatName = "log.level" }));
 				list.Add(Tuple.Create("WriteMessage", baseRootObject.Fields.Single(f => f.Key == "message").Value));
 
 				// HACK in _metadata
-				list.Add(Tuple.Create("WriteProp", new Field { Name = "_metadata", Schema = baseRootObject }));
+				list.Add(Tuple.Create("WriteProp", new Field { Name = "_metadata", Schema = baseRootObject, FlatName = "_metadata" }));
 				list.AddRange(baseRootObject.GetFieldsFlat().Where(f => f.Name != "@timestamp" && f.Name != "message")
 					.Select(f => Tuple.Create("WriteProp", f)));
 				return list;

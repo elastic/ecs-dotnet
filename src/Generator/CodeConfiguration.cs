@@ -12,6 +12,8 @@ namespace Generator
 		public static string ElasticCommonSchemaGeneratedFolder { get; } = $@"{Root}Elastic.CommonSchema/";
 		public static string ElasticCommonSchemaNESTGeneratedFolder { get; } = $@"{Root}Elastic.CommonSchemaNEST/";
 
+		public static string ElasticNLogGeneratedFolder { get; } = $@"{Root}Elastic.CommonSchema.NLog/";
+
 		private static string Root
 		{
 			get

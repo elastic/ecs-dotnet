@@ -21,7 +21,7 @@ namespace Elastic.CommonSchema.Serilog
 	/// <summary>
 	/// Elastic Common Schema converter for LogEvent
 	/// </summary>
-	public class LogEventConverter
+	public static class LogEventConverter
 	{
 		private static class SpecialKeys
 		{
@@ -57,6 +57,7 @@ namespace Elastic.CommonSchema.Serilog
 			var ecsEvent = new Base
 			{
 				Timestamp = logEvent.Timestamp,
+				Message = logEvent.RenderMessage(),
 				Ecs = new Ecs { Version = Base.Version },
 				Log = GetLog(logEvent, exceptions, configuration),
 				Agent = GetAgent(logEvent),
@@ -83,8 +84,6 @@ namespace Elastic.CommonSchema.Serilog
 
 			if (configuration.MapCustom != null)
 				ecsEvent = configuration.MapCustom(ecsEvent, logEvent);
-
-			ecsEvent.Message = logEvent.RenderMessage();
 
 			return ecsEvent;
 		}
@@ -350,7 +349,7 @@ namespace Elastic.CommonSchema.Serilog
 				while (exception != null)
 				{
 					frame = new StackTrace(exception, true).GetFrame(0);
-					fullText.WriteLine($"\tException {i:D2} inner --------------------------");
+					fullText.WriteLine($"\tException {i++:D2} inner --------------------------");
 					fullText.WriteLine($"\tType: {exception.GetType()}");
 					fullText.WriteLine($"\tSource: {exception.TargetSite?.DeclaringType?.AssemblyQualifiedName}");
 					fullText.WriteLine($"\tMessage: {exception.Message}");

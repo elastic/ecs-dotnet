@@ -9,14 +9,16 @@ using NLog.LayoutRenderers;
 
 namespace Elastic.Apm.NLog
 {
-	[LayoutRenderer("ElasticApmTraceId")]
+	[LayoutRenderer(Name)]
 	[ThreadSafe]
 	public class ApmTraceIdLayoutRenderer : LayoutRenderer
 	{
+		public const string Name = "ElasticApmTraceId";
+
 		protected override void Append(StringBuilder builder, LogEventInfo logEvent)
 		{
-			if (!Agent.IsConfigured) return;
-			if (Agent.Tracer.CurrentTransaction == null) return;
+			if (!Agent.IsConfigured || Agent.Tracer?.CurrentTransaction == null)
+				return;
 
 			builder.Append(Agent.Tracer.CurrentTransaction.TraceId);
 		}
