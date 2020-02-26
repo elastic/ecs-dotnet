@@ -36,11 +36,9 @@ namespace Elastic.CommonSchema.NLog.Tests
 		protected static void TestLogger(Action<ILogger, Func<List<LogEventInfo>>> act)
 		{
 			var configurationItemFactory = new Config.ConfigurationItemFactory();
-			configurationItemFactory.LayoutRenderers.RegisterDefinition(ApmTraceIdLayoutRenderer.Name, typeof(ApmTraceIdLayoutRenderer));
-			configurationItemFactory.LayoutRenderers.RegisterDefinition(ApmTransactionIdLayoutRenderer.Name, typeof(ApmTransactionIdLayoutRenderer));
 			configurationItemFactory.RegisterItemsFromAssembly(Assembly.GetAssembly(typeof(EcsLayout)));
 
-			// These layout renderers need to registered statically
+			// These layout renderers need to registered statically as ultimately ConfigurationItemFactory.Default is called in the call stack.
 			LayoutRenderer.Register<ApmTraceIdLayoutRenderer>(ApmTraceIdLayoutRenderer.Name); //generic
 			LayoutRenderer.Register<ApmTransactionIdLayoutRenderer>(ApmTransactionIdLayoutRenderer.Name); //generic
 
