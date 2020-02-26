@@ -49,6 +49,28 @@ pipeline {
     }
     stage('Parallel'){
       parallel {
+        stage('Linux') {
+          options { skipDefaultCheckout() }
+          environment {
+            MSBUILDDEBUGPATH = "${env.WORKSPACE}"
+          }
+          steps {
+            withGithubNotify(context: 'Linux') {
+              deleteDir()
+              unstash 'source'
+              dir("${BASE_DIR}"){
+                dotnet(){
+                  sh './build.sh'
+                }
+              }
+            }
+          }
+          post {
+            unsuccessful {
+              archiveArtifacts(allowEmptyArchive: true, artifacts: "${MSBUILDDEBUGPATH}/**/MSBuild_*.failure.txt")
+            }
+          }
+        }
         stage('Windows') {
           agent { label 'windows-2019-immutable' }
           options { skipDefaultCheckout() }
@@ -82,5 +104,13 @@ pipeline {
     cleanup {
       notifyBuildResult()
     }
+  }
+}
+
+def dotnet(Closure body){
+  def dockerTagName = 'docker.elastic.co/observability-ci/ecs-dotnet-sdk-linux:latest'
+  sh label: 'Docker build', script: "docker build --tag ${dockerTagName} .ci/docker/sdk-linux"
+  docker.image("${dockerTagName}").inside("-e HOME='${env.WORKSPACE}/${env.BASE_DIR}'"){
+    body()
   }
 }
