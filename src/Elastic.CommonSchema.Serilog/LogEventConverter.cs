@@ -7,7 +7,6 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Text;
 using System.Threading;
 using Serilog.Events;
 #if NETSTANDARD
@@ -100,7 +99,10 @@ namespace Elastic.CommonSchema.Serilog
 
 		private static IDictionary<string, object> GetMetadata(LogEvent logEvent)
 		{
-			var dict = new Dictionary<string, object>();
+			var dict = new Dictionary<string, object>
+			{
+				{ ToSnakeCase("MessageTemplate"), logEvent.MessageTemplate.Text }
+			};
 
 			//TODO what does this do and where does it come from?
 			if (logEvent.Properties.TryGetValue("ActionPayload", out var actionPayload))
@@ -142,19 +144,33 @@ namespace Elastic.CommonSchema.Serilog
 						continue;
 				}
 
-				if (logEventPropertyValue.Value is SequenceValue values)
-				{
-					dict.Add(ToSnakeCase(logEventPropertyValue.Key), values.Elements.Select(e => e.ToString()).ToArray());
-					continue;
-				}
-
-				if (logEventPropertyValue.Value is ScalarValue sv)
-					dict.Add(ToSnakeCase(logEventPropertyValue.Key), sv.Value);
-				else
-					dict.Add(ToSnakeCase(logEventPropertyValue.Key), logEventPropertyValue.Value);
+				dict.Add(ToSnakeCase(logEventPropertyValue.Key), PropertyValueToObject(logEventPropertyValue.Value));
 			}
-			if (dict.Count == 0) return null;
+
+			if (dict.Count == 0)
+				return null;
+
 			return dict;
+		}
+
+		private static object PropertyValueToObject(LogEventPropertyValue propertyValue)
+		{
+			switch (propertyValue) {
+				case SequenceValue values:
+					return values.Elements.Select(PropertyValueToObject).ToArray();
+				case ScalarValue sv:
+					return sv.Value;
+				case DictionaryValue dv:
+					return dv.Elements.ToDictionary(keySelector: kvp => ToSnakeCase(kvp.Key.Value.ToString()), elementSelector: (kvp) => PropertyValueToObject(kvp.Value));
+				case StructureValue ov:
+				{
+					var dict = ov.Properties.ToDictionary(p => p.Name, p => PropertyValueToObject(p.Value));
+					if (ov.TypeTag != null) dict.Add("$type", ov.TypeTag);
+					return dict;
+				}
+				default:
+					return propertyValue;
+			}
 		}
 
 		private static string ToSnakeCase(string key) => key;
@@ -169,6 +185,7 @@ namespace Elastic.CommonSchema.Serilog
 				Name = machineName.Value.ToString()
 			};
 
+			//todo map more uptime etc
 			return host;
 		}
 
@@ -336,6 +353,7 @@ namespace Elastic.CommonSchema.Serilog
 					fullText.WriteLine($"\tType: {exception.GetType()}");
 					fullText.WriteLine($"\tSource: {exception.TargetSite?.DeclaringType?.AssemblyQualifiedName}");
 					fullText.WriteLine($"\tMessage: {exception.Message}");
+					fullText.WriteLine($"\tTrace: {exception.StackTrace}");
 					fullText.WriteLine($"\tLocation: {frame.GetFileName()}");
 					fullText.WriteLine(
 						$"\tMethod: {frame.GetMethod()} ({frame.GetFileLineNumber()}, {frame.GetFileColumnNumber()})");
