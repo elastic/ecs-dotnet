@@ -55,7 +55,7 @@ pipeline {
             MSBUILDDEBUGPATH = "${env.WORKSPACE}"
           }
           steps {
-            withGithubNotify(context: 'Build-Linux') {
+            withGithubNotify(context: 'Linux') {
               deleteDir()
               unstash 'source'
               dir("${BASE_DIR}"){
