@@ -14,7 +14,7 @@ module Tests =
         Directory.CreateDirectory Paths.BuildOutput |> ignore
         let command = 
             let p = [
-                "test"; "."; "-c"; "RELEASE";
+                "test"; "."; "-c"; "Release";
                 (sprintf "-p:Version=%s" <| version.Full.ToString()); 
             ]
             //make sure we only test netcoreapp on linux or requested on the command line to only test-one
