@@ -7,7 +7,6 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Text;
 using System.Threading;
 using Serilog.Events;
 #if NETSTANDARD
@@ -148,34 +147,34 @@ namespace Elastic.CommonSchema.Serilog
 
 				dict.Add(ToSnakeCase(logEventPropertyValue.Key), PropertyValueToObject(logEventPropertyValue.Value));
 			}
-			if (dict.Count == 0) return null;
+
+			if (dict.Count == 0)
+				return null;
+
 			return dict;
 		}
 
 		private static object PropertyValueToObject(LogEventPropertyValue propertyValue)
 		{
-			if (propertyValue is SequenceValue values)
-			{
-				return values.Elements.Select(e => PropertyValueToObject(e)).ToArray();
+			switch (propertyValue) {
+				case SequenceValue values:
+					return values.Elements.Select(PropertyValueToObject).ToArray();
+				case ScalarValue sv:
+					return sv.Value;
+				case DictionaryValue dv:
+					return dv.Elements.ToDictionary(keySelector: kvp => ToSnakeCase(kvp.Key.Value.ToString()), elementSelector: (kvp) => PropertyValueToObject(kvp.Value));
+				case StructureValue ov:
+				{
+					var dict = ov.Properties.ToDictionary(p => p.Name, p => PropertyValueToObject(p.Value));
+					if (ov.TypeTag != null) dict.Add("$type", ov.TypeTag);
+					return dict;
+				}
+				default:
+					return propertyValue;
 			}
-
-			if (propertyValue is ScalarValue sv)
-				return sv.Value;
-			else if (propertyValue is DictionaryValue dv)
-				return dv.Elements.ToDictionary(keySelector: (kvp) => ToSnakeCase(kvp.Key.Value.ToString()), elementSelector: (kvp) => PropertyValueToObject(kvp.Value));
-			else if (propertyValue is StructureValue ov)
-			{
-				var dict = ov.Properties.ToDictionary(p => p.Name, p => PropertyValueToObject(p.Value));
-				if (ov.TypeTag != null) dict.Add("$type", ov.TypeTag);
-				return dict;
-			}
-			else
-				return propertyValue;
 		}
 
 		private static string ToSnakeCase(string key) => key;
-
-
 
 		private static Host GetHost(LogEvent e)
 		{
@@ -186,6 +185,7 @@ namespace Elastic.CommonSchema.Serilog
 			{
 				Name = machineName.Value.ToString()
 			};
+
 			//todo map more uptime etc
 			return host;
 		}
@@ -269,7 +269,7 @@ namespace Elastic.CommonSchema.Serilog
 				 : SpecialKeys.DefaultLogger ;
 
 			var log = new Log { Level = e.Level.ToString("F"), Logger = source};
-			
+
 			if (configuration.MapExceptions)
 			{
 				// TODO - walk stack trace for other information
@@ -304,10 +304,6 @@ namespace Elastic.CommonSchema.Serilog
 				Timezone = TimeZoneInfo.Local.StandardName
 			};
 
-			//Why does this get overriden in full framework?
-#if FULLFRAMEWORK
-			evnt.Timezone = TimeZone.CurrentTimeZone.StandardName;
-#endif
 			return evnt;
 		}
 
