@@ -9,7 +9,7 @@ build and test goals for the linux OS.
 ## Build docker image
 docker build -t sdk .ci/docker/sdk-linux
 
-## Run container to build the ecs-dotnet
+## Run container to build and test the ecs-dotnet project
 docker run --rm -ti \
        --name ecs-dotnet \
        -u "$(id -u):$(id -g)" \
@@ -18,14 +18,4 @@ docker run --rm -ti \
        -e HOME=/tmp \
        sdk:latest \
        /bin/bash -c './build.sh'
-
-## Run container to test the ecs-dotnet
-docker run --rm -ti \
-       --name ecs-dotnet \
-       -u "$(id -u):$(id -g)" \
-       -v $(pwd):/src \
-       -w /src \
-       -e HOME=/tmp \
-       sdk:latest \
-       /bin/bash -c '.ci/scripts/test.sh'
 ```
