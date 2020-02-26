@@ -37,7 +37,7 @@ namespace Elastic.CommonSchema.Serilog.Tests
 			act(LoggerConfiguration.CreateLogger().ForContext(GetType()), GetLogEvents);
 		}
 
-		private IEnumerable<string> ToFormattedStrings(List<LogEvent> logEvents) =>
+		private List<string> ToFormattedStrings(List<LogEvent> logEvents) =>
 			logEvents
 				.Select(l =>
 				{
@@ -47,7 +47,7 @@ namespace Elastic.CommonSchema.Serilog.Tests
 				})
 				.ToList();
 
-		protected IEnumerable<(string Json, Base Base)> ToEcsEvents(List<LogEvent> logEvents) =>
+		protected List<(string Json, Base Base)> ToEcsEvents(List<LogEvent> logEvents) =>
 			ToFormattedStrings(logEvents)
 				.Select(s => (s, Base.Deserialize(s)))
 				.ToList();
