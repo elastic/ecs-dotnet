@@ -76,6 +76,7 @@ namespace Elastic.CommonSchema.BenchmarkDotNetExporter.IntegrationTests
 				Job.ShortRun.With(CoreRuntime.Core30).WithInvocationCount(4).WithUnrollFactor(2),
 			};
 			var config = DefaultConfig.Instance
+				.KeepBenchmarkFiles()
 				.With(jobs.ToArray())
 				.With(MemoryDiagnoser.Default);
 			return config;
