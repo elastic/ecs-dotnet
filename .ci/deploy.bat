@@ -1,8 +1,9 @@
 echo off
-set arg1=%1
-set arg2=%2
+set key=%1
+set url=%2
 
 @echo on
 FOR /R ".\" %%a  in (*.nupkg) DO (
-	echo dotnet nuget push "%%x" -k "%arg1%" -s "%arg2%"
+	@echo Filename: %%a
+	echo dotnet nuget push "%%a" -k "%key%" -s "%url%"
 )
