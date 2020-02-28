@@ -88,9 +88,9 @@ pipeline {
               dir("${BASE_DIR}"){
                 bat script: 'choco install dotnetcore-sdk -m -y --no-progress -r --version 3.0.100', label: 'Tools'
                 bat script: 'build.bat canary', label: 'build'
-                //whenTrue(env.BRANCH.equals('master')) {
+                whenTrue(env.BRANCH.equals('master')) {
                   release('secret/apm-team/ci/elastic-observability-appveyor')
-                //}
+                }
               }
             }
           }
