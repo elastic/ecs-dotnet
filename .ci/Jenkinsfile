@@ -101,9 +101,6 @@ pipeline {
     }
     stage('Release to AppVeyor') {
       options { skipDefaultCheckout() }
-      when {
-        branch 'master'
-      }
       steps {
         // Let's reuse the build from the Linux worker
         dir("${BASE_DIR}"){
