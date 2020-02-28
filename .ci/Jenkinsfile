@@ -123,12 +123,7 @@ def dotnet(Closure body){
 
 def release(secret){
   def repo = getVaultSecret(secret: secret)
-  wrap([$class: 'MaskPasswordsBuildWrapper', varPasswordPairs: [
-    [var: 'REPO_API_KEY', password: repo.data.apiKey],
-    [var: 'REPO_API_URL', password: repo.data.url],
-    ]]) {
-    withEnv(["REPO_API_KEY=${repo.data.apiKey}", "REPO_API_URL=${repo.data.url}"]) {
-      bat(label: 'Deploy', script: ".ci/deploy.bat ${REPO_API_KEY} ${REPO_API_URL}")
-    }
+  withEnvMask(vars: [[var: 'REPO_API_KEY', password: repo.data.apiKey], [var: 'REPO_API_URL', password: repo.data.url]]){
+    bat(label: 'Deploy', script: ".ci/deploy.bat ${REPO_API_KEY} ${REPO_API_URL}")
   }
 }
