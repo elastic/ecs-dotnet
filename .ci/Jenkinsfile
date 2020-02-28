@@ -60,7 +60,7 @@ pipeline {
               unstash 'source'
               dir("${BASE_DIR}"){
                 dotnet(){
-                  sh './build.sh'
+                  sh script: './build.sh canary', label: 'build'
                 }
               }
             }
@@ -99,6 +99,23 @@ pipeline {
         }
       }
     }
+    stage('Release to AppVeyor') {
+      options { skipDefaultCheckout() }
+      when {
+        branch 'master'
+      }
+      steps {
+        // Let's reuse the build from the Linux worker
+        dir("${BASE_DIR}"){
+          deploy('secret/apm-team/ci/elastic-observability-appveyor')
+        }
+      }
+      post{
+        success {
+          archiveArtifacts(allowEmptyArchive: true, artifacts: "${BASE_DIR}/**/bin/Release/**/*.nupkg")
+        }
+      }
+    }
   }
   post {
     cleanup {
@@ -112,5 +129,19 @@ def dotnet(Closure body){
   sh label: 'Docker build', script: "docker build --tag ${dockerTagName} .ci/docker/sdk-linux"
   docker.image("${dockerTagName}").inside("-e HOME='${env.WORKSPACE}/${env.BASE_DIR}'"){
     body()
+  }
+}
+
+def deploy(secret){
+  dotnet(){
+    def repo = getVaultSecret(secret: secret)
+    wrap([$class: 'MaskPasswordsBuildWrapper', varPasswordPairs: [
+      [var: 'REPO_API_KEY', password: repo.data.apiKey],
+      [var: 'REPO_API_URL', password: repo.data.url],
+      ]]) {
+      withEnv(["REPO_API_KEY=${repo.data.apiKey}", "REPO_API_URL=${repo.data.url}"]) {
+        sh(label: 'Deploy', script: ".ci/deploy.sh ${REPO_API_KEY} ${REPO_API_URL}")
+      }
+    }
   }
 }
