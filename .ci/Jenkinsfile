@@ -88,9 +88,9 @@ pipeline {
               dir("${BASE_DIR}"){
                 bat script: 'choco install dotnetcore-sdk -m -y --no-progress -r --version 3.0.100', label: 'Tools'
                 bat script: 'build.bat canary', label: 'build'
-                whenTrue(env.BRANCH.equals('master')) {
+                //whenTrue(env.BRANCH.equals('master')) {
                   release('secret/apm-team/ci/elastic-observability-appveyor')
-                }
+                //}
               }
             }
           }
@@ -124,10 +124,13 @@ def dotnet(Closure body){
 def release(secret){
   def repo = getVaultSecret(secret: secret)
   wrap([$class: 'MaskPasswordsBuildWrapper', varPasswordPairs: [
-    [var: 'REPO_API_KEY', password: repo.data.apiKey],
-    [var: 'REPO_API_URL', password: repo.data.url],
+    //[var: 'REPO_API_KEY', password: repo.data.apiKey],
+    //[var: 'REPO_API_URL', password: repo.data.url],
+    [var: 'REPO_API_KEY', password: 'foo'],
+    [var: 'REPO_API_URL', password: 'bar'],
     ]]) {
-    withEnv(["REPO_API_KEY=${repo.data.apiKey}", "REPO_API_URL=${repo.data.url}"]) {
+    //withEnv(["REPO_API_KEY=${repo.data.apiKey}", "REPO_API_URL=${repo.data.url}"]) {
+    withEnv(["REPO_API_KEY=foo", "REPO_API_URL=bar"]) {
       bat(label: 'Deploy', script: ".ci/deploy.bat ${REPO_API_KEY} ${REPO_API_URL}")
     }
   }
