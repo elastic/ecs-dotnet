@@ -82,24 +82,36 @@ pipeline {
             DOTNET_CLI_TELEMETRY_OPTOUT = 'true'
             DOTNET_SKIP_FIRST_TIME_EXPERIENCE = 'true'
           }
-          steps {
-            withGithubNotify(context: 'Windows') {
-              unstash 'source'
-              dir("${BASE_DIR}"){
-                bat script: 'choco install dotnetcore-sdk -m -y --no-progress -r --version 3.0.100', label: 'Tools'
-                bat script: 'build.bat canary', label: 'build'
-                //whenTrue(env.BRANCH_NAME.equals('master')) {
-                  release('secret/apm-team/ci/elastic-ecs-dotnet-appveyor')
-                //}
+          stages {
+            stage('Build') {
+              steps {
+                withGithubNotify(context: 'Windows') {
+                  unstash 'source'
+                  dir("${BASE_DIR}"){
+                    bat script: 'choco install dotnetcore-sdk -m -y --no-progress -r --version 3.0.100', label: 'Tools'
+                    bat script: 'build.bat canary', label: 'build'
+                  }
+                }
+              }
+              post {
+                unsuccessful {
+                  archiveArtifacts(allowEmptyArchive: true, artifacts: "${MSBUILDDEBUGPATH}/**/MSBuild_*.failure.txt")
+                }
               }
             }
-          }
-          post {
-            success {
-              archiveArtifacts(allowEmptyArchive: true, artifacts: "${BASE_DIR}/**/build/output/**/*.nupkg")
-            }
-            unsuccessful {
-              archiveArtifacts(allowEmptyArchive: true, artifacts: "${MSBUILDDEBUGPATH}/**/MSBuild_*.failure.txt")
+            stage('Deploy') {
+              steps {
+                dir("${BASE_DIR}"){
+                  //whenTrue(env.BRANCH_NAME.equals('master')) {
+                    release('secret/apm-team/ci/elastic-ecs-dotnet-appveyor')
+                  //}
+                }
+              }
+              post {
+                always {
+                  archiveArtifacts(allowEmptyArchive: true, artifacts: "${BASE_DIR}/**/build/output/**/*.nupkg")
+                }
+              }
             }
           }
         }
