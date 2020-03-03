@@ -103,7 +103,7 @@ pipeline {
               steps {
                 dir("${BASE_DIR}"){
                   //whenTrue(env.BRANCH_NAME.equals('master')) {
-                    release('secret/apm-team/ci/elastic-ecs-dotnet-appveyor')
+                    release('secret/apm-team/ci/elastic-observability-appveyor')
                   //}
                 }
               }
