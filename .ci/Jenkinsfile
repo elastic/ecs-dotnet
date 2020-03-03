@@ -9,6 +9,8 @@ pipeline {
     BASE_DIR = "src/go.elastic.co/apm/${env.REPO}"
     NOTIFY_TO = credentials('notify-to')
     JOB_GCS_BUCKET = credentials('gcs-bucket')
+    DOTNET_CLI_TELEMETRY_OPTOUT = 'true'
+    DOTNET_SKIP_FIRST_TIME_EXPERIENCE = 'true'
   }
   options {
     timeout(time: 1, unit: 'HOURS')
@@ -60,7 +62,7 @@ pipeline {
               unstash 'source'
               dir("${BASE_DIR}"){
                 dotnet(){
-                  sh './build.sh'
+                  sh script: './build.sh', label: 'build'
                 }
               }
             }
@@ -82,21 +84,38 @@ pipeline {
             DOTNET_ROOT = "C:\\Program Files\\dotnet"
             PATH = "${env.DOTNET_ROOT};${env.DOTNET_ROOT}\\tools;${env.PATH};${env.HOME}\\bin"
             MSBUILDDEBUGPATH = "${env.WORKSPACE}"
-            DOTNET_CLI_TELEMETRY_OPTOUT = 'true'
-            DOTNET_SKIP_FIRST_TIME_EXPERIENCE = 'true'
           }
-          steps {
-            withGithubNotify(context: 'Windows') {
-              unstash 'source'
-              dir("${BASE_DIR}"){
-                bat script: 'choco install dotnetcore-sdk -m -y --no-progress -r --version 3.0.100', label: 'Tools'
-                bat script: 'build.bat canary', label: 'build'
+          stages {
+            stage('Build') {
+              steps {
+                withGithubNotify(context: 'Windows') {
+                  unstash 'source'
+                  dir("${BASE_DIR}"){
+                    bat script: 'choco install dotnetcore-sdk -m -y --no-progress -r --version 3.0.100', label: 'Tools'
+                    bat script: 'build.bat canary', label: 'build'
+                  }
+                }
+              }
+              post {
+                unsuccessful {
+                  archiveArtifacts(allowEmptyArchive: true, artifacts: "${MSBUILDDEBUGPATH}/**/MSBuild_*.failure.txt")
+                }
               }
             }
-          }
-          post {
-            unsuccessful {
-              archiveArtifacts(allowEmptyArchive: true, artifacts: "${MSBUILDDEBUGPATH}/**/MSBuild_*.failure.txt")
+            stage('Deploy') {
+              when {
+                branch 'master'
+              }
+              steps {
+                dir("${BASE_DIR}"){
+                  release('secret/apm-team/ci/elastic-observability-appveyor')
+                }
+              }
+              post {
+                always {
+                  archiveArtifacts(allowEmptyArchive: true, artifacts: "${BASE_DIR}/**/build/output/**/*.nupkg")
+                }
+              }
             }
           }
         }
@@ -115,5 +134,12 @@ def dotnet(Closure body){
   sh label: 'Docker build', script: "docker build --tag ${dockerTagName} .ci/docker/sdk-linux"
   docker.image("${dockerTagName}").inside("-e HOME='${env.WORKSPACE}/${env.BASE_DIR}'"){
     body()
+  }
+}
+
+def release(secret){
+  def repo = getVaultSecret(secret: secret)
+  withEnvMask(vars: [[var: 'REPO_API_KEY', password: repo.data.apiKey], [var: 'REPO_API_URL', password: repo.data.url]]){
+    bat(label: 'Deploy', script: ".ci/deploy.bat ${REPO_API_KEY} ${REPO_API_URL}")
   }
 }
