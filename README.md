@@ -2,6 +2,8 @@
 
 # Elastic Common Schema .NET
 
+[![Build Status](https://apm-ci.elastic.co/buildStatus/icon?job=apm-agent-dotnet%2Fecs-dotnet-mbp%2Fmaster)](https://apm-ci.elastic.co/job/apm-agent-dotnet/job/ecs-dotnet-mbp/job/master/)
+
 This repository contains .NET integrations that use the Elastic Common Schema (ECS), including popular .NET logging frameworks. Read the [announcement post](https://www.elastic.co/blog/elastic-common-schema-dotnet-library-and-integrations-released-for-elasticsearch).
 
 The Elastic Common Schema defines a common set of fields for ingesting data into Elasticsearch. A common schema helps you correlate data from sources like logs and metrics or IT operations analytics and security analytics. Further information on ECS can be found in the official [Elastic documentation](https://www.elastic.co/guide/en/ecs/current/index.html) or [github repository](https://github.com/elastic/ecs).
