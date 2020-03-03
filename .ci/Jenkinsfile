@@ -100,11 +100,12 @@ pipeline {
               }
             }
             stage('Deploy') {
+              when {
+                branch 'master'
+              }
               steps {
                 dir("${BASE_DIR}"){
-                  //whenTrue(env.BRANCH_NAME.equals('master')) {
-                    release('secret/apm-team/ci/elastic-observability-appveyor')
-                  //}
+                  release('secret/apm-team/ci/elastic-observability-appveyor')
                 }
               }
               post {
