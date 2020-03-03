@@ -71,6 +71,9 @@ pipeline {
             unsuccessful {
               archiveArtifacts(allowEmptyArchive: true, artifacts: "${MSBUILDDEBUGPATH}/**/MSBuild_*.failure.txt")
             }
+            always {
+              junit(allowEmptyResults: true, keepLongStdio: true, testResults: "${BASE_DIR}/build/output/junit-*.xml")
+            }
           }
         }
         stage('Windows') {
