@@ -140,11 +140,12 @@ namespace Generator.Schema
 		{
 			var filtered = GetFilteredFields().Where(f => !f.JsonFieldName.Contains("."));
 
-			// DNS Answers are handled as child objects
+			// The following are handled as child objects
 			filtered = filtered.Where(f => f.FlatName != "dns.answers");
-
-			// Sys logs are handled as child objects
 			filtered = filtered.Where(f => f.FlatName != "log.syslog");
+			filtered = filtered.Where(f => f.FlatName != "network.inner");
+			filtered = filtered.Where(f => f.FlatName != "observer.egress");
+			filtered = filtered.Where(f => f.FlatName != "observer.ingress");
 
 			return filtered;
 		}

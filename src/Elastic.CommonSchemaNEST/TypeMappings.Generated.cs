@@ -285,7 +285,6 @@ namespace Elastic.CommonSchema.Elasticsearch
 									.Keyword(p => p.Name(n => n.CommunityId).IgnoreAbove(1024))
 									.Number(p => p.Name(n => n.Bytes).Type(NumberType.Long))
 									.Number(p => p.Name(n => n.Packets).Type(NumberType.Long))
-									.Object<object>(p => p.Name(n => n.Inner))
 							))
 							.Object<Observer>(o =>
 								o.Properties(a => a
@@ -298,8 +297,6 @@ namespace Elastic.CommonSchema.Elasticsearch
 									.Keyword(p => p.Name(n => n.Version).IgnoreAbove(1024))
 									.Keyword(p => p.Name(n => n.SerialNumber).IgnoreAbove(1024))
 									.Keyword(p => p.Name(n => n.Type).IgnoreAbove(1024))
-									.Object<object>(p => p.Name(n => n.Ingress))
-									.Object<object>(p => p.Name(n => n.Egress))
 							))
 							.Object<Organization>(o =>
 								o.Properties(a => a

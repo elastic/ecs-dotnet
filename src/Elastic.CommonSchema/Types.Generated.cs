@@ -2528,13 +2528,6 @@ namespace Elastic.CommonSchema
 		[DataMember(Name = "packets")]
 		public long? Packets { get; set; }
 
-		/// <summary>
-		/// Network.inner fields are added in addition to network.vlan fields to describe  the innermost VLAN when q-in-q VLAN tagging is present. Allowed fields include  vlan.id and vlan.name. Inner vlan fields are typically used when sending traffic with multiple 802.1q encapsulations to a network sensor (e.g. Zeek, Wireshark.)
-		/// </summary>
-		/// <remarks>Extended</remarks>
-		[DataMember(Name = "inner")]
-		public object Inner { get; set; }
-
 	}
 
 	/// <summary>
@@ -2816,20 +2809,6 @@ namespace Elastic.CommonSchema
 		/// <example>firewall</example>
 		[DataMember(Name = "type")]
 		public string Type { get; set; }
-
-		/// <summary>
-		/// Observer.ingress holds information like interface number and name, vlan, and zone information to  classify ingress traffic.  Single armed monitoring such as a network sensor on a span port should  only use observer.ingress to categorize traffic.
-		/// </summary>
-		/// <remarks>Extended</remarks>
-		[DataMember(Name = "ingress")]
-		public object Ingress { get; set; }
-
-		/// <summary>
-		/// Observer.egress holds information like interface number and name, vlan, and zone information to  classify egress traffic.  Single armed monitoring such as a network sensor on a span port should  only use observer.ingress to categorize traffic.
-		/// </summary>
-		/// <remarks>Extended</remarks>
-		[DataMember(Name = "egress")]
-		public object Egress { get; set; }
 
 	}
 
