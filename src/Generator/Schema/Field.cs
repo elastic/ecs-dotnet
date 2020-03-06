@@ -30,64 +30,48 @@ namespace Generator.Schema
 		{
 			get
 			{
+				var isArray = Normalize != null && Normalize.Contains("array");
 				// Special cases.
-				if (FlatName == "container.image.tag") return "string[]";
-				if (FlatName == "host.ip") return "string[]";
-				if (FlatName == "host.mac") return "string[]";
-				if (FlatName == "observer.ip") return "string[]";
-				if (FlatName == "observer.mac") return "string[]";
-				if (FlatName == "related.ip") return "string[]";
-				if (FlatName == "related.user") return "string[]";
-				if (FlatName == "threat.tactic.name") return "string[]";
-				if (FlatName == "threat.tactic.id") return "string[]";
-				if (FlatName == "threat.tactic.reference") return "string[]";
-				if (FlatName == "threat.technique.name") return "string[]";
-				if (FlatName == "threat.technique.id") return "string[]";
-				if (FlatName == "threat.technique.reference") return "string[]";
-				if (FlatName == "event.category") return "string[]";
-				if (FlatName == "event.type") return "string[]";
-				if (FlatName == "process.args") return "string[]";
-				if (FlatName == "process.parent.args") return "string[]";
-				if (FlatName == "registry.data.strings") return "string[]";
-				if (FlatName == "tls.server.certificate_chain") return "string[]";
-				if (FlatName == "tls.server.supported_ciphers") return "string[]";
-				if (FlatName == "tls.client.certificate_chain") return "string[]";
-				if (FlatName == "tls.client.supported_ciphers") return "string[]";
-				if (FlatName == "vulnerability.category") return "string[]";
-				if (FlatName == "file.attributes") return "string[]";
-				if (FlatName == "dns.header_flags") return "string[]";
-				if (FlatName == "dns.resolved_ip") return "string[]";
-				if (FlatName == "user.id") return "string[]";
-				if (FlatName == "tags") return "string[]";
 				if (FlatName == "labels") return "IDictionary<string, object>";
 
 				// C# custom property
 				if (Name == "_metadata") return "IDictionary<string, object>";
 
+
+				var tipe = "";
 				switch (Type)
 				{
 					case FieldType.Keyword:
 					case FieldType.Text:
-						return "string";
-					case FieldType.Long:
-						return "long?";
-					case FieldType.Integer:
-						return "int?";
-					case FieldType.Date:
-						return "DateTimeOffset?";
 					case FieldType.Ip:
-						return "string";
+						tipe = "string";
+						break;
+					case FieldType.Long:
+						tipe =  "long?";
+						break;
+					case FieldType.Integer:
+						tipe =  "int?";
+						break;
+					case FieldType.Date:
+						tipe =  "DateTimeOffset?";
+						break;
 					case FieldType.Object:
-						return "object";
+						tipe =  "object";
+						break;
 					case FieldType.Float:
-						return "float?";
+						tipe =  "float?";
+						break;
 					case FieldType.GeoPoint:
-						return "Location";
+						tipe =  "Location";
+						break;
 					case FieldType.Boolean:
-						return "bool?";
+						tipe =  "bool?";
+						break;
 					default:
 						throw new ArgumentOutOfRangeException();
 				}
+
+				return isArray ? $"{tipe}[]" : tipe;
 			}
 		}
 
@@ -267,5 +251,8 @@ namespace Generator.Schema
 
 			return result;
 		}
+
+		[JsonProperty("normalize")]
+		public string[] Normalize { get; set; }
 	}
 }
