@@ -15,8 +15,8 @@ namespace Elastic.Apm.SerilogEnricher
 	{
 		public void Enrich(LogEvent logEvent, ILogEventPropertyFactory propertyFactory)
 		{
-			if (!Agent.IsConfigured || Agent.Tracer.CurrentTransaction == null)
-				return;
+			if (!Agent.IsConfigured) return;
+			if (Agent.Tracer?.CurrentTransaction == null) return;
 
 			logEvent.AddPropertyIfAbsent(propertyFactory.CreateProperty(
 				"ElasticApmTransactionId", Agent.Tracer.CurrentTransaction.Id));
