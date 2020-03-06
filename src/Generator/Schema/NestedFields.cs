@@ -43,6 +43,15 @@ namespace Generator.Schema
 				if (_schema.Name == "log" && ClassName == "Syslog")
 					return _schema.Fields.Single(f => f.Value.FlatName == "log.syslog").Value.DescriptionSanitized;
 
+				if (_schema.Name == "network" && ClassName == "Inner")
+					return _schema.Fields.Single(f => f.Value.FlatName == "network.inner").Value.DescriptionSanitized;
+
+				if (_schema.Name == "observer" && ClassName == "Ingress")
+					return _schema.Fields.Single(f => f.Value.FlatName == "observer.ingress").Value.DescriptionSanitized;
+
+				if (_schema.Name == "observer" && ClassName == "Egress")
+					return _schema.Fields.Single(f => f.Value.FlatName == "observer.egress").Value.DescriptionSanitized;
+
 				if (ClassName == "Trace" || ClassName == "Transaction")
 				{
 					var tracingSchema = _schema.Specification.YamlSchemas.Single(f => f.Name == "tracing");
