@@ -30,7 +30,11 @@ namespace Generator.Schema
 		{
 			get
 			{
-				var isArray = Normalize != null && Normalize.Contains("array");
+				var isArray = Normalize != null && Normalize.Contains("array") ||
+					FlatName == "user.id" ||
+					FlatName == "registry.data.strings";
+
+
 				// Special cases.
 				if (FlatName == "labels") return "IDictionary<string, object>";
 

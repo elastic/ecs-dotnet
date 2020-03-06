@@ -3511,7 +3511,7 @@ namespace Elastic.CommonSchema
 		/// <remarks>Core</remarks>
 		/// <example>[\"C:\\rta\\red_ttp\\bin\\myapp.exe\"]</example>
 		[DataMember(Name = "strings")]
-		public string Strings { get; set; }
+		public string[] Strings { get; set; }
 
 		/// <summary>
 		/// Original bytes written with base64 encoding.<para/>For Windows registry operations, such as SetValueEx and RegQueryValueEx, this corresponds to the data pointed by `lp_data`. This is optional but provides better recoverability and should be populated for REG_BINARY encoded values.
@@ -4530,7 +4530,7 @@ namespace Elastic.CommonSchema
 		/// </summary>
 		/// <remarks>Core</remarks>
 		[DataMember(Name = "id")]
-		public string Id { get; set; }
+		public string[] Id { get; set; }
 
 		/// <summary>
 		/// Short name or login of the user.
