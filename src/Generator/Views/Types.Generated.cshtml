@@ -38,7 +38,9 @@ namespace Elastic.CommonSchema
 	/// A common schema helps you correlate data from sources like logs and metrics or IT operations analytics
 	/// and security analytics.
 	/// <para/>
-	/// See: https://github.com/elastic/ecs
+	/// ECS Repostory: https://github.com/elastic/ecs
+	/// <para/>
+	/// ECS field reference: https://www.elastic.co/guide/en/ecs/@(Model.YamlSchemasOrdered.First().DownloadBranch)/ecs-base.html
 	/// </summary>
 	public partial class Base
 	{
@@ -248,6 +250,8 @@ foreach (var field in schema.Fields.Where(f => f.Value.IsCustomEnum))
 	
 <text>	/// <summary>
 	/// @Raw(schema.DescriptionSanitized)
+	/// <para/>
+	/// ECS field reference: https://www.elastic.co/guide/en/ecs/@(Model.YamlSchemasOrdered.First().DownloadBranch)/ecs-@(schema.Name.ToLower()).html
 	/// </summary>
 	@if (!schema.Footnote.IsNullOrEmpty())
 	{

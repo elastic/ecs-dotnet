@@ -27,7 +27,9 @@ namespace Elastic.CommonSchema
 	/// A common schema helps you correlate data from sources like logs and metrics or IT operations analytics
 	/// and security analytics.
 	/// <para/>
-	/// See: https://github.com/elastic/ecs
+	/// ECS Repostory: https://github.com/elastic/ecs
+	/// <para/>
+	/// ECS field reference: https://www.elastic.co/guide/en/ecs/1.5/ecs-base.html
 	/// </summary>
 	public partial class Base
 	{
@@ -361,6 +363,8 @@ namespace Elastic.CommonSchema
 
 	/// <summary>
 	/// The agent fields contain the data about the software entity, if any, that collects, detects, or observes events on a host, or takes measurements on a host.<para/>Examples include Beats. Agents may also run on observers. ECS agent.* fields shall be populated with details of the agent running on the host or observer where the event happened or the measurement was taken.
+	/// <para/>
+	/// ECS field reference: https://www.elastic.co/guide/en/ecs/1.5/ecs-agent.html
 	/// </summary>
 	/// <remarks>
 	/// Examples: In the case of Beats for logs, the agent.name is filebeat. For APM, it is the agent running in the app/service. The agent information does not change if data is sent through queuing systems like Kafka, Redis, or processing systems such as Logstash or APM Server.
@@ -426,6 +430,8 @@ namespace Elastic.CommonSchema
 
 	/// <summary>
 	/// An autonomous system (AS) is a collection of connected Internet Protocol (IP) routing prefixes under the control of one or more network operators on behalf of a single administrative entity or domain that presents a common, clearly defined routing policy to the internet.
+	/// <para/>
+	/// ECS field reference: https://www.elastic.co/guide/en/ecs/1.5/ecs-as.html
 	/// </summary>
 	public class As 
 	{
@@ -468,6 +474,8 @@ namespace Elastic.CommonSchema
 
 	/// <summary>
 	/// A client is defined as the initiator of a network connection for events regarding sessions, connections, or bidirectional flow records.<para/>For TCP events, the client is the initiator of the TCP connection that sends the SYN packet(s). For other protocols, the client is generally the initiator or requestor in the network transaction. Some systems use the term "originator" to refer the client in TCP connections. The client fields describe details about the system acting as the client in the network event. Client fields are usually populated in conjunction with server fields. Client fields are generally not populated for packet-level events.<para/>Client / server representations can add semantic context to an exchange, which is helpful to visualize the data in certain situations. If your context falls in that category, you should still ensure that source and destination are filled appropriately.
+	/// <para/>
+	/// ECS field reference: https://www.elastic.co/guide/en/ecs/1.5/ecs-client.html
 	/// </summary>
 	public class Client 
 	{
@@ -624,6 +632,8 @@ namespace Elastic.CommonSchema
 
 	/// <summary>
 	/// Fields related to the cloud or infrastructure the events are coming from.
+	/// <para/>
+	/// ECS field reference: https://www.elastic.co/guide/en/ecs/1.5/ecs-cloud.html
 	/// </summary>
 	/// <remarks>
 	/// Examples: If Metricbeat is running on an EC2 host and fetches data from its host, the cloud info contains the data about this machine. If Metricbeat runs on a remote machine outside the cloud and fetches data from a service running in the cloud, the field contains cloud data from the machine the service is running on.
@@ -676,6 +686,8 @@ namespace Elastic.CommonSchema
 
 	/// <summary>
 	/// These fields contain information about binary code signatures.
+	/// <para/>
+	/// ECS field reference: https://www.elastic.co/guide/en/ecs/1.5/ecs-code_signature.html
 	/// </summary>
 	public class CodeSignature 
 	{
@@ -744,6 +756,8 @@ namespace Elastic.CommonSchema
 
 	/// <summary>
 	/// Container fields are used for meta information about the specific container that is the source of information.<para/>These fields help correlate data based containers from any runtime.
+	/// <para/>
+	/// ECS field reference: https://www.elastic.co/guide/en/ecs/1.5/ecs-container.html
 	/// </summary>
 	public class Container 
 	{
@@ -807,6 +821,8 @@ namespace Elastic.CommonSchema
 
 	/// <summary>
 	/// Destination fields describe details about the destination of a packet/event.<para/>Destination fields are usually populated in conjunction with source fields.
+	/// <para/>
+	/// ECS field reference: https://www.elastic.co/guide/en/ecs/1.5/ecs-destination.html
 	/// </summary>
 	public class Destination 
 	{
@@ -911,6 +927,8 @@ namespace Elastic.CommonSchema
 
 	/// <summary>
 	/// These fields contain information about code libraries dynamically loaded into processes.<para/><para/>Many operating systems refer to "shared code libraries" with different names, but this field set refers to all of the following:<para/>* Dynamic-link library (`.dll`) commonly used on Windows<para/>* Shared Object (`.so`) commonly used on Unix-like operating systems<para/>* Dynamic library (`.dylib`) commonly used on macOS
+	/// <para/>
+	/// ECS field reference: https://www.elastic.co/guide/en/ecs/1.5/ecs-dll.html
 	/// </summary>
 	public class Dll 
 	{
@@ -1060,6 +1078,8 @@ namespace Elastic.CommonSchema
 
 	/// <summary>
 	/// Fields describing DNS queries and answers.<para/>DNS events should either represent a single DNS query prior to getting answers (`dns.type:query`) or they should represent a full exchange and contain the query details as well as all of the answers that were provided for this query (`dns.type:answer`).
+	/// <para/>
+	/// ECS field reference: https://www.elastic.co/guide/en/ecs/1.5/ecs-dns.html
 	/// </summary>
 	public class Dns 
 	{
@@ -1127,6 +1147,8 @@ namespace Elastic.CommonSchema
 
 	/// <summary>
 	/// Meta-information specific to ECS.
+	/// <para/>
+	/// ECS field reference: https://www.elastic.co/guide/en/ecs/1.5/ecs-ecs.html
 	/// </summary>
 	public class Ecs 
 	{
@@ -1142,6 +1164,8 @@ namespace Elastic.CommonSchema
 
 	/// <summary>
 	/// These fields can represent errors of any kind.<para/>Use them for errors that happen while fetching events or in cases where the event itself contains an error.
+	/// <para/>
+	/// ECS field reference: https://www.elastic.co/guide/en/ecs/1.5/ecs-error.html
 	/// </summary>
 	public class Error 
 	{
@@ -1398,6 +1422,8 @@ namespace Elastic.CommonSchema
 
 	/// <summary>
 	/// The event fields are used for context information about the log or metric event itself.<para/>A log is defined as an event containing details of something that happened. Log events must include the time at which the thing happened. Examples of log events include a process starting on a host, a network packet being sent from a source to a destination, or a network connection between a client and a server being initiated or closed. A metric is defined as an event containing one or more numerical measurements and the time at which the measurement was taken. Examples of metric events include memory pressure measured on a host and device temperature. See the `event.kind` definition in this section for additional details about metric and state events.
+	/// <para/>
+	/// ECS field reference: https://www.elastic.co/guide/en/ecs/1.5/ecs-event.html
 	/// </summary>
 	public class Event 
 	{
@@ -1589,6 +1615,8 @@ namespace Elastic.CommonSchema
 
 	/// <summary>
 	/// A file is defined as a set of information that has been created on, or has existed on a filesystem.<para/>File objects can be associated with host events, network events, and/or file events (e.g., those produced by File Integrity Monitoring [FIM] products or services). File fields provide details about the affected file associated with the event or metric.
+	/// <para/>
+	/// ECS field reference: https://www.elastic.co/guide/en/ecs/1.5/ecs-file.html
 	/// </summary>
 	public class File 
 	{
@@ -1782,6 +1810,8 @@ namespace Elastic.CommonSchema
 
 	/// <summary>
 	/// Geo fields can carry data about a specific location related to an event.<para/>This geolocation information can be derived from techniques such as Geo IP, or be user-supplied.
+	/// <para/>
+	/// ECS field reference: https://www.elastic.co/guide/en/ecs/1.5/ecs-geo.html
 	/// </summary>
 	public class Geo 
 	{
@@ -1853,6 +1883,8 @@ namespace Elastic.CommonSchema
 
 	/// <summary>
 	/// The group fields are meant to represent groups that are relevant to the event.
+	/// <para/>
+	/// ECS field reference: https://www.elastic.co/guide/en/ecs/1.5/ecs-group.html
 	/// </summary>
 	public class Group 
 	{
@@ -1881,6 +1913,8 @@ namespace Elastic.CommonSchema
 
 	/// <summary>
 	/// The hash fields represent different hash algorithms and their values.<para/>Field names for common hashes (e.g. MD5, SHA1) are predefined. Add fields for other hashes by lowercasing the hash algorithm name and using underscore separators as appropriate (snake case, e.g. sha3_512).
+	/// <para/>
+	/// ECS field reference: https://www.elastic.co/guide/en/ecs/1.5/ecs-hash.html
 	/// </summary>
 	public class Hash 
 	{
@@ -1916,6 +1950,8 @@ namespace Elastic.CommonSchema
 
 	/// <summary>
 	/// A host is defined as a general computing instance.<para/>ECS host.* fields should be populated with details about the host on which the event happened, or from which the measurement was taken. Host types include hardware, virtual machines, Docker containers, and Kubernetes nodes.
+	/// <para/>
+	/// ECS field reference: https://www.elastic.co/guide/en/ecs/1.5/ecs-host.html
 	/// </summary>
 	public class Host 
 	{
@@ -2125,6 +2161,8 @@ namespace Elastic.CommonSchema
 
 	/// <summary>
 	/// Fields related to HTTP activity. Use the `url` field set to store the url of the request.
+	/// <para/>
+	/// ECS field reference: https://www.elastic.co/guide/en/ecs/1.5/ecs-http.html
 	/// </summary>
 	public class Http 
 	{
@@ -2152,6 +2190,8 @@ namespace Elastic.CommonSchema
 
 	/// <summary>
 	/// The interface fields are used to record ingress and egress interface information when reported by an observer (e.g. firewall, router, load balancer) in the context of the observer handling a network connection.  In the case of a single observer interface (e.g. network sensor on a span port) only the observer.ingress information should be populated.
+	/// <para/>
+	/// ECS field reference: https://www.elastic.co/guide/en/ecs/1.5/ecs-interface.html
 	/// </summary>
 	public class Interface 
 	{
@@ -2300,6 +2340,8 @@ namespace Elastic.CommonSchema
 
 	/// <summary>
 	/// Details about the event's logging mechanism or logging transport.<para/>The log.* fields are typically populated with details about the logging mechanism used to create and/or transport the event. For example, syslog details belong under `log.syslog.*`.<para/>The details specific to your event source are typically not logged under `log.*`, but rather in `event.*` or in other ECS fields.
+	/// <para/>
+	/// ECS field reference: https://www.elastic.co/guide/en/ecs/1.5/ecs-log.html
 	/// </summary>
 	public partial class Log 
 	{
@@ -2379,6 +2421,8 @@ namespace Elastic.CommonSchema
 
 	/// <summary>
 	/// The network is defined as the communication path over which a host or network event happens.<para/>The network.* fields should be populated with details about the network activity associated with an event.
+	/// <para/>
+	/// ECS field reference: https://www.elastic.co/guide/en/ecs/1.5/ecs-network.html
 	/// </summary>
 	public class Network 
 	{
@@ -2657,6 +2701,8 @@ namespace Elastic.CommonSchema
 
 	/// <summary>
 	/// An observer is defined as a special network, security, or application device used to detect, observe, or create network, security, or application-related events and metrics.<para/>This could be a custom hardware appliance or a server that has been configured to run special network, security, or application software. Examples include firewalls, web proxies, intrusion detection/prevention systems, network monitoring sensors, web application firewalls, data loss prevention systems, and APM servers. The observer.* fields shall be populated with details of the system, if any, that detects, observes and/or creates a network, security, or application event or metric. Message queues and ETL components used in processing events or metrics are not considered observers in ECS.
+	/// <para/>
+	/// ECS field reference: https://www.elastic.co/guide/en/ecs/1.5/ecs-observer.html
 	/// </summary>
 	public class Observer 
 	{
@@ -2789,6 +2835,8 @@ namespace Elastic.CommonSchema
 
 	/// <summary>
 	/// The organization fields enrich data with information about the company or entity the data is associated with.<para/>These fields help you arrange or filter data stored in an index by one or multiple organizations.
+	/// <para/>
+	/// ECS field reference: https://www.elastic.co/guide/en/ecs/1.5/ecs-organization.html
 	/// </summary>
 	public class Organization 
 	{
@@ -2810,6 +2858,8 @@ namespace Elastic.CommonSchema
 
 	/// <summary>
 	/// The OS fields contain information about the operating system.
+	/// <para/>
+	/// ECS field reference: https://www.elastic.co/guide/en/ecs/1.5/ecs-os.html
 	/// </summary>
 	public class Os 
 	{
@@ -2865,6 +2915,8 @@ namespace Elastic.CommonSchema
 
 	/// <summary>
 	/// These fields contain information about an installed software package. It contains general information about a package, such as name, version or size. It also contains installation details, such as time or location.
+	/// <para/>
+	/// ECS field reference: https://www.elastic.co/guide/en/ecs/1.5/ecs-package.html
 	/// </summary>
 	public class Package 
 	{
@@ -2975,6 +3027,8 @@ namespace Elastic.CommonSchema
 
 	/// <summary>
 	/// These fields contain Windows Portable Executable (PE) metadata.
+	/// <para/>
+	/// ECS field reference: https://www.elastic.co/guide/en/ecs/1.5/ecs-pe.html
 	/// </summary>
 	public class Pe 
 	{
@@ -3285,6 +3339,8 @@ namespace Elastic.CommonSchema
 
 	/// <summary>
 	/// These fields contain information about a process.<para/>These fields can help you correlate metrics information with a process id/name from a log message.  The `process.pid` often stays in the metric itself and is copied to the global field for correlation.
+	/// <para/>
+	/// ECS field reference: https://www.elastic.co/guide/en/ecs/1.5/ecs-process.html
 	/// </summary>
 	public class Process 
 	{
@@ -3469,6 +3525,8 @@ namespace Elastic.CommonSchema
 
 	/// <summary>
 	/// Fields related to Windows Registry operations.
+	/// <para/>
+	/// ECS field reference: https://www.elastic.co/guide/en/ecs/1.5/ecs-registry.html
 	/// </summary>
 	public class Registry 
 	{
@@ -3514,6 +3572,8 @@ namespace Elastic.CommonSchema
 
 	/// <summary>
 	/// This field set is meant to facilitate pivoting around a piece of data.<para/>Some pieces of information can be seen in many places in an ECS event. To facilitate searching for them, store an array of all seen values to their corresponding field in `related.`.<para/>A concrete example is IP addresses, which can be under host, observer, source, destination, client, server, and network.forwarded_ip. If you append all IPs to `related.ip`, you can then search for a given IP trivially, no matter where it appeared, by querying `related.ip:192.0.2.15`.
+	/// <para/>
+	/// ECS field reference: https://www.elastic.co/guide/en/ecs/1.5/ecs-related.html
 	/// </summary>
 	public class Related 
 	{
@@ -3542,6 +3602,8 @@ namespace Elastic.CommonSchema
 
 	/// <summary>
 	/// Rule fields are used to capture the specifics of any observer or agent rules that generate alerts or other notable events.<para/>Examples of data sources that would populate the rule fields include: network admission control platforms, network or host IDS/IPS, network firewalls, web application firewalls, url filters, endpoint detection and response (EDR) systems, etc.
+	/// <para/>
+	/// ECS field reference: https://www.elastic.co/guide/en/ecs/1.5/ecs-rule.html
 	/// </summary>
 	public class Rule 
 	{
@@ -3650,6 +3712,8 @@ namespace Elastic.CommonSchema
 
 	/// <summary>
 	/// A Server is defined as the responder in a network connection for events regarding sessions, connections, or bidirectional flow records.<para/>For TCP events, the server is the receiver of the initial SYN packet(s) of the TCP connection. For other protocols, the server is generally the responder in the network transaction. Some systems actually use the term "responder" to refer the server in TCP connections. The server fields describe details about the system acting as the server in the network event. Server fields are usually populated in conjunction with client fields. Server fields are generally not populated for packet-level events.<para/>Client / server representations can add semantic context to an exchange, which is helpful to visualize the data in certain situations. If your context falls in that category, you should still ensure that source and destination are filled appropriately.
+	/// <para/>
+	/// ECS field reference: https://www.elastic.co/guide/en/ecs/1.5/ecs-server.html
 	/// </summary>
 	public class Server 
 	{
@@ -3769,6 +3833,8 @@ namespace Elastic.CommonSchema
 
 	/// <summary>
 	/// The service fields describe the service for or from which the data was collected.<para/>These fields help you find and correlate logs for a specific service and version.
+	/// <para/>
+	/// ECS field reference: https://www.elastic.co/guide/en/ecs/1.5/ecs-service.html
 	/// </summary>
 	public class Service 
 	{
@@ -3850,6 +3916,8 @@ namespace Elastic.CommonSchema
 
 	/// <summary>
 	/// Source fields describe details about the source of a packet/event.<para/>Source fields are usually populated in conjunction with destination fields.
+	/// <para/>
+	/// ECS field reference: https://www.elastic.co/guide/en/ecs/1.5/ecs-source.html
 	/// </summary>
 	public class Source 
 	{
@@ -4016,6 +4084,8 @@ namespace Elastic.CommonSchema
 
 	/// <summary>
 	/// Fields to classify events and alerts according to a threat taxonomy such as the Mitre ATT&CK framework.<para/>These fields are for users to classify alerts from all of their sources (e.g. IDS, NGFW, etc.) within a common taxonomy. The threat.tactic.* are meant to capture the high level category of the threat (e.g. "impact"). The threat.technique.* fields are meant to capture which kind of approach is used by this detected threat, to accomplish the goal (e.g. "endpoint denial of service").
+	/// <para/>
+	/// ECS field reference: https://www.elastic.co/guide/en/ecs/1.5/ecs-threat.html
 	/// </summary>
 	public class Threat 
 	{
@@ -4259,6 +4329,8 @@ namespace Elastic.CommonSchema
 
 	/// <summary>
 	/// Fields related to a TLS connection. These fields focus on the TLS protocol itself and intentionally avoids in-depth analysis of the related x.509 certificate files.
+	/// <para/>
+	/// ECS field reference: https://www.elastic.co/guide/en/ecs/1.5/ecs-tls.html
 	/// </summary>
 	public class Tls 
 	{
@@ -4332,6 +4404,8 @@ namespace Elastic.CommonSchema
 
 	/// <summary>
 	/// URL fields provide support for complete or partial URLs, and supports the breaking down into scheme, domain, path, and so on.
+	/// <para/>
+	/// ECS field reference: https://www.elastic.co/guide/en/ecs/1.5/ecs-url.html
 	/// </summary>
 	public class Url 
 	{
@@ -4438,6 +4512,8 @@ namespace Elastic.CommonSchema
 
 	/// <summary>
 	/// The user fields describe information about the user that is relevant to the event.<para/>Fields can have one entry or multiple entries. If a user has more than one id, provide an array that includes all of them.
+	/// <para/>
+	/// ECS field reference: https://www.elastic.co/guide/en/ecs/1.5/ecs-user.html
 	/// </summary>
 	public class User 
 	{
@@ -4512,6 +4588,8 @@ namespace Elastic.CommonSchema
 
 	/// <summary>
 	/// The user_agent fields normally come from a browser request.<para/>They often show up in web service logs coming from the parsed user agent string.
+	/// <para/>
+	/// ECS field reference: https://www.elastic.co/guide/en/ecs/1.5/ecs-user_agent.html
 	/// </summary>
 	public class UserAgent 
 	{
@@ -4557,6 +4635,8 @@ namespace Elastic.CommonSchema
 
 	/// <summary>
 	/// The VLAN fields are used to identify 802.1q tag(s) of a packet, as well as ingress and egress VLAN associations of an observer in relation to a specific packet or connection.<para/>Network.vlan fields are used to record a single VLAN tag, or the outer tag in the case of q-in-q encapsulations, for a packet or connection as observed, typically provided by a network sensor (e.g. Zeek, Wireshark) passively reporting on traffic.<para/>Network.inner VLAN fields are used to report inner q-in-q 802.1q tags (multiple 802.1q encapsulations) as observed, typically provided by a network sensor  (e.g. Zeek, Wireshark) passively reporting on traffic. Network.inner VLAN fields should only be used in addition to network.vlan fields to indicate q-in-q tagging.<para/>Observer.ingress and observer.egress VLAN values are used to record observer specific information when observer events contain discrete ingress and egress VLAN information, typically provided by firewalls, routers, or load balancers.
+	/// <para/>
+	/// ECS field reference: https://www.elastic.co/guide/en/ecs/1.5/ecs-vlan.html
 	/// </summary>
 	public class Vlan 
 	{
@@ -4633,6 +4713,8 @@ namespace Elastic.CommonSchema
 
 	/// <summary>
 	/// The vulnerability fields describe information about a vulnerability that is relevant to an event.
+	/// <para/>
+	/// ECS field reference: https://www.elastic.co/guide/en/ecs/1.5/ecs-vulnerability.html
 	/// </summary>
 	public class Vulnerability 
 	{
