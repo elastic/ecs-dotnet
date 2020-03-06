@@ -87,7 +87,7 @@ namespace Elastic.CommonSchema
 		public Destination Destination { get; set; }
 
 		/// <summary>
-		/// These fields contain information about code libraries dynamically loaded into processes.<para/><para/>Many operating systems refer to "shared code libraries" with different names, but this field set refers to all of the following:<para/>* Dynamic-link library (`.dll`) commonly used on Windows<para/>* Shared Object (`.so`) commonly used on Unix-like operating systems<para/>* Dynamic library (`.dylib`) commonly used on macOS
+		/// These fields contain information about code libraries dynamically loaded into processes.<para/>Many operating systems refer to "shared code libraries" with different names, but this field set refers to all of the following:<para/>* Dynamic-link library (`.dll`) commonly used on Windows<para/>* Shared Object (`.so`) commonly used on Unix-like operating systems<para/>* Dynamic library (`.dylib`) commonly used on macOS
 		/// </summary>
 		[DataMember(Name = "dll")]
 		public Dll Dll { get; set; }
@@ -926,7 +926,7 @@ namespace Elastic.CommonSchema
 	}
 
 	/// <summary>
-	/// These fields contain information about code libraries dynamically loaded into processes.<para/><para/>Many operating systems refer to "shared code libraries" with different names, but this field set refers to all of the following:<para/>* Dynamic-link library (`.dll`) commonly used on Windows<para/>* Shared Object (`.so`) commonly used on Unix-like operating systems<para/>* Dynamic library (`.dylib`) commonly used on macOS
+	/// These fields contain information about code libraries dynamically loaded into processes.<para/>Many operating systems refer to "shared code libraries" with different names, but this field set refers to all of the following:<para/>* Dynamic-link library (`.dll`) commonly used on Windows<para/>* Shared Object (`.so`) commonly used on Unix-like operating systems<para/>* Dynamic library (`.dylib`) commonly used on macOS
 	/// <para/>
 	/// ECS field reference: https://www.elastic.co/guide/en/ecs/1.5/ecs-dll.html
 	/// </summary>
@@ -2489,7 +2489,7 @@ namespace Elastic.CommonSchema
 		public string Protocol { get; set; }
 
 		/// <summary>
-		/// Direction of the network traffic.<para/>Recommended values are:<para/>  * inbound<para/>  * outbound<para/>  * internal<para/>  * external<para/>  * unknown<para/><para/>When mapping events from a host-based monitoring context, populate this field from the host's point of view.<para/>When mapping events from a network or perimeter-based monitoring context, populate this field from the point of view of your network perimeter.
+		/// Direction of the network traffic.<para/>Recommended values are:<para/>  * inbound<para/>  * outbound<para/>  * internal<para/>  * external<para/>  * unknown<para/>When mapping events from a host-based monitoring context, populate this field from the host's point of view.<para/>When mapping events from a network or perimeter-based monitoring context, populate this field from the point of view of your network perimeter.
 		/// </summary>
 		/// <remarks>Core</remarks>
 		/// <example>inbound</example>
