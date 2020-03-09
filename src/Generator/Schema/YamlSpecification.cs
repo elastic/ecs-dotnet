@@ -12,6 +12,10 @@ namespace Generator.Schema
 	{
 		private YamlSchema _baseRoot;
 
+		public string FullVersion => DownloadBranch + ".0";
+
+		public string DownloadBranch { get; set; }
+
 		public YamlSchema BaseYamlSchema()
 		{
 			if (_baseRoot != null)

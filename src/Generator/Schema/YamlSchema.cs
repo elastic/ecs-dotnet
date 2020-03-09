@@ -23,12 +23,6 @@ namespace Generator.Schema
 		[JsonProperty("description", Required = Required.Always)]
 		public string Description { get; set; }
 
-		[JsonIgnore]
-		public string FullVersion => DownloadBranch + ".0";
-
-		[JsonIgnore]
-		public string DownloadBranch { get; set; }
-
 		/// <summary>
 		///  The fields within the schema
 		/// </summary>

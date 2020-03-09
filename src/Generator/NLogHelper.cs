@@ -27,7 +27,7 @@ namespace Generator
 				case "log.level": return "${level}";
 				case "labels": return "";
 				case "message": return "${message}";
-				case "ecs.version": return field.Schema.FullVersion;
+				case "ecs.version": return field.Schema.Specification.FullVersion;
 				default: return string.Empty;
 			}
 		}

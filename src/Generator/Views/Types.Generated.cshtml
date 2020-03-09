@@ -27,7 +27,7 @@ using System.Runtime.Serialization;
 namespace Elastic.CommonSchema
 {
 	/// <summary>
-	/// Elastic Common Schema version @(Model.YamlSchemasOrdered.First().FullVersion)
+	/// Elastic Common Schema version @(Model.FullVersion)
 	/// <para/>
 	/// The Elastic Common Schema (ECS) defines a common set of fields for ingesting data into Elasticsearch.
 	/// A common schema helps you correlate data from sources like logs and metrics or IT operations analytics
@@ -35,14 +35,14 @@ namespace Elastic.CommonSchema
 	/// <para/>
 	/// ECS Repostory: https://github.com/elastic/ecs
 	/// <para/>
-	/// ECS field reference: https://www.elastic.co/guide/en/ecs/@(Model.YamlSchemasOrdered.First().DownloadBranch)/ecs-base.html
+	/// ECS field reference: https://www.elastic.co/guide/en/ecs/@(Model.DownloadBranch)/ecs-base.html
 	/// </summary>
 	public partial class Base
 	{
 		/// <summary>
 		/// Elastic Common Schema version
 		/// </summary>
-		public static string Version => "@(Model.YamlSchemasOrdered.First().FullVersion)";
+		public static string Version => "@(Model.FullVersion)";
 
 		/// <summary>
 		/// Container for additional metadata against this event.
@@ -246,7 +246,7 @@ foreach (var field in schema.Fields.Where(f => f.Value.IsCustomEnum()))
 <text>	/// <summary>
 	/// @Raw(schema.DescriptionSanitized())
 	/// <para/>
-	/// ECS field reference: https://www.elastic.co/guide/en/ecs/@(Model.YamlSchemasOrdered.First().DownloadBranch)/ecs-@(schema.Name.ToLower()).html
+	/// ECS field reference: https://www.elastic.co/guide/en/ecs/@(Model.DownloadBranch)/ecs-@(schema.Name.ToLower()).html
 	/// </summary>
 	@if (!schema.Footnote.IsNullOrEmpty())
 	{
@@ -299,13 +299,13 @@ foreach (var nesting in schema.Nestings)
 namespace Elastic.CommonSchema.Elasticsearch
 {
 	/// <summary>
-	/// Elastic Common Schema version @(Model.YamlSchemasOrdered.First().FullVersion) index templates to be used with Elasticsearch.
+	/// Elastic Common Schema version @(Model.FullVersion) index templates to be used with Elasticsearch.
 	/// </summary>
 	public static class IndexTemplates
 	{
 @foreach (var template in Model.Templates)
 {<text>		/// <summary>
-		/// Elastic Common Schema version @(Model.YamlSchemasOrdered.First().FullVersion) index template for Elasticsearch version @(template.Key)
+		/// Elastic Common Schema version @(Model.FullVersion) index template for Elasticsearch version @(template.Key)
 		/// See the Put Index Template API documentation: https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-templates.html
 		/// </summary>
 		/// <returns>Index template string that can be used with the Put Index Template API.</returns>

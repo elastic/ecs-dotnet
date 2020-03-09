@@ -87,9 +87,8 @@ namespace Generator
 					using (var fileProgress = progressBar.Spawn(files.Count, $"Listing {files.Count} files",
 						new ProgressBarOptions { ProgressCharacter = '─', BackgroundColor = ConsoleColor.DarkGray }))
 					{
-						foreach (var file in files)
+						foreach (var specifications in files.Select(GetYamlSchemas))
 						{
-							var specifications = GetYamlSchemas(downloadBranch, file);
 							yamlSchemas.AddRange(specifications);
 							fileProgress.Tick();
 						}
@@ -124,7 +123,8 @@ namespace Generator
 			var spec = new YamlSpecification
 			{
 				YamlSchemas = yamlSchemas,
-				Templates = templates
+				Templates = templates,
+				DownloadBranch = downloadBranch
 			};
 
 			foreach (var specYamlSchema in spec.YamlSchemas)
@@ -141,7 +141,7 @@ namespace Generator
 			return textInfo.ToTitleCase(s.ToLowerInvariant()).Replace("_", string.Empty).Replace(".", string.Empty);
 		}
 
-		private static IEnumerable<YamlSchema> GetYamlSchemas(string downloadBranch, string file)
+		private static IEnumerable<YamlSchema> GetYamlSchemas(string file)
 		{
 			var deserializer = new Deserializer();
 			var contents = File.ReadAllText(file);
@@ -169,7 +169,6 @@ namespace Generator
 			return spec.Select(d => d.Value)
 				.Select(s =>
 				{
-					s.DownloadBranch = downloadBranch;
 					foreach (var (key, value) in s.Fields)
 						value.Schema = s;
 					return s;
