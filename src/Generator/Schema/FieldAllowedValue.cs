@@ -6,7 +6,7 @@ using Newtonsoft.Json;
 
 namespace Generator.Schema
 {
-	public class AllowedValue
+	public class FieldAllowedValue
 	{
 		[JsonProperty("name")]
 		public string Name { get; set; }

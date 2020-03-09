@@ -7,7 +7,7 @@ using Newtonsoft.Json;
 namespace Generator.Schema
 {
 	[JsonObject(MemberSerialization.OptIn)]
-	public class MultiField
+	public class FieldMultiField
 	{
 		/// <summary>
 		///     Name of the field, defaults to multi_fields type (optional)

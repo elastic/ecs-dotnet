@@ -16,7 +16,7 @@ namespace Generator.Schema
 		public YamlSchema Schema { get; set; }
 
 		[JsonProperty("allowed_values")]
-		public List<AllowedValue> AllowedValues { get; set; }
+		public List<FieldAllowedValue> AllowedValues { get; set; }
 
 		[JsonProperty("dashed_name")]
 		public string DashedName { get; set; }
@@ -72,7 +72,7 @@ namespace Generator.Schema
 		///  Optional
 		/// </summary>
 		[JsonProperty("multi_fields")]
-		public List<MultiField> MultiFields { get; set; }
+		public List<FieldMultiField> MultiFields { get; set; }
 
 		/// <summary>
 		///  Name of the field (required)

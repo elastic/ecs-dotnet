@@ -17,7 +17,7 @@ namespace Generator.Schema
 		public static string DescriptionSanitized(this YamlSchema value) =>
 			Regex.Replace(value.Description.TrimEnd(), @"[\r\n]+", "<para/>");
 
-		public static string DescriptionSanitized(this AllowedValue value) =>
+		public static string DescriptionSanitized(this FieldAllowedValue value) =>
 			Regex.Replace(value.Description.TrimEnd(), @"[\r\n]+", "<para/>");
 
 		public static string GetEnumClrTypeName(this Field value) =>
