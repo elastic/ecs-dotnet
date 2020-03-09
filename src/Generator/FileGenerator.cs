@@ -31,7 +31,7 @@ namespace Generator
 		{
 			Warnings = new List<string>();
 			var spec = GetEcsSpecification(downloadBranch, folders);
-			var actions = new Dictionary<Action<EcsSpecification>, string>
+			var actions = new Dictionary<Action<YamlSpecification>, string>
 			{
 				{ GenerateTypes, "Dotnet types" },
 				{ GenerateTypeMappings, "Dotnet type mapping" },
@@ -64,7 +64,7 @@ namespace Generator
 			Console.ResetColor();
 		}
 
-		private static EcsSpecification GetEcsSpecification(string downloadBranch, string[] folders)
+		private static YamlSpecification GetEcsSpecification(string downloadBranch, string[] folders)
 		{
 			var specificationFolder = Path.Combine(CodeConfiguration.SpecificationFolder, downloadBranch);
 			var directories = Directory
@@ -121,7 +121,7 @@ namespace Generator
 				}
 			}
 
-			var spec = new EcsSpecification
+			var spec = new YamlSpecification
 			{
 				YamlSchemas = yamlSchemas,
 				Templates = templates
@@ -175,10 +175,10 @@ namespace Generator
 				});
 		}
 
-		private static string DoRazor(string name, string template, EcsSpecification model) =>
+		private static string DoRazor(string name, string template, YamlSpecification model) =>
 			Razor.CompileRenderStringAsync(name, template, model).GetAwaiter().GetResult();
 
-		private static void GenerateTypes(EcsSpecification model)
+		private static void GenerateTypes(YamlSpecification model)
 		{
 			var targetDir = Path.GetFullPath(CodeConfiguration.ElasticCommonSchemaGeneratedFolder);
 			var outputFile = Path.Combine(targetDir, @"Types.Generated.cs");
@@ -188,7 +188,7 @@ namespace Generator
 			File.WriteAllText(outputFile, source);
 		}
 
-		private static void GenerateTypeMappings(EcsSpecification model)
+		private static void GenerateTypeMappings(YamlSpecification model)
 		{
 			var targetDir = Path.GetFullPath(CodeConfiguration.ElasticCommonSchemaNESTGeneratedFolder);
 			var outputFile = Path.Combine(targetDir, @"TypeMappings.Generated.cs");
@@ -198,7 +198,7 @@ namespace Generator
 			File.WriteAllText(outputFile, source);
 		}
 
-		private static void GenerateBaseJsonFormatter(EcsSpecification model)
+		private static void GenerateBaseJsonFormatter(YamlSpecification model)
 		{
 			var targetDir = Path.GetFullPath(CodeConfiguration.ElasticCommonSchemaGeneratedFolder);
 			var outputFile = Path.Combine(targetDir, "Serialization", @"BaseJsonFormatter.Generated.cs");

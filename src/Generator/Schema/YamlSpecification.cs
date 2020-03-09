@@ -8,7 +8,7 @@ using System.Linq;
 
 namespace Generator.Schema
 {
-	public class EcsSpecification
+	public class YamlSpecification
 	{
 		private YamlSchema _baseRoot;
 
@@ -28,6 +28,7 @@ namespace Generator.Schema
 						baseRoot.Fields.Add(otherRootField.Key, otherRootField.Value);
 				}
 			}
+
 			_baseRoot = baseRoot;
 			return _baseRoot;
 		}

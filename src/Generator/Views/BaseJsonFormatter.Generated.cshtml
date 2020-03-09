@@ -7,7 +7,7 @@
 @using Generator.Schema
 @using Microsoft.CodeAnalysis.CSharp.Syntax
 @using Newtonsoft.Json
-@inherits Generator.CodeTemplatePage<Generator.Schema.EcsSpecification>
+@inherits Generator.CodeTemplatePage<Generator.Schema.YamlSpecification>
 // Licensed to Elasticsearch B.V under one or more agreements.
 // Elasticsearch B.V licenses this file to you under the Apache 2.0 License.
 // See the LICENSE file in the project root for more information
@@ -49,7 +49,7 @@ namespace Elastic.CommonSchema.Serialization
 {<text>				"@(name)" => ReadString(ref reader, ref loglevel),
 </text>}
 	else
-{<text>				"@(name)" => ReadProp<@(Raw(field.Item2.ClrType))>(ref reader, "@name", ecsEvent, (b, v) => b.@(FileGenerator.PascalCase(field.Item2.Name)) = v),
+{<text>				"@(name)" => ReadProp<@(Raw(field.Item2.ClrType()))>(ref reader, "@name", ecsEvent, (b, v) => b.@(FileGenerator.PascalCase(field.Item2.Name)) = v),
 </text>}
 }
 @foreach (var schema in Model.BaseYamlSchema().GetFieldsNested())

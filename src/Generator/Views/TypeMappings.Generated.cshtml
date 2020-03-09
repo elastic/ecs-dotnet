@@ -3,8 +3,9 @@
 @using System.Collections.Generic
 @using CsQuery.ExtensionMethods.Internal
 @using Generator
+@using Generator.Schema
 @using Newtonsoft.Json
-@inherits Generator.CodeTemplatePage<Generator.Schema.EcsSpecification>
+@inherits Generator.CodeTemplatePage<Generator.Schema.YamlSpecification>
 // Licensed to Elasticsearch B.V under one or more agreements.
 // Elasticsearch B.V licenses this file to you under the Apache 2.0 License.
 // See the LICENSE file in the project root for more information
@@ -91,7 +92,7 @@ namespace Elastic.CommonSchema.Elasticsearch
 						properties
 @foreach (var field in Model.BaseYamlSchema().GetFieldsFlat())
 {
-<text>							.@(Raw(field.MappingType))(p => p.Name(n => n.@(field.PropertyName))@(field.Extras))
+<text>							.@(Raw(field.MappingType()))(p => p.Name(n => n.@(field.PropertyName))@(field.Extras))
 </text> 
 }@foreach (var schema in Model.NonBaseYamlSchemas())
 {
@@ -99,7 +100,7 @@ namespace Elastic.CommonSchema.Elasticsearch
 								o.Properties(a => a
 @foreach (var field in schema.GetFieldsFlat())
 {
-<text>									.@(Raw(field.MappingType))(p => p.Name(n => n.@(field.PropertyName))@(field.Extras))
+<text>									.@(Raw(field.MappingType()))(p => p.Name(n => n.@(field.PropertyName))@(field.Extras))
 </text> 
 }
 							))

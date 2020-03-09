@@ -167,7 +167,7 @@ namespace Elastic.CommonSchema.Elasticsearch
 									.Text(p => p.Name(n => n.Message).Norms(false))
 									.Keyword(p => p.Name(n => n.Code).IgnoreAbove(1024))
 									.Keyword(p => p.Name(n => n.Type).IgnoreAbove(1024))
-									.Keyword(p => p.Name(n => n.StackTrace).IgnoreAbove(1024).Index(false).DocValues(false))
+									.Keyword(p => p.Name(n => n.StackTrace).IgnoreAbove(1024).Index(false))
 							))
 							.Object<Event>(o =>
 								o.Properties(a => a
@@ -182,7 +182,7 @@ namespace Elastic.CommonSchema.Elasticsearch
 									.Keyword(p => p.Name(n => n.Dataset).IgnoreAbove(1024))
 									.Keyword(p => p.Name(n => n.Provider).IgnoreAbove(1024))
 									.Number(p => p.Name(n => n.Severity).Type(NumberType.Long))
-									.Keyword(p => p.Name(n => n.Original).IgnoreAbove(1024).Index(false).DocValues(false))
+									.Keyword(p => p.Name(n => n.Original).IgnoreAbove(1024).Index(false))
 									.Keyword(p => p.Name(n => n.Hash).IgnoreAbove(1024))
 									.Number(p => p.Name(n => n.Duration).Type(NumberType.Long))
 									.Number(p => p.Name(n => n.Sequence).Type(NumberType.Long))
@@ -269,7 +269,7 @@ namespace Elastic.CommonSchema.Elasticsearch
 							.Object<Log>(o =>
 								o.Properties(a => a
 									.Keyword(p => p.Name(n => n.Level).IgnoreAbove(1024))
-									.Keyword(p => p.Name(n => n.Original).IgnoreAbove(1024).Index(false).DocValues(false))
+									.Keyword(p => p.Name(n => n.Original).IgnoreAbove(1024).Index(false))
 									.Keyword(p => p.Name(n => n.Logger).IgnoreAbove(1024))
 							))
 							.Object<Network>(o =>

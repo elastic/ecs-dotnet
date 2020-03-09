@@ -12,16 +12,13 @@ namespace Generator.Schema
 	[JsonObject(MemberSerialization.OptIn)]
 	public class YamlSchema
 	{
-		public EcsSpecification Specification { get; set; }
+		public YamlSpecification Specification { get; set; }
 
 		/// <summary>
 		///     Description of the field set
 		/// </summary>
 		[JsonProperty("description", Required = Required.Always)]
 		public string Description { get; set; }
-
-		[JsonIgnore]
-		public string DescriptionSanitized => Regex.Replace(Description.TrimEnd(), @"[\r\n]+", "<para/>");
 
 		[JsonIgnore]
 		public string DownloadBranch { get; set; }
@@ -97,9 +94,9 @@ namespace Generator.Schema
 		public List<NestedFields> GetFieldsNested()
 		{
 			var nestedFields = new List<NestedFields>();
-			foreach (var nestedField in GetFilteredFields().Where(f => f.JsonFieldName.Contains(".")))
+			foreach (var nestedField in GetFilteredFields().Where(f => f.JsonFieldName().Contains(".")))
 			{
-				var split = nestedField.JsonFieldName.Split('.').ToArray();
+				var split = nestedField.JsonFieldName().Split('.').ToArray();
 				var current = nestedFields.SingleOrDefault(n => n.Name == split.First());
 
 				if (current != null)
@@ -138,7 +135,7 @@ namespace Generator.Schema
 
 		public IEnumerable<Field> GetFieldsFlat()
 		{
-			var filtered = GetFilteredFields().Where(f => !f.JsonFieldName.Contains("."));
+			var filtered = GetFilteredFields().Where(f => !f.JsonFieldName().Contains("."));
 
 			// The following are handled as child objects
 			filtered = filtered.Where(f => f.FlatName != "dns.answers");
