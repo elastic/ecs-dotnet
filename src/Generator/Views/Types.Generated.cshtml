@@ -1,12 +1,7 @@
-@using RazorLight
 @using System.Linq
-@using System.Collections.Generic
-@using System.Reflection.Metadata
-@using System.Security.Cryptography.X509Certificates
 @using CsQuery.ExtensionMethods.Internal
 @using Generator
 @using Generator.Schema
-@using Microsoft.CodeAnalysis.CSharp.Syntax
 @using Newtonsoft.Json
 @inherits Generator.CodeTemplatePage<Generator.Schema.YamlSpecification>
 // Licensed to Elasticsearch B.V under one or more agreements.
@@ -77,7 +72,7 @@ namespace Elastic.CommonSchema
 </text>
 		}
 		[DataMember(Name = "@Raw(field.JsonFieldName())")]
-		public @Raw(field.ClrType()) @(field.PropertyName) { get; set; }
+		public @Raw(field.ClrType()) @(field.PropertyName()) { get; set; }
 
 </text> 
 }
@@ -232,7 +227,7 @@ foreach (var field in schema.Fields.Where(f => f.Value.IsCustomEnum()))
 <text>	/// <summary>
 	/// @Raw(field.Value.DescriptionSanitized())
     /// </summary>
-	public class @field.Value.GetEnumClrTypeName
+	public class @field.Value.GetEnumClrTypeName()
 	{
 	@foreach (var value in field.Value.AllowedValues)
 	{
@@ -293,7 +288,7 @@ foreach (var nesting in schema.Nestings)
 <text>		/// <example>@Raw(JsonConvert.SerializeObject(field.Example).Trim('"'))</example>
 </text>}
 		[DataMember(Name = "@Raw(field.JsonFieldName())")]
-		public @Raw(field.ClrType()) @(field.PropertyName) { get; set; }
+		public @Raw(field.ClrType()) @(field.PropertyName()) { get; set; }
 
 </text>}
 	}
