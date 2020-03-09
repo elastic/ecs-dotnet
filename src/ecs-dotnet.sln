@@ -43,7 +43,6 @@ ProjectSection(SolutionItems) = preProject
 	..\global.json = ..\global.json
 	..\license.txt = ..\license.txt
 	..\README.md = ..\README.md
-	..\appveyor.yml = ..\appveyor.yml
 	..\build.bat = ..\build.bat
 	..\build.sh = ..\build.sh
 	..\nuget.config = ..\nuget.config

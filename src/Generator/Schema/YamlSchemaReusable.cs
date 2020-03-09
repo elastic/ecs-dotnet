@@ -8,7 +8,7 @@ using Newtonsoft.Json;
 namespace Generator.Schema
 {
 	[JsonObject(MemberSerialization.OptIn)]
-	public class Reusable
+	public class YamlSchemaReusable
 	{
 		[JsonProperty("expected")]
 		public List<string> Expected { get; set; }

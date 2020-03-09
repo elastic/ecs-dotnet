@@ -92,7 +92,7 @@ namespace Elastic.CommonSchema.Elasticsearch
 						properties
 @foreach (var field in Model.BaseYamlSchema().GetFieldsFlat())
 {
-<text>							.@(Raw(field.MappingType()))(p => p.Name(n => n.@(field.PropertyName())@(field.Extras())
+<text>							.@(Raw(field.MappingType()))(p => p.Name(n => n.@(field.PropertyName()))@(field.Extras()))
 </text> 
 }@foreach (var schema in Model.NonBaseYamlSchemas())
 {
@@ -100,7 +100,7 @@ namespace Elastic.CommonSchema.Elasticsearch
 								o.Properties(a => a
 @foreach (var field in schema.GetFieldsFlat())
 {
-<text>									.@(Raw(field.MappingType()))(p => p.Name(n => n.@(field.PropertyName())@(field.Extras())
+<text>									.@(Raw(field.MappingType()))(p => p.Name(n => n.@(field.PropertyName()))@(field.Extras()))
 </text> 
 }
 							))

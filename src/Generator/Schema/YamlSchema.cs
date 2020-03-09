@@ -60,7 +60,7 @@ namespace Generator.Schema
 		///     Optional
 		/// </summary>
 		[JsonProperty("reusable")]
-		public Reusable Reusable { get; set; }
+		public YamlSchemaReusable Reusable { get; set; }
 
 		/// <summary>
 		///     Whether or not the fields of this field set should be nested under the field set name. (optional)
