@@ -12,31 +12,34 @@ namespace Generator.Schema
 	[JsonObject(MemberSerialization.OptIn)]
 	public class YamlSchema
 	{
+		/// <summary>
+		///  Reference to the YAML specification.
+		/// </summary>
 		public YamlSpecification Specification { get; set; }
 
 		/// <summary>
-		///     Description of the field set
+		/// vDescription of the field set
 		/// </summary>
 		[JsonProperty("description", Required = Required.Always)]
 		public string Description { get; set; }
 
 		[JsonIgnore]
+		public string FullVersion => DownloadBranch + ".0";
+
+		[JsonIgnore]
 		public string DownloadBranch { get; set; }
 
 		/// <summary>
-		///     Array of fields
+		///  The fields within the schema
 		/// </summary>
 		[JsonProperty("fields", Required = Required.Always)]
 		public Dictionary<string, Field> Fields { get; set; }
 
 		/// <summary>
-		///     Additional footnote
+		///  Footnote of this schema.
 		/// </summary>
 		[JsonProperty("footnote")]
 		public string Footnote { get; set; }
-
-		[JsonIgnore]
-		public string FullVersion => DownloadBranch + ".0";
 
 		/// <summary>
 		///     TBD. Just set it to 2, for now ;-)

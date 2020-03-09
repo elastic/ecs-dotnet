@@ -8,12 +8,21 @@ namespace Generator.Schema
 {
 	public class FieldAllowedValue
 	{
+		/// <summary>
+		///  Name of the allowed value.
+		/// </summary>
 		[JsonProperty("name")]
 		public string Name { get; set; }
 
+		/// <summary>
+		///  Description of the allowed value.
+		/// </summary>
 		[JsonProperty("description")]
 		public string Description { get; set; }
 
+		/// <summary>
+		///  List of allowed values.
+		/// </summary>
 		[JsonProperty("expected_event_types")]
 		public string[] ExpectedEventTypes { get; set; }
 	}

@@ -170,7 +170,8 @@ namespace Generator
 				.Select(s =>
 				{
 					s.DownloadBranch = downloadBranch;
-					foreach (var kvp in s.Fields) kvp.Value.Schema = s;
+					foreach (var (key, value) in s.Fields)
+						value.Schema = s;
 					return s;
 				});
 		}
