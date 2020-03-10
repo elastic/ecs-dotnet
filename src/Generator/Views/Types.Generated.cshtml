@@ -65,7 +65,7 @@ namespace Elastic.CommonSchema
 <text>		/// <summary>
 		/// @Raw(field.DescriptionSanitized())
 		/// </summary>
-		/// <remarks>@field.Level.ToString("f")</remarks>
+		/// <remarks>(ECS @field.Level.ToString("f"))</remarks>
 		@if (field.Example != null)
 		{
 <text>		/// <example>@Raw(field.ExampleSanitized())</example>
@@ -107,7 +107,7 @@ namespace Elastic.CommonSchema
 <text>		/// <summary>
 		/// @nestedField.NamePCased @Raw(field.DescriptionSanitized())
 		/// </summary>
-		/// <remarks>@field.Level.ToString("f")</remarks>
+		/// <remarks>(ECS @field.Level.ToString("f"))</remarks>
 		@if (field.Example != null)
 		{
 <text>		/// <example>@Raw(field.ExampleSanitized())</example>
@@ -139,7 +139,7 @@ namespace Elastic.CommonSchema
 	{<text>		/// <summary>
 		/// @Raw(field.DescriptionSanitized())
 		/// </summary>
-		/// <remarks>@field.Level.ToString("f")</remarks>
+		/// <remarks>(ECS @field.Level.ToString("f"))</remarks>
 		@if (field.Example != null)
 		{
 <text>		/// <example>@Raw(field.ExampleSanitized())</example>
@@ -175,7 +175,7 @@ namespace Elastic.CommonSchema
 <text>		/// <summary>
 		/// @nestedField.NamePCased @Raw(field.DescriptionSanitized())
 		/// </summary>
-		/// <remarks>@field.Level.ToString("f")</remarks>
+		/// <remarks>(ECS @field.Level.ToString("f"))</remarks>
 		@if (field.Example != null)
 		{
 <text>		/// <example>@Raw(field.ExampleSanitized())</example>
@@ -207,7 +207,7 @@ namespace Elastic.CommonSchema
 	{<text>		/// <summary>
 		/// @Raw(field.DescriptionSanitized())
 		/// </summary>
-		/// <remarks>@field.Level.ToString("f")</remarks>
+		/// <remarks>(ECS @field.Level.ToString("f"))</remarks>
 		@if (field.Example != null)
 		{
 <text>		/// <example>@Raw(field.ExampleSanitized())</example>
@@ -282,7 +282,7 @@ foreach (var nesting in schema.Nestings)
 	{<text>		/// <summary>
 		/// @Raw(field.DescriptionSanitized())
 		/// </summary>
-		/// <remarks>@field.Level.ToString("f")</remarks>
+		/// <remarks>(ECS @field.Level.ToString("f"))</remarks>
 		@if (field.Example != null)
 		{
 <text>		/// <example>@Raw(field.ExampleSanitized())</example>

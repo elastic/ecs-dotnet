@@ -28,7 +28,6 @@ namespace Elastic.CommonSchema.Tests
 			deserialized.Agent.Name.Should().Be("some-agent");
 			deserialized.Log.Should().NotBeNull();
 			deserialized.Log.Level.Should().Be("debug");
-
 		}
 
 		public class SubclassedBase : Base

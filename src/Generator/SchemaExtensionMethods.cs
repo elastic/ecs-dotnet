@@ -15,9 +15,6 @@ namespace Generator.Schema
 		public static string NamePCased(this YamlSchema value) =>
 			FileGenerator.PascalCase(value.Name);
 
-		public static string DescriptionSanitized(this Field value) =>
-			Regex.Replace(value.Description.TrimEnd(), @"[\r\n]+", "<para/>");
-
 		public static string ExampleSanitized(this Field value) =>
 			value.Example.ToString().StartsWith("{") && value.Example.ToString().Contains("lat")
 				? value.Example.ToString()
@@ -25,11 +22,17 @@ namespace Generator.Schema
 						? "[" + string.Join(',', value.Example.ToString().Trim('[').Trim(']').Split(',').Select(s => s.Trim())) + "]"
 						: JsonConvert.SerializeObject(value.Example).Trim('"');
 
+		private static string Sanitized(this string value) =>
+			Regex.Replace(value.TrimEnd(), @"[\r\n]+", "<para/><para/>");
+
+		public static string DescriptionSanitized(this Field value) =>
+			value.Description.Sanitized();
+
 		public static string DescriptionSanitized(this YamlSchema value) =>
-			Regex.Replace(value.Description.TrimEnd(), @"[\r\n]+", "<para/>");
+			value.Description.Sanitized();
 
 		public static string DescriptionSanitized(this FieldAllowedValue value) =>
-			Regex.Replace(value.Description.TrimEnd(), @"[\r\n]+", "<para/>");
+			value.Description.Sanitized();
 
 		public static string GetEnumClrTypeName(this Field value) =>
 			FileGenerator.PascalCase(value.FlatName);
