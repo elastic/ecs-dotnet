@@ -19,9 +19,11 @@ namespace Generator.Schema
 			Regex.Replace(value.Description.TrimEnd(), @"[\r\n]+", "<para/>");
 
 		public static string ExampleSanitized(this Field value) =>
-			value.Example.ToString().StartsWith("[")
-				? "[" + string.Join(',', value.Example.ToString().Trim('[').Trim(']').Split(',').Select(s => s.Trim())) + "]"
-				: JsonConvert.SerializeObject(value.Example).Trim('"');
+			value.Example.ToString().StartsWith("{") && value.Example.ToString().Contains("lat")
+				? value.Example.ToString()
+				: value.Example.ToString().StartsWith("[")
+						? "[" + string.Join(',', value.Example.ToString().Trim('[').Trim(']').Split(',').Select(s => s.Trim())) + "]"
+						: JsonConvert.SerializeObject(value.Example).Trim('"');
 
 		public static string DescriptionSanitized(this YamlSchema value) =>
 			Regex.Replace(value.Description.TrimEnd(), @"[\r\n]+", "<para/>");

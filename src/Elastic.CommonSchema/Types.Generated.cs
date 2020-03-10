@@ -1819,7 +1819,7 @@ namespace Elastic.CommonSchema
 		/// Longitude and latitude.
 		/// </summary>
 		/// <remarks>Core</remarks>
-		/// <example>{ \"lon\": -73.614830, \"lat\": 45.505918 }</example>
+		/// <example>{ "lon": -73.614830, "lat": 45.505918 }</example>
 		[DataMember(Name = "location")]
 		public Location Location { get; set; }
 
