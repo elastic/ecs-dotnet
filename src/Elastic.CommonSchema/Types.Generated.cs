@@ -34,7 +34,7 @@ namespace Elastic.CommonSchema
 	public partial class Base
 	{
 		/// <summary>
-		/// Elastic Common Schema version
+		/// Elastic Common Schema version 1.5.0
 		/// </summary>
 		public static string Version => "1.5.0";
 
@@ -490,7 +490,7 @@ namespace Elastic.CommonSchema
 		/// <summary>
 		/// Geo nested field.
 		/// <para/>
-		/// Geo fields can carry data about a specific location related to an event.&lt;para/&gt;This geolocation information can be derived from techniques such as Geo IP, or be user-supplied.
+		/// Geo fields can carry data about a specific location related to an event.<para/>This geolocation information can be derived from techniques such as Geo IP, or be user-supplied.
 		/// </summary>
 		[DataMember(Name = "geo")]
 		public Geo Geo { get; set; }
@@ -498,7 +498,7 @@ namespace Elastic.CommonSchema
 		/// <summary>
 		/// User nested field.
 		/// <para/>
-		/// The user fields describe information about the user that is relevant to the event.&lt;para/&gt;Fields can have one entry or multiple entries. If a user has more than one id, provide an array that includes all of them.
+		/// The user fields describe information about the user that is relevant to the event.<para/>Fields can have one entry or multiple entries. If a user has more than one id, provide an array that includes all of them.
 		/// </summary>
 		[DataMember(Name = "user")]
 		public User User { get; set; }
@@ -837,7 +837,7 @@ namespace Elastic.CommonSchema
 		/// <summary>
 		/// Geo nested field.
 		/// <para/>
-		/// Geo fields can carry data about a specific location related to an event.&lt;para/&gt;This geolocation information can be derived from techniques such as Geo IP, or be user-supplied.
+		/// Geo fields can carry data about a specific location related to an event.<para/>This geolocation information can be derived from techniques such as Geo IP, or be user-supplied.
 		/// </summary>
 		[DataMember(Name = "geo")]
 		public Geo Geo { get; set; }
@@ -845,7 +845,7 @@ namespace Elastic.CommonSchema
 		/// <summary>
 		/// User nested field.
 		/// <para/>
-		/// The user fields describe information about the user that is relevant to the event.&lt;para/&gt;Fields can have one entry or multiple entries. If a user has more than one id, provide an array that includes all of them.
+		/// The user fields describe information about the user that is relevant to the event.<para/>Fields can have one entry or multiple entries. If a user has more than one id, provide an array that includes all of them.
 		/// </summary>
 		[DataMember(Name = "user")]
 		public User User { get; set; }
@@ -943,7 +943,7 @@ namespace Elastic.CommonSchema
 		/// <summary>
 		/// Hash nested field.
 		/// <para/>
-		/// The hash fields represent different hash algorithms and their values.&lt;para/&gt;Field names for common hashes (e.g. MD5, SHA1) are predefined. Add fields for other hashes by lowercasing the hash algorithm name and using underscore separators as appropriate (snake case, e.g. sha3_512).
+		/// The hash fields represent different hash algorithms and their values.<para/>Field names for common hashes (e.g. MD5, SHA1) are predefined. Add fields for other hashes by lowercasing the hash algorithm name and using underscore separators as appropriate (snake case, e.g. sha3_512).
 		/// </summary>
 		[DataMember(Name = "hash")]
 		public Hash Hash { get; set; }
@@ -1631,7 +1631,7 @@ namespace Elastic.CommonSchema
 		/// <summary>
 		/// Hash nested field.
 		/// <para/>
-		/// The hash fields represent different hash algorithms and their values.&lt;para/&gt;Field names for common hashes (e.g. MD5, SHA1) are predefined. Add fields for other hashes by lowercasing the hash algorithm name and using underscore separators as appropriate (snake case, e.g. sha3_512).
+		/// The hash fields represent different hash algorithms and their values.<para/>Field names for common hashes (e.g. MD5, SHA1) are predefined. Add fields for other hashes by lowercasing the hash algorithm name and using underscore separators as appropriate (snake case, e.g. sha3_512).
 		/// </summary>
 		[DataMember(Name = "hash")]
 		public Hash Hash { get; set; }
@@ -1958,7 +1958,7 @@ namespace Elastic.CommonSchema
 		/// <summary>
 		/// Geo nested field.
 		/// <para/>
-		/// Geo fields can carry data about a specific location related to an event.&lt;para/&gt;This geolocation information can be derived from techniques such as Geo IP, or be user-supplied.
+		/// Geo fields can carry data about a specific location related to an event.<para/>This geolocation information can be derived from techniques such as Geo IP, or be user-supplied.
 		/// </summary>
 		[DataMember(Name = "geo")]
 		public Geo Geo { get; set; }
@@ -1974,7 +1974,7 @@ namespace Elastic.CommonSchema
 		/// <summary>
 		/// User nested field.
 		/// <para/>
-		/// The user fields describe information about the user that is relevant to the event.&lt;para/&gt;Fields can have one entry or multiple entries. If a user has more than one id, provide an array that includes all of them.
+		/// The user fields describe information about the user that is relevant to the event.<para/>Fields can have one entry or multiple entries. If a user has more than one id, provide an array that includes all of them.
 		/// </summary>
 		[DataMember(Name = "user")]
 		public User User { get; set; }
@@ -2429,7 +2429,7 @@ namespace Elastic.CommonSchema
 		/// <summary>
 		/// Vlan nested field.
 		/// <para/>
-		/// The VLAN fields are used to identify 802.1q tag(s) of a packet, as well as ingress and egress VLAN associations of an observer in relation to a specific packet or connection.&lt;para/&gt;Network.vlan fields are used to record a single VLAN tag, or the outer tag in the case of q-in-q encapsulations, for a packet or connection as observed, typically provided by a network sensor (e.g. Zeek, Wireshark) passively reporting on traffic.&lt;para/&gt;Network.inner VLAN fields are used to report inner q-in-q 802.1q tags (multiple 802.1q encapsulations) as observed, typically provided by a network sensor  (e.g. Zeek, Wireshark) passively reporting on traffic. Network.inner VLAN fields should only be used in addition to network.vlan fields to indicate q-in-q tagging.&lt;para/&gt;Observer.ingress and observer.egress VLAN values are used to record observer specific information when observer events contain discrete ingress and egress VLAN information, typically provided by firewalls, routers, or load balancers.
+		/// The VLAN fields are used to identify 802.1q tag(s) of a packet, as well as ingress and egress VLAN associations of an observer in relation to a specific packet or connection.<para/>Network.vlan fields are used to record a single VLAN tag, or the outer tag in the case of q-in-q encapsulations, for a packet or connection as observed, typically provided by a network sensor (e.g. Zeek, Wireshark) passively reporting on traffic.<para/>Network.inner VLAN fields are used to report inner q-in-q 802.1q tags (multiple 802.1q encapsulations) as observed, typically provided by a network sensor  (e.g. Zeek, Wireshark) passively reporting on traffic. Network.inner VLAN fields should only be used in addition to network.vlan fields to indicate q-in-q tagging.<para/>Observer.ingress and observer.egress VLAN values are used to record observer specific information when observer events contain discrete ingress and egress VLAN information, typically provided by firewalls, routers, or load balancers.
 		/// </summary>
 		[DataMember(Name = "vlan")]
 		public Vlan Vlan { get; set; }
@@ -2702,7 +2702,7 @@ namespace Elastic.CommonSchema
 		/// <summary>
 		/// Geo nested field.
 		/// <para/>
-		/// Geo fields can carry data about a specific location related to an event.&lt;para/&gt;This geolocation information can be derived from techniques such as Geo IP, or be user-supplied.
+		/// Geo fields can carry data about a specific location related to an event.<para/>This geolocation information can be derived from techniques such as Geo IP, or be user-supplied.
 		/// </summary>
 		[DataMember(Name = "geo")]
 		public Geo Geo { get; set; }
@@ -2726,7 +2726,7 @@ namespace Elastic.CommonSchema
 		/// <summary>
 		/// Vlan nested field.
 		/// <para/>
-		/// The VLAN fields are used to identify 802.1q tag(s) of a packet, as well as ingress and egress VLAN associations of an observer in relation to a specific packet or connection.&lt;para/&gt;Network.vlan fields are used to record a single VLAN tag, or the outer tag in the case of q-in-q encapsulations, for a packet or connection as observed, typically provided by a network sensor (e.g. Zeek, Wireshark) passively reporting on traffic.&lt;para/&gt;Network.inner VLAN fields are used to report inner q-in-q 802.1q tags (multiple 802.1q encapsulations) as observed, typically provided by a network sensor  (e.g. Zeek, Wireshark) passively reporting on traffic. Network.inner VLAN fields should only be used in addition to network.vlan fields to indicate q-in-q tagging.&lt;para/&gt;Observer.ingress and observer.egress VLAN values are used to record observer specific information when observer events contain discrete ingress and egress VLAN information, typically provided by firewalls, routers, or load balancers.
+		/// The VLAN fields are used to identify 802.1q tag(s) of a packet, as well as ingress and egress VLAN associations of an observer in relation to a specific packet or connection.<para/>Network.vlan fields are used to record a single VLAN tag, or the outer tag in the case of q-in-q encapsulations, for a packet or connection as observed, typically provided by a network sensor (e.g. Zeek, Wireshark) passively reporting on traffic.<para/>Network.inner VLAN fields are used to report inner q-in-q 802.1q tags (multiple 802.1q encapsulations) as observed, typically provided by a network sensor  (e.g. Zeek, Wireshark) passively reporting on traffic. Network.inner VLAN fields should only be used in addition to network.vlan fields to indicate q-in-q tagging.<para/>Observer.ingress and observer.egress VLAN values are used to record observer specific information when observer events contain discrete ingress and egress VLAN information, typically provided by firewalls, routers, or load balancers.
 		/// </summary>
 		[DataMember(Name = "vlan")]
 		public Vlan Vlan { get; set; }
@@ -3334,7 +3334,7 @@ namespace Elastic.CommonSchema
 		/// <summary>
 		/// Hash nested field.
 		/// <para/>
-		/// The hash fields represent different hash algorithms and their values.&lt;para/&gt;Field names for common hashes (e.g. MD5, SHA1) are predefined. Add fields for other hashes by lowercasing the hash algorithm name and using underscore separators as appropriate (snake case, e.g. sha3_512).
+		/// The hash fields represent different hash algorithms and their values.<para/>Field names for common hashes (e.g. MD5, SHA1) are predefined. Add fields for other hashes by lowercasing the hash algorithm name and using underscore separators as appropriate (snake case, e.g. sha3_512).
 		/// </summary>
 		[DataMember(Name = "hash")]
 		public Hash Hash { get; set; }
@@ -3707,7 +3707,7 @@ namespace Elastic.CommonSchema
 		/// <summary>
 		/// Geo nested field.
 		/// <para/>
-		/// Geo fields can carry data about a specific location related to an event.&lt;para/&gt;This geolocation information can be derived from techniques such as Geo IP, or be user-supplied.
+		/// Geo fields can carry data about a specific location related to an event.<para/>This geolocation information can be derived from techniques such as Geo IP, or be user-supplied.
 		/// </summary>
 		[DataMember(Name = "geo")]
 		public Geo Geo { get; set; }
@@ -3715,7 +3715,7 @@ namespace Elastic.CommonSchema
 		/// <summary>
 		/// User nested field.
 		/// <para/>
-		/// The user fields describe information about the user that is relevant to the event.&lt;para/&gt;Fields can have one entry or multiple entries. If a user has more than one id, provide an array that includes all of them.
+		/// The user fields describe information about the user that is relevant to the event.<para/>Fields can have one entry or multiple entries. If a user has more than one id, provide an array that includes all of them.
 		/// </summary>
 		[DataMember(Name = "user")]
 		public User User { get; set; }
@@ -3911,7 +3911,7 @@ namespace Elastic.CommonSchema
 		/// <summary>
 		/// Geo nested field.
 		/// <para/>
-		/// Geo fields can carry data about a specific location related to an event.&lt;para/&gt;This geolocation information can be derived from techniques such as Geo IP, or be user-supplied.
+		/// Geo fields can carry data about a specific location related to an event.<para/>This geolocation information can be derived from techniques such as Geo IP, or be user-supplied.
 		/// </summary>
 		[DataMember(Name = "geo")]
 		public Geo Geo { get; set; }
@@ -3919,7 +3919,7 @@ namespace Elastic.CommonSchema
 		/// <summary>
 		/// User nested field.
 		/// <para/>
-		/// The user fields describe information about the user that is relevant to the event.&lt;para/&gt;Fields can have one entry or multiple entries. If a user has more than one id, provide an array that includes all of them.
+		/// The user fields describe information about the user that is relevant to the event.<para/>Fields can have one entry or multiple entries. If a user has more than one id, provide an array that includes all of them.
 		/// </summary>
 		[DataMember(Name = "user")]
 		public User User { get; set; }

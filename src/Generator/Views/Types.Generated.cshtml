@@ -40,7 +40,7 @@ namespace Elastic.CommonSchema
 	public partial class Base
 	{
 		/// <summary>
-		/// Elastic Common Schema version
+		/// Elastic Common Schema version @(Model.FullVersion)
 		/// </summary>
 		public static string Version => "@(Model.FullVersion)";
 
@@ -263,7 +263,7 @@ foreach (var nesting in schema.Nestings)
 {<text>		/// <summary>
 		/// @FileGenerator.PascalCase(nesting) nested field.
 		/// <para/>
-		/// @Model.YamlSchemas.Single(y => y.Name == nesting).DescriptionSanitized()
+		/// @Raw(Model.YamlSchemas.Single(y => y.Name == nesting).DescriptionSanitized())
 		/// </summary>
 		[DataMember(Name = "@nesting")]
 		public @FileGenerator.PascalCase(nesting) @FileGenerator.PascalCase(nesting) { get; set; }
