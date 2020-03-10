@@ -11,6 +11,9 @@ namespace Generator.Schema
 {
 	public static class SchemaExtensionMethods
 	{
+		public static string NamePCased(this YamlSchema value) =>
+			FileGenerator.PascalCase(value.Name);
+
 		public static string DescriptionSanitized(this Field value) =>
 			Regex.Replace(value.Description.TrimEnd(), @"[\r\n]+", "<para/>");
 
@@ -26,9 +29,11 @@ namespace Generator.Schema
 		public static bool IsCustomEnum(this Field value) =>
 			value.AllowedValues != null && value.AllowedValues.Any();
 
+		public static bool IsArray(this Field value) => value.Normalize != null && value.Normalize.Contains("array");
+
 		public static string ClrType(this Field value)
 		{
-			var isArray = value.Normalize != null && value.Normalize.Contains("array") ||
+			var isArray = value.IsArray() ||
 				value.FlatName == "user.id" ||
 				value.FlatName == "registry.data.strings";
 

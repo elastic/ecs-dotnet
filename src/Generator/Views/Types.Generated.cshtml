@@ -56,7 +56,7 @@ namespace Elastic.CommonSchema
 		/// @Raw(schema.DescriptionSanitized())
 		/// </summary>
 		[DataMember(Name = "@Raw(schema.Name)")]
-		public @FileGenerator.PascalCase(schema.Name) @FileGenerator.PascalCase(schema.Name) { get; set; }
+		public @schema.NamePCased() @schema.NamePCased() { get; set; }
 
 </text>
 }
@@ -81,8 +81,8 @@ namespace Elastic.CommonSchema
 <text>		/// <summary>
 		/// @Raw(field.Description)
 		/// </summary>
-		[DataMember(Name = "@Raw(field.ClassName.ToLower())")]
-		public @field.ClassNameType @FileGenerator.PascalCase(field.ClassName) { get; set; }
+		[DataMember(Name = "@Raw(field.Name)")]
+		public @field.ClassNameType @field.NamePCased { get; set; }
 
 </text> 
 }
@@ -98,14 +98,14 @@ namespace Elastic.CommonSchema
 		}
 		
 <text>	/// <summary>
-	/// @nestedField.ClassName@child.ClassName, property of <see cref="@FileGenerator.PascalCase(Model.BaseYamlSchema().Name)@nestedField.ClassName" />
+	/// @nestedField.NamePCased@child.NamePCased, property of <see cref="@FileGenerator.PascalCase(Model.BaseYamlSchema().Name)@nestedField.NamePCased" />
 	/// </summary>
-	public class @child.ClassName
+	public class @child.NamePCased
 	{
 	@foreach (var field in child.Fields)
 	{
 <text>		/// <summary>
-		/// @nestedField.ClassName @Raw(field.DescriptionSanitized())
+		/// @nestedField.NamePCased @Raw(field.DescriptionSanitized())
 		/// </summary>
 		/// <remarks>@field.Level.ToString("f")</remarks>
 		@if (field.Example != null)
@@ -114,7 +114,7 @@ namespace Elastic.CommonSchema
 </text> 
 		}
 		[DataMember(Name = "@Raw(string.Join(".", field.Name.ToLower().Split('.').Skip(2)))")]
-		public @Raw(field.ClrType()) @FileGenerator.PascalCase(field.Name).Replace(nestedField.ClassName + child.ClassName, string.Empty) { get; set; }
+		public @Raw(field.ClrType()) @FileGenerator.PascalCase(field.Name).Replace(nestedField.NamePCased + child.NamePCased, string.Empty) { get; set; }
 
 </text>}
 	}
@@ -123,16 +123,16 @@ namespace Elastic.CommonSchema
 	}
 		
 <text>	/// <summary>
-	/// @nestedField.ClassName, property of <see cref="@FileGenerator.PascalCase(Model.BaseYamlSchema().Name)" />
+	/// @nestedField.NamePCased, property of <see cref="@FileGenerator.PascalCase(Model.BaseYamlSchema().Name)" />
 	/// </summary>
-	public class @nestedField.ClassName
+	public class @nestedField.NamePCased
 	{
 @foreach (var child in nestedField.Children)
 	{<text>		/// <summary>
-		/// @child.ClassName property.
+		/// @child.NamePCased property.
 		/// </summary>		   
-		[DataMember(Name = "@child.ClassName.ToLower()")]
-		public @nestedField.ClassName@child.ClassName @child.ClassName { get; set; }
+		[DataMember(Name = "@child.NamePCased.ToLower()")]
+		public @nestedField.NamePCased@child.NamePCased @child.NamePCased { get; set; }
 
 </text>}
 @foreach (var field in nestedField.Fields)
@@ -146,7 +146,7 @@ namespace Elastic.CommonSchema
 </text> 
 		}
 		[DataMember(Name = "@Raw(string.Join(".", field.Name.ToLower().Split('.').Skip(1)))")]
-		public @Raw(field.ClrType()) @FileGenerator.PascalCase(field.Name).Replace(nestedField.ClassName, string.Empty) { get; set; }
+		public @Raw(field.ClrType()) @FileGenerator.PascalCase(field.Name).Replace(nestedField.NamePCased, string.Empty) { get; set; }
 
 </text>}
 	}
@@ -166,14 +166,14 @@ namespace Elastic.CommonSchema
 		}
 		
 <text>	/// <summary>
-	/// @nestedField.ClassName@child.ClassName, property of <see cref="@FileGenerator.PascalCase(schema.Name)@nestedField.ClassName" />
+	/// @nestedField.NamePCased@child.NamePCased, property of <see cref="@schema.NamePCased()@nestedField.NamePCased" />
 	/// </summary>
-	public class @nestedField.ClassName@child.ClassName
+	public class @nestedField.NamePCased@child.NamePCased
 	{
 	@foreach (var field in child.Fields)
 	{
 <text>		/// <summary>
-		/// @nestedField.ClassName @Raw(field.DescriptionSanitized())
+		/// @nestedField.NamePCased @Raw(field.DescriptionSanitized())
 		/// </summary>
 		/// <remarks>@field.Level.ToString("f")</remarks>
 		@if (field.Example != null)
@@ -182,7 +182,7 @@ namespace Elastic.CommonSchema
 </text> 
 		}
 		[DataMember(Name = "@Raw(string.Join(".", field.Name.ToLower().Split('.').Skip(2)))")]
-		public @Raw(field.ClrType()) @FileGenerator.PascalCase(field.Name).Replace(nestedField.ClassName + child.ClassName, string.Empty) { get; set; }
+		public @Raw(field.ClrType()) @FileGenerator.PascalCase(field.Name).Replace(nestedField.NamePCased + child.NamePCased, string.Empty) { get; set; }
 
 </text>}
 	}
@@ -191,16 +191,16 @@ namespace Elastic.CommonSchema
 	}
 		
 <text>	/// <summary>
-	/// @nestedField.ClassName, property of <see cref="@FileGenerator.PascalCase(schema.Name)" />
+	/// @nestedField.NamePCased, property of <see cref="@schema.NamePCased()" />
 	/// </summary>
-	public class @FileGenerator.PascalCase(schema.Name)@nestedField.ClassName
+	public class @schema.NamePCased()@nestedField.NamePCased
 	{
 @foreach (var child in nestedField.Children)
 	{<text>		/// <summary>
-		/// @child.ClassName property.
+		/// @child.NamePCased property.
 		/// </summary>		   
-		[DataMember(Name = "@child.ClassName.ToLower()")]
-		public @nestedField.ClassName@child.ClassName @child.ClassName { get; set; }
+		[DataMember(Name = "@child.NamePCased.ToLower()")]
+		public @nestedField.NamePCased@child.NamePCased @child.NamePCased { get; set; }
 
 </text>}
 @foreach (var field in nestedField.Fields)
@@ -214,7 +214,7 @@ namespace Elastic.CommonSchema
 </text> 
 		}
 		[DataMember(Name = "@Raw(string.Join(".", field.Name.ToLower().Split('.').Skip(1)))")]
-		public @Raw(field.ClrType()) @FileGenerator.PascalCase(field.Name).Replace(nestedField.ClassName, string.Empty) { get; set; }
+		public @Raw(field.ClrType()) @FileGenerator.PascalCase(field.Name).Replace(nestedField.NamePCased, string.Empty) { get; set; }
 
 </text>}
 	}
@@ -255,7 +255,7 @@ foreach (var field in schema.Fields.Where(f => f.Value.IsCustomEnum()))
 	/// </remarks>
 </text>
 	}
-	public @(schema.Name == "log" ? "partial " : "")class @FileGenerator.PascalCase(schema.Name) 
+	public @(schema.Name == "log" ? "partial " : "")class @schema.NamePCased() 
 	{
 	@if (schema.Nestings != null)
 	{
@@ -274,8 +274,8 @@ foreach (var nesting in schema.Nestings)
 	{<text>		/// <summary>
 		/// @Raw(field.Description)
 		/// </summary>
-		[DataMember(Name = "@Raw(field.ClassName.ToLower())")]
-		public @FileGenerator.PascalCase(schema.Name)@field.ClassNameType @FileGenerator.PascalCase(field.ClassName) { get; set; }
+		[DataMember(Name = "@Raw(field.NamePCased.ToLower())")]
+		public @schema.NamePCased()@field.ClassNameType @field.NamePCased { get; set; }
 
 </text>}
 @foreach (var field in schema.GetFieldsFlat())

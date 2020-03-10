@@ -218,17 +218,13 @@ namespace Generator
 
 			public override bool CanConvert(Type type) => type == typeof(T);
 
-			public override void WriteJson(
-				JsonWriter writer, object value, JsonSerializer serializer
-			)
+			public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
 			{
 				var cast = (T)value;
 				writer.WriteValue(cast.ToString().ToLower());
 			}
 
-			public override object ReadJson(
-				JsonReader reader, Type type, object existingValue, JsonSerializer serializer
-			) =>
+			public override object ReadJson(JsonReader reader, Type type, object existingValue, JsonSerializer serializer) =>
 				throw new NotSupportedException();
 		}
 	}

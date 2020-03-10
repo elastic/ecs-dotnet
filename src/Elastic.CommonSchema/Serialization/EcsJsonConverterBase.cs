@@ -54,8 +54,7 @@ namespace Elastic.CommonSchema.Serialization
 			return JsonSerializer.Deserialize(ref reader, type, options);
 		}
 
-		protected static TValue ReadProp<TValue>(ref Utf8JsonReader reader, string key)
-			where TValue : class
+		protected static TValue ReadProp<TValue>(ref Utf8JsonReader reader, string key)  where TValue : class
 		{
 			if (reader.TokenType == JsonTokenType.Null) return null;
 

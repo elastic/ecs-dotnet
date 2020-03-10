@@ -16,7 +16,8 @@ namespace Elastic.CommonSchema.Serialization
 				reader.Read();
 				return null;
 			}
-			if (reader.TokenType != JsonTokenType.StartObject) throw new JsonException();
+			if (reader.TokenType != JsonTokenType.StartObject)
+				throw new JsonException();
 
 			var ecsEvent = new TBase();
 

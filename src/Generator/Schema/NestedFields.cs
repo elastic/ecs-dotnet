@@ -13,52 +13,46 @@ namespace Generator.Schema
 
 		public NestedFields(YamlSchema schema) => _schema = schema;
 
-		public List<NestedFields> Children = new List<NestedFields>();
+		public readonly List<NestedFields> Children = new List<NestedFields>();
 
 		public string Name { get; set; }
 
-		public string ClassName => FileGenerator.PascalCase(Name);
+		public string NamePCased => FileGenerator.PascalCase(Name);
 
-		public string ClassNameType
-		{
-			get
+		public string ClassNameType =>
+			_schema.Name switch
 			{
-				if (_schema.Name == "dns" && ClassName == "Answers")
-					return FileGenerator.PascalCase(ClassName) + "[]";
-
-				if (_schema.Name == "log" && ClassName == "Syslog")
-					return FileGenerator.PascalCase(ClassName) + "[]";
-
-				return FileGenerator.PascalCase(ClassName);
-			}
-		}
+				"dns" when Name == "answers" && _schema.Fields.Single(f => f.Value.Name == "answers").Value.IsArray() => (NamePCased + "[]"),
+				"log" when Name == "syslog" => (NamePCased + "[]"),
+				_ => NamePCased
+			};
 
 		public string Description
 		{
 			get
 			{
-				if (_schema.Name == "dns" && ClassName == "Answers")
+				if (_schema.Name == "dns" && Name == "answers")
 					return _schema.Fields.Single(f => f.Value.FlatName == "dns.answers").Value.DescriptionSanitized();
 
-				if (_schema.Name == "log" && ClassName == "Syslog")
+				if (_schema.Name == "log" && Name == "syslog")
 					return _schema.Fields.Single(f => f.Value.FlatName == "log.syslog").Value.DescriptionSanitized();
 
-				if (_schema.Name == "network" && ClassName == "Inner")
+				if (_schema.Name == "network" && Name == "inner")
 					return _schema.Fields.Single(f => f.Value.FlatName == "network.inner").Value.DescriptionSanitized();
 
-				if (_schema.Name == "observer" && ClassName == "Ingress")
+				if (_schema.Name == "observer" && Name == "ingress")
 					return _schema.Fields.Single(f => f.Value.FlatName == "observer.ingress").Value.DescriptionSanitized();
 
-				if (_schema.Name == "observer" && ClassName == "Egress")
+				if (_schema.Name == "observer" && Name == "egress")
 					return _schema.Fields.Single(f => f.Value.FlatName == "observer.egress").Value.DescriptionSanitized();
 
-				if (ClassName == "Trace" || ClassName == "Transaction")
+				if (Name == "trace" || Name == "transaction")
 				{
 					var tracingSchema = _schema.Specification.YamlSchemas.Single(f => f.Name == "tracing");
-					return $"{tracingSchema.DescriptionSanitized()}<para/>{FileGenerator.PascalCase(Name)} property.";
+					return $"{tracingSchema.DescriptionSanitized()}<para/>{NamePCased} property.";
 				}
 
-				return $"{FileGenerator.PascalCase(ClassName)} property.";
+				return $"{NamePCased} property.";
 			}
 		}
 
