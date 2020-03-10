@@ -6,6 +6,7 @@ using System;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
+using Newtonsoft.Json;
 
 namespace Generator.Schema
 {
@@ -16,6 +17,11 @@ namespace Generator.Schema
 
 		public static string DescriptionSanitized(this Field value) =>
 			Regex.Replace(value.Description.TrimEnd(), @"[\r\n]+", "<para/>");
+
+		public static string ExampleSanitized(this Field value) =>
+			value.Example.ToString().StartsWith("[")
+				? "[" + string.Join(',', value.Example.ToString().Trim('[').Trim(']').Split(',').Select(s => s.Trim())) + "]"
+				: JsonConvert.SerializeObject(value.Example).Trim('"');
 
 		public static string DescriptionSanitized(this YamlSchema value) =>
 			Regex.Replace(value.Description.TrimEnd(), @"[\r\n]+", "<para/>");

@@ -68,7 +68,7 @@ namespace Elastic.CommonSchema
 		/// <remarks>@field.Level.ToString("f")</remarks>
 		@if (field.Example != null)
 		{
-<text>		/// <example>@Raw(JsonConvert.SerializeObject(field.Example).Trim('"'))</example>
+<text>		/// <example>@Raw(field.ExampleSanitized())</example>
 </text>
 		}
 		[DataMember(Name = "@Raw(field.JsonFieldName())")]
@@ -110,7 +110,7 @@ namespace Elastic.CommonSchema
 		/// <remarks>@field.Level.ToString("f")</remarks>
 		@if (field.Example != null)
 		{
-<text>		/// <example>@Raw(JsonConvert.SerializeObject(field.Example).Trim('"'))</example>
+<text>		/// <example>@Raw(field.ExampleSanitized())</example>
 </text> 
 		}
 		[DataMember(Name = "@Raw(string.Join(".", field.Name.ToLower().Split('.').Skip(2)))")]
@@ -142,7 +142,7 @@ namespace Elastic.CommonSchema
 		/// <remarks>@field.Level.ToString("f")</remarks>
 		@if (field.Example != null)
 		{
-<text>		/// <example>@Raw(JsonConvert.SerializeObject(field.Example).Trim('"'))</example>
+<text>		/// <example>@Raw(field.ExampleSanitized())</example>
 </text> 
 		}
 		[DataMember(Name = "@Raw(string.Join(".", field.Name.ToLower().Split('.').Skip(1)))")]
@@ -178,7 +178,7 @@ namespace Elastic.CommonSchema
 		/// <remarks>@field.Level.ToString("f")</remarks>
 		@if (field.Example != null)
 		{
-<text>		/// <example>@Raw(JsonConvert.SerializeObject(field.Example).Trim('"'))</example>
+<text>		/// <example>@Raw(field.ExampleSanitized())</example>
 </text> 
 		}
 		[DataMember(Name = "@Raw(string.Join(".", field.Name.ToLower().Split('.').Skip(2)))")]
@@ -210,7 +210,7 @@ namespace Elastic.CommonSchema
 		/// <remarks>@field.Level.ToString("f")</remarks>
 		@if (field.Example != null)
 		{
-<text>		/// <example>@Raw(JsonConvert.SerializeObject(field.Example).Trim('"'))</example>
+<text>		/// <example>@Raw(field.ExampleSanitized())</example>
 </text> 
 		}
 		[DataMember(Name = "@Raw(string.Join(".", field.Name.ToLower().Split('.').Skip(1)))")]
@@ -285,7 +285,7 @@ foreach (var nesting in schema.Nestings)
 		/// <remarks>@field.Level.ToString("f")</remarks>
 		@if (field.Example != null)
 		{
-<text>		/// <example>@Raw(JsonConvert.SerializeObject(field.Example).Trim('"'))</example>
+<text>		/// <example>@Raw(field.ExampleSanitized())</example>
 </text>}
 		[DataMember(Name = "@Raw(field.JsonFieldName())")]
 		public @Raw(field.ClrType()) @(field.PropertyName()) { get; set; }

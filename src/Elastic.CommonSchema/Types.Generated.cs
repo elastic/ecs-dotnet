@@ -296,7 +296,7 @@ namespace Elastic.CommonSchema
 		/// List of keywords used to tag each event.
 		/// </summary>
 		/// <remarks>Core</remarks>
-		/// <example>[\"production\", \"env2\"]</example>
+		/// <example>["production","env2"]</example>
 		[DataMember(Name = "tags")]
 		public string[] Tags { get; set; }
 
@@ -1656,7 +1656,7 @@ namespace Elastic.CommonSchema
 		/// Array of file attributes.<para/>Attributes names will vary by platform. Here's a non-exhaustive list of values that are expected in this field: archive, compressed, directory, encrypted, execute, hidden, read, readonly, system, write.
 		/// </summary>
 		/// <remarks>Extended</remarks>
-		/// <example>[\"readonly\", \"system\"]</example>
+		/// <example>["readonly","system"]</example>
 		[DataMember(Name = "attributes")]
 		public string[] Attributes { get; set; }
 
@@ -3488,7 +3488,7 @@ namespace Elastic.CommonSchema
 		/// Content when writing string types.<para/>Populated as an array when writing string data to the registry. For single string registry types (REG_SZ, REG_EXPAND_SZ), this should be an array with one string. For sequences of string with REG_MULTI_SZ, this array will be variable length. For numeric data, such as REG_DWORD and REG_QWORD, this should be populated with the decimal representation (e.g `"1"`).
 		/// </summary>
 		/// <remarks>Core</remarks>
-		/// <example>[\"C:\\rta\\red_ttp\\bin\\myapp.exe\"]</example>
+		/// <example>["C:\rta\red_ttp\bin\myapp.exe"]</example>
 		[DataMember(Name = "strings")]
 		public string[] Strings { get; set; }
 
@@ -4737,7 +4737,7 @@ namespace Elastic.CommonSchema
 		/// The type of system or architecture that the vulnerability affects. These may be platform-specific (for example, Debian or SUSE) or general (for example, Database or Firewall). For example (https://qualysguard.qualys.com/qwebhelp/fo_portal/knowledgebase/vulnerability_categories.htm[Qualys vulnerability categories])<para/>This field must be an array.
 		/// </summary>
 		/// <remarks>Extended</remarks>
-		/// <example>[\"Firewall\"]</example>
+		/// <example>["Firewall"]</example>
 		[DataMember(Name = "category")]
 		public string[] Category { get; set; }
 
