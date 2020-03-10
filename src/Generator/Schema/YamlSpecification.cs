@@ -10,7 +10,12 @@ namespace Generator.Schema
 {
 	public class YamlSpecification
 	{
-		private YamlSchema _baseRoot;
+		public const string TimestampFieldName = "@timestamp";
+		public const string MessageFieldName = "message";
+		public const string LogLevelFieldName = "log.level";
+
+		// The "root" schema for ECS
+		private YamlSchema _baseSchema;
 
 		public string FullVersion => DownloadBranch + ".0";
 
@@ -18,23 +23,25 @@ namespace Generator.Schema
 
 		public YamlSchema BaseYamlSchema()
 		{
-			if (_baseRoot != null)
-				return _baseRoot;
+			if (_baseSchema != null)
+				return _baseSchema;
 
-			var otherRoots = YamlSchemas.Where(s => string.IsNullOrWhiteSpace(s.Prefix) && s.Name != "base").ToArray();
-			var baseRoot = YamlSchemas.Single(s => s.Name == "base");
+			const string baseSchemaName = "base";
+			var baseSchema = YamlSchemas.Single(s => s.Name == baseSchemaName);
 
-			foreach (var otherRoot in otherRoots)
+			// Currently the tracing schema exists outside of the base schema, and needs to be "re-attached"
+			var otherBaseSchemas = YamlSchemas.Where(s => string.IsNullOrWhiteSpace(s.Prefix) && s.Name != baseSchemaName).ToArray();
+			foreach (var otherBaseSchema in otherBaseSchemas)
 			{
-				foreach (var otherRootField in otherRoot.Fields)
+				foreach (var (key, value) in otherBaseSchema.Fields)
 				{
-					if (!baseRoot.Fields.ContainsKey(otherRootField.Key))
-						baseRoot.Fields.Add(otherRootField.Key, otherRootField.Value);
+					if (!baseSchema.Fields.ContainsKey(key))
+						baseSchema.Fields.Add(key, value);
 				}
 			}
 
-			_baseRoot = baseRoot;
-			return _baseRoot;
+			_baseSchema = baseSchema;
+			return _baseSchema;
 		}
 
 		public IEnumerable<YamlSchema> NonBaseYamlSchemas() => YamlSchemas.Where(s => !string.IsNullOrWhiteSpace(s.Prefix)).OrderBy(s => s.Name);
@@ -44,17 +51,18 @@ namespace Generator.Schema
 			get
 			{
 				var baseRootObject = BaseYamlSchema();
-				var list = new List<Tuple<string, Field>>();
-				list.Add(Tuple.Create("WriteTimestamp", baseRootObject.Fields.Single(f => f.Key == "@timestamp").Value));
+				var list = new List<Tuple<string, Field>>
+				{
+					Tuple.Create("WriteTimestamp", baseRootObject.Fields.Single(f => f.Key == TimestampFieldName).Value),
+					// HACK in the log.level
+					Tuple.Create("WriteLogLevel", new Field { Name = LogLevelFieldName, Schema = baseRootObject, FlatName = LogLevelFieldName }),
+					Tuple.Create("WriteMessage", baseRootObject.Fields.Single(f => f.Key == MessageFieldName).Value),
+					Tuple.Create("WriteProp", new Field { Name = "_metadata", Schema = baseRootObject, FlatName = "_metadata" })
+				};
 
-				// HACK in the log.level
-				list.Add(Tuple.Create("WriteLogLevel", new Field { Name = "log.level", Schema = baseRootObject, FlatName = "log.level" }));
-				list.Add(Tuple.Create("WriteMessage", baseRootObject.Fields.Single(f => f.Key == "message").Value));
-
-				// HACK in _metadata
-				list.Add(Tuple.Create("WriteProp", new Field { Name = "_metadata", Schema = baseRootObject, FlatName = "_metadata" }));
-				list.AddRange(baseRootObject.GetFieldsFlat().Where(f => f.Name != "@timestamp" && f.Name != "message")
-					.Select(f => Tuple.Create("WriteProp", f)));
+				list.AddRange(baseRootObject.GetFieldsFlat()
+					                                     .Where(f => f.Name != TimestampFieldName && f.Name != MessageFieldName)
+														 .Select(f => Tuple.Create("WriteProp", f)));
 				return list;
 			}
 		}

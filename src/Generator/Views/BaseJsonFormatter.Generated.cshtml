@@ -42,10 +42,10 @@ namespace Elastic.CommonSchema.Serialization
 @foreach (var field in Model.BaseFieldsOrdered)
 {
 	var name = field.Item2.Name;
-	if (name == "@timestamp")
+	if (name == YamlSpecification.TimestampFieldName)
 {<text>				"@(name)" => ReadDateTime(ref reader, ref @(name)),
 </text>}
-	else if (name == "log.level")
+	else if (name == YamlSpecification.LogLevelFieldName)
 {<text>				"@(name)" => ReadString(ref reader, ref loglevel),
 </text>}
 	else

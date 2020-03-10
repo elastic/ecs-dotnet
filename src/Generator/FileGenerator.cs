@@ -38,14 +38,14 @@ namespace Generator
 				{ GenerateBaseJsonFormatter, "Base Json Formatter" },
 			};
 
-			using (var pbar = new ProgressBar(actions.Count, "Generating code",
+			using (var progressBar = new ProgressBar(actions.Count, "Generating code",
 				new ProgressBarOptions { BackgroundColor = ConsoleColor.DarkGray }))
 			{
 				foreach (var kv in actions)
 				{
-					pbar.Message = "Generating " + kv.Value;
+					progressBar.Message = "Generating " + kv.Value;
 					kv.Key(spec);
-					pbar.Tick("Generated " + kv.Value);
+					progressBar.Tick("Generated " + kv.Value);
 				}
 			}
 
@@ -128,18 +128,16 @@ namespace Generator
 			};
 
 			foreach (var specYamlSchema in spec.YamlSchemas)
-			{
 				specYamlSchema.Specification = spec;
-			}
 
 			return spec;
 		}
 
-		public static string PascalCase(string s)
-		{
-			var textInfo = new CultureInfo("en-US").TextInfo;
-			return textInfo.ToTitleCase(s.ToLowerInvariant()).Replace("_", string.Empty).Replace(".", string.Empty);
-		}
+		public static string PascalCase(string s) => new CultureInfo("en-US")
+			.TextInfo
+			.ToTitleCase(s.ToLowerInvariant())
+			.Replace("_", string.Empty)
+			.Replace(".", string.Empty);
 
 		private static IEnumerable<YamlSchema> GetYamlSchemas(string file)
 		{
@@ -155,7 +153,12 @@ namespace Generator
 				new JsonSerializerSettings
 				{
 					NullValueHandling = NullValueHandling.Ignore,
-					Converters = { new FormatAsTextConverter<int>(), new FormatAsTextConverter<int?>(), new FormatAsTextConverter<bool?>() }
+					Converters =
+					{
+						new FormatAsTextConverter<int>(),
+						new FormatAsTextConverter<int?>(),
+						new FormatAsTextConverter<bool?>()
+					}
 				});
 
 			var differ = new JsonDiffPatchDotNet.JsonDiffPatch();
