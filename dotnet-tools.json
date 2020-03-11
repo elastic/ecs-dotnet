@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "isRoot": true,
+  "tools": {
+    "dotnet-assembly-differ": {
+      "version": "1.0.0-ci20191218193732",
+      "commands": [
+        "assembly-differ"
+      ]
+    }
+  }
+}

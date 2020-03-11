@@ -68,8 +68,6 @@ module ReleaseNotes =
         |> writer.WriteLine
                 
     let GenerateNotes version =
-//        match version with
-//        | NoChange _ -> failwith "Can not generate release notes if no new version was specified"
-//        | Update (newVersion, oldVersion) -> generateNotes newVersion oldVersion
-          ignore()
-
+        match version with
+        | NoChange _ -> failwith "Can not generate release notes if no new version was specified"
+        | Update (newVersion, oldVersion) -> generateNotes newVersion oldVersion
