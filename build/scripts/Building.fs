@@ -13,7 +13,7 @@ module Build =
 
     let Restore() = DotNet.Exec ["restore"; Solution; ] |> ignore
 
-    let Compile args (ArtifactsVersion(version)) = 
+    let Compile args version = 
         let props = 
             [ 
                 "CurrentVersion", (version.Full.ToString());

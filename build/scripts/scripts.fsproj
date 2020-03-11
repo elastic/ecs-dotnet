@@ -14,7 +14,6 @@
     <Compile Include="Releasing.fs" />
     <Compile Include="ReleaseNotes.fs" />
     <Compile Include="Building.fs" />
-    <Compile Include="Differ.fs" />
     <Compile Include="Testing.fs" />
     <Compile Include="Targets.fs" />
   </ItemGroup>

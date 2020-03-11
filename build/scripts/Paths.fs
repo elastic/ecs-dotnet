@@ -7,7 +7,7 @@ module Paths =
     let Repository = sprintf "https://github.com/%s/%s" OwnerName RepositoryName
 
     let private buildFolder = "build"
-    let TargetsFolder = "build/scripts"
+    let ScriptsFolder = "build/scripts"
     let BuildOutput = sprintf "%s/output" buildFolder
     
     let Solution = "src/ecs-dotnet.sln"

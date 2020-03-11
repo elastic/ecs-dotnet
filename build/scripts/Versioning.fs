@@ -81,8 +81,8 @@ module Versioning =
     
     let ArtifactsVersion buildVersions =
         match buildVersions with
-        | NoChange n -> ArtifactsVersion n
-        | Update (newVersion, _) -> ArtifactsVersion newVersion
+        | NoChange n -> n
+        | Update (newVersion, _) -> newVersion
     
     let private sn () =
             match isMono with 
@@ -134,22 +134,68 @@ module Versioning =
         | true -> validate dll name 
         | _ -> failwithf "Attemped to verify signature of %s but it was not found!" dll
 
-    let ValidateArtifacts (ArtifactsVersion(version)) =
+    let BuiltArtifacts version = 
+        let packages =
+            let allPackages = !! "build/output/*.nupkg" |> Seq.toList
+            let toProject (package: string) =
+                let id = Path.GetFileName(package) |> String.replace (version.Full.ToString()) "" |> String.replace "..nupkg" ""
+                {| Package = package; NugetId = id; |} 
+                
+            allPackages |> List.map toProject
+        packages
+
+    let restoreOnce = lazy(Tooling.DotNet.Exec ["tool"; "restore"])
+    
+    let private differ = "assembly-differ"
+    
+    let Diff args =
+        restoreOnce.Force()
+        let args = args |> String.concat " "
+        let command = sprintf @"%s %s -o ../../%s" differ args Paths.BuildOutput
+        Tooling.DotNet.ExecIn Paths.ScriptsFolder [command] |> ignore
+    
+    let ValidateArtifacts version =
         let fileVersion = version.AssemblyFile
         let tmp = "build/output/tmp"
-        !! "build/output/*.nupkg"
-        |> Seq.iter(fun f -> 
-           Zip.unzip tmp f
-           !! (sprintf "%s/**/*.dll" tmp)
-           |> Seq.iter(fun f -> 
+        
+        let packages = BuiltArtifacts version
+        printf "%O" packages
+        
+        packages
+        |> Seq.iter(fun p ->
+
+            printfn "Unzipping: %s" p.Package
+            
+            Zip.unzip tmp p.Package
+            let nugetId = p.NugetId
+
+            let directories = Directory.GetDirectories <| sprintf "%s/lib" tmp
+            directories
+            |> Seq.iter(fun d ->
+                
+                let info = DirectoryInfo d
+                let tfm = info.Name
+                let fullPath = Path.GetFullPath d
+                
+                let command = [ sprintf "previous-nuget|%s|%s|%s" nugetId (version.Full.ToString()) tfm;
+                                sprintf "directory|%s" fullPath ]
+                try
+                    Diff command
+                with
+                  | e as ex -> printfn "%s" e.Message
+            )
+           
+            !! (sprintf "%s/**/*.dll" tmp)
+            |> Seq.iter(fun f -> 
                 let fv = FileVersionInfo.GetVersionInfo(f)
-                let a = AssemblyName.GetAssemblyName(f).Version
+                let name = AssemblyName.GetAssemblyName(f)
+                let a = name.Version
                 printfn "Assembly: %A File: %s Product: %s => %s" a fv.FileVersion fv.ProductVersion f
                 if (a.Revision > 0 || a.Build > 0) then failwith (sprintf "%s assembly version is not sticky to its minor component" f)
                 if (parse (fv.ProductVersion) <> version.Full) then
                     failwith (sprintf "Expected product info %s to match new version %O " fv.ProductVersion fileVersion)
 
                 validateDllStrongName f f
-           )
-           Directory.delete tmp
+            )
+            Directory.delete tmp
         )

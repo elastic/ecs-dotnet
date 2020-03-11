@@ -10,7 +10,7 @@ open Versioning
 
 module Tests =
     
-    let TestAll (ArtifactsVersion(version)) =
+    let TestAll version =
         Directory.CreateDirectory Paths.BuildOutput |> ignore
         let command = 
             let p = [
