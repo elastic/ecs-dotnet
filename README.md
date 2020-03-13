@@ -131,6 +131,10 @@ var config = CreateDefaultConfig().With(exporter);
 BenchmarkRunner.Run(typeof(Md5VsSha256), config);
 ```
 
+# Examples
+
+- [Elastic.CommonSchema.Serilog and ASP.NET Core](/examples/aspnetcore-with-serilog/)
+
 ## Copyright and License
 
 This software is Copyright (c) 2014-2020 by Elasticsearch BV.
