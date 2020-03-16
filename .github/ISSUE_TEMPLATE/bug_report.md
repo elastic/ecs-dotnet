@@ -15,7 +15,9 @@ a feature request, please include one and only one of the below blocks
 in your new issue.
 -->
 
-**ECS version**:
+**ECS schema version (e.g. 1.4.0)**:
+
+**ECS .NET assembly version (e.g. 1.4.2)**:
 
 **Elasticsearch version (if applicable)**:
 
