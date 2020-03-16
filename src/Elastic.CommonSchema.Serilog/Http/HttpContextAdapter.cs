@@ -2,10 +2,11 @@
 // Elasticsearch B.V licenses this file to you under the Apache 2.0 License.
 // See the LICENSE file in the project root for more information
 
-using System.Collections.Generic;
 #if !NETSTANDARD
 using System;
 using System.Web;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Elastic.CommonSchema.Serilog
 {
@@ -13,19 +14,23 @@ namespace Elastic.CommonSchema.Serilog
 	{
 		private readonly HttpContext _httpContext;
 
-		public HttpAdapter(HttpContext httpContext) =>
-			_httpContext = httpContext;
+		public HttpAdapter(HttpContext httpContext) => _httpContext = httpContext;
 
-		public Client Client { get; }
-		public IEnumerable<Exception> Exceptions { get; }
+		public Client Client => null;
 
-		public Http Http => new Http
+		public IEnumerable<Exception> Exceptions => Enumerable.Empty<Exception>();
+
+		public Http Http => _httpContext == null ? null : new Http
 		{
 			Request = new HttpRequest
 			{
 				Method = _httpContext.Request.HttpMethod,
 				Bytes = _httpContext.Request.TotalBytes,
-				Body = new RequestBody { Bytes = _httpContext.Request.TotalBytes, Content = _httpContext.Request.InputStream.ToString() },
+				Body = new RequestBody
+				{
+					Bytes = _httpContext.Request.TotalBytes,
+					Content = _httpContext.Request.InputStream.ToString()
+				},
 				Referrer = _httpContext.Request.UrlReferrer?.ToString()
 			},
 			Response = new HttpResponse
@@ -40,9 +45,12 @@ namespace Elastic.CommonSchema.Serilog
 			}
 		};
 
-		public Server Server => new Server { Domain = _httpContext.Request.Url.Authority };
+		public Server Server => _httpContext == null ? null : new Server
+		{
+			Domain = _httpContext.Request.Url.Authority
+		};
 
-		public Url Url => new Url
+		public Url Url => _httpContext == null ? null : new Url
 		{
 			Original = _httpContext.Request.RawUrl,
 			Full = _httpContext.Request.Url.ToString(),
@@ -54,9 +62,9 @@ namespace Elastic.CommonSchema.Serilog
 			Port = _httpContext.Request.Url.Port
 		};
 
-		public User User { get; }
+		public User User => null;
 
-		public UserAgent UserAgent => new UserAgent
+		public UserAgent UserAgent => _httpContext == null ? null : new UserAgent
 		{
 			Device = _httpContext.Request.Browser != null
 				? new UserAgentDevice { Name = _httpContext.Request.Browser?.MobileDeviceModel }

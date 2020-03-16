@@ -7,6 +7,14 @@
       <Description>Serilog TextFormatter that formats log events in accordance with Elastic Common Schema (ECS).</Description>
     </PropertyGroup>
     <ItemGroup>
+      <None Remove="Lib\UAParser.regexes.yaml" />
+    </ItemGroup>
+    <ItemGroup>
+      <EmbeddedResource Include="Lib\UAParser.regexes.yaml">
+      <LogicalName>UAParser.regexes.yaml</LogicalName>
+	</EmbeddedResource>
+    </ItemGroup>
+    <ItemGroup>
       <ProjectReference Include="..\Elastic.CommonSchema\Elastic.CommonSchema.csproj" />
     </ItemGroup>
     <ItemGroup>
