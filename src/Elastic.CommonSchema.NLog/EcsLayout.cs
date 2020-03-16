@@ -349,7 +349,7 @@ namespace Elastic.CommonSchema.NLog
 					? new User { Name = serverUser }
 					: null,
 				Address = serverAddress,
-				Ip = serverIp
+				Ip = new[] { serverIp }
 			};
 		}
 

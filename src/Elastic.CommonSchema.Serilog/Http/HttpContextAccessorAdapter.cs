@@ -131,12 +131,13 @@ namespace Elastic.CommonSchema.Serilog
 				if (_httpContextAccessor.HttpContext == null)
 					return null;
 
-				var address = _httpContextAccessor.HttpContext.Features.Get<IHttpConnectionFeature>()?.RemoteIpAddress.ToString();
+				var ip4 = _httpContextAccessor.HttpContext.Features.Get<IHttpConnectionFeature>()?.RemoteIpAddress.MapToIPv4();
+				var ip6 = _httpContextAccessor.HttpContext.Features.Get<IHttpConnectionFeature>()?.RemoteIpAddress.MapToIPv6();
 
 				return new Client
 				{
-					Address = address,
-					Ip = address,
+					Address = ip4.ToString(),
+					Ip = new [] { ip4.ToString(), ip6.ToString() },
 					Bytes = _httpContextAccessor.HttpContext.Request.ContentLength,
 					User = User
 				};

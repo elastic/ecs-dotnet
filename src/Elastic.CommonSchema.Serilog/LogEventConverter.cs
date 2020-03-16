@@ -198,7 +198,7 @@ namespace Elastic.CommonSchema.Serilog
 
 			var hasHost = e.TryGetScalarPropertyValue(SpecialKeys.Host, out var host);
 			server.Address = hasHost ? host.Value.ToString() : null;
-			server.Ip = hasHost ? host.Value.ToString() : null;
+			server.Ip = hasHost ? new[] { host.Value.ToString() }: null;
 			return server;
 		}
 
