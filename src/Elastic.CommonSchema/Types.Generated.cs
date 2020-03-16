@@ -521,7 +521,7 @@ namespace Elastic.CommonSchema
 		/// </summary>
 		/// <remarks>(ECS Core)</remarks>
 		[DataMember(Name = "ip")]
-		public string Ip { get; set; }
+		public string[] Ip { get; set; }
 
 		/// <summary>
 		/// Port of the client.
@@ -868,7 +868,7 @@ namespace Elastic.CommonSchema
 		/// </summary>
 		/// <remarks>(ECS Core)</remarks>
 		[DataMember(Name = "ip")]
-		public string Ip { get; set; }
+		public string[] Ip { get; set; }
 
 		/// <summary>
 		/// Port of the destination.
@@ -3738,7 +3738,7 @@ namespace Elastic.CommonSchema
 		/// </summary>
 		/// <remarks>(ECS Core)</remarks>
 		[DataMember(Name = "ip")]
-		public string Ip { get; set; }
+		public string[] Ip { get; set; }
 
 		/// <summary>
 		/// Port of the server.
@@ -3942,7 +3942,7 @@ namespace Elastic.CommonSchema
 		/// </summary>
 		/// <remarks>(ECS Core)</remarks>
 		[DataMember(Name = "ip")]
-		public string Ip { get; set; }
+		public string[] Ip { get; set; }
 
 		/// <summary>
 		/// Port of the source.

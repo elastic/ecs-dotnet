@@ -46,6 +46,10 @@ namespace Generator.Schema
 		{
 			var isArray = value.IsArray() ||
 				value.FlatName == "user.id" ||
+				value.FlatName == "client.ip" ||
+				value.FlatName == "destination.ip" ||
+				value.FlatName == "server.ip" ||
+				value.FlatName == "source.ip" ||
 				value.FlatName == "registry.data.strings";
 
 			// Special cases.
