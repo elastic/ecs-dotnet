@@ -121,7 +121,7 @@ namespace Elastic.CommonSchema.Serilog
 			Domain = ConvertToUri(_httpContextAccessor.HttpContext.Request).Authority
 		};
 
-		public Uri ConvertToUri(Microsoft.AspNetCore.Http.HttpRequest request)
+		private Uri ConvertToUri(Microsoft.AspNetCore.Http.HttpRequest request)
 			=> new Uri($"{request.Scheme}://{request.Host}{request.Path}");
 
 		public Client Client

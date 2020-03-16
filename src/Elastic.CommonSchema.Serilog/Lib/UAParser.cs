@@ -30,12 +30,12 @@ namespace UAParser
     /// <summary>
     /// Represents the physical device the user agent is using
     /// </summary>
-    public sealed class Device
+    internal sealed class Device
     {
         /// <summary>
         /// Constructs a Device instance
         /// </summary>
-        public Device(string family, string brand, string model)
+        internal Device(string family, string brand, string model)
         {
             Family = family.Trim();
             if (brand != null)
@@ -47,20 +47,20 @@ namespace UAParser
         /// <summary>
         /// Returns true if the device is likely to be a spider or a bot device
         /// </summary>
-        public bool IsSpider => "Spider".Equals(Family, StringComparison.OrdinalIgnoreCase);
+        internal bool IsSpider => "Spider".Equals(Family, StringComparison.OrdinalIgnoreCase);
 
         /// <summary>
         ///The brand of the device
         /// </summary>
-        public string Brand { get; }
+        internal string Brand { get; }
         /// <summary>
         /// The family of the device, if available
         /// </summary>
-        public string Family { get; }
+        internal string Family { get; }
         /// <summary>
         /// The model of the device, if available
         /// </summary>
-        public string Model { get; }
+        internal string Model { get; }
 
         /// <summary>
         /// A readable description of the device
@@ -75,12 +75,12 @@ namespace UAParser
     /// Represents the operating system the user agent runs on
     /// </summary>
     // ReSharper disable once InconsistentNaming
-    public sealed class OS
+    internal sealed class OS
     {
         /// <summary>
         /// Constructs an OS instance
         /// </summary>
-        public OS(string family, string major, string minor, string patch, string patchMinor)
+        internal OS(string family, string major, string minor, string patch, string patchMinor)
         {
             Family     = family;
             Major      = major;
@@ -92,23 +92,23 @@ namespace UAParser
         /// <summary>
         /// The familiy of the OS
         /// </summary>
-        public string Family     { get; }
+        internal string Family     { get; }
         /// <summary>
         /// The major version of the OS, if available
         /// </summary>
-        public string Major      { get; }
+        internal string Major      { get; }
         /// <summary>
         /// The minor version of the OS, if available
         /// </summary>
-        public string Minor      { get; }
+        internal string Minor      { get; }
         /// <summary>
         /// The patch version of the OS, if available
         /// </summary>
-        public string Patch      { get; }
+        internal string Patch      { get; }
         /// <summary>
         /// The minor patch version of the OS, if available
         /// </summary>
-        public string PatchMinor { get; }
+        internal string PatchMinor { get; }
         /// <summary>
         /// A readable description of the OS
         /// </summary>
@@ -123,12 +123,12 @@ namespace UAParser
     /// <summary>
     /// Represents a user agent, commonly a browser
     /// </summary>
-    public sealed class UserAgent
+    internal sealed class UserAgent
     {
         /// <summary>
         /// Construct a UserAgent instance
         /// </summary>
-        public UserAgent(string family, string major, string minor, string patch)
+        internal UserAgent(string family, string major, string minor, string patch)
         {
             Family = family;
             Major  = major;
@@ -139,19 +139,19 @@ namespace UAParser
         /// <summary>
         /// The family of user agent
         /// </summary>
-        public string Family { get; }
+        internal string Family { get; }
         /// <summary>
         /// Major version of the user agent, if available
         /// </summary>
-        public string Major  { get; }
+        internal string Major  { get; }
         /// <summary>
         /// Minor version of the user agent, if available
         /// </summary>
-        public string Minor  { get; }
+        internal string Minor  { get; }
         /// <summary>
         /// Patch version of the user agent, if available
         /// </summary>
-        public string Patch  { get; }
+        internal string Patch  { get; }
 
         /// <summary>
         /// The user agent as a readbale string
@@ -166,7 +166,7 @@ namespace UAParser
 
     internal static class VersionString
     {
-        public static string Format(params string[] parts)
+        internal static string Format(params string[] parts)
         {
             return string.Join(".", parts.Where(v => !String.IsNullOrEmpty(v)).ToArray());
         }
@@ -176,7 +176,7 @@ namespace UAParser
     /// Representing the parse results. Structure of this class aligns with the
     /// ua-parser-output WebIDL structure defined in this document: https://github.com/ua-parser/uap-core/blob/master/docs/specification.md
     /// </summary>
-    public interface IUAParserOutput
+    internal interface IUAParserOutput
     {
         /// <summary>
         /// The user agent string, the input for the UAParser
@@ -203,39 +203,39 @@ namespace UAParser
     /// Represents the user agent client information resulting from parsing
     /// a user agent string
     /// </summary>
-    public class ClientInfo : IUAParserOutput
+    internal class ClientInfo : IUAParserOutput
     {
         /// <summary>
         /// The user agent string, the input for the UAParser
         /// </summary>
-        public string String { get; }
+		public string String { get; }
         // ReSharper disable once InconsistentNaming
         /// <summary>
         /// The OS parsed from the user agent string
         /// </summary>
         // ReSharper disable once InconsistentNaming
-        public OS OS { get; }
+		public OS OS { get; }
 
         /// <summary>
         /// The Device parsed from the user agent string
         /// </summary>
-        public Device Device { get; }
+		public Device Device { get; }
         /// <summary>
         /// The User Agent parsed from the user agent string
         /// </summary>
         [Obsolete("Mirrors the value of the UA property. Will be removed in future versions")]
-        public UserAgent UserAgent => UA;
+        internal UserAgent UserAgent => UA;
 
         // ReSharper disable once InconsistentNaming
         /// <summary>
         /// The User Agent parsed from the user agent string
         /// </summary>
-        public UserAgent UA { get; }
+		public UserAgent UA { get; }
 
         /// <summary>
         /// Constructs an instance of the ClientInfo with results of the user agent string parsing
         /// </summary>
-        public ClientInfo(string inputString, OS os, Device device, UserAgent userAgent)
+        internal ClientInfo(string inputString, OS os, Device device, UserAgent userAgent)
         {
             String = inputString;
             OS = os;
@@ -256,14 +256,14 @@ namespace UAParser
     /// <summary>
     /// Options available for the parser
     /// </summary>
-    public sealed class ParserOptions
+    internal sealed class ParserOptions
     {
 #if REGEX_COMPILATION
         /// <summary>
         /// If true, will use compiled regular expressions for slower startup time
         /// but higher throughput. The default is false.
         /// </summary>
-        public bool UseCompiledRegex { get; set; }
+        internal bool UseCompiledRegex { get; set; }
 #endif
 
 #if REGEX_MATCHTIMEOUT
@@ -272,20 +272,20 @@ namespace UAParser
         /// serving as a fail safe for potential infinite backtracking. The default is
         /// set to Regex.InfiniteMatchTimeout
         /// </summary>
-        public TimeSpan MatchTimeOut { get; set; } = Regex.InfiniteMatchTimeout;
+        internal TimeSpan MatchTimeOut { get; set; } = Regex.InfiniteMatchTimeout;
 #endif
     }
 
     /// <summary>
     /// Represents a parser of a user agent string
     /// </summary>
-    public sealed class Parser
+    internal sealed class Parser
     {
         /// <summary>
         /// The constant string value used to signal an unknown match for a given property or value. This
         /// is by default the string "Other".
         /// </summary>
-        public const string Other = "Other";
+        internal const string Other = "Other";
 
         private readonly Func<string, OS> _osParser;
         private readonly Func<string, Device> _deviceParser;
@@ -311,7 +311,7 @@ namespace UAParser
         /// <param name="yaml">a string containing yaml definitions of reg-ex</param>
         /// <param name="parserOptions">specifies the options for the parser</param>
         /// <returns>A <see cref="Parser"/> instance parsing user agent strings based on the regexes defined in the yaml string</returns>
-        public static Parser FromYaml(string yaml, ParserOptions parserOptions = null)
+        internal static Parser FromYaml(string yaml, ParserOptions parserOptions = null)
         {
             return new Parser(new MinimalYamlParser(yaml), parserOptions);
         }
@@ -322,7 +322,7 @@ namespace UAParser
         /// </summary>
         /// <param name="parserOptions">specifies the options for the parser</param>
         /// <returns></returns>
-        public static Parser GetDefault(ParserOptions parserOptions = null)
+        internal static Parser GetDefault(ParserOptions parserOptions = null)
         {
             using (var stream = typeof(Parser)
 #if INTROSPECTION_EXTENSIONS
@@ -337,7 +337,7 @@ namespace UAParser
         /// <summary>
         /// Parse a user agent string and obtain all client information
         /// </summary>
-        public ClientInfo Parse(string uaString)
+        internal ClientInfo Parse(string uaString)
         {
             var os     = ParseOS(uaString);
             var device = ParseDevice(uaString);
@@ -348,15 +348,15 @@ namespace UAParser
         /// <summary>
         /// Parse a user agent string and obtain the OS information
         /// </summary>
-        public OS ParseOS(string uaString) { return _osParser(uaString); }
+        internal OS ParseOS(string uaString) { return _osParser(uaString); }
         /// <summary>
         /// Parse a user agent string and obtain the device information
         /// </summary>
-        public Device ParseDevice(string uaString) { return _deviceParser(uaString); }
+        internal Device ParseDevice(string uaString) { return _deviceParser(uaString); }
         /// <summary>
         /// Parse a user agent string and obtain the UserAgent information
         /// </summary>
-        public UserAgent ParseUserAgent(string uaString) { return _userAgentParser(uaString); }
+        internal UserAgent ParseUserAgent(string uaString) { return _userAgentParser(uaString); }
 
         private static Func<string, T> CreateParser<T>(IEnumerable<Func<string, T>> parsers, T defaultValue) where T : class
         {
@@ -379,7 +379,7 @@ namespace UAParser
             }
 
             // ReSharper disable once InconsistentNaming
-            public Func<string, OS> OSSelector(Func<string, string> indexer)
+            internal Func<string, OS> OSSelector(Func<string, string> indexer)
             {
                 var regex = Regex(indexer, "OS");
                 var os = indexer("os_replacement");
@@ -390,7 +390,7 @@ namespace UAParser
                 return Parsers.OS(regex, os, v1, v2, v3, v4);
             }
 
-            public Func<string, UserAgent> UserAgentSelector(Func<string, string> indexer)
+            internal Func<string, UserAgent> UserAgentSelector(Func<string, string> indexer)
             {
                 var regex = Regex(indexer, "User agent");
                 var family = indexer("family_replacement");
@@ -400,7 +400,7 @@ namespace UAParser
                 return Parsers.UserAgent(regex, family, v1, v2, v3);
             }
 
-            public Func<string, Device> DeviceSelector(Func<string, string> indexer)
+            internal Func<string, Device> DeviceSelector(Func<string, string> indexer)
             {
                 var regex = Regex(indexer, "Device", indexer("regex_flag"));
                 var device = indexer("device_replacement");
@@ -450,7 +450,7 @@ namespace UAParser
         private static class Parsers
         {
             // ReSharper disable once InconsistentNaming
-            public static Func<string, OS> OS(Regex regex, string osReplacement, string v1Replacement, string v2Replacement, string v3Replacement, string v4Replacement)
+            internal static Func<string, OS> OS(Regex regex, string osReplacement, string v1Replacement, string v2Replacement, string v3Replacement, string v4Replacement)
             {
                 // For variable replacements to be consistent the order of the linq statements are important ($1
                 // is only available to the first 'from X in Replace(..)' and so forth) so a a bit of conditional
@@ -483,7 +483,7 @@ namespace UAParser
                                      select new OS(family, v1, v2, v3, v4));
             }
 
-            public static Func<string, Device> Device(Regex regex, string familyReplacement, string brandReplacement, string modelReplacement)
+            internal static Func<string, Device> Device(Regex regex, string familyReplacement, string brandReplacement, string modelReplacement)
             {
                 return Create(regex, from family in ReplaceAll(familyReplacement)
                                      from brand in ReplaceAll(brandReplacement)
@@ -491,7 +491,7 @@ namespace UAParser
                                      select new Device(family, brand, model));
             }
 
-            public static Func<string, UserAgent> UserAgent(Regex regex, string familyReplacement, string majorReplacement, string minorReplacement, string patchReplacement)
+            internal static Func<string, UserAgent> UserAgent(Regex regex, string familyReplacement, string majorReplacement, string minorReplacement, string patchReplacement)
             {
                 return Create(regex, from family in Replace(familyReplacement, "$1")
                                      from v1 in Replace(majorReplacement, "$2")
@@ -608,7 +608,7 @@ namespace UAParser
 
     internal static class RegexBinderBuilder
     {
-        public static Func<Match, IEnumerator<int>, TResult> SelectMany<T1, T2, TResult>(
+        internal static Func<Match, IEnumerator<int>, TResult> SelectMany<T1, T2, TResult>(
             this Func<Match, IEnumerator<int>, T1> binder,
             Func<T1, Func<Match, IEnumerator<int>, T2>> continuation,
             Func<T1, T2, TResult> projection)
@@ -625,7 +625,7 @@ namespace UAParser
 
     internal static class StringExtensions
     {
-        public static string ReplaceFirstOccurence(this string input, string search, string replacement)
+        internal static string ReplaceFirstOccurence(this string input, string search, string replacement)
         {
             if (input == null) throw new ArgumentNullException(nameof(input));
             var index = input.IndexOf(search, StringComparison.Ordinal);
@@ -637,7 +637,7 @@ namespace UAParser
 
     internal static class DictionaryExtensions
     {
-        public static TValue Find<TKey, TValue>(this IDictionary<TKey, TValue> dictionary, TKey key)
+        internal static TValue Find<TKey, TValue>(this IDictionary<TKey, TValue> dictionary, TKey key)
         {
             if (dictionary == null) throw new ArgumentNullException(nameof(dictionary));
             return dictionary.TryGetValue(key, out var result) ? result : default(TValue);
@@ -655,20 +655,20 @@ namespace UAParser
         {
             private Dictionary<string, string> _lastEntry;
 
-            public Mapping()
+            internal Mapping()
             {
                 Sequences = new List<Dictionary<string, string>>();
             }
 
-            public List<Dictionary<string, string>> Sequences { get; }
+            internal List<Dictionary<string, string>> Sequences { get; }
 
-            public void BeginSequence()
+            internal void BeginSequence()
             {
                 _lastEntry = new Dictionary<string, string>();
                 Sequences.Add(_lastEntry);
             }
 
-            public void AddToSequence(string key, string value)
+            internal void AddToSequence(string key, string value)
             {
                 _lastEntry[key] = value;
             }
@@ -676,7 +676,7 @@ namespace UAParser
 
         private readonly Dictionary<string, Mapping> _mappings = new Dictionary<string, Mapping>();
 
-        public MinimalYamlParser(string yamlString)
+        internal MinimalYamlParser(string yamlString)
         {
             ReadIntoMappingModel(yamlString);
         }
@@ -740,7 +740,7 @@ namespace UAParser
             return value;
         }
 
-        public IEnumerable<Dictionary<string, string>> ReadMapping(string mappingName)
+        internal IEnumerable<Dictionary<string, string>> ReadMapping(string mappingName)
         {
             if (_mappings.TryGetValue(mappingName, out var mapping))
             {
