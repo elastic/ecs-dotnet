@@ -10,6 +10,12 @@ The Elastic Common Schema defines a common set of fields for ingesting data into
 
 Contributions are welcome, please read our [guidelines](https://github.com/elastic/ecs-dotnet/tree/master/contributing.md).
 
+---
+
+**Please note** that this library is in a **beta** version and backwards-incompatible changes might be introduced in future releases. While we strive to comply to [semver](https://semver.org/), we can not guarantee to avoid breaking changes in minor releases.
+
+---
+
 # Integrations
 
 Official NuGet packages can be referenced from [NuGet.org](https://www.nuget.org).
