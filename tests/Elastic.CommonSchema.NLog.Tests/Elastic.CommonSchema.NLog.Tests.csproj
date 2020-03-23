@@ -16,7 +16,7 @@
         <PackageReference Include="xunit.NLog" Version="1.1.1" />
         <PackageReference Include="xunit.runner.visualstudio" Version="2.4.0" />
         <PackageReference Include="coverlet.collector" Version="1.0.1" />
-        <PackageReference Include="Elastic.Apm" Version="1.2.0" />
+        <PackageReference Include="Elastic.Apm" Version="1.4.0" />
     </ItemGroup>
 
     <ItemGroup>
