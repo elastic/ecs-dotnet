@@ -1,16 +1,21 @@
 using System;
 using System.Collections.Concurrent;
+using System.Diagnostics;
+using System.Linq;
+using System.Linq.Expressions;
 using System.Threading;
+using Elasticsearch.Net;
+using Essential.LoggerProvider.Ecs;
 
 namespace Essential.LoggerProvider
 {
     internal class ElasticsearchLoggerProcessor : IDisposable
     {
         private const int _maxQueuedMessages = 1024;
-
-        private readonly BlockingCollection<LogEvent> _messageQueue = new BlockingCollection<LogEvent>(_maxQueuedMessages);
-
+        private readonly BlockingCollection<QueueEvent> _messageQueue = new BlockingCollection<QueueEvent>(_maxQueuedMessages);
         private readonly Thread _outputThread;
+        private ElasticsearchLoggerOptions _options = default!;
+        private ElasticLowLevelClient _lowLevelClient = default!;
 
         public ElasticsearchLoggerProcessor()
         {
@@ -21,7 +26,15 @@ namespace Essential.LoggerProvider
             _outputThread.Start();
         }
 
-        internal ElasticsearchLoggerOptions Options { get; set; } = default!;
+        internal ElasticsearchLoggerOptions Options
+        {
+            get { return _options; }
+            set
+            {
+                _options = value; 
+                UpdateClient();
+            }
+        }
 
         public void Dispose()
         {
@@ -35,13 +48,13 @@ namespace Essential.LoggerProvider
             _messageQueue?.Dispose();
         }
 
-        public void EnqueueMessage(LogEvent logEvent)
+        public void EnqueueMessage(QueueEvent queueEvent)
         {
             if (!_messageQueue.IsAddingCompleted)
             {
                 try
                 {
-                    _messageQueue.Add(logEvent);
+                    _messageQueue.Add(queueEvent);
                     return;
                 }
                 catch (InvalidOperationException) { }
@@ -50,7 +63,7 @@ namespace Essential.LoggerProvider
             // Adding is complete, so just log the message
             try
             {
-                WriteMessage(logEvent);
+                WriteMessage(queueEvent);
             }
             catch (Exception) { }
         }
@@ -74,8 +87,41 @@ namespace Essential.LoggerProvider
             }
         }
 
-        private void WriteMessage(LogEvent logEvent)
+        private void UpdateClient()
         {
+            // TODO: Check if Uri has changed before recreating
+            
+            IConnectionPool connectionPool;
+            switch (_options.ConnectionPoolType)
+            {
+                case ConnectionPoolType.Sniffing:
+                case ConnectionPoolType.Unknown:
+                    connectionPool = new SniffingConnectionPool(_options.NodeUris);
+                    break;
+                default:
+                    throw new Exception($"Unknown connection pool type {_options.ConnectionPoolType}");
+            }
+            
+            var settings = new ConnectionConfiguration(connectionPool);
+
+            var lowlevelClient = new ElasticLowLevelClient(settings);
+
+            var originalClient = Interlocked.Exchange(ref _lowLevelClient, lowlevelClient);
+        }
+
+        private void WriteMessage(QueueEvent queueEvent)
+        {
+            // TODO: injectable property provider
+            var timestamp = DateTimeOffset.Now;
+            var logEvent = new LogEvent()
+            {
+                Timestamp = timestamp,
+                Message =  queueEvent.Message
+            };
+            var index = string.Format("log-{0:yyyy.MM.dd}", timestamp);
+            var lowLevelClient = _lowLevelClient;
+            var response = _lowLevelClient.Index<StringResponse>(index, PostData.Serializable(logEvent));
+            
             //_writer.WriteLine(message);
         }
     }

@@ -67,7 +67,7 @@ namespace Essential.LoggerProvider
                 scopes = scopeList.ToArray();
             }
             
-            var logEvent = new LogEvent(
+            var logEvent = new QueueEvent(
                 _categoryName,
                 logLevel,
                 eventId,

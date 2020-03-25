@@ -3,7 +3,7 @@ using Microsoft.Extensions.Logging;
 
 namespace Essential.LoggerProvider
 {
-    public class LogEvent
+    public class QueueEvent
     {
         public string CategoryName { get; }
         public LogLevel LogLevel { get; }
@@ -12,7 +12,7 @@ namespace Essential.LoggerProvider
         public Exception? Exception { get; }
         public object[]? Scopes { get; }
 
-        public LogEvent(string categoryName, LogLevel logLevel, EventId? eventId, string message,
+        public QueueEvent(string categoryName, LogLevel logLevel, EventId? eventId, string message,
             Exception? exception, object[]? scopes)
         {
             CategoryName = categoryName;
