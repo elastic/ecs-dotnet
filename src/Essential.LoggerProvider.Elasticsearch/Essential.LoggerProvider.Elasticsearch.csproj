@@ -1,0 +1,37 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>netstandard2.0</TargetFramework>
+      <Product>Essential.Logging</Product>
+      <Authors>sgryphon</Authors>
+      <Copyright>Copyright © 2020 Gryphon Technology Pty Ltd</Copyright>
+      <Version>0.0.1</Version>
+      <RootNamespace>Essential</RootNamespace>
+        <LangVersion>8</LangVersion>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+  <PropertyGroup>
+    <Description>
+      Elasticsearch logger provider for Microsoft.Extensions.Logging.
+
+      Other Essential.Logging packages extend the .NET Microsoft.Extensions.Logging with guidance, links, utilities, and additional logger providers.
+
+      See the project site on GitHub for examples and documentation.
+    </Description>
+    <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
+    <PackageLicenseExpression>LGPL-3.0-or-later</PackageLicenseExpression>
+    <PackageProjectUrl>https://github.com/sgryphon/essential-logging</PackageProjectUrl>
+    <PackageIcon>diagnostics-logo-64.png</PackageIcon>
+    <PackageTags>Logging;LoggerProvider;Tracing;Diagnostics;Log;Trace;File logger</PackageTags>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="..\..\docs\images\diagnostics-logo-64.png" Pack="true" PackagePath="\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.Logging.Configuration" Version="2.2.0" />
+  </ItemGroup>
+  
+</Project>
