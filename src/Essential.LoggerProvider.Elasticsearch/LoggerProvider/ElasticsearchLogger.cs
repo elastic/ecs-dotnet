@@ -52,6 +52,7 @@ namespace Essential.LoggerProvider
             }
 
             // TODO: Want to render state values (separate from message) to pass to log event, for semantic logging
+            // Maybe render to JSON in-process, then queue bytes for sending to index ??
             
             var message = formatter(state, exception);
 

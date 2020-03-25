@@ -90,19 +90,31 @@ namespace Essential.LoggerProvider
         private void UpdateClient()
         {
             // TODO: Check if Uri has changed before recreating
-            
-            IConnectionPool connectionPool;
-            switch (_options.ConnectionPoolType)
+
+            ConnectionConfiguration settings;
+            if (_options.NodeUris.Length == 0)
             {
-                case ConnectionPoolType.Sniffing:
-                case ConnectionPoolType.Unknown:
-                    connectionPool = new SniffingConnectionPool(_options.NodeUris);
-                    break;
-                default:
-                    throw new Exception($"Unknown connection pool type {_options.ConnectionPoolType}");
+                settings = new ConnectionConfiguration();
             }
-            
-            var settings = new ConnectionConfiguration(connectionPool);
+            else if (_options.NodeUris.Length == 1)
+            {
+                settings = new ConnectionConfiguration(_options.NodeUris[0]);
+            }
+            else
+            {
+                IConnectionPool connectionPool;
+                switch (_options.ConnectionPoolType)
+                {
+                    case ConnectionPoolType.Sniffing:
+                    case ConnectionPoolType.Unknown:
+                        connectionPool = new SniffingConnectionPool(_options.NodeUris);
+                        break;
+                    default:
+                        throw new Exception($"Unknown connection pool type {_options.ConnectionPoolType}");
+                }
+
+                settings = new ConnectionConfiguration(connectionPool);
+            }
 
             var lowlevelClient = new ElasticLowLevelClient(settings);
 

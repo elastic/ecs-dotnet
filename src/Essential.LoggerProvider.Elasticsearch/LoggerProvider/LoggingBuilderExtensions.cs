@@ -9,7 +9,7 @@ namespace Essential.LoggerProvider
 {
     public static class LoggingBuilderExtensions
     {
-        public static ILoggingBuilder AddRollingFile(this ILoggingBuilder builder)
+        public static ILoggingBuilder AddElasticsearch(this ILoggingBuilder builder)
         {
             builder.Services.TryAddEnumerable(ServiceDescriptor
                 .Singleton<ILoggerProvider, ElasticsearchLoggerProvider>());
@@ -21,12 +21,12 @@ namespace Essential.LoggerProvider
             return builder;
         }
 
-        public static ILoggingBuilder AddRollingFile(this ILoggingBuilder builder,
+        public static ILoggingBuilder AddElasticsearch(this ILoggingBuilder builder,
             Action<ElasticsearchLoggerOptions> configure)
         {
             if (configure == null) throw new ArgumentNullException(nameof(configure));
 
-            builder.AddRollingFile();
+            builder.AddElasticsearch();
             builder.Services.Configure(configure);
             return builder;
         }
