@@ -14,6 +14,6 @@
       a lower NLog version
     -->
     <PackageReference Include="NLog" Version="4.5.4" />
-    <PackageReference Include="Elastic.Apm" Version="1.2.0" />
+    <PackageReference Include="Elastic.Apm" Version="1.4.0" />
   </ItemGroup>
 </Project>
