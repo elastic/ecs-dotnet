@@ -7,11 +7,13 @@ namespace Essential.LoggerProvider
     public class ElasticsearchLogger : ILogger
     {
         private readonly string _categoryName;
+        private readonly ElasticsearchLoggerProcessor _loggerProcessor;
         private ElasticsearchLoggerOptions _options = default!;
 
-        internal ElasticsearchLogger(string categoryName)
+        internal ElasticsearchLogger(string categoryName, ElasticsearchLoggerProcessor loggerProcessor)
         {
             _categoryName = categoryName;
+            _loggerProcessor = loggerProcessor;
         }
 
         internal ElasticsearchLoggerOptions Options
@@ -49,6 +51,8 @@ namespace Essential.LoggerProvider
                 throw new ArgumentNullException(nameof(formatter));
             }
 
+            // TODO: Want to render state values (separate from message) to pass to log event, for semantic logging
+            
             var message = formatter(state, exception);
 
             var scopeProvider = ScopeProvider;
@@ -63,8 +67,16 @@ namespace Essential.LoggerProvider
                 scopes = scopeList.ToArray();
             }
             
-            //_loggerProcessor.EnqueueMessage(output);
-            throw new NotImplementedException("Implement elasticsearch client");
+            var logEvent = new LogEvent(
+                _categoryName,
+                logLevel,
+                eventId,
+                message,
+                exception,
+                scopes
+            );
+            
+            _loggerProcessor.EnqueueMessage(logEvent);
         }
         
     }
