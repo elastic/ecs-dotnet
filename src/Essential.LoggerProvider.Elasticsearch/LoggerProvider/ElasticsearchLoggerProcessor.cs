@@ -123,17 +123,21 @@ namespace Essential.LoggerProvider
 
         private void WriteMessage(QueueEvent queueEvent)
         {
-            var timestamp = ElasticsearchLoggerProvider.LocalDateTimeProvider().ToUniversalTime();
+            var timestamp = ElasticsearchLoggerProvider.LocalDateTimeProvider();
             var id = Guid.NewGuid().ToString();
             
             var logEvent = new LogEvent()
             {
                 Timestamp = timestamp,
-                Message =  queueEvent.Message
+                Message =  queueEvent.Message,
+                Agent = new Agent(),
+                Log = new Log(queueEvent.LogLevel, queueEvent.CategoryName)
             };
+            
             var index = string.Format(_options.Index, timestamp);
-            var lowLevelClient = _lowLevelClient;
-            var response = _lowLevelClient.Index<StringResponse>(index, id, PostData.Serializable(logEvent));
+            
+            var localClient = _lowLevelClient;
+            var response = localClient.Index<StringResponse>(index, id, PostData.Serializable(logEvent));
             
             //_writer.WriteLine(message);
         }
