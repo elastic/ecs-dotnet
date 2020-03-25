@@ -15,7 +15,7 @@ namespace Essential.LoggerProvider
         private readonly BlockingCollection<QueueEvent> _messageQueue = new BlockingCollection<QueueEvent>(_maxQueuedMessages);
         private readonly Thread _outputThread;
         private ElasticsearchLoggerOptions _options = default!;
-        private ElasticLowLevelClient _lowLevelClient = default!;
+        private IElasticLowLevelClient _lowLevelClient = default!;
 
         public ElasticsearchLoggerProcessor()
         {
@@ -118,21 +118,22 @@ namespace Essential.LoggerProvider
 
             var lowlevelClient = new ElasticLowLevelClient(settings);
 
-            var originalClient = Interlocked.Exchange(ref _lowLevelClient, lowlevelClient);
+            _ = Interlocked.Exchange(ref _lowLevelClient, lowlevelClient);
         }
 
         private void WriteMessage(QueueEvent queueEvent)
         {
-            // TODO: injectable property provider
-            var timestamp = DateTimeOffset.Now;
+            var timestamp = ElasticsearchLoggerProvider.LocalDateTimeProvider().ToUniversalTime();
+            var id = Guid.NewGuid().ToString();
+            
             var logEvent = new LogEvent()
             {
                 Timestamp = timestamp,
                 Message =  queueEvent.Message
             };
-            var index = string.Format("log-{0:yyyy.MM.dd}", timestamp);
+            var index = string.Format(_options.Index, timestamp);
             var lowLevelClient = _lowLevelClient;
-            var response = _lowLevelClient.Index<StringResponse>(index, PostData.Serializable(logEvent));
+            var response = _lowLevelClient.Index<StringResponse>(index, id, PostData.Serializable(logEvent));
             
             //_writer.WriteLine(message);
         }

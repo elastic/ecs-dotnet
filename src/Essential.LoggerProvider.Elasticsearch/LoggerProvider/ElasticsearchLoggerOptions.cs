@@ -10,6 +10,8 @@ namespace Essential.LoggerProvider
         /// </summary>
         public bool IncludeScopes { get; set; } = true;
 
+        public string Index { get; set; } = "dotnet-{0:yyyy.MM.dd}";
+        
         /// <summary>
         /// Gets or sets value indicating if logger accepts and queues writes.
         /// </summary>

@@ -15,6 +15,8 @@ namespace Essential.LoggerProvider
         private readonly ElasticsearchLoggerProcessor _processor;
         private IExternalScopeProvider _scopeProvider = default!;
 
+        public static Func<DateTimeOffset> LocalDateTimeProvider { get; set; } = () => DateTimeOffset.Now;
+
         public ElasticsearchLoggerProvider(IOptionsMonitor<ElasticsearchLoggerOptions> options)
         {
             _options = options;
