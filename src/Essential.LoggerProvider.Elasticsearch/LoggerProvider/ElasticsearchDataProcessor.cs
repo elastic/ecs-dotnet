@@ -192,9 +192,11 @@ namespace Essential.LoggerProvider
             ConnectionConfiguration settings;
             if (_options.NodeUris.Length == 0)
             {
+                // This is SingleNode with "http://localhost:9200"
                 settings = new ConnectionConfiguration();
             }
-            else if (_options.NodeUris.Length == 1)
+            else if (_options.ConnectionPoolType == ConnectionPoolType.SingleNode 
+                || (_options.ConnectionPoolType == ConnectionPoolType.Unknown && _options.NodeUris.Length == 1))
             {
                 settings = new ConnectionConfiguration(_options.NodeUris[0]);
             }
@@ -203,12 +205,21 @@ namespace Essential.LoggerProvider
                 IConnectionPool connectionPool;
                 switch (_options.ConnectionPoolType)
                 {
-                    case ConnectionPoolType.Sniffing:
+                    // TODO: Add option to randomize pool
                     case ConnectionPoolType.Unknown:
+                    case ConnectionPoolType.Sniffing:
                         connectionPool = new SniffingConnectionPool(_options.NodeUris);
                         break;
+                    case ConnectionPoolType.Static:
+                        connectionPool = new StaticConnectionPool(_options.NodeUris);
+                        break;
+                    case ConnectionPoolType.Sticky:
+                        connectionPool = new StickyConnectionPool(_options.NodeUris);
+                        break;
+                    // case ConnectionPoolType.StickySniffing:
+                    // case ConnectionPoolType.Cloud:
                     default:
-                        throw new Exception($"Unknown connection pool type {_options.ConnectionPoolType}");
+                        throw new NotSupportedException($"Unknown connection pool type {_options.ConnectionPoolType}");
                 }
 
                 settings = new ConnectionConfiguration(connectionPool);

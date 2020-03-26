@@ -10,6 +10,12 @@ namespace Essential.LoggerProvider
         /// </summary>
         public bool IncludeScopes { get; set; } = true;
 
+        public bool IncludeHost { get; set; } = true;
+
+        public bool IncludeProcess { get; set; } = true;
+
+        public bool IncludeUser { get; set; } = true;
+
         public string Index { get; set; } = "dotnet-{0:yyyy.MM.dd}";
         
         /// <summary>
@@ -20,5 +26,7 @@ namespace Essential.LoggerProvider
         public Uri[] NodeUris { get; set; } = new Uri[0];
 
         public ConnectionPoolType ConnectionPoolType { get; set; }
+
+        public string[] Tags { get; set; } = new string[0];
     }
 }

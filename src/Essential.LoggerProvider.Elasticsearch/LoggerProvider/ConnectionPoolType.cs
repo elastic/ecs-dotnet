@@ -3,6 +3,11 @@ namespace Essential.LoggerProvider
     public enum ConnectionPoolType
     {
         Unknown = 0,
-        Sniffing
+        SingleNode,
+        Sniffing,
+        Static,
+        Sticky,
+        StickySniffing,
+        Cloud
     }
 }

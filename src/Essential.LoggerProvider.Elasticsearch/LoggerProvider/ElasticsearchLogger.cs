@@ -75,35 +75,91 @@ namespace Essential.LoggerProvider
         private ElasticsearchData BuildElasticsearchData<TState>(string categoryName, LogLevel logLevel, EventId eventId, TState state, Exception? exception,
             Func<TState, Exception, string> formatter)
         {
-            var timestamp = ElasticsearchLoggerProvider.LocalDateTimeProvider();
-            var message = formatter(state, exception!);
-
-            var elasticsearchData = new ElasticsearchData()
-            {
-                Timestamp = timestamp,
-                Message =  message
-            };
-
+            var elasticsearchData = new ElasticsearchData();
+            
+            elasticsearchData.Timestamp = ElasticsearchLoggerProvider.LocalDateTimeProvider();
+            elasticsearchData.Message = formatter(state, exception!);
             elasticsearchData.Log = new Log(logLevel, categoryName);
-            elasticsearchData.Agent = _dataProcessor.GetAgent();
             elasticsearchData.Event = new Event(eventId.Name, eventId.Id.ToString(), _dataProcessor.GetSeverity(logLevel));
-            elasticsearchData.Host = _dataProcessor.GetHost();
-            elasticsearchData.Process = _dataProcessor.GetProcess();
-            elasticsearchData.User = new User(Thread.CurrentPrincipal?.Identity.Name, Environment.UserName, Environment.UserDomainName);
-            elasticsearchData.Trace = new Ecs.Trace(Trace.CorrelationManager.ActivityId.ToString());
-            elasticsearchData.Service = _dataProcessor.GetService();
 
             if (exception != null)
             {
-                var stackTrace = exception.StackTrace;
-                if (exception.InnerException != null)
-                {
-                    stackTrace += Environment.NewLine + "---> " + exception.InnerException.ToString();
-                }
-                elasticsearchData.Error = new Error(exception.GetType().FullName, exception.Message, stackTrace);
+                AddException(exception, elasticsearchData);
+            }
+            
+            elasticsearchData.Agent = _dataProcessor.GetAgent();
+            elasticsearchData.Service = _dataProcessor.GetService();
+
+            if (_options.Tags != null && _options.Tags.Length > 0)
+            {
+                elasticsearchData.Tags = _options.Tags;
             }
 
-            // Add scope values
+            if (_options.IncludeHost)
+            {
+                elasticsearchData.Host = _dataProcessor.GetHost();
+            }
+
+            if (_options.IncludeProcess)
+            {
+                elasticsearchData.Process = _dataProcessor.GetProcess();
+            }
+
+            if (_options.IncludeUser)
+            {
+                elasticsearchData.User = new User(Thread.CurrentPrincipal?.Identity.Name, Environment.UserName,
+                    Environment.UserDomainName);
+            }
+
+            if (!Trace.CorrelationManager.ActivityId.Equals(Guid.Empty))
+            {
+                elasticsearchData.Trace = new Ecs.Trace(Trace.CorrelationManager.ActivityId.ToString());
+            }
+            
+            if (_options.IncludeScopes)
+            {
+                AddScopeValues(elasticsearchData);
+            }
+            
+            // These will overwrite any scope values with the same name
+            AddStateValues(state, elasticsearchData);
+
+            return elasticsearchData;
+        }
+
+        private static void AddException(Exception exception, ElasticsearchData elasticsearchData)
+        {
+            var stackTrace = exception.StackTrace;
+            if (exception.InnerException != null)
+            {
+                stackTrace += Environment.NewLine + "---> " + exception.InnerException.ToString();
+            }
+
+            elasticsearchData.Error = new Error(exception.GetType().FullName, exception.Message, stackTrace);
+        }
+
+        private static void AddStateValues<TState>(TState state, ElasticsearchData elasticsearchData)
+        {
+            if (state is IEnumerable<KeyValuePair<string, object>> stateValues)
+            {
+                if (stateValues.Count() > 0)
+                {
+                    if (elasticsearchData.Labels == null)
+                    {
+                        elasticsearchData.Labels = new Dictionary<string, string>();
+                    }
+
+                    foreach (var kvp in stateValues)
+                    {
+                        // TODO: Handling for different types, e.g. array
+                        elasticsearchData.Labels[kvp.Key] = kvp.Value.ToString();
+                    }
+                }
+            }
+        }
+
+        private void AddScopeValues(ElasticsearchData elasticsearchData)
+        {
             var scopeProvider = ScopeProvider;
             if (Options.IncludeScopes && scopeProvider != null)
             {
@@ -114,6 +170,7 @@ namespace Essential.LoggerProvider
                     {
                         elasticsearchData.Labels = new Dictionary<string, string>();
                     }
+
                     if (scope is IEnumerable<KeyValuePair<string, object>> scopeValues)
                     {
                         foreach (var kvp in scopeValues)
@@ -133,26 +190,6 @@ namespace Essential.LoggerProvider
                     index++;
                 }, elasticsearchData);
             }
-            
-            // Add semantic parameter values
-            if (state is IEnumerable<KeyValuePair<string, object>> stateValues)
-            {
-                if (stateValues.Count() > 0)
-                {
-                    if (elasticsearchData.Labels == null)
-                    {
-                        elasticsearchData.Labels = new Dictionary<string, string>();
-                    }
-                    foreach (var kvp in stateValues)
-                    {
-                        // TODO: Handling for different types, e.g. array
-                        elasticsearchData.Labels[kvp.Key] = kvp.Value.ToString();
-                    }
-                }
-            }
-
-            return elasticsearchData;
         }
-        
     }
 }
