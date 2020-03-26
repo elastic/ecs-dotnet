@@ -23,7 +23,6 @@ namespace Generator.Schema
 			_schema.Name switch
 			{
 				"dns" when Name == "answers" && _schema.Fields.Single(f => f.Value.Name == "answers").Value.IsArray() => (NamePCased + "[]"),
-				"log" when Name == "syslog" => (NamePCased + "[]"),
 				_ => NamePCased
 			};
 

@@ -2355,7 +2355,7 @@ namespace Elastic.CommonSchema
 		/// The Syslog metadata of the event, if the event was transmitted via Syslog. Please see RFCs 5424 or 3164.
 		/// </summary>
 		[DataMember(Name = "syslog")]
-		public LogSyslog[] Syslog { get; set; }
+		public LogSyslog Syslog { get; set; }
 
 		/// <summary>
 		/// Original log level of the log event.<para/><para/>If the source of the event provides a log level or textual severity, this is the one that goes in `log.level`. If your source doesn't specify one, you may put your event transport's severity here (e.g. Syslog severity).<para/><para/>Some examples are `warn`, `err`, `i`, `informational`.
