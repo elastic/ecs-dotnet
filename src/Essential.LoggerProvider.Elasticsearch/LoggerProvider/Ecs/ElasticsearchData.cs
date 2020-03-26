@@ -33,7 +33,7 @@ namespace Essential.LoggerProvider.Ecs
 
         [DataMember(Name = "service")] public Service? Service { get; set; }
 
-        //[DataMember(Name = "tags")] public IList<string>? Tags { get; set; }
+        [DataMember(Name = "tags")] public IList<string>? Tags { get; set; }
 
         [DataMember(Name = "@timestamp")] public DateTimeOffset Timestamp { get; set; }
 

@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using Essential.LoggerProvider.Ecs;
 using Microsoft.Extensions.Logging;
 using System.Threading;
@@ -102,16 +103,52 @@ namespace Essential.LoggerProvider
                 elasticsearchData.Error = new Error(exception.GetType().FullName, exception.Message, stackTrace);
             }
 
+            // Add scope values
             var scopeProvider = ScopeProvider;
-            object[]? scopes = null;
             if (Options.IncludeScopes && scopeProvider != null)
             {
-                var scopeList = new List<object>();
-                scopeProvider.ForEachScope((scope, localList) =>
+                int index = 0;
+                scopeProvider.ForEachScope((scope, innerData) =>
                 {
-                    localList.Add(scope);
-                }, scopeList);
-                scopes = scopeList.ToArray();
+                    if (elasticsearchData.Labels == null)
+                    {
+                        elasticsearchData.Labels = new Dictionary<string, string>();
+                    }
+                    if (scope is IEnumerable<KeyValuePair<string, object>> scopeValues)
+                    {
+                        foreach (var kvp in scopeValues)
+                        {
+                            if (kvp.Key != "{OriginalFormat}")
+                            {
+                                // TODO: Handling for different types, e.g. array
+                                elasticsearchData.Labels[kvp.Key] = kvp.Value.ToString();
+                            }
+                        }
+                    }
+                    else
+                    {
+                        elasticsearchData.Labels["scope" + index.ToString()] = scope.ToString();
+                    }
+
+                    index++;
+                }, elasticsearchData);
+            }
+            
+            // Add semantic parameter values
+            if (state is IEnumerable<KeyValuePair<string, object>> stateValues)
+            {
+                if (stateValues.Count() > 0)
+                {
+                    if (elasticsearchData.Labels == null)
+                    {
+                        elasticsearchData.Labels = new Dictionary<string, string>();
+                    }
+                    foreach (var kvp in stateValues)
+                    {
+                        // TODO: Handling for different types, e.g. array
+                        elasticsearchData.Labels[kvp.Key] = kvp.Value.ToString();
+                    }
+                }
             }
 
             return elasticsearchData;
