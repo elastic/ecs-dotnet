@@ -106,7 +106,7 @@ namespace Essential.LoggerProvider
                 var operatingSystem = new Ecs.OperatingSystem(
                     RuntimeInformation.OSDescription,
                     Environment.OSVersion.Platform.ToString(),
-                    Environment.OSVersion.VersionString);
+                    Environment.OSVersion.Version.ToString());
                 _host = new Host(Environment.MachineName, RuntimeInformation.OSArchitecture.ToString(),
                     operatingSystem);
             }

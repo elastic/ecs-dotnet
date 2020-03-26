@@ -6,12 +6,17 @@ namespace Essential.LoggerProvider.Ecs
 {
     public class ElasticsearchData
     {
+        // TODO: Maybe look at a faster way to just serialize/write values directly to bytes (and queue the bytes)
+        // (rather than sticking into a class that then gets serialized)
+        
         // agent.type = "Essential.LoggerProvider.Elasticsearch", agent.version
         [DataMember(Name = "agent")] public Agent? Agent { get; set; } = default;
 
         // ecs.version
         [DataMember(Name = "ecs")] public Ecs Ecs { get; set; } = new Ecs();
 
+        [DataMember(Name = "error")] public Error? Error { get; set; }
+        
         [DataMember(Name = "event")] public Event? Event { get; set; }
 
         [DataMember(Name = "host")] public Host? Host { get; set; }

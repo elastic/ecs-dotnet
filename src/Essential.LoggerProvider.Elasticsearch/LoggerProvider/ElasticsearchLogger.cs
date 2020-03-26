@@ -71,11 +71,11 @@ namespace Essential.LoggerProvider
             }
         }
 
-        private ElasticsearchData BuildElasticsearchData<TState>(string categoryName, LogLevel logLevel, EventId eventId, TState state, Exception exception,
+        private ElasticsearchData BuildElasticsearchData<TState>(string categoryName, LogLevel logLevel, EventId eventId, TState state, Exception? exception,
             Func<TState, Exception, string> formatter)
         {
             var timestamp = ElasticsearchLoggerProvider.LocalDateTimeProvider();
-            var message = formatter(state, exception);
+            var message = formatter(state, exception!);
 
             var elasticsearchData = new ElasticsearchData()
             {
@@ -91,6 +91,16 @@ namespace Essential.LoggerProvider
             elasticsearchData.User = new User(Thread.CurrentPrincipal?.Identity.Name, Environment.UserName, Environment.UserDomainName);
             elasticsearchData.Trace = new Ecs.Trace(Trace.CorrelationManager.ActivityId.ToString());
             elasticsearchData.Service = _dataProcessor.GetService();
+
+            if (exception != null)
+            {
+                var stackTrace = exception.StackTrace;
+                if (exception.InnerException != null)
+                {
+                    stackTrace += Environment.NewLine + "---> " + exception.InnerException.ToString();
+                }
+                elasticsearchData.Error = new Error(exception.GetType().FullName, exception.Message, stackTrace);
+            }
 
             var scopeProvider = ScopeProvider;
             object[]? scopes = null;
