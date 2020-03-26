@@ -7,13 +7,13 @@ namespace Essential.LoggerProvider.Ecs
     {
         public Log(LogLevel level, string logger)
         {
-            Level = level;
+            Level = level.ToString();
             Logger = logger;
         }
         
         // log.level = Some examples are warn, err, i, informational ** LogLevel **
         [DataMember(Name = "level")]
-        public LogLevel Level { get; set; }
+        public string Level { get; set; }
         
         // log.logger = example: org.elasticsearch.bootstrap.Bootstrap ** CategoryName **
         [DataMember(Name = "logger")]

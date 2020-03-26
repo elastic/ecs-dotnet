@@ -4,7 +4,7 @@ using System.Runtime.Serialization;
 
 namespace Essential.LoggerProvider.Ecs
 {
-    public class LogEvent
+    public class ElasticsearchData
     {
         // ecs.version
         [DataMember(Name = "ecs")]

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Essential.LoggerProvider.Ecs;
 using Microsoft.Extensions.Logging;
 
 namespace Essential.LoggerProvider
@@ -7,13 +8,13 @@ namespace Essential.LoggerProvider
     public class ElasticsearchLogger : ILogger
     {
         private readonly string _categoryName;
-        private readonly ElasticsearchLoggerProcessor _loggerProcessor;
+        private readonly ElasticsearchDataProcessor _dataProcessor;
         private ElasticsearchLoggerOptions _options = default!;
 
-        internal ElasticsearchLogger(string categoryName, ElasticsearchLoggerProcessor loggerProcessor)
+        internal ElasticsearchLogger(string categoryName, ElasticsearchDataProcessor dataProcessor)
         {
             _categoryName = categoryName;
-            _loggerProcessor = loggerProcessor;
+            _dataProcessor = dataProcessor;
         }
 
         internal ElasticsearchLoggerOptions Options
@@ -41,18 +42,36 @@ namespace Essential.LoggerProvider
         public void Log<TState>(LogLevel logLevel, EventId eventId, TState state, Exception exception,
             Func<TState, Exception, string> formatter)
         {
-            if (!IsEnabled(logLevel))
+            try
             {
-                return;
-            }
+                if (!IsEnabled(logLevel))
+                {
+                    return;
+                }
 
-            if (formatter == null)
+                if (formatter == null)
+                {
+                    throw new ArgumentNullException(nameof(formatter));
+                }
+
+                // TODO: Want to render state values (separate from message) to pass to log event, for semantic logging
+                // Maybe render to JSON in-process, then queue bytes for sending to index ??
+
+                var logEvent = BuildLogEvent(_categoryName, logLevel, eventId, state, exception, formatter);
+
+                _dataProcessor.EnqueueMessage(logEvent);
+            }
+            catch (Exception ex)
             {
-                throw new ArgumentNullException(nameof(formatter));
+                Console.Error.WriteLine("ElasticsearchLogger exception: {0}", ex);
             }
+        }
 
-            // TODO: Want to render state values (separate from message) to pass to log event, for semantic logging
-            // Maybe render to JSON in-process, then queue bytes for sending to index ??
+
+        private ElasticsearchData BuildLogEvent<TState>(string categoryName, LogLevel logLevel, EventId eventId, TState state, Exception exception,
+            Func<TState, Exception, string> formatter)
+        {
+            var timestamp = ElasticsearchLoggerProvider.LocalDateTimeProvider();
             
             var message = formatter(state, exception);
 
@@ -67,17 +86,16 @@ namespace Essential.LoggerProvider
                 }, scopeList);
                 scopes = scopeList.ToArray();
             }
-            
-            var logEvent = new QueueEvent(
-                _categoryName,
-                logLevel,
-                eventId,
-                message,
-                exception,
-                scopes
-            );
-            
-            _loggerProcessor.EnqueueMessage(logEvent);
+
+            var logEvent = new ElasticsearchData()
+            {
+                Timestamp = timestamp,
+                Message =  message,
+                Agent = new Agent(),
+                Log = new Log(logLevel, categoryName)
+            };
+
+            return logEvent;
         }
         
     }

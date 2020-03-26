@@ -9,15 +9,15 @@ using Essential.LoggerProvider.Ecs;
 
 namespace Essential.LoggerProvider
 {
-    internal class ElasticsearchLoggerProcessor : IDisposable
+    internal class ElasticsearchDataProcessor : IDisposable
     {
         private const int _maxQueuedMessages = 1024;
-        private readonly BlockingCollection<QueueEvent> _messageQueue = new BlockingCollection<QueueEvent>(_maxQueuedMessages);
+        private readonly BlockingCollection<ElasticsearchData> _messageQueue = new BlockingCollection<ElasticsearchData>(_maxQueuedMessages);
         private readonly Thread _outputThread;
         private ElasticsearchLoggerOptions _options = default!;
         private IElasticLowLevelClient _lowLevelClient = default!;
 
-        public ElasticsearchLoggerProcessor()
+        public ElasticsearchDataProcessor()
         {
             _outputThread = new Thread(ProcessLogQueue)
             {
@@ -48,13 +48,13 @@ namespace Essential.LoggerProvider
             _messageQueue?.Dispose();
         }
 
-        public void EnqueueMessage(QueueEvent queueEvent)
+        public void EnqueueMessage(ElasticsearchData elasticsearchData)
         {
             if (!_messageQueue.IsAddingCompleted)
             {
                 try
                 {
-                    _messageQueue.Add(queueEvent);
+                    _messageQueue.Add(elasticsearchData);
                     return;
                 }
                 catch (InvalidOperationException) { }
@@ -63,7 +63,7 @@ namespace Essential.LoggerProvider
             // Adding is complete, so just log the message
             try
             {
-                WriteMessage(queueEvent);
+                WriteMessage(elasticsearchData);
             }
             catch (Exception) { }
         }
@@ -121,23 +121,14 @@ namespace Essential.LoggerProvider
             _ = Interlocked.Exchange(ref _lowLevelClient, lowlevelClient);
         }
 
-        private void WriteMessage(QueueEvent queueEvent)
+        private void WriteMessage(ElasticsearchData elasticsearchData)
         {
-            var timestamp = ElasticsearchLoggerProvider.LocalDateTimeProvider();
+            var index = string.Format(_options.Index, elasticsearchData.Timestamp);
+
             var id = Guid.NewGuid().ToString();
             
-            var logEvent = new LogEvent()
-            {
-                Timestamp = timestamp,
-                Message =  queueEvent.Message,
-                Agent = new Agent(),
-                Log = new Log(queueEvent.LogLevel, queueEvent.CategoryName)
-            };
-            
-            var index = string.Format(_options.Index, timestamp);
-            
             var localClient = _lowLevelClient;
-            var response = localClient.Index<StringResponse>(index, id, PostData.Serializable(logEvent));
+            var response = localClient.Index<StringResponse>(index, id, PostData.Serializable(elasticsearchData));
             
             //_writer.WriteLine(message);
         }

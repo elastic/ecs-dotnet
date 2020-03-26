@@ -12,7 +12,7 @@ namespace Essential.LoggerProvider
         private readonly IOptionsMonitor<ElasticsearchLoggerOptions> _options;
 
         private readonly IDisposable _optionsReloadToken;
-        private readonly ElasticsearchLoggerProcessor _processor;
+        private readonly ElasticsearchDataProcessor _processor;
         private IExternalScopeProvider _scopeProvider = default!;
 
         public static Func<DateTimeOffset> LocalDateTimeProvider { get; set; } = () => DateTimeOffset.Now;
@@ -20,7 +20,7 @@ namespace Essential.LoggerProvider
         public ElasticsearchLoggerProvider(IOptionsMonitor<ElasticsearchLoggerOptions> options)
         {
             _options = options;
-            _processor = new ElasticsearchLoggerProcessor();
+            _processor = new ElasticsearchDataProcessor();
             _loggers = new ConcurrentDictionary<string, ElasticsearchLogger>();
             ReloadLoggerOptions(options.CurrentValue);
             _optionsReloadToken = _options.OnChange(ReloadLoggerOptions);
