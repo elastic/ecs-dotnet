@@ -151,8 +151,15 @@ namespace Essential.LoggerProvider
 
                     foreach (var kvp in stateValues)
                     {
-                        // TODO: Handling for different types, e.g. array
-                        elasticsearchData.Labels[kvp.Key] = kvp.Value.ToString();
+                        if (kvp.Key == "{OriginalFormat}")
+                        {
+                            elasticsearchData.MessageTemplate = kvp.Value.ToString();
+                        }
+                        else
+                        {
+                            // TODO: Handling for different types, e.g. array
+                            elasticsearchData.Labels[kvp.Key] = kvp.Value.ToString();
+                        }
                     }
                 }
             }
@@ -163,31 +170,35 @@ namespace Essential.LoggerProvider
             var scopeProvider = ScopeProvider;
             if (Options.IncludeScopes && scopeProvider != null)
             {
-                int index = 0;
                 scopeProvider.ForEachScope((scope, innerData) =>
                 {
                     if (elasticsearchData.Labels == null)
                     {
                         elasticsearchData.Labels = new Dictionary<string, string>();
                     }
+                    if (elasticsearchData.Scopes == null)
+                    {
+                        elasticsearchData.Scopes = new List<string>();
+                    }
 
+                    bool isFormattedLogValues = false;
                     if (scope is IEnumerable<KeyValuePair<string, object>> scopeValues)
                     {
                         foreach (var kvp in scopeValues)
                         {
-                            if (kvp.Key != "{OriginalFormat}")
+                            if (kvp.Key == "{OriginalFormat}")
+                            {
+                                isFormattedLogValues = true;
+                            }
+                            else
                             {
                                 // TODO: Handling for different types, e.g. array
                                 elasticsearchData.Labels[kvp.Key] = kvp.Value.ToString();
                             }
                         }
                     }
-                    else
-                    {
-                        elasticsearchData.Labels["scope" + index.ToString()] = scope.ToString();
-                    }
-
-                    index++;
+                    // TODO: Handling for different types, e.g. array (but not formatted log values)
+                    elasticsearchData.Scopes.Add(scope.ToString());
                 }, elasticsearchData);
             }
         }

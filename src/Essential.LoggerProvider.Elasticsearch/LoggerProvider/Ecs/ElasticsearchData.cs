@@ -29,8 +29,14 @@ namespace Essential.LoggerProvider.Ecs
 
         [DataMember(Name = "message")] public string Message { get; set; } = string.Empty;
 
+        // Custom field; use capitalisation as per ECS 
+        public string? MessageTemplate { get; set; }
+
         [DataMember(Name = "process")] public Process? Process { get; set; }
 
+        // Custom field; use capitalisation as per ECS 
+        public IList<string>? Scopes { get; set; }
+        
         [DataMember(Name = "service")] public Service? Service { get; set; }
 
         [DataMember(Name = "tags")] public IList<string>? Tags { get; set; }
@@ -40,7 +46,7 @@ namespace Essential.LoggerProvider.Ecs
         [DataMember(Name = "trace")] public Trace? Trace { get; set; }
 
         [DataMember(Name = "user")] public User? User { get; set; }
-
+        
         // If there is an exception
         // error.code, error.id, error.message, error.stack_trace, error.type
 
