@@ -198,7 +198,7 @@ namespace Elastic.CommonSchema.Serilog
 
 			var hasHost = e.TryGetScalarPropertyValue(SpecialKeys.Host, out var host);
 			server.Address = hasHost ? host.Value.ToString() : null;
-			server.Ip = hasHost ? new[] { host.Value.ToString() }: null;
+			server.Ip = hasHost ? host.Value.ToString() : null;
 			return server;
 		}
 
@@ -224,11 +224,11 @@ namespace Elastic.CommonSchema.Serilog
 			{
 				return new Process
 				{
-					Title = processName,
+					Title = string.IsNullOrEmpty(processName) ? null : processName,
 					Name = processName,
 					Pid = pid,
-					Thread = int.TryParse(threadId ?? processId ?? "", out var id)
-						? new ProcessThread() { Id = id }
+					Thread = int.TryParse(threadId ?? processId, out var id)
+						? new ProcessThread { Id = id }
 						: null,
 				};
 			}
@@ -236,9 +236,10 @@ namespace Elastic.CommonSchema.Serilog
 			var currentThread = Thread.CurrentThread;
 			var process = TryGetProcess(pid);
 
+			var mainWindowTitle = process?.MainWindowTitle;
 			return new Process
 			{
-				Title = process?.MainWindowTitle,
+				Title = string.IsNullOrEmpty(mainWindowTitle) ? null : mainWindowTitle,
 				Name = process?.ProcessName ?? processName,
 				Pid = process?.Id ?? pid,
 				Executable = process?.ProcessName ?? processName,
