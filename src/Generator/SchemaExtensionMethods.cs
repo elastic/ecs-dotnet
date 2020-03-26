@@ -45,7 +45,6 @@ namespace Generator.Schema
 		public static string ClrType(this Field value)
 		{
 			var isArray = value.IsArray() ||
-				value.FlatName == "user.id" ||
 				value.FlatName == "client.ip" ||
 				value.FlatName == "destination.ip" ||
 				value.FlatName == "server.ip" ||

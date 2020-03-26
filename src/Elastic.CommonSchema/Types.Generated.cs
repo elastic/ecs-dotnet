@@ -4509,7 +4509,7 @@ namespace Elastic.CommonSchema
 		/// </summary>
 		/// <remarks>(ECS Core)</remarks>
 		[DataMember(Name = "id")]
-		public string[] Id { get; set; }
+		public string Id { get; set; }
 
 		/// <summary>
 		/// Short name or login of the user.
