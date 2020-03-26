@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Text;
 using Essential.LoggerProvider.Ecs;
 using Microsoft.Extensions.Logging;
 using System.Threading;
@@ -138,7 +139,7 @@ namespace Essential.LoggerProvider
             elasticsearchData.Error = new Error(exception.GetType().FullName, exception.Message, stackTrace);
         }
 
-        private static void AddStateValues<TState>(TState state, ElasticsearchData elasticsearchData)
+        private void AddStateValues<TState>(TState state, ElasticsearchData elasticsearchData)
         {
             if (state is IEnumerable<KeyValuePair<string, object>> stateValues)
             {
@@ -157,8 +158,7 @@ namespace Essential.LoggerProvider
                         }
                         else
                         {
-                            // TODO: Handling for different types, e.g. array
-                            elasticsearchData.Labels[kvp.Key] = kvp.Value.ToString();
+                            elasticsearchData.Labels[kvp.Key] = FormatValue(kvp.Value);
                         }
                     }
                 }
@@ -192,14 +192,43 @@ namespace Essential.LoggerProvider
                             }
                             else
                             {
-                                // TODO: Handling for different types, e.g. array
-                                elasticsearchData.Labels[kvp.Key] = kvp.Value.ToString();
+                                elasticsearchData.Labels[kvp.Key] = FormatValue(kvp.Value);
                             }
                         }
                     }
-                    // TODO: Handling for different types, e.g. array (but not formatted log values)
-                    elasticsearchData.Scopes.Add(scope.ToString());
+
+                    var formattedScope = isFormattedLogValues ? scope.ToString() : FormatValue(scope); 
+                    elasticsearchData.Scopes.Add(formattedScope);
                 }, elasticsearchData);
+            }
+        }
+
+        private string FormatValue(object value)
+        {
+            switch (value)
+            {
+                case byte b:
+                    return b.ToString("X2");
+                case byte[] bytes:
+                    var builder = new StringBuilder("0x");
+                    foreach (var b in bytes)
+                    {
+                        builder.Append(b.ToString("X2"));
+                    }
+                    return builder.ToString();
+                case DateTime dateTime:
+                    if (dateTime.TimeOfDay.Equals(TimeSpan.Zero))
+                    {
+                        return dateTime.ToString("yyyy'-'MM'-'dd");
+                    }
+                    else
+                    {
+                        return dateTime.ToString("s");
+                    }
+                case DateTimeOffset dateTimeOffset:
+                    return dateTimeOffset.ToString("yyyy'-'MM'-'dd'T'HH':'mm':'ss.ffffffzzz");
+                default:
+                    return value.ToString();
             }
         }
     }
