@@ -1,7 +1,11 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using Essential.LoggerProvider.Ecs;
 using Microsoft.Extensions.Logging;
+using System.Threading;
+using Thread = System.Threading.Thread;
+using Trace = System.Diagnostics.Trace;
 
 namespace Essential.LoggerProvider
 {
@@ -57,9 +61,9 @@ namespace Essential.LoggerProvider
                 // TODO: Want to render state values (separate from message) to pass to log event, for semantic logging
                 // Maybe render to JSON in-process, then queue bytes for sending to index ??
 
-                var logEvent = BuildLogEvent(_categoryName, logLevel, eventId, state, exception, formatter);
+                var elasticsearchData = BuildElasticsearchData(_categoryName, logLevel, eventId, state, exception, formatter);
 
-                _dataProcessor.EnqueueMessage(logEvent);
+                _dataProcessor.EnqueueMessage(elasticsearchData);
             }
             catch (Exception ex)
             {
@@ -67,13 +71,26 @@ namespace Essential.LoggerProvider
             }
         }
 
-
-        private ElasticsearchData BuildLogEvent<TState>(string categoryName, LogLevel logLevel, EventId eventId, TState state, Exception exception,
+        private ElasticsearchData BuildElasticsearchData<TState>(string categoryName, LogLevel logLevel, EventId eventId, TState state, Exception exception,
             Func<TState, Exception, string> formatter)
         {
             var timestamp = ElasticsearchLoggerProvider.LocalDateTimeProvider();
-            
             var message = formatter(state, exception);
+
+            var elasticsearchData = new ElasticsearchData()
+            {
+                Timestamp = timestamp,
+                Message =  message
+            };
+
+            elasticsearchData.Log = new Log(logLevel, categoryName);
+            elasticsearchData.Agent = _dataProcessor.GetAgent();
+            elasticsearchData.Event = new Event(eventId.Name, eventId.Id.ToString(), _dataProcessor.GetSeverity(logLevel));
+            elasticsearchData.Host = _dataProcessor.GetHost();
+            elasticsearchData.Process = _dataProcessor.GetProcess();
+            elasticsearchData.User = new User(Thread.CurrentPrincipal?.Identity.Name, Environment.UserName, Environment.UserDomainName);
+            elasticsearchData.Trace = new Ecs.Trace(Trace.CorrelationManager.ActivityId.ToString());
+            elasticsearchData.Service = _dataProcessor.GetService();
 
             var scopeProvider = ScopeProvider;
             object[]? scopes = null;
@@ -87,15 +104,7 @@ namespace Essential.LoggerProvider
                 scopes = scopeList.ToArray();
             }
 
-            var logEvent = new ElasticsearchData()
-            {
-                Timestamp = timestamp,
-                Message =  message,
-                Agent = new Agent(),
-                Log = new Log(logLevel, categoryName)
-            };
-
-            return logEvent;
+            return elasticsearchData;
         }
         
     }

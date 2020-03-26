@@ -13,11 +13,11 @@ namespace Essential.LoggerProvider.Ecs
         
         // log.level = Some examples are warn, err, i, informational ** LogLevel **
         [DataMember(Name = "level")]
-        public string Level { get; set; }
+        public string Level { get; }
         
         // log.logger = example: org.elasticsearch.bootstrap.Bootstrap ** CategoryName **
         [DataMember(Name = "logger")]
-        public string Logger { get; set; }
+        public string Logger { get; }
         
         // log.syslog = The Syslog metadata of the event
         // log.syslog.facility.code

@@ -6,27 +6,35 @@ namespace Essential.LoggerProvider.Ecs
 {
     public class ElasticsearchData
     {
-        // ecs.version
-        [DataMember(Name = "ecs")]
-        public Ecs Ecs { get; set;  } = new Ecs();
-        
-        [DataMember(Name = "@timestamp")]
-        public DateTimeOffset Timestamp { get; set; }
-        
-        [DataMember(Name = "message")]
-        public string Message { get; set; } = string.Empty;
+        // agent.type = "Essential.LoggerProvider.Elasticsearch", agent.version
+        [DataMember(Name = "agent")] public Agent? Agent { get; set; } = default;
 
-        [DataMember(Name = "tags")]
-        public IList<string> Tags { get; set; } = new List<string>();
-        
+        // ecs.version
+        [DataMember(Name = "ecs")] public Ecs Ecs { get; set; } = new Ecs();
+
+        [DataMember(Name = "event")] public Event? Event { get; set; }
+
+        [DataMember(Name = "host")] public Host? Host { get; set; }
+
         // labels = Custom key/value pairs. Can be used to add meta information to events. Should not contain nested objects.
         // example: {'application': 'foo-bar', 'env': 'production'}
-        [DataMember(Name = "labels")]
-        public IDictionary<string, string> Labels { get; set; } = new Dictionary<string, string>();
+        [DataMember(Name = "labels")] public IDictionary<string, string>? Labels { get; set; }
 
-        // agent.type = "Essential.LoggerProvider.Elasticsearch", agent.version
-        [DataMember(Name = "agent")] 
-        public Agent Agent { get; set; } = default!;
+        [DataMember(Name = "log")] public Log? Log { get; set; }
+
+        [DataMember(Name = "message")] public string Message { get; set; } = string.Empty;
+
+        [DataMember(Name = "process")] public Process? Process { get; set; }
+
+        [DataMember(Name = "service")] public Service? Service { get; set; }
+
+        //[DataMember(Name = "tags")] public IList<string>? Tags { get; set; }
+
+        [DataMember(Name = "@timestamp")] public DateTimeOffset Timestamp { get; set; }
+
+        [DataMember(Name = "trace")] public Trace? Trace { get; set; }
+
+        [DataMember(Name = "user")] public User? User { get; set; }
 
         // If there is an exception
         // error.code, error.id, error.message, error.stack_trace, error.type
@@ -44,61 +52,10 @@ namespace Essential.LoggerProvider.Ecs
         //         "backend_queue": 0, ... }
         // }
 
-        // event.action, = example: user-password-change   ** EventId.Name **
-        // event.category, = database, network, process ### don't know for now
-        // event.code, = example of this is the Windows Event ID. ** EventId.Id **
-        // event.kind = alert, event ### probably best not to use for now; otherwise map from LogLevel.. but then redundant
-        // xxx event.module = Name of the module, e.g. apache
-        // xxx event.provider = source of the event, e.g. kernel, Microsoft-Windows-Security-Auditing 
-        // event.severity = numeric => from LogLevel
-        // event.type = error, info ### probably best not to use for now; otherwise map from LogLevel.. but then redundant
-
-        // Syslog severity belongs in log.syslog.severity.code. event.severity
-
-        // At least hostname
-        // host.architecture, host.domain, host.hostname, host.ip, 
-
-        // log.level = Some examples are warn, err, i, informational ** LogLevel **
-        // log.logger = example: org.elasticsearch.bootstrap.Bootstrap ** CategoryName **
-        // log.syslog = The Syslog metadata of the event
-        // log.syslog.facility.code
-        // log.syslog.priority
-        // log.syslog.severity.code => from LogLevel
-        // log.syslog.severity.name
-        
-        [DataMember(Name = "log")] 
-        public Log Log { get; set; } = default!;
-
-        // Some of these
-        // os.family OS family (such as redhat, debian, freebsd, windows).
-        // os.full, os.kernel, os.name, os.platform, os.version
-
-        // Some of these
-        // process.args Array of process arguments, starting with the absolute path to the executable. example: ['/usr/bin/ssh', '-l', 'user', '10.0.0.16']
-        // process.name Sometimes called program name or similar.
-        // process.pid process id
-        // process.thread.id
-        // process.thread.name
-        // process.title
-
-        // maybe inject from config?
-        // service.name
-        // service.type
-        // service.version
-
-        // Should add correlation at some point... maybe stick activity id here for now
-        // trace.id = A trace groups multiple events like transactions that belong together. For example, a user request handled by multiple inter-connected services.
         // transaction.id = A transaction is the highest level of work measured within a service, such as a request to a server.
-
-        // System info
-        // user.domain
-        // user.name
 
         // extract out url.*, http.* fields (instead of labels)
 
         // also, a standard way to pass in things like event.category, event.type, event.outcome ... maybe look for scope fields or param values with matching names.
-
     }
 }
-
-
