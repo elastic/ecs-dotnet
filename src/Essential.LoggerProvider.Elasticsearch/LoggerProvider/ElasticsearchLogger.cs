@@ -1,11 +1,10 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using Essential.LoggerProvider.Ecs;
 using Microsoft.Extensions.Logging;
-using System.Threading;
 using Thread = System.Threading.Thread;
 using Trace = System.Diagnostics.Trace;
 
@@ -63,7 +62,8 @@ namespace Essential.LoggerProvider
                 // TODO: Want to render state values (separate from message) to pass to log event, for semantic logging
                 // Maybe render to JSON in-process, then queue bytes for sending to index ??
 
-                var elasticsearchData = BuildElasticsearchData(_categoryName, logLevel, eventId, state, exception, formatter);
+                var elasticsearchData =
+                    BuildElasticsearchData(_categoryName, logLevel, eventId, state, exception, formatter);
 
                 _dataProcessor.EnqueueMessage(elasticsearchData);
             }
@@ -71,61 +71,6 @@ namespace Essential.LoggerProvider
             {
                 Console.Error.WriteLine("ElasticsearchLogger exception: {0}", ex);
             }
-        }
-
-        private ElasticsearchData BuildElasticsearchData<TState>(string categoryName, LogLevel logLevel, EventId eventId, TState state, Exception? exception,
-            Func<TState, Exception, string> formatter)
-        {
-            var elasticsearchData = new ElasticsearchData();
-            
-            elasticsearchData.Timestamp = ElasticsearchLoggerProvider.LocalDateTimeProvider();
-            elasticsearchData.Message = formatter(state, exception!);
-            elasticsearchData.Log = new Log(logLevel, categoryName);
-            elasticsearchData.Event = new Event(eventId.Name, eventId.Id.ToString(), _dataProcessor.GetSeverity(logLevel));
-
-            if (exception != null)
-            {
-                AddException(exception, elasticsearchData);
-            }
-            
-            elasticsearchData.Agent = _dataProcessor.GetAgent();
-            elasticsearchData.Service = _dataProcessor.GetService();
-
-            if (_options.Tags != null && _options.Tags.Length > 0)
-            {
-                elasticsearchData.Tags = _options.Tags;
-            }
-
-            if (_options.IncludeHost)
-            {
-                elasticsearchData.Host = _dataProcessor.GetHost();
-            }
-
-            if (_options.IncludeProcess)
-            {
-                elasticsearchData.Process = _dataProcessor.GetProcess();
-            }
-
-            if (_options.IncludeUser)
-            {
-                elasticsearchData.User = new User(Thread.CurrentPrincipal?.Identity.Name, Environment.UserName,
-                    Environment.UserDomainName);
-            }
-
-            if (!Trace.CorrelationManager.ActivityId.Equals(Guid.Empty))
-            {
-                elasticsearchData.Trace = new Ecs.Trace(Trace.CorrelationManager.ActivityId.ToString());
-            }
-            
-            if (_options.IncludeScopes)
-            {
-                AddScopeValues(elasticsearchData);
-            }
-            
-            // These will overwrite any scope values with the same name
-            AddStateValues(state, elasticsearchData);
-
-            return elasticsearchData;
         }
 
         private static void AddException(Exception exception, ElasticsearchData elasticsearchData)
@@ -137,6 +82,45 @@ namespace Essential.LoggerProvider
             }
 
             elasticsearchData.Error = new Error(exception.GetType().FullName, exception.Message, stackTrace);
+        }
+
+        private void AddScopeValues(ElasticsearchData elasticsearchData)
+        {
+            var scopeProvider = ScopeProvider;
+            if (Options.IncludeScopes && scopeProvider != null)
+            {
+                scopeProvider.ForEachScope((scope, innerData) =>
+                {
+                    if (elasticsearchData.Labels == null)
+                    {
+                        elasticsearchData.Labels = new Dictionary<string, string>();
+                    }
+
+                    if (elasticsearchData.Scopes == null)
+                    {
+                        elasticsearchData.Scopes = new List<string>();
+                    }
+
+                    bool isFormattedLogValues = false;
+                    if (scope is IEnumerable<KeyValuePair<string, object>> scopeValues)
+                    {
+                        foreach (var kvp in scopeValues)
+                        {
+                            if (kvp.Key == "{OriginalFormat}")
+                            {
+                                isFormattedLogValues = true;
+                            }
+                            else
+                            {
+                                elasticsearchData.Labels[kvp.Key] = FormatValue(kvp.Value);
+                            }
+                        }
+                    }
+
+                    var formattedScope = isFormattedLogValues ? scope.ToString() : FormatValue(scope);
+                    elasticsearchData.Scopes.Add(formattedScope);
+                }, elasticsearchData);
+            }
         }
 
         private void AddStateValues<TState>(TState state, ElasticsearchData elasticsearchData)
@@ -165,45 +149,110 @@ namespace Essential.LoggerProvider
             }
         }
 
-        private void AddScopeValues(ElasticsearchData elasticsearchData)
+        private ElasticsearchData BuildElasticsearchData<TState>(string categoryName, LogLevel logLevel,
+            EventId eventId, TState state, Exception? exception,
+            Func<TState, Exception, string> formatter)
         {
-            var scopeProvider = ScopeProvider;
-            if (Options.IncludeScopes && scopeProvider != null)
+            var elasticsearchData = new ElasticsearchData();
+
+            elasticsearchData.Timestamp = ElasticsearchLoggerProvider.LocalDateTimeProvider();
+            elasticsearchData.Message = formatter(state, exception!);
+            elasticsearchData.Log = new Log(logLevel, categoryName);
+            elasticsearchData.Event =
+                new Event(eventId.Name, eventId.Id.ToString(), _dataProcessor.GetSeverity(logLevel));
+
+            if (exception != null)
             {
-                scopeProvider.ForEachScope((scope, innerData) =>
-                {
-                    if (elasticsearchData.Labels == null)
-                    {
-                        elasticsearchData.Labels = new Dictionary<string, string>();
-                    }
-                    if (elasticsearchData.Scopes == null)
-                    {
-                        elasticsearchData.Scopes = new List<string>();
-                    }
-
-                    bool isFormattedLogValues = false;
-                    if (scope is IEnumerable<KeyValuePair<string, object>> scopeValues)
-                    {
-                        foreach (var kvp in scopeValues)
-                        {
-                            if (kvp.Key == "{OriginalFormat}")
-                            {
-                                isFormattedLogValues = true;
-                            }
-                            else
-                            {
-                                elasticsearchData.Labels[kvp.Key] = FormatValue(kvp.Value);
-                            }
-                        }
-                    }
-
-                    var formattedScope = isFormattedLogValues ? scope.ToString() : FormatValue(scope); 
-                    elasticsearchData.Scopes.Add(formattedScope);
-                }, elasticsearchData);
+                AddException(exception, elasticsearchData);
             }
+
+            elasticsearchData.Agent = _dataProcessor.GetAgent();
+            elasticsearchData.Service = _dataProcessor.GetService();
+
+            if (_options.Tags != null && _options.Tags.Length > 0)
+            {
+                elasticsearchData.Tags = _options.Tags;
+            }
+
+            if (_options.IncludeHost)
+            {
+                elasticsearchData.Host = _dataProcessor.GetHost();
+            }
+
+            if (_options.IncludeProcess)
+            {
+                elasticsearchData.Process = _dataProcessor.GetProcess();
+            }
+
+            if (_options.IncludeUser)
+            {
+                elasticsearchData.User = new User(Thread.CurrentPrincipal?.Identity.Name, Environment.UserName,
+                    Environment.UserDomainName);
+            }
+
+            if (!Trace.CorrelationManager.ActivityId.Equals(Guid.Empty))
+            {
+                elasticsearchData.Trace = new Ecs.Trace(Trace.CorrelationManager.ActivityId.ToString());
+            }
+
+            if (_options.IncludeScopes)
+            {
+                AddScopeValues(elasticsearchData);
+            }
+
+            // These will overwrite any scope values with the same name
+            AddStateValues(state, elasticsearchData);
+
+            return elasticsearchData;
         }
 
-        private string FormatValue(object value)
+        private string FormatEnumerable(IEnumerable enumerable, int depth)
+        {
+            var stringBuilder = new StringBuilder();
+
+            // The standard array.ToString() isn't very interesting, so render the elements
+            depth = depth + 1;
+            var index = 0;
+            foreach (var item in enumerable)
+            {
+                if (index > 0)
+                {
+                    stringBuilder.Append(_options.ListSeparator);
+                }
+
+                var value = FormatValue(item, depth);
+                stringBuilder.Append(value);
+                index++;
+            }
+
+            return stringBuilder.ToString();
+        }
+
+        private string FormatStringDictionary(IDictionary<string, object> dictionary, int depth)
+        {
+            // The standard dictionary.ToString() isn't very interesting, so render the key-value pairs
+            var stringBuilder = new StringBuilder();
+            depth = depth + 1;
+            var index = 0;
+            foreach (var kvp in dictionary)
+            {
+                if (index > 0)
+                {
+                    stringBuilder.Append(" ");
+                }
+
+                WriteName(stringBuilder, kvp.Key);
+                stringBuilder.Append('=');
+                stringBuilder.Append('"');
+                WriteValue(stringBuilder, FormatValue(kvp.Value, depth));
+                stringBuilder.Append('"');
+                index++;
+            }
+
+            return stringBuilder.ToString();
+        }
+
+        private string FormatValue(object value, int depth = 0)
         {
             switch (value)
             {
@@ -215,6 +264,7 @@ namespace Essential.LoggerProvider
                     {
                         builder.Append(b.ToString("X2"));
                     }
+
                     return builder.ToString();
                 case DateTime dateTime:
                     if (dateTime.TimeOfDay.Equals(TimeSpan.Zero))
@@ -227,8 +277,59 @@ namespace Essential.LoggerProvider
                     }
                 case DateTimeOffset dateTimeOffset:
                     return dateTimeOffset.ToString("yyyy'-'MM'-'dd'T'HH':'mm':'ss.ffffffzzz");
+                case string s:
+                    // since 'string' implements IEnumerable, special case it
+                    return s;
                 default:
-                    return value.ToString();
+                    if (depth < 1 && value is IDictionary<string, object> dictionary)
+                    {
+                        // need to special case dictionary before IEnumerable
+                        return FormatStringDictionary(dictionary, depth);
+                    }
+                    else if (depth < 1 && value is IEnumerable enumerable)
+                    {
+                        // if the value implements IEnumerable, build a comma separated string
+                        return FormatEnumerable(enumerable, depth);
+                    }
+                    else
+                    {
+                        return value.ToString();
+                    }
+            }
+        }
+
+        private void WriteName(StringBuilder stringBuilder, string name)
+        {
+            foreach (var c in name.Cast<char>())
+            {
+                if (c == ' ')
+                {
+                    stringBuilder.Append('_');
+                }
+                else if (c == '=')
+                {
+                    stringBuilder.AppendFormat("_x{0:X2}_", (int)c);
+                }
+                else
+                {
+                    stringBuilder.Append(c);
+                }
+            }
+        }
+
+        private void WriteValue(StringBuilder stringBuilder, string value)
+        {
+            foreach (var c in value.Cast<char>())
+            {
+                if (c == '"' || c == '\\')
+                {
+                    stringBuilder.Append('\\');
+                    stringBuilder.Append(c);
+                }
+                else
+                {
+                    stringBuilder.Append(c);
+                }
             }
         }
     }

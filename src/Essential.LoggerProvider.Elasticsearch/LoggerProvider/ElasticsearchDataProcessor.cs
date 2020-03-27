@@ -232,7 +232,10 @@ namespace Essential.LoggerProvider
 
         private void WriteMessage(ElasticsearchData elasticsearchData)
         {
-            var index = string.Format(_options.Index, elasticsearchData.Timestamp);
+            var indexTime = _options.IndexOffset.HasValue
+                ? elasticsearchData.Timestamp.ToOffset(_options.IndexOffset.Value)
+                : elasticsearchData.Timestamp; 
+            var index = string.Format(_options.Index, indexTime);
 
             var id = Guid.NewGuid().ToString();
 
