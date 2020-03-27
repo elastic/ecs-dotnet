@@ -5,9 +5,9 @@ namespace Essential.LoggerProvider
     public class ElasticsearchLoggerOptions
     {
         /// <summary>
-        /// Gets or sets a flag indicating whether scopes should be included in the message. Defaults to <c>true</c>.
+        /// Gets or sets the connection pool type. Default for multiple nodes is <c>Sniffing</c>; other supported values are <c>Static</c>, <c>Sticky</c>, or force to <c>SingleNode</c>.
         /// </summary>
-        public bool IncludeScopes { get; set; } = true;
+        public ConnectionPoolType ConnectionPoolType { get; set; }
 
         /// <summary>
         /// Gets or sets a flag indicating whether host details should be included in the message. Defaults to <c>true</c>.
@@ -18,6 +18,11 @@ namespace Essential.LoggerProvider
         /// Gets or sets a flag indicating whether process details should be included in the message. Defaults to <c>true</c>.
         /// </summary>
         public bool IncludeProcess { get; set; } = true;
+
+        /// <summary>
+        /// Gets or sets a flag indicating whether scopes should be included in the message. Defaults to <c>true</c>.
+        /// </summary>
+        public bool IncludeScopes { get; set; } = true;
 
         /// <summary>
         /// Gets or sets a flag indicating whether user details should be included in the message. Defaults to <c>true</c>.
@@ -43,16 +48,11 @@ namespace Essential.LoggerProvider
         /// Gets or sets the separate to use for <c>IList</c> semantic values.
         /// </summary>
         public string ListSeparator { get; set; } = ", ";
-        
+
         /// <summary>
         /// Gets or sets the URIs of the Elasticsearch nodes in the connection pool. If not specified the default single node "http://localhost:9200" is used.
         /// </summary>
         public Uri[] NodeUris { get; set; } = new Uri[0];
-
-        /// <summary>
-        /// Gets or sets the connection pool type. Default for multiple nodes is <c>Sniffing</c>; other supported values are <c>Static</c>, <c>Sticky</c>, or force to <c>SingleNode</c>.
-        /// </summary>
-        public ConnectionPoolType ConnectionPoolType { get; set; }
 
         /// <summary>
         /// Gets or sets additional tags to pass in the message, for example you can tag with the environment name ('Development', 'Production', etc).

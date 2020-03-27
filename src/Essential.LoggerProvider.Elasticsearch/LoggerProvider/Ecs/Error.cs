@@ -14,7 +14,7 @@ namespace Essential.LoggerProvider.Ecs
         [DataMember(Name = "message")] public string Message { get; }
 
         [DataMember(Name = "stack_trace")] public string StackTrace { get; }
-        
+
         [DataMember(Name = "type")] public string Type { get; }
 
         // If there is an exception

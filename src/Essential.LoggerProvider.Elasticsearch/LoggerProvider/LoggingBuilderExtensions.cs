@@ -16,8 +16,9 @@ namespace Essential.LoggerProvider
             builder.Services.TryAddEnumerable(ServiceDescriptor
                 .Singleton<IConfigureOptions<ElasticsearchLoggerOptions>, ElasticsearchLoggerOptionsSetup>());
             builder.Services.TryAddEnumerable(ServiceDescriptor
-                .Singleton<IOptionsChangeTokenSource<ElasticsearchLoggerOptions>, LoggerProviderOptionsChangeTokenSource<
-                    ElasticsearchLoggerOptions, ElasticsearchLoggerProvider>>());
+                .Singleton<IOptionsChangeTokenSource<ElasticsearchLoggerOptions>, LoggerProviderOptionsChangeTokenSource
+                    <
+                        ElasticsearchLoggerOptions, ElasticsearchLoggerProvider>>());
             return builder;
         }
 
@@ -30,6 +31,5 @@ namespace Essential.LoggerProvider
             builder.Services.Configure(configure);
             return builder;
         }
-
     }
 }

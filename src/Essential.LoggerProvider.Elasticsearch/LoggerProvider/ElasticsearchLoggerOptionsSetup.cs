@@ -5,7 +5,8 @@ namespace Essential.LoggerProvider
 {
     internal class ElasticsearchLoggerOptionsSetup : ConfigureFromConfigurationOptions<ElasticsearchLoggerOptions>
     {
-        public ElasticsearchLoggerOptionsSetup(ILoggerProviderConfiguration<ElasticsearchLoggerProvider> providerConfiguration)
+        public ElasticsearchLoggerOptionsSetup(
+            ILoggerProviderConfiguration<ElasticsearchLoggerProvider> providerConfiguration)
             : base(providerConfiguration.Configuration)
         {
         }

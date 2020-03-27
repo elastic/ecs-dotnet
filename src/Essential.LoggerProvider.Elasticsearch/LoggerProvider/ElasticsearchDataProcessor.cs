@@ -17,14 +17,16 @@ namespace Essential.LoggerProvider
         private Agent? _agent;
         private Host? _host;
         private IElasticLowLevelClient _lowLevelClient = default!;
-        private const int MaxQueuedMessages = 1024;
+
         private readonly BlockingCollection<ElasticsearchData> _messageQueue =
             new BlockingCollection<ElasticsearchData>(MaxQueuedMessages);
+
         private ElasticsearchLoggerOptions _options = default!;
         private readonly Thread _outputThread;
         private int _processId;
         private string? _processName;
         private Service? _service;
+        private const int MaxQueuedMessages = 1024;
 
         public ElasticsearchDataProcessor()
         {
@@ -195,8 +197,8 @@ namespace Essential.LoggerProvider
                 // This is SingleNode with "http://localhost:9200"
                 settings = new ConnectionConfiguration();
             }
-            else if (_options.ConnectionPoolType == ConnectionPoolType.SingleNode 
-                || (_options.ConnectionPoolType == ConnectionPoolType.Unknown && _options.NodeUris.Length == 1))
+            else if (_options.ConnectionPoolType == ConnectionPoolType.SingleNode
+                     || (_options.ConnectionPoolType == ConnectionPoolType.Unknown && _options.NodeUris.Length == 1))
             {
                 settings = new ConnectionConfiguration(_options.NodeUris[0]);
             }
@@ -234,7 +236,7 @@ namespace Essential.LoggerProvider
         {
             var indexTime = _options.IndexOffset.HasValue
                 ? elasticsearchData.Timestamp.ToOffset(_options.IndexOffset.Value)
-                : elasticsearchData.Timestamp; 
+                : elasticsearchData.Timestamp;
             var index = string.Format(_options.Index, indexTime);
 
             var id = Guid.NewGuid().ToString();

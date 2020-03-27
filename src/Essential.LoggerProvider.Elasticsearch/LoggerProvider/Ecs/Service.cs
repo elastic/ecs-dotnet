@@ -15,7 +15,7 @@ namespace Essential.LoggerProvider.Ecs
 
         // service.version
         [DataMember(Name = "version")] public string Version { get; }
-        
+
         // maybe inject from config?
         // service.name
     }
