@@ -75,12 +75,10 @@ namespace Essential.LoggerProvider
 
         private static void AddException(Exception exception, ElasticsearchData elasticsearchData)
         {
-            var stackTrace = exception.StackTrace;
-            if (exception.InnerException != null)
-            {
-                stackTrace += Environment.NewLine + "---> " + exception.InnerException.ToString();
-            }
-
+            // Use the full string of the exception, which includes both the outer stack trace and any
+            // inner exceptions and their stack trace. It also includes any additional values that some
+            // exceptions have in ToString() that is not in Message.
+            var stackTrace = exception.ToString();
             elasticsearchData.Error = new Error(exception.GetType().FullName, exception.Message, stackTrace);
         }
 
@@ -273,7 +271,7 @@ namespace Essential.LoggerProvider
                     }
                     else
                     {
-                        return dateTime.ToString("s");
+                        return dateTime.ToString("o");
                     }
                 case DateTimeOffset dateTimeOffset:
                     return dateTimeOffset.ToString("yyyy'-'MM'-'dd'T'HH':'mm':'ss.ffffffzzz");
