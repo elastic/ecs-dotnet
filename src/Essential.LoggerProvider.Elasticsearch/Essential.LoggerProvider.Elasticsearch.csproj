@@ -12,18 +12,16 @@
     </PropertyGroup>
 
   <PropertyGroup>
-    <Description>
-      Elasticsearch logger provider for Microsoft.Extensions.Logging.
+    <Description>Elasticsearch-Logstash-Kibana (ELK) stack logger provider for Microsoft.Extensions.Logging. Writes direct to Elasticsearch using the Elastic Common Schema (ECS), with semantic logging of structured data from message and scope values. The results can be viewed and queried in the Kibana console. 
+      
+Other Essential.Logging packages extend the .NET Microsoft.Extensions.Logging with guidance, links, utilities, and additional logger providers.
 
-      Other Essential.Logging packages extend the .NET Microsoft.Extensions.Logging with guidance, links, utilities, and additional logger providers.
-
-      See the project site on GitHub for examples and documentation.
-    </Description>
+See the project site on GitHub for examples and documentation.</Description>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
     <PackageLicenseExpression>LGPL-3.0-or-later</PackageLicenseExpression>
     <PackageProjectUrl>https://github.com/sgryphon/essential-logging</PackageProjectUrl>
     <PackageIcon>diagnostics-logo-64.png</PackageIcon>
-    <PackageTags>Logging;LoggerProvider;Tracing;Diagnostics;Log;Trace;File logger</PackageTags>
+    <PackageTags>Logging;LoggerProvider;Elasticsearch;ELK;Kibana;Logstash;Tracing;Diagnostics;Log;Trace;ECS</PackageTags>
   </PropertyGroup>
 
   <ItemGroup>

@@ -2,9 +2,10 @@
 
 # ElasticsearchLoggerProvider
 
-This logger provider writes to the Elasticsearch-Logstash-Kibana stack. It writes directly to Elasticsearch, 
-following the [Elastic Common Schema (ECS)](https://www.elastic.co/guide/en/ecs/current/ecs-reference.html),
-with semantic logging of individual fields. The results can be viewed and queried in the Kibana console.
+Elasticsearch-Logstash-Kibana (ELK) stack logger provider for Microsoft.Extensions.Logging.
+
+Writes direct to Elasticsearch using the [Elastic Common Schema (ECS)](https://www.elastic.co/guide/en/ecs/current/ecs-reference.html), 
+with semantic logging of structured data from message and scope values. The results can be viewed and queried in the Kibana console.
 
 The logger uses the [Elasticsearch.Net low level client](https://github.com/elastic/elasticsearch-net) to
 manage the network connection to Elasticsearch.
@@ -42,7 +43,7 @@ If you are running multiple applications or on multiple servers, you might want 
 include `service.type`, `service.version`, and `host.hostname`.
 
 Additional fields are defined below, and all individual message and scope values are logged 
-as `label.*` custom key/value pairs.
+as `label.*` custom key/value pairs, e.g. `labels.CustomerId`.
 
 ### Basic configuration
 
