@@ -43,7 +43,7 @@ If you are running multiple applications or on multiple servers, you might want 
 include `service.type`, `service.version`, and `host.hostname`.
 
 Additional fields are defined below, and all individual message and scope values are logged 
-as `label.*` custom key/value pairs, e.g. `labels.CustomerId`.
+as `labels.*` custom key/value pairs, e.g. `labels.CustomerId`.
 
 ### Basic configuration
 
