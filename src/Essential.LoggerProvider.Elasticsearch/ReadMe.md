@@ -228,6 +228,8 @@ The `_source` field is the message sent from the LoggerProvider, along with the 
 | log.level | string | The log level: `Critical`, `Error`, `Warning`, `Information`, `Debug`, or `Trace`. |
 | log.logger | string | The category name (namespace and class) of the logger, e.g. `HelloElasticsearch.Worker`. |
 
+The `event.severity` field is numeric and can be used to order events by level, e.g. Kibana query `event.severity <= 4` will get all messages that have log level `Warning` or worse.
+
 #### Error fields
 
 If the log message includes an exception, the details are reported in the error fields.
