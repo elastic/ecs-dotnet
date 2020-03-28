@@ -10,7 +10,7 @@ with semantic logging of structured data from message and scope values. The resu
 The logger uses the [Elasticsearch.Net low level client](https://github.com/elastic/elasticsearch-net) to
 manage the network connection to Elasticsearch.
 
-## Basic usage
+## Usage
 
 Add a reference to the `Essential.LoggerProvider.Elasticsearch` package:
 
@@ -63,13 +63,14 @@ The other useful value to configure is a tag for the environment, e.g. Developme
 
 **NOTE:** You don't need any configuration to just use a local Elasticsearch instance, as it defaults to http://localhost:9200/.
 
-## Example output
+### Example program
 
 * See [HelloElasticsearch](../../examples/HelloElasticsearch)
 
 ![Example - Elasticsearch](../../docs/images/example-elasticsearch-kibana.png)
 
-## Full configuration
+
+## Configuration settings
 
 The logger provider will be automatically configured with any logging settings under the alias `Elasticsearch`. 
 
@@ -95,21 +96,9 @@ The following default settings are used.
 }
 ```
 
-If you want to configure from a different section, it can be configured manually:
-
-```c#
-    .ConfigureLogging((hostContext, loggingBuilder) =>
-    {
-        loggingBuilder.AddElasticsearch(options =>
-            hostContext.Configuration.Bind("Logging:CustomElasticsearch", options));
-    })
-```
-
-### Setting descriptions
-
 | Setting | Type | Description |
 | ------- | ---- | ----------- |
-| ConnectionPoolType | enum | Default for multiple nodes is `Sniffing`; other supported values are `Static`, `Sticky`, or force to `SingleNode` |
+| ConnectionPoolType | enum | Default is `Singlenode`; for multiple nodes default is `Sniffing`. Other supported values are `Static`, `Sticky`, or force to `SingleNode` |
 | IncludeHost | boolean | Default `true`; set to `false` to disable logging host values. |
 | IncludeProcess | boolean | Default `true`; set to `false` to disable logging process values. |
 | IncludeScopes | boolean | Default `true`; set to `false` to disable logging scope values. |
@@ -121,9 +110,106 @@ If you want to configure from a different section, it can be configured manually
 | NodeUris | array | URI(s) of the Elasticsearch nodes to connect to. Default is a single node `[ "http://localhost:9200" ]` |
 | Tags | array | Additional tags to include in the message. Useful to specify the environment or other details, e.g.  `[ "Staging", "Priority" ]` |
 
-## Elastic Common Schema (ECS)
 
-Log messages follow the [Elastic Common Schema (ECS)](https://www.elastic.co/guide/en/ecs/current/ecs-reference.html).
+If you want to configure from a different section, it can be configured manually:
+
+```c#
+    .ConfigureLogging((hostContext, loggingBuilder) =>
+    {
+        loggingBuilder.AddElasticsearch(options =>
+            hostContext.Configuration.Bind("Logging:CustomElasticsearch", options));
+    })
+```
+
+## Output - Elastic Common Schema (ECS)
+
+Log messages sent to Elasticsearch follow the [Elastic Common Schema (ECS)](https://www.elastic.co/guide/en/ecs/current/ecs-reference.html).
+
+### Example document
+
+The `_source` field is the message sent from the LoggerProvider, along with the `_index` and `_id` (a GUID).
+
+```json
+{
+  "_index": "dotnet-2020.03.26",
+  "_type": "_doc",
+  "_id": "e17bfee9-8fb9-4de3-ab04-335718f37aa1",
+  "_version": 1,
+  "_score": null,
+  "_source": {
+    "agent": {
+      "type": "Essential.LoggerProvider.Elasticsearch",
+      "version": "1.1.1+bd3ad63"
+    },
+    "ecs": {
+      "version": "1.5"
+    },
+    "error": {
+      "message": "Calculation error",
+      "stack_trace": "System.Exception: Calculation error\n ---> System.DivideByZeroException: Attempted to divide by zero.\n   at HelloElasticsearch.Worker.ExecuteAsync(CancellationToken stoppingToken) in /home/sly/Code/essential-logging/examples/HelloElasticsearch/Worker.cs:line 63\n   --- End of inner exception stack trace ---\n   at HelloElasticsearch.Worker.ExecuteAsync(CancellationToken stoppingToken) in /home/sly/Code/essential-logging/examples/HelloElasticsearch/Worker.cs:line 67",
+      "type": "System.Exception"    },
+    "event": {
+      "name": "ErrorProcessingCustomer",
+      "code": "5000",
+      "severity": 3
+    },
+    "host": {
+      "architecture": "X64",
+      "hostname": "VUB1804",
+      "os": {
+        "full": "Linux 4.15.0-91-generic #92-Ubuntu SMP Fri Feb 28 11:09:48 UTC 2020",
+        "platform": "Unix",
+        "version": "4.15.0.91"
+      }
+    },
+    "labels": {
+      "ip": "2001:db8:85a3::8a2e:370:7334",
+      "CustomerId": "12345"
+    },
+    "log": {
+      "level": "Error",
+      "logger": "HelloElasticsearch.Worker"
+    },
+    "message": "Unexpected error processing customer 12345.",
+    "MessageTemplate": "Unexpected error processing customer {CustomerId}.",
+    "process": {
+      "name": "HelloElasticsearch",
+      "pid": 20273,
+      "thread": {
+        "id": 6
+      }
+    },
+    "Scopes": [
+      "IP address 2001:db8:85a3::8a2e:370:7334",
+      "PlainScope"
+    ],
+    "service": {
+      "type": "HelloElasticsearch",
+      "version": "1.0.0"
+    },
+    "tags": [
+      "Development"
+    ],
+    "trace": {
+      "id": "9d9df7e6-3a1f-4917-bf12-a50575097897"
+    },
+    "@timestamp": "2020-03-27T12:53:17.6266621+10:00",
+    "user": {
+      "domain": "VUB1804",
+      "id": "sgryphon+es@live.com",
+      "name": "sly"
+    }
+  },
+  "fields": {
+    "@timestamp": [
+      "2020-03-27T02:53:17.626Z"
+    ]
+  },
+  "sort": [
+    1585277597626
+  ]
+}
+```
 
 ### Standard Fields
 
@@ -184,13 +270,14 @@ The `labels` property in ECS should not contain nested objects, so values are co
 with specific formats for some types, e.g. calling string on a list is usually not very useful, so the contents of the list is logged instead.
 
 **Labels value formatting**
+
 | Type | Formatting |
 | ---- | ---------- |
 | byte | Hex, e.g. "9A" |
 | byte[] | Prefixed hex, e.g. "0x12789AF0" |
 | DateTimeOffset | ISO format, e.g. "2020-01-02T03:04:05.000000+06:00" |
-| DateTime | In most cases `DateTimeOffset` should be used instead (1). Where `DateTime` is used for date only (with no time component), it is formatted as a date, e.g. "2020-01-02". If it has a time component, the roundtrip format is used. |
-| IEnumerable | Values separated by ", " (customisable) |
+| DateTime | In most cases `DateTimeOffset` should be used instead (1). Where `DateTime` is used for date only (with no time component), it is formatted as a date, e.g. "2020-01-02". If it has a time component, the roundtrip ("o") format is used. |
+| IEnumerable | Values separated by ", " (configurable) |
 | IDictionary<string, object> | A string containing key value pairs, e.g. `token="0x12789AF0" count="5"` |
 | *other values* | The result of `ToString()`, including scalar values, e.g. the number `5.3` is logged as the string  "5.3" |
 
@@ -203,14 +290,14 @@ These identify the version of the logger provider being used.
 | Field | Type | Description |
 | ----- | ---- | ----------- |
 | agent.type | string | Name of the logger provider assembly, `Essential.LoggerProvider.Elasticsearch`. |
-| agent.version | string | Informational version number of the logger assembly, e.g. `1.0.0+281cf66`. |
+| agent.version | string | Informational version number of the logger assembly, e.g. `1.1.1+bd3ad63`. |
 | ecs.version | string | Version of ECS standard used, currently `1.5`. |
 
 ### Service fields
 
 This identifies the application/service that is running and generating the logs. 
 
-The values are pulled from `Assembly.GetEntryAssembly()`, using the `Name` 
+The values are pulled from the entry assemb, `Assembly.GetEntryAssembly()`, using the `Name` 
 and `AssemblyInformationalVersionAttribute` values (if informational version is not set 
 it falls back to assembly `Version`).
 
@@ -237,15 +324,17 @@ dotnet tool restore
 dotnet gitversion
 ```
 
+You are welcome to use the [`build.ps1`](../../build.ps1) script in this repository as an example.
+
 ### Tracing fields
 
 | Field | Type | Description |
 | ----- | ---- | ----------- |
-| trace.id | string | Correlation identifier. Value, if not empty, of `CorrelationManager.ActivityId` from `System.Diagnostics`. |
+| trace.id | string | Correlation identifier. Value, if not the empty Guid, of `CorrelationManager.ActivityId` from `System.Diagnostics`. |
 
 ### Host fields
 
-If not disabled.
+NOTE: Can be disabled via configuration.
 
 | Field | Type | Description |
 | ----- | ---- | ----------- |
@@ -257,7 +346,7 @@ If not disabled.
 
 ### Process fields
 
-If not disabled.
+NOTE: Can be disabled via configuration.
 
 | Field | Type | Description |
 | ----- | ---- | ----------- |
@@ -268,103 +357,10 @@ If not disabled.
 
 ### User fields
 
-If not disabled.
+NOTE: Can be disabled via configuration.
 
 | Field | Type | Description |
 | ----- | ---- | ----------- |
 | user.domain | string | The current domain, either the machine name or a Windows domain. Value of `Environment.UserDomainName`. |
 | user.id | string | Current user principal name, if set. Value of `Thread.CurrentPrincipal.Identity.Name`. |
 | user.name | string | The current user. Value of `Environment.UserName`. |
-
-## Example document
-
-The `_source` field is the message sent from the LoggerProvider, along with the `_index` and `_id` (a GUID).
-
-```json
-{
-  "_index": "dotnet-2020.03.26",
-  "_type": "_doc",
-  "_id": "e17bfee9-8fb9-4de3-ab04-335718f37aa1",
-  "_version": 1,
-  "_score": null,
-  "_source": {
-    "agent": {
-      "type": "Essential.LoggerProvider.Elasticsearch",
-      "version": "0.0.1"
-    },
-    "ecs": {
-      "version": "1.5"
-    },
-    "error": {
-      "message": "Calculation error",
-      "stack_trace": "   at HelloElasticsearch.Worker.ExecuteAsync(CancellationToken stoppingToken) in /home/sly/Code/essential-logging/examples/HelloElasticsearch/Worker.cs:line 65\n---> System.DivideByZeroException: Attempted to divide by zero.\n   at HelloElasticsearch.Worker.ExecuteAsync(CancellationToken stoppingToken) in /home/sly/Code/essential-logging/examples/HelloElasticsearch/Worker.cs:line 61",
-      "type": "System.Exception"
-    },
-    "event": {
-      "name": "ErrorProcessingCustomer",
-      "code": "5000",
-      "severity": 3
-    },
-    "host": {
-      "architecture": "X64",
-      "hostname": "VUB1804",
-      "os": {
-        "full": "Linux 4.15.0-91-generic #92-Ubuntu SMP Fri Feb 28 11:09:48 UTC 2020",
-        "platform": "Unix",
-        "version": "4.15.0.91"
-      }
-    },
-    "labels": {
-      "ip": "2001:db8:85a3::8a2e:370:7334",
-      "CustomerId": "12345"
-    },
-    "log": {
-      "level": "Error",
-      "logger": "HelloElasticsearch.Worker"
-    },
-    "message": "Unexpected error processing customer 12345.",
-    "MessageTemplate": "Unexpected error processing customer {CustomerId}.",
-    "process": {
-      "name": "HelloElasticsearch",
-      "pid": 20273,
-      "thread": {
-        "id": 6
-      }
-    },
-    "Scopes": [
-      "IP address 2001:db8:85a3::8a2e:370:7334",
-      "PlainScope"
-    ],
-    "service": {
-      "type": "HelloElasticsearch",
-      "version": "1.0.0"
-    },
-    "tags": [
-      "Development"
-    ],
-    "@timestamp": "2020-03-27T12:53:17.6266621+10:00",
-    "user": {
-      "domain": "VUB1804",
-      "name": "sly"
-    }
-  },
-  "fields": {
-    "@timestamp": [
-      "2020-03-27T02:53:17.626Z"
-    ]
-  },
-  "sort": [
-    1585277597626
-  ]
-}
-```
-
-## Development notes
-
-Th
-Elasticsearch common schema
-
-https://www.elastic.co/guide/en/ecs/current/ecs-reference.html
-
-
-
