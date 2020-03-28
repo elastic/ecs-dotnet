@@ -121,6 +121,9 @@ If you want to configure from a different section, it can be configured manually
     })
 ```
 
+Configuration can, of course, also be done in code, e.g. to add the environment as a tag.
+
+
 ## Output - Elastic Common Schema (ECS)
 
 Log messages sent to Elasticsearch follow the [Elastic Common Schema (ECS)](https://www.elastic.co/guide/en/ecs/current/ecs-reference.html).
@@ -147,7 +150,8 @@ The `_source` field is the message sent from the LoggerProvider, along with the 
     "error": {
       "message": "Calculation error",
       "stack_trace": "System.Exception: Calculation error\n ---> System.DivideByZeroException: Attempted to divide by zero.\n   at HelloElasticsearch.Worker.ExecuteAsync(CancellationToken stoppingToken) in /home/sly/Code/essential-logging/examples/HelloElasticsearch/Worker.cs:line 63\n   --- End of inner exception stack trace ---\n   at HelloElasticsearch.Worker.ExecuteAsync(CancellationToken stoppingToken) in /home/sly/Code/essential-logging/examples/HelloElasticsearch/Worker.cs:line 67",
-      "type": "System.Exception"    },
+      "type": "System.Exception"
+    },
     "event": {
       "name": "ErrorProcessingCustomer",
       "code": "5000",
