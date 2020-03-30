@@ -12,12 +12,12 @@ namespace Elastic.CommonSchema.Tests
 {
 	public class Serializes
 	{
-		private Log _log = new Log { Level = "debug" };
+		private readonly Log _log = new Log { Level = "debug" };
 
 		[Fact]
 		public void SerializesSomethingToString()
 		{
-			var b = new Base { Agent = new Agent { Name = "some-agent" }, Log =  _log};
+			var b = new Base { Agent = new Agent { Name = "some-agent" }, Log = _log};
 
 			var serialized = b.Serialize();
 			serialized.Should().NotBeNullOrWhiteSpace();
@@ -28,7 +28,6 @@ namespace Elastic.CommonSchema.Tests
 			deserialized.Agent.Name.Should().Be("some-agent");
 			deserialized.Log.Should().NotBeNull();
 			deserialized.Log.Level.Should().Be("debug");
-
 		}
 
 		public class SubclassedBase : Base
@@ -76,7 +75,6 @@ namespace Elastic.CommonSchema.Tests
 			var deserialized = EcsSerializerFactory<SubclassedBase>.Deserialize(serialized);
 			deserialized.Log.Should().NotBeNull();
 			deserialized.Agent2.Should().NotBeNull();
-
 		}
 
 		[Fact]
@@ -119,6 +117,5 @@ namespace Elastic.CommonSchema.Tests
 			deserialized.Agent2.Should().NotBeNull();
 			deserialized.Agent2.Name.Should().Be("some-agent");
 		}
-
 	}
 }

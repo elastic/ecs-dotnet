@@ -109,20 +109,35 @@ namespace Elastic.CommonSchema.Serilog
 					Original = _httpContextAccessor.HttpContext.Request.Path,
 					Full = uri.ToString(),
 					Scheme = uri.Scheme,
-					Query = uri.Query,
+					Query = string.IsNullOrEmpty(uri.Query) ? null : uri.Query,
 					Domain = uri.Authority,
 					Port = uri.Port
 				};
 			}
 		}
 
-		public Server Server => _httpContextAccessor.HttpContext == null ? null : new Server
+		public Server Server
 		{
-			Domain = ConvertToUri(_httpContextAccessor.HttpContext.Request).Authority
-		};
+			get
+			{
+				if (_httpContextAccessor.HttpContext == null)
+					return null;
 
-		private Uri ConvertToUri(Microsoft.AspNetCore.Http.HttpRequest request)
-			=> new Uri($"{request.Scheme}://{request.Host}{request.Path}");
+				var ip4 = _httpContextAccessor.HttpContext.Connection.LocalIpAddress.MapToIPv4();
+
+				var uri = ConvertToUri(_httpContextAccessor.HttpContext.Request);
+
+				return new Server
+				{
+					Address = ip4.ToString(),
+					Ip = ip4.ToString(),
+					Domain = uri.Authority
+				};
+			}
+		}
+
+		private static Uri ConvertToUri(Microsoft.AspNetCore.Http.HttpRequest request) =>
+			new Uri($"{request.Scheme}://{request.Host}{request.Path}");
 
 		public Client Client
 		{
@@ -131,12 +146,12 @@ namespace Elastic.CommonSchema.Serilog
 				if (_httpContextAccessor.HttpContext == null)
 					return null;
 
-				var address = _httpContextAccessor.HttpContext.Features.Get<IHttpConnectionFeature>()?.RemoteIpAddress.ToString();
+				var ip4 = _httpContextAccessor.HttpContext.Features.Get<IHttpConnectionFeature>()?.RemoteIpAddress.MapToIPv4();
 
 				return new Client
 				{
-					Address = address,
-					Ip = address,
+					Address = ip4.ToString(),
+					Ip = ip4.ToString(),
 					Bytes = _httpContextAccessor.HttpContext.Request.ContentLength,
 					User = User
 				};
@@ -168,7 +183,7 @@ namespace Elastic.CommonSchema.Serilog
 
 				return new User
 				{
-					Id = hasIdClaim ? new[] { idClaim.First().Value } : null,
+					Id = hasIdClaim ? idClaim.First().Value : null,
 					Name = hasNameClaim ? nameClaim.First().Value : null,
 					Email = hasEmailClaim ? emailClaim.First().Value : null,
 					Hash = hasHashClaim ? hashClaim.First().Value : null,

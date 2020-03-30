@@ -16,10 +16,12 @@ namespace Elastic.CommonSchema.Serialization
 {
 	/// <summary>
 	/// This static class allows you to deserialize subclasses of <see cref="Base"/>
-	/// If you are dealing with <see cref="Base"/> directly you do not need to use this class.
-	/// Use <see cref="Base.Deserialize(string)"/> and the overloads instead.
-	/// Note this class should only be used for advanced use cases, for simpler use cases you can utilise the <see cref="Base.Metadata"/> property.
+	/// If you are dealing with <see cref="Base"/> directly you do not need to use this class,
+	/// use <see cref="Base.Deserialize(string)"/> and the overloads instead.
 	/// </summary>
+	/// <remarks>
+	/// This class should only be used for advanced use cases, for simpler use cases you can utilise the <see cref="Base.Metadata"/> property.
+	/// </remarks>
 	/// <typeparam name="TBase">Type of the <see cref="Base"/> subclass</typeparam>
 	public static class EcsSerializerFactory<TBase> where TBase : Base, new()
 	{
