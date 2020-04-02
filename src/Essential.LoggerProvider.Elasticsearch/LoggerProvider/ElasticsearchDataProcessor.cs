@@ -14,6 +14,8 @@ namespace Essential.LoggerProvider
     internal class ElasticsearchDataProcessor : IDisposable
     {
         private Agent? _agent;
+
+        private Ecs? _ecs;
         private Host? _host;
         private IElasticLowLevelClient _lowLevelClient = default!;
 
@@ -76,6 +78,16 @@ namespace Essential.LoggerProvider
                 PostEvent(baseEvent);
             }
             catch (Exception) { }
+        }
+
+        public Ecs GetEcs()
+        {
+            if (_ecs is null)
+            {
+                _ecs = new Ecs() {Version = Base.Version};
+            }
+
+            return _ecs;
         }
 
         internal Agent GetAgent()
@@ -183,6 +195,7 @@ namespace Essential.LoggerProvider
             {
                 indexTime = indexTime.ToOffset(_options.IndexOffset.Value);
             }
+
             var index = string.Format(_options.Index, indexTime);
 
             var id = Guid.NewGuid().ToString();

@@ -119,6 +119,7 @@ namespace Essential.LoggerProvider
                     {
                         baseEvent.Metadata = new Dictionary<string, object>();
                     }
+
                     baseEvent.Metadata["Scopes"] = formattedScope;
                 }, baseEvent);
             }
@@ -143,7 +144,7 @@ namespace Essential.LoggerProvider
                             {
                                 baseEvent.Metadata = new Dictionary<string, object>();
                             }
-                            
+
                             baseEvent.Metadata["MessageTemplate"] = kvp.Value.ToString();
                         }
                         else
@@ -161,6 +162,7 @@ namespace Essential.LoggerProvider
         {
             var baseEvent = new Base();
 
+            baseEvent.Ecs = _dataProcessor.GetEcs();
             baseEvent.Timestamp = ElasticsearchLoggerProvider.LocalDateTimeProvider();
             baseEvent.Message = formatter(state, exception!);
             baseEvent.Log = new Log {Level = logLevel.ToString(), Logger = categoryName};

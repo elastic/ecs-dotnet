@@ -134,23 +134,27 @@ The `_source` field is the message sent from the LoggerProvider, along with the 
 
 ```json
 {
-  "_index": "dotnet-2020.03.26",
+  "_index": "dotnet-2020.04.01",
   "_type": "_doc",
-  "_id": "e17bfee9-8fb9-4de3-ab04-335718f37aa1",
+  "_id": "e679947e-d320-4f05-a5db-7a2e8eea815e",
   "_version": 1,
   "_score": null,
   "_source": {
+    "_metadata": {
+      "Scopes": "PlainScope",
+      "MessageTemplate": "Unexpected error processing customer {CustomerId}."
+    },
     "agent": {
-      "version": "1.1.1+bd3ad63",
+      "version": "1.0.0+bd3ad6",
       "type": "Essential.LoggerProvider.Elasticsearch"
     },
     "ecs": {
-      "version": "1.5"
+      "version": "1.5.0"
     },
     "error": {
       "message": "Calculation error",
       "type": "System.Exception",
-      "stack_trace": "System.Exception: Calculation error\n ---> System.DivideByZeroException: Attempted to divide by zero.\n   at HelloElasticsearch.Worker.ExecuteAsync(CancellationToken stoppingToken) in /home/sly/Code/essential-logging/examples/HelloElasticsearch/Worker.cs:line 63\n   --- End of inner exception stack trace ---\n   at HelloElasticsearch.Worker.ExecuteAsync(CancellationToken stoppingToken) in /home/sly/Code/essential-logging/examples/HelloElasticsearch/Worker.cs:line 67"
+      "stack_trace": "System.Exception: Calculation error\n ---> System.DivideByZeroException: Attempted to divide by zero.\n   at HelloElasticsearch.Worker.ExecuteAsync(CancellationToken stoppingToken) in /home/sly/Code/essential-logging/examples/HelloElasticsearch/Worker.cs:line 70\n   --- End of inner exception stack trace ---\n   at HelloElasticsearch.Worker.ExecuteAsync(CancellationToken stoppingToken) in /home/sly/Code/essential-logging/examples/HelloElasticsearch/Worker.cs:line 74"
     },
     "event": {
       "code": "5000",
@@ -172,9 +176,9 @@ The `_source` field is the message sent from the LoggerProvider, along with the 
     },
     "process": {
       "thread": {
-        "id": 6
+        "id": 10
       },
-      "pid": 20273,
+      "pid": 20625,
       "name": "HelloElasticsearch"
     },
     "service": {
@@ -182,35 +186,30 @@ The `_source` field is the message sent from the LoggerProvider, along with the 
       "version": "1.0.0"
     },
     "user": {
-      "domain": "VUB1804",
       "id": "sgryphon+es@live.com",
-      "name": "sly"
+      "name": "sly",
+      "domain": "VUB1804"
     },
-    "@timestamp": "2020-03-27T12:53:17.6266621+10:00",
+    "@timestamp": "2020-04-02T21:21:07.8162795+10:00",
     "tags": [
       "Development"
     ],
-    "trace": {
-      "id": "9d9df7e6-3a1f-4917-bf12-a50575097897"
-    },
     "labels": {
       "ip": "2001:db8:85a3::8a2e:370:7334",
       "CustomerId": "12345"
     },
     "message": "Unexpected error processing customer 12345.",
-    "MessageTemplate": "Unexpected error processing customer {CustomerId}.",
-    "Scopes": [
-      "IP address 2001:db8:85a3::8a2e:370:7334",
-      "PlainScope"
-    ]
+    "trace": {
+      "id": "7b899f0f-dbe7-4711-a75d-ee571241fb9d"
+    }
   },
   "fields": {
     "@timestamp": [
-      "2020-03-27T02:53:17.626Z"
+      "2020-04-02T11:21:07.816Z"
     ]
   },
   "sort": [
-    1585277597626
+    1585826467816
   ]
 }
 ```

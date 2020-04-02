@@ -5,7 +5,7 @@
       <Product>Essential.Logging</Product>
       <Authors>sgryphon</Authors>
       <Copyright>Copyright © 2020 Gryphon Technology Pty Ltd</Copyright>
-      <Version>0.0.1</Version>
+      <Version>1.0.0+bd3ad6</Version>
       <RootNamespace>Essential</RootNamespace>
         <LangVersion>8</LangVersion>
         <Nullable>enable</Nullable>
