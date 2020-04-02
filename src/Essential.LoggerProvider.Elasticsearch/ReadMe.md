@@ -136,14 +136,15 @@ The `_source` field is the message sent from the LoggerProvider, along with the 
 {
   "_index": "dotnet-2020.04.01",
   "_type": "_doc",
-  "_id": "e679947e-d320-4f05-a5db-7a2e8eea815e",
+  "_id": "b1f9c454-4562-4a37-a950-441dcda83f48",
   "_version": 1,
   "_score": null,
   "_source": {
-    "_metadata": {
-      "Scopes": "PlainScope",
-      "MessageTemplate": "Unexpected error processing customer {CustomerId}."
-    },
+    "MessageTemplate": "Unexpected error processing customer {CustomerId}.",
+    "Scopes": [
+      "IP address 2001:db8:85a3::8a2e:370:7334",
+      "PlainScope"
+    ],
     "agent": {
       "version": "1.0.0+bd3ad6",
       "type": "Essential.LoggerProvider.Elasticsearch"
@@ -176,9 +177,9 @@ The `_source` field is the message sent from the LoggerProvider, along with the 
     },
     "process": {
       "thread": {
-        "id": 10
+        "id": 6
       },
-      "pid": 20625,
+      "pid": 21054,
       "name": "HelloElasticsearch"
     },
     "service": {
@@ -190,7 +191,7 @@ The `_source` field is the message sent from the LoggerProvider, along with the 
       "name": "sly",
       "domain": "VUB1804"
     },
-    "@timestamp": "2020-04-02T21:21:07.8162795+10:00",
+    "@timestamp": "2020-04-02T21:30:56.1351149+10:00",
     "tags": [
       "Development"
     ],
@@ -200,16 +201,16 @@ The `_source` field is the message sent from the LoggerProvider, along with the 
     },
     "message": "Unexpected error processing customer 12345.",
     "trace": {
-      "id": "7b899f0f-dbe7-4711-a75d-ee571241fb9d"
+      "id": "380f61e2-c365-4c8c-96d9-1ccfb9ded562"
     }
   },
   "fields": {
     "@timestamp": [
-      "2020-04-02T11:21:07.816Z"
+      "2020-04-02T11:30:56.135Z"
     ]
   },
   "sort": [
-    1585826467816
+    1585827056135
   ]
 }
 ```

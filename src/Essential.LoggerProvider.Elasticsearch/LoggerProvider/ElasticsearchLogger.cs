@@ -63,7 +63,7 @@ namespace Essential.LoggerProvider
                 // Maybe render to JSON in-process, then queue bytes for sending to index ??
 
                 var elasticsearchData =
-                    BuildBaseEvent(_categoryName, logLevel, eventId, state, exception, formatter);
+                    BuildLogEvent(_categoryName, logLevel, eventId, state, exception, formatter);
 
                 _dataProcessor.EnqueueMessage(elasticsearchData);
             }
@@ -73,31 +73,35 @@ namespace Essential.LoggerProvider
             }
         }
 
-        private static void AddException(Exception exception, Base elasticsearchData)
+        private static void AddException(Exception exception, LogEvent logEvent)
         {
             // Use the full string of the exception, which includes both the outer stack trace and any
             // inner exceptions and their stack trace. It also includes any additional values that some
             // exceptions have in ToString() that is not in Message.
             var stackTrace = exception.ToString();
-            elasticsearchData.Error = new Error
+            logEvent.Error = new Error
             {
                 Type = exception.GetType().FullName, Message = exception.Message, StackTrace = stackTrace
             };
         }
 
-        private void AddScopeValues(Base baseEvent)
+        private void AddScopeValues(LogEvent logEvent)
         {
             var scopeProvider = ScopeProvider;
             if (Options.IncludeScopes && scopeProvider != null)
             {
                 scopeProvider.ForEachScope((scope, innerData) =>
                 {
-                    if (baseEvent.Labels == null)
+                    if (logEvent.Labels == null)
                     {
-                        baseEvent.Labels = new Dictionary<string, object>();
+                        logEvent.Labels = new Dictionary<string, object>();
                     }
 
-                    var scopes = new List<string>();
+                    if (logEvent.Scopes == null)
+                    {
+                        logEvent.Scopes = new List<string>();
+                    }
+
                     var isFormattedLogValues = false;
                     if (scope is IEnumerable<KeyValuePair<string, object>> scopeValues)
                     {
@@ -109,64 +113,54 @@ namespace Essential.LoggerProvider
                             }
                             else
                             {
-                                baseEvent.Labels[kvp.Key] = FormatValue(kvp.Value);
+                                logEvent.Labels[kvp.Key] = FormatValue(kvp.Value);
                             }
                         }
                     }
 
                     var formattedScope = isFormattedLogValues ? scope.ToString() : FormatValue(scope);
-                    if (baseEvent.Metadata == null)
-                    {
-                        baseEvent.Metadata = new Dictionary<string, object>();
-                    }
-
-                    baseEvent.Metadata["Scopes"] = formattedScope;
-                }, baseEvent);
+                    logEvent.Scopes.Add(formattedScope);
+                }, logEvent);
             }
         }
 
-        private void AddStateValues<TState>(TState state, Base baseEvent)
+        private void AddStateValues<TState>(TState state, LogEvent logEvent)
         {
             if (state is IEnumerable<KeyValuePair<string, object>> stateValues)
             {
                 if (stateValues.Count() > 0)
                 {
-                    if (baseEvent.Labels == null)
+                    if (logEvent.Labels == null)
                     {
-                        baseEvent.Labels = new Dictionary<string, object>();
+                        logEvent.Labels = new Dictionary<string, object>();
                     }
 
                     foreach (var kvp in stateValues)
                     {
                         if (kvp.Key == "{OriginalFormat}")
                         {
-                            if (baseEvent.Metadata == null)
-                            {
-                                baseEvent.Metadata = new Dictionary<string, object>();
-                            }
-
-                            baseEvent.Metadata["MessageTemplate"] = kvp.Value.ToString();
+                            logEvent.MessageTemplate = kvp.Value.ToString();
                         }
                         else
                         {
-                            baseEvent.Labels[kvp.Key] = FormatValue(kvp.Value);
+                            logEvent.Labels[kvp.Key] = FormatValue(kvp.Value);
                         }
                     }
                 }
             }
         }
 
-        private Base BuildBaseEvent<TState>(string categoryName, LogLevel logLevel,
+        private LogEvent BuildLogEvent<TState>(string categoryName, LogLevel logLevel,
             EventId eventId, TState state, Exception? exception,
             Func<TState, Exception, string> formatter)
         {
-            var baseEvent = new Base();
+            var logEvent = new LogEvent();
 
-            baseEvent.Ecs = _dataProcessor.GetEcs();
-            baseEvent.Timestamp = ElasticsearchLoggerProvider.LocalDateTimeProvider();
-            baseEvent.Message = formatter(state, exception!);
-            baseEvent.Log = new Log {Level = logLevel.ToString(), Logger = categoryName};
-            baseEvent.Event =
+            logEvent.Ecs = _dataProcessor.GetEcs();
+            logEvent.Timestamp = ElasticsearchLoggerProvider.LocalDateTimeProvider();
+            logEvent.Message = formatter(state, exception!);
+            logEvent.Log = new Log {Level = logLevel.ToString(), Logger = categoryName};
+            logEvent.Event =
                 new Event
                 {
                     Action = eventId.Name,
@@ -176,30 +170,30 @@ namespace Essential.LoggerProvider
 
             if (exception != null)
             {
-                AddException(exception, baseEvent);
+                AddException(exception, logEvent);
             }
 
-            baseEvent.Agent = _dataProcessor.GetAgent();
-            baseEvent.Service = _dataProcessor.GetService();
+            logEvent.Agent = _dataProcessor.GetAgent();
+            logEvent.Service = _dataProcessor.GetService();
 
             if (_options.Tags != null && _options.Tags.Length > 0)
             {
-                baseEvent.Tags = _options.Tags;
+                logEvent.Tags = _options.Tags;
             }
 
             if (_options.IncludeHost)
             {
-                baseEvent.Host = _dataProcessor.GetHost();
+                logEvent.Host = _dataProcessor.GetHost();
             }
 
             if (_options.IncludeProcess)
             {
-                baseEvent.Process = _dataProcessor.GetProcess();
+                logEvent.Process = _dataProcessor.GetProcess();
             }
 
             if (_options.IncludeUser)
             {
-                baseEvent.User = new User
+                logEvent.User = new User
                 {
                     Id = Thread.CurrentPrincipal?.Identity.Name,
                     Name = Environment.UserName,
@@ -209,19 +203,19 @@ namespace Essential.LoggerProvider
 
             if (!Trace.CorrelationManager.ActivityId.Equals(Guid.Empty))
             {
-                baseEvent.Trace =
+                logEvent.Trace =
                     new Elastic.CommonSchema.Trace() {Id = Trace.CorrelationManager.ActivityId.ToString()};
             }
 
             if (_options.IncludeScopes)
             {
-                AddScopeValues(baseEvent);
+                AddScopeValues(logEvent);
             }
 
             // These will overwrite any scope values with the same name
-            AddStateValues(state, baseEvent);
+            AddStateValues(state, logEvent);
 
-            return baseEvent;
+            return logEvent;
         }
 
         private string FormatEnumerable(IEnumerable enumerable, int depth)

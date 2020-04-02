@@ -19,8 +19,8 @@ namespace Essential.LoggerProvider
         private Host? _host;
         private IElasticLowLevelClient _lowLevelClient = default!;
 
-        private readonly BlockingCollection<Base> _messageQueue =
-            new BlockingCollection<Base>(MaxQueuedMessages);
+        private readonly BlockingCollection<LogEvent> _messageQueue =
+            new BlockingCollection<LogEvent>(MaxQueuedMessages);
 
         private ElasticsearchLoggerOptions _options = default!;
         private readonly Thread _outputThread;
@@ -60,13 +60,13 @@ namespace Essential.LoggerProvider
             _messageQueue?.Dispose();
         }
 
-        public void EnqueueMessage(Base baseEvent)
+        public void EnqueueMessage(LogEvent logEvent)
         {
             if (!_messageQueue.IsAddingCompleted)
             {
                 try
                 {
-                    _messageQueue.Add(baseEvent);
+                    _messageQueue.Add(logEvent);
                     return;
                 }
                 catch (InvalidOperationException) { }
@@ -75,7 +75,7 @@ namespace Essential.LoggerProvider
             // Adding is complete, so just log the message
             try
             {
-                PostEvent(baseEvent);
+                PostEvent(logEvent);
             }
             catch (Exception) { }
         }
@@ -188,9 +188,9 @@ namespace Essential.LoggerProvider
             }
         }
 
-        private void PostEvent(Base baseEvent)
+        private void PostEvent(LogEvent logEvent)
         {
-            var indexTime = baseEvent.Timestamp ?? ElasticsearchLoggerProvider.LocalDateTimeProvider();
+            var indexTime = logEvent.Timestamp ?? ElasticsearchLoggerProvider.LocalDateTimeProvider();
             if (_options.IndexOffset.HasValue)
             {
                 indexTime = indexTime.ToOffset(_options.IndexOffset.Value);
@@ -201,16 +201,16 @@ namespace Essential.LoggerProvider
             var id = Guid.NewGuid().ToString();
 
             var localClient = _lowLevelClient;
-            var response = localClient.Index<StringResponse>(index, id, PostData.Serializable(baseEvent));
+            var response = localClient.Index<StringResponse>(index, id, PostData.Serializable(logEvent));
         }
 
         private void ProcessLogQueue()
         {
             try
             {
-                foreach (var baseEvent in _messageQueue.GetConsumingEnumerable())
+                foreach (var logEvent in _messageQueue.GetConsumingEnumerable())
                 {
-                    PostEvent(baseEvent);
+                    PostEvent(logEvent);
                 }
             }
             catch
