@@ -153,7 +153,7 @@ The `_source` field is the message sent from the LoggerProvider, along with the 
       "type": "System.Exception"
     },
     "event": {
-      "name": "ErrorProcessingCustomer",
+      "action": "ErrorProcessingCustomer",
       "code": "5000",
       "severity": 3
     },
@@ -222,7 +222,7 @@ The `_source` field is the message sent from the LoggerProvider, along with the 
 | @timestamp | date | `DateTimeOffset` when the message was logged, including local offset. |
 | message | string | The formatted log message and arguments. |
 | tags | array | Custom tags from configuration, e.g. `[ "Staging", "Priority" ]`. Can have multiple values. |
-| event.name | string | The name of the logged EventId, e.g. `ErrorProcessingCustomer`. |
+| event.action | string | The name of the logged EventId, e.g. `ErrorProcessingCustomer`. |
 | event.code | string | The numeric value (as a string) of the EventId, e.g. `5000`. |
 | event.severity | long | The syslog severity corresponding to the log level, 2 = critical, 3 = error, 4 = warning, 6 = information, 7 = debug and trace. (Also used in the Systemd format of ConsoleLoggerProvider) |
 | log.level | string | The log level: `Critical`, `Error`, `Warning`, `Information`, `Debug`, or `Trace`. |

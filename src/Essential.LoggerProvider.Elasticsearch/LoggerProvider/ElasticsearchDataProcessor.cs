@@ -4,11 +4,10 @@ using System.Linq;
 using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Threading;
+using Elastic.CommonSchema;
 using Elasticsearch.Net;
-using Essential.LoggerProvider.Ecs;
 using Microsoft.Extensions.Logging;
 using Process = System.Diagnostics.Process;
-using Thread = System.Threading.Thread;
 
 namespace Essential.LoggerProvider
 {
@@ -18,8 +17,8 @@ namespace Essential.LoggerProvider
         private Host? _host;
         private IElasticLowLevelClient _lowLevelClient = default!;
 
-        private readonly BlockingCollection<ElasticsearchData> _messageQueue =
-            new BlockingCollection<ElasticsearchData>(MaxQueuedMessages);
+        private readonly BlockingCollection<Base> _messageQueue =
+            new BlockingCollection<Base>(MaxQueuedMessages);
 
         private ElasticsearchLoggerOptions _options = default!;
         private readonly Thread _outputThread;
@@ -59,13 +58,13 @@ namespace Essential.LoggerProvider
             _messageQueue?.Dispose();
         }
 
-        public void EnqueueMessage(ElasticsearchData elasticsearchData)
+        public void EnqueueMessage(Base baseEvent)
         {
             if (!_messageQueue.IsAddingCompleted)
             {
                 try
                 {
-                    _messageQueue.Add(elasticsearchData);
+                    _messageQueue.Add(baseEvent);
                     return;
                 }
                 catch (InvalidOperationException) { }
@@ -74,7 +73,7 @@ namespace Essential.LoggerProvider
             // Adding is complete, so just log the message
             try
             {
-                WriteMessage(elasticsearchData);
+                PostEvent(baseEvent);
             }
             catch (Exception) { }
         }
@@ -87,8 +86,8 @@ namespace Essential.LoggerProvider
                 var type = assembly.GetName().Name;
                 var versionAttribute = assembly.GetCustomAttributes(false)
                     .OfType<AssemblyInformationalVersionAttribute>().FirstOrDefault();
-                var version = versionAttribute.InformationalVersion;
-                _agent = new Agent(type, version);
+                var version = versionAttribute?.InformationalVersion;
+                _agent = new Agent {Type = type, Version = version};
             }
 
             return _agent;
@@ -105,18 +104,24 @@ namespace Essential.LoggerProvider
                 //     osDescription = osDescription.Substring(0, Math.Max(0, indexOfHash - 1));
                 // }
 
-                var operatingSystem = new Ecs.OperatingSystem(
-                    RuntimeInformation.OSDescription,
-                    Environment.OSVersion.Platform.ToString(),
-                    Environment.OSVersion.Version.ToString());
-                _host = new Host(Environment.MachineName, RuntimeInformation.OSArchitecture.ToString(),
-                    operatingSystem);
+                var operatingSystem = new Os
+                {
+                    Full = RuntimeInformation.OSDescription,
+                    Platform = Environment.OSVersion.Platform.ToString(),
+                    Version = Environment.OSVersion.Version.ToString()
+                };
+                _host = new Host
+                {
+                    Hostname = Environment.MachineName,
+                    Architecture = RuntimeInformation.OSArchitecture.ToString(),
+                    Os = operatingSystem
+                };
             }
 
             return _host;
         }
 
-        internal Ecs.Process GetProcess()
+        internal Elastic.CommonSchema.Process GetProcess()
         {
             if (_processName == null)
             {
@@ -127,8 +132,12 @@ namespace Essential.LoggerProvider
 
             var currentThread = Thread.CurrentThread;
 
-            return new Ecs.Process(_processName, _processId,
-                new Ecs.Thread(currentThread.Name, currentThread.ManagedThreadId));
+            return new Elastic.CommonSchema.Process
+            {
+                Name = _processName,
+                Pid = _processId,
+                Thread = new ProcessThread {Name = currentThread.Name, Id = currentThread.ManagedThreadId}
+            };
         }
 
         internal Service GetService()
@@ -141,7 +150,7 @@ namespace Essential.LoggerProvider
                 var versionAttribute = entryAssembly.GetCustomAttributes(false)
                     .OfType<AssemblyInformationalVersionAttribute>().FirstOrDefault();
                 var version = versionAttribute?.InformationalVersion ?? entryAssemblyName.Version.ToString();
-                _service = new Service(type, version);
+                _service = new Service {Type = type, Version = version};
             }
 
             return _service;
@@ -167,13 +176,28 @@ namespace Essential.LoggerProvider
             }
         }
 
+        private void PostEvent(Base baseEvent)
+        {
+            var indexTime = baseEvent.Timestamp ?? ElasticsearchLoggerProvider.LocalDateTimeProvider();
+            if (_options.IndexOffset.HasValue)
+            {
+                indexTime = indexTime.ToOffset(_options.IndexOffset.Value);
+            }
+            var index = string.Format(_options.Index, indexTime);
+
+            var id = Guid.NewGuid().ToString();
+
+            var localClient = _lowLevelClient;
+            var response = localClient.Index<StringResponse>(index, id, PostData.Serializable(baseEvent));
+        }
+
         private void ProcessLogQueue()
         {
             try
             {
-                foreach (var logEvent in _messageQueue.GetConsumingEnumerable())
+                foreach (var baseEvent in _messageQueue.GetConsumingEnumerable())
                 {
-                    WriteMessage(logEvent);
+                    PostEvent(baseEvent);
                 }
             }
             catch
@@ -230,21 +254,6 @@ namespace Essential.LoggerProvider
             var lowlevelClient = new ElasticLowLevelClient(settings);
 
             _ = Interlocked.Exchange(ref _lowLevelClient, lowlevelClient);
-        }
-
-        private void WriteMessage(ElasticsearchData elasticsearchData)
-        {
-            var indexTime = _options.IndexOffset.HasValue
-                ? elasticsearchData.Timestamp.ToOffset(_options.IndexOffset.Value)
-                : elasticsearchData.Timestamp;
-            var index = string.Format(_options.Index, indexTime);
-
-            var id = Guid.NewGuid().ToString();
-
-            var localClient = _lowLevelClient;
-            var response = localClient.Index<StringResponse>(index, id, PostData.Serializable(elasticsearchData));
-
-            //_writer.WriteLine(message);
         }
     }
 }
