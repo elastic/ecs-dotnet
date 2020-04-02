@@ -141,68 +141,68 @@ The `_source` field is the message sent from the LoggerProvider, along with the 
   "_score": null,
   "_source": {
     "agent": {
-      "type": "Essential.LoggerProvider.Elasticsearch",
-      "version": "1.1.1+bd3ad63"
+      "version": "1.1.1+bd3ad63",
+      "type": "Essential.LoggerProvider.Elasticsearch"
     },
     "ecs": {
       "version": "1.5"
     },
     "error": {
       "message": "Calculation error",
-      "stack_trace": "System.Exception: Calculation error\n ---> System.DivideByZeroException: Attempted to divide by zero.\n   at HelloElasticsearch.Worker.ExecuteAsync(CancellationToken stoppingToken) in /home/sly/Code/essential-logging/examples/HelloElasticsearch/Worker.cs:line 63\n   --- End of inner exception stack trace ---\n   at HelloElasticsearch.Worker.ExecuteAsync(CancellationToken stoppingToken) in /home/sly/Code/essential-logging/examples/HelloElasticsearch/Worker.cs:line 67",
-      "type": "System.Exception"
+      "type": "System.Exception",
+      "stack_trace": "System.Exception: Calculation error\n ---> System.DivideByZeroException: Attempted to divide by zero.\n   at HelloElasticsearch.Worker.ExecuteAsync(CancellationToken stoppingToken) in /home/sly/Code/essential-logging/examples/HelloElasticsearch/Worker.cs:line 63\n   --- End of inner exception stack trace ---\n   at HelloElasticsearch.Worker.ExecuteAsync(CancellationToken stoppingToken) in /home/sly/Code/essential-logging/examples/HelloElasticsearch/Worker.cs:line 67"
     },
     "event": {
-      "action": "ErrorProcessingCustomer",
       "code": "5000",
+      "action": "ErrorProcessingCustomer",
       "severity": 3
     },
     "host": {
-      "architecture": "X64",
-      "hostname": "VUB1804",
       "os": {
-        "full": "Linux 4.15.0-91-generic #92-Ubuntu SMP Fri Feb 28 11:09:48 UTC 2020",
         "platform": "Unix",
+        "full": "Linux 4.15.0-91-generic #92-Ubuntu SMP Fri Feb 28 11:09:48 UTC 2020",
         "version": "4.15.0.91"
-      }
-    },
-    "labels": {
-      "ip": "2001:db8:85a3::8a2e:370:7334",
-      "CustomerId": "12345"
+      },
+      "hostname": "VUB1804",
+      "architecture": "X64"
     },
     "log": {
       "level": "Error",
       "logger": "HelloElasticsearch.Worker"
     },
-    "message": "Unexpected error processing customer 12345.",
-    "MessageTemplate": "Unexpected error processing customer {CustomerId}.",
     "process": {
-      "name": "HelloElasticsearch",
-      "pid": 20273,
       "thread": {
         "id": 6
-      }
+      },
+      "pid": 20273,
+      "name": "HelloElasticsearch"
     },
-    "Scopes": [
-      "IP address 2001:db8:85a3::8a2e:370:7334",
-      "PlainScope"
-    ],
     "service": {
       "type": "HelloElasticsearch",
       "version": "1.0.0"
     },
+    "user": {
+      "domain": "VUB1804",
+      "id": "sgryphon+es@live.com",
+      "name": "sly"
+    },
+    "@timestamp": "2020-03-27T12:53:17.6266621+10:00",
     "tags": [
       "Development"
     ],
     "trace": {
       "id": "9d9df7e6-3a1f-4917-bf12-a50575097897"
     },
-    "@timestamp": "2020-03-27T12:53:17.6266621+10:00",
-    "user": {
-      "domain": "VUB1804",
-      "id": "sgryphon+es@live.com",
-      "name": "sly"
-    }
+    "labels": {
+      "ip": "2001:db8:85a3::8a2e:370:7334",
+      "CustomerId": "12345"
+    },
+    "message": "Unexpected error processing customer 12345.",
+    "MessageTemplate": "Unexpected error processing customer {CustomerId}.",
+    "Scopes": [
+      "IP address 2001:db8:85a3::8a2e:370:7334",
+      "PlainScope"
+    ]
   },
   "fields": {
     "@timestamp": [
