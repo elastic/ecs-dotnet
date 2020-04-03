@@ -134,6 +134,7 @@ BenchmarkRunner.Run(typeof(Md5VsSha256), config);
 # Examples
 
 - [Elastic.CommonSchema.Serilog and ASP.NET Core](/examples/aspnetcore-with-serilog/)
+- [Console application using stand alone ElasticsearchLoggerProvider](/examples/console-with-loggerprovider/)
 
 ## Copyright and License
 
