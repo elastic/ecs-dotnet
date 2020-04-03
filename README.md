@@ -72,6 +72,24 @@ var factory = new LogFactory(config);
 var logger = factory.GetCurrentClassLogger();
 ```
 
+### ElasticsearchLoggerProvider (external project)
+
+The Elastic Common Schema foundation library is also used directly in a stand alone logger provider, 
+[Essential.LoggerProvider.Elasticsearch](https://github.com/sgryphon/essential-logging/tree/master/src/Essential.LoggerProvider.Elasticsearch).
+
+This logger provider can be added directly to Microsoft.Extensions.Logging:
+
+```csharp
+using Essential.LoggerProvider;
+
+// ...
+
+    .ConfigureLogging((hostContext, loggingBuilder) =>
+    {
+        loggingBuilder.AddElasticsearch();
+    })
+```
+
 ## APM
 
 ### [Elastic.Apm.SerilogEnricher](https://github.com/elastic/ecs-dotnet/tree/master/src/Elastic.Apm.SerilogEnricher)
