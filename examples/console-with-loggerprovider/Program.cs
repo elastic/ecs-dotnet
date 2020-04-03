@@ -6,7 +6,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
 
-namespace HelloElasticsearch
+namespace ConsoleExample
 {
     public class Program
     {

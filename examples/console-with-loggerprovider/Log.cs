@@ -1,7 +1,7 @@
 using System;
 using Microsoft.Extensions.Logging;
 
-namespace HelloElasticsearch
+namespace ConsoleExample
 {
     internal static class Log
     {

@@ -10,7 +10,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Configuration;
 
-namespace HelloElasticsearch
+namespace ConsoleExample
 {
     public class Worker : BackgroundService
     {
