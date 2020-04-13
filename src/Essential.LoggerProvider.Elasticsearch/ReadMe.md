@@ -135,9 +135,9 @@ The `_source` field is the message sent from the LoggerProvider, along with the 
 
 ```json
 {
-  "_index": "dotnet-2020.04.01",
+  "_index": "dotnet-2020.04.12",
   "_type": "_doc",
-  "_id": "b1f9c454-4562-4a37-a950-441dcda83f48",
+  "_id": "563503a8-9d10-46ff-a09f-c6ccbf124db9",
   "_version": 1,
   "_score": null,
   "_source": {
@@ -156,7 +156,7 @@ The `_source` field is the message sent from the LoggerProvider, along with the 
     "error": {
       "message": "Calculation error",
       "type": "System.Exception",
-      "stack_trace": "System.Exception: Calculation error\n ---> System.DivideByZeroException: Attempted to divide by zero.\n   at HelloElasticsearch.Worker.ExecuteAsync(CancellationToken stoppingToken) in /home/sly/Code/essential-logging/examples/HelloElasticsearch/Worker.cs:line 70\n   --- End of inner exception stack trace ---\n   at HelloElasticsearch.Worker.ExecuteAsync(CancellationToken stoppingToken) in /home/sly/Code/essential-logging/examples/HelloElasticsearch/Worker.cs:line 74"
+      "stack_trace": "System.Exception: Calculation error\n ---> System.DivideByZeroException: Attempted to divide by zero.\n   at HelloElasticsearch.Worker.ExecuteAsync(CancellationToken stoppingToken) in /home/sly/Code/essential-logging/examples/HelloElasticsearch/Worker.cs:line 80\n   --- End of inner exception stack trace ---\n   at HelloElasticsearch.Worker.ExecuteAsync(CancellationToken stoppingToken) in /home/sly/Code/essential-logging/examples/HelloElasticsearch/Worker.cs:line 84"
     },
     "event": {
       "code": "5000",
@@ -178,9 +178,9 @@ The `_source` field is the message sent from the LoggerProvider, along with the 
     },
     "process": {
       "thread": {
-        "id": 6
+        "id": 10
       },
-      "pid": 21054,
+      "pid": 25982,
       "name": "HelloElasticsearch"
     },
     "service": {
@@ -192,7 +192,7 @@ The `_source` field is the message sent from the LoggerProvider, along with the 
       "name": "sly",
       "domain": "VUB1804"
     },
-    "@timestamp": "2020-04-02T21:30:56.1351149+10:00",
+    "@timestamp": "2020-04-13T21:25:22.3352989+10:00",
     "tags": [
       "Development"
     ],
@@ -202,16 +202,19 @@ The `_source` field is the message sent from the LoggerProvider, along with the 
     },
     "message": "Unexpected error processing customer 12345.",
     "trace": {
-      "id": "380f61e2-c365-4c8c-96d9-1ccfb9ded562"
+      "id": "c20bde1071f7cf4e9a6f368c824e05f7"
+    },
+    "transaction": {
+      "id": "00-c20bde1071f7cf4e9a6f368c824e05f7-92ba5ee64d963746-00"
     }
   },
   "fields": {
     "@timestamp": [
-      "2020-04-02T11:30:56.135Z"
+      "2020-04-13T11:25:22.335Z"
     ]
   },
   "sort": [
-    1585827056135
+    1586777122335
   ]
 }
 ```
