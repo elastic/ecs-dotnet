@@ -305,6 +305,8 @@ namespace Essential.LoggerProvider
         {
             switch (value)
             {
+                case null:
+                    return string.Empty;
                 case byte b:
                     return b.ToString("X2");
                 case byte[] bytes:
