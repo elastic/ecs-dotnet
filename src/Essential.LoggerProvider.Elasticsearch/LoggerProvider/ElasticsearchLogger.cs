@@ -230,12 +230,17 @@ namespace Essential.LoggerProvider
             if (((kvp.Key == "TraceId" || kvp.Key == "CorrelationId") && _options.MapCorrelationValues)
                 || kvp.Key == "trace.id")
             {
-                if (logEvent.Trace == null)
+                var value = FormatValue(kvp.Value);
+                if (!string.IsNullOrWhiteSpace(value))
                 {
-                    logEvent.Trace = new Elastic.CommonSchema.Trace();
+                    if (logEvent.Trace == null)
+                    {
+                        logEvent.Trace = new Elastic.CommonSchema.Trace();
+                    }
+
+                    logEvent.Trace.Id = value;
                 }
 
-                logEvent.Trace.Id = FormatValue(kvp.Value);
                 return true;
             }
 
@@ -244,12 +249,17 @@ namespace Essential.LoggerProvider
             if ((kvp.Key == "RequestId" && _options.MapCorrelationValues)
                 || kvp.Key == "transaction.id")
             {
-                if (logEvent.Transaction == null)
+                var value = FormatValue(kvp.Value);
+                if (!string.IsNullOrWhiteSpace(value))
                 {
-                    logEvent.Transaction = new Transaction();
+                    if (logEvent.Transaction == null)
+                    {
+                        logEvent.Transaction = new Transaction();
+                    }
+
+                    logEvent.Transaction.Id = value;
                 }
 
-                logEvent.Transaction.Id = FormatValue(kvp.Value);
                 return true;
             }
 
@@ -258,6 +268,7 @@ namespace Essential.LoggerProvider
 
         private static void DefaultCorrelationValues(LogEvent logEvent)
         {
+            // Shared, i.e. root, trace correlation
             if (logEvent.Trace == null || string.IsNullOrEmpty(logEvent.Trace.Id))
             {
                 var activity = Activity.Current;
@@ -268,12 +279,49 @@ namespace Essential.LoggerProvider
                         logEvent.Trace = new Elastic.CommonSchema.Trace();
                     }
 
-                    logEvent.Trace.Id = activity?.Id;
+                    logEvent.Trace.Id = activity?.RootId ?? activity?.Id;
                 }
-                else if (!Trace.CorrelationManager.ActivityId.Equals(Guid.Empty))
+            }
+
+            if (logEvent.Trace == null || string.IsNullOrEmpty(logEvent.Trace.Id))
+            {
+                if (!Trace.CorrelationManager.ActivityId.Equals(Guid.Empty))
                 {
-                    logEvent.Trace =
-                        new Elastic.CommonSchema.Trace() {Id = Trace.CorrelationManager.ActivityId.ToString()};
+                    if (logEvent.Trace == null)
+                    {
+                        logEvent.Trace = new Elastic.CommonSchema.Trace();
+                    }
+
+                    logEvent.Trace.Id = Trace.CorrelationManager.ActivityId.ToString();
+                }
+            }
+
+            // Individual, i.e. activity, transaction correlation
+            if (logEvent.Transaction == null || string.IsNullOrEmpty(logEvent.Transaction.Id))
+            {
+                var activity = Activity.Current;
+                if (!string.IsNullOrEmpty(activity?.Id))
+                {
+                    if (logEvent.Transaction == null)
+                    {
+                        logEvent.Transaction = new Transaction();
+                    }
+
+                    logEvent.Transaction.Id = activity?.Id;
+                }
+            }
+
+            if (logEvent.Transaction == null || string.IsNullOrEmpty(logEvent.Transaction.Id))
+            {
+                if (!Trace.CorrelationManager.ActivityId.Equals(Guid.Empty))
+                {
+                    if (logEvent.Transaction == null)
+                    {
+                        logEvent.Transaction = new Transaction();
+                    }
+                    
+
+                    logEvent.Transaction.Id = Trace.CorrelationManager.ActivityId.ToString();
                 }
             }
         }

@@ -337,11 +337,19 @@ You are welcome to use the [`build.ps1`](../../build.ps1) script in this reposit
 
 | Field | Type | Description |
 | ----- | ---- | ----------- |
-| trace.id | string | Cross-service trace correlation identifier. From message or scope value `trace.id`, or (if enabled) ASP.NET keys `TraceId` or `CorrelationId`; otherwise use `Activity.Current.Id` from `System.Diagnostics`, or if that is empty then `CorrelationManager.ActivityId`. |
-| transaction.id | string | Transaction for this service, e.g. request. From message or scope value `transaction.id`, or (if enabled) ASP.NET key `RequestId`. |
+| trace.id | string | Cross-service trace correlation identifier. From message or scope value `trace.id`, or (if enabled) ASP.NET keys `TraceId` or `CorrelationId`; otherwise use `Activity.Current.RootId` from `System.Diagnostics`, `Activity.Current.Id`, or `CorrelationManager.ActivityId`. |
+| transaction.id | string | Transaction for this service, e.g. request. From message or scope value `transaction.id`, or (if enabled) ASP.NET key `RequestId`; otherwise use `Activity.Current.Id` from `System.Diagnostics`, or `CorrelationManager.ActivityId`. |
 
-ASP.NET will automatically pass correlation identifiers between tiers; from 3.0 it also supports the W3C Trace Context standard (https://www.w3.org/TR/trace-context/
-).
+ASP.NET will automatically pass correlation identifiers between tiers; from 3.0 it also supports the W3C Trace Context standard (https://www.w3.org/TR/trace-context/).
+
+The value of `Activity.Current.RootId` is used as the cross-service identifier (in W3C format this is the Trace ID), 
+and `Activity.Current.Id` is used for the transaction (in W3C format the full ID has both the Trace ID and the Span ID).
+
+To turn on W3C format, use:
+
+```c#
+Activity.DefaultIdFormat = ActivityIdFormat.W3C;
+```
 
 ### Host fields
 
