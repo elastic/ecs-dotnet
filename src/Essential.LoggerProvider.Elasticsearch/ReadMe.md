@@ -89,6 +89,7 @@ The following default settings are used.
       "IndexOffset": null,
       "IsEnabled": true,
       "ListSeparator": ", ",
+      "MapCorrelationValues": true,
       "NodeUris": [ "http://localhost:9200" ],
       "Tags": []
     }
@@ -107,9 +108,9 @@ The following default settings are used.
 | IndexOffset | timespan | Override to set the offset used to generate the `index`. Default value is `null`, which uses the system local offset; use `"00:00"` for UTC.  |
 | IsEnabled | boolean | Default `true`; set to `false` to disable the logger. |
 | ListSeparator | string | Separator to use for `IEnumerable` in `labels.*` values. Default is `", "`. |
+| MapCorrelationValues | boolean | Maps keys (from ASP.NET) `TraceId` or `CorrelationId` to `trace.id`, and `RequestId` to `transaction.id`. Default `true`. |
 | NodeUris | array | URI(s) of the Elasticsearch nodes to connect to. Default is a single node `[ "http://localhost:9200" ]` |
 | Tags | array | Additional tags to include in the message. Useful to specify the environment or other details, e.g.  `[ "Staging", "Priority" ]` |
-
 
 If you want to configure from a different section, it can be configured manually:
 
@@ -336,7 +337,11 @@ You are welcome to use the [`build.ps1`](../../build.ps1) script in this reposit
 
 | Field | Type | Description |
 | ----- | ---- | ----------- |
-| trace.id | string | Correlation identifier. Value, if not the empty Guid, of `CorrelationManager.ActivityId` from `System.Diagnostics`. |
+| trace.id | string | Cross-service trace correlation identifier. From message or scope value `trace.id`, or (if enabled) ASP.NET keys `TraceId` or `CorrelationId`; otherwise use `Activity.Current.Id` from `System.Diagnostics`, or if that is empty then `CorrelationManager.ActivityId`. |
+| transaction.id | string | Transaction for this service, e.g. request. From message or scope value `transaction.id`, or (if enabled) ASP.NET key `RequestId`. |
+
+ASP.NET will automatically pass correlation identifiers between tiers; from 3.0 it also supports the W3C Trace Context standard (https://www.w3.org/TR/trace-context/
+).
 
 ### Host fields
 

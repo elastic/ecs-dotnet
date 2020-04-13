@@ -50,6 +50,11 @@ namespace Essential.LoggerProvider
         public string ListSeparator { get; set; } = ", ";
 
         /// <summary>
+        /// Gets or sets a flag indicating whether well known correlation keys (in scope and message) should be mapped to ECS fields. Defaults to <c>true</c>.
+        /// </summary>
+        public bool MapCorrelationValues { get; set; } = true;
+
+        /// <summary>
         /// Gets or sets the URIs of the Elasticsearch nodes in the connection pool. If not specified the default single node "http://localhost:9200" is used.
         /// </summary>
         public Uri[] NodeUris { get; set; } = new Uri[0];
