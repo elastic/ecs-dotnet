@@ -111,6 +111,22 @@ namespace Essential.LoggerProvider
                             {
                                 isFormattedLogValues = true;
                             }
+                            else if (kvp.Key == "TraceId")
+                            {
+                                if (logEvent.Trace == null)
+                                {
+                                    logEvent.Trace = new Elastic.CommonSchema.Trace();
+                                }
+                                logEvent.Trace.Id = kvp.Value.ToString();
+                            }
+                            else if (kvp.Key == "RequestId")
+                            {
+                                if (logEvent.Transaction == null)
+                                {
+                                    logEvent.Transaction = new Transaction();
+                                }
+                                logEvent.Transaction.Id = kvp.Value.ToString();
+                            }
                             else
                             {
                                 logEvent.Labels[kvp.Key] = FormatValue(kvp.Value);
@@ -140,6 +156,22 @@ namespace Essential.LoggerProvider
                         if (kvp.Key == "{OriginalFormat}")
                         {
                             logEvent.MessageTemplate = kvp.Value.ToString();
+                        }
+                        else if (kvp.Key == "TraceId")
+                        {
+                            if (logEvent.Trace == null)
+                            {
+                                logEvent.Trace = new Elastic.CommonSchema.Trace();
+                            }
+                            logEvent.Trace.Id = kvp.Value.ToString();
+                        }
+                        else if (kvp.Key == "RequestId")
+                        {
+                            if (logEvent.Transaction == null)
+                            {
+                                logEvent.Transaction = new Transaction();
+                            }
+                            logEvent.Transaction.Id = kvp.Value.ToString();
                         }
                         else
                         {
@@ -201,12 +233,6 @@ namespace Essential.LoggerProvider
                 };
             }
 
-            if (!Trace.CorrelationManager.ActivityId.Equals(Guid.Empty))
-            {
-                logEvent.Trace =
-                    new Elastic.CommonSchema.Trace() {Id = Trace.CorrelationManager.ActivityId.ToString()};
-            }
-
             if (_options.IncludeScopes)
             {
                 AddScopeValues(logEvent);
@@ -215,7 +241,18 @@ namespace Essential.LoggerProvider
             // These will overwrite any scope values with the same name
             AddStateValues(state, logEvent);
 
+            AddCorrelationValues<TState>(logEvent);
+            
             return logEvent;
+        }
+
+        private static void AddCorrelationValues<TState>(LogEvent logEvent)
+        {
+            if (!Trace.CorrelationManager.ActivityId.Equals(Guid.Empty))
+            {
+                logEvent.Trace =
+                    new Elastic.CommonSchema.Trace() {Id = Trace.CorrelationManager.ActivityId.ToString()};
+            }
         }
 
         private string FormatEnumerable(IEnumerable enumerable, int depth)
