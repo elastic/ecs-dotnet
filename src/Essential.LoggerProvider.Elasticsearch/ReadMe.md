@@ -205,7 +205,7 @@ The `_source` field is the message sent from the LoggerProvider, along with the 
       "id": "c20bde1071f7cf4e9a6f368c824e05f7"
     },
     "transaction": {
-      "id": "00-c20bde1071f7cf4e9a6f368c824e05f7-92ba5ee64d963746-00"
+      "id": "92ba5ee64d963746"
     }
   },
   "fields": {
