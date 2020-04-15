@@ -18,6 +18,9 @@ namespace Essential.LoggerProvider
         private readonly ElasticsearchDataProcessor _dataProcessor;
         private ElasticsearchLoggerOptions _options = default!;
 
+        private Regex w3cFormat = new Regex(@"^[abcdef]{2}-[\dabcdef]{32}-([\dabcdef]{16})-[\dabcdef]{2}$",
+            RegexOptions.Compiled);
+
         internal ElasticsearchLogger(string categoryName, ElasticsearchDataProcessor dataProcessor)
         {
             _categoryName = categoryName;
@@ -160,6 +163,31 @@ namespace Essential.LoggerProvider
             }
         }
 
+        private void AddTracing(LogEvent logEvent)
+        {
+            var activity = Activity.Current;
+
+            if (activity != null)
+            {
+                // Unique identifier of the trace.
+                // A trace groups multiple events like transactions that belong together. For example, a user request handled by multiple inter-connected services.
+                logEvent.Trace = new Elastic.CommonSchema.Trace() {Id = activity.RootId};
+
+                // Unique identifier of the transaction.
+                // A transaction is the highest level of work measured within a service, such as a request to a server.
+                var spanId = ExtractW3cSpanIdFromActivityId(activity.Id);
+                logEvent.Transaction = new Transaction() {Id = spanId ?? activity.Id};
+            }
+            else
+            {
+                if (!Trace.CorrelationManager.ActivityId.Equals(Guid.Empty))
+                {
+                    logEvent.Trace =
+                        new Elastic.CommonSchema.Trace() {Id = Trace.CorrelationManager.ActivityId.ToString()};
+                }
+            }
+        }
+
         private LogEvent BuildLogEvent<TState>(string categoryName, LogLevel logLevel,
             EventId eventId, TState state, Exception? exception,
             Func<TState, Exception, string> formatter)
@@ -212,7 +240,7 @@ namespace Essential.LoggerProvider
             }
 
             AddTracing(logEvent);
-            
+
             if (_options.IncludeScopes)
             {
                 AddScopeValues(logEvent);
@@ -259,32 +287,6 @@ namespace Essential.LoggerProvider
             }
 
             return false;
-        }
-        
-        Regex w3cFormat = new Regex(@"^[abcdef]{2}-[\dabcdef]{32}-([\dabcdef]{16})-[\dabcdef]{2}$", RegexOptions.Compiled);
-
-        private void AddTracing(LogEvent logEvent)
-        {
-            var activity = Activity.Current;
-            
-            if (activity != null)
-            {
-                // Unique identifier of the trace.
-                // A trace groups multiple events like transactions that belong together. For example, a user request handled by multiple inter-connected services.
-                logEvent.Trace = new Elastic.CommonSchema.Trace() {Id = activity.RootId};
-
-                // Unique identifier of the transaction.
-                // A transaction is the highest level of work measured within a service, such as a request to a server.
-                var spanId = ExtractW3cSpanIdFromActivityId(activity.Id); 
-                logEvent.Transaction = new Transaction() {Id = spanId ?? activity.Id};
-            }
-            else
-            {
-                if (!Trace.CorrelationManager.ActivityId.Equals(Guid.Empty))
-                {
-                    logEvent.Trace = new Elastic.CommonSchema.Trace() {Id = Trace.CorrelationManager.ActivityId.ToString()};
-                }
-            }
         }
 
         private string? ExtractW3cSpanIdFromActivityId(string activityId)

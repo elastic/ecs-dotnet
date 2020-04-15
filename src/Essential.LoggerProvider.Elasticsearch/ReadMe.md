@@ -108,7 +108,6 @@ The following default settings are used.
 | IndexOffset | timespan | Override to set the offset used to generate the `index`. Default value is `null`, which uses the system local offset; use `"00:00"` for UTC.  |
 | IsEnabled | boolean | Default `true`; set to `false` to disable the logger. |
 | ListSeparator | string | Separator to use for `IEnumerable` in `labels.*` values. Default is `", "`. |
-| MapCorrelationValues | boolean | Maps keys (from ASP.NET) `TraceId` or `CorrelationId` to `trace.id`, and `RequestId` to `transaction.id`. Default `true`. |
 | NodeUris | array | URI(s) of the Elasticsearch nodes to connect to. Default is a single node `[ "http://localhost:9200" ]` |
 | Tags | array | Additional tags to include in the message. Useful to specify the environment or other details, e.g.  `[ "Staging", "Priority" ]` |
 
@@ -340,15 +339,15 @@ You are welcome to use the [`build.ps1`](../../build.ps1) script in this reposit
 
 | Field | Type | Description |
 | ----- | ---- | ----------- |
-| trace.id | string | Cross-service trace correlation identifier. From message or scope value `trace.id`, or (if enabled) ASP.NET keys `TraceId` or `CorrelationId`; otherwise use `Activity.Current.RootId` from `System.Diagnostics`, `Activity.Current.Id`, or `CorrelationManager.ActivityId`. |
-| transaction.id | string | Transaction for this service, e.g. request. From message or scope value `transaction.id`, or (if enabled) ASP.NET key `RequestId`; otherwise use `Activity.Current.Id` from `System.Diagnostics`, or `CorrelationManager.ActivityId`. |
+| trace.id | string | Cross-service trace correlation identifier. From `Activity.Current.RootId` from `System.Diagnostics`, with a fallback to `CorrelationManager.ActivityId`. Can be overridden by a message or scope value `trace.id`. |
+| transaction.id | string | Transaction for this service, e.g. individual request identifier. If in W3C format, parse out the SpanId from `Activity.Current.Id` from `System.Diagnostics`, otherwise just use the full `Activity.Current.Id` (e.g. if hierarchical). Can be overridden by message or scope value `transaction.id`. |
 
 ASP.NET will automatically pass correlation identifiers between tiers; from 3.0 it also supports the W3C Trace Context standard (https://www.w3.org/TR/trace-context/).
 
 The value of `Activity.Current.RootId` is used as the cross-service identifier (in W3C format this is the Trace ID), 
-and `Activity.Current.Id` is used for the transaction (in W3C format the full ID has both the Trace ID and the Span ID).
+if in W3C format the Span ID portion of `Activity.Current.Id` is used for the transaction, otherwise the full value is used (this is consistent with the way ASP.NET works).
 
-To turn on W3C format, use:
+It is recommended to turn on W3C format, for compatibility with other systems:
 
 ```c#
 Activity.DefaultIdFormat = ActivityIdFormat.W3C;
