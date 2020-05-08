@@ -106,6 +106,8 @@ namespace Elastic.CommonSchema
 			JsonSerializer.Serialize(writer, this, JsonConfiguration.SerializerOptions);
 		}
 
+		public void Serialize(Utf8JsonWriter writer) => JsonSerializer.Serialize(writer, this, JsonConfiguration.SerializerOptions);
+
 		public Task SerializeAsync(Stream stream, CancellationToken ctx = default) =>
 			JsonSerializer.SerializeAsync(stream, this, GetType(), SerializerOptions, ctx);
 	}

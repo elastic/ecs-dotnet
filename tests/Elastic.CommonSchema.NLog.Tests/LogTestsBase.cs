@@ -48,6 +48,7 @@ namespace Elastic.CommonSchema.NLog.Tests
 
 			var loggingConfiguration = new Config.LoggingConfiguration();
 			loggingConfiguration.AddRule(LogLevel.Trace, LogLevel.Fatal, memoryTarget);
+			loggingConfiguration.DefaultCultureInfo = System.Globalization.CultureInfo.InvariantCulture;
 
 			var factory = new LogFactory(loggingConfiguration);
 

@@ -17,7 +17,7 @@ namespace Elastic.CommonSchema.NLog.Tests
 		{
 			logger.Info("My log message!");
 			logger.Info("Test output to NLog!");
-			Action sketchy = () => throw new Exception("I threw up.");
+			void sketchy() => throw new Exception("I threw up.");
 			var exception = Record.Exception(sketchy);
 			logger.Error(exception, "Here is an error.");
 			Assert.NotNull(exception);

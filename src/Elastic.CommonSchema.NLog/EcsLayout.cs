@@ -22,6 +22,7 @@ namespace Elastic.CommonSchema.NLog
 		public const string Name = nameof(EcsLayout);
 
 		private readonly Layout _disableThreadAgnostic = "${threadid:cached=true}";
+		private readonly ReusableUtf8JsonWriter _jsonWriter = new ReusableUtf8JsonWriter();
 
 		public EcsLayout()
 		{
@@ -96,42 +97,46 @@ namespace Elastic.CommonSchema.NLog
 		[ArrayParameter(typeof(TargetPropertyWithContext), "tag")]
 		public IList<TargetPropertyWithContext> Tags { get; } = new List<TargetPropertyWithContext>();
 
-		protected override void RenderFormattedMessage(LogEventInfo logEventInfo, StringBuilder target)
+		protected override void RenderFormattedMessage(LogEventInfo logEvent, StringBuilder target)
 		{
 			var ecsEvent = new Base
 			{
-				Timestamp = logEventInfo.TimeStamp,
-				Message = logEventInfo.FormattedMessage,
+				Timestamp = logEvent.TimeStamp,
+				Message = logEvent.FormattedMessage,
 				Ecs = new Ecs { Version = Base.Version },
-				Log = GetLog(logEventInfo),
-				Event = GetEvent(logEventInfo),
-				Metadata = GetMetadata(logEventInfo),
-				Process = GetProcess(logEventInfo),
-				Trace = GetTrace(logEventInfo),
-				Transaction = GetTransaction(logEventInfo),
-				Error = GetError(logEventInfo.Exception),
-				Tags = GetTags(logEventInfo),
-				Labels = GetLabels(logEventInfo),
-				Agent = GetAgent(logEventInfo),
-				Server = GetServer(logEventInfo),
-				Host = GetHost(logEventInfo)
+				Log = GetLog(logEvent),
+				Event = GetEvent(logEvent),
+				Metadata = GetMetadata(logEvent),
+				Process = GetProcess(logEvent),
+				Trace = GetTrace(logEvent),
+				Transaction = GetTransaction(logEvent),
+				Error = GetError(logEvent.Exception),
+				Tags = GetTags(logEvent),
+				Labels = GetLabels(logEvent),
+				Agent = GetAgent(logEvent),
+				Server = GetServer(logEvent),
+				Host = GetHost(logEvent)
 			};
+
 			//Give any deriving classes a chance to enrich the event
-			EnrichEvent(logEventInfo,ref ecsEvent);
+			EnrichEvent(logEvent, ref ecsEvent);
 			//Allow programmatical actions to enrich before serializing
-			EnrichAction?.Invoke(ecsEvent, logEventInfo);
-			var output = ecsEvent.Serialize();
-			target.Append(output);
+			EnrichAction?.Invoke(ecsEvent, logEvent);
+
+			using (var reusableWriter = _jsonWriter.AllocateJsonWriter(target))
+			{
+				reusableWriter.Serialize(ecsEvent);
+			}
 		}
 
 		/// <summary>
 		/// Override to supplement the ECS event parsing
 		/// </summary>
-		/// <param name="logEventInfo">The original log event</param>
+		/// <param name="logEvent">The original log event</param>
 		/// <param name="ecsEvent">The EcsEvent to modify</param>
 		/// <returns>Enriched ECS Event</returns>
 		/// <remarks>Destructive for performance</remarks>
-		protected virtual void EnrichEvent(LogEventInfo logEventInfo,ref Base ecsEvent)
+		protected virtual void EnrichEvent(LogEventInfo logEvent, ref Base ecsEvent)
 		{
 		}
 
