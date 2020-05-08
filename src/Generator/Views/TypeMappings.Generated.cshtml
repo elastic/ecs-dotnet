@@ -3,8 +3,9 @@
 @using System.Collections.Generic
 @using CsQuery.ExtensionMethods.Internal
 @using Generator
+@using Generator.Schema
 @using Newtonsoft.Json
-@inherits Generator.CodeTemplatePage<Generator.Schema.EcsSpecification>
+@inherits Generator.CodeTemplatePage<Generator.Schema.YamlSpecification>
 // Licensed to Elasticsearch B.V under one or more agreements.
 // Elasticsearch B.V licenses this file to you under the Apache 2.0 License.
 // See the LICENSE file in the project root for more information
@@ -29,7 +30,7 @@ using Nest;
 namespace Elastic.CommonSchema.Elasticsearch
 {
 	/// <summary>
-	/// Utilities for Elastic Common Schema version @(Model.YamlSchemasOrdered.First().FullVersion)
+	/// Utilities for Elastic Common Schema version @(Model.FullVersion)
 	/// To be used in conjunction with the NEST client.
 	/// <para/>
 	/// The Elastic Common Schema (ECS) defines a common set of fields for ingesting data into Elasticsearch.
@@ -42,7 +43,7 @@ namespace Elastic.CommonSchema.Elasticsearch
 	{
 		/// <summary>
 		/// Get a Put Index Template Descriptor for use with <see cref="Nest.PutIndexTemplateRequest"/>
-		/// designed for use with Elastic Common Schema version @(Model.YamlSchemasOrdered.First().FullVersion)
+		/// designed for use with Elastic Common Schema version @(Model.FullVersion)
 		/// </summary>
 		/// @Raw("<param name=\"name\">The name of the index template.</param>")
 		/// <returns>An instance of <see cref="Nest.PutIndexTemplateDescriptor"/>.</returns>
@@ -73,12 +74,12 @@ namespace Elastic.CommonSchema.Elasticsearch
 
 		/// <summary>
 		/// Get a type mapping descriptor for use with <see cref="Nest.PutIndexTemplateDescriptor"/>
-		/// designed for use with Elastic Common Schema version @(Model.YamlSchemasOrdered.First().FullVersion)
+		/// designed for use with Elastic Common Schema version @(Model.FullVersion)
 		/// </summary>
 		public static Func@(Raw("<TypeMappingDescriptor<Base>, ITypeMapping>")) GetTypeMappingDescriptor()
 		{
 			return map =>
-				 map.Meta(meta => meta.Add("version", "@(Model.YamlSchemasOrdered.First().FullVersion)"))
+				 map.Meta(meta => meta.Add("version", "@(Model.FullVersion)"))
 					.DateDetection(false)
 					.DynamicTemplates(dynamicTemplate =>
 						dynamicTemplate.DynamicTemplate("strings_as_keyword",
@@ -91,15 +92,15 @@ namespace Elastic.CommonSchema.Elasticsearch
 						properties
 @foreach (var field in Model.BaseYamlSchema().GetFieldsFlat())
 {
-<text>							.@(Raw(field.MappingType))(p => p.Name(n => n.@(field.PropertyName))@(field.Extras))
+<text>							.@(Raw(field.MappingType()))(p => p.Name(n => n.@(field.PropertyName()))@(field.Extras()))
 </text> 
 }@foreach (var schema in Model.NonBaseYamlSchemas())
 {
-<text>							.Object<@FileGenerator.PascalCase(schema.Name)>(o =>
+<text>							.Object<@schema.NamePCased()>(o =>
 								o.Properties(a => a
 @foreach (var field in schema.GetFieldsFlat())
 {
-<text>									.@(Raw(field.MappingType))(p => p.Name(n => n.@(field.PropertyName))@(field.Extras))
+<text>									.@(Raw(field.MappingType()))(p => p.Name(n => n.@(field.PropertyName()))@(field.Extras()))
 </text> 
 }
 							))

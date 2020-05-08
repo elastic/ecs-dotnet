@@ -31,21 +31,21 @@ namespace Generator
 		{
 			Warnings = new List<string>();
 			var spec = GetEcsSpecification(downloadBranch, folders);
-			var actions = new Dictionary<Action<EcsSpecification>, string>
+			var actions = new Dictionary<Action<YamlSpecification>, string>
 			{
 				{ GenerateTypes, "Dotnet types" },
 				{ GenerateTypeMappings, "Dotnet type mapping" },
 				{ GenerateBaseJsonFormatter, "Base Json Formatter" },
 			};
 
-			using (var pbar = new ProgressBar(actions.Count, "Generating code",
+			using (var progressBar = new ProgressBar(actions.Count, "Generating code",
 				new ProgressBarOptions { BackgroundColor = ConsoleColor.DarkGray }))
 			{
 				foreach (var kv in actions)
 				{
-					pbar.Message = "Generating " + kv.Value;
+					progressBar.Message = "Generating " + kv.Value;
 					kv.Key(spec);
-					pbar.Tick("Generated " + kv.Value);
+					progressBar.Tick("Generated " + kv.Value);
 				}
 			}
 
@@ -64,7 +64,7 @@ namespace Generator
 			Console.ResetColor();
 		}
 
-		private static EcsSpecification GetEcsSpecification(string downloadBranch, string[] folders)
+		private static YamlSpecification GetEcsSpecification(string downloadBranch, string[] folders)
 		{
 			var specificationFolder = Path.Combine(CodeConfiguration.SpecificationFolder, downloadBranch);
 			var directories = Directory
@@ -87,9 +87,8 @@ namespace Generator
 					using (var fileProgress = progressBar.Spawn(files.Count, $"Listing {files.Count} files",
 						new ProgressBarOptions { ProgressCharacter = '─', BackgroundColor = ConsoleColor.DarkGray }))
 					{
-						foreach (var file in files)
+						foreach (var specifications in files.Select(GetYamlSchemas))
 						{
-							var specifications = GetYamlSchemas(downloadBranch, file);
 							yamlSchemas.AddRange(specifications);
 							fileProgress.Tick();
 						}
@@ -121,27 +120,26 @@ namespace Generator
 				}
 			}
 
-			var spec = new EcsSpecification
+			var spec = new YamlSpecification
 			{
 				YamlSchemas = yamlSchemas,
-				Templates = templates
+				Templates = templates,
+				DownloadBranch = downloadBranch
 			};
 
 			foreach (var specYamlSchema in spec.YamlSchemas)
-			{
 				specYamlSchema.Specification = spec;
-			}
 
 			return spec;
 		}
 
-		public static string PascalCase(string s)
-		{
-			var textInfo = new CultureInfo("en-US").TextInfo;
-			return textInfo.ToTitleCase(s.ToLowerInvariant()).Replace("_", string.Empty).Replace(".", string.Empty);
-		}
+		public static string PascalCase(string s) => new CultureInfo("en-US")
+			.TextInfo
+			.ToTitleCase(s.ToLowerInvariant())
+			.Replace("_", string.Empty)
+			.Replace(".", string.Empty);
 
-		private static IEnumerable<YamlSchema> GetYamlSchemas(string downloadBranch, string file)
+		private static IEnumerable<YamlSchema> GetYamlSchemas(string file)
 		{
 			var deserializer = new Deserializer();
 			var contents = File.ReadAllText(file);
@@ -155,7 +153,12 @@ namespace Generator
 				new JsonSerializerSettings
 				{
 					NullValueHandling = NullValueHandling.Ignore,
-					Converters = { new FormatAsTextConverter<int>(), new FormatAsTextConverter<int?>(), new FormatAsTextConverter<bool?>() }
+					Converters =
+					{
+						new FormatAsTextConverter<int>(),
+						new FormatAsTextConverter<int?>(),
+						new FormatAsTextConverter<bool?>()
+					}
 				});
 
 			var differ = new JsonDiffPatchDotNet.JsonDiffPatch();
@@ -169,16 +172,16 @@ namespace Generator
 			return spec.Select(d => d.Value)
 				.Select(s =>
 				{
-					s.DownloadBranch = downloadBranch;
-					foreach (var kvp in s.Fields) kvp.Value.Schema = s;
+					foreach (var (key, value) in s.Fields)
+						value.Schema = s;
 					return s;
 				});
 		}
 
-		private static string DoRazor(string name, string template, EcsSpecification model) =>
+		private static string DoRazor(string name, string template, YamlSpecification model) =>
 			Razor.CompileRenderStringAsync(name, template, model).GetAwaiter().GetResult();
 
-		private static void GenerateTypes(EcsSpecification model)
+		private static void GenerateTypes(YamlSpecification model)
 		{
 			var targetDir = Path.GetFullPath(CodeConfiguration.ElasticCommonSchemaGeneratedFolder);
 			var outputFile = Path.Combine(targetDir, @"Types.Generated.cs");
@@ -188,7 +191,7 @@ namespace Generator
 			File.WriteAllText(outputFile, source);
 		}
 
-		private static void GenerateTypeMappings(EcsSpecification model)
+		private static void GenerateTypeMappings(YamlSpecification model)
 		{
 			var targetDir = Path.GetFullPath(CodeConfiguration.ElasticCommonSchemaNESTGeneratedFolder);
 			var outputFile = Path.Combine(targetDir, @"TypeMappings.Generated.cs");
@@ -198,7 +201,7 @@ namespace Generator
 			File.WriteAllText(outputFile, source);
 		}
 
-		private static void GenerateBaseJsonFormatter(EcsSpecification model)
+		private static void GenerateBaseJsonFormatter(YamlSpecification model)
 		{
 			var targetDir = Path.GetFullPath(CodeConfiguration.ElasticCommonSchemaGeneratedFolder);
 			var outputFile = Path.Combine(targetDir, "Serialization", @"BaseJsonFormatter.Generated.cs");
@@ -215,17 +218,13 @@ namespace Generator
 
 			public override bool CanConvert(Type type) => type == typeof(T);
 
-			public override void WriteJson(
-				JsonWriter writer, object value, JsonSerializer serializer
-			)
+			public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
 			{
 				var cast = (T)value;
 				writer.WriteValue(cast.ToString().ToLower());
 			}
 
-			public override object ReadJson(
-				JsonReader reader, Type type, object existingValue, JsonSerializer serializer
-			) =>
+			public override object ReadJson(JsonReader reader, Type type, object existingValue, JsonSerializer serializer) =>
 				throw new NotSupportedException();
 		}
 	}

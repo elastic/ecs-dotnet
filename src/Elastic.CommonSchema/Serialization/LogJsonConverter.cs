@@ -38,7 +38,7 @@ namespace Elastic.CommonSchema.Serialization
 					"origin" => ReadProp<LogOrigin>(ref reader, "origin", log, (b, v) => b.Origin = v),
 					"original" => ReadString(ref reader, ref original),
 					"level" => ReadString(ref reader, ref loglevel),
-					"syslog" => ReadProp<LogSyslog[]>(ref reader, "syslog", log, (b, v) => b.Syslog = v),
+					"syslog" => ReadProp<LogSyslog>(ref reader, "syslog", log, (b, v) => b.Syslog = v),
 					"logger" => ReadString(ref reader, ref logger),
 					_ => false
 				};

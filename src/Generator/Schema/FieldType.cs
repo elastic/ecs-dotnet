@@ -6,6 +6,9 @@ using System.Runtime.Serialization;
 
 namespace Generator.Schema
 {
+	/// <summary>
+	///  The Elasticsearch field type.
+	/// </summary>
 	public enum FieldType
 	{
 		[EnumMember(Value = "keyword")] Keyword,

@@ -36,18 +36,17 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{3582B07D-C2B0-49CC-B676-EAF806EB010E}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "build", "build", "{441B3323-3651-4B6E-95B3-7CD43E5E223A}"
-	ProjectSection(SolutionItems) = preProject
-		..\.editorconfig = ..\.editorconfig
-		..\.gitattributes = ..\.gitattributes
-		..\.gitignore = ..\.gitignore
-		..\appveyor.yml = ..\appveyor.yml
-		..\build.bat = ..\build.bat
-		..\build.sh = ..\build.sh
-		..\global.json = ..\global.json
-		..\license.txt = ..\license.txt
-		..\nuget.config = ..\nuget.config
-		..\README.md = ..\README.md
-	EndProjectSection
+ProjectSection(SolutionItems) = preProject
+	..\.editorconfig = ..\.editorconfig
+	..\.gitattributes = ..\.gitattributes
+	..\.gitignore = ..\.gitignore
+	..\global.json = ..\global.json
+	..\license.txt = ..\license.txt
+	..\README.md = ..\README.md
+	..\build.bat = ..\build.bat
+	..\build.sh = ..\build.sh
+	..\nuget.config = ..\nuget.config
+EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Elastic.CommonSchema.Tests", "..\tests\Elastic.CommonSchema.Tests\Elastic.CommonSchema.Tests.csproj", "{EE4EA2DE-411D-400C-9BF6-8F6AFC17697C}"
 EndProject

@@ -12,34 +12,28 @@ namespace Generator.Schema
 	[JsonObject(MemberSerialization.OptIn)]
 	public class YamlSchema
 	{
-		public EcsSpecification Specification { get; set; }
+		/// <summary>
+		///  Reference to the YAML specification.
+		/// </summary>
+		public YamlSpecification Specification { get; set; }
 
 		/// <summary>
-		///     Description of the field set
+		/// vDescription of the field set
 		/// </summary>
 		[JsonProperty("description", Required = Required.Always)]
 		public string Description { get; set; }
 
-		[JsonIgnore]
-		public string DescriptionSanitized => Regex.Replace(Description.TrimEnd(), @"\r\n?|\n", "<para/>");
-
-		[JsonIgnore]
-		public string DownloadBranch { get; set; }
-
 		/// <summary>
-		///     Array of fields
+		///  The fields within the schema
 		/// </summary>
 		[JsonProperty("fields", Required = Required.Always)]
 		public Dictionary<string, Field> Fields { get; set; }
 
 		/// <summary>
-		///     Additional footnote
+		///  Footnote of this schema.
 		/// </summary>
 		[JsonProperty("footnote")]
 		public string Footnote { get; set; }
-
-		[JsonIgnore]
-		public string FullVersion => DownloadBranch + ".0";
 
 		/// <summary>
 		///     TBD. Just set it to 2, for now ;-)
@@ -63,7 +57,7 @@ namespace Generator.Schema
 		///     Optional
 		/// </summary>
 		[JsonProperty("reusable")]
-		public Reusable Reusable { get; set; }
+		public YamlSchemaReusable Reusable { get; set; }
 
 		/// <summary>
 		///     Whether or not the fields of this field set should be nested under the field set name. (optional)
@@ -97,9 +91,9 @@ namespace Generator.Schema
 		public List<NestedFields> GetFieldsNested()
 		{
 			var nestedFields = new List<NestedFields>();
-			foreach (var nestedField in GetFilteredFields().Where(f => f.JsonFieldName.Contains(".")))
+			foreach (var nestedField in GetFilteredFields().Where(f => f.JsonFieldName().Contains(".")))
 			{
-				var split = nestedField.JsonFieldName.Split('.').ToArray();
+				var split = nestedField.JsonFieldName().Split('.').ToArray();
 				var current = nestedFields.SingleOrDefault(n => n.Name == split.First());
 
 				if (current != null)
@@ -138,13 +132,14 @@ namespace Generator.Schema
 
 		public IEnumerable<Field> GetFieldsFlat()
 		{
-			var filtered = GetFilteredFields().Where(f => !f.JsonFieldName.Contains("."));
+			var filtered = GetFilteredFields().Where(f => !f.JsonFieldName().Contains("."));
 
-			// DNS Answers are handled as child objects
+			// The following are handled as child objects
 			filtered = filtered.Where(f => f.FlatName != "dns.answers");
-
-			// Sys logs are handled as child objects
 			filtered = filtered.Where(f => f.FlatName != "log.syslog");
+			filtered = filtered.Where(f => f.FlatName != "network.inner");
+			filtered = filtered.Where(f => f.FlatName != "observer.egress");
+			filtered = filtered.Where(f => f.FlatName != "observer.ingress");
 
 			return filtered;
 		}
