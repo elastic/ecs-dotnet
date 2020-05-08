@@ -12,7 +12,15 @@ Contributions are welcome, please read our [guidelines](https://github.com/elast
 
 ---
 
-**Please note** that this library is in a **beta** version and backwards-incompatible changes might be introduced in future releases. While we strive to comply to [semver](https://semver.org/), we can not guarantee to avoid breaking changes in minor releases.
+### Versioning
+
+Version components: `{major}.{minor}.{patch}`
+
+These libraries are not versioned according to [SemVer](https://semver.org/) principles. Backwards compatibility is only guaranteed within *minor* versions, since ECS only makes this guarantee. Patch releases of this library will not seek to introduce breaking changes, but will be used to address bug fixes within that minor version.
+
+Each assembly release indicates the ECS version that it is compatible with (see _releases_), but typically the minor version number of the assembly correlates to the compatible version of ECS; for example; all of `1.4.0`, `1.4.1`, `1.4.2` and `1.4.3` are compatible with ECS version `1.4.0`.
+
+The assemblies are versioned using an assembly identity of `major.minor.*` as opposed to `major.*` as is common when following SemVer.
 
 ---
 
