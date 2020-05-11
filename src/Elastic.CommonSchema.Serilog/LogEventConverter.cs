@@ -9,12 +9,6 @@ using System.IO;
 using System.Linq;
 using System.Threading;
 using Serilog.Events;
-#if NETSTANDARD
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Http.Abstractions;
-#else
-
-#endif
 
 namespace Elastic.CommonSchema.Serilog
 {
