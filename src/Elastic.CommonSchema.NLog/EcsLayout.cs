@@ -43,11 +43,6 @@ namespace Elastic.CommonSchema.NLog
 			ApmTransactionId = "${ElasticApmTransactionId}";
 		}
 
-		private static class SpecialKeys
-		{
-			public const string DefaultLogger = "Elastic.CommonSchema.NLog";
-		}
-
 		public Layout AgentId { get; set; }
 		public Layout AgentName { get; set; }
 		public Layout AgentType { get; set; }
@@ -162,6 +157,7 @@ namespace Elastic.CommonSchema.NLog
 				fullText.WriteLine($"\tType: {exception.GetType()}");
 				fullText.WriteLine($"\tSource: {exception.TargetSite?.DeclaringType?.AssemblyQualifiedName}");
 				fullText.WriteLine($"\tMessage: {exception.Message}");
+				fullText.WriteLine($"\tTrace: {exception.StackTrace}");
 				fullText.WriteLine($"\tLocation: {frame.GetFileName()}");
 				fullText.WriteLine($"\tMethod: {frame.GetMethod()} ({frame.GetFileLineNumber()}, {frame.GetFileColumnNumber()})");
 
@@ -216,7 +212,7 @@ namespace Elastic.CommonSchema.NLog
 			var log = new Log
 			{
 				Level = logEventInfo.Level.ToString(),
-				Logger = SpecialKeys.DefaultLogger,
+				Logger = logEventInfo.LoggerName,
 				Original = logEventInfo.Message
 			};
 
