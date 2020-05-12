@@ -86,10 +86,11 @@ namespace Elastic.CommonSchema.NLog
 		public Layout ServerAddress { get; set; }
 		public Layout ServerIp { get; set; }
 		public Layout ServerUser { get; set; }
+
 		/// <summary>
-        /// Optional action to enrich the constructed <see cref="Base">EcsEvent</see> before it is serialized
-        /// </summary>
-        /// <remarks>This is called last in the chain of enrichment functions</remarks>
+		/// Optional action to enrich the constructed <see cref="Base">EcsEvent</see> before it is serialized
+		/// </summary>
+		/// <remarks>This is called last in the chain of enrichment functions</remarks>
 		public Action<Base,LogEventInfo> EnrichAction { get; set; }
 
 		[ArrayParameter(typeof(TargetPropertyWithContext), "tag")]
@@ -124,12 +125,12 @@ namespace Elastic.CommonSchema.NLog
 		}
 
 		/// <summary>
-        /// Override to supplement the ECS event parsing
-        /// </summary>
-        /// <param name="logEventInfo">The original log event</param>
-        /// <param name="ecsEvent">The EcsEvent to modify</param>
-        /// <returns>Enriched ECS Event</returns>
-        /// <remarks>Destructive for performance</remarks>
+		/// Override to supplement the ECS event parsing
+		/// </summary>
+		/// <param name="logEventInfo">The original log event</param>
+		/// <param name="ecsEvent">The EcsEvent to modify</param>
+		/// <returns>Enriched ECS Event</returns>
+		/// <remarks>Destructive for performance</remarks>
 		protected virtual void EnrichEvent(LogEventInfo logEventInfo,ref Base ecsEvent)
 		{
 		}
