@@ -87,6 +87,12 @@ namespace Elastic.CommonSchema.NLog
 		public Layout ServerIp { get; set; }
 		public Layout ServerUser { get; set; }
 
+		/// <summary>
+		/// Optional action to enrich the constructed <see cref="Base">EcsEvent</see> before it is serialized
+		/// </summary>
+		/// <remarks>This is called last in the chain of enrichment functions</remarks>
+		public Action<Base,LogEventInfo> EnrichAction { get; set; }
+
 		[ArrayParameter(typeof(TargetPropertyWithContext), "tag")]
 		public IList<TargetPropertyWithContext> Tags { get; } = new List<TargetPropertyWithContext>();
 
@@ -110,9 +116,23 @@ namespace Elastic.CommonSchema.NLog
 				Server = GetServer(logEventInfo),
 				Host = GetHost(logEventInfo)
 			};
-
+			//Give any deriving classes a chance to enrich the event
+			EnrichEvent(logEventInfo,ref ecsEvent);
+			//Allow programmatical actions to enrich before serializing
+			EnrichAction?.Invoke(ecsEvent, logEventInfo);
 			var output = ecsEvent.Serialize();
 			target.Append(output);
+		}
+
+		/// <summary>
+		/// Override to supplement the ECS event parsing
+		/// </summary>
+		/// <param name="logEventInfo">The original log event</param>
+		/// <param name="ecsEvent">The EcsEvent to modify</param>
+		/// <returns>Enriched ECS Event</returns>
+		/// <remarks>Destructive for performance</remarks>
+		protected virtual void EnrichEvent(LogEventInfo logEventInfo,ref Base ecsEvent)
+		{
 		}
 
 		protected override string GetFormattedMessage(LogEventInfo logEvent)
