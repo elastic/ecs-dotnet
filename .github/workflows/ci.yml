@@ -43,8 +43,6 @@ jobs:
         path: build/output/junit-*.xml
         includeSummary: true
         numFailures: 10
-    
-    
   deploy:
     runs-on: ubuntu-18.04
     needs: build
