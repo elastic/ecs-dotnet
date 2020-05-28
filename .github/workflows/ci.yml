@@ -34,6 +34,8 @@ jobs:
         
     - run: ./build.sh build -s true
       name: Build
+    - run: ./build.sh test -s true
+      name: Test
     - run: ./build.sh generatepackages -s true
       name: Generate local nuget packages
     - run: ./build.sh validatepackages -s true

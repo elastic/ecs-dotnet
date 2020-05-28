@@ -91,7 +91,7 @@ pipeline {
                 withGithubNotify(context: 'Windows') {
                   unstash 'source'
                   dir("${BASE_DIR}"){
-                    bat script: 'choco install dotnetcore-sdk -m -y --no-progress -r --version 3.0.100', label: 'Tools'
+                    bat script: 'choco install dotnetcore-sdk -m -y --no-progress -r --version 3.1.200', label: 'Tools'
                     bat script: 'build.bat release', label: 'build'
                   }
                 }
