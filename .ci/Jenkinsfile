@@ -61,7 +61,7 @@ pipeline {
               deleteDir()
               unstash 'source'
               dir("${BASE_DIR}"){
-                sh script: 'git fetch --prune --unshallow --tags', label: 'build'
+                sh script: 'git fetch --prune --tags', label: 'build'
                 dotnet(){
                   sh script: './build.sh release -c false', label: 'build'
                 }
@@ -92,7 +92,7 @@ pipeline {
                 withGithubNotify(context: 'Windows') {
                   unstash 'source'
                   dir("${BASE_DIR}"){
-                    bat script: 'git fetch --prune --unshallow --tags', label: 'build'
+                    bat script: 'git fetch --prune --tags', label: 'build'
                     bat script: 'choco install dotnetcore-sdk -m -y --no-progress -r --version 3.1.200', label: 'Tools'
                     bat script: 'build.bat release -c false', label: 'build'
                   }
