@@ -26,11 +26,11 @@ jobs:
         echo exit code $?
         git tag --list
     - uses: actions/setup-dotnet@v1
-        with:
-          dotnet-version: '3.1.201'
-          source-url: https://nuget.pkg.github.com/elastic/index.json
-        env:
-          NUGET_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
+      with:
+        dotnet-version: '3.1.201'
+        source-url: https://nuget.pkg.github.com/elastic/index.json
+      env:
+        NUGET_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
 
     - run: ./build.sh build -s true
       name: Build
