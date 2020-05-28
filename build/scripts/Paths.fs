@@ -1,16 +1,24 @@
-﻿namespace Scripts
+module Paths
 
-module Paths =
+open System
+open System.IO
 
-    let OwnerName = "elastic"
-    let RepositoryName = "ecs-dotnet"
-    let Repository = sprintf "https://github.com/%s/%s" OwnerName RepositoryName
+let ToolName = "elasticsearch-net-abstractions"
+let Repository = sprintf "elastic/%s" ToolName
+let MainTFM = "netstandard2.0"
 
-    let private buildFolder = "build"
-    let ScriptsFolder = "build/scripts"
-    let BuildOutput = sprintf "%s/output" buildFolder
+let ValidateAssemblyName = false
+let IncludeGitHashInInformational = true
+let GenerateApiChanges = false
+
+let Root =
+    let mutable dir = DirectoryInfo(".")
+    while dir.GetFiles("*.sln").Length = 0 do dir <- dir.Parent
+    Environment.CurrentDirectory <- dir.FullName
+    dir
     
-    let Solution = "src/ecs-dotnet.sln"
+let RootRelative path = Path.GetRelativePath(Root.FullName, path) 
     
-    let Output(folder) = sprintf "%s/%s" BuildOutput folder
-    
+let Output = DirectoryInfo(Path.Combine(Root.FullName, "build", "output"))
+
+let ToolProject = DirectoryInfo(Path.Combine(Root.FullName, "src", ToolName))

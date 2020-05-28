@@ -29,8 +29,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Elastic.Apm.Test.Common", "
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{7610B796-BB3E-4CB2-8296-79BBFF6D23FC}"
 	ProjectSection(SolutionItems) = preProject
-		Library.build.props = Library.build.props
-		PublishArtifacts.build.props = PublishArtifacts.build.props
+		Directory.Build.props = Directory.Build.props
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{3582B07D-C2B0-49CC-B676-EAF806EB010E}"
@@ -46,6 +45,7 @@ ProjectSection(SolutionItems) = preProject
 	..\build.bat = ..\build.bat
 	..\build.sh = ..\build.sh
 	..\nuget.config = ..\nuget.config
+	..\Directory.Build.props = ..\Directory.Build.props
 EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Elastic.CommonSchema.Tests", "..\tests\Elastic.CommonSchema.Tests\Elastic.CommonSchema.Tests.csproj", "{EE4EA2DE-411D-400C-9BF6-8F6AFC17697C}"

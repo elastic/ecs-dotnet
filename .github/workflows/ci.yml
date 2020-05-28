@@ -1,0 +1,64 @@
+name: Always be deploying
+
+on:
+  pull_request:
+    paths-ignore: 
+      - 'README.md'
+      - '.editorconfig'
+  push:
+    paths-ignore:
+      - 'README.md'
+      - '.editorconfig'
+    branches:
+      - master 
+    tags:
+      - "*.*.*"
+
+jobs:
+  build:
+    runs-on: ubuntu-18.04
+    steps:
+    - uses: actions/checkout@v2
+      with:
+        fetch-depth: 1
+    - run: |
+        git fetch --prune --unshallow --tags
+        echo exit code $?
+        git tag --list
+    - uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: '3.1.201'
+        source-url: https://nuget.pkg.github.com/elastic/index.json
+      env:
+        NUGET_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
+        
+    - run: ./build.sh build -s true
+      name: Build
+    - run: ./build.sh generatepackages -s true
+      name: Generate local nuget packages
+    - run: ./build.sh validatepackages -s true
+      name: "validate *.npkg files that were created"
+    - run: ./build.sh generateapichanges -s true
+      name: "Inspect public API changes"
+
+    - name: publish canary packages github package repository
+      if: github.event_name == 'push' && startswith(github.ref, 'refs/heads')
+      shell: bash
+      run:  |
+          until dotnet nuget push 'build/output/*.nupkg' -k ${{secrets.GITHUB_TOKEN}} --skip-duplicate --no-symbols true; do echo "Retrying"; sleep 1; done;
+
+    # Github packages requires authentication, this is likely going away in the future so for now we publish to feedz.io
+    - run: dotnet nuget push 'build/output/*.nupkg' -k ${{secrets.FEEDZ_IO_API_KEY}} -s https://f.feedz.io/elastic/all/nuget/index.json --skip-duplicate --no-symbols true
+      name: publish canary packages to feedz.io
+      if: github.event_name == 'push' && startswith(github.ref, 'refs/heads')
+
+    - run: ./build.sh generatereleasenotes -s true
+      name: Generate release notes for tag
+      if: github.event_name == 'push' && startswith(github.ref, 'refs/tags')
+    - run: ./build.sh createreleaseongithub -s true --token ${{secrets.GITHUB_TOKEN}}
+      if: github.event_name == 'push' && startswith(github.ref, 'refs/tags')
+      name: Create or update release for tag on github
+          
+    # - run: dotnet nuget push 'build/output/*.nupkg' -k ${{secrets.NUGET_ORG_API_KEY}} -s https://api.nuget.org/v3/index.json --skip-duplicate --no-symbols true
+    #  name: release to nuget.org
+    #  if: github.event_name == 'push' && startswith(github.ref, 'refs/tags')
