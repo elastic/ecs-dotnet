@@ -5,6 +5,7 @@
     <Title>Elastic Common Schema (ECS) Types</Title>
     <Description>Maps Elastic Common Schema (ECS) to .NET types including (de)serialization using System.Text.Json</Description>
     <LangVersion>latest</LangVersion>
+    <IsPackable>True</IsPackable>
   </PropertyGroup>
   <ItemGroup>
     <!-- TODO do we care to ilmerge this? -->

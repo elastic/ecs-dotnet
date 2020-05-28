@@ -3,9 +3,10 @@ module Paths
 open System
 open System.IO
 
-let ToolName = "elasticsearch-net-abstractions"
+let ToolName = "ecs-dotnet"
 let Repository = sprintf "elastic/%s" ToolName
 let MainTFM = "netstandard2.0"
+let SignKey = "069ca2728db333c1"
 
 let ValidateAssemblyName = false
 let IncludeGitHashInInformational = true

@@ -3,6 +3,7 @@
     <TargetFrameworks>netstandard2.0;net461</TargetFrameworks>
     <Title>Elastic APM Serilog Enricher</Title>
     <Description>Enrich Serilog log messages with APM TraceId and TransactionId.</Description>
+    <IsPackable>True</IsPackable>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Serilog" Version="2.0.0"/>

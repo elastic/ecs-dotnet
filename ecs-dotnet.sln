@@ -3,29 +3,29 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29806.167
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Generator", "Generator\Generator.csproj", "{18C57984-EDB9-41F7-9745-BDE1E7BAF449}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Generator", "src\Generator\Generator.csproj", "{18C57984-EDB9-41F7-9745-BDE1E7BAF449}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Elastic.CommonSchema", "Elastic.CommonSchema\Elastic.CommonSchema.csproj", "{70072EAB-C5DF-4100-B594-B9DC3169D604}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Elastic.CommonSchema", "src\Elastic.CommonSchema\Elastic.CommonSchema.csproj", "{70072EAB-C5DF-4100-B594-B9DC3169D604}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Elastic.CommonSchemaNEST", "Elastic.CommonSchemaNEST\Elastic.CommonSchemaNEST.csproj", "{2A8F9106-B4FD-4721-B29D-24B93F72F101}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Elastic.CommonSchemaNEST", "src\Elastic.CommonSchemaNEST\Elastic.CommonSchemaNEST.csproj", "{2A8F9106-B4FD-4721-B29D-24B93F72F101}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Elastic.CommonSchema.Serilog", "Elastic.CommonSchema.Serilog\Elastic.CommonSchema.Serilog.csproj", "{45BC8315-6AD6-4F3C-B590-7B52D19ED401}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Elastic.CommonSchema.Serilog", "src\Elastic.CommonSchema.Serilog\Elastic.CommonSchema.Serilog.csproj", "{45BC8315-6AD6-4F3C-B590-7B52D19ED401}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Elastic.CommonSchema.Serilog.Tests", "..\tests\Elastic.CommonSchema.Serilog.Tests\Elastic.CommonSchema.Serilog.Tests.csproj", "{D7BA6070-909F-402E-A6F4-1CE54A7BE0B7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Elastic.CommonSchema.Serilog.Tests", "tests\Elastic.CommonSchema.Serilog.Tests\Elastic.CommonSchema.Serilog.Tests.csproj", "{D7BA6070-909F-402E-A6F4-1CE54A7BE0B7}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Specification", "Specification\Specification.csproj", "{21FD7B39-5FDD-4432-B25E-8425D3EC46A3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Specification", "src\Specification\Specification.csproj", "{21FD7B39-5FDD-4432-B25E-8425D3EC46A3}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Elastic.Apm.SerilogEnricher", "Elastic.Apm.SerilogEnricher\Elastic.Apm.SerilogEnricher.csproj", "{240A3E16-78BF-4430-A3ED-C7479F12A6DE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Elastic.Apm.SerilogEnricher", "src\Elastic.Apm.SerilogEnricher\Elastic.Apm.SerilogEnricher.csproj", "{240A3E16-78BF-4430-A3ED-C7479F12A6DE}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Elastic.Apm.SerilogEnricher.Test", "..\tests\Elastic.Apm.SerilogEnricher.Test\Elastic.Apm.SerilogEnricher.Test.csproj", "{D8117E06-8856-4D61-A02E-570E9B6C3646}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Elastic.Apm.SerilogEnricher.Test", "tests\Elastic.Apm.SerilogEnricher.Test\Elastic.Apm.SerilogEnricher.Test.csproj", "{D8117E06-8856-4D61-A02E-570E9B6C3646}"
 EndProject
-Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "scripts", "..\build\scripts\scripts.fsproj", "{4779DD6F-AE49-4A80-9F67-D9F2DB05E557}"
+Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "scripts", "build\scripts\scripts.fsproj", "{4779DD6F-AE49-4A80-9F67-D9F2DB05E557}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Elastic.Apm.NLog", "Elastic.Apm.NLog\Elastic.Apm.NLog.csproj", "{A1DEDE4E-0876-41E8-8DF0-8F85EAF3FAFA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Elastic.Apm.NLog", "src\Elastic.Apm.NLog\Elastic.Apm.NLog.csproj", "{A1DEDE4E-0876-41E8-8DF0-8F85EAF3FAFA}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Elastic.Apm.NLog.Test", "..\tests\Elastic.Apm.NLog.Test\Elastic.Apm.NLog.Test.csproj", "{4755093F-5A27-4EF4-BC7F-DB8676E9B81A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Elastic.Apm.NLog.Test", "tests\Elastic.Apm.NLog.Test\Elastic.Apm.NLog.Test.csproj", "{4755093F-5A27-4EF4-BC7F-DB8676E9B81A}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Elastic.Apm.Test.Common", "..\tests\Elastic.Apm.Test.Common\Elastic.Apm.Test.Common.csproj", "{4E0D951B-FEC5-4043-913A-BED795892405}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Elastic.Apm.Test.Common", "tests\Elastic.Apm.Test.Common\Elastic.Apm.Test.Common.csproj", "{4E0D951B-FEC5-4043-913A-BED795892405}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{7610B796-BB3E-4CB2-8296-79BBFF6D23FC}"
 	ProjectSection(SolutionItems) = preProject
@@ -36,31 +36,31 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{3582B07D
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "build", "build", "{441B3323-3651-4B6E-95B3-7CD43E5E223A}"
 ProjectSection(SolutionItems) = preProject
-	..\.editorconfig = ..\.editorconfig
-	..\.gitattributes = ..\.gitattributes
-	..\.gitignore = ..\.gitignore
-	..\global.json = ..\global.json
-	..\license.txt = ..\license.txt
-	..\README.md = ..\README.md
-	..\build.bat = ..\build.bat
-	..\build.sh = ..\build.sh
-	..\nuget.config = ..\nuget.config
-	..\Directory.Build.props = ..\Directory.Build.props
+	.editorconfig = .editorconfig
+	.gitattributes = .gitattributes
+	.gitignore = .gitignore
+	global.json = global.json
+	license.txt = license.txt
+	README.md = README.md
+	build.bat = build.bat
+	build.sh = build.sh
+	nuget.config = nuget.config
+	Directory.Build.props = Directory.Build.props
 EndProjectSection
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Elastic.CommonSchema.Tests", "..\tests\Elastic.CommonSchema.Tests\Elastic.CommonSchema.Tests.csproj", "{EE4EA2DE-411D-400C-9BF6-8F6AFC17697C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Elastic.CommonSchema.Tests", "tests\Elastic.CommonSchema.Tests\Elastic.CommonSchema.Tests.csproj", "{EE4EA2DE-411D-400C-9BF6-8F6AFC17697C}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Elastic.CommonSchema.BenchmarkDotNetExporter", "Elastic.CommonSchema.BenchmarkDotNetExporter\Elastic.CommonSchema.BenchmarkDotNetExporter.csproj", "{6BE3084A-D84D-4782-9915-6E41575712C7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Elastic.CommonSchema.BenchmarkDotNetExporter", "src\Elastic.CommonSchema.BenchmarkDotNetExporter\Elastic.CommonSchema.BenchmarkDotNetExporter.csproj", "{6BE3084A-D84D-4782-9915-6E41575712C7}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Elastic.CommonSchema.BenchmarkDotNetExporter.IntegrationTests", "..\tests\Elastic.CommonSchema.BenchmarkDotNetExporter.IntegrationTests\Elastic.CommonSchema.BenchmarkDotNetExporter.IntegrationTests.csproj", "{4138E98A-4714-4139-BD89-D9FF4F2A3A73}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Elastic.CommonSchema.BenchmarkDotNetExporter.IntegrationTests", "tests\Elastic.CommonSchema.BenchmarkDotNetExporter.IntegrationTests\Elastic.CommonSchema.BenchmarkDotNetExporter.IntegrationTests.csproj", "{4138E98A-4714-4139-BD89-D9FF4F2A3A73}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Elastic.CommonSchema.NLog", "Elastic.CommonSchema.NLog\Elastic.CommonSchema.NLog.csproj", "{0881CC2E-BFBB-40DB-BA5B-B3D23A985F73}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Elastic.CommonSchema.NLog", "src\Elastic.CommonSchema.NLog\Elastic.CommonSchema.NLog.csproj", "{0881CC2E-BFBB-40DB-BA5B-B3D23A985F73}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Elastic.CommonSchema.NLog.Tests", "..\tests\Elastic.CommonSchema.NLog.Tests\Elastic.CommonSchema.NLog.Tests.csproj", "{89ADA999-1A1D-4B51-8CEE-39A553F669D1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Elastic.CommonSchema.NLog.Tests", "tests\Elastic.CommonSchema.NLog.Tests\Elastic.CommonSchema.NLog.Tests.csproj", "{89ADA999-1A1D-4B51-8CEE-39A553F669D1}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "examples", "examples", "{05075402-8669-45BD-913A-BD40A29BBEAB}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AspnetCoreExample", "..\examples\aspnetcore-with-serilog\AspnetCoreExample.csproj", "{03FD4BFA-F9A5-4C16-ACA1-30FD060DFAEA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AspnetCoreExample", "examples\aspnetcore-with-serilog\AspnetCoreExample.csproj", "{03FD4BFA-F9A5-4C16-ACA1-30FD060DFAEA}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "aspnetcore-with-serilog", "aspnetcore-with-serilog", "{9F103D76-F7FA-4D10-8214-6E79C28D5AEC}"
 EndProject

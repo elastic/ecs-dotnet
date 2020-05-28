@@ -52,7 +52,7 @@ let private validatePackages (arguments:ParseResults<Arguments>) =
     let appVeyorArgs =
         if Fake.Core.Environment.environVarAsBool "APPVEYOR" then ["-r"; "true"] else []
     
-    let args = ["-v"; currentVersionInformational.Value; "-k"; "96c599bbe3e70f5d"; "-t"; output] @ appVeyorArgs
+    let args = ["-v"; currentVersionInformational.Value; "-k"; Paths.SignKey; "-t"; output] @ appVeyorArgs
     nugetPackages |> Seq.iter (fun p -> exec "dotnet" (["nupkg-validator"; p] @ args) |> ignore)
     
 

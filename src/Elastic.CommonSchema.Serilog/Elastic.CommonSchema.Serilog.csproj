@@ -4,6 +4,7 @@
       <TargetFrameworks>netstandard2.0;netstandard2.1;net461</TargetFrameworks>
       <Title>Elastic Common Schema (ECS) Serilog Formatter</Title>
       <Description>Serilog TextFormatter that formats log events in accordance with Elastic Common Schema (ECS).</Description>
+      <IsPackable>True</IsPackable>
     </PropertyGroup>
     <ItemGroup>
       <None Remove="Lib\UAParser.regexes.yaml" />

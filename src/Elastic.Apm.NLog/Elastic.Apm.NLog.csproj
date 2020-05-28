@@ -3,6 +3,7 @@
     <TargetFramework>netstandard2.0</TargetFramework>
     <Title>Elastic APM NLog Layout Renderers</Title>
     <Description>Enrich NLog log messages with APM TraceId and TransactionId.</Description>
+    <IsPackable>True</IsPackable>
   </PropertyGroup>
   <ItemGroup>
     <!-- 
