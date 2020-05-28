@@ -20,6 +20,7 @@ type Arguments =
     
     | [<Inherit;AltCommandLine("-s")>] SingleTarget of bool
     | [<Inherit>] Token of string 
+    | [<Inherit;AltCommandLine("-c")>] CleanCheckout of bool
 with
     interface IArgParserTemplate with
         member this.Usage =
@@ -32,6 +33,7 @@ with
             
             | SingleTarget _ -> "Runs the provided sub command without running their dependencies"
             | Token _ -> "Token to be used to authenticate with github"
+            | CleanCheckout _ -> "Skip the clean checkout check that guards the release/publish targets"
             
             | PristineCheck  
             | GeneratePackages

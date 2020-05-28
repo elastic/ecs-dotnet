@@ -35,8 +35,10 @@ let private clean (arguments:ParseResults<Arguments>) =
 let private build (arguments:ParseResults<Arguments>) = exec "dotnet" ["build"; "-c"; "Release"] |> ignore
 
 let private pristineCheck (arguments:ParseResults<Arguments>) =
-    match Information.isCleanWorkingCopy "." with
-    | true  -> printfn "The checkout folder does not have pending changes, proceeding"
+    let doCheck = arguments.TryGetResult CleanCheckout |> Option.defaultValue true
+    match doCheck, Information.isCleanWorkingCopy "." with
+    | _, true  -> printfn "The checkout folder does not have pending changes, proceeding"
+    | false, _ -> printf "Checkout is dirty but -c was specified to ignore this"
     | _ -> failwithf "The checkout folder has pending changes, aborting"
 
 let private test (arguments:ParseResults<Arguments>) =

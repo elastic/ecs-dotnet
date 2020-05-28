@@ -62,7 +62,7 @@ pipeline {
               unstash 'source'
               dir("${BASE_DIR}"){
                 dotnet(){
-                  sh script: './build.sh release', label: 'build'
+                  sh script: './build.sh release -c false', label: 'build'
                 }
               }
             }
@@ -92,7 +92,7 @@ pipeline {
                   unstash 'source'
                   dir("${BASE_DIR}"){
                     bat script: 'choco install dotnetcore-sdk -m -y --no-progress -r --version 3.1.200', label: 'Tools'
-                    bat script: 'build.bat release', label: 'build'
+                    bat script: 'build.bat release -c false', label: 'build'
                   }
                 }
               }
