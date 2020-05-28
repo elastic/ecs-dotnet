@@ -46,6 +46,8 @@ ProjectSection(SolutionItems) = preProject
 	build.sh = build.sh
 	nuget.config = nuget.config
 	Directory.Build.props = Directory.Build.props
+	.ci\Jenkinsfile = .ci\Jenkinsfile
+	.github\workflows\ci.yml = .github\workflows\ci.yml
 EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Elastic.CommonSchema.Tests", "tests\Elastic.CommonSchema.Tests\Elastic.CommonSchema.Tests.csproj", "{EE4EA2DE-411D-400C-9BF6-8F6AFC17697C}"
