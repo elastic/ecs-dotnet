@@ -26,16 +26,42 @@ jobs:
         echo exit code $?
         git tag --list
     - uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: '3.1.201'
+          source-url: https://nuget.pkg.github.com/elastic/index.json
+        env:
+          NUGET_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
+
+    - run: ./build.sh build -s true
+      name: Build
+    - run: ./build.sh test -s true
+      name: Test
+    - uses: ashley-taylor/junit-report-annotations-action@v1.0
+        with:
+          access-token: ${{secrets.GITHUB_TOKEN}} 
+          path: build/output/junit-*.xml
+          includeSummary: true
+          numFailures: 10
+    
+    
+  deploy:
+    runs-on: ubuntu-18.04
+    needs: build
+    steps:
+    - uses: actions/checkout@v2
+      with:
+        fetch-depth: 1
+    - run: |
+        git fetch --prune --unshallow --tags
+        echo exit code $?
+        git tag --list
+    - uses: actions/setup-dotnet@v1
       with:
         dotnet-version: '3.1.201'
         source-url: https://nuget.pkg.github.com/elastic/index.json
       env:
         NUGET_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
-        
-    - run: ./build.sh build -s true
-      name: Build
-    - run: ./build.sh test -s true
-      name: Test
+    - uses:    
     - run: ./build.sh generatepackages -s true
       name: Generate local nuget packages
     - run: ./build.sh validatepackages -s true
