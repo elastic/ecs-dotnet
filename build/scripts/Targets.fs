@@ -39,6 +39,12 @@ let private pristineCheck (arguments:ParseResults<Arguments>) =
     | true  -> printfn "The checkout folder does not have pending changes, proceeding"
     | _ -> failwithf "The checkout folder has pending changes, aborting"
 
+let private test (arguments:ParseResults<Arguments>) =
+    let junitOutput = Path.Combine(Paths.Output.FullName, "junit-{assembly}-{framework}-test-results.xml")
+    let loggerPathArgs = sprintf "LogFilePath=%s" junitOutput
+    let loggerArg = sprintf "--logger:\"junit;%s\"" loggerPathArgs
+    exec "dotnet" ["test"; "-c"; "RELEASE"; "--logger:\"junit;LogFilePath=output\{framework}\{assembly}-test-results.xml\""] |> ignore
+
 let private generatePackages (arguments:ParseResults<Arguments>) =
     let output = Paths.RootRelative Paths.Output.FullName
     exec "dotnet" ["pack"; "-c"; "Release"; "-o"; output] |> ignore
@@ -139,13 +145,15 @@ let Setup (parsed:ParseResults<Arguments>) (subCommand:Arguments) =
     step Clean.Name clean
     cmd Build.Name None (Some [Clean.Name]) <| fun _ -> build parsed
     
+    cmd Test.Name (Some [Build.Name;]) None <| fun _ -> test parsed
+    
     step PristineCheck.Name pristineCheck
     step GeneratePackages.Name generatePackages 
     step ValidatePackages.Name validatePackages 
     step GenerateReleaseNotes.Name generateReleaseNotes
     step GenerateApiChanges.Name generateApiChanges
     cmd Release.Name
-        (Some [PristineCheck.Name; Build.Name;])
+        (Some [PristineCheck.Name; Test.Name;])
         (Some [GeneratePackages.Name; ValidatePackages.Name; GenerateReleaseNotes.Name; GenerateApiChanges.Name])
         <| fun _ -> release parsed
         
