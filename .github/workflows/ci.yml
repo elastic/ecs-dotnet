@@ -36,13 +36,7 @@ jobs:
       name: Build
     - run: ./build.sh test -s true
       name: Test
-    - uses: ashley-taylor/junit-report-annotations-action@v1.0
-      if: always()
-      with:
-        access-token: ${{secrets.GITHUB_TOKEN}} 
-        path: build/output/junit-*.xml
-        includeSummary: true
-        numFailures: 10
+      
   deploy:
     runs-on: ubuntu-18.04
     needs: build
