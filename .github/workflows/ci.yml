@@ -37,11 +37,12 @@ jobs:
     - run: ./build.sh test -s true
       name: Test
     - uses: ashley-taylor/junit-report-annotations-action@v1.0
-        with:
-          access-token: ${{secrets.GITHUB_TOKEN}} 
-          path: build/output/junit-*.xml
-          includeSummary: true
-          numFailures: 10
+      if: always()
+      with:
+        access-token: ${{secrets.GITHUB_TOKEN}} 
+        path: build/output/junit-*.xml
+        includeSummary: true
+        numFailures: 10
     
     
   deploy:
