@@ -60,7 +60,6 @@ jobs:
         source-url: https://nuget.pkg.github.com/elastic/index.json
       env:
         NUGET_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
-    - uses:    
     - run: ./build.sh generatepackages -s true
       name: Generate local nuget packages
     - run: ./build.sh validatepackages -s true
