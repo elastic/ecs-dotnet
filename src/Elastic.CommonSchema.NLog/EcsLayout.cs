@@ -6,6 +6,8 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
+using System.Reflection;
 using System.Text;
 using NLog;
 using NLog.Config;
@@ -20,6 +22,9 @@ namespace Elastic.CommonSchema.NLog
 	public class EcsLayout : Layout
 	{
 		public const string Name = nameof(EcsLayout);
+
+		private static readonly bool NLogApmLoaded =
+			Type.GetType("Elastic.Apm.NLog.ApmTraceIdLayoutRenderer, Elastic.Apm.NLog") != null
 
 		private readonly Layout _disableThreadAgnostic = "${threadid:cached=true}";
 
@@ -39,8 +44,11 @@ namespace Elastic.CommonSchema.NLog
 			ServerUser = "${environment-user}"; // NLog 4.6.4
 
 			// These values are set by the Elastic.Apm.NLog package
-			ApmTraceId = "${ElasticApmTraceId}";
-			ApmTransactionId = "${ElasticApmTransactionId}";
+			if (NLogApmLoaded)
+			{
+				ApmTraceId = "${ElasticApmTraceId}";
+				ApmTransactionId = "${ElasticApmTransactionId}";
+			}
 		}
 
 		public Layout AgentId { get; set; }
