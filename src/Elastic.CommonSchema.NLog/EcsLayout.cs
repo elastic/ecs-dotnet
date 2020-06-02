@@ -155,7 +155,7 @@ namespace Elastic.CommonSchema.NLog
 				{
 					Message = exception.Message,
 					StackTrace = CatchError(exception),
-					Code = exception.GetType().ToString()
+					Type = exception.GetType().ToString(),
 				}
 				: null;
 
