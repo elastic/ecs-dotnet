@@ -98,8 +98,9 @@ namespace Elastic.CommonSchema
 		public byte[] SerializeToUtf8Bytes() => JsonSerializer.SerializeToUtf8Bytes(this, GetType(), SerializerOptions);
 
 		[ThreadStatic]
-		private static readonly ReusableUtf8JsonWriter ReusableJsonWriter = new ReusableUtf8JsonWriter();
-		
+		private static ReusableUtf8JsonWriter _reusableJsonWriter;
+		private static ReusableUtf8JsonWriter ReusableJsonWriter => _reusableJsonWriter ??= new ReusableUtf8JsonWriter();
+
 		public StringBuilder Serialize(StringBuilder stringBuilder)
 		{
 			using var reusableWriter = ReusableJsonWriter.AllocateJsonWriter(stringBuilder);
