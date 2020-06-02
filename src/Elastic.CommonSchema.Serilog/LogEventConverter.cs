@@ -274,7 +274,7 @@ namespace Elastic.CommonSchema.Serilog
 
 		private static Error GetError(IReadOnlyList<Exception> exceptions) =>
 			exceptions != null && exceptions.Count > 0
-				? new Error { Message = exceptions[0].Message, StackTrace = CatchErrors(exceptions), Code = exceptions[0].GetType().ToString() }
+				? new Error { Message = exceptions[0].Message, StackTrace = CatchErrors(exceptions), Type = exceptions[0].GetType().ToString() }
 				: null;
 
 		private static Event GetEvent(LogEvent e)
