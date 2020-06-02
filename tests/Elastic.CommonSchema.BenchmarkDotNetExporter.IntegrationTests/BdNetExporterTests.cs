@@ -14,15 +14,15 @@ using BenchmarkDotNet.Environments;
 using BenchmarkDotNet.Jobs;
 using BenchmarkDotNet.Running;
 using Elastic.CommonSchema.BenchmarkDotNetExporter.Domain;
-using Elastic.Xunit;
-using Elastic.Xunit.XunitPlumbing;
+using Elastic.Elasticsearch.Xunit;
+using Elastic.Elasticsearch.Xunit.XunitPlumbing;
 using Elasticsearch.Net;
 using FluentAssertions;
 using Xunit;
 using Nest;
 using Job = BenchmarkDotNet.Jobs.Job;
 
-[assembly: TestFramework("Elastic.Xunit.Sdk.ElasticTestFramework", "Elastic.Xunit")]
+[assembly: TestFramework("Elastic.Elasticsearch.Xunit.Sdk.ElasticTestFramework", "Elastic.Elasticsearch.Xunit")]
 
 namespace Elastic.CommonSchema.BenchmarkDotNetExporter.IntegrationTests
 {

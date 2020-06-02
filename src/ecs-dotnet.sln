@@ -64,6 +64,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AspnetCoreExample", "..\exa
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "aspnetcore-with-serilog", "aspnetcore-with-serilog", "{9F103D76-F7FA-4D10-8214-6E79C28D5AEC}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Elastic.CommonSchema.Benchmarks", "..\tests\Elastic.CommonSchema.Benchmarks\Elastic.CommonSchema.Benchmarks.csproj", "{EC19A9E1-79CC-46A8-94D7-EE66ED22D3BD}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -140,6 +142,10 @@ Global
 		{03FD4BFA-F9A5-4C16-ACA1-30FD060DFAEA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{03FD4BFA-F9A5-4C16-ACA1-30FD060DFAEA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{03FD4BFA-F9A5-4C16-ACA1-30FD060DFAEA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EC19A9E1-79CC-46A8-94D7-EE66ED22D3BD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EC19A9E1-79CC-46A8-94D7-EE66ED22D3BD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EC19A9E1-79CC-46A8-94D7-EE66ED22D3BD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EC19A9E1-79CC-46A8-94D7-EE66ED22D3BD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -164,6 +170,7 @@ Global
 		{89ADA999-1A1D-4B51-8CEE-39A553F669D1} = {3582B07D-C2B0-49CC-B676-EAF806EB010E}
 		{9F103D76-F7FA-4D10-8214-6E79C28D5AEC} = {05075402-8669-45BD-913A-BD40A29BBEAB}
 		{03FD4BFA-F9A5-4C16-ACA1-30FD060DFAEA} = {9F103D76-F7FA-4D10-8214-6E79C28D5AEC}
+		{EC19A9E1-79CC-46A8-94D7-EE66ED22D3BD} = {3582B07D-C2B0-49CC-B676-EAF806EB010E}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {7F60C4BB-6216-4E50-B1E4-9C38EB484843}
