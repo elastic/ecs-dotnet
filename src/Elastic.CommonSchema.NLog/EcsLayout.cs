@@ -324,12 +324,12 @@ namespace Elastic.CommonSchema.NLog
 				? Array.Empty<string>()
 				: tags.Split(new[] { ';', ',', ' ', '\t', '\n' }, StringSplitOptions.RemoveEmptyEntries);
 
-		private IDictionary<string, object> GetLabels(LogEventInfo e)
+		private IDictionary<string, string> GetLabels(LogEventInfo e)
 		{
 			if (Labels?.Count == 0)
 				return null;
 
-			var labels = new Dictionary<string, object>();
+			var labels = new Dictionary<string, string>();
 			for (var i = 0; i < Labels?.Count; ++i)
 			{
 				var value = Labels[i].Layout?.Render(e);
@@ -499,6 +499,21 @@ namespace Elastic.CommonSchema.NLog
 			while (propertyBag.ContainsKey(key))
 			{
 				if (string.Equals(value?.ToString(), propertyBag[key]?.ToString(), StringComparison.Ordinal))
+					return;
+
+				key += "_1";
+			}
+
+			propertyBag.Add(key, value);
+		}
+		private static void Populate(IDictionary<string, string> propertyBag, string key, string value)
+		{
+			if (string.IsNullOrEmpty(key))
+				return;
+
+			while (propertyBag.ContainsKey(key))
+			{
+				if (string.Equals(value.ToString(), propertyBag[key], StringComparison.Ordinal))
 					return;
 
 				key += "_1";
