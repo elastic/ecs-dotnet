@@ -23,8 +23,14 @@ namespace Elastic.CommonSchema.NLog
 	{
 		public const string Name = nameof(EcsLayout);
 
-		private static readonly bool NLogApmLoaded =
-			Type.GetType("Elastic.Apm.NLog.ApmTraceIdLayoutRenderer, Elastic.Apm.NLog") != null
+		private static bool? _nlogApmLoaded;
+
+		private static bool NLogApmLoaded()
+		{
+			if (_nlogApmLoaded.HasValue) return _nlogApmLoaded.Value;
+			_nlogApmLoaded = Type.GetType("Elastic.Apm.NLog.ApmTraceIdLayoutRenderer, Elastic.Apm.NLog") != null;
+			return _nlogApmLoaded.Value;
+		}
 
 		private readonly Layout _disableThreadAgnostic = "${threadid:cached=true}";
 
@@ -44,7 +50,7 @@ namespace Elastic.CommonSchema.NLog
 			ServerUser = "${environment-user}"; // NLog 4.6.4
 
 			// These values are set by the Elastic.Apm.NLog package
-			if (NLogApmLoaded)
+			if (NLogApmLoaded())
 			{
 				ApmTraceId = "${ElasticApmTraceId}";
 				ApmTransactionId = "${ElasticApmTransactionId}";
