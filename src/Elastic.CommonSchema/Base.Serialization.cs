@@ -5,6 +5,7 @@
 using System;
 using System.Buffers;
 using System.IO;
+using System.Text;
 using System.Text.Encodings.Web;
 using System.Text.Json;
 using System.Threading;
@@ -96,6 +97,16 @@ namespace Elastic.CommonSchema
 
 		public byte[] SerializeToUtf8Bytes() => JsonSerializer.SerializeToUtf8Bytes(this, GetType(), SerializerOptions);
 
+		[ThreadStatic]
+		private static readonly ReusableUtf8JsonWriter ReusableJsonWriter = new ReusableUtf8JsonWriter();
+		
+		public StringBuilder Serialize(StringBuilder stringBuilder)
+		{
+			using var reusableWriter = ReusableJsonWriter.AllocateJsonWriter(stringBuilder);
+			reusableWriter.Serialize(this);
+			return stringBuilder;
+		}
+
 		public void Serialize(Stream stream)
 		{
 			using var writer = new Utf8JsonWriter(stream, new JsonWriterOptions
@@ -103,10 +114,10 @@ namespace Elastic.CommonSchema
 				Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
 				Indented = false
 			});
-			JsonSerializer.Serialize(writer, this, JsonConfiguration.SerializerOptions);
+			JsonSerializer.Serialize(writer, this, SerializerOptions);
 		}
 
-		public void Serialize(Utf8JsonWriter writer) => JsonSerializer.Serialize(writer, this, JsonConfiguration.SerializerOptions);
+		internal void Serialize(Utf8JsonWriter writer) => JsonSerializer.Serialize(writer, this, SerializerOptions);
 
 		public Task SerializeAsync(Stream stream, CancellationToken ctx = default) =>
 			JsonSerializer.SerializeAsync(stream, this, GetType(), SerializerOptions, ctx);

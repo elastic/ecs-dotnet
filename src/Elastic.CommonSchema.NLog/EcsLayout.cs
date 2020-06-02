@@ -33,7 +33,6 @@ namespace Elastic.CommonSchema.NLog
 		}
 
 		private readonly Layout _disableThreadAgnostic = "${threadid:cached=true}";
-		private readonly ReusableUtf8JsonWriter _jsonWriter = new ReusableUtf8JsonWriter();
 
 		public EcsLayout()
 		{
@@ -144,10 +143,7 @@ namespace Elastic.CommonSchema.NLog
 			//Allow programmatical actions to enrich before serializing
 			EnrichAction?.Invoke(ecsEvent, logEvent);
 
-			using (var reusableWriter = _jsonWriter.AllocateJsonWriter(target))
-			{
-				reusableWriter.Serialize(ecsEvent);
-			}
+			ecsEvent.Serialize(target);
 		}
 
 		/// <summary>
