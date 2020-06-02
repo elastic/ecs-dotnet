@@ -38,6 +38,9 @@ namespace Elastic.CommonSchema.NLog
 		{
 			IncludeAllProperties = true;
 
+			LogOriginCallSiteMethod = "${exception:format=method}";
+			LogOriginCallSiteFile = "${exception:format=source}";
+
 			ProcessId = "${processid}";
 			ProcessName = "${processname:FullName=false}";
 			ProcessExecutable = "${processname:FullName=true}";
@@ -70,6 +73,10 @@ namespace Elastic.CommonSchema.NLog
 		/// ensure correct async context capture when necessary
 		/// </summary>
 		public Layout DisableThreadAgnostic => IncludeMdlc ? _disableThreadAgnostic : null;
+
+		public Layout LogOriginCallSiteMethod { get; set; }
+		public Layout LogOriginCallSiteFile { get; set; }
+		public Layout LogOriginCallSiteLine { get; set; }
 
 		public Layout EventAction { get; set; }
 		public Layout EventCategory { get; set; }
@@ -162,7 +169,7 @@ namespace Elastic.CommonSchema.NLog
 				{
 					Message = exception.Message,
 					StackTrace = CatchError(exception),
-					Code = exception.GetType().ToString()
+					Type = exception.GetType().ToString(),
 				}
 				: null;
 
@@ -241,16 +248,39 @@ namespace Elastic.CommonSchema.NLog
 				: null;
 		}
 
-		private static Log GetLog(LogEventInfo logEventInfo)
+		private Log GetLog(LogEventInfo logEventInfo)
 		{
+			var logOriginMethod = LogOriginCallSiteMethod?.Render(logEventInfo);
+			var logOriginSourceFile = LogOriginCallSiteFile?.Render(logEventInfo);
+			var logOriginSourceLine = LogOriginCallSiteLine?.Render(logEventInfo);
+			var logOriginSourceLineNo = ParseLogOriginCallSiteLineNo(logOriginSourceLine);
+
+			var originFile = (!string.IsNullOrEmpty(logOriginSourceFile) || logOriginSourceLineNo.HasValue) ?
+				new OriginFile() { Line = logOriginSourceLineNo, Name = logOriginSourceFile } : null;
+
+			var origin = (originFile != null || !string.IsNullOrEmpty(logOriginMethod)) ?
+				new LogOrigin() { Function = logOriginMethod, File = originFile } : null;
+
 			var log = new Log
 			{
 				Level = logEventInfo.Level.ToString(),
 				Logger = logEventInfo.LoggerName,
-				Original = logEventInfo.Message
+				Original = logEventInfo.Message,
+				Origin = origin,
 			};
 
 			return log;
+		}
+
+		private int? ParseLogOriginCallSiteLineNo(string logOriginSourceLine)
+		{
+			if (string.IsNullOrEmpty(logOriginSourceLine))
+				return null;
+
+			if (int.TryParse(logOriginSourceLine, out var logOriginSourceLineNo))
+				return logOriginSourceLineNo;
+
+			return 0;
 		}
 
 		private string[] GetTags(LogEventInfo e)
