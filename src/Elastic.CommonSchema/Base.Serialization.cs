@@ -3,53 +3,14 @@
 // See the LICENSE file in the project root for more information
 
 using System;
-using System.Buffers;
 using System.IO;
+using System.Text;
 using System.Text.Encodings.Web;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Elastic.CommonSchema.Serialization;
 using static Elastic.CommonSchema.Serialization.JsonConfiguration;
-
-namespace Elastic.CommonSchema.Serialization
-{
-	/// <summary>
-	/// This static class allows you to deserialize subclasses of <see cref="Base"/>
-	/// If you are dealing with <see cref="Base"/> directly you do not need to use this class,
-	/// use <see cref="Base.Deserialize(string)"/> and the overloads instead.
-	/// </summary>
-	/// <remarks>
-	/// This class should only be used for advanced use cases, for simpler use cases you can utilise the <see cref="Base.Metadata"/> property.
-	/// </remarks>
-	/// <typeparam name="TBase">Type of the <see cref="Base"/> subclass</typeparam>
-	public static class EcsSerializerFactory<TBase> where TBase : Base, new()
-	{
-		public static ValueTask<TBase> DeserializeAsync(Stream stream, CancellationToken ctx = default) =>
-			JsonSerializer.DeserializeAsync<TBase>(stream, SerializerOptions, ctx);
-
-		public static TBase Deserialize(string json) => JsonSerializer.Deserialize<TBase>(json, SerializerOptions);
-
-		public static TBase Deserialize(ReadOnlySpan<byte> json) => JsonSerializer.Deserialize<TBase>(json, SerializerOptions);
-
-		public static TBase Deserialize(Stream stream)
-		{
-			using var ms = new MemoryStream();
-			var buffer = ArrayPool<byte>.Shared.Rent(1024);
-			var total = 0;
-			int read;
-			while ((read = stream.Read(buffer, 0, buffer.Length)) > 0)
-			{
-				ms.Write(buffer, 0, read);
-				total += read;
-			}
-			var span = ms.TryGetBuffer(out var segment)
-				? new ReadOnlyMemory<byte>(segment.Array, segment.Offset, total).Span
-				: new ReadOnlyMemory<byte>(ms.ToArray()).Span;
-			return Deserialize(span);
-		}
-	}
-}
 
 namespace Elastic.CommonSchema
 {
@@ -96,6 +57,16 @@ namespace Elastic.CommonSchema
 
 		public byte[] SerializeToUtf8Bytes() => JsonSerializer.SerializeToUtf8Bytes(this, GetType(), SerializerOptions);
 
+		private static ReusableUtf8JsonWriter _reusableJsonWriter;
+		private static ReusableUtf8JsonWriter ReusableJsonWriter => _reusableJsonWriter ??= new ReusableUtf8JsonWriter();
+
+		public StringBuilder Serialize(StringBuilder stringBuilder)
+		{
+			using var reusableWriter = ReusableJsonWriter.AllocateJsonWriter(stringBuilder);
+			reusableWriter.Serialize(this);
+			return stringBuilder;
+		}
+
 		public void Serialize(Stream stream)
 		{
 			using var writer = new Utf8JsonWriter(stream, new JsonWriterOptions
@@ -103,8 +74,10 @@ namespace Elastic.CommonSchema
 				Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
 				Indented = false
 			});
-			JsonSerializer.Serialize(writer, this, JsonConfiguration.SerializerOptions);
+			JsonSerializer.Serialize(writer, this, SerializerOptions);
 		}
+
+		internal void Serialize(Utf8JsonWriter writer) => JsonSerializer.Serialize(writer, this, SerializerOptions);
 
 		public Task SerializeAsync(Stream stream, CancellationToken ctx = default) =>
 			JsonSerializer.SerializeAsync(stream, this, GetType(), SerializerOptions, ctx);
