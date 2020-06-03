@@ -6,7 +6,7 @@
       <Authors>sgryphon</Authors>
       <Copyright>Copyright (c) 2014-2020 by Elasticsearch BV</Copyright>
       <Version>1.0.0+bd3ad6</Version>
-      <RootNamespace>Essential</RootNamespace>
+      <RootNamespace>Elastic.CommonSchema</RootNamespace>
         <LangVersion>8</LangVersion>
         <Nullable>enable</Nullable>
     </PropertyGroup>
@@ -15,7 +15,7 @@
     <Description>Elasticsearch-Logstash-Kibana (ELK) stack logger provider for Microsoft.Extensions.Logging. Writes direct to Elasticsearch using the Elastic Common Schema (ECS), with semantic logging of structured data from message and scope values. The results can be viewed and queried in the Kibana console. 
       
 See the project site on GitHub for examples and documentation.</Description>
-    <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
+    <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
     <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
     <PackageProjectUrl>https://github.com/elastic/ecs-dotnet</PackageProjectUrl>
     <PackageIcon>elastic-logo-200.png</PackageIcon>
