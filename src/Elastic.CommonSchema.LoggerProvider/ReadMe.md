@@ -1,6 +1,4 @@
-![Essential Logging](../../docs/images/diagnostics-logo-64.png)
-
-# ElasticsearchLoggerProvider
+# Elastic.CommonSchema.LoggerProvider
 
 Elasticsearch-Logstash-Kibana (ELK) stack logger provider for Microsoft.Extensions.Logging.
 
@@ -12,16 +10,16 @@ manage the network connection to Elasticsearch.
 
 ## Usage
 
-Add a reference to the `Essential.LoggerProvider.Elasticsearch` package:
+Add a reference to the `Elastic.CommonSchema.LoggerProvider` package:
 
 ```powershell
-dotnet add package Essential.LoggerProvider.Elasticsearch
+dotnet add package Elastic.CommonSchema.LoggerProvider
 ```
 
 Then, add the provider to the loggingBuilder during host construction, using the provided extension method. 
 
 ```c#
-using Essential.LoggerProvider;
+using Elastic.CommonSchema;
 
 // ...
 
@@ -65,9 +63,9 @@ The other useful value to configure is a tag for the environment, e.g. Developme
 
 ### Example program
 
-* See [HelloElasticsearch](../../examples/HelloElasticsearch)
+* See [HelloElasticsearch](../../examples/console-with-loggerprovider)
 
-![Example - Elasticsearch](../../docs/images/example-elasticsearch-kibana.png)
+![Example - Elasticsearch](../../examples/console-with-loggerprovider/example-elasticsearch-kibana.png)
 
 
 ## Configuration settings
@@ -147,7 +145,7 @@ The `_source` field is the message sent from the LoggerProvider, along with the 
     ],
     "agent": {
       "version": "1.0.0+bd3ad6",
-      "type": "Essential.LoggerProvider.Elasticsearch"
+      "type": "Elastic.CommonSchema.LoggerProvider"
     },
     "ecs": {
       "version": "1.5.0"
@@ -298,7 +296,7 @@ These identify the version of the logger provider being used.
 
 | Field | Type | Description |
 | ----- | ---- | ----------- |
-| agent.type | string | Name of the logger provider assembly, `Essential.LoggerProvider.Elasticsearch`. |
+| agent.type | string | Name of the logger provider assembly, `Elastic.CommonSchema.LoggerProvider`. |
 | agent.version | string | Informational version number of the logger assembly, e.g. `1.1.1+bd3ad63`. |
 | ecs.version | string | Version of ECS standard used, currently `1.5`. |
 

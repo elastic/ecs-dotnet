@@ -5,7 +5,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Configuration;
 using Microsoft.Extensions.Options;
 
-namespace Essential.LoggerProvider
+namespace Elastic.CommonSchema
 {
     public static class LoggingBuilderExtensions
     {

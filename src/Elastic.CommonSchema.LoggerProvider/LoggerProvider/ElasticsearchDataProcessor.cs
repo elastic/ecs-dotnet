@@ -9,7 +9,7 @@ using Elasticsearch.Net;
 using Microsoft.Extensions.Logging;
 using Process = System.Diagnostics.Process;
 
-namespace Essential.LoggerProvider
+namespace Elastic.CommonSchema
 {
     internal class ElasticsearchDataProcessor : IDisposable
     {
@@ -137,7 +137,7 @@ namespace Essential.LoggerProvider
         {
             if (_processName == null)
             {
-                using var process = Process.GetCurrentProcess();
+                using var process = System.Diagnostics.Process.GetCurrentProcess();
                 _processId = process.Id;
                 _processName = process.ProcessName;
             }

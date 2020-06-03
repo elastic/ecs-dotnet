@@ -10,7 +10,7 @@ using Elastic.CommonSchema;
 using Microsoft.Extensions.Logging;
 using Trace = System.Diagnostics.Trace;
 
-namespace Essential.LoggerProvider
+namespace Elastic.CommonSchema
 {
     public class ElasticsearchLogger : ILogger
     {
@@ -180,10 +180,10 @@ namespace Essential.LoggerProvider
             }
             else
             {
-                if (!Trace.CorrelationManager.ActivityId.Equals(Guid.Empty))
+                if (!System.Diagnostics.Trace.CorrelationManager.ActivityId.Equals(Guid.Empty))
                 {
                     logEvent.Trace =
-                        new Elastic.CommonSchema.Trace() {Id = Trace.CorrelationManager.ActivityId.ToString()};
+                        new Elastic.CommonSchema.Trace() {Id = System.Diagnostics.Trace.CorrelationManager.ActivityId.ToString()};
                 }
             }
         }

@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using Elastic.CommonSchema;
 
-namespace Essential.LoggerProvider
+namespace Elastic.CommonSchema
 {
     public class LogEvent : Base
     {

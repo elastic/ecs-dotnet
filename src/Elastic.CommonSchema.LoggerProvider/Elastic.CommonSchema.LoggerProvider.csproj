@@ -2,9 +2,9 @@
 
     <PropertyGroup>
         <TargetFramework>netstandard2.0</TargetFramework>
-      <Product>Essential.Logging</Product>
+      <Product>Elastic.CommonSchema</Product>
       <Authors>sgryphon</Authors>
-      <Copyright>Copyright © 2020 Gryphon Technology Pty Ltd</Copyright>
+      <Copyright>Copyright (c) 2014-2020 by Elasticsearch BV</Copyright>
       <Version>1.0.0+bd3ad6</Version>
       <RootNamespace>Essential</RootNamespace>
         <LangVersion>8</LangVersion>
@@ -14,18 +14,16 @@
   <PropertyGroup>
     <Description>Elasticsearch-Logstash-Kibana (ELK) stack logger provider for Microsoft.Extensions.Logging. Writes direct to Elasticsearch using the Elastic Common Schema (ECS), with semantic logging of structured data from message and scope values. The results can be viewed and queried in the Kibana console. 
       
-Other Essential.Logging packages extend the .NET Microsoft.Extensions.Logging with guidance, links, utilities, and additional logger providers.
-
 See the project site on GitHub for examples and documentation.</Description>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
-    <PackageLicenseExpression>LGPL-3.0-or-later</PackageLicenseExpression>
-    <PackageProjectUrl>https://github.com/sgryphon/essential-logging</PackageProjectUrl>
-    <PackageIcon>diagnostics-logo-64.png</PackageIcon>
+    <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
+    <PackageProjectUrl>https://github.com/elastic/ecs-dotnet</PackageProjectUrl>
+    <PackageIcon>elastic-logo-200.png</PackageIcon>
     <PackageTags>Logging;LoggerProvider;Elasticsearch;ELK;Kibana;Logstash;Tracing;Diagnostics;Log;Trace;ECS</PackageTags>
   </PropertyGroup>
 
   <ItemGroup>
-    <None Include="..\..\docs\images\diagnostics-logo-64.png" Pack="true" PackagePath="\" />
+    <None Include="elastic-logo-200.png" Pack="true" PackagePath="\" />
   </ItemGroup>
 
   <ItemGroup>

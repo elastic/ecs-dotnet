@@ -1,6 +1,6 @@
 using System;
 
-namespace Essential.LoggerProvider
+namespace Elastic.CommonSchema
 {
     public class ElasticsearchLoggerOptions
     {

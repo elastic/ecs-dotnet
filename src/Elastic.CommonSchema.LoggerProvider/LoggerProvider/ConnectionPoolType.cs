@@ -1,4 +1,4 @@
-namespace Essential.LoggerProvider
+namespace Elastic.CommonSchema
 {
     public enum ConnectionPoolType
     {
