@@ -7,12 +7,11 @@ using Microsoft.Extensions.Options;
 
 namespace Elastic.CommonSchema
 {
-    internal class ElasticsearchLoggerOptionsSetup : ConfigureFromConfigurationOptions<ElasticsearchLoggerOptions>
-    {
-        public ElasticsearchLoggerOptionsSetup(
-            ILoggerProviderConfiguration<ElasticsearchLoggerProvider> providerConfiguration)
-            : base(providerConfiguration.Configuration)
-        {
-        }
-    }
+	internal class ElasticsearchLoggerOptionsSetup : ConfigureFromConfigurationOptions<ElasticsearchLoggerOptions>
+	{
+		public ElasticsearchLoggerOptionsSetup(
+			ILoggerProviderConfiguration<ElasticsearchLoggerProvider> providerConfiguration
+		)
+			: base(providerConfiguration.Configuration) { }
+	}
 }
