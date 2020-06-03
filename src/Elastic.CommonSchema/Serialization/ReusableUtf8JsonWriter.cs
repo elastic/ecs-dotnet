@@ -51,13 +51,10 @@ namespace Elastic.CommonSchema.Serialization
 
 		private static void CopyToStringBuilder(ArraySegment<byte> byteArray, char[] encodingBuffer, StringBuilder output)
 		{
-			var utf8Encoder = Encoding.UTF8;
-			var byteCount = 0;
-			var charCount = 0;
 			for (var i = 0; i < byteArray.Count; i += encodingBuffer.Length)
 			{
-				byteCount = Math.Min(byteArray.Count - i, encodingBuffer.Length);
-				charCount = utf8Encoder.GetChars(byteArray.Array, byteArray.Offset + i, byteCount, encodingBuffer, 0);
+				var byteCount = Math.Min(byteArray.Count - i, encodingBuffer.Length);
+				var charCount = Encoding.UTF8.GetChars(byteArray.Array, byteArray.Offset + i, byteCount, encodingBuffer, 0);
 				output.Append(encodingBuffer, 0, charCount);
 			}
 		}
