@@ -10,6 +10,20 @@ The Elastic Common Schema defines a common set of fields for ingesting data into
 
 Contributions are welcome, please read our [guidelines](https://github.com/elastic/ecs-dotnet/tree/master/contributing.md).
 
+---
+
+### Versioning
+
+Version components: `{major}.{minor}.{patch}`
+
+These libraries are not versioned according to [SemVer](https://semver.org/) principles. Backwards compatibility is only guaranteed within *minor* versions, since ECS only makes this guarantee. Patch releases of this library will not seek to introduce breaking changes, but will be used to address bug fixes within that minor version.
+
+Each assembly release indicates the ECS version that it is compatible with (see _releases_), but typically the minor version number of the assembly correlates to the compatible version of ECS; for example; all of `1.4.0`, `1.4.1`, `1.4.2` and `1.4.3` are compatible with ECS version `1.4.0`.
+
+The assemblies are versioned using an assembly identity of `major.minor.*` as opposed to `major.*` as is common when following SemVer.
+
+---
+
 # Integrations
 
 Official NuGet packages can be referenced from [NuGet.org](https://www.nuget.org).

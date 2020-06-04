@@ -19,7 +19,7 @@
     </ItemGroup>
     <ItemGroup>
         <PackageReference Include="Serilog" Version="2.9.0.0" />
-        <PackageReference Condition="$(DefineConstants.Contains(NETSTANDARD))" Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.2.0.0" />
+        <PackageReference Condition="$(DefineConstants.Contains(NETSTANDARD))" Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.1.0.0" />
         <Reference Condition="$(DefineConstants.Contains(FULLFRAMEWORK))" Include="System.Web" />
     </ItemGroup>
 </Project>

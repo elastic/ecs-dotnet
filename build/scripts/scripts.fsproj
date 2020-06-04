@@ -25,7 +25,7 @@
   <ItemGroup>
     <PackageReference Include="FSharp.Core" Version="4.7.0" />
     
-    <PackageReference Include="Bullseye" Version="3.0.0" />
+    <PackageReference Include="Bullseye" Version="3.3.0" />
     <PackageReference Include="Fake.Core.Environment" Version="5.15.0" />
     <PackageReference Include="Fake.Core.SemVer" Version="5.15.0" />
     <PackageReference Include="Fake.IO.FileSystem" Version="5.15.0" />
