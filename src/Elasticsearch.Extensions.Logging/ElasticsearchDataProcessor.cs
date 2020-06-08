@@ -8,10 +8,11 @@ using System.Linq;
 using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Threading;
+using Elastic.CommonSchema;
 using Elasticsearch.Net;
 using Microsoft.Extensions.Logging;
 
-namespace Elastic.CommonSchema
+namespace Elasticsearch.Extensions.Logging
 {
 	internal class ElasticsearchDataProcessor : IDisposable
 	{

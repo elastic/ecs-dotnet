@@ -1,4 +1,4 @@
-# Elastic.CommonSchema.LoggerProvider
+# Elasticsearch Logger Provider
 
 Elasticsearch-Logstash-Kibana (ELK) stack logger provider for Microsoft.Extensions.Logging.
 
@@ -10,16 +10,16 @@ manage the network connection to Elasticsearch.
 
 ## Usage
 
-Add a reference to the `Elastic.CommonSchema.LoggerProvider` package:
+Add a reference to the `Elasticsearch.Extensions.Logging` package:
 
 ```powershell
-dotnet add package Elastic.CommonSchema.LoggerProvider
+dotnet add package Elasticsearch.Extensions.Logging
 ```
 
 Then, add the provider to the loggingBuilder during host construction, using the provided extension method. 
 
 ```c#
-using Elastic.CommonSchema;
+using Elasticsearch.Extensions.Logging;
 
 // ...
 
@@ -145,7 +145,7 @@ The `_source` field is the message sent from the LoggerProvider, along with the 
     ],
     "agent": {
       "version": "1.0.0+bd3ad6",
-      "type": "Elastic.CommonSchema.LoggerProvider"
+      "type": "Elasticsearch.Extensions.Logging.LoggerProvider"
     },
     "ecs": {
       "version": "1.5.0"
@@ -296,7 +296,7 @@ These identify the version of the logger provider being used.
 
 | Field | Type | Description |
 | ----- | ---- | ----------- |
-| agent.type | string | Name of the logger provider assembly, `Elastic.CommonSchema.LoggerProvider`. |
+| agent.type | string | Name of the logger provider assembly, `Elasticsearch.Extensions.Logging.LoggerProvider`. |
 | agent.version | string | Informational version number of the logger assembly, e.g. `1.1.1+bd3ad63`. |
 | ecs.version | string | Version of ECS standard used, currently `1.5`. |
 

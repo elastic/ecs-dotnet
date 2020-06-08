@@ -10,9 +10,11 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
+using Elastic.CommonSchema;
 using Microsoft.Extensions.Logging;
+using Trace = Elastic.CommonSchema.Trace;
 
-namespace Elastic.CommonSchema
+namespace Elasticsearch.Extensions.Logging
 {
 	public class ElasticsearchLogger : ILogger
 	{

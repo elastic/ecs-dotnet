@@ -4,7 +4,7 @@
 
 using System;
 
-namespace Elastic.CommonSchema
+namespace Elasticsearch.Extensions.Logging
 {
 	public class ElasticsearchLoggerOptions
 	{

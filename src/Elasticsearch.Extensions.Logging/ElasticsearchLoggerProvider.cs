@@ -7,7 +7,7 @@ using System.Collections.Concurrent;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 
-namespace Elastic.CommonSchema
+namespace Elasticsearch.Extensions.Logging
 {
 	[ProviderAlias("Elasticsearch")]
 	public class ElasticsearchLoggerProvider : ILoggerProvider, ISupportExternalScope

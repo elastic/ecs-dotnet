@@ -5,7 +5,7 @@
 using Microsoft.Extensions.Logging.Configuration;
 using Microsoft.Extensions.Options;
 
-namespace Elastic.CommonSchema
+namespace Elasticsearch.Extensions.Logging
 {
 	internal class ElasticsearchLoggerOptionsSetup : ConfigureFromConfigurationOptions<ElasticsearchLoggerOptions>
 	{

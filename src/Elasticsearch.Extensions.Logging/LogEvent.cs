@@ -3,8 +3,9 @@
 // See the LICENSE file in the project root for more information
 
 using System.Collections.Generic;
+using Elastic.CommonSchema;
 
-namespace Elastic.CommonSchema
+namespace Elasticsearch.Extensions.Logging
 {
 	public class LogEvent : Base
 	{
