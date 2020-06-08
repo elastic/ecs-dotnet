@@ -48,6 +48,10 @@ pipeline {
       }
     }
     stage('Parallel'){
+      when {
+        not { buildingTag() }
+        beforeAgent true
+      }
       parallel {
         stage('Linux') {
           options { skipDefaultCheckout() }
@@ -99,6 +103,68 @@ pipeline {
         }
       }
     }
+    stage('Release') {
+      when {
+        beforeAgent true
+        anyOf {
+          tag pattern: '\\d+\\.\\d+\\.\\d+(-(alpha|beta|rc)\\d*)?', comparator: 'REGEXP'
+          branch 'master'
+        }
+      }
+      stages {
+        stage('Build') {
+          steps {
+            deleteDir()
+            unstash 'source'
+            dir("${BASE_DIR}"){
+              dotnet() {
+                sh(label: 'Generate local nuget packages', script: './build.sh generatepackages -s true')
+                sh(label: 'Validate *.npkg files that were created', script: './build.sh validatepackages -s true')
+                sh(label: 'Inspect public API change', script: './build.sh generateapichanges -s true')
+              }
+            }
+          }
+        }
+        stage('Release to feedz.io') {
+          when {
+            branch 'master'
+            beforeAgent true
+          }
+          steps {
+            dir("${BASE_DIR}"){
+              release(secret: 'secret/apm-team/ci/elastic-observability-feedz.io')
+            }
+          }
+        }
+        stage('Release to NuGet') {
+          when {
+            branch 'master'
+            beforeAgent true
+          }
+          steps {
+            dir("${BASE_DIR}"){
+              release('secret/apm-team/ci/elastic-observability-nuget')
+            }
+          }
+        }
+        stage('Tags') {
+          when {
+            buildingTag()
+            beforeAgent true
+          }
+          steps {
+            dir("${BASE_DIR}"){
+              dotnet() {
+                withCredentials([string(credentialsId: '2a9602aa-ab9f-4e52-baf3-b71ca88469c7', variable: 'GITHUB_TOKEN')]) {
+                  sh(label: 'Generate release notes', script: './build.sh generatereleasenotes -s true')
+                  sh(label: 'Create or update release for tag on github', script: './build.sh createreleaseongithub -s true --token ${GITHUB_TOKEN}')
+                }
+              }
+            }
+          }
+        }
+      }
+    }
   }
   post {
     cleanup {
@@ -109,8 +175,22 @@ pipeline {
 
 def dotnet(Closure body){
   def dockerTagName = 'docker.elastic.co/observability-ci/ecs-dotnet-sdk-linux:latest'
-  sh label: 'Docker build', script: "docker build --tag ${dockerTagName} .ci/docker/sdk-linux"
+  // Add some resilience
+  retry(2) {
+    sh label: 'Docker build', script: "docker build --tag ${dockerTagName} .ci/docker/sdk-linux"
+  }
   docker.image("${dockerTagName}").inside("-e HOME='${env.WORKSPACE}/${env.BASE_DIR}'"){
     body()
+  }
+}
+
+def release(Map args = [:]) {
+  def secret = args.secret
+  dotnet(){
+    def repo = getVaultSecret(secret: secret)
+    withEnvMask(vars: [ [var: 'REPO_API_KEY', password: repo.data.apiKey],
+                        [var: 'REPO_API_URL', password: repo.data.url] ]) {
+      sh(label: 'Deploy', script: ".ci/deploy.sh ${REPO_API_KEY} ${REPO_API_URL}")
+    }
   }
 }
