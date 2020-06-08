@@ -7,11 +7,19 @@
       <Description>Serilog TextFormatter that formats log events in accordance with Elastic Common Schema (ECS).</Description>
     </PropertyGroup>
     <ItemGroup>
+      <None Remove="Lib\UAParser.regexes.yaml" />
+    </ItemGroup>
+    <ItemGroup>
+      <EmbeddedResource Include="Lib\UAParser.regexes.yaml">
+      <LogicalName>UAParser.regexes.yaml</LogicalName>
+	</EmbeddedResource>
+    </ItemGroup>
+    <ItemGroup>
       <ProjectReference Include="..\Elastic.CommonSchema\Elastic.CommonSchema.csproj" />
     </ItemGroup>
     <ItemGroup>
         <PackageReference Include="Serilog" Version="2.9.0.0" />
-        <PackageReference Condition="$(DefineConstants.Contains(NETSTANDARD))" Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.2.0.0" />
+        <PackageReference Condition="$(DefineConstants.Contains(NETSTANDARD))" Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.1.0.0" />
         <Reference Condition="$(DefineConstants.Contains(FULLFRAMEWORK))" Include="System.Web" />
     </ItemGroup>
 </Project>

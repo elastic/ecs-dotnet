@@ -7,13 +7,15 @@ open Fake.Core
 //this is ugly but a direct port of what used to be duplicated in our DOS and bash scripts
 module Commandline =
 
-    let private usage = """
+    let public Usage = """
 USAGE:
 
 build <target> [params]
 
 Targets:
 
+* help
+  - show this usage list
 * build-all
   - default target if non provided.
 * clean
@@ -72,8 +74,7 @@ Targets:
             NeedsClean = 
                 match (target) with
                 | ("release") -> true
-                | ("build")
-                | ("diff") -> false
+                | ("build") -> false
                 | _ -> true;
             CommandArguments = Unknown
         }
@@ -83,14 +84,10 @@ Targets:
             | _ :: tail -> target :: tail
             | [] -> [target]
         
-        let split (s:string) = s.Split ',' |> Array.toList 
-
         match arguments with
-        | [] | ["build"] | ["clean"] | ["touch"; ] | ["temp"; ] | ["canary"; ] -> parsed
-        | "diff" :: tail -> { parsed with RemainingArguments = tail }
+        | [] | ["build"] | ["clean"] | ["touch"; ] | ["temp"; ] | ["canary"; ] | ["help"; ] -> parsed
         | "test" :: tail -> { parsed with RemainingArguments = tail }
         | ["release"; version] -> { parsed with CommandArguments = SetVersion { Version = version }  }
-
         | _ ->
-            eprintf "%s" usage
+            eprintf "%s" Usage
             failwith "Please consult printed help text on how to call our build"

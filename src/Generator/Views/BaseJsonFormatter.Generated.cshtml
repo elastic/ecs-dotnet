@@ -7,7 +7,7 @@
 @using Generator.Schema
 @using Microsoft.CodeAnalysis.CSharp.Syntax
 @using Newtonsoft.Json
-@inherits Generator.CodeTemplatePage<Generator.Schema.EcsSpecification>
+@inherits Generator.CodeTemplatePage<Generator.Schema.YamlSpecification>
 // Licensed to Elasticsearch B.V under one or more agreements.
 // Elasticsearch B.V licenses this file to you under the Apache 2.0 License.
 // See the LICENSE file in the project root for more information
@@ -42,21 +42,21 @@ namespace Elastic.CommonSchema.Serialization
 @foreach (var field in Model.BaseFieldsOrdered)
 {
 	var name = field.Item2.Name;
-	if (name == "@timestamp")
+	if (name == YamlSpecification.TimestampFieldName)
 {<text>				"@(name)" => ReadDateTime(ref reader, ref @(name)),
 </text>}
-	else if (name == "log.level")
+	else if (name == YamlSpecification.LogLevelFieldName)
 {<text>				"@(name)" => ReadString(ref reader, ref loglevel),
 </text>}
 	else
-{<text>				"@(name)" => ReadProp<@(Raw(field.Item2.ClrType))>(ref reader, "@name", ecsEvent, (b, v) => b.@(FileGenerator.PascalCase(field.Item2.Name)) = v),
+{<text>				"@(name)" => ReadProp<@(Raw(field.Item2.ClrType()))>(ref reader, "@name", ecsEvent, (b, v) => b.@(FileGenerator.PascalCase(field.Item2.Name)) = v),
 </text>}
 }
 @foreach (var schema in Model.BaseYamlSchema().GetFieldsNested())
-{<text>				"@schema.Name" => ReadProp<@(FileGenerator.PascalCase(schema.ClassName))>(ref reader, "@schema.Name", ecsEvent, (b, v) => b.@(FileGenerator.PascalCase(schema.ClassName)) = v),
+{<text>				"@schema.Name" => ReadProp<@(schema.NamePCased)>(ref reader, "@schema.Name", ecsEvent, (b, v) => b.@(schema.NamePCased) = v),
 </text>}
 @foreach (var schema in Model.NonBaseYamlSchemas())
-{<text>				"@schema.Name" => ReadProp<@(FileGenerator.PascalCase(schema.Name))>(ref reader, "@schema.Name", ecsEvent, (b, v) => b.@(FileGenerator.PascalCase(schema.Name)) = v),
+{<text>				"@schema.Name" => ReadProp<@(schema.NamePCased())>(ref reader, "@schema.Name", ecsEvent, (b, v) => b.@(schema.NamePCased()) = v),
 </text>}
 				_ =>
 					typeof(Base) == ecsEvent.GetType()
@@ -86,12 +86,12 @@ namespace Elastic.CommonSchema.Serialization
 </text>}
 }
 			// Complex types
-@foreach (var schema in Model.BaseYamlSchema().GetFieldsNested())
+@foreach (var nestedField in Model.BaseYamlSchema().GetFieldsNested())
 {
-<text>			WriteProp(writer, "@(schema.Name)", value.@(FileGenerator.PascalCase(schema.Name)));
+<text>			WriteProp(writer, "@(nestedField.Name)", value.@(nestedField.NamePCased));
 </text>}
 @foreach (var schema in Model.YamlSchemasOrdered.Skip(1))
-{<text>			WriteProp(writer, "@(schema.Name)", value.@(FileGenerator.PascalCase(schema.Name)));
+{<text>			WriteProp(writer, "@(schema.Name)", value.@(schema.NamePCased()));
 </text>}
 			if (typeof(Base) != value.GetType())
 				value.WriteAdditionalProperties((k, v) => WriteProp(writer, k, v));

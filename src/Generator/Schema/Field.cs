@@ -2,12 +2,7 @@
 // Elasticsearch B.V licenses this file to you under the Apache 2.0 License.
 // See the LICENSE file in the project root for more information
 
-using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Text.RegularExpressions;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 
@@ -16,256 +11,151 @@ namespace Generator.Schema
 	[JsonObject(MemberSerialization.OptIn)]
 	public class Field
 	{
-		[JsonProperty("allowed_values")]
-		public List<AllowedValue> AllowedValues { get; set; }
-
-		[JsonIgnore]
-		public string GetEnumClrTypeName => FileGenerator.PascalCase(FlatName);
-
-		[JsonIgnore]
-		public bool IsCustomEnum => AllowedValues != null && AllowedValues.Any();
-
-		[JsonIgnore]
-		public string ClrType
-		{
-			get
-			{
-				// Special cases.
-				if (FlatName == "container.image.tag") return "string[]";
-				if (FlatName == "host.ip") return "string[]";
-				if (FlatName == "host.mac") return "string[]";
-				if (FlatName == "observer.ip") return "string[]";
-				if (FlatName == "observer.mac") return "string[]";
-				if (FlatName == "related.ip") return "string[]";
-				if (FlatName == "related.user") return "string[]";
-				if (FlatName == "threat.tactic.name") return "string[]";
-				if (FlatName == "threat.tactic.id") return "string[]";
-				if (FlatName == "threat.tactic.reference") return "string[]";
-				if (FlatName == "threat.technique.name") return "string[]";
-				if (FlatName == "threat.technique.id") return "string[]";
-				if (FlatName == "threat.technique.reference") return "string[]";
-				if (FlatName == "event.category") return "string[]";
-				if (FlatName == "event.type") return "string[]";
-				if (FlatName == "process.args") return "string[]";
-				if (FlatName == "process.parent.args") return "string[]";
-				if (FlatName == "registry.data.strings") return "string[]";
-				if (FlatName == "tls.server.certificate_chain") return "string[]";
-				if (FlatName == "tls.server.supported_ciphers") return "string[]";
-				if (FlatName == "tls.client.certificate_chain") return "string[]";
-				if (FlatName == "tls.client.supported_ciphers") return "string[]";
-				if (FlatName == "vulnerability.category") return "string[]";
-				if (FlatName == "file.attributes") return "string[]";
-				if (FlatName == "dns.header_flags") return "string[]";
-				if (FlatName == "dns.resolved_ip") return "string[]";
-				if (FlatName == "user.id") return "string[]";
-				if (FlatName == "tags") return "string[]";
-				if (FlatName == "labels") return "IDictionary<string, object>";
-
-				// C# custom property
-				if (Name == "_metadata") return "IDictionary<string, object>";
-
-				switch (Type)
-				{
-					case FieldType.Keyword:
-					case FieldType.Text:
-						return "string";
-					case FieldType.Long:
-						return "long?";
-					case FieldType.Integer:
-						return "int?";
-					case FieldType.Date:
-						return "DateTimeOffset?";
-					case FieldType.Ip:
-						return "string";
-					case FieldType.Object:
-						return "object";
-					case FieldType.Float:
-						return "float?";
-					case FieldType.GeoPoint:
-						return "Location";
-					case FieldType.Boolean:
-						return "bool?";
-					default:
-						throw new ArgumentOutOfRangeException();
-				}
-			}
-		}
-
-		[JsonProperty("dashed_name")]
-		public string DashedName { get; set; }
-
 		/// <summary>
-		///     Description of the field (required)
+		///  Reference to the schema to which this field belongs.
 		/// </summary>
-		[JsonProperty("description", Required = Required.Always)]
-		public string Description { get; set; }
-
 		[JsonIgnore]
-		public string DescriptionSanitized => Regex.Replace(Description.TrimEnd(), @"\r\n?|\n", "<para/>");
-
-		[JsonProperty("doc_values")]
-		public bool? DocValues { get; set; }
+		public YamlSchema Schema { get; set; }
 
 		/// <summary>
-		///     A single value example of what can be expected in this field (optional)
+		///  Ordering of this field
 		/// </summary>
-		[JsonProperty("example")]
-		public object Example { get; set; }
-
-		[JsonIgnore]
-		public string Extras
-		{
-			get
-			{
-				var builder = new StringBuilder();
-
-				if (IgnoreAbove.HasValue) builder.AppendFormat(".IgnoreAbove({0})", IgnoreAbove.Value);
-
-				if (Norms.HasValue) builder.AppendFormat(".Norms({0})", Norms.Value.ToString().ToLower());
-
-				if (Indexed.HasValue) builder.AppendFormat(".Index({0})", Indexed.Value.ToString().ToLower());
-
-				if (DocValues.HasValue) builder.AppendFormat(".DocValues({0})", DocValues.Value.ToString().ToLower());
-
-				if (Type == FieldType.Long
-					|| Type == FieldType.Integer
-					|| Type == FieldType.Float)
-					builder.AppendFormat(".Type(NumberType.{0:f})", Type);
-
-				return builder.ToString();
-			}
-		}
-
-		[JsonProperty("flat_name", Required = Required.Always)]
-		public string FlatName { get; set; }
-
-		[JsonProperty("format")] public string Format { get; set; }
-
-		[JsonProperty("ignore_above")] public int? IgnoreAbove { get; set; } //
+		[JsonProperty("order", Required = Required.Always)]
+		public int Order { get; set; }
 
 		/// <summary>
-		///     If false, means field is not indexed (overrides type) (optional)
-		/// </summary>
-		[JsonProperty("index")]
-		public bool? Indexed { get; set; }
-
-		[JsonProperty("input_format")] public string InputFormat { get; set; }
-
-		/// <summary>
-		///     TBD
-		/// </summary>
-		[JsonProperty("required")]
-		[Obsolete("TBD if still relevant.")]
-		public string IsRequired { get; set; }
-
-		[JsonIgnore]
-		public string JsonFieldName
-		{
-			get
-			{
-				if (string.IsNullOrEmpty(Schema.Prefix))
-					return FlatName;
-
-				return TrimStart(FlatName, Schema.Prefix);
-			}
-		}
-
-		/// <summary>
-		///     ECS Level of maturity of the field (required)
-		/// </summary>
-		[JsonProperty("level", Required = Required.Always)]
-		[JsonConverter(typeof(StringEnumConverter))]
-		public FieldLevel Level { get; set; }
-
-		[JsonIgnore]
-		public string MappingType
-		{
-			get
-			{
-				switch (Type)
-				{
-					case FieldType.Keyword:
-						return "Keyword";
-					case FieldType.Long:
-						return "Number";
-					case FieldType.Integer:
-						return "Number";
-					case FieldType.Date:
-						return "Date";
-					case FieldType.Ip:
-						return "Ip";
-					case FieldType.Object:
-						return "Object<" + ClrType + ">";
-					case FieldType.Text:
-						return "Text";
-					case FieldType.Float:
-						return "Number";
-					case FieldType.GeoPoint:
-						return "GeoPoint";
-					case FieldType.Boolean:
-						return "Boolean";
-					default:
-						throw new ArgumentOutOfRangeException();
-				}
-			}
-		}
-
-		/// <summary>
-		///     Optional
-		/// </summary>
-		[JsonProperty("multi_fields")]
-		public List<MultiField> MultiFields { get; set; }
-
-		/// <summary>
-		///     Name of the field (required)
+		///  Name of the field.
 		/// </summary>
 		[JsonProperty("name", Required = Required.Always)]
 		public string Name { get; set; }
 
-		[JsonProperty("norms")] public bool? Norms { get; set; } //
-
 		/// <summary>
-		///     Type of the field (required)
+		///  The name of this field, separated by hyphens.
 		/// </summary>
-		[JsonProperty("object_type")]
-		[JsonConverter(typeof(StringEnumConverter))]
-		public FieldType? ObjectType { get; set; }
-
-		[JsonProperty("order", Required = Required.Always)]
-		public int Order { get; set; }
-
-		[JsonProperty("original_fieldset")] public string OriginalFieldset { get; set; }
-
-		[JsonProperty("output_format")] public string OutputFormat { get; set; }
-
-		[JsonProperty("output_precision")] public int? OutputPrecision { get; set; }
-
-		[JsonIgnore]
-		public string PropertyName => FileGenerator.PascalCase(JsonFieldName).TrimStart('@');
-
-		public YamlSchema Schema { get; set; }
+		[JsonProperty("dashed_name", Required = Required.Always)]
+		public string DashedName { get; set; }
 
 		/// <summary>
-		///     Shorter definition, for display in tight spaces (optional)
+		///  The name of this field, separated by dots.
+		/// </summary>
+		[JsonProperty("flat_name", Required = Required.Always)]
+		public string FlatName { get; set; }
+
+		/// <summary>
+		///  Description of the field (required)
+		/// </summary>
+		[JsonProperty("description", Required = Required.Always)]
+		public string Description { get; set; }
+
+		/// <summary>
+		///  Shorter definition, for display in tight spaces (optional)
 		/// </summary>
 		[JsonProperty("short")]
 		public string Short { get; set; }
 
 		/// <summary>
-		///     Type of the field (required)
+		///  Type of the field (required)
 		/// </summary>
 		[JsonProperty("type", Required = Required.Always)]
 		[JsonConverter(typeof(StringEnumConverter))]
 		public FieldType Type { get; set; }
 
-		public static string TrimStart(string target, string trimString)
-		{
-			if (string.IsNullOrEmpty(trimString)) return target;
+		/// <summary>
+		///  Elasticsearch Type of the field.
+		/// </summary>
+		[JsonProperty("object_type")]
+		[JsonConverter(typeof(StringEnumConverter))]
+		public FieldType? ObjectType { get; set; }
 
-			var result = target;
-			while (result.StartsWith(trimString)) result = result.Substring(trimString.Length);
+		/// <summary>
+		///  A single value example of what can be expected in this field.
+		/// </summary>
+		[JsonProperty("example")]
+		public object Example { get; set; }
 
-			return result;
-		}
+		/// <summary>
+		///  The format for this field. e.g. "bytes"
+		/// </summary>
+		[JsonProperty("format")]
+		public string Format { get; set; }
+
+		/// <summary>
+		///  Determines the input format. e.g. "nanoseconds"
+		/// </summary>
+		[JsonProperty("input_format")]
+		public string InputFormat { get; set; }
+
+		/// <summary>
+		///  Is this field required?
+		/// </summary>
+		[JsonProperty("required")]
+		public string IsRequired { get; set; }
+
+		/// <summary>
+		///  ECS Level of maturity of the field (required)
+		/// </summary>
+		[JsonProperty("level", Required = Required.Always)]
+		[JsonConverter(typeof(StringEnumConverter))]
+		public FieldLevel Level { get; set; }
+
+		/// <summary>
+		///  Allowed values for this field.
+		/// </summary>
+		[JsonProperty("allowed_values")]
+		public List<FieldAllowedValue> AllowedValues { get; set; }
+
+		/// <summary>
+		/// Describes the normalisation of this field (e.g. array)
+		/// </summary>
+		[JsonProperty("normalize")]
+		public string[] Normalize { get; set; }
+
+		/// <summary>
+		///  Reference to the original fieldset used by this field.
+		/// </summary>
+		[JsonProperty("original_fieldset")]
+		public string OriginalFieldset { get; set; }
+
+		/// <summary>
+		///  Output format. e.g. asMilliseconds
+		/// </summary>
+		[JsonProperty("output_format")]
+		public string OutputFormat { get; set; }
+
+		/// <summary>
+		///  Output format precision
+		/// </summary>
+		[JsonProperty("output_precision")]
+		public int? OutputPrecision { get; set; }
+
+		/// <summary>
+		/// https://www.elastic.co/guide/en/elasticsearch/reference/current/doc-values.html
+		/// </summary>
+		[JsonProperty("doc_values")]
+		public bool? DocValues { get; set; }
+
+		/// <summary>
+		///  https://www.elastic.co/guide/en/elasticsearch/reference/current/ignore-above.html
+		/// </summary>
+		[JsonProperty("ignore_above")]
+		public int? IgnoreAbove { get; set; } //
+
+		/// <summary>
+		/// https://www.elastic.co/guide/en/elasticsearch/reference/current/mapping-index.html
+		/// </summary>
+		[JsonProperty("index")]
+		public bool? Indexed { get; set; }
+
+		/// <summary>
+		///  https://www.elastic.co/guide/en/elasticsearch/reference/current/multi-fields.html
+		/// </summary>
+		[JsonProperty("multi_fields")]
+		public List<FieldMultiField> MultiFields { get; set; }
+
+		/// <summary>
+		///  https://www.elastic.co/guide/en/elasticsearch/reference/current/norms.html
+		/// </summary>
+		[JsonProperty("norms")]
+		public bool? Norms { get; set; }
 	}
 }

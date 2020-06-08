@@ -65,7 +65,7 @@ module Main =
            "build"; "nuget-pack"; "validate-artifacts"; "generate-release-notes"
         ] (fun _ -> printfn "Finished Release Build %O" artifactsVersion)
 
-        command "diff" [ "clean"; ] <| fun _ -> Differ.Run parsed
+        target "help"  <| fun _ -> (printfn "%s" Commandline.Usage)
 
         Targets.RunTargetsAndExit([parsed.Target], fun e -> e.GetType() = typeof<ProcExecException>)
 

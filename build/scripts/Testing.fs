@@ -10,12 +10,13 @@ open Versioning
 
 module Tests =
     
-    let TestAll (ArtifactsVersion(version)) =
+    let TestAll version =
         Directory.CreateDirectory Paths.BuildOutput |> ignore
         let command = 
             let p = [
                 "test"; "."; "-c"; "Release";
-                (sprintf "-p:Version=%s" <| version.Full.ToString()); 
+                (sprintf "-p:Version=%s" <| version.Full.ToString());
+                "--logger"; "junit;LogFilePath=..\\..\\build\\output\\junit-{assembly}.xml;MethodFormat=Class;FailureBodyFormat=Verbose";
             ]
             //make sure we only test netcoreapp on linux or requested on the command line to only test-one
             match Environment.isLinux with 

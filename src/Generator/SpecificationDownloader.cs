@@ -43,16 +43,13 @@ namespace Generator
 					select new Specification { FolderOnDisk = Path.Combine(branch, kv.Key), Branch = branch, GithubListingUrl = url })
 				.ToList();
 
-			using (var progress =
-				new ProgressBar(specifications.Count, "Downloading specifications", MainProgressBarOptions))
+			using var progress = new ProgressBar(specifications.Count, "Downloading specifications", MainProgressBarOptions);
+			foreach (var spec in specifications)
 			{
-				foreach (var spec in specifications)
-				{
-					progress.Message = $"Downloading to {spec.FolderOnDisk} for branch {branch}";
-					DownloadDefinitions(spec, progress, ".yml");
-					DownloadDefinitions(spec, progress, ".json");
-					progress.Tick($"Downloaded to {spec.FolderOnDisk} for branch {branch}");
-				}
+				progress.Message = $"Downloading to {spec.FolderOnDisk} for branch {branch}";
+				DownloadDefinitions(spec, progress, ".yml");
+				DownloadDefinitions(spec, progress, ".json");
+				progress.Tick($"Downloaded to {spec.FolderOnDisk} for branch {branch}");
 			}
 		}
 
@@ -60,17 +57,8 @@ namespace Generator
 
 		private static void DownloadDefinitions(Specification spec, IProgressBar progress, string filenameMatch)
 		{
-			using (var client = new WebClient())
-			{
-				var html = client.DownloadString(spec.GithubListingUrl);
-				FindFilesOnListing(spec, html, progress, filenameMatch);
-			}
-		}
-
-		private static void FindFilesOnListing(Specification spec, string html, IProgressBar progress,
-			string filenameMatch
-		)
-		{
+			using var client = new WebClient();
+			var html = client.DownloadString(spec.GithubListingUrl);
 			if (!Directory.Exists(CodeConfiguration.SpecificationFolder))
 				Directory.CreateDirectory(CodeConfiguration.SpecificationFolder);
 
@@ -83,20 +71,15 @@ namespace Generator
 				.Where(s => !string.IsNullOrEmpty(s) && s.EndsWith(filenameMatch))
 				.ToList();
 
-			using (var subBar = progress.Spawn(endpoints.Count, "fetching individual files", SubProgressBarOptions))
-				endpoints.ForEach(s => WriteFile(spec, s, subBar));
-		}
-
-		private static void WriteFile(Specification spec, string s, IProgressBar progress)
-		{
-			var rawFile = spec.GithubDownloadUrl(s);
-			using (var client = new WebClient())
-			{
+			using var subBar = progress.Spawn(endpoints.Count, "fetching individual files", SubProgressBarOptions);
+			endpoints.ForEach(s => {
+				var rawFile = spec.GithubDownloadUrl(s);
+				using var endpointClient = new WebClient();
 				var fileName = rawFile.Split('/').Last();
-				var contents = client.DownloadString(rawFile);
+				var contents = endpointClient.DownloadString(rawFile);
 				WriteToFolder(spec.FolderOnDisk, fileName, contents);
-				progress.Tick($"Downloading {fileName}");
-			}
+				((IProgressBar)subBar).Tick($"Downloading {fileName}");
+			});
 		}
 
 		private static void WriteToFolder(string folder, string filename, string contents)

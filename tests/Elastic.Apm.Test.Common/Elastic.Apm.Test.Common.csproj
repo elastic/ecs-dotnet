@@ -6,7 +6,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Elastic.Apm" Version="1.2.0" />
+    <PackageReference Include="Elastic.Apm" Version="1.4.0" />
+    <PackageReference Include="JunitXml.TestLogger" Version="2.1.15" />
   </ItemGroup>
 
 </Project>

@@ -9,12 +9,6 @@ using System.IO;
 using System.Linq;
 using System.Threading;
 using Serilog.Events;
-#if NETSTANDARD
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Http.Abstractions;
-#else
-
-#endif
 
 namespace Elastic.CommonSchema.Serilog
 {
@@ -224,11 +218,11 @@ namespace Elastic.CommonSchema.Serilog
 			{
 				return new Process
 				{
-					Title = processName,
+					Title = string.IsNullOrEmpty(processName) ? null : processName,
 					Name = processName,
 					Pid = pid,
-					Thread = int.TryParse(threadId ?? processId ?? "", out var id)
-						? new ProcessThread() { Id = id }
+					Thread = int.TryParse(threadId ?? processId, out var id)
+						? new ProcessThread { Id = id }
 						: null,
 				};
 			}
@@ -236,9 +230,10 @@ namespace Elastic.CommonSchema.Serilog
 			var currentThread = Thread.CurrentThread;
 			var process = TryGetProcess(pid);
 
+			var mainWindowTitle = process?.MainWindowTitle;
 			return new Process
 			{
-				Title = process?.MainWindowTitle,
+				Title = string.IsNullOrEmpty(mainWindowTitle) ? null : mainWindowTitle,
 				Name = process?.ProcessName ?? processName,
 				Pid = process?.Id ?? pid,
 				Executable = process?.ProcessName ?? processName,
@@ -279,7 +274,7 @@ namespace Elastic.CommonSchema.Serilog
 
 		private static Error GetError(IReadOnlyList<Exception> exceptions) =>
 			exceptions != null && exceptions.Count > 0
-				? new Error { Message = exceptions[0].Message, StackTrace = CatchErrors(exceptions), Code = exceptions[0].GetType().ToString() }
+				? new Error { Message = exceptions[0].Message, StackTrace = CatchErrors(exceptions), Type = exceptions[0].GetType().ToString() }
 				: null;
 
 		private static Event GetEvent(LogEvent e)

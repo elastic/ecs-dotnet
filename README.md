@@ -2,11 +2,27 @@
 
 # Elastic Common Schema .NET
 
+[![Build Status](https://apm-ci.elastic.co/buildStatus/icon?job=apm-agent-dotnet%2Fecs-dotnet-mbp%2Fmaster)](https://apm-ci.elastic.co/job/apm-agent-dotnet/job/ecs-dotnet-mbp/job/master/)
+
 This repository contains .NET integrations that use the Elastic Common Schema (ECS), including popular .NET logging frameworks. Read the [announcement post](https://www.elastic.co/blog/elastic-common-schema-dotnet-library-and-integrations-released-for-elasticsearch).
 
 The Elastic Common Schema defines a common set of fields for ingesting data into Elasticsearch. A common schema helps you correlate data from sources like logs and metrics or IT operations analytics and security analytics. Further information on ECS can be found in the official [Elastic documentation](https://www.elastic.co/guide/en/ecs/current/index.html) or [github repository](https://github.com/elastic/ecs).
 
 Contributions are welcome, please read our [guidelines](https://github.com/elastic/ecs-dotnet/tree/master/contributing.md).
+
+---
+
+### Versioning
+
+Version components: `{major}.{minor}.{patch}`
+
+These libraries are not versioned according to [SemVer](https://semver.org/) principles. Backwards compatibility is only guaranteed within *minor* versions, since ECS only makes this guarantee. Patch releases of this library will not seek to introduce breaking changes, but will be used to address bug fixes within that minor version.
+
+Each assembly release indicates the ECS version that it is compatible with (see _releases_), but typically the minor version number of the assembly correlates to the compatible version of ECS; for example; all of `1.4.0`, `1.4.1`, `1.4.2` and `1.4.3` are compatible with ECS version `1.4.0`.
+
+The assemblies are versioned using an assembly identity of `major.minor.*` as opposed to `major.*` as is common when following SemVer.
+
+---
 
 # Integrations
 
@@ -128,6 +144,10 @@ var exporter = new ElasticsearchBenchmarkExporter(options);
 var config = CreateDefaultConfig().With(exporter);
 BenchmarkRunner.Run(typeof(Md5VsSha256), config);
 ```
+
+# Examples
+
+- [Elastic.CommonSchema.Serilog and ASP.NET Core](/examples/aspnetcore-with-serilog/)
 
 ## Copyright and License
 

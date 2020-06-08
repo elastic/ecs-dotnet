@@ -6,6 +6,8 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
+using System.Reflection;
 using System.Text;
 using NLog;
 using NLog.Config;
@@ -21,11 +23,23 @@ namespace Elastic.CommonSchema.NLog
 	{
 		public const string Name = nameof(EcsLayout);
 
+		private static bool? _nlogApmLoaded;
+
+		private static bool NLogApmLoaded()
+		{
+			if (_nlogApmLoaded.HasValue) return _nlogApmLoaded.Value;
+			_nlogApmLoaded = Type.GetType("Elastic.Apm.NLog.ApmTraceIdLayoutRenderer, Elastic.Apm.NLog") != null;
+			return _nlogApmLoaded.Value;
+		}
+
 		private readonly Layout _disableThreadAgnostic = "${threadid:cached=true}";
 
 		public EcsLayout()
 		{
 			IncludeAllProperties = true;
+
+			LogOriginCallSiteMethod = "${exception:format=method}";
+			LogOriginCallSiteFile = "${exception:format=source}";
 
 			ProcessId = "${processid}";
 			ProcessName = "${processname:FullName=false}";
@@ -39,13 +53,11 @@ namespace Elastic.CommonSchema.NLog
 			ServerUser = "${environment-user}"; // NLog 4.6.4
 
 			// These values are set by the Elastic.Apm.NLog package
-			ApmTraceId = "${ElasticApmTraceId}";
-			ApmTransactionId = "${ElasticApmTransactionId}";
-		}
-
-		private static class SpecialKeys
-		{
-			public const string DefaultLogger = "Elastic.CommonSchema.NLog";
+			if (NLogApmLoaded())
+			{
+				ApmTraceId = "${ElasticApmTraceId}";
+				ApmTransactionId = "${ElasticApmTransactionId}";
+			}
 		}
 
 		public Layout AgentId { get; set; }
@@ -61,6 +73,10 @@ namespace Elastic.CommonSchema.NLog
 		/// ensure correct async context capture when necessary
 		/// </summary>
 		public Layout DisableThreadAgnostic => IncludeMdlc ? _disableThreadAgnostic : null;
+
+		public Layout LogOriginCallSiteMethod { get; set; }
+		public Layout LogOriginCallSiteFile { get; set; }
+		public Layout LogOriginCallSiteLine { get; set; }
 
 		public Layout EventAction { get; set; }
 		public Layout EventCategory { get; set; }
@@ -92,32 +108,53 @@ namespace Elastic.CommonSchema.NLog
 		public Layout ServerIp { get; set; }
 		public Layout ServerUser { get; set; }
 
+		/// <summary>
+		/// Optional action to enrich the constructed <see cref="Base">EcsEvent</see> before it is serialized
+		/// </summary>
+		/// <remarks>This is called last in the chain of enrichment functions</remarks>
+		public Action<Base,LogEventInfo> EnrichAction { get; set; }
+
 		[ArrayParameter(typeof(TargetPropertyWithContext), "tag")]
 		public IList<TargetPropertyWithContext> Tags { get; } = new List<TargetPropertyWithContext>();
 
-		protected override void RenderFormattedMessage(LogEventInfo logEventInfo, StringBuilder target)
+		protected override void RenderFormattedMessage(LogEventInfo logEvent, StringBuilder target)
 		{
 			var ecsEvent = new Base
 			{
-				Timestamp = logEventInfo.TimeStamp,
-				Message = logEventInfo.FormattedMessage,
+				Timestamp = logEvent.TimeStamp,
+				Message = logEvent.FormattedMessage,
 				Ecs = new Ecs { Version = Base.Version },
-				Log = GetLog(logEventInfo),
-				Event = GetEvent(logEventInfo),
-				Metadata = GetMetadata(logEventInfo),
-				Process = GetProcess(logEventInfo),
-				Trace = GetTrace(logEventInfo),
-				Transaction = GetTransaction(logEventInfo),
-				Error = GetError(logEventInfo.Exception),
-				Tags = GetTags(logEventInfo),
-				Labels = GetLabels(logEventInfo),
-				Agent = GetAgent(logEventInfo),
-				Server = GetServer(logEventInfo),
-				Host = GetHost(logEventInfo)
+				Log = GetLog(logEvent),
+				Event = GetEvent(logEvent),
+				Metadata = GetMetadata(logEvent),
+				Process = GetProcess(logEvent),
+				Trace = GetTrace(logEvent),
+				Transaction = GetTransaction(logEvent),
+				Error = GetError(logEvent.Exception),
+				Tags = GetTags(logEvent),
+				Labels = GetLabels(logEvent),
+				Agent = GetAgent(logEvent),
+				Server = GetServer(logEvent),
+				Host = GetHost(logEvent)
 			};
 
-			var output = ecsEvent.Serialize();
-			target.Append(output);
+			//Give any deriving classes a chance to enrich the event
+			EnrichEvent(logEvent, ref ecsEvent);
+			//Allow programmatical actions to enrich before serializing
+			EnrichAction?.Invoke(ecsEvent, logEvent);
+
+			ecsEvent.Serialize(target);
+		}
+
+		/// <summary>
+		/// Override to supplement the ECS event parsing
+		/// </summary>
+		/// <param name="logEvent">The original log event</param>
+		/// <param name="ecsEvent">The EcsEvent to modify</param>
+		/// <returns>Enriched ECS Event</returns>
+		/// <remarks>Destructive for performance</remarks>
+		protected virtual void EnrichEvent(LogEventInfo logEvent, ref Base ecsEvent)
+		{
 		}
 
 		protected override string GetFormattedMessage(LogEventInfo logEvent)
@@ -133,7 +170,7 @@ namespace Elastic.CommonSchema.NLog
 				{
 					Message = exception.Message,
 					StackTrace = CatchError(exception),
-					Code = exception.GetType().ToString()
+					Type = exception.GetType().ToString(),
 				}
 				: null;
 
@@ -162,6 +199,7 @@ namespace Elastic.CommonSchema.NLog
 				fullText.WriteLine($"\tType: {exception.GetType()}");
 				fullText.WriteLine($"\tSource: {exception.TargetSite?.DeclaringType?.AssemblyQualifiedName}");
 				fullText.WriteLine($"\tMessage: {exception.Message}");
+				fullText.WriteLine($"\tTrace: {exception.StackTrace}");
 				fullText.WriteLine($"\tLocation: {frame.GetFileName()}");
 				fullText.WriteLine($"\tMethod: {frame.GetMethod()} ({frame.GetFileLineNumber()}, {frame.GetFileColumnNumber()})");
 
@@ -211,16 +249,39 @@ namespace Elastic.CommonSchema.NLog
 				: null;
 		}
 
-		private static Log GetLog(LogEventInfo logEventInfo)
+		private Log GetLog(LogEventInfo logEventInfo)
 		{
+			var logOriginMethod = LogOriginCallSiteMethod?.Render(logEventInfo);
+			var logOriginSourceFile = LogOriginCallSiteFile?.Render(logEventInfo);
+			var logOriginSourceLine = LogOriginCallSiteLine?.Render(logEventInfo);
+			var logOriginSourceLineNo = ParseLogOriginCallSiteLineNo(logOriginSourceLine);
+
+			var originFile = (!string.IsNullOrEmpty(logOriginSourceFile) || logOriginSourceLineNo.HasValue) ?
+				new OriginFile() { Line = logOriginSourceLineNo, Name = logOriginSourceFile } : null;
+
+			var origin = (originFile != null || !string.IsNullOrEmpty(logOriginMethod)) ?
+				new LogOrigin() { Function = logOriginMethod, File = originFile } : null;
+
 			var log = new Log
 			{
 				Level = logEventInfo.Level.ToString(),
-				Logger = SpecialKeys.DefaultLogger,
-				Original = logEventInfo.Message
+				Logger = logEventInfo.LoggerName,
+				Original = logEventInfo.Message,
+				Origin = origin,
 			};
 
 			return log;
+		}
+
+		private int? ParseLogOriginCallSiteLineNo(string logOriginSourceLine)
+		{
+			if (string.IsNullOrEmpty(logOriginSourceLine))
+				return null;
+
+			if (int.TryParse(logOriginSourceLine, out var logOriginSourceLineNo))
+				return logOriginSourceLineNo;
+
+			return 0;
 		}
 
 		private string[] GetTags(LogEventInfo e)

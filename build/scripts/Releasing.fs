@@ -4,7 +4,7 @@ open Versioning
 
 module Release =
     
-    let NugetPack (ArtifactsVersion(version)) = 
+    let NugetPack version = 
     
         Tooling.DotNet.ExecIn "src" [ "pack"; 
             "-c"; "Release";

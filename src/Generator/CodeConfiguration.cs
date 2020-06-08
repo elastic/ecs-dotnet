@@ -18,7 +18,8 @@ namespace Generator
 		{
 			get
 			{
-				if (_root != null) return _root;
+				if (_root != null)
+					return _root;
 
 				var currentDirectory = Directory.GetCurrentDirectory();
 				var directoryInfo = new DirectoryInfo(currentDirectory);

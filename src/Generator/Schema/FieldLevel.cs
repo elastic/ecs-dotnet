@@ -6,6 +6,9 @@ using System.Runtime.Serialization;
 
 namespace Generator.Schema
 {
+	/// <summary>
+	///  ECS level
+	/// </summary>
 	public enum FieldLevel
 	{
 		[EnumMember(Value = "core")] Core,

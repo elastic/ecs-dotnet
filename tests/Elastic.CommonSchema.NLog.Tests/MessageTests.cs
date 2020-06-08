@@ -2,6 +2,7 @@
 // Elasticsearch B.V licenses this file to you under the Apache 2.0 License.
 // See the LICENSE file in the project root for more information
 
+using System;
 using System.Linq;
 using FluentAssertions;
 using Xunit;
@@ -44,6 +45,30 @@ namespace Elastic.CommonSchema.NLog.Tests
 
 			var y = info.Metadata["some_y"] as double?;
 			y.Should().HaveValue().And.Be(2.2);
+		});
+
+		[Fact]
+		public void SeesMessageWithException() => TestLogger((logger, getLogEvents) =>
+		{
+			try
+			{
+				if (logger != null)
+					throw new ArgumentException("Logger Exception");
+			}
+			catch (Exception ex)
+			{
+				logger.Error(ex, "My Exception!");
+			}
+
+			var logEvents = getLogEvents();
+			logEvents.Should().HaveCount(1);
+
+			var ecsEvents = ToEcsEvents(logEvents);
+
+			var (_, info) = ecsEvents.First();
+			info.Log.Origin.Function.Should().Contain(nameof(SeesMessageWithException));
+			info.Error.Message.Should().Be("Logger Exception");
+			info.Error.Type.Should().Be(typeof(ArgumentException).ToString());
 		});
 	}
 }
