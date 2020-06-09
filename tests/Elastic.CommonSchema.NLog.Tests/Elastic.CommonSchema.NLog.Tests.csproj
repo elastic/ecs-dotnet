@@ -1,10 +1,11 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-    <PropertyGroup>
-        <TargetFramework>netcoreapp3.0</TargetFramework>
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.0</TargetFramework>
 
-        <IsPackable>false</IsPackable>
-    </PropertyGroup>
+    <IsPackable>false</IsPackable>
+    <NoWarn>NU1701</NoWarn>
+  </PropertyGroup>
 
     <ItemGroup>
         <PackageReference Include="FluentAssertions" Version="5.9.0" />
