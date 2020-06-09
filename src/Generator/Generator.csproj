@@ -1,19 +1,20 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project Sdk="Microsoft.NET.Sdk">
-    <PropertyGroup>
-        <OutputType>Exe</OutputType>
-        <TargetFramework>netcoreapp3.0</TargetFramework>
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>netcoreapp3.0</TargetFramework>
+    <IsPackable>False</IsPackable>
+    <SignAssembly>False</SignAssembly>
     <PreserveCompilationContext>true</PreserveCompilationContext>
-    </PropertyGroup>
-    <ItemGroup>
-        <PackageReference Include="Cogito.Json.Schema.Validation" Version="1.0.1" />
-        <PackageReference Include="CsQuery.Core" Version="2.0.1" />
-        <PackageReference Include="JsonDiffPatch" Version="2.0.49" />
-        <PackageReference Include="JsonDiffPatch.Net" Version="2.1.0" />
-        <PackageReference Include="Newtonsoft.Json" Version="12.0.3-beta1" />
-        <PackageReference Include="RazorLight.Unofficial" Version="2.0.0-beta1.3" />
-       <PackageReference Include="ShellProgressBar" Version="4.2.0" />
-        <PackageReference Include="YamlDotNet" Version="6.0.0" />
-    </ItemGroup>
-    <Import Project="$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildThisFileDirectory), build.bat))\src\Library.build.props" />
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Cogito.Json.Schema.Validation" Version="1.0.1"/>
+    <PackageReference Include="CsQuery.Core" Version="2.0.1"/>
+    <PackageReference Include="JsonDiffPatch" Version="2.0.49"/>
+    <PackageReference Include="JsonDiffPatch.Net" Version="2.1.0"/>
+    <PackageReference Include="Newtonsoft.Json" Version="12.0.3-beta1"/>
+    <PackageReference Include="RazorLight.Unofficial" Version="2.0.0-beta1.3"/>
+    <PackageReference Include="ShellProgressBar" Version="4.2.0"/>
+    <PackageReference Include="YamlDotNet" Version="6.0.0"/>
+  </ItemGroup>
 </Project>
