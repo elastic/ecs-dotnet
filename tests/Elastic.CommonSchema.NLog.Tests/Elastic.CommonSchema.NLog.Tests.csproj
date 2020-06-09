@@ -11,7 +11,7 @@
         <PackageReference Include="FluentAssertions" Version="5.9.0" />
         <PackageReference Include="JunitXml.TestLogger" Version="2.1.15" />
         <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.2.0" />
-        <PackageReference Include="NLog" Version="4.5.4" />
+        <PackageReference Include="NLog" Version="4.5.11" />
         <PackageReference Include="NLog.Config" Version="4.5.4" />
         <PackageReference Include="xunit" Version="2.4.0" />
         <PackageReference Include="xunit.NLog" Version="1.1.1" />

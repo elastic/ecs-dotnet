@@ -69,7 +69,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AspnetCoreExample", "exampl
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "aspnetcore-with-serilog", "aspnetcore-with-serilog", "{9F103D76-F7FA-4D10-8214-6E79C28D5AEC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Elastic.CommonSchema.Benchmarks", "..\tests\Elastic.CommonSchema.Benchmarks\Elastic.CommonSchema.Benchmarks.csproj", "{EC19A9E1-79CC-46A8-94D7-EE66ED22D3BD}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Elastic.CommonSchema.Benchmarks", "tests\Elastic.CommonSchema.Benchmarks\Elastic.CommonSchema.Benchmarks.csproj", "{EC19A9E1-79CC-46A8-94D7-EE66ED22D3BD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
