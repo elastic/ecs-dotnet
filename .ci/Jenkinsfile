@@ -136,45 +136,37 @@ pipeline {
           }
         }
         stage('Release to appveyor') {
-          when {
-            branch 'master'
-          }
+          when { branch 'master' }
           steps {
             dir("${BASE_DIR}"){
-              release(secret: 'secret/apm-team/ci/elastic-observability-appveyor')
+              deploy(secret: 'secret/apm-team/ci/elastic-observability-appveyor')
             }
           }
         }
         stage('Release to feedz.io') {
-          when {
-            branch 'master'
-          }
+          when { branch 'master' }
           steps {
             dir("${BASE_DIR}"){
-              release(secret: 'secret/apm-team/ci/elastic-observability-feedz.io')
+              deploy(secret: 'secret/apm-team/ci/elastic-observability-feedz.io')
             }
           }
         }
         stage('Release to NuGet') {
-          when {
-            branch 'master'
-          }
+          when { branch 'master' }
           steps {
             dir("${BASE_DIR}"){
-              release('secret/apm-team/ci/elastic-observability-nuget')
+              deploy('secret/apm-team/ci/elastic-observability-nuget')
             }
           }
         }
-        stage('Tags') {
-          when {
-            buildingTag()
-          }
+        stage('Release Notes') {
+          when { buildingTag() }
           steps {
             dir("${BASE_DIR}"){
-              dotnet() {
-                withCredentials([string(credentialsId: '2a9602aa-ab9f-4e52-baf3-b71ca88469c7', variable: 'GITHUB_TOKEN')]) {
+              withGitRelease(credentialsId: '2a9602aa-ab9f-4e52-baf3-b71ca88469c7-UserAndToken') {
+                dotnet() {
                   sh(label: 'Generate release notes', script: './build.sh generatereleasenotes -s true')
-                  sh(label: 'Create or update release for tag on github', script: './build.sh createreleaseongithub -s true --token ${GITHUB_TOKEN}')
+                  sh(label: 'Create or update release for tag on github', script: "./build.sh createreleaseongithub -s true --token ${GITHUB_TOKEN}")
                 }
               }
             }
@@ -201,7 +193,7 @@ def dotnet(Closure body){
   }
 }
 
-def release(Map args = [:]) {
+def deploy(Map args = [:]) {
   def secret = args.secret
   def repo = getVaultSecret(secret: secret)
   withEnvMask(vars: [ [var: 'REPO_API_KEY', password: repo.data.apiKey],
