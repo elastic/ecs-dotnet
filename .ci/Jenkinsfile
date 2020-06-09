@@ -137,14 +137,6 @@ pipeline {
             }
           }
         }
-        stage('Release to appveyor') {
-          when { branch 'master' }
-          steps {
-            dir("${BASE_DIR}"){
-              deploy(secret: 'secret/apm-team/ci/elastic-observability-appveyor')
-            }
-          }
-        }
         stage('Release to feedz.io') {
           when { branch 'master' }
           steps {
@@ -154,7 +146,7 @@ pipeline {
           }
         }
         stage('Release to NuGet') {
-          when { branch 'master' }
+          when { buildingTag() }
           steps {
             dir("${BASE_DIR}"){
               deploy('secret/apm-team/ci/elastic-observability-nuget')
@@ -169,6 +161,7 @@ pipeline {
                 dotnet() {
                   sh(label: 'Generate release notes', script: './build.sh generatereleasenotes -s true')
                   sh(label: 'Create or update release for tag on github', script: "./build.sh createreleaseongithub -s true --token ${GITHUB_TOKEN}")
+                  sh(label: 'Inspect public API change', script: './build.sh generateapichanges -s true')
                 }
               }
             }
