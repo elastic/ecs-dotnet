@@ -31,7 +31,10 @@ pipeline {
       steps {
         pipelineManager([ cancelPreviousRunningBuilds: [ when: 'PR' ] ])
         deleteDir()
-        gitCheckout(basedir: "${BASE_DIR}", githubNotifyFirstTimeContributor: true)
+        gitCheckout(basedir: "${BASE_DIR}", githubNotifyFirstTimeContributor: true, shallow: false)
+        dir("${BASE_DIR}"){
+          sh(label: 'Fetch tags', script: 'git fetch --prune --tags')
+        }
         stash allowEmpty: true, name: 'source', useDefaultExcludes: false
       }
     }
@@ -65,7 +68,6 @@ pipeline {
               deleteDir()
               unstash 'source'
               dir("${BASE_DIR}"){
-                sh script: 'git fetch --prune --tags', label: 'build'
                 dotnet(){
                   sh script: './build.sh release -c false', label: 'build'
                 }
@@ -96,7 +98,6 @@ pipeline {
                 withGithubNotify(context: 'Windows') {
                   unstash 'source'
                   dir("${BASE_DIR}"){
-                    bat script: 'git fetch --prune --tags', label: 'build'
                     bat script: 'choco install dotnetcore-sdk -m -y --no-progress -r --version 3.1.200', label: 'Tools'
                     bat script: 'build.bat release -c false', label: 'build'
                   }
