@@ -65,8 +65,9 @@ pipeline {
               deleteDir()
               unstash 'source'
               dir("${BASE_DIR}"){
+                sh script: 'git fetch --prune --tags', label: 'build'
                 dotnet(){
-                  sh script: './build.sh', label: 'build'
+                  sh script: './build.sh release -c false', label: 'build'
                 }
               }
             }
@@ -95,8 +96,9 @@ pipeline {
                 withGithubNotify(context: 'Windows') {
                   unstash 'source'
                   dir("${BASE_DIR}"){
-                    bat script: 'choco install dotnetcore-sdk -m -y --no-progress -r --version 3.0.100', label: 'Tools'
-                    bat script: 'build.bat canary', label: 'build'
+                    bat script: 'git fetch --prune --tags', label: 'build'
+                    bat script: 'choco install dotnetcore-sdk -m -y --no-progress -r --version 3.1.200', label: 'Tools'
+                    bat script: 'build.bat release -c false', label: 'build'
                   }
                 }
               }
@@ -105,7 +107,7 @@ pipeline {
                   archiveArtifacts(allowEmptyArchive: true, artifacts: "${MSBUILDDEBUGPATH}/**/MSBuild_*.failure.txt")
                 }
                 always {
-                  archiveArtifacts(allowEmptyArchive: true, artifacts: "${BASE_DIR}/**/build/output/**/*.nupkg")
+                  archiveArtifacts(allowEmptyArchive: true, artifacts: "${BASE_DIR}/**/build/output/*.nupkg")
                 }
               }
             }

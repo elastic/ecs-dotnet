@@ -2,10 +2,28 @@
   "version": 1,
   "isRoot": true,
   "tools": {
+    "minver-cli": {
+      "version": "2.2.0",
+      "commands": [
+        "minver"
+      ]
+    },
     "assembly-differ": {
       "version": "0.12.5",
       "commands": [
         "assembly-differ"
+      ]
+    },
+    "release-notes": {
+      "version": "0.2.3",
+      "commands": [
+        "release-notes"
+      ]
+    },
+    "nupkg-validator": {
+      "version": "0.3.1",
+      "commands": [
+        "nupkg-validator"
       ]
     }
   }
