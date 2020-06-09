@@ -125,7 +125,7 @@ pipeline {
         }
       }
       stages {
-        stage('Build') {
+        stage('Generate') {
           steps {
             deleteDir()
             unstash 'source'
