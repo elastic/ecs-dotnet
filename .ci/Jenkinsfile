@@ -81,7 +81,7 @@ pipeline {
             always {
               dir("${BASE_DIR}"){
                 junit(allowEmptyResults: true, keepLongStdio: true, testResults: 'build/output/junit-*.xml')
-                archiveArtifacts(allowEmptyArchive: true, artifacts: 'build/output')
+                archiveArtifacts(allowEmptyArchive: true, artifacts: 'build/output/**/*')
               }
             }
           }
@@ -113,7 +113,7 @@ pipeline {
                 always {
                   dir("${BASE_DIR}"){
                     junit(allowEmptyResults: true, keepLongStdio: true, testResults: 'build/output/junit-*.xml')
-                    archiveArtifacts(allowEmptyArchive: true, artifacts: 'build/output')
+                    archiveArtifacts(allowEmptyArchive: true, artifacts: 'build/output/**/*')
                   }
                 }
               }
