@@ -76,10 +76,13 @@ pipeline {
           }
           post {
             unsuccessful {
-              archiveArtifacts(allowEmptyArchive: true, artifacts: "${MSBUILDDEBUGPATH}/**/MSBuild_*.failure.txt,${BASE_DIR}/build/output")
+              archiveArtifacts(allowEmptyArchive: true, artifacts: "${MSBUILDDEBUGPATH}/**/MSBuild_*.failure.txt")
             }
             always {
-              junit(allowEmptyResults: true, keepLongStdio: true, testResults: "${BASE_DIR}/build/output/junit-*.xml")
+              dir("${BASE_DIR}"){
+                junit(allowEmptyResults: true, keepLongStdio: true, testResults: 'build/output/junit-*.xml')
+                archiveArtifacts(allowEmptyArchive: true, artifacts: 'build/output')
+              }
             }
           }
         }
@@ -105,10 +108,13 @@ pipeline {
               }
               post {
                 unsuccessful {
-                  archiveArtifacts(allowEmptyArchive: true, artifacts: "${MSBUILDDEBUGPATH}/**/MSBuild_*.failure.txt,${BASE_DIR}/build/output")
+                  archiveArtifacts(allowEmptyArchive: true, artifacts: "${MSBUILDDEBUGPATH}/**/MSBuild_*.failure.txt")
                 }
                 always {
-                  archiveArtifacts(allowEmptyArchive: true, artifacts: "${BASE_DIR}/build/output/*.nupkg")
+                  dir("${BASE_DIR}"){
+                    junit(allowEmptyResults: true, keepLongStdio: true, testResults: 'build/output/junit-*.xml')
+                    archiveArtifacts(allowEmptyArchive: true, artifacts: 'build/output')
+                  }
                 }
               }
             }
