@@ -76,7 +76,7 @@ pipeline {
           }
           post {
             unsuccessful {
-              archiveArtifacts(allowEmptyArchive: true, artifacts: "${MSBUILDDEBUGPATH}/**/MSBuild_*.failure.txt,${BASE_DIR}/build/output/**")
+              archiveArtifacts(allowEmptyArchive: true, artifacts: "${MSBUILDDEBUGPATH}/**/MSBuild_*.failure.txt,${BASE_DIR}/build/output")
             }
             always {
               junit(allowEmptyResults: true, keepLongStdio: true, testResults: "${BASE_DIR}/build/output/junit-*.xml")
@@ -98,17 +98,17 @@ pipeline {
                 withGithubNotify(context: 'Windows') {
                   unstash 'source'
                   dir("${BASE_DIR}"){
-                    bat script: 'choco install dotnetcore-sdk -m -y --no-progress -r --version 3.1.200', label: 'Tools'
+                    bat script: 'choco install dotnetcore-sdk -m -y --no-progress -r --version 3.1.202', label: 'Tools'
                     bat script: 'build.bat release -c false', label: 'build'
                   }
                 }
               }
               post {
                 unsuccessful {
-                  archiveArtifacts(allowEmptyArchive: true, artifacts: "${MSBUILDDEBUGPATH}/**/MSBuild_*.failure.txt")
+                  archiveArtifacts(allowEmptyArchive: true, artifacts: "${MSBUILDDEBUGPATH}/**/MSBuild_*.failure.txt,${BASE_DIR}/build/output")
                 }
                 always {
-                  archiveArtifacts(allowEmptyArchive: true, artifacts: "${BASE_DIR}/**/build/output/*.nupkg")
+                  archiveArtifacts(allowEmptyArchive: true, artifacts: "${BASE_DIR}/build/output/*.nupkg")
                 }
               }
             }
