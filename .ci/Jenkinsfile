@@ -152,14 +152,6 @@ pipeline {
             }
           }
         }
-        stage('Release to NuGet') {
-          when { buildingTag() }
-          steps {
-            dir("${BASE_DIR}"){
-              deploy(secret: 'secret/apm-team/ci/elastic-observability-nuget')
-            }
-          }
-        }
         stage('Release Notes') {
           when { buildingTag() }
           steps {
@@ -167,10 +159,18 @@ pipeline {
               withGitRelease(credentialsId: '2a9602aa-ab9f-4e52-baf3-b71ca88469c7-UserAndToken') {
                 dotnet() {
                   sh(label: 'Generate release notes', script: './build.sh generatereleasenotes -s true')
-                  sh(label: 'Create or update release for tag on github', script: "./build.sh createreleaseongithub -s true --token ${GITHUB_TOKEN}")
                   sh(label: 'Inspect public API change', script: './build.sh generateapichanges -s true')
+                  sh(label: 'Create or update release for tag on github', script: "./build.sh createreleaseongithub -s true --token ${GITHUB_TOKEN}")
                 }
               }
+            }
+          }
+        }
+        stage('Release to NuGet') {
+          when { buildingTag() }
+          steps {
+            dir("${BASE_DIR}"){
+              //deploy(secret: 'secret/apm-team/ci/elastic-observability-nuget')
             }
           }
         }
