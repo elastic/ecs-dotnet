@@ -60,6 +60,9 @@ let private validatePackages (arguments:ParseResults<Arguments>) =
     let jenkinsOnWindowsArgs =
         if Fake.Core.Environment.environVarAsBool "JENKINS_URL" && Fake.Core.Environment.isWindows then ["-r"; "true"] else []
     
+    printfn "Running on jenkins: %b" <| Fake.Core.Environment.environVarAsBool "JENKINS_URL"
+    printfn "Running on windows %b" <| Fake.Core.Environment.isWindows
+    
     let args = ["-v"; currentVersionInformational.Value; "-k"; Paths.SignKey; "-t"; output] @ jenkinsOnWindowsArgs
     nugetPackages |> Seq.iter (fun p -> exec "dotnet" (["nupkg-validator"; p] @ args) |> ignore)
     
