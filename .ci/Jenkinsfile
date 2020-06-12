@@ -186,8 +186,10 @@ pipeline {
 
 def dotnet(Closure body){
   def dockerTagName = 'docker.elastic.co/observability-ci/ecs-dotnet-sdk-linux:latest'
-  // Add some resilience
-  retry(2) {
+```suggestion
+  // When running in the CI with multiple parallel stages
+  // the access could be considered as a DDOS attack.
+  retryWithSleep(retries: 2, seconds: 5, backoff: true) {
     sh label: 'Docker build', script: "docker build --tag ${dockerTagName} .ci/docker/sdk-linux"
   }
   docker.image("${dockerTagName}").inside("-e HOME='${env.WORKSPACE}/${env.BASE_DIR}'"){
