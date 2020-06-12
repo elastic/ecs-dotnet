@@ -186,7 +186,6 @@ pipeline {
 
 def dotnet(Closure body){
   def dockerTagName = 'docker.elastic.co/observability-ci/ecs-dotnet-sdk-linux:latest'
-```suggestion
   // When running in the CI with multiple parallel stages
   // the access could be considered as a DDOS attack.
   retryWithSleep(retries: 2, seconds: 5, backoff: true) {
