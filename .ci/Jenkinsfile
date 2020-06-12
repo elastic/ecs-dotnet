@@ -170,7 +170,7 @@ pipeline {
           when { buildingTag() }
           steps {
             dir("${BASE_DIR}"){
-              //deploy(secret: 'secret/apm-team/ci/elastic-observability-nuget')
+              deploy(secret: 'secret/apm-team/ci/elastic-observability-nuget')
             }
           }
         }
