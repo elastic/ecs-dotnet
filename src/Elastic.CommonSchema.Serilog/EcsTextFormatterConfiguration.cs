@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Http;
 using System.Web;
 #endif
 using System;
+using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using Serilog.Events;
 
@@ -19,6 +20,7 @@ namespace Elastic.CommonSchema.Serilog
 		Func<Base, LogEvent, Base> MapCustom { get; set; }
 		bool MapExceptions { get; set; }
 		IHttpAdapter MapHttpAdapter { get; set; }
+		IList<string> LogEventPropertiesToFilter { get;set; }
 	}
 
 	public class EcsTextFormatterConfiguration : IEcsTextFormatterConfiguration
@@ -27,6 +29,7 @@ namespace Elastic.CommonSchema.Serilog
 		bool IEcsTextFormatterConfiguration.MapCurrentThread { get; set; } = true;
 
 		IHttpAdapter IEcsTextFormatterConfiguration.MapHttpAdapter { get; set; }
+		public IList<string> LogEventPropertiesToFilter { get; set; }
 
 		Func<Base, LogEvent, Base> IEcsTextFormatterConfiguration.MapCustom { get; set; } = (b, e) => b;
 

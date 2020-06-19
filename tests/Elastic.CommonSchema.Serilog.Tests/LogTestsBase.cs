@@ -17,7 +17,7 @@ namespace Elastic.CommonSchema.Serilog.Tests
 	{
 		protected LoggerConfiguration LoggerConfiguration { get; set; }
 
-		protected EcsTextFormatter Formatter { get; } = new EcsTextFormatter();
+		protected EcsTextFormatter Formatter { get; set; } = new EcsTextFormatter();
 
 		protected LogTestsBase(ITestOutputHelper output) =>
 			LoggerConfiguration = new LoggerConfiguration()
