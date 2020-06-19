@@ -1,11 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project Sdk="Microsoft.NET.Sdk">
-  <Import Project="$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildThisFileDirectory), build.bat))\src\PublishArtifacts.build.props"/>
   <PropertyGroup>
     <TargetFrameworks>netstandard2.0;netstandard2.1;net461</TargetFrameworks>
     <Title>Elastic Common Schema (ECS) Types</Title>
     <Description>Maps Elastic Common Schema (ECS) to .NET types including (de)serialization using System.Text.Json</Description>
     <LangVersion>latest</LangVersion>
+    <IsPackable>True</IsPackable>
   </PropertyGroup>
   <ItemGroup>
     <!-- TODO do we care to ilmerge this? -->

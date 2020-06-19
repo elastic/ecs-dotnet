@@ -1,44 +1,22 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-  <Import Project="$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildThisFileDirectory), build.bat))\src\Library.build.props" />
+
   <PropertyGroup>
-    <TargetFramework>netcoreapp3.0</TargetFramework>
     <OutputType>Exe</OutputType>
-    <!-- Type Providers are restored using net461, fine for netcoreapp2.2 so we kill the warning -->
-    <NoWarn>$(NoWarn);NU1701</NoWarn>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <IsPackable>false</IsPackable>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Commandline.fs" />
+    <PackageReference Include="Argu" Version="6.0.0" />
+    <PackageReference Include="Bullseye" Version="3.3.0" />
+    <PackageReference Include="Proc" Version="0.6.2" />
+    <PackageReference Include="Fake.Tools.Git" Version="5.15.0" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Compile Include="Paths.fs" />
-    <Compile Include="Tooling.fs" />
-    <Compile Include="Versioning.fs" />
-    <Compile Include="Releasing.fs" />
-    <Compile Include="ReleaseNotes.fs" />
-    <Compile Include="Building.fs" />
-    <Compile Include="Testing.fs" />
+    <Compile Include="CommandLine.fs" />
     <Compile Include="Targets.fs" />
+    <Compile Include="Program.fs" />
   </ItemGroup>
-  <ItemGroup>
-    <Content Include="..\..\build.sh"><Link>build.sh</Link></Content>
-    <Content Include="..\..\build.bat"><Link>build.bat</Link></Content>
-    <Content Include="..\..\appveyor.yml"><Link>appveyor.yml</Link></Content>
-  </ItemGroup>
-  <ItemGroup>
-    <PackageReference Include="FSharp.Core" Version="4.7.0" />
-    
-    <PackageReference Include="Bullseye" Version="3.0.0" />
-    <PackageReference Include="Fake.Core.Environment" Version="5.15.0" />
-    <PackageReference Include="Fake.Core.SemVer" Version="5.15.0" />
-    <PackageReference Include="Fake.IO.FileSystem" Version="5.15.0" />
-    <PackageReference Include="Fake.IO.Zip" Version="5.15.0" />
-    <PackageReference Include="ILRepack" Version="2.1.0-beta1" />
-    <PackageReference Include="Newtonsoft.Json" Version="12.0.1" />
-    <PackageReference Include="NuGet.CommandLine" Version="4.9.4" />
-    <PackageReference Include="Octokit" Version="0.32.0" />
-    <PackageReference Include="Proc" Version="0.6.1" />
-  </ItemGroup>
-  <Target Name="CopyToolPackages" AfterTargets="Build">
-    <Copy SourceFiles="$(PkgILRepack)\tools\ILRepack.exe" DestinationFolder="$(OutDir)" />
-    <Copy SourceFiles="$(PkgNuGet_CommandLine)\tools\NuGet.exe" DestinationFolder="$(OutDir)" />
-  </Target>
 
 </Project>

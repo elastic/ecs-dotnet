@@ -77,3 +77,4 @@ project.lock.json
 *.sln.iml
 /src/.vs/restore.dg
 src/packages/
+BenchmarkDotNet.Artifacts

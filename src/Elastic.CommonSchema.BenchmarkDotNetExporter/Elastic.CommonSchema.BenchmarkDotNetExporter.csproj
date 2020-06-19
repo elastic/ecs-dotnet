@@ -1,11 +1,11 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-  <Import Project="$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildThisFileDirectory), build.bat))\src\PublishArtifacts.build.props" />
   <PropertyGroup>
     <TargetFrameworks>netstandard2.0;netstandard2.1;net461</TargetFrameworks>
     <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
     <Title>Elastic Common Schema (ECS) BenchmarkDotNet exporter</Title>
     <Description>Exports BenchmarkDotNet benchmarks to Elasticsearch using Elastic Common Schema (ECS) format</Description>
     <LangVersion>latest</LangVersion>
+    <IsPackable>True</IsPackable>
   </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="..\Elastic.CommonSchema\Elastic.CommonSchema.csproj" />
