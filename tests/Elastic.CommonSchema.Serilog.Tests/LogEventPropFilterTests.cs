@@ -32,15 +32,14 @@ namespace Elastic.CommonSchema.Serilog.Tests
 
 			Formatter = new EcsTextFormatter(new EcsTextFormatterConfiguration()
 			{
-				LogEventPropertiesToFilter = new List<string>(){{ "foo" }}
+				LogEventPropertiesToFilter = new HashSet<string>(){{ "foo" }}
 			});
 		}
 
-		[Fact]
-		public void FilterLogEventProperty() => TestLogger((logger, getLogEvents) =>
+		private LogEvent BuildLogEvent()
 		{
 			var parser = new MessageTemplateParser();
-			var evnt = new LogEvent(
+			return new LogEvent(
 				DateTimeOffset.Now,
 				LogEventLevel.Information,
 				null,
@@ -50,6 +49,16 @@ namespace Elastic.CommonSchema.Serilog.Tests
 					new LogEventProperty("foo", new ScalarValue("aaa")),
 					new LogEventProperty("bar", new ScalarValue("bbb")),
 				});
+		}
+
+		/// <summary>
+		/// Test the default <see cref="EcsTextFormatterConfiguration.LogEventPropertiesToFilter"/> via a hashset
+		/// </summary>
+		[Fact]
+		public void FilterLogEventProperty() => TestLogger((logger, getLogEvents) =>
+		{
+			var parser = new MessageTemplateParser();
+			var evnt = BuildLogEvent();
 			logger.Write(evnt);
 
 			var logEvents = getLogEvents();
@@ -62,6 +71,107 @@ namespace Elastic.CommonSchema.Serilog.Tests
 			info.Error.Should().BeNull();
 			info.Metadata.Should().Contain("bar", "bbb");
 			info.Metadata.Should().NotContainKey("foo", "Should have been filtered");
+		});
+		/// <summary>
+		/// Test that null <see cref="EcsTextFormatterConfiguration.LogEventPropertiesToFilter"/> does not cause any critical errors
+		/// </summary>
+		[Fact]
+		public void NullFilterLogEventProperty() => TestLogger((logger, getLogEvents) =>
+		{
+			Formatter = new EcsTextFormatter(new EcsTextFormatterConfiguration()
+			{
+				LogEventPropertiesToFilter = null
+			});
+
+			var evnt = BuildLogEvent();
+			logger.Write(evnt);
+
+			var logEvents = getLogEvents();
+			logEvents.Should().HaveCount(1);
+
+			var ecsEvents = ToEcsEvents(logEvents);
+
+			var (_, info) = ecsEvents.First();
+			info.Log.Level.Should().Be("Information");
+			info.Error.Should().BeNull();
+			info.Metadata.Should().Contain("bar", "bbb");
+			info.Metadata.Should().Contain("foo", "aaa");
+		});
+
+		/// <summary>
+		/// Test that <see cref="EcsTextFormatterConfiguration.LogEventPropertiesToFilter"/> can be empty and does not cause any critical errors
+		/// </summary>
+		[Fact]
+		public void EmptyFilterLogEventProperty() => TestLogger((logger, getLogEvents) =>
+		{
+			Formatter = new EcsTextFormatter(new EcsTextFormatterConfiguration()
+			{
+				LogEventPropertiesToFilter = new HashSet<string>()
+			});
+
+			var evnt = BuildLogEvent();
+			logger.Write(evnt);
+
+			var logEvents = getLogEvents();
+			logEvents.Should().HaveCount(1);
+
+			var ecsEvents = ToEcsEvents(logEvents);
+
+			var (_, info) = ecsEvents.First();
+			info.Log.Level.Should().Be("Information");
+			info.Error.Should().BeNull();
+			info.Metadata.Should().Contain("bar", "bbb");
+			info.Metadata.Should().Contain("foo", "aaa");
+		});
+		/// <summary>
+		/// Test that <see cref="EcsTextFormatterConfiguration.LogEventPropertiesToFilter"/> can be case insensitive
+		/// </summary>
+		[Fact]
+		public void CaseInsensitiveFilterLogEventProperty() => TestLogger((logger, getLogEvents) =>
+		{
+			Formatter = new EcsTextFormatter(new EcsTextFormatterConfiguration()
+			{
+				LogEventPropertiesToFilter = new HashSet<string>(StringComparer.OrdinalIgnoreCase){{ "FOO" }}
+			});
+
+			var evnt = BuildLogEvent();
+			logger.Write(evnt);
+
+			var logEvents = getLogEvents();
+			logEvents.Should().HaveCount(1);
+
+			var ecsEvents = ToEcsEvents(logEvents);
+
+			var (_, info) = ecsEvents.First();
+			info.Log.Level.Should().Be("Information");
+			info.Error.Should().BeNull();
+			info.Metadata.Should().Contain("bar", "bbb");
+			info.Metadata.Should().NotContainKey("foo", "Should have been filtered");
+		});
+		/// <summary>
+		/// Test that <see cref="EcsTextFormatterConfiguration.LogEventPropertiesToFilter"/> can be case sensitive
+		/// </summary>
+		[Fact]
+		public void CaseSensitiveFilterLogEventProperty() => TestLogger((logger, getLogEvents) =>
+		{
+			Formatter = new EcsTextFormatter(new EcsTextFormatterConfiguration()
+			{
+				LogEventPropertiesToFilter = new HashSet<string>(StringComparer.Ordinal){{ "FOO" }}
+			});
+
+			var evnt = BuildLogEvent();
+			logger.Write(evnt);
+
+			var logEvents = getLogEvents();
+			logEvents.Should().HaveCount(1);
+
+			var ecsEvents = ToEcsEvents(logEvents);
+
+			var (_, info) = ecsEvents.First();
+			info.Log.Level.Should().Be("Information");
+			info.Error.Should().BeNull();
+			info.Metadata.Should().Contain("bar", "bbb");
+			info.Metadata.Should().Contain("foo", "aaa");
 		});
 	}
 }

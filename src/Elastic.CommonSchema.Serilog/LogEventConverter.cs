@@ -91,7 +91,7 @@ namespace Elastic.CommonSchema.Serilog
 				? null
 				: new Transaction { Id = transactionId.Value.ToString() };
 
-		private static IDictionary<string, object> GetMetadata(LogEvent logEvent, IList<string> propKeyFilter=null)
+		private static IDictionary<string, object> GetMetadata(LogEvent logEvent, ISet<string> propKeyFilter=null)
 		{
 			var dict = new Dictionary<string, object>
 			{
@@ -138,7 +138,7 @@ namespace Elastic.CommonSchema.Serilog
 						continue;
 				}
 				//key present in list of keys to filter
-				if (propKeyFilter?.Any(key => key.Equals(logEventPropertyValue.Key, StringComparison.OrdinalIgnoreCase)) ?? false)
+				if (propKeyFilter?.Contains(logEventPropertyValue.Key) ?? false)
 					continue;
 				dict.Add(ToSnakeCase(logEventPropertyValue.Key), PropertyValueToObject(logEventPropertyValue.Value));
 			}
