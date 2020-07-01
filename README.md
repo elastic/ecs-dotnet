@@ -79,11 +79,11 @@ Formats an NLog event into a JSON representation that adheres to the Elastic Com
 
 ```csharp
 Layout.Register<EcsLayout>("EcsLayout"); // Register the ECS layout.
-var config = new Config.LoggingConfiguration();
-var memoryTarget = new EventInfoMemoryTarget { Layout = Layout.FromString("EcsLayout") }; // Use the layout.
-config.AddRule(LogLevel.Debug, LogLevel.Fatal, memoryTarget);
-var factory = new LogFactory(config);
-var logger = factory.GetCurrentClassLogger();
+var config = new LoggingConfiguration();
+var consoleTarget = new ConsoleTarget("console") { Layout = new EcsLayout() };  // Use the ECS layout.
+config.AddRule(LogLevel.Debug, LogLevel.Fatal, consoleTarget);
+LogManager.Configuration = config;
+var logger = LogManager.GetCurrentClassLogger();
 ```
 
 ## APM
@@ -114,17 +114,16 @@ Introduce two special place holder variables (`ElasticApmTraceId`, `ElasticApmTr
 [Learn more...](https://github.com/elastic/ecs-dotnet/tree/master/src/Elastic.Apm.NLog)
 
 ```csharp
-var target = new MemoryTarget();
-target.Layout = "${ElasticApmTraceId}|${ElasticApmTransactionId}|${message}";
-Agent.Tracer.CaptureTransaction("TestTransaction", "Test", t =>
-{
-	traceId = "trace-id";
-	transactionId = "transaction-id";
-	logger.Debug("InTransaction");
-});
 // Logged message will be in format of `trace-id|transation-id|InTransaction`
 // or `||InTransaction` if the place holders are not available
+var consoleTarget = new ConsoleTarget("console");
+consoleTarget.Layout = "${ElasticApmTraceId}|${ElasticApmTransactionId}|${message}";
+config.AddRule(LogLevel.Debug, LogLevel.Fatal, consoleTarget);
+LogManager.Configuration = config;
+var logger = LogManager.GetCurrentClassLogger();
 ```
+
+When using EcsLayout from `Elastic.CommonSchema.NLog` then trace and transaction id will automatically appear in ECS.
 
 ## Benchmarking
 
