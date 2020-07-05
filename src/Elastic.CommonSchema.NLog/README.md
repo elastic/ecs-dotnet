@@ -6,22 +6,42 @@ This Layout implementation formats an NLog event into a JSON representation that
 
 The .NET assemblies are published to NuGet under the package name [Elastic.CommonSchema.NLog](http://nuget.org/packages/Elastic.CommonSchema.NLog)
 
-## How to Enable
+## How to use from API
 
 ```csharp
 Layout.Register<EcsLayout>("EcsLayout"); // Register the ECS layout.
-var config = new Config.LoggingConfiguration();
-var memoryTarget = new EventInfoMemoryTarget { Layout = Layout.FromString("EcsLayout") }; // Use the layout.
-config.AddRule(LogLevel.Debug, LogLevel.Fatal, memoryTarget);
-var factory = new LogFactory(config);
-var logger = factory.GetCurrentClassLogger();
+var config = new LoggingConfiguration();
+var consoleTarget = new ConsoleTarget("console") { Layout = new EcsLayout() };  // Use the ECS layout.
+config.AddRule(LogLevel.Debug, LogLevel.Fatal, consoleTarget);
+LogManager.Configuration = config;
+var logger = LogManager.GetCurrentClassLogger();
 ```
 
 In the code snippet above `Layout.Register<EcsLayout>("EcsLayout")` registers the `EcsLayout` with NLog.
-The `Layout = Layout.FromString("EcsLayout")` line then instructs NLog to use the registered layout.
-The sample above uses the memory target, but you are free to use any target of your choice, perhaps consider using a
+The `Layout = new EcsLayout()` line then instructs NLog to use the registered layout.
+The sample above uses the console target, but you are free to use any target of your choice, perhaps consider using a
 filesystem target and [Elastic Filebeat](https://www.elastic.co/downloads/beats/filebeat) for durable and reliable ingestion.
 
+## How to use from NLog.config
+
+```xml
+<nlog>
+  <extensions>
+    <add assembly="Elastic.Apm.NLog"/>
+    <add assembly="Elastic.CommonSchema.NLog"/>
+  </extensions>
+  <targets>
+    <target name="console" type="console">
+      <layout xsi:type="EcsLayout" />
+    </target>
+  </targets>
+  <rules>
+    <logger name="*" minLevel="Debug" writeTo="Console" />
+  </rules>
+</nlog>
+```
+
+## Example output from EcsLayout
 An example of the output is given below:
 
 ```json

@@ -11,19 +11,32 @@ Which will be replaced with the appropriate Elastic APM variables if available
 
 The .NET assemblies are published to NuGet under the package name [Elastic.Apm.NLog](http://nuget.org/packages/Elastic.Apm.NLog)
 
-## How to Enable
+## How to use from API
 
 ```csharp
-var target = new MemoryTarget();
-target.Layout = "${ElasticApmTraceId}|${ElasticApmTransactionId}|${message}";
-Agent.Tracer.CaptureTransaction("TestTransaction", "Test", t =>
-{
-	traceId = "trace-id";
-	transactionId = "transaction-id";
-	logger.Debug("InTransaction");
-});
 // Logged message will be in format of `trace-id|transation-id|InTransaction`
 // or `||InTransaction` if the place holders are not available
+var consoleTarget = new ConsoleTarget("console");
+consoleTarget.Layout = "${ElasticApmTraceId}|${ElasticApmTransactionId}|${message}";
+config.AddRule(LogLevel.Debug, LogLevel.Fatal, consoleTarget);
+LogManager.Configuration = config;
+var logger = LogManager.GetCurrentClassLogger();
+```
+
+## How to use from NLog.config
+
+```xml
+<nlog>
+  <extensions>
+    <add assembly="Elastic.Apm.NLog"/>
+  </extensions>
+  <targets>
+    <target name="console" type="console" layout="${ElasticApmTraceId}|${ElasticApmTransactionId}|${message}" />
+  </targets>
+  <rules>
+    <logger name="*" minLevel="Debug" writeTo="Console" />
+  </rules>
+</nlog>
 ```
 
 ## Prerequisite
