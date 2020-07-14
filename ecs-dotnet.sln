@@ -71,7 +71,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "aspnetcore-with-serilog", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Elastic.CommonSchema.Benchmarks", "tests\Elastic.CommonSchema.Benchmarks\Elastic.CommonSchema.Benchmarks.csproj", "{EC19A9E1-79CC-46A8-94D7-EE66ED22D3BD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Elasticsearch.Extensions.Logging", "Elasticsearch.Extensions.Logging\Elasticsearch.Extensions.Logging.csproj", "{D88AAA7D-1AEE-4B4C-BE37-69BA85DA07DA}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Elasticsearch.Extensions.Logging", "src\Elasticsearch.Extensions.Logging\Elasticsearch.Extensions.Logging.csproj", "{D88AAA7D-1AEE-4B4C-BE37-69BA85DA07DA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
