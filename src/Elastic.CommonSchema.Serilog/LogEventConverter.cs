@@ -138,7 +138,7 @@ namespace Elastic.CommonSchema.Serilog
 						continue;
 				}
 				//key present in list of keys to filter
-				if (propKeyFilter?.Contains(logEventPropertyValue.Key) ?? false)
+				if (logEventPropertiesToFilter?.Contains(logEventPropertyValue.Key) ?? false)
 					continue;
 				dict.Add(ToSnakeCase(logEventPropertyValue.Key), PropertyValueToObject(logEventPropertyValue.Value));
 			}
