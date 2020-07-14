@@ -8,6 +8,7 @@
     <PackageTags>Logging;LoggerProvider;Elasticsearch;ELK;Kibana;Logstash;Tracing;Diagnostics;Log;Trace;ECS</PackageTags>
     <LangVersion>8</LangVersion>
     <Nullable>enable</Nullable>
+    <IsPackable>false</IsPackable>
   </PropertyGroup>
 
   <ItemGroup>
