@@ -91,7 +91,7 @@ namespace Elastic.CommonSchema.Serilog
 				? null
 				: new Transaction { Id = transactionId.Value.ToString() };
 
-		private static IDictionary<string, object> GetMetadata(LogEvent logEvent, ISet<string> propKeyFilter=null)
+		private static IDictionary<string, object> GetMetadata(LogEvent logEvent, ISet<string> logEventPropertiesToFilter)
 		{
 			var dict = new Dictionary<string, object>
 			{
