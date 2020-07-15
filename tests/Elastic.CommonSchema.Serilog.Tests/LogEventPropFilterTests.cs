@@ -31,9 +31,7 @@ namespace Elastic.CommonSchema.Serilog.Tests
 				.Enrich.WithElasticApmCorrelationInfo();
 
 			Formatter = new EcsTextFormatter(new EcsTextFormatterConfiguration()
-			{
-				LogEventPropertiesToFilter = new HashSet<string>(){{ "foo" }}
-			});
+					.LogEventPropertiesToFilter(new HashSet<string>(){{ "foo" }}));
 		}
 
 		private LogEvent BuildLogEvent()
@@ -79,9 +77,7 @@ namespace Elastic.CommonSchema.Serilog.Tests
 		public void NullFilterLogEventProperty() => TestLogger((logger, getLogEvents) =>
 		{
 			Formatter = new EcsTextFormatter(new EcsTextFormatterConfiguration()
-			{
-				LogEventPropertiesToFilter = null
-			});
+					.LogEventPropertiesToFilter(null));
 
 			var evnt = BuildLogEvent();
 			logger.Write(evnt);
@@ -105,9 +101,7 @@ namespace Elastic.CommonSchema.Serilog.Tests
 		public void EmptyFilterLogEventProperty() => TestLogger((logger, getLogEvents) =>
 		{
 			Formatter = new EcsTextFormatter(new EcsTextFormatterConfiguration()
-			{
-				LogEventPropertiesToFilter = new HashSet<string>()
-			});
+				.LogEventPropertiesToFilter(new HashSet<string>()));
 
 			var evnt = BuildLogEvent();
 			logger.Write(evnt);
@@ -130,9 +124,7 @@ namespace Elastic.CommonSchema.Serilog.Tests
 		public void CaseInsensitiveFilterLogEventProperty() => TestLogger((logger, getLogEvents) =>
 		{
 			Formatter = new EcsTextFormatter(new EcsTextFormatterConfiguration()
-			{
-				LogEventPropertiesToFilter = new HashSet<string>(StringComparer.OrdinalIgnoreCase){{ "FOO" }}
-			});
+				.LogEventPropertiesToFilter(new HashSet<string>(StringComparer.OrdinalIgnoreCase){{ "FOO" }}));
 
 			var evnt = BuildLogEvent();
 			logger.Write(evnt);
@@ -155,9 +147,7 @@ namespace Elastic.CommonSchema.Serilog.Tests
 		public void CaseSensitiveFilterLogEventProperty() => TestLogger((logger, getLogEvents) =>
 		{
 			Formatter = new EcsTextFormatter(new EcsTextFormatterConfiguration()
-			{
-				LogEventPropertiesToFilter = new HashSet<string>(StringComparer.Ordinal){{ "FOO" }}
-			});
+				.LogEventPropertiesToFilter(new HashSet<string>(StringComparer.Ordinal){{ "FOO" }}));
 
 			var evnt = BuildLogEvent();
 			logger.Write(evnt);
