@@ -139,11 +139,6 @@ namespace Elasticsearch.Extensions.Logging
 				// Unique identifier of the trace.
 				// A trace groups multiple events like transactions that belong together. For example, a user request handled by multiple inter-connected services.
 				logEvent.Trace = new Trace() { Id = activity.RootId };
-
-				// Unique identifier of the transaction.
-				// A transaction is the highest level of work measured within a service, such as a request to a server.
-				var spanId = ExtractW3cSpanIdFromActivityId(activity.Id);
-				logEvent.Transaction = new Transaction() { Id = spanId ?? activity.Id };
 			}
 			else
 			{
@@ -227,27 +222,6 @@ namespace Elasticsearch.Extensions.Logging
 			}
 
 			return false;
-		}
-
-		private string? ExtractW3cSpanIdFromActivityId(string activityId)
-		{
-			if (activityId.Length != 2 + 32 + 16 + 2 + 3) return null;
-
-			// validate format
-			for (var index = 0; index < activityId.Length; index++)
-			{
-				var c = activityId[index];
-				if (index == 2 || index == 2 + 1 + 32 || index == 2 + 1 + 32 + 1 + 16)
-				{
-					if (c != '-') return null;
-				}
-				else
-				{
-					if (c < '0' || c > 'f' || c > '9' && c < 'a') return null;
-				}
-			}
-
-			return activityId.Substring(2 + 1 + 32 + 1, 16);
 		}
 
 		private string FormatEnumerable(IEnumerable enumerable, int depth)
