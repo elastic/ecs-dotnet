@@ -28,7 +28,7 @@ namespace Elastic.CommonSchema.NLog.Tests
 		[Fact]
 		public void SeesMessageWithProp() => TestLogger((logger, getLogEvents) =>
 		{
-			logger.Info("Info {ValueX} {SomeY}", "X", 2.2);
+			logger.Info("Info {ValueX} {SomeY} {NotX}", "X", 2.2, 42);
 
 			var logEvents = getLogEvents();
 			logEvents.Should().HaveCount(1);
@@ -36,9 +36,10 @@ namespace Elastic.CommonSchema.NLog.Tests
 			var ecsEvents = ToEcsEvents(logEvents);
 
 			var (_, info) = ecsEvents.First();
-			info.Message.Should().Be("Info \"X\" 2.2");
+			info.Message.Should().Be("Info \"X\" 2.2 42");
 			info.Metadata.Should().ContainKey("value_x");
 			info.Metadata.Should().ContainKey("some_y");
+			info.Metadata.Should().NotContainKey("not_x");
 
 			var x = info.Metadata["value_x"] as string;
 			x.Should().NotBeNull().And.Be("X");

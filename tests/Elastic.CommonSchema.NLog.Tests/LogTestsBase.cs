@@ -27,7 +27,9 @@ namespace Elastic.CommonSchema.NLog.Tests
 
 			var logFactory = new LogFactory();
 			var logConfig = new Config.LoggingConfiguration(logFactory);
-			var memoryTarget = new MemoryTarget { Layout = new EcsLayout(), OptimizeBufferReuse = true };
+			var ecsLayout = new EcsLayout();
+			ecsLayout.ExcludeProperties.Add("NotX");
+			var memoryTarget = new MemoryTarget { Layout = ecsLayout, OptimizeBufferReuse = true };
 			logConfig.AddRule(LogLevel.Trace, LogLevel.Fatal, memoryTarget);
 			logConfig.DefaultCultureInfo = System.Globalization.CultureInfo.InvariantCulture;
 			logFactory.Configuration = logConfig;
