@@ -117,6 +117,11 @@ namespace Elastic.CommonSchema.NLog
 		[ArrayParameter(typeof(TargetPropertyWithContext), "tag")]
 		public IList<TargetPropertyWithContext> Tags { get; } = new List<TargetPropertyWithContext>();
 
+		/// <summary>
+		/// List of property names to exclude from MetaData, when <see cref="IncludeAllProperties"/> is true
+		/// </summary>
+		public ISet<string> ExcludeProperties { get; set; } = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+
 		protected override void RenderFormattedMessage(LogEventInfo logEvent, StringBuilder target)
 		{
 			var ecsEvent = new Base
@@ -219,7 +224,13 @@ namespace Elastic.CommonSchema.NLog
 			if (IncludeAllProperties && e.HasProperties)
 			{
 				foreach (var prop in e.Properties)
-					Populate(metadata, prop.Key?.ToString(), prop.Value);
+				{
+					var propertyName = prop.Key?.ToString();
+					if (string.IsNullOrEmpty(propertyName) || ExcludeProperties.Contains(propertyName))
+						continue;
+
+					Populate(metadata, propertyName, prop.Value);
+				}
 			}
 
 			if (IncludeMdlc)
@@ -239,7 +250,7 @@ namespace Elastic.CommonSchema.NLog
 				foreach (var targetPropertyWithContext in Metadata)
 				{
 					var value = targetPropertyWithContext.Layout?.Render(e);
-					if (!string.IsNullOrEmpty(value) || targetPropertyWithContext.IncludeEmptyValue)
+					if (targetPropertyWithContext.IncludeEmptyValue || !string.IsNullOrEmpty(value))
 						Populate(metadata, targetPropertyWithContext.Name, value);
 				}
 			}
@@ -483,7 +494,7 @@ namespace Elastic.CommonSchema.NLog
 
 			while (propertyBag.ContainsKey(key))
 			{
-				if (string.Equals(value.ToString(), propertyBag[key].ToString(), StringComparison.Ordinal))
+				if (string.Equals(value?.ToString(), propertyBag[key]?.ToString(), StringComparison.Ordinal))
 					return;
 
 				key += "_1";
