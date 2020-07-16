@@ -4,6 +4,7 @@
 
 using System;
 using System.Collections.Concurrent;
+using System.Linq;
 using System.Threading;
 using Elastic.CommonSchema;
 using Elasticsearch.Net;
