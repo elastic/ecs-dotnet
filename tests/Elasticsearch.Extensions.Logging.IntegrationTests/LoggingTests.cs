@@ -35,7 +35,9 @@ namespace Elasticsearch.Extensions.Logging.IntegrationTests
 				o =>
 				{
 					o.Index = $"{pre}-{{0:yyyy.MM.dd}}";
-					o.NodeUris = Client.ConnectionSettings.ConnectionPool.Nodes.Select(n => n.Uri).ToArray();
+					var nodes = Client.ConnectionSettings.ConnectionPool.Nodes.Select(n => n.Uri).ToArray();
+					o.ShipTo = new ShipTo(nodes, ConnectionPoolType.Static);
+					
 				});
 
 			var optionsFactory = new OptionsFactory<ElasticsearchLoggerOptions>(
