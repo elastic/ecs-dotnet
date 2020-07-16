@@ -220,38 +220,21 @@ namespace Elasticsearch.Extensions.Logging
 		{
 			// TODO: Check if Uri has changed before recreating
 			// TODO: Injectable factory? Or some way of testing.
+			var connectionPool = _options.ShipTo.CreateConnectionPool();
+			var nodes = _options.ShipTo.NodeUris.ToArray();
 
 			ConnectionConfiguration settings;
-			if (_options.NodeUris.Length == 0)
+
+			if (nodes.Length == 0 && _options.ShipTo.ConnectionPoolType != ConnectionPoolType.Cloud)
 			{
 				// This is SingleNode with "http://localhost:9200"
 				settings = new ConnectionConfiguration();
 			}
 			else if (_options.ConnectionPoolType == ConnectionPoolType.SingleNode
-				|| _options.ConnectionPoolType == ConnectionPoolType.Unknown && _options.NodeUris.Length == 1)
-				settings = new ConnectionConfiguration(_options.NodeUris[0]);
+				|| _options.ConnectionPoolType == ConnectionPoolType.Unknown && nodes.Length == 1)
+				settings = new ConnectionConfiguration(nodes[0]);
 			else
 			{
-				IConnectionPool connectionPool;
-				switch (_options.ConnectionPoolType)
-				{
-					// TODO: Add option to randomize pool
-					case ConnectionPoolType.Unknown:
-					case ConnectionPoolType.Sniffing:
-						connectionPool = new SniffingConnectionPool(_options.NodeUris);
-						break;
-					case ConnectionPoolType.Static:
-						connectionPool = new StaticConnectionPool(_options.NodeUris);
-						break;
-					case ConnectionPoolType.Sticky:
-						connectionPool = new StickyConnectionPool(_options.NodeUris);
-						break;
-					// case ConnectionPoolType.StickySniffing:
-					// case ConnectionPoolType.Cloud:
-					default:
-						throw new NotSupportedException($"Unknown connection pool type {_options.ConnectionPoolType}");
-				}
-
 				settings = new ConnectionConfiguration(connectionPool);
 			}
 
