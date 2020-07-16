@@ -3,11 +3,11 @@ using Xunit;
 
 [assembly: TestFramework("Elastic.Elasticsearch.Xunit.Sdk.ElasticTestFramework", "Elastic.Elasticsearch.Xunit")]
 
-namespace Elastic.CommonSchema.BenchmarkDotNetExporter.IntegrationTests
+namespace Elasticsearch.Extensions.Logging.IntegrationTests
 {
 	/// <summary> Declare our cluster that we want to inject into our test classes </summary>
-	public class BenchmarkCluster : XunitClusterBase
+	public class LoggingCluster : XunitClusterBase
 	{
-		public BenchmarkCluster() : base(new XunitClusterConfiguration("7.5.0")) { }
+		public LoggingCluster() : base(new XunitClusterConfiguration("7.7.0")) { }
 	}
 }
