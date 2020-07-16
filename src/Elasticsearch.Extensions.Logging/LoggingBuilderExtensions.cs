@@ -35,5 +35,50 @@ namespace Elasticsearch.Extensions.Logging
 			builder.Services.Configure(configure);
 			return builder;
 		}
+
+		public static ILoggingBuilder AddElasticCloud(this ILoggingBuilder builder,
+			string cloudId, string apiKey
+		)
+		{
+			if (string.IsNullOrEmpty(cloudId))
+				throw new ArgumentException("cloudId may not be empty.", nameof(cloudId));
+
+			if (string.IsNullOrEmpty(apiKey))
+				throw new ArgumentException("apiKey may not be empty.", nameof(apiKey));
+
+			builder.AddElasticsearch();
+
+			void configure(ElasticsearchLoggerOptions options)
+			{
+				options.ShipTo = new ShipTo(cloudId, apiKey);
+			}
+
+			builder.Services.Configure((Action<ElasticsearchLoggerOptions>)configure);
+			return builder;
+		}
+
+		public static ILoggingBuilder AddElasticCloud(this ILoggingBuilder builder,
+			string cloudId, string username, string password
+		)
+		{
+			if (string.IsNullOrEmpty(cloudId))
+				throw new ArgumentException("cloudId may not be empty.", nameof(cloudId));
+
+			if (string.IsNullOrEmpty(username))
+				throw new ArgumentException("username may not be empty.", nameof(username));
+
+			if (string.IsNullOrEmpty(password))
+				throw new ArgumentException("password may not be empty.", nameof(password));
+
+			builder.AddElasticsearch();
+
+			void configure(ElasticsearchLoggerOptions options)
+			{
+				options.ShipTo = new ShipTo(cloudId, username, password);
+			}
+
+			builder.Services.Configure((Action<ElasticsearchLoggerOptions>)configure);
+			return builder;
+		}
 	}
 }

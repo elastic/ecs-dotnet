@@ -57,10 +57,11 @@ namespace Elasticsearch.Extensions.Logging
 		public string ListSeparator { get; set; } = ", ";
 
 		/// <summary>
-		/// Gets or sets the URIs of the Elasticsearch nodes in the connection pool. If not specified the default single node
+		/// Gets or sets the ShipTo property of the Elasticsearch.
+		/// If not specified the default single node is being used.
 		/// "http://localhost:9200" is used.
 		/// </summary>
-		public Uri[] NodeUris { get; set; } = new Uri[0];
+		public ShipTo ShipTo { get; set; } = new ShipTo();
 
 		/// <summary>
 		/// Gets or sets additional tags to pass in the message, for example you can tag with the environment name ('Development',
@@ -68,4 +69,5 @@ namespace Elasticsearch.Extensions.Logging
 		/// </summary>
 		public string[] Tags { get; set; } = new string[0];
 	}
+
 }
