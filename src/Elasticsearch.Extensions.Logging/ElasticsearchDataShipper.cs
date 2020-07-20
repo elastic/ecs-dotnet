@@ -4,31 +4,104 @@
 
 using System;
 using System.Collections.Concurrent;
+using System.Collections.Generic;
 using System.Linq;
+using System.Text.Encodings.Web;
+using System.Text.Json;
 using System.Threading;
-using Elastic.CommonSchema;
+using System.Threading.Channels;
+using System.Threading.Tasks;
 using Elasticsearch.Net;
 
 namespace Elasticsearch.Extensions.Logging
 {
 	internal class ElasticsearchDataShipper : IDisposable
 	{
-		private const int MaxQueuedMessages = 1024;
+		private const int MaxQueuedMessages = 300;
 
-		private readonly BlockingCollection<LogEvent> _messageQueue =
-			new BlockingCollection<LogEvent>(MaxQueuedMessages);
-
-		private readonly Thread _outputThread;
+		private readonly Task<Task> _backgroundTask;
 
 		public ElasticsearchDataShipper()
 		{
-			_outputThread = new Thread(ProcessLogQueue) { IsBackground = true, Name = $"{nameof(ElasticsearchLogger)}.{nameof(ProcessLogQueue)}" };
-			_outputThread.Start();
+			PubSub = Channel.CreateBounded<LogEvent>(new BoundedChannelOptions(10_000)
+			{
+				SingleReader = true,
+				AllowSynchronousContinuations = true,
+				// wait does not block it simply signals that Writer.TryWrite should return false and be retried
+				// DropWrite will make `TryWrite` always return true, which is not what we want.
+				FullMode = BoundedChannelFullMode.Wait
+			});
+			_backgroundTask = Task.Factory.StartNew(async () => await Consume().ConfigureAwait(false), TaskCreationOptions.LongRunning);
 		}
 
 		private IElasticLowLevelClient _lowLevelClient = default!;
 
 		private ElasticsearchLoggerOptions _options = default!;
+		public Channel<LogEvent> PubSub { get; }
+		public ChannelWriter<LogEvent> Writer => PubSub.Writer;
+
+		public void Enqueue(LogEvent item)
+		{
+			if (!Writer.TryWrite(item))
+			{
+				//TODO publish to callback
+			}
+		}
+
+		private static readonly byte[] LineFeed = { 10 };
+		private async Task Consume()
+		{
+			var buffer = new List<LogEvent>(MaxQueuedMessages);
+			DateTimeOffset? timeSinceLastFirstRead = null;
+			var timeout = TimeSpan.FromSeconds(5);
+			var cts = new CancellationTokenSource();
+			cts.CancelAfter(timeout);
+			while (true)
+			{
+				var duration = DateTimeOffset.UtcNow - timeSinceLastFirstRead;
+				while (buffer.Count < MaxQueuedMessages && PubSub.Reader.TryRead(out LogEvent item))
+				{
+					if (duration > timeout) break;
+
+					timeSinceLastFirstRead ??= DateTimeOffset.UtcNow;
+					buffer.Add(item);
+				}
+
+				if (buffer.Count == 0 || (buffer.Count < MaxQueuedMessages && duration <= timeout)) continue;
+
+				var response = await _lowLevelClient.BulkAsync<DynamicResponse>(
+                    PostData.StreamHandler(buffer,
+						(@event, stream) => { /* NOT USED */},
+                        async (@event, stream, ctx)  =>
+						{
+							foreach (var logEvent in buffer)
+							{
+								var indexTime = logEvent.Timestamp ?? ElasticsearchLoggerProvider.LocalDateTimeProvider();
+								if (_options.IndexOffset.HasValue) indexTime = indexTime.ToOffset(_options.IndexOffset.Value);
+
+								var index = string.Format(_options.Index, indexTime);
+								var indexHeader = new { index = new { _index = index} };
+								await JsonSerializer.SerializeAsync(stream, indexHeader, indexHeader.GetType(), SerializerOptions, ctx).ConfigureAwait(false);
+								await stream.WriteAsync(LineFeed, 0, 1, ctx).ConfigureAwait(false);
+								await logEvent.SerializeAsync(stream, ctx).ConfigureAwait(false);
+								await stream.WriteAsync(LineFeed, 0, 1, ctx).ConfigureAwait(false);
+							}
+
+
+						})
+                    ).ConfigureAwait(false);
+				Console.WriteLine($":::::::::::::::: Bulk Write: {response.Success} {buffer.Count} => {duration}");
+				buffer.Clear();
+				timeSinceLastFirstRead = DateTimeOffset.UtcNow;
+			}
+			//Console.WriteLine("STOPPED!!");
+		}
+
+		private static readonly JsonSerializerOptions SerializerOptions = new JsonSerializerOptions
+		{
+			IgnoreNullValues = true,
+			Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
+		};
 
 		internal ElasticsearchLoggerOptions Options
 		{
@@ -42,67 +115,12 @@ namespace Elasticsearch.Extensions.Logging
 
 		public void Dispose()
 		{
-			_messageQueue?.CompleteAdding();
 			try
 			{
-				_outputThread.Join(1500); // with timeout in case writer is locked
+				// TODO cancellation
+				_backgroundTask.Dispose();
 			}
-			catch (ThreadStateException) { }
-
-			_messageQueue?.Dispose();
-		}
-
-		public void EnqueueMessage(LogEvent logEvent)
-		{
-			if (!_messageQueue.IsAddingCompleted)
-			{
-				try
-				{
-					_messageQueue.Add(logEvent);
-					return;
-				}
-				catch (InvalidOperationException) { }
-			}
-
-			// Adding is complete, so just log the message
-			try
-			{
-				PostEvent(logEvent);
-			}
-			catch (Exception) { }
-		}
-
-		private void PostEvent(LogEvent logEvent)
-		{
-			var indexTime = logEvent.Timestamp ?? ElasticsearchLoggerProvider.LocalDateTimeProvider();
-			if (_options.IndexOffset.HasValue) indexTime = indexTime.ToOffset(_options.IndexOffset.Value);
-
-			var index = string.Format(_options.Index, indexTime);
-
-			var localClient = _lowLevelClient;
-			var response = localClient.Index<StringResponse>(index,
-				PostData.StreamHandler(logEvent,
-					(@event, stream) => logEvent.Serialize(stream),
-					// async variant not used yet but will when we move to channels/tpl in the future
-					async (@event, stream, ctx) => await logEvent.SerializeAsync(stream, ctx).ConfigureAwait(false)
-					)
-				);
-		}
-
-		private void ProcessLogQueue()
-		{
-			try
-			{
-				foreach (var logEvent in _messageQueue.GetConsumingEnumerable()) PostEvent(logEvent);
-			}
-			catch
-			{
-				try
-				{
-					_messageQueue.CompleteAdding();
-				}
-				catch { }
-			}
+			catch { }
 		}
 
 		private void UpdateClient()
@@ -126,7 +144,7 @@ namespace Elasticsearch.Extensions.Logging
 			{
 				settings = new ConnectionConfiguration(connectionPool);
 			}
-
+			settings = settings.EnableDebugMode();
 			var lowlevelClient = new ElasticLowLevelClient(settings);
 
 			_ = Interlocked.Exchange(ref _lowLevelClient, lowlevelClient);

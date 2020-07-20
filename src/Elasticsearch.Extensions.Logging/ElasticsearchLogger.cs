@@ -55,7 +55,7 @@ namespace Elasticsearch.Extensions.Logging
 				var elasticsearchData =
 					BuildLogEvent(_categoryName, logLevel, eventId, state, exception, formatter);
 
-				_dataShipper.EnqueueMessage(elasticsearchData);
+				_dataShipper.Enqueue(elasticsearchData);
 			}
 			catch (Exception ex)
 			{

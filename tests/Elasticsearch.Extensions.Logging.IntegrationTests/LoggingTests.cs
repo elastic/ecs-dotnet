@@ -59,7 +59,7 @@ namespace Elasticsearch.Extensions.Logging.IntegrationTests
 			logger.LogError("an error occured");
 
 			// TODO make sure we can await something here on ElasticsearchDataShipper
-			await Task.Delay(TimeSpan.FromSeconds(5));
+			await Task.Delay(TimeSpan.FromSeconds(10));
 
 			var response = Client.Search<LogEvent>(new SearchRequest($"{indexPrefix}-*"));
 
