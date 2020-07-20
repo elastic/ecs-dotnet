@@ -3,6 +3,7 @@
 // See the LICENSE file in the project root for more information
 
 using System;
+using Elasticsearch.Net;
 
 namespace Elasticsearch.Extensions.Logging
 {
@@ -68,6 +69,45 @@ namespace Elasticsearch.Extensions.Logging
 		/// 'Production', etc).
 		/// </summary>
 		public string[] Tags { get; set; } = new string[0];
+
+		public DrainThrottles Throttles { get; set; } = new DrainThrottles();
+
+	}
+
+	/// <summary>
+	/// Controls how <see cref="LogEvent"/>'s are batched and send to Elasticsearch. These can not be dynamically updated.
+	/// </summary>
+	public class DrainThrottles
+	{
+		/// <summary>
+		/// The maximum number of `<see cref="LogEvent"/> that can queued in memory. If this threshold is reached messages will be dropped
+		/// </summary>
+		public int MaxInFlightMessages { get; set; } = 100_000;
+
+		/// <summary>
+		/// The number of messages a local buffer should reach before sending the messages in a single call to `Elasticsearch`.
+		/// </summary>
+		public int MaxConsumerBufferSize { get; set; } = 1_000;
+
+		/// <summary>
+		/// A consumer builds up a local buffer until <see cref="MaxConsumerBufferSize"/> is reached. If messages come in too slow however these
+		/// messages could end up taking forever to be sent to Elasticsearch. This controls how long a buffer may exists before a flush is triggered.
+		/// </summary>
+		public TimeSpan MaxConsumerBufferLifeTime { get; set; } = TimeSpan.FromSeconds(5);
+
+		/// <summary>
+		/// The maximum number of consumers allowed to poll for new messages on the channel. Defaults to 1, increase to introduce concurrency.
+		/// </summary>
+		public int ConcurrentConsumers { get; set; } = 1;
+
+		/// <summary>
+		/// If <see cref="MaxInFlightMessages"/> is reached, <see cref="LogEvent"/>'s will fail to be published. You can be notified of dropped
+		/// messages with this callback
+		/// </summary>
+		public Action<LogEvent> PublishRejectionCallback { get; set; } = e => { };
+
+		public Action<IElasticsearchResponse, IConsumerBuffer> ElasticsearchResponseCallback { get; set; } = (r, b) => { };
+
 	}
 
 }

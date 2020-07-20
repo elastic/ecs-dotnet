@@ -6,7 +6,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Logging.Console;
 using Nest;
 
 namespace Elasticsearch.Extensions.Logging.Example
@@ -22,13 +21,31 @@ namespace Elasticsearch.Extensions.Logging.Example
 				})
 				.ConfigureLogging((hostContext, loggingBuilder) =>
 				{
-					loggingBuilder.AddElasticsearch();
-					// The default configuration section is "Elasticsearch"; if you want
-					// a different section, you can manually configure:
-					// loggingBuilder.AddElasticsearch(options =>
-					//     hostContext.Configuration.Bind("Logging:CustomElasticsearch", options));
+					// removing console logger when showcasing high traffic, too noisy otherwise
+					if (args.Length > 0 && args[0] == "high")
+						loggingBuilder.ClearProviders();
+
+					loggingBuilder.AddElasticsearch(c =>
+					{
+						if (args.Length > 0 && args[0] == "high")
+						{
+							c.Throttles = new DrainThrottles
+							{
+								ConcurrentConsumers = 4,
+								PublishRejectionCallback = e => Console.Write("!")
+							};
+						}
+
+						c.Throttles.ElasticsearchResponseCallback = (r, b) =>
+							Console.WriteLine($"Indexed: {r.ApiCall.Success} items: {b.Count} time since first read: {b.DurationSinceFirstRead}");
+					});
 				})
-				.ConfigureServices((hostContext, services) => { services.AddHostedService<Worker>(); });
+				.ConfigureServices((hostContext, services) =>
+				{
+					if (args.Length > 0 && args[0] == "high")
+						services.AddHostedService<HighVolumeWorkSimulation>();
+					else services.AddHostedService<LowVolumeWorkSimulation>();
+				});
 
 		public static async Task Main(string[] args)
 		{

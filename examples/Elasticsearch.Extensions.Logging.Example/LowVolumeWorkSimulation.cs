@@ -5,17 +5,18 @@ using System.Security.Claims;
 using System.Security.Principal;
 using System.Threading;
 using System.Threading.Tasks;
-using Elastic.CommonSchema;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
 namespace Elasticsearch.Extensions.Logging.Example
 {
-	public class Worker : BackgroundService
-	{
-		private readonly ILogger<Worker> _logger;
 
-		public Worker(ILogger<Worker> logger) => _logger = logger;
+	/// <summary> Simulate work that logs in low volume with some time in between each log call </summary>
+	public class LowVolumeWorkSimulation : BackgroundService
+	{
+		private readonly ILogger<LowVolumeWorkSimulation> _logger;
+
+		public LowVolumeWorkSimulation(ILogger<LowVolumeWorkSimulation> logger) => _logger = logger;
 
 		protected override async Task ExecuteAsync(CancellationToken stoppingToken)
 		{

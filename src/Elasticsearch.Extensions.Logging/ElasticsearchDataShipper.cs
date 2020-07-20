@@ -3,7 +3,6 @@
 // See the LICENSE file in the project root for more information
 
 using System;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.Encodings.Web;
@@ -17,90 +16,93 @@ namespace Elasticsearch.Extensions.Logging
 {
 	internal class ElasticsearchDataShipper : IDisposable
 	{
-		private const int MaxQueuedMessages = 300;
+		private readonly List<Task<Task>> _backgroundTasks =  new List<Task<Task>>();
 
-		private readonly Task<Task> _backgroundTask;
-
-		public ElasticsearchDataShipper()
+		public ElasticsearchDataShipper(ElasticsearchLoggerOptions options)
 		{
-			PubSub = Channel.CreateBounded<LogEvent>(new BoundedChannelOptions(10_000)
+			_options = options;
+			var maxConsumers = Math.Max(1, options.Throttles.ConcurrentConsumers);
+			PubSub = Channel.CreateBounded<LogEvent>(new BoundedChannelOptions(options.Throttles.MaxInFlightMessages)
 			{
-				SingleReader = true,
+				SingleReader = maxConsumers == 1,
 				AllowSynchronousContinuations = true,
 				// wait does not block it simply signals that Writer.TryWrite should return false and be retried
 				// DropWrite will make `TryWrite` always return true, which is not what we want.
 				FullMode = BoundedChannelFullMode.Wait
 			});
-			_backgroundTask = Task.Factory.StartNew(async () => await Consume().ConfigureAwait(false), TaskCreationOptions.LongRunning);
+			async Task ConsumeMessages() =>
+				await Consume(options.Throttles.MaxConsumerBufferSize, options.Throttles.MaxConsumerBufferLifeTime).ConfigureAwait(false);
+			for (var i = 0; i < maxConsumers; i++)
+				_backgroundTasks.Add(Task.Factory.StartNew(() => ConsumeMessages(), TaskCreationOptions.LongRunning));
 		}
+
 
 		private IElasticLowLevelClient _lowLevelClient = default!;
 
-		private ElasticsearchLoggerOptions _options = default!;
+		private ElasticsearchLoggerOptions _options;
 		public Channel<LogEvent> PubSub { get; }
 		public ChannelWriter<LogEvent> Writer => PubSub.Writer;
 
 		public void Enqueue(LogEvent item)
 		{
 			if (!Writer.TryWrite(item))
-			{
-				//TODO publish to callback
-			}
+				Options.Throttles.PublishRejectionCallback?.Invoke(item);
 		}
 
 		private static readonly byte[] LineFeed = { 10 };
-		private async Task Consume()
-		{
-			var buffer = new List<LogEvent>(MaxQueuedMessages);
-			DateTimeOffset? timeSinceLastFirstRead = null;
-			var timeout = TimeSpan.FromSeconds(5);
-			var cts = new CancellationTokenSource();
-			cts.CancelAfter(timeout);
-			while (true)
-			{
-				var duration = DateTimeOffset.UtcNow - timeSinceLastFirstRead;
-				while (buffer.Count < MaxQueuedMessages && PubSub.Reader.TryRead(out LogEvent item))
-				{
-					if (duration > timeout) break;
 
-					timeSinceLastFirstRead ??= DateTimeOffset.UtcNow;
+
+		private async Task Consume(int maxQueuedMessages, TimeSpan maxInterval)
+		{
+			using var buffer = new ConsumerBuffer(maxQueuedMessages, maxInterval);
+
+			while (await buffer.WaitToReadAsync(PubSub.Reader).ConfigureAwait(false))
+			{
+				while (buffer.Count < maxQueuedMessages && PubSub.Reader.TryRead(out LogEvent item))
+				{
+					if (buffer.DurationSinceFirstRead > maxInterval) break;
+
 					buffer.Add(item);
 				}
 
-				if (buffer.Count == 0 || (buffer.Count < MaxQueuedMessages && duration <= timeout)) continue;
+				if (buffer.NoThresholdsHit) continue;
 
 				var response = await _lowLevelClient.BulkAsync<DynamicResponse>(
-                    PostData.StreamHandler(buffer,
-						(@event, stream) => { /* NOT USED */},
-                        async (@event, stream, ctx)  =>
-						{
-							foreach (var logEvent in buffer)
+						PostData.StreamHandler(buffer,
+							(@event, stream) =>
 							{
-								var indexTime = logEvent.Timestamp ?? ElasticsearchLoggerProvider.LocalDateTimeProvider();
-								if (_options.IndexOffset.HasValue) indexTime = indexTime.ToOffset(_options.IndexOffset.Value);
+								/* NOT USED */
+							},
+							async (@event, stream, ctx) =>
+							{
+								foreach (var logEvent in buffer.Buffer)
+								{
+									var indexTime = logEvent.Timestamp ?? ElasticsearchLoggerProvider.LocalDateTimeProvider();
+									if (_options.IndexOffset.HasValue) indexTime = indexTime.ToOffset(_options.IndexOffset.Value);
 
-								var index = string.Format(_options.Index, indexTime);
-								var indexHeader = new { index = new { _index = index} };
-								await JsonSerializer.SerializeAsync(stream, indexHeader, indexHeader.GetType(), SerializerOptions, ctx).ConfigureAwait(false);
-								await stream.WriteAsync(LineFeed, 0, 1, ctx).ConfigureAwait(false);
-								await logEvent.SerializeAsync(stream, ctx).ConfigureAwait(false);
-								await stream.WriteAsync(LineFeed, 0, 1, ctx).ConfigureAwait(false);
-							}
+									var index = string.Format(_options.Index, indexTime);
+									var indexHeader = new { index = new { _index = index } };
+									await JsonSerializer.SerializeAsync(stream, indexHeader, indexHeader.GetType(), SerializerOptions, ctx)
+										.ConfigureAwait(false);
+									await stream.WriteAsync(LineFeed, 0, 1, ctx).ConfigureAwait(false);
+									await logEvent.SerializeAsync(stream, ctx).ConfigureAwait(false);
+									await stream.WriteAsync(LineFeed, 0, 1, ctx).ConfigureAwait(false);
+								}
+							})
+					)
+					.ConfigureAwait(false);
 
+				// TODO retries, backoff, response failure callbacks
 
-						})
-                    ).ConfigureAwait(false);
-				Console.WriteLine($":::::::::::::::: Bulk Write: {response.Success} {buffer.Count} => {duration}");
-				buffer.Clear();
-				timeSinceLastFirstRead = DateTimeOffset.UtcNow;
+				Options.Throttles.ElasticsearchResponseCallback?.Invoke(response, buffer);
+
+				buffer.Reset();
 			}
-			//Console.WriteLine("STOPPED!!");
 		}
 
 		private static readonly JsonSerializerOptions SerializerOptions = new JsonSerializerOptions
 		{
-			IgnoreNullValues = true,
-			Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
+			IgnoreNullValues = true, Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
 		};
 
 		internal ElasticsearchLoggerOptions Options
@@ -118,7 +120,7 @@ namespace Elasticsearch.Extensions.Logging
 			try
 			{
 				// TODO cancellation
-				_backgroundTask.Dispose();
+				foreach (var t in _backgroundTasks) t.Dispose();
 			}
 			catch { }
 		}
