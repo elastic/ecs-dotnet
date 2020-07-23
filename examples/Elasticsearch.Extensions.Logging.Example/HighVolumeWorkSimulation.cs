@@ -23,7 +23,7 @@ namespace Elasticsearch.Extensions.Logging.Example
 			for (var i = 0; i < 100_000; i++)
 			{
 				_logger.LogWarning($"We are logging way too much: {i}");
-				if (i % 1_00 == 0) await Task.Delay(1, ctx);
+				if (i % 100 == 0) await Task.Delay(1, ctx);
 			}
 		}
 	}
