@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Http;
 using System.Web;
 #endif
 using System;
+using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using Serilog.Events;
 
@@ -19,6 +20,7 @@ namespace Elastic.CommonSchema.Serilog
 		Func<Base, LogEvent, Base> MapCustom { get; set; }
 		bool MapExceptions { get; set; }
 		IHttpAdapter MapHttpAdapter { get; set; }
+		ISet<string> LogEventPropertiesToFilter { get;set; }
 	}
 
 	public class EcsTextFormatterConfiguration : IEcsTextFormatterConfiguration
@@ -27,6 +29,7 @@ namespace Elastic.CommonSchema.Serilog
 		bool IEcsTextFormatterConfiguration.MapCurrentThread { get; set; } = true;
 
 		IHttpAdapter IEcsTextFormatterConfiguration.MapHttpAdapter { get; set; }
+		ISet<string> IEcsTextFormatterConfiguration.LogEventPropertiesToFilter { get; set; }
 
 		Func<Base, LogEvent, Base> IEcsTextFormatterConfiguration.MapCustom { get; set; } = (b, e) => b;
 
@@ -42,6 +45,8 @@ namespace Elastic.CommonSchema.Serilog
 		public EcsTextFormatterConfiguration MapCurrentThread(bool value) => Assign(this, value, (o, v) => o.MapCurrentThread = v);
 
 		public EcsTextFormatterConfiguration MapCustom(Func<Base, LogEvent, Base> value) => Assign(this, value, (o, v) => o.MapCustom = v);
+
+		public EcsTextFormatterConfiguration LogEventPropertiesToFilter(ISet<string> value) => Assign(this, value, (o, v) => o.LogEventPropertiesToFilter = v);
 
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		private static EcsTextFormatterConfiguration Assign<TValue>(

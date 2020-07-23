@@ -56,7 +56,7 @@ namespace Elastic.CommonSchema.Serilog
 				Log = GetLog(logEvent, exceptions, configuration),
 				Agent = GetAgent(logEvent),
 				Event = GetEvent(logEvent),
-				Metadata = GetMetadata(logEvent),
+				Metadata = GetMetadata(logEvent,configuration.LogEventPropertiesToFilter),
 				Process = GetProcess(logEvent, configuration.MapCurrentThread),
 				Host = GetHost(logEvent),
 				Trace = GetTrace(logEvent),
@@ -91,7 +91,7 @@ namespace Elastic.CommonSchema.Serilog
 				? null
 				: new Transaction { Id = transactionId.Value.ToString() };
 
-		private static IDictionary<string, object> GetMetadata(LogEvent logEvent)
+		private static IDictionary<string, object> GetMetadata(LogEvent logEvent, ISet<string> logEventPropertiesToFilter)
 		{
 			var dict = new Dictionary<string, object>
 			{
@@ -137,7 +137,9 @@ namespace Elastic.CommonSchema.Serilog
 					case SpecialKeys.MachineName:
 						continue;
 				}
-
+				//key present in list of keys to filter
+				if (logEventPropertiesToFilter?.Contains(logEventPropertyValue.Key) ?? false)
+					continue;
 				dict.Add(ToSnakeCase(logEventPropertyValue.Key), PropertyValueToObject(logEventPropertyValue.Value));
 			}
 
