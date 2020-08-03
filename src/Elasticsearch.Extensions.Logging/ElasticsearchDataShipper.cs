@@ -146,7 +146,6 @@ namespace Elasticsearch.Extensions.Logging
 			{
 				settings = new ConnectionConfiguration(connectionPool);
 			}
-			settings = settings.EnableDebugMode();
 			var lowlevelClient = new ElasticLowLevelClient(settings);
 
 			_ = Interlocked.Exchange(ref _lowLevelClient, lowlevelClient);
