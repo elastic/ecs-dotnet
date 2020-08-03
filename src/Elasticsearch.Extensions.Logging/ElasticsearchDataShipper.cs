@@ -22,7 +22,7 @@ namespace Elasticsearch.Extensions.Logging
 		{
 			_options = options;
 			var maxConsumers = Math.Max(1, options.Throttles.ConcurrentConsumers);
-			PubSub = Channel.CreateBounded<LogEvent>(new BoundedChannelOptions(options.Throttles.MaxInFlightMessages)
+			Channel = System.Threading.Channels.Channel.CreateBounded<LogEvent>(new BoundedChannelOptions(options.Throttles.MaxInFlightMessages)
 			{
 				SingleReader = maxConsumers == 1,
 				AllowSynchronousContinuations = true,
@@ -40,8 +40,8 @@ namespace Elasticsearch.Extensions.Logging
 		private IElasticLowLevelClient _lowLevelClient = default!;
 
 		private ElasticsearchLoggerOptions _options;
-		public Channel<LogEvent> PubSub { get; }
-		public ChannelWriter<LogEvent> Writer => PubSub.Writer;
+		public Channel<LogEvent> Channel { get; }
+		public ChannelWriter<LogEvent> Writer => Channel.Writer;
 
 		public void Enqueue(LogEvent item)
 		{
@@ -56,9 +56,9 @@ namespace Elasticsearch.Extensions.Logging
 		{
 			using var buffer = new ConsumerBuffer(maxQueuedMessages, maxInterval);
 
-			while (await buffer.WaitToReadAsync(PubSub.Reader).ConfigureAwait(false))
+			while (await buffer.WaitToReadAsync(Channel.Reader).ConfigureAwait(false))
 			{
-				while (buffer.Count < maxQueuedMessages && PubSub.Reader.TryRead(out LogEvent item))
+				while (buffer.Count < maxQueuedMessages && Channel.Reader.TryRead(out LogEvent item))
 				{
 					if (buffer.DurationSinceFirstRead > maxInterval) break;
 
