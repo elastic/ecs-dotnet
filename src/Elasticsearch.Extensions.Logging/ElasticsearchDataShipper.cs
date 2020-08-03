@@ -31,7 +31,7 @@ namespace Elasticsearch.Extensions.Logging
 				FullMode = BoundedChannelFullMode.Wait
 			});
 			async Task ConsumeMessages() =>
-				await Consume(options.Throttles.MaxConsumerBufferSize, options.Throttles.MaxConsumerBufferLifeTime).ConfigureAwait(false);
+				await Consume(options.Throttles.MaxConsumerBufferSize, options.Throttles.MaxConsumerBufferLifetime).ConfigureAwait(false);
 			for (var i = 0; i < maxConsumers; i++)
 				_backgroundTasks.Add(Task.Factory.StartNew(() => ConsumeMessages(), TaskCreationOptions.LongRunning));
 		}
