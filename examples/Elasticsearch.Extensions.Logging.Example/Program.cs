@@ -12,8 +12,10 @@ namespace Elasticsearch.Extensions.Logging.Example
 {
 	internal static class Program
 	{
-		public static IHostBuilder CreateHostBuilder(string[] args) =>
-			Host.CreateDefaultBuilder(args)
+		public static IHostBuilder CreateHostBuilder(string[] args)
+		{
+			var highLoadUseCase = args.Length > 0 && args[0] == "high";
+			return Host.CreateDefaultBuilder(args)
 				.UseConsoleLifetime()
 				.ConfigureAppConfiguration((hostContext, configurationBuilder) =>
 				{
@@ -22,19 +24,13 @@ namespace Elasticsearch.Extensions.Logging.Example
 				.ConfigureLogging((hostContext, loggingBuilder) =>
 				{
 					// removing console logger when showcasing high traffic, too noisy otherwise
-					if (args.Length > 0 && args[0] == "high")
+					if (highLoadUseCase)
 						loggingBuilder.ClearProviders();
 
 					loggingBuilder.AddElasticsearch(c =>
 					{
-						if (args.Length > 0 && args[0] == "high")
-						{
-							c.Throttles = new DrainThrottles
-							{
-								ConcurrentConsumers = 4,
-								PublishRejectionCallback = e => Console.Write("!")
-							};
-						}
+						if (highLoadUseCase)
+							c.Throttles = new DrainThrottles { ConcurrentConsumers = 4, PublishRejectionCallback = e => Console.Write("!") };
 
 						c.Throttles.ElasticsearchResponseCallback = (r, b) =>
 							Console.WriteLine($"Indexed: {r.ApiCall.Success} items: {b.Count} time since first read: {b.DurationSinceFirstRead}");
@@ -46,6 +42,7 @@ namespace Elasticsearch.Extensions.Logging.Example
 						services.AddHostedService<HighVolumeWorkSimulation>();
 					else services.AddHostedService<LowVolumeWorkSimulation>();
 				});
+		}
 
 		public static async Task Main(string[] args)
 		{
