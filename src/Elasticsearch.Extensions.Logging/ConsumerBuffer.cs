@@ -73,7 +73,6 @@ namespace Elasticsearch.Extensions.Logging
 		/// </summary>
 		public async Task<bool> WaitToReadAsync(ChannelReader<LogEvent> reader)
 		{
-			//if we have nothing in the buffer wait indefinitely for messages
 			if (_breaker.IsCancellationRequested)
 			{
 				_breaker.Dispose();
