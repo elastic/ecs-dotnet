@@ -14,9 +14,9 @@ namespace Elasticsearch.Extensions.Logging.Example
 	/// <summary> Simulate work that logs in low volume with some time in between each log call </summary>
 	public class HighVolumeWorkSimulation : BackgroundService
 	{
-		private readonly ILogger<LowVolumeWorkSimulation> _logger;
+		private readonly ILogger<HighVolumeWorkSimulation> _logger;
 
-		public HighVolumeWorkSimulation(ILogger<LowVolumeWorkSimulation> logger) => _logger = logger;
+		public HighVolumeWorkSimulation(ILogger<HighVolumeWorkSimulation> logger) => _logger = logger;
 
 		protected override async Task ExecuteAsync(CancellationToken ctx)
 		{

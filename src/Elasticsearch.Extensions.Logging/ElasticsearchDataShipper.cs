@@ -49,7 +49,7 @@ namespace Elasticsearch.Extensions.Logging
 				Options.Throttles.PublishRejectionCallback?.Invoke(item);
 		}
 
-		private static readonly byte[] LineFeed = { 10 };
+		private static readonly byte[] LineFeed = { (byte)'\n' };
 
 
 		private async Task Consume(int maxQueuedMessages, TimeSpan maxInterval)

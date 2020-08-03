@@ -26,6 +26,7 @@ namespace Elasticsearch.Extensions.Logging
 
 		public TimeSpan ForceFlushAfter { get; }
 		public List<LogEvent> Buffer { get; }
+                /// <summary>The time that the first event is read from the channel and added to the buffer, from first read or after the buffer is reset.</summary>
 		private DateTimeOffset? TimeOfFirstRead { get; set; }
 
 		public int Count => Buffer.Count;

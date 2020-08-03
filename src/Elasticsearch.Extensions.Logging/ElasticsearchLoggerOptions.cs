@@ -80,29 +80,29 @@ namespace Elasticsearch.Extensions.Logging
 	public class DrainThrottles
 	{
 		/// <summary>
-		/// The maximum number of `<see cref="LogEvent"/> that can queued in memory. If this threshold is reached messages will be dropped
+		/// The maximum number of <see cref="LogEvent"/> that can be queued in memory. If this threshold is reached, events will be dropped
 		/// </summary>
 		public int MaxInFlightMessages { get; set; } = 100_000;
 
 		/// <summary>
-		/// The number of messages a local buffer should reach before sending the messages in a single call to `Elasticsearch`.
+		/// The number of events a local buffer should reach before sending the events in a single call to Elasticsearch.
 		/// </summary>
 		public int MaxConsumerBufferSize { get; set; } = 1_000;
 
 		/// <summary>
-		/// A consumer builds up a local buffer until <see cref="MaxConsumerBufferSize"/> is reached. If messages come in too slow however these
-		/// messages could end up taking forever to be sent to Elasticsearch. This controls how long a buffer may exists before a flush is triggered.
+		/// A consumer builds up a local buffer until <see cref="MaxConsumerBufferSize"/> is reached. If events come in too slow, these
+		/// events could end up taking forever to be sent to Elasticsearch. This controls how long a buffer may exist before a flush is triggered.
 		/// </summary>
-		public TimeSpan MaxConsumerBufferLifeTime { get; set; } = TimeSpan.FromSeconds(5);
+		public TimeSpan MaxConsumerBufferLifetime { get; set; } = TimeSpan.FromSeconds(5);
 
 		/// <summary>
-		/// The maximum number of consumers allowed to poll for new messages on the channel. Defaults to 1, increase to introduce concurrency.
+		/// The maximum number of consumers allowed to poll for new events on the channel. Defaults to 1, increase to introduce concurrency.
 		/// </summary>
 		public int ConcurrentConsumers { get; set; } = 1;
 
 		/// <summary>
-		/// If <see cref="MaxInFlightMessages"/> is reached, <see cref="LogEvent"/>'s will fail to be published. You can be notified of dropped
-		/// messages with this callback
+		/// If <see cref="MaxInFlightMessages"/> is reached, <see cref="LogEvent"/>'s will fail to be published to the channel. You can be notified of dropped
+		/// events with this callback
 		/// </summary>
 		public Action<LogEvent> PublishRejectionCallback { get; set; } = e => { };
 
