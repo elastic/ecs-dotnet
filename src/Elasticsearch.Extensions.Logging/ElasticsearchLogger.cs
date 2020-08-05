@@ -19,12 +19,12 @@ namespace Elasticsearch.Extensions.Logging
 	public class ElasticsearchLogger : ILogger
 	{
 		private readonly string _categoryName;
-		private readonly ElasticsearchDataProcessor _dataProcessor;
+		private readonly ElasticsearchDataShipper _dataShipper;
 
-		internal ElasticsearchLogger(string categoryName, ElasticsearchDataProcessor dataProcessor)
+		internal ElasticsearchLogger(string categoryName, ElasticsearchDataShipper dataShipper)
 		{
 			_categoryName = categoryName;
-			_dataProcessor = dataProcessor;
+			_dataShipper = dataShipper;
 		}
 
 		private Regex _w3CFormat = new Regex(@"^[abcdef]{2}-[\dabcdef]{32}-([\dabcdef]{16})-[\dabcdef]{2}$",
@@ -55,7 +55,7 @@ namespace Elasticsearch.Extensions.Logging
 				var elasticsearchData =
 					BuildLogEvent(_categoryName, logLevel, eventId, state, exception, formatter);
 
-				_dataProcessor.EnqueueMessage(elasticsearchData);
+				_dataShipper.EnqueueMessage(elasticsearchData);
 			}
 			catch (Exception ex)
 			{
@@ -155,25 +155,26 @@ namespace Elasticsearch.Extensions.Logging
 			Func<TState, Exception, string> formatter
 		)
 		{
-			var logEvent = new LogEvent();
+			var logEvent = new LogEvent
+			{
+				Ecs = LogEventToEcsHelper.GetEcs(),
+				Timestamp = ElasticsearchLoggerProvider.LocalDateTimeProvider(),
+				Message = formatter(state, exception!),
+				Log = new Log { Level = LogEventToEcsHelper.GetLogLevelString(logLevel), Logger = categoryName },
+				Event = new Event { Action = eventId.Name, Code = eventId.Id.ToString(), Severity = LogEventToEcsHelper.GetSeverity(logLevel) }
+			};
 
-			logEvent.Ecs = _dataProcessor.GetEcs();
-			logEvent.Timestamp = ElasticsearchLoggerProvider.LocalDateTimeProvider();
-			logEvent.Message = formatter(state, exception!);
-			logEvent.Log = new Log { Level = logLevel.ToString(), Logger = categoryName };
-			logEvent.Event =
-				new Event { Action = eventId.Name, Code = eventId.Id.ToString(), Severity = _dataProcessor.GetSeverity(logLevel) };
 
 			if (exception != null) AddException(exception, logEvent);
 
-			logEvent.Agent = _dataProcessor.GetAgent();
-			logEvent.Service = _dataProcessor.GetService();
+			logEvent.Agent = LogEventToEcsHelper.GetAgent();
+			logEvent.Service = LogEventToEcsHelper.GetService();
 
 			if (Options.Tags != null && Options.Tags.Length > 0) logEvent.Tags = Options.Tags;
 
-			if (Options.IncludeHost) logEvent.Host = _dataProcessor.GetHost();
+			if (Options.IncludeHost) logEvent.Host = LogEventToEcsHelper.GetHost();
 
-			if (Options.IncludeProcess) logEvent.Process = _dataProcessor.GetProcess();
+			if (Options.IncludeProcess) logEvent.Process = LogEventToEcsHelper.GetProcess();
 
 			if (Options.IncludeUser)
 			{

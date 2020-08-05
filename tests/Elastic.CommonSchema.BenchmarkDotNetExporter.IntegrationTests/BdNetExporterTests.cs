@@ -20,8 +20,6 @@ using Xunit;
 using Nest;
 using Job = BenchmarkDotNet.Jobs.Job;
 
-[assembly: TestFramework("Elastic.Elasticsearch.Xunit.Sdk.ElasticTestFramework", "Elastic.Elasticsearch.Xunit")]
-
 namespace Elastic.CommonSchema.BenchmarkDotNetExporter.IntegrationTests
 {
 	public class BenchmarkIntegrationTests : IClusterFixture<BenchmarkCluster>

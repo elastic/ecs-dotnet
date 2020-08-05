@@ -16,12 +16,12 @@ namespace Elasticsearch.Extensions.Logging
 		private readonly IOptionsMonitor<ElasticsearchLoggerOptions> _options;
 
 		private readonly IDisposable _optionsReloadToken;
-		private readonly ElasticsearchDataProcessor _processor;
+		private readonly ElasticsearchDataShipper _shipper;
 
 		public ElasticsearchLoggerProvider(IOptionsMonitor<ElasticsearchLoggerOptions> options)
 		{
 			_options = options;
-			_processor = new ElasticsearchDataProcessor();
+			_shipper = new ElasticsearchDataShipper();
 			_loggers = new ConcurrentDictionary<string, ElasticsearchLogger>();
 			ReloadLoggerOptions(options.CurrentValue);
 			_optionsReloadToken = _options.OnChange(ReloadLoggerOptions);
@@ -34,12 +34,12 @@ namespace Elasticsearch.Extensions.Logging
 		public ILogger CreateLogger(string name) =>
 			_loggers.GetOrAdd(name,
 				loggerName =>
-					new ElasticsearchLogger(name, _processor) { Options = _options.CurrentValue, ScopeProvider = _scopeProvider });
+					new ElasticsearchLogger(name, _shipper) { Options = _options.CurrentValue, ScopeProvider = _scopeProvider });
 
 		public void Dispose()
 		{
 			_optionsReloadToken?.Dispose();
-			_processor.Dispose();
+			_shipper.Dispose();
 		}
 
 		public void SetScopeProvider(IExternalScopeProvider scopeProvider)
@@ -50,7 +50,7 @@ namespace Elasticsearch.Extensions.Logging
 
 		private void ReloadLoggerOptions(ElasticsearchLoggerOptions options)
 		{
-			_processor.Options = options;
+			_shipper.Options = options;
 			foreach (var logger in _loggers) logger.Value.Options = options;
 		}
 	}
