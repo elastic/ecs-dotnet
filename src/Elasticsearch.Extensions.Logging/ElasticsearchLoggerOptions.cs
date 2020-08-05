@@ -100,6 +100,8 @@ namespace Elasticsearch.Extensions.Logging
 		/// </summary>
 		public int ConcurrentConsumers { get; set; } = 1;
 
+		//TODO these should be events since it's unknown if there will be typically one listener or multiple
+
 		/// <summary>
 		/// If <see cref="MaxInFlightMessages"/> is reached, <see cref="LogEvent"/>'s will fail to be published to the channel. You can be notified of dropped
 		/// events with this callback
