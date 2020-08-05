@@ -21,8 +21,8 @@ namespace Elasticsearch.Extensions.Logging
 		public ElasticsearchDataShipper(ElasticsearchLoggerOptions options)
 		{
 			_options = options;
-			var maxConsumers = Math.Max(1, options.Throttles.ConcurrentConsumers);
-			Channel = System.Threading.Channels.Channel.CreateBounded<LogEvent>(new BoundedChannelOptions(options.Throttles.MaxInFlightMessages)
+			var maxConsumers = Math.Max(1, options.BufferOptions.ConcurrentConsumers);
+			Channel = System.Threading.Channels.Channel.CreateBounded<LogEvent>(new BoundedChannelOptions(options.BufferOptions.MaxInFlightMessages)
 			{
 				SingleReader = maxConsumers == 1,
 				AllowSynchronousContinuations = true,
@@ -31,7 +31,7 @@ namespace Elasticsearch.Extensions.Logging
 				FullMode = BoundedChannelFullMode.Wait
 			});
 			async Task ConsumeMessages() =>
-				await Consume(options.Throttles.MaxConsumerBufferSize, options.Throttles.MaxConsumerBufferLifetime).ConfigureAwait(false);
+				await Consume(options.BufferOptions.MaxConsumerBufferSize, options.BufferOptions.MaxConsumerBufferLifetime).ConfigureAwait(false);
 			for (var i = 0; i < maxConsumers; i++)
 				_backgroundTasks.Add(Task.Factory.StartNew(() => ConsumeMessages(), TaskCreationOptions.LongRunning));
 		}
@@ -46,7 +46,7 @@ namespace Elasticsearch.Extensions.Logging
 		public void Enqueue(LogEvent item)
 		{
 			if (!Writer.TryWrite(item))
-				Options.Throttles.PublishRejectionCallback?.Invoke(item);
+				Options.BufferOptions.PublishRejectionCallback?.Invoke(item);
 		}
 
 		private static readonly byte[] LineFeed = { (byte)'\n' };
@@ -94,7 +94,7 @@ namespace Elasticsearch.Extensions.Logging
 
 				// TODO retries, backoff, response failure callbacks
 
-				Options.Throttles.ElasticsearchResponseCallback?.Invoke(response, buffer);
+				Options.BufferOptions.ElasticsearchResponseCallback?.Invoke(response, buffer);
 
 				buffer.Reset();
 			}

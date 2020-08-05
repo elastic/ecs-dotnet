@@ -30,9 +30,9 @@ namespace Elasticsearch.Extensions.Logging.Example
 					loggingBuilder.AddElasticsearch(c =>
 					{
 						if (highLoadUseCase)
-							c.Throttles = new DrainThrottles { ConcurrentConsumers = 4, PublishRejectionCallback = e => Console.Write("!") };
+							c.BufferOptions = new BufferOptions { ConcurrentConsumers = 4, PublishRejectionCallback = e => Console.Write("!") };
 
-						c.Throttles.ElasticsearchResponseCallback = (r, b) =>
+						c.BufferOptions.ElasticsearchResponseCallback = (r, b) =>
 							Console.WriteLine($"Indexed: {r.ApiCall.Success} items: {b.Count} time since first read: {b.DurationSinceFirstRead}");
 					});
 				})

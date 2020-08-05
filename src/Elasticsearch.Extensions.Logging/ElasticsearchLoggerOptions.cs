@@ -70,14 +70,14 @@ namespace Elasticsearch.Extensions.Logging
 		/// </summary>
 		public string[] Tags { get; set; } = new string[0];
 
-		public DrainThrottles Throttles { get; set; } = new DrainThrottles();
+		public BufferOptions BufferOptions { get; set; } = new BufferOptions();
 
 	}
 
 	/// <summary>
 	/// Controls how <see cref="LogEvent"/>'s are batched and send to Elasticsearch. These can not be dynamically updated.
 	/// </summary>
-	public class DrainThrottles
+	public class BufferOptions
 	{
 		/// <summary>
 		/// The maximum number of <see cref="LogEvent"/> that can be queued in memory. If this threshold is reached, events will be dropped
