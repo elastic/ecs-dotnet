@@ -37,7 +37,7 @@ namespace Elasticsearch.Extensions.Logging.IntegrationTests
 					o.Index = $"{pre}-{{0:yyyy.MM.dd}}";
 					var nodes = Client.ConnectionSettings.ConnectionPool.Nodes.Select(n => n.Uri).ToArray();
 					o.ShipTo = new ShipTo(nodes, ConnectionPoolType.Static);
-					
+
 				});
 
 			var optionsFactory = new OptionsFactory<ElasticsearchLoggerOptions>(
@@ -59,7 +59,7 @@ namespace Elasticsearch.Extensions.Logging.IntegrationTests
 			logger.LogError("an error occured");
 
 			// TODO make sure we can await something here on ElasticsearchDataShipper
-			await Task.Delay(TimeSpan.FromSeconds(5));
+			await Task.Delay(TimeSpan.FromSeconds(10));
 
 			var response = Client.Search<LogEvent>(new SearchRequest($"{indexPrefix}-*"));
 

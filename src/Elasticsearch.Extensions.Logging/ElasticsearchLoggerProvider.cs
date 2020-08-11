@@ -21,7 +21,7 @@ namespace Elasticsearch.Extensions.Logging
 		public ElasticsearchLoggerProvider(IOptionsMonitor<ElasticsearchLoggerOptions> options)
 		{
 			_options = options;
-			_shipper = new ElasticsearchDataShipper();
+			_shipper = new ElasticsearchDataShipper(options.CurrentValue);
 			_loggers = new ConcurrentDictionary<string, ElasticsearchLogger>();
 			ReloadLoggerOptions(options.CurrentValue);
 			_optionsReloadToken = _options.OnChange(ReloadLoggerOptions);

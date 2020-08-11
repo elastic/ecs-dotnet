@@ -3,32 +3,107 @@
 // See the LICENSE file in the project root for more information
 
 using System;
-using System.Collections.Concurrent;
+using System.Collections.Generic;
 using System.Linq;
+using System.Text.Encodings.Web;
+using System.Text.Json;
 using System.Threading;
-using Elastic.CommonSchema;
+using System.Threading.Channels;
+using System.Threading.Tasks;
 using Elasticsearch.Net;
 
 namespace Elasticsearch.Extensions.Logging
 {
 	internal class ElasticsearchDataShipper : IDisposable
 	{
-		private const int MaxQueuedMessages = 1024;
+		private readonly List<Task<Task>> _backgroundTasks =  new List<Task<Task>>();
 
-		private readonly BlockingCollection<LogEvent> _messageQueue =
-			new BlockingCollection<LogEvent>(MaxQueuedMessages);
-
-		private readonly Thread _outputThread;
-
-		public ElasticsearchDataShipper()
+		public ElasticsearchDataShipper(ElasticsearchLoggerOptions options)
 		{
-			_outputThread = new Thread(ProcessLogQueue) { IsBackground = true, Name = $"{nameof(ElasticsearchLogger)}.{nameof(ProcessLogQueue)}" };
-			_outputThread.Start();
+			_options = options;
+			var maxConsumers = Math.Max(1, options.BufferOptions.ConcurrentConsumers);
+			Channel = System.Threading.Channels.Channel.CreateBounded<LogEvent>(new BoundedChannelOptions(options.BufferOptions.MaxInFlightMessages)
+			{
+				SingleReader = maxConsumers == 1,
+				AllowSynchronousContinuations = true,
+				// wait does not block it simply signals that Writer.TryWrite should return false and be retried
+				// DropWrite will make `TryWrite` always return true, which is not what we want.
+				FullMode = BoundedChannelFullMode.Wait
+			});
+			async Task ConsumeMessages() =>
+				await Consume(options.BufferOptions.MaxConsumerBufferSize, options.BufferOptions.MaxConsumerBufferLifetime).ConfigureAwait(false);
+			for (var i = 0; i < maxConsumers; i++)
+				_backgroundTasks.Add(Task.Factory.StartNew(() => ConsumeMessages(), TaskCreationOptions.LongRunning));
 		}
+
 
 		private IElasticLowLevelClient _lowLevelClient = default!;
 
-		private ElasticsearchLoggerOptions _options = default!;
+		private ElasticsearchLoggerOptions _options;
+		public Channel<LogEvent> Channel { get; }
+		public ChannelWriter<LogEvent> Writer => Channel.Writer;
+
+		public void Enqueue(LogEvent item)
+		{
+			if (!Writer.TryWrite(item))
+				Options.BufferOptions.PublishRejectionCallback?.Invoke(item);
+		}
+
+		private static readonly byte[] LineFeed = { (byte)'\n' };
+
+
+		private async Task Consume(int maxQueuedMessages, TimeSpan maxInterval)
+		{
+			using var buffer = new ConsumerBuffer(maxQueuedMessages, maxInterval);
+
+			while (await buffer.WaitToReadAsync(Channel.Reader).ConfigureAwait(false))
+			{
+				while (buffer.Count < maxQueuedMessages && Channel.Reader.TryRead(out LogEvent item))
+				{
+					if (buffer.DurationSinceFirstRead > maxInterval) break;
+
+					buffer.Add(item);
+				}
+
+				if (buffer.NoThresholdsHit) continue;
+
+				var response = await _lowLevelClient.BulkAsync<DynamicResponse>(
+						PostData.StreamHandler(buffer,
+							(@event, stream) =>
+							{
+								/* NOT USED */
+							},
+							async (@event, stream, ctx) =>
+							{
+								foreach (var logEvent in buffer.Buffer)
+								{
+									var indexTime = logEvent.Timestamp ?? ElasticsearchLoggerProvider.LocalDateTimeProvider();
+									if (_options.IndexOffset.HasValue) indexTime = indexTime.ToOffset(_options.IndexOffset.Value);
+
+									var index = string.Format(_options.Index, indexTime);
+									var indexHeader = new { index = new { _index = index } };
+									await JsonSerializer.SerializeAsync(stream, indexHeader, indexHeader.GetType(), SerializerOptions, ctx)
+										.ConfigureAwait(false);
+									await stream.WriteAsync(LineFeed, 0, 1, ctx).ConfigureAwait(false);
+									await logEvent.SerializeAsync(stream, ctx).ConfigureAwait(false);
+									await stream.WriteAsync(LineFeed, 0, 1, ctx).ConfigureAwait(false);
+								}
+							})
+					)
+					.ConfigureAwait(false);
+
+				// TODO retries, backoff, response failure callbacks
+
+				Options.BufferOptions.ElasticsearchResponseCallback?.Invoke(response, buffer);
+
+				buffer.Reset();
+			}
+		}
+
+		private static readonly JsonSerializerOptions SerializerOptions = new JsonSerializerOptions
+		{
+			IgnoreNullValues = true, Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
+		};
 
 		internal ElasticsearchLoggerOptions Options
 		{
@@ -42,67 +117,12 @@ namespace Elasticsearch.Extensions.Logging
 
 		public void Dispose()
 		{
-			_messageQueue?.CompleteAdding();
 			try
 			{
-				_outputThread.Join(1500); // with timeout in case writer is locked
+				// TODO cancellation
+				foreach (var t in _backgroundTasks) t.Dispose();
 			}
-			catch (ThreadStateException) { }
-
-			_messageQueue?.Dispose();
-		}
-
-		public void EnqueueMessage(LogEvent logEvent)
-		{
-			if (!_messageQueue.IsAddingCompleted)
-			{
-				try
-				{
-					_messageQueue.Add(logEvent);
-					return;
-				}
-				catch (InvalidOperationException) { }
-			}
-
-			// Adding is complete, so just log the message
-			try
-			{
-				PostEvent(logEvent);
-			}
-			catch (Exception) { }
-		}
-
-		private void PostEvent(LogEvent logEvent)
-		{
-			var indexTime = logEvent.Timestamp ?? ElasticsearchLoggerProvider.LocalDateTimeProvider();
-			if (_options.IndexOffset.HasValue) indexTime = indexTime.ToOffset(_options.IndexOffset.Value);
-
-			var index = string.Format(_options.Index, indexTime);
-
-			var localClient = _lowLevelClient;
-			var response = localClient.Index<StringResponse>(index,
-				PostData.StreamHandler(logEvent,
-					(@event, stream) => logEvent.Serialize(stream),
-					// async variant not used yet but will when we move to channels/tpl in the future
-					async (@event, stream, ctx) => await logEvent.SerializeAsync(stream, ctx).ConfigureAwait(false)
-					)
-				);
-		}
-
-		private void ProcessLogQueue()
-		{
-			try
-			{
-				foreach (var logEvent in _messageQueue.GetConsumingEnumerable()) PostEvent(logEvent);
-			}
-			catch
-			{
-				try
-				{
-					_messageQueue.CompleteAdding();
-				}
-				catch { }
-			}
+			catch { }
 		}
 
 		private void UpdateClient()
@@ -126,7 +146,6 @@ namespace Elasticsearch.Extensions.Logging
 			{
 				settings = new ConnectionConfiguration(connectionPool);
 			}
-
 			var lowlevelClient = new ElasticLowLevelClient(settings);
 
 			_ = Interlocked.Exchange(ref _lowLevelClient, lowlevelClient);
