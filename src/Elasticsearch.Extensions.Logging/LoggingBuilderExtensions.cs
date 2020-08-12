@@ -8,6 +8,7 @@ using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Configuration;
 using Microsoft.Extensions.Options;
+using Elastic.Ingest;
 
 namespace Elasticsearch.Extensions.Logging
 {
@@ -25,9 +26,7 @@ namespace Elasticsearch.Extensions.Logging
 			return builder;
 		}
 
-		public static ILoggingBuilder AddElasticsearch(this ILoggingBuilder builder,
-			Action<ElasticsearchLoggerOptions> configure
-		)
+		public static ILoggingBuilder AddElasticsearch(this ILoggingBuilder builder, Action<ElasticsearchLoggerOptions> configure)
 		{
 			if (configure == null) throw new ArgumentNullException(nameof(configure));
 
@@ -36,9 +35,7 @@ namespace Elasticsearch.Extensions.Logging
 			return builder;
 		}
 
-		public static ILoggingBuilder AddElasticCloud(this ILoggingBuilder builder,
-			string cloudId, string apiKey
-		)
+		public static ILoggingBuilder AddElasticCloud(this ILoggingBuilder builder, string cloudId, string apiKey)
 		{
 			if (string.IsNullOrEmpty(cloudId))
 				throw new ArgumentException("cloudId may not be empty.", nameof(cloudId));
@@ -57,9 +54,7 @@ namespace Elasticsearch.Extensions.Logging
 			return builder;
 		}
 
-		public static ILoggingBuilder AddElasticCloud(this ILoggingBuilder builder,
-			string cloudId, string username, string password
-		)
+		public static ILoggingBuilder AddElasticCloud(this ILoggingBuilder builder, string cloudId, string username, string password)
 		{
 			if (string.IsNullOrEmpty(cloudId))
 				throw new ArgumentException("cloudId may not be empty.", nameof(cloudId));

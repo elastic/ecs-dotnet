@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Elastic.CommonSchema;
 using Elastic.Elasticsearch.Xunit;
 using Elastic.Elasticsearch.Xunit.XunitPlumbing;
+using Elastic.Ingest;
 using Elasticsearch.Net;
 using FluentAssertions;
 using Microsoft.Extensions.Logging;

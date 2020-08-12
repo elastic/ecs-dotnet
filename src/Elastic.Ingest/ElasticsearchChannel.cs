@@ -12,17 +12,17 @@ using System.Threading.Channels;
 using System.Threading.Tasks;
 using Elasticsearch.Net;
 
-namespace Elasticsearch.Extensions.Logging
+namespace Elastic.Ingest
 {
-	internal class ElasticsearchDataShipper : IDisposable
+	public class ElasticsearchChannel<TEvent> : IDisposable
 	{
 		private readonly List<Task<Task>> _backgroundTasks =  new List<Task<Task>>();
 
-		public ElasticsearchDataShipper(ElasticsearchLoggerOptions options)
+		public ElasticsearchChannel(ElasticsearchChannelOptions<TEvent> options)
 		{
 			_options = options;
 			var maxConsumers = Math.Max(1, options.BufferOptions.ConcurrentConsumers);
-			Channel = System.Threading.Channels.Channel.CreateBounded<LogEvent>(new BoundedChannelOptions(options.BufferOptions.MaxInFlightMessages)
+			Channel = System.Threading.Channels.Channel.CreateBounded<TEvent>(new BoundedChannelOptions(options.BufferOptions.MaxInFlightMessages)
 			{
 				SingleReader = maxConsumers == 1,
 				AllowSynchronousContinuations = true,
@@ -36,17 +36,19 @@ namespace Elasticsearch.Extensions.Logging
 				_backgroundTasks.Add(Task.Factory.StartNew(() => ConsumeMessages(), TaskCreationOptions.LongRunning));
 		}
 
-
 		private IElasticLowLevelClient _lowLevelClient = default!;
 
-		private ElasticsearchLoggerOptions _options;
-		public Channel<LogEvent> Channel { get; }
-		public ChannelWriter<LogEvent> Writer => Channel.Writer;
+		private ElasticsearchChannelOptions<TEvent> _options;
+		public Channel<TEvent> Channel { get; }
+		public ChannelWriter<TEvent> Writer => Channel.Writer;
 
-		public void Enqueue(LogEvent item)
+		public bool TryWrite(TEvent item)
 		{
-			if (!Writer.TryWrite(item))
-				Options.BufferOptions.PublishRejectionCallback?.Invoke(item);
+			if (Writer.TryWrite(item)) return true;
+
+			Options.BufferOptions.PublishRejectionCallback?.Invoke(item);
+			return false;
+
 		}
 
 		private static readonly byte[] LineFeed = { (byte)'\n' };
@@ -54,11 +56,11 @@ namespace Elasticsearch.Extensions.Logging
 
 		private async Task Consume(int maxQueuedMessages, TimeSpan maxInterval)
 		{
-			using var buffer = new ConsumerBuffer(maxQueuedMessages, maxInterval);
+			using var buffer = new ChannelBuffer<TEvent>(maxQueuedMessages, maxInterval);
 
 			while (await buffer.WaitToReadAsync(Channel.Reader).ConfigureAwait(false))
 			{
-				while (buffer.Count < maxQueuedMessages && Channel.Reader.TryRead(out LogEvent item))
+				while (buffer.Count < maxQueuedMessages && Channel.Reader.TryRead(out var item))
 				{
 					if (buffer.DurationSinceFirstRead > maxInterval) break;
 
@@ -68,16 +70,14 @@ namespace Elasticsearch.Extensions.Logging
 				if (buffer.NoThresholdsHit) continue;
 
 				var response = await _lowLevelClient.BulkAsync<DynamicResponse>(
-						PostData.StreamHandler(buffer,
-							(@event, stream) =>
+						PostData.StreamHandler(buffer.Buffer,
+							(b, stream) => { /* NOT USED */ },
+							async (b, stream, ctx) =>
 							{
-								/* NOT USED */
-							},
-							async (@event, stream, ctx) =>
-							{
-								foreach (var logEvent in buffer.Buffer)
+								foreach (var @event in b)
 								{
-									var indexTime = logEvent.Timestamp ?? ElasticsearchLoggerProvider.LocalDateTimeProvider();
+									if (@event == null) continue;
+									var indexTime = Options.TimestampLookup?.Invoke(@event) ?? DateTimeOffset.Now;
 									if (_options.IndexOffset.HasValue) indexTime = indexTime.ToOffset(_options.IndexOffset.Value);
 
 									var index = string.Format(_options.Index, indexTime);
@@ -85,7 +85,14 @@ namespace Elasticsearch.Extensions.Logging
 									await JsonSerializer.SerializeAsync(stream, indexHeader, indexHeader.GetType(), SerializerOptions, ctx)
 										.ConfigureAwait(false);
 									await stream.WriteAsync(LineFeed, 0, 1, ctx).ConfigureAwait(false);
-									await logEvent.SerializeAsync(stream, ctx).ConfigureAwait(false);
+									if (Options.WriteEvent != null)
+										await Options.WriteEvent(stream, ctx, @event).ConfigureAwait(false);
+									else
+									{
+										await JsonSerializer.SerializeAsync(stream, @event, typeof(TEvent), SerializerOptions, ctx)
+											.ConfigureAwait(false);
+									}
+
 									await stream.WriteAsync(LineFeed, 0, 1, ctx).ConfigureAwait(false);
 								}
 							})
@@ -105,7 +112,9 @@ namespace Elasticsearch.Extensions.Logging
 			IgnoreNullValues = true, Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
 		};
 
-		internal ElasticsearchLoggerOptions Options
+		// TODO private, make reload support very explicit (change shipto only?)
+
+		public ElasticsearchChannelOptions<TEvent> Options
 		{
 			get => _options;
 			set
@@ -134,7 +143,7 @@ namespace Elasticsearch.Extensions.Logging
 
 			ConnectionConfiguration settings;
 
-			if (nodes.Length == 0 && _options.ShipTo.ConnectionPoolType != ConnectionPoolType.Cloud)
+			if (nodes.Length == 0 && _options.ShipTo.ConnectionPool != ConnectionPoolType.Cloud)
 			{
 				// This is SingleNode with "http://localhost:9200"
 				settings = new ConnectionConfiguration();

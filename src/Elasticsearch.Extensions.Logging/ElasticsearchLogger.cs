@@ -11,6 +11,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
 using Elastic.CommonSchema;
+using Elastic.Ingest;
 using Microsoft.Extensions.Logging;
 using Trace = Elastic.CommonSchema.Trace;
 
@@ -19,16 +20,13 @@ namespace Elasticsearch.Extensions.Logging
 	public class ElasticsearchLogger : ILogger
 	{
 		private readonly string _categoryName;
-		private readonly ElasticsearchDataShipper _dataShipper;
+		private readonly ElasticsearchChannel<LogEvent> _channel;
 
-		internal ElasticsearchLogger(string categoryName, ElasticsearchDataShipper dataShipper)
+		internal ElasticsearchLogger(string categoryName, ElasticsearchChannel<LogEvent> channel)
 		{
 			_categoryName = categoryName;
-			_dataShipper = dataShipper;
+			_channel = channel;
 		}
-
-		private Regex _w3CFormat = new Regex(@"^[abcdef]{2}-[\dabcdef]{32}-([\dabcdef]{16})-[\dabcdef]{2}$",
-			RegexOptions.Compiled);
 
 		internal ElasticsearchLoggerOptions Options { get; set; } = default!;
 
@@ -55,7 +53,7 @@ namespace Elasticsearch.Extensions.Logging
 				var elasticsearchData =
 					BuildLogEvent(_categoryName, logLevel, eventId, state, exception, formatter);
 
-				_dataShipper.Enqueue(elasticsearchData);
+				_channel.TryWrite(elasticsearchData);
 			}
 			catch (Exception ex)
 			{

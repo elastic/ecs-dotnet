@@ -1,0 +1,23 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <Title>Elasticsearch Buffer backed data shipper</Title>
+    <Description>TODO</Description>
+    <PackageTags>TODO</PackageTags>
+    <LangVersion>latest</LangVersion>
+    <Nullable>enable</Nullable>
+    <IsPackable>false</IsPackable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Elasticsearch.Net" Version="7.6.1" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Configuration" Version="2.2.0" />
+    <PackageReference Include="System.Threading.Channels" Version="4.7.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Elastic.CommonSchema\Elastic.CommonSchema.csproj" />
+  </ItemGroup>
+
+</Project>
