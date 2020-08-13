@@ -4,12 +4,12 @@ using System.Threading;
 using System.Threading.Channels;
 using System.Threading.Tasks;
 
-namespace Elasticsearch.Extensions.Logging
+namespace Elastic.Ingest
 {
 	/// <summary>
 	/// Information about the consumers local buffer, available to users in <see cref="DrainThrottles.ElasticsearchResponseCallback" />
 	/// </summary>
-	public interface IConsumerBuffer
+	public interface IChannelBuffer
 	{
 		int Count { get; }
 		TimeSpan? DurationSinceFirstRead { get; }
@@ -20,28 +20,29 @@ namespace Elasticsearch.Extensions.Logging
 	/// every N messages OR in the case messages do no flow fast enough or stop before N messages were received every
 	/// M timespan.
 	/// </summary>
-	internal class ConsumerBuffer : IConsumerBuffer, IDisposable
+	internal class ChannelBuffer<TEvent> : IChannelBuffer, IDisposable
 	{
 		private readonly int _maxBufferSize;
 
 		public TimeSpan ForceFlushAfter { get; }
-		public List<LogEvent> Buffer { get; }
-                /// <summary>The time that the first event is read from the channel and added to the buffer, from first read or after the buffer is reset.</summary>
+		public List<TEvent> Buffer { get; }
+
+		/// <summary>The time that the first event is read from the channel and added to the buffer, from first read or after the buffer is reset.</summary>
 		private DateTimeOffset? TimeOfFirstRead { get; set; }
 
 		public int Count => Buffer.Count;
 		public TimeSpan? DurationSinceFirstRead => DateTimeOffset.UtcNow - TimeOfFirstRead;
 		public bool NoThresholdsHit => Count == 0 || (Count < _maxBufferSize && DurationSinceFirstRead <= ForceFlushAfter);
 
-		public ConsumerBuffer(int maxBufferSize, TimeSpan forceFlushAfter)
+		public ChannelBuffer(int maxBufferSize, TimeSpan forceFlushAfter)
 		{
 			_maxBufferSize = maxBufferSize;
 			ForceFlushAfter = forceFlushAfter;
-			Buffer = new List<LogEvent>(maxBufferSize);
+			Buffer = new List<TEvent>(maxBufferSize);
 			TimeOfFirstRead = null;
 		}
 
-		public void Add(LogEvent item)
+		public void Add(TEvent item)
 		{
 			TimeOfFirstRead ??= DateTimeOffset.UtcNow;
 			Buffer.Add(item);
@@ -58,6 +59,7 @@ namespace Elasticsearch.Extensions.Logging
 			get
 			{
 				if (!DurationSinceFirstRead.HasValue) return ForceFlushAfter;
+
 				var d = DurationSinceFirstRead.Value;
 				return d < ForceFlushAfter ? ForceFlushAfter - d : ForceFlushAfter;
 			}
@@ -71,7 +73,7 @@ namespace Elasticsearch.Extensions.Logging
 		/// <see cref="ForceFlushAfter"/>. This tries to avoid allocation too many <see cref="CancellationTokenSource"/>'s
 		/// needlessly and reuses them if possible. If we know the buffer is empty we can wait indefinitely as well.
 		/// </summary>
-		public async Task<bool> WaitToReadAsync(ChannelReader<LogEvent> reader)
+		public async Task<bool> WaitToReadAsync(ChannelReader<TEvent> reader)
 		{
 			if (_breaker.IsCancellationRequested)
 			{

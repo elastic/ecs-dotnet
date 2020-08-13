@@ -4,6 +4,7 @@
 
 using System;
 using System.Collections.Concurrent;
+using Elastic.Ingest;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 
@@ -16,12 +17,12 @@ namespace Elasticsearch.Extensions.Logging
 		private readonly IOptionsMonitor<ElasticsearchLoggerOptions> _options;
 
 		private readonly IDisposable _optionsReloadToken;
-		private readonly ElasticsearchDataShipper _shipper;
+		private readonly ElasticsearchChannel<LogEvent> _shipper;
 
 		public ElasticsearchLoggerProvider(IOptionsMonitor<ElasticsearchLoggerOptions> options)
 		{
 			_options = options;
-			_shipper = new ElasticsearchDataShipper(options.CurrentValue);
+			_shipper = new ElasticsearchChannel<LogEvent>(options.CurrentValue);
 			_loggers = new ConcurrentDictionary<string, ElasticsearchLogger>();
 			ReloadLoggerOptions(options.CurrentValue);
 			_optionsReloadToken = _options.OnChange(ReloadLoggerOptions);
@@ -29,7 +30,7 @@ namespace Elasticsearch.Extensions.Logging
 
 		private IExternalScopeProvider _scopeProvider = default!;
 
-		public static Func<DateTimeOffset> LocalDateTimeProvider { get; set; } = () => DateTimeOffset.Now;
+		public static Func<DateTimeOffset> LocalDateTimeProvider { get; set; } = () => DateTimeOffset.UtcNow;
 
 		public ILogger CreateLogger(string name) =>
 			_loggers.GetOrAdd(name,
