@@ -35,6 +35,9 @@ namespace Elasticsearch.Extensions.Logging.Example
 
 						c.BufferOptions.ElasticsearchResponseCallback = (r, b) =>
 							Console.WriteLine($"Indexed: {r.ApiCall.Success} items: {b.Count} time since first read: {b.DurationSinceFirstRead}");
+
+						c.ShipTo = new ShipTo(new []{ new Uri("http://ipv4.fiddler:9200") }, ConnectionPoolType.Static);
+
 					});
 				})
 				.ConfigureServices((hostContext, services) =>
@@ -61,6 +64,7 @@ namespace Elasticsearch.Extensions.Logging.Example
 			var nodes = cluster.NodesUris();
 			var connectionPool = new StaticConnectionPool(nodes);
 			var settings = new ConnectionSettings(connectionPool)
+				.Proxy(new Uri("http://localhost:8080"), "", "")
 				.EnableDebugMode();
 			return new ElasticClient(settings);
 		}

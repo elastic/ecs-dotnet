@@ -4,19 +4,37 @@
 
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text.Encodings.Web;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Channels;
 using System.Threading.Tasks;
+using Elastic.Ingest.Serialization;
 using Elasticsearch.Net;
 
 namespace Elastic.Ingest
 {
+	internal static class ElasticsearchChannelStatics
+	{
+		public static readonly byte[] LineFeed = { (byte)'\n' };
+
+		public static readonly BulkRequestParameters RequestParams =
+			new BulkRequestParameters { QueryString = { { "filter_path", "error, items.*.status,items.*.error" } } };
+
+		public static readonly JsonSerializerOptions SerializerOptions = new JsonSerializerOptions
+		{
+			IgnoreNullValues = true,
+			Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
+		};
+
+		public static readonly HashSet<int> RetryStatusCodes = new HashSet<int>(new[] { 502, 503, 504, 429 });
+	}
+
 	public class ElasticsearchChannel<TEvent> : IDisposable
 	{
-		private readonly List<Task<Task>> _backgroundTasks =  new List<Task<Task>>();
+		private readonly List<Task<Task>> _backgroundTasks = new List<Task<Task>>();
 
 		public ElasticsearchChannel(ElasticsearchChannelOptions<TEvent> options)
 		{
@@ -30,8 +48,10 @@ namespace Elastic.Ingest
 				// DropWrite will make `TryWrite` always return true, which is not what we want.
 				FullMode = BoundedChannelFullMode.Wait
 			});
+
 			async Task ConsumeMessages() =>
 				await Consume(options.BufferOptions.MaxConsumerBufferSize, options.BufferOptions.MaxConsumerBufferLifetime).ConfigureAwait(false);
+
 			for (var i = 0; i < maxConsumers; i++)
 				_backgroundTasks.Add(Task.Factory.StartNew(() => ConsumeMessages(), TaskCreationOptions.LongRunning));
 		}
@@ -48,11 +68,7 @@ namespace Elastic.Ingest
 
 			Options.BufferOptions.PublishRejectionCallback?.Invoke(item);
 			return false;
-
 		}
-
-		private static readonly byte[] LineFeed = { (byte)'\n' };
-
 
 		private async Task Consume(int maxQueuedMessages, TimeSpan maxInterval)
 		{
@@ -69,48 +85,71 @@ namespace Elastic.Ingest
 
 				if (buffer.NoThresholdsHit) continue;
 
-				var response = await _lowLevelClient.BulkAsync<DynamicResponse>(
-						PostData.StreamHandler(buffer.Buffer,
-							(b, stream) => { /* NOT USED */ },
-							async (b, stream, ctx) =>
-							{
-								foreach (var @event in b)
-								{
-									if (@event == null) continue;
-									var indexTime = Options.TimestampLookup?.Invoke(@event) ?? DateTimeOffset.Now;
-									if (_options.IndexOffset.HasValue) indexTime = indexTime.ToOffset(_options.IndexOffset.Value);
+				var items = buffer.Buffer;
+				BulkResponse? response = null;
+				for (var i = 0; i < 3 && items.Count > 0; i++)
+				{
+					// TODO https://github.com/elastic/elasticsearch/pull/55088
+					// Allows to happy flow to return no items on the response
+					response = await _lowLevelClient.BulkAsync<BulkResponse>(
+							PostData.StreamHandler(items,
+								(b, stream) => { /* NOT USED */ },
+								async (b, stream, ctx) => { await WriteBufferToStreamAsync(b, stream, ctx).ConfigureAwait(false); })
+							, ElasticsearchChannelStatics.RequestParams)
+						.ConfigureAwait(false);
 
-									var index = string.Format(_options.Index, indexTime);
-									var indexHeader = new { index = new { _index = index } };
-									await JsonSerializer.SerializeAsync(stream, indexHeader, indexHeader.GetType(), SerializerOptions, ctx)
-										.ConfigureAwait(false);
-									await stream.WriteAsync(LineFeed, 0, 1, ctx).ConfigureAwait(false);
-									if (Options.WriteEvent != null)
-										await Options.WriteEvent(stream, ctx, @event).ConfigureAwait(false);
-									else
-									{
-										await JsonSerializer.SerializeAsync(stream, @event, typeof(TEvent), SerializerOptions, ctx)
-											.ConfigureAwait(false);
-									}
+					// TODO to callback receives buffer but only sees IBufferChannel values which could
+					// get updated when the callback executes, not thread safe. Sent an isolated copy and decouple
+					// IChannelBuffer from ChannelBuffer
+					Options.BufferOptions.ElasticsearchResponseCallback?.Invoke(response, buffer);
 
-									await stream.WriteAsync(LineFeed, 0, 1, ctx).ConfigureAwait(false);
-								}
-							})
-					)
-					.ConfigureAwait(false);
+					// TODO https://github.com/elastic/elasticsearch/issues/60442
+					// allows us to check for `207` before doing expensive LINQ/array manipulations
+					items = items
+						.Zip(response.Items, (doc, item) => (doc, item))
+						.Where(t => ElasticsearchChannelStatics.RetryStatusCodes.Contains(t.item.Status))
+						.Select(t => t.doc)
+						.ToList();
 
-				// TODO retries, backoff, response failure callbacks
+					// TODO callback for rejected items
 
-				Options.BufferOptions.ElasticsearchResponseCallback?.Invoke(response, buffer);
-
+					// TODO make backoff configurable as lambda on options
+					if (items.Count > 0)
+						await Task.Delay(TimeSpan.FromSeconds(2 * (i + 1))).ConfigureAwait(false);
+				}
+				if (items.Count > 0 && response != null)
+				{
+					// TODO callback for items which could potentially still be retried
+				}
 				buffer.Reset();
 			}
 		}
 
-		private static readonly JsonSerializerOptions SerializerOptions = new JsonSerializerOptions
+		private async Task WriteBufferToStreamAsync(List<TEvent> b, Stream stream, CancellationToken ctx)
 		{
-			IgnoreNullValues = true, Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
-		};
+			foreach (var @event in b)
+			{
+				if (@event == null) continue;
+
+				var indexTime = Options.TimestampLookup?.Invoke(@event) ?? DateTimeOffset.Now;
+				if (_options.IndexOffset.HasValue) indexTime = indexTime.ToOffset(_options.IndexOffset.Value);
+
+				var index = string.Format(_options.Index, indexTime);
+				var indexHeader = new { index = new { _index = "H" + index } };
+				await JsonSerializer.SerializeAsync(stream, indexHeader, indexHeader.GetType(), ElasticsearchChannelStatics.SerializerOptions, ctx)
+					.ConfigureAwait(false);
+				await stream.WriteAsync(ElasticsearchChannelStatics.LineFeed, 0, 1, ctx).ConfigureAwait(false);
+				if (Options.WriteEvent != null)
+					await Options.WriteEvent(stream, ctx, @event).ConfigureAwait(false);
+				else
+				{
+					await JsonSerializer.SerializeAsync(stream, @event, typeof(TEvent), ElasticsearchChannelStatics.SerializerOptions, ctx)
+						.ConfigureAwait(false);
+				}
+
+				await stream.WriteAsync(ElasticsearchChannelStatics.LineFeed, 0, 1, ctx).ConfigureAwait(false);
+			}
+		}
 
 		// TODO private, make reload support very explicit (change shipto only?)
 
@@ -142,19 +181,28 @@ namespace Elastic.Ingest
 			var nodes = _options.ShipTo.NodeUris.ToArray();
 
 			ConnectionConfiguration settings;
+			var serializer = new SystemTextJsonSerializer();
 
 			if (nodes.Length == 0 && _options.ShipTo.ConnectionPool != ConnectionPoolType.Cloud)
 			{
 				// This is SingleNode with "http://localhost:9200"
-				settings = new ConnectionConfiguration();
+				var singleNodePool = new SingleNodeConnectionPool(new Uri("http://localhost:9200"));
+				settings = new ConnectionConfiguration(singleNodePool, serializer: serializer);
 			}
 			else if (_options.ConnectionPoolType == ConnectionPoolType.SingleNode
 				|| _options.ConnectionPoolType == ConnectionPoolType.Unknown && nodes.Length == 1)
-				settings = new ConnectionConfiguration(nodes[0]);
+			{
+				var singleNodePool = new SingleNodeConnectionPool(nodes[0]);
+				settings = new ConnectionConfiguration(singleNodePool, serializer: serializer);
+			}
 			else
 			{
-				settings = new ConnectionConfiguration(connectionPool);
+				settings = new ConnectionConfiguration(connectionPool, serializer: serializer);
 			}
+
+			settings = settings.Proxy(new Uri("http://localhost:8080"), "", "");
+			settings = settings.EnableDebugMode();
+
 			var lowlevelClient = new ElasticLowLevelClient(settings);
 
 			_ = Interlocked.Exchange(ref _lowLevelClient, lowlevelClient);

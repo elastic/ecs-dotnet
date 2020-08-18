@@ -3,6 +3,7 @@
 // See the LICENSE file in the project root for more information
 
 using System;
+using Elastic.Ingest.Serialization;
 using Elasticsearch.Net;
 
 namespace Elastic.Ingest
@@ -41,7 +42,7 @@ namespace Elastic.Ingest
 		/// </summary>
 		public Action<TEvent> PublishRejectionCallback { get; set; } = e => { };
 
-		public Action<IElasticsearchResponse, IChannelBuffer> ElasticsearchResponseCallback { get; set; } = (r, b) => { };
+		public Action<BulkResponse, IChannelBuffer> ElasticsearchResponseCallback { get; set; } = (r, b) => { };
 
 	}
 
