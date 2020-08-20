@@ -9,15 +9,17 @@ namespace Elastic.Ingest.Serialization
 {
 	public class BulkResponse : IElasticsearchResponse
 	{
+		[JsonIgnore]
 		IApiCallDetails IElasticsearchResponse.ApiCall { get; set; } = null!;
+		[JsonIgnore]
 		public IApiCallDetails ApiCall => ((IElasticsearchResponse)this).ApiCall;
 
 		[JsonPropertyName("items")]
 		[JsonConverter(typeof(ResponseItemsConverter))]
-		public IReadOnlyCollection<BulkResponseItem> Items { get; internal set; } = null!;
+		public IReadOnlyCollection<BulkResponseItem> Items { get; set; } = null!;
 
 		[JsonPropertyName("error")]
-		public ServerError? Error { get; internal set; }
+		public ServerError? Error { get; set; }
 
 		public bool TryGetServerErrorReason(out string? reason)
 		{
@@ -30,9 +32,9 @@ namespace Elastic.Ingest.Serialization
 	[JsonConverter(typeof(ItemConverter))]
 	public class BulkResponseItem
 	{
-		public string Action { get; set; } = null!;
-		public ServerError? Error { get; set; }
-		public int Status { get; set; }
+		public string Action { get; internal set; } = null!;
+		public ServerError? Error { get; internal set; }
+		public int Status { get; internal set; }
 	}
 
 	// TODO reuse error from Elasticsearch.Net when it shifts to System.Text.Json

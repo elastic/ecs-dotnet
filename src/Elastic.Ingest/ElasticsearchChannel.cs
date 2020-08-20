@@ -34,33 +34,50 @@ namespace Elastic.Ingest
 
 	public class ElasticsearchChannel<TEvent> : IDisposable
 	{
-		private readonly List<Task<Task>> _backgroundTasks = new List<Task<Task>>();
+		private readonly List<Task> _backgroundTasks = new List<Task>();
 
 		public ElasticsearchChannel(ElasticsearchChannelOptions<TEvent> options)
 		{
 			_options = options;
-			var maxConsumers = Math.Max(1, options.BufferOptions.ConcurrentConsumers);
-			Channel = System.Threading.Channels.Channel.CreateBounded<TEvent>(new BoundedChannelOptions(options.BufferOptions.MaxInFlightMessages)
+			UpdateClient();
+
+			var maxConsumers = Math.Max(1, BufferOptions.ConcurrentConsumers);
+			Channel = System.Threading.Channels.Channel.CreateBounded<TEvent>(new BoundedChannelOptions(BufferOptions.MaxInFlightMessages)
 			{
 				SingleReader = maxConsumers == 1,
-				AllowSynchronousContinuations = true,
+				AllowSynchronousContinuations = false,
 				// wait does not block it simply signals that Writer.TryWrite should return false and be retried
 				// DropWrite will make `TryWrite` always return true, which is not what we want.
 				FullMode = BoundedChannelFullMode.Wait
 			});
 
-			async Task ConsumeMessages() =>
-				await Consume(options.BufferOptions.MaxConsumerBufferSize, options.BufferOptions.MaxConsumerBufferLifetime).ConfigureAwait(false);
+			var waitHandle = maxConsumers == 1 ? BufferOptions.WaitHandle : null;
+			Task ConsumeMessages() => Consume(BufferOptions.MaxConsumerBufferSize, BufferOptions.MaxConsumerBufferLifetime, waitHandle);
 
+			// TODO I Think Task.Run is actually fine here, also allows us to box and capture this in the lambda to StartNew.
+			// could be a config option
 			for (var i = 0; i < maxConsumers; i++)
-				_backgroundTasks.Add(Task.Factory.StartNew(() => ConsumeMessages(), TaskCreationOptions.LongRunning));
+				_backgroundTasks.Add(Task.Factory.StartNew(async () => await ConsumeMessages().ConfigureAwait(false), TaskCreationOptions.LongRunning).Unwrap());
 		}
 
 		private IElasticLowLevelClient _lowLevelClient = default!;
 
-		private ElasticsearchChannelOptions<TEvent> _options;
 		public Channel<TEvent> Channel { get; }
 		public ChannelWriter<TEvent> Writer => Channel.Writer;
+		public BufferOptions<TEvent> BufferOptions => _options.BufferOptions;
+
+		private ElasticsearchChannelOptions<TEvent> _options;
+		public ElasticsearchChannelOptions<TEvent> Options
+		{
+			get => _options;
+			set
+			{
+				_options = value;
+				UpdateClient();
+			}
+		}
+
+
 
 		public bool TryWrite(TEvent item)
 		{
@@ -70,7 +87,7 @@ namespace Elastic.Ingest
 			return false;
 		}
 
-		private async Task Consume(int maxQueuedMessages, TimeSpan maxInterval)
+		private async Task Consume(int maxQueuedMessages, TimeSpan maxInterval, ManualResetEventSlim? bufferOptionsWaitHandle)
 		{
 			using var buffer = new ChannelBuffer<TEvent>(maxQueuedMessages, maxInterval);
 
@@ -85,13 +102,15 @@ namespace Elastic.Ingest
 
 				if (buffer.NoThresholdsHit) continue;
 
+				//bufferOptionsWaitHandle?.Reset();
+
 				var items = buffer.Buffer;
-				BulkResponse? response = null;
-				for (var i = 0; i < 3 && items.Count > 0; i++)
+				var maxRetries = Options.BufferOptions.MaxRetries;
+				for (var i = 0; i <= maxRetries && items.Count > 0; i++)
 				{
 					// TODO https://github.com/elastic/elasticsearch/pull/55088
 					// Allows to happy flow to return no items on the response
-					response = await _lowLevelClient.BulkAsync<BulkResponse>(
+					var response = await _lowLevelClient.BulkAsync<BulkResponse>(
 							PostData.StreamHandler(items,
 								(b, stream) => { /* NOT USED */ },
 								async (b, stream, ctx) => { await WriteBufferToStreamAsync(b, stream, ctx).ConfigureAwait(false); })
@@ -105,23 +124,37 @@ namespace Elastic.Ingest
 
 					// TODO https://github.com/elastic/elasticsearch/issues/60442
 					// allows us to check for `207` before doing expensive LINQ/array manipulations
-					items = items
-						.Zip(response.Items, (doc, item) => (doc, item))
+
+					var zipped = items.Zip(response.Items, (doc, item) => (doc, item)).ToList();
+
+					// retry any 429,502,503,504
+					items = zipped
 						.Where(t => ElasticsearchChannelStatics.RetryStatusCodes.Contains(t.item.Status))
 						.Select(t => t.doc)
 						.ToList();
 
-					// TODO callback for rejected items
+					// report any events that are going to be dropped
+					if (Options.BufferOptions.ServerRejectionCallback != null)
+					{
+						var rejected = zipped
+							.Where(t =>
+								(t.item.Status < 200 || t.item.Status > 300)
+								&& !ElasticsearchChannelStatics.RetryStatusCodes.Contains(t.item.Status))
+							.ToList();
+						if (rejected.Count > 0) Options.BufferOptions.ServerRejectionCallback(rejected);
+					}
 
-					// TODO make backoff configurable as lambda on options
-					if (items.Count > 0)
-						await Task.Delay(TimeSpan.FromSeconds(2 * (i + 1))).ConfigureAwait(false);
-				}
-				if (items.Count > 0 && response != null)
-				{
-					// TODO callback for items which could potentially still be retried
+					// delay if we still have items and we are not at the end of the max retry cycle
+					var atEndOfRetries = (i + 1) <= maxRetries;
+					if (items.Count > 0 && !atEndOfRetries)
+						await Task.Delay(Options.BufferOptions.BackoffPeriod(i)).ConfigureAwait(false);
+					// otherwise if retryable items still exist and the user wants to be notified notify the user
+					else if (items.Count > 0 && atEndOfRetries)
+						Options.BufferOptions.RetryRejectionCallback?.Invoke(items);
+
 				}
 				buffer.Reset();
+				bufferOptionsWaitHandle?.Set();
 			}
 		}
 
@@ -135,7 +168,7 @@ namespace Elastic.Ingest
 				if (_options.IndexOffset.HasValue) indexTime = indexTime.ToOffset(_options.IndexOffset.Value);
 
 				var index = string.Format(_options.Index, indexTime);
-				var indexHeader = new { index = new { _index = "H" + index } };
+				var indexHeader = new { index = new { _index = index } };
 				await JsonSerializer.SerializeAsync(stream, indexHeader, indexHeader.GetType(), ElasticsearchChannelStatics.SerializerOptions, ctx)
 					.ConfigureAwait(false);
 				await stream.WriteAsync(ElasticsearchChannelStatics.LineFeed, 0, 1, ctx).ConfigureAwait(false);
@@ -153,16 +186,6 @@ namespace Elastic.Ingest
 
 		// TODO private, make reload support very explicit (change shipto only?)
 
-		public ElasticsearchChannelOptions<TEvent> Options
-		{
-			get => _options;
-			set
-			{
-				_options = value;
-				UpdateClient();
-			}
-		}
-
 		public void Dispose()
 		{
 			try
@@ -175,10 +198,17 @@ namespace Elastic.Ingest
 
 		private void UpdateClient()
 		{
+			if (_options.ShipTo.Client != null)
+			{
+				_lowLevelClient = _options.ShipTo.Client;
+				return;
+			}
+
+
 			// TODO: Check if Uri has changed before recreating
 			// TODO: Injectable factory? Or some way of testing.
 			var connectionPool = _options.ShipTo.CreateConnectionPool();
-			var nodes = _options.ShipTo.NodeUris.ToArray();
+			var nodes = _options.ShipTo.NodeUris?.ToArray() ?? Array.Empty<Uri>();
 
 			ConnectionConfiguration settings;
 			var serializer = new SystemTextJsonSerializer();

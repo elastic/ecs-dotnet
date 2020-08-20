@@ -10,16 +10,20 @@ namespace Elastic.Ingest
 {
 	public class ShipTo
 	{
-		public IEnumerable<Uri> NodeUris { get; } = new Uri[0];
+		public IEnumerable<Uri>? NodeUris { get; }
 		public ConnectionPoolType? ConnectionPool{ get; }
-		public string CloudId { get; } = string.Empty;
+		public string? CloudId { get; }
 
-		public string ApiKey { get; } = string.Empty;
+		public string? ApiKey { get; }
 
-		public string Username { get; } = string.Empty;
-		public string Password { get; } = string.Empty;
+		public string? Username { get; }
+		public string? Password { get; }
+
+		public IElasticLowLevelClient? Client { get; set; }
 
 		public ShipTo() => ConnectionPool = ConnectionPoolType.SingleNode;
+
+		public ShipTo(IElasticLowLevelClient client) => Client = client;
 
 		public ShipTo(IEnumerable<Uri> nodeUris, ConnectionPoolType connectionPoolType)
 		{
@@ -83,19 +87,6 @@ namespace Elastic.Ingest
 				default:
 					return null;
 			}
-		}
-
-		public override int GetHashCode()
-		{
-			var hashCode = 352033288;
-
-			hashCode = hashCode * -1521134295 + ConnectionPool.GetHashCode();
-			hashCode = hashCode * -1521134295 + CloudId.GetHashCode();
-			hashCode = hashCode * -1521134295 + Username.GetHashCode();
-			hashCode = hashCode * -1521134295 + Password.GetHashCode();
-			hashCode = hashCode * -1521134295 + NodeUris.GetHashCode();
-
-			return hashCode;
 		}
 	}
 

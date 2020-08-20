@@ -79,6 +79,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Elasticsearch.Extensions.Lo
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Elastic.Ingest", "src\Elastic.Ingest\Elastic.Ingest.csproj", "{741E050B-EF53-4531-8406-6FBEB1A5E2D4}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Elastic.Ingest.Tests", "tests\Elastic.Ingest.Tests\Elastic.Ingest.Tests.csproj", "{2FBE4070-D8D6-4787-B3D3-18016F9D09CC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -175,6 +177,10 @@ Global
 		{741E050B-EF53-4531-8406-6FBEB1A5E2D4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{741E050B-EF53-4531-8406-6FBEB1A5E2D4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{741E050B-EF53-4531-8406-6FBEB1A5E2D4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2FBE4070-D8D6-4787-B3D3-18016F9D09CC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2FBE4070-D8D6-4787-B3D3-18016F9D09CC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2FBE4070-D8D6-4787-B3D3-18016F9D09CC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2FBE4070-D8D6-4787-B3D3-18016F9D09CC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -204,6 +210,7 @@ Global
 		{0E7008E1-B215-4B9B-BC28-DC9D31415FB9} = {3582B07D-C2B0-49CC-B676-EAF806EB010E}
 		{F319AD28-A0A4-4012-8480-E2A4CFA755C2} = {05075402-8669-45BD-913A-BD40A29BBEAB}
 		{741E050B-EF53-4531-8406-6FBEB1A5E2D4} = {7610B796-BB3E-4CB2-8296-79BBFF6D23FC}
+		{2FBE4070-D8D6-4787-B3D3-18016F9D09CC} = {3582B07D-C2B0-49CC-B676-EAF806EB010E}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {7F60C4BB-6216-4E50-B1E4-9C38EB484843}

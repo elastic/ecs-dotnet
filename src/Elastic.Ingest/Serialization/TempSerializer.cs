@@ -63,7 +63,7 @@ namespace Elastic.Ingest.Serialization
 			if (TryReturnDefault(stream, out T deserialize)) return deserialize;
 
 			var buffered = ToReadOnlySpan(stream);
-			return JsonSerializer.Deserialize<T>(buffered, _none);
+			return JsonSerializer.Deserialize<T>(buffered, _indented);
 		}
 
 		public void Serialize<T>(T data, Stream stream, SerializationFormatting formatting = None)
