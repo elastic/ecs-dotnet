@@ -108,14 +108,27 @@ namespace Elastic.Ingest
 				var maxRetries = Options.BufferOptions.MaxRetries;
 				for (var i = 0; i <= maxRetries && items.Count > 0; i++)
 				{
+					Options.BufferOptions.BulkAttemptCallback?.Invoke(i, items.Count);
 					// TODO https://github.com/elastic/elasticsearch/pull/55088
 					// Allows to happy flow to return no items on the response
-					var response = await _lowLevelClient.BulkAsync<BulkResponse>(
-							PostData.StreamHandler(items,
-								(b, stream) => { /* NOT USED */ },
-								async (b, stream, ctx) => { await WriteBufferToStreamAsync(b, stream, ctx).ConfigureAwait(false); })
-							, ElasticsearchChannelStatics.RequestParams)
-						.ConfigureAwait(false);
+					BulkResponse response = null!;
+					try
+					{
+						response = await _lowLevelClient.BulkAsync<BulkResponse>(
+								PostData.StreamHandler(items,
+									(b, stream) =>
+									{
+										/* NOT USED */
+									},
+									async (b, stream, ctx) => { await WriteBufferToStreamAsync(b, stream, ctx).ConfigureAwait(false); })
+								, ElasticsearchChannelStatics.RequestParams)
+							.ConfigureAwait(false);
+					}
+					catch (Exception e)
+					{
+						Options.BufferOptions.ExceptionCallback?.Invoke(e);
+						break;
+					}
 
 					// TODO to callback receives buffer but only sees IBufferChannel values which could
 					// get updated when the callback executes, not thread safe. Sent an isolated copy and decouple
@@ -145,9 +158,12 @@ namespace Elastic.Ingest
 					}
 
 					// delay if we still have items and we are not at the end of the max retry cycle
-					var atEndOfRetries = (i + 1) <= maxRetries;
+					var atEndOfRetries = i == maxRetries;
 					if (items.Count > 0 && !atEndOfRetries)
+					{
 						await Task.Delay(Options.BufferOptions.BackoffPeriod(i)).ConfigureAwait(false);
+						Options.BufferOptions.RetryCallBack?.Invoke(items);
+					}
 					// otherwise if retryable items still exist and the user wants to be notified notify the user
 					else if (items.Count > 0 && atEndOfRetries)
 						Options.BufferOptions.RetryRejectionCallback?.Invoke(items);

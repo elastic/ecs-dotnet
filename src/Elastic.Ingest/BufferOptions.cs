@@ -56,9 +56,15 @@ namespace Elastic.Ingest
 		/// <summary> Subscribe to be notified of events that are retryable but did not store correctly withing the boundaries of <see cref="MaxRetries"/></summary>
 		public Action<List<TEvent>>? RetryRejectionCallback { get; set; }
 
+		/// <summary> Subscribe to be notified of events that are retryable but did not store correctly withing the boundaries of <see cref="MaxRetries"/></summary>
+		public Action<List<TEvent>>? RetryCallBack { get; set; }
+
 		/// <summary> A generic hook to be notified of any bulk request being initiated by <see cref="ElasticsearchChannel{TEvent}"/> </summary>
 		public Action<BulkResponse, IChannelBuffer> ElasticsearchResponseCallback { get; set; } = (r, b) => { };
 
+		public Action<Exception>? ExceptionCallback { get; set; }
+
+		public Action<int, int>? BulkAttemptCallback { get; set; }
 
 		/// <summary>
 		/// A function to calculate the backoff period, gets passed the number of retries attempted starting at 0.
@@ -73,7 +79,6 @@ namespace Elastic.Ingest
 		/// NOTE: This is solely meant to be able to test <see cref="ElasticsearchChannel{TEvent}"/> without complicating its thread safety.
 		/// </summary>
 		public ManualResetEventSlim? WaitHandle { get; set; }
-
 	}
 
 }
