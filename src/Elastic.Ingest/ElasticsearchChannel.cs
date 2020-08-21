@@ -45,7 +45,9 @@ namespace Elastic.Ingest
 			Channel = System.Threading.Channels.Channel.CreateBounded<TEvent>(new BoundedChannelOptions(BufferOptions.MaxInFlightMessages)
 			{
 				SingleReader = maxConsumers == 1,
-				AllowSynchronousContinuations = false,
+				// Stephen Toub comment: https://github.com/dotnet/runtime/issues/26338#issuecomment-393720727
+				// AFAICT this is fine since we run in a dedicated long running task.
+				AllowSynchronousContinuations = true,
 				// wait does not block it simply signals that Writer.TryWrite should return false and be retried
 				// DropWrite will make `TryWrite` always return true, which is not what we want.
 				FullMode = BoundedChannelFullMode.Wait
@@ -101,8 +103,6 @@ namespace Elastic.Ingest
 				}
 
 				if (buffer.NoThresholdsHit) continue;
-
-				//bufferOptionsWaitHandle?.Reset();
 
 				var items = buffer.Buffer;
 				var maxRetries = Options.BufferOptions.MaxRetries;
