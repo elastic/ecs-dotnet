@@ -64,7 +64,7 @@ namespace Elasticsearch.Extensions.Logging.Example
 			var nodes = cluster.NodesUris();
 			var connectionPool = new StaticConnectionPool(nodes);
 			var settings = new ConnectionSettings(connectionPool)
-				.Proxy(new Uri("http://localhost:8080"), "", "")
+				//.Proxy(new Uri("http://localhost:8080"), "", "")
 				.EnableDebugMode();
 			return new ElasticClient(settings);
 		}
