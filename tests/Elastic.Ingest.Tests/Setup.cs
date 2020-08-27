@@ -35,7 +35,7 @@ namespace Elastic.Ingest.Tests
 			private int _requests;
 			private int _responses;
 			private int _retries;
-			private int _retryDepletions;
+			private int _maxRetriesExceeded;
 
 			public TestSession(IElasticLowLevelClient client)
 			{
@@ -51,7 +51,7 @@ namespace Elastic.Ingest.Tests
 					ServerRejectionCallback = (list) => Interlocked.Increment(ref _rejections),
 					BulkAttemptCallback = (c, a) => Interlocked.Increment(ref _requests),
 					ElasticsearchResponseCallback = (r, b) => Interlocked.Increment(ref _responses),
-					RetryRejectionCallback = (list) => Interlocked.Increment(ref _retryDepletions),
+					MaxRetriesExceededCallback = (list) => Interlocked.Increment(ref _maxRetriesExceeded),
 					RetryCallBack = (list) => Interlocked.Increment(ref _retries),
 					ExceptionCallback= (e) => LastException = e
 				};
@@ -73,7 +73,7 @@ namespace Elastic.Ingest.Tests
 			public int TotalBulkRequests => _requests;
 			public int TotalBulkResponses => _responses;
 			public int TotalRetries => _retries;
-			public int RetryDepletions => _retryDepletions;
+			public int MaxRetriesExceeded => _maxRetriesExceeded;
 			public Exception LastException { get; private set; }
 
 			public void Wait()

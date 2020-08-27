@@ -166,7 +166,7 @@ namespace Elastic.Ingest
 					}
 					// otherwise if retryable items still exist and the user wants to be notified notify the user
 					else if (items.Count > 0 && atEndOfRetries)
-						Options.BufferOptions.RetryRejectionCallback?.Invoke(items);
+						Options.BufferOptions.MaxRetriesExceededCallback?.Invoke(items);
 
 				}
 				buffer.Reset();

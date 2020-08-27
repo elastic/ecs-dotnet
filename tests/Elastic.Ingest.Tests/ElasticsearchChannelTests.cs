@@ -74,7 +74,7 @@ namespace Elastic.Ingest.Tests
 
 			session.TotalBulkRequests.Should().Be(4);
 			session.TotalRetries.Should().Be(3);
-			session.RetryDepletions.Should().Be(1);
+			session.MaxRetriesExceeded.Should().Be(1);
 			session.Rejections.Should().Be(0);
 
 			session.WriteAndWait(events: 2);
@@ -98,8 +98,9 @@ namespace Elastic.Ingest.Tests
 			session.WriteAndWait(events: 2);
 
 			session.TotalBulkRequests.Should().Be(1);
+			session.TotalBulkResponses.Should().Be(0);
 			session.TotalRetries.Should().Be(0);
-			session.RetryDepletions.Should().Be(0);
+			session.MaxRetriesExceeded.Should().Be(0);
 			session.Rejections.Should().Be(0);
 			session.LastException.Should().NotBeNull();
 			session.LastException.Message.Should().Be("boom!");
@@ -107,6 +108,7 @@ namespace Elastic.Ingest.Tests
 			session.WriteAndWait(events: 2);
 
 			session.TotalBulkRequests.Should().Be(2);
+			session.TotalBulkResponses.Should().Be(1);
 			session.TotalRetries.Should().Be(0);
 			session.Rejections.Should().Be(0);
 
