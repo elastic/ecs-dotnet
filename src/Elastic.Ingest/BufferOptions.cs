@@ -26,7 +26,7 @@ namespace Elastic.Ingest
 		public int MaxConsumerBufferSize { get; set; } = 1_000;
 
 		/// <summary>
-		/// The maximum number of times items that return a retryable status codes are retried to be stored in Elasticsearch.
+		/// The maximum number of times that an item that returns with a retryable status code is retried to be stored in Elasticsearch.
 		/// <see cref="BackoffPeriod"/> to implement a backoff period of your choosing. MaxRetries default to 3.
 		/// </summary>
 		public int MaxRetries { get; set; } = 3;
@@ -56,7 +56,7 @@ namespace Elastic.Ingest
 		/// <summary> Subscribe to be notified of events that are retryable but did not store correctly withing the boundaries of <see cref="MaxRetries"/></summary>
 		public Action<List<TEvent>>? RetryRejectionCallback { get; set; }
 
-		/// <summary> Subscribe to be notified of events that are retryable but did not store correctly withing the boundaries of <see cref="MaxRetries"/></summary>
+		/// <summary> Subscribe to be notified of events that are retryable but did not store correctly within the number of configured <see cref="MaxRetries"/></summary>
 		public Action<List<TEvent>>? RetryCallBack { get; set; }
 
 		/// <summary> A generic hook to be notified of any bulk request being initiated by <see cref="ElasticsearchChannel{TEvent}"/> </summary>
