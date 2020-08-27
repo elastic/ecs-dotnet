@@ -11,12 +11,12 @@ using Elasticsearch.Net;
 namespace Elastic.Ingest
 {
 	/// <summary>
-	/// Controls how <see cref="LogEvent"/>'s are batched and send to Elasticsearch. These can not be dynamically updated.
+	/// Controls how instances of <see cref="TEvent"/>'s are batched and send to Elasticsearch. These can not be dynamically updated.
 	/// </summary>
 	public class BufferOptions<TEvent>
 	{
 		/// <summary>
-		/// The maximum number of <see cref="LogEvent"/> that can be queued in memory. If this threshold is reached, events will be dropped
+		/// The maximum number of <see cref="TEvent"/> instances that can be queued in memory. If this threshold is reached, events will be dropped
 		/// </summary>
 		public int MaxInFlightMessages { get; set; } = 100_000;
 
