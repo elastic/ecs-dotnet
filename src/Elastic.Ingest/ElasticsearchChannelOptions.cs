@@ -2,13 +2,17 @@ using System;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
+using Elasticsearch.Net;
 
 namespace Elastic.Ingest
 {
 	public class ElasticsearchChannelOptions<TEvent>
 	{
-		//TODO index patters are more complex then this, ILM, write alias, buffer tier, datastreams
+		public ElasticsearchChannelOptions() { }
 
+		public ElasticsearchChannelOptions(IElasticLowLevelClient client) => ShipTo = new ShipTo(client);
+
+		//TODO index patters are more complex then this, ILM, write alias, buffer tier, datastreams
 		/// <summary>
 		/// Gets or sets the format string for the Elastic search index. The current <c>DateTimeOffset</c> is passed as parameter
 		/// 0.
