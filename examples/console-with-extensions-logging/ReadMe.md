@@ -31,12 +31,13 @@ For more details on configuration, see [Elasticsearch.Extensions.Logging](../../
 
 ## Running the sample
 
-You need to be running Elasticsearch and Kibana. A docker compose configuration is provided, to run on either Linux,
-or using Docker Desktop (see https://docs.docker.com/docker-for-windows/). The provided configuration will create two nodes, one for Elasticsearch, and one for Kibana:
+You need to be running Elasticsearch and Kibana. If you don't already have them running, a docker compose configuration is provided, to run on either Linux, or using Docker Desktop (see https://docs.docker.com/docker-for-windows/). The provided configuration will create two nodes, one for Elasticsearch, and one for Kibana:
 
 ```powershell
-docker-compose -f ./examples/console-with-extensions-logging/docker-compose.yml start
+docker-compose -f ./examples/console-with-extensions-logging/docker-compose.yml up
 ```
+
+(On some machines you may need to check the requirements to run Elasticsearch, e.g. increase virtual memory on the Docker host, https://www.elastic.co/guide/en/elasticsearch/reference/current/vm-max-map-count.html)
 
 Then run the example:
 
