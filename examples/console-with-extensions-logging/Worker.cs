@@ -14,7 +14,7 @@ namespace ConsoleExample
 {
     public class Worker : BackgroundService
     {
-        private readonly ILogger<Worker> _logger;
+        private readonly ILogger _logger;
 
         public Worker(ILogger<Worker> logger)
         {
@@ -35,7 +35,7 @@ namespace ConsoleExample
             var rate = 0;
 
             Thread.CurrentPrincipal = new ClaimsPrincipal(new GenericIdentity("sgryphon+es@live.com"));
-            Trace.CorrelationManager.ActivityId = Guid.NewGuid();
+            new Activity("Worker").Start();
 
             using (_logger.BeginScope("IP address {ip}", ipAddress))
             {
