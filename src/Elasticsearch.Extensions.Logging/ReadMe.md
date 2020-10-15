@@ -63,9 +63,9 @@ The other useful value to configure is a tag for the environment, e.g. Developme
 
 ### Example program
 
-* See [HelloElasticsearch](../../examples/console-with-loggerprovider)
+* See [Console with Extensions.Logging](../../examples/console-with-extensions-logging)
 
-![Example - Elasticsearch](../../examples/console-with-loggerprovider/example-elasticsearch-kibana.png)
+![Example - Elasticsearch](../../examples/console-with-extensions-logging/example-elasticsearch-kibana.png)
 
 
 ## Configuration settings
