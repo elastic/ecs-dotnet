@@ -28,16 +28,13 @@ namespace Elasticsearch.Extensions.Logging.Example
 					if (highLoadUseCase)
 						loggingBuilder.ClearProviders();
 
-					loggingBuilder.AddElasticsearch(c =>
+					loggingBuilder.AddElasticsearch(options => {}, configureChannel =>
 					{
 						if (highLoadUseCase)
-							c.BufferOptions = new BufferOptions<LogEvent> { ConcurrentConsumers = 4, PublishRejectionCallback = e => Console.Write("!") };
+							configureChannel.BufferOptions = new BufferOptions<LogEvent> { ConcurrentConsumers = 4, PublishRejectionCallback = e => Console.Write("!") };
 
-						c.BufferOptions.ElasticsearchResponseCallback = (r, b) =>
+						configureChannel.BufferOptions.ElasticsearchResponseCallback = (r, b) =>
 							Console.WriteLine($"Indexed: {r.ApiCall.Success} items: {b.Count} time since first read: {b.DurationSinceFirstRead}");
-
-						c.ShipTo = new ShipTo(new []{ new Uri("http://ipv4.fiddler:9200") }, ConnectionPoolType.Static);
-
 					});
 				})
 				.ConfigureServices((hostContext, services) =>

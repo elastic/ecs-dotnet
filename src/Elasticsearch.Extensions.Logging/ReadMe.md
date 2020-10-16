@@ -78,7 +78,6 @@ The following default settings are used.
 {
   "Logging": {
     "Elasticsearch": {
-      "ConnectionPoolType": "SingleNode",
       "IncludeHost": true,
       "IncludeProcess": true,
       "IncludeScopes": true,
@@ -88,8 +87,11 @@ The following default settings are used.
       "IsEnabled": true,
       "ListSeparator": ", ",
       "MapCorrelationValues": true,
-      "NodeUris": [ "http://localhost:9200" ],
-      "Tags": []
+      "Tags": [],
+      "ShipTo": {
+        "ConnectionPoolType": "SingleNode",
+        "NodeUris": [ "http://localhost:9200" ]
+      }
     }
   }
 }
@@ -97,7 +99,6 @@ The following default settings are used.
 
 | Setting | Type | Description |
 | ------- | ---- | ----------- |
-| ConnectionPoolType | enum | Default is `Singlenode`; for multiple nodes default is `Sniffing`. Other supported values are `Static`, `Sticky`, or force to `SingleNode` |
 | IncludeHost | boolean | Default `true`; set to `false` to disable logging host values. |
 | IncludeProcess | boolean | Default `true`; set to `false` to disable logging process values. |
 | IncludeScopes | boolean | Default `true`; set to `false` to disable logging scope values. |
@@ -106,8 +107,18 @@ The following default settings are used.
 | IndexOffset | timespan | Override to set the offset used to generate the `index`. Default value is `null`, which uses the system local offset; use `"00:00"` for UTC.  |
 | IsEnabled | boolean | Default `true`; set to `false` to disable the logger. |
 | ListSeparator | string | Separator to use for `IEnumerable` in `labels.*` values. Default is `", "`. |
-| NodeUris | array | URI(s) of the Elasticsearch nodes to connect to. Default is a single node `[ "http://localhost:9200" ]` |
 | Tags | array | Additional tags to include in the message. Useful to specify the environment or other details, e.g.  `[ "Staging", "Priority" ]` |
+
+The ShipTo settings can have the following properties, depending on the type of connection pool.
+
+| Setting | Type | Description |
+| ------- | ---- | ----------- |
+| ApiKey | string | API Key, where connection pool type is Cloud, and authenticating via API Key. |
+| CloudId | string | Cloud ID, where connection pool type is Cloud. |
+| ConnectionPoolType | enum | Default is `Singlenode`, or `Sniffing` for multiple nodes, or `Cloud` if `CloudId` is provided. Other supported values are `Static` or `Sticky`. |
+| NodeUris | array | URI(s) of the Elasticsearch nodes to connect to. Default is a single node `[ "http://localhost:9200" ]` |
+| Password | string | Password, where connection pool type is Cloud, and authenticating via username/password. |
+| Username | string | Username, where connection pool type is Cloud, and authenticating via username/password. |
 
 If you want to configure from a different section, it can be configured manually:
 
@@ -120,6 +131,23 @@ If you want to configure from a different section, it can be configured manually
 ```
 
 Configuration can, of course, also be done in code, e.g. to add the environment as a tag.
+
+### Elastic Cloud configuration
+
+If `CloudId` is provided, the `ConnectionPoolType` defaults to `Cloud`:
+
+```json
+{
+  "Logging": {
+    "Elasticsearch": {
+      "ShipTo": {
+        "CloudId": "12345",
+        "ApiKey": "abcdef"
+      }
+    }
+  }
+}
+```
 
 
 ## Output - Elastic Common Schema (ECS)

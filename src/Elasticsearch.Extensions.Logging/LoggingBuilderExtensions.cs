@@ -35,6 +35,18 @@ namespace Elasticsearch.Extensions.Logging
 			return builder;
 		}
 
+		public static ILoggingBuilder AddElasticsearch(this ILoggingBuilder builder, Action<ElasticsearchLoggerOptions> configure, 
+			Action<ElasticsearchChannelOptions<LogEvent>> configureChannel)
+		{
+			if (configure == null) throw new ArgumentNullException(nameof(configure));
+			if (configureChannel == null) throw new ArgumentNullException(nameof(configureChannel));
+
+			builder.AddElasticsearch();
+			builder.Services.Configure(configure);
+			builder.Services.TryAddEnumerable(ServiceDescriptor.Singleton<IChannelSetup>(new InternalChannelSetup(configureChannel)));
+			return builder;
+		}
+
 		public static ILoggingBuilder AddElasticCloud(this ILoggingBuilder builder, string cloudId, string apiKey)
 		{
 			if (string.IsNullOrEmpty(cloudId))
@@ -47,7 +59,9 @@ namespace Elasticsearch.Extensions.Logging
 
 			void configure(ElasticsearchLoggerOptions options)
 			{
-				options.ShipTo = new ShipTo(cloudId, apiKey);
+				options.ShipTo.ConnectionPoolType = ConnectionPoolType.Cloud;
+				options.ShipTo.CloudId = cloudId;
+				options.ShipTo.ApiKey = apiKey;
 			}
 
 			builder.Services.Configure((Action<ElasticsearchLoggerOptions>)configure);
@@ -69,7 +83,10 @@ namespace Elasticsearch.Extensions.Logging
 
 			void configure(ElasticsearchLoggerOptions options)
 			{
-				options.ShipTo = new ShipTo(cloudId, username, password);
+				options.ShipTo.ConnectionPoolType = ConnectionPoolType.Cloud;
+				options.ShipTo.CloudId = cloudId;
+				options.ShipTo.Username = username;
+				options.ShipTo.Password = password;
 			}
 
 			builder.Services.Configure((Action<ElasticsearchLoggerOptions>)configure);
