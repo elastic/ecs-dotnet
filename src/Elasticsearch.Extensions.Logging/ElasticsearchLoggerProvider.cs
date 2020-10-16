@@ -4,6 +4,8 @@
 
 using System;
 using System.Collections.Concurrent;
+using System.Collections.Generic;
+using System.Linq;
 using Elastic.Ingest;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
@@ -13,16 +15,24 @@ namespace Elasticsearch.Extensions.Logging
 	[ProviderAlias("Elasticsearch")]
 	public class ElasticsearchLoggerProvider : ILoggerProvider, ISupportExternalScope
 	{
+		private readonly IChannelSetup[] _channelConfigurations;
+
 		private readonly ConcurrentDictionary<string, ElasticsearchLogger> _loggers;
+
 		private readonly IOptionsMonitor<ElasticsearchLoggerOptions> _options;
 
 		private readonly IDisposable _optionsReloadToken;
 		private readonly ElasticsearchChannel<LogEvent> _shipper;
 
-		public ElasticsearchLoggerProvider(IOptionsMonitor<ElasticsearchLoggerOptions> options)
+		public ElasticsearchLoggerProvider(IOptionsMonitor<ElasticsearchLoggerOptions> options, 
+			IEnumerable<IChannelSetup> channelConfigurations)
 		{
 			_options = options;
-			_shipper = new ElasticsearchChannel<LogEvent>(options.CurrentValue);
+			_channelConfigurations = channelConfigurations.ToArray();
+			
+			var channelOptions = CreateChannelOptions(options.CurrentValue, _channelConfigurations);
+			_shipper = new ElasticsearchChannel<LogEvent>(channelOptions);
+
 			_loggers = new ConcurrentDictionary<string, ElasticsearchLogger>();
 			ReloadLoggerOptions(options.CurrentValue);
 			_optionsReloadToken = _options.OnChange(ReloadLoggerOptions);
@@ -49,9 +59,46 @@ namespace Elasticsearch.Extensions.Logging
 			foreach (var logger in _loggers) logger.Value.ScopeProvider = scopeProvider;
 		}
 
+		private ElasticsearchChannelOptions<LogEvent> CreateChannelOptions(ElasticsearchLoggerOptions options,
+			IChannelSetup[] channelConfigurations)
+		{
+			var channelOptions = new ElasticsearchChannelOptions<LogEvent>();
+			channelOptions.Index = options.Index;
+			channelOptions.IndexOffset = options.IndexOffset;
+			channelOptions.ConnectionPoolType = options.ShipTo.ConnectionPoolType;
+
+			channelOptions.WriteEvent = async (stream, ctx, l) => await l.SerializeAsync(stream, ctx).ConfigureAwait(false);
+			channelOptions.TimestampLookup = l => l.Timestamp;
+
+			if (options.ShipTo.ConnectionPoolType == ConnectionPoolType.Cloud
+				|| (options.ShipTo.ConnectionPoolType == ConnectionPoolType.Unknown && !string.IsNullOrEmpty(options.ShipTo.CloudId))) {
+				if (!string.IsNullOrWhiteSpace(options.ShipTo.Username))
+				{
+					channelOptions.ShipTo = new ShipTo(options.ShipTo.CloudId, options.ShipTo.Username, options.ShipTo.Password);
+				}
+				else
+				{
+					channelOptions.ShipTo = new ShipTo(options.ShipTo.CloudId, options.ShipTo.ApiKey);
+				}
+			} 
+			else 
+			{
+				channelOptions.ShipTo = new ShipTo(options.ShipTo.NodeUris, options.ShipTo.ConnectionPoolType);
+			}
+
+			foreach (var channelSetup in channelConfigurations)
+			{
+				channelSetup.ConfigureChannel(channelOptions);
+			}
+
+			return channelOptions;
+		}
+
 		private void ReloadLoggerOptions(ElasticsearchLoggerOptions options)
 		{
-			_shipper.Options = options;
+			var channelOptions = CreateChannelOptions(options, _channelConfigurations);
+			_shipper.Options = channelOptions;
+			
 			foreach (var logger in _loggers) logger.Value.Options = options;
 		}
 	}

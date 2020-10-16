@@ -220,10 +220,8 @@ namespace Elastic.Ingest
 				return;
 			}
 
-
 			// TODO: Check if Uri has changed before recreating
 			// TODO: Injectable factory? Or some way of testing.
-			var connectionPool = _options.ShipTo.CreateConnectionPool();
 			var nodes = _options.ShipTo.NodeUris?.ToArray() ?? Array.Empty<Uri>();
 
 			ConnectionConfiguration settings;
@@ -243,6 +241,7 @@ namespace Elastic.Ingest
 			}
 			else
 			{
+				var connectionPool = _options.ShipTo.CreateConnectionPool();
 				settings = new ConnectionConfiguration(connectionPool, serializer: serializer);
 			}
 
