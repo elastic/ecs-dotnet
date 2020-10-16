@@ -13,6 +13,9 @@ namespace Elasticsearch.Extensions.Logging.Example
 {
 	internal static class Program
 	{
+		// Configuration can be overriden from command line, e.g.
+		// dotnet run --project ./examples/Elasticsearch.Extensions.Logging.Example/ --Logging:Elasticsearch:ShipTo:NodeUris:0 "http://ipv4.fiddler:9200"
+
 		public static IHostBuilder CreateHostBuilder(string[] args)
 		{
 			var highLoadUseCase = args.Length > 0 && args[0] == "high";
