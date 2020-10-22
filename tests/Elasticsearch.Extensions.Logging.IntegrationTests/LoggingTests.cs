@@ -37,16 +37,17 @@ namespace Elasticsearch.Extensions.Logging.IntegrationTests
 				{
 					o.Index = $"{pre}-{{0:yyyy.MM.dd}}";
 					var nodes = Client.ConnectionSettings.ConnectionPool.Nodes.Select(n => n.Uri).ToArray();
-					o.ShipTo = new ShipTo(nodes, ConnectionPoolType.Static);
+					o.ShipTo = new ShipToOptions() { NodeUris = nodes, ConnectionPoolType = ConnectionPoolType.Static };
 
 				});
+			var channelSetup = new IChannelSetup[] {};
 
 			var optionsFactory = new OptionsFactory<ElasticsearchLoggerOptions>(
 				new []{ options }, Enumerable.Empty<IPostConfigureOptions<ElasticsearchLoggerOptions>>());
 			var optionsMonitor = new OptionsMonitor<ElasticsearchLoggerOptions>(
 				optionsFactory, Enumerable.Empty<IOptionsChangeTokenSource<ElasticsearchLoggerOptions>>(), new OptionsCache<ElasticsearchLoggerOptions>());
 			var loggerFactory = new LoggerFactory(
-				new[] { new ElasticsearchLoggerProvider(optionsMonitor) }, new LoggerFilterOptions { MinLevel = LogLevel.Information });
+				new[] { new ElasticsearchLoggerProvider(optionsMonitor, channelSetup) }, new LoggerFilterOptions { MinLevel = LogLevel.Information });
 			logger = loggerFactory.CreateLogger<ElasticsearchLogger>();
 			indexPrefix = pre;
 			return loggerFactory;

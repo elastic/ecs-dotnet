@@ -5,13 +5,13 @@
 using System;
 using Elastic.Ingest;
 
-namespace Elasticsearch.Extensions.Logging
+namespace Elasticsearch.Extensions.Logging.IntegrationTests
 {
-	internal class InternalChannelSetup : IChannelSetup
-	{
-		private readonly Action<ElasticsearchChannelOptions<LogEvent>> _configureChannel;
+    internal class TestChannelSetup : IChannelSetup
+    {
+        Action<ElasticsearchChannelOptions<LogEvent>> _configureChannel;
 
-		public InternalChannelSetup(Action<ElasticsearchChannelOptions<LogEvent>> configureChannel) => _configureChannel = configureChannel;
+        public TestChannelSetup(Action<ElasticsearchChannelOptions<LogEvent>> configureChannel) => _configureChannel = configureChannel;
 
 		public void ConfigureChannel(ElasticsearchChannelOptions<LogEvent> channelConfiguration) => _configureChannel(channelConfiguration);
 	}
