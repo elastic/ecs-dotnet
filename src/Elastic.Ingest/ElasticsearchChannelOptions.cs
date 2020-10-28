@@ -2,7 +2,7 @@ using System;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
-using Elasticsearch.Net;
+using Elastic.Transport;
 
 namespace Elastic.Ingest
 {
@@ -10,7 +10,7 @@ namespace Elastic.Ingest
 	{
 		public ElasticsearchChannelOptions() { }
 
-		public ElasticsearchChannelOptions(IElasticLowLevelClient client) => ShipTo = new ShipTo(client);
+		public ElasticsearchChannelOptions(ITransport<ITransportConfigurationValues> transport) => ShipTo = new ShipTo(transport);
 
 		//TODO index patters are more complex then this, ILM, write alias, buffer tier, datastreams
 		/// <summary>

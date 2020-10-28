@@ -1,5 +1,5 @@
 using System;
-using Elasticsearch.Net.VirtualizedCluster.Rules;
+using Elastic.Transport.VirtualizedCluster.Rules;
 using FluentAssertions;
 using Xunit;
 
@@ -10,11 +10,11 @@ namespace Elastic.Ingest.Tests
 		[Fact]
 		public void RejectionsAreReportedAndNotRetried()
 		{
-			var client = Setup.CreateClient(v => v
+			var client = TestSetup.CreateClient(v => v
 				.ClientCalls(c => c.BulkResponse(400, 400))
 				.ClientCalls(c => c.BulkResponse(200, 200))
 			);
-			using var session = Setup.CreateTestSession(client);
+			using var session = TestSetup.CreateTestSession(client);
 			session.WriteAndWait(events: 2);
 
 			session.Rejections.Should().Be(1);
@@ -32,7 +32,7 @@ namespace Elastic.Ingest.Tests
 		[Fact]
 		public void BackoffRetries()
 		{
-			var client = Setup.CreateClient(v => v
+			var client = TestSetup.CreateClient(v => v
 					// first two events keep bouncing
 				.ClientCalls(c => c.BulkResponse(429, 429))
 				.ClientCalls(c => c.BulkResponse(429, 429)) //retry 1
@@ -42,7 +42,7 @@ namespace Elastic.Ingest.Tests
 					// next two succeed straight away
 				.ClientCalls(c => c.BulkResponse(200, 200)) //next batch
 			);
-			using var session = Setup.CreateTestSession(client);
+			using var session = TestSetup.CreateTestSession(client);
 			session.WriteAndWait(events: 2);
 
 			session.Rejections.Should().Be(0);
@@ -60,7 +60,7 @@ namespace Elastic.Ingest.Tests
 		[Fact]
 		public void BackoffTooMuchEndsUpOnDLQ()
 		{
-			var client = Setup.CreateClient(v => v
+			var client = TestSetup.CreateClient(v => v
 					// first two events keep bouncing
 				.ClientCalls(c => c.BulkResponse(429, 429))
 				.ClientCalls(c => c.BulkResponse(429, 429)) //retry 1
@@ -69,7 +69,7 @@ namespace Elastic.Ingest.Tests
 					// next two succeed straight away
 				.ClientCalls(c => c.BulkResponse(200, 200)) //next batch
 			);
-			using var session = Setup.CreateTestSession(client);
+			using var session = TestSetup.CreateTestSession(client);
 			session.WriteAndWait(events: 2);
 
 			session.TotalBulkRequests.Should().Be(4);
@@ -88,13 +88,13 @@ namespace Elastic.Ingest.Tests
 		[Fact]
 		public void ExceptionDoesNotHaltProcessingAndIsReported()
 		{
-			var client = Setup.CreateClient(v => v
+			var client = TestSetup.CreateClient(v => v
 					// first two events throws an exception in the client call
 				.ClientCalls(c => c.Fails(TimesHelper.Once, new Exception("boom!")))
 					// next two succeed straight away
 				.ClientCalls(c => c.BulkResponse(200, 200)) //next batch
 			);
-			using var session = Setup.CreateTestSession(client);
+			using var session = TestSetup.CreateTestSession(client);
 			session.WriteAndWait(events: 2);
 
 			session.TotalBulkRequests.Should().Be(1);

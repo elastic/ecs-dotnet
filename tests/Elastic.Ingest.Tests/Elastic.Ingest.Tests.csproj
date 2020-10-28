@@ -12,7 +12,7 @@
     <PackageReference Include="xunit.runner.visualstudio" Version="2.3.1" />
 
 
-    <PackageReference Include="Elasticsearch.Net.VirtualizedCluster" Version="8.1.0-ci20200821T101114" />
+    <PackageReference Include="Elastic.Transport.VirtualizedCluster" Version="0.1.2" />
   </ItemGroup>
 
   <ItemGroup>

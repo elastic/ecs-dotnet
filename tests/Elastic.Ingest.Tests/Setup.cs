@@ -2,28 +2,26 @@
 using System.Linq;
 using System.Threading;
 using Elastic.CommonSchema;
-using Elastic.Ingest.Serialization;
-using Elasticsearch.Net;
-using Elasticsearch.Net.VirtualizedCluster;
-using Elasticsearch.Net.VirtualizedCluster.Rules;
+using Elastic.Transport;
+using Elastic.Transport.VirtualizedCluster;
+using Elastic.Transport.VirtualizedCluster.Components;
+using Elastic.Transport.VirtualizedCluster.Rules;
 
 namespace Elastic.Ingest.Tests
 {
-	public static class Setup
+	public static class TestSetup
 	{
-		public static SystemTextJsonSerializer Serializer { get; } = new SystemTextJsonSerializer();
-
-		public static IElasticLowLevelClient CreateClient(Func<VirtualCluster, VirtualCluster> setup)
+		public static ITransport<ITransportConfigurationValues> CreateClient(Func<VirtualCluster, VirtualCluster> setup)
 		{
-			var cluster = VirtualClusterWith.Nodes(1).Ping(c=>c.SucceedAlways());
+			var cluster = Virtual.Elasticsearch.Bootstrap(numberOfNodes: 1).Ping(c=>c.SucceedAlways());
 			var virtualSettings = setup(cluster)
 				.StaticConnectionPool()
 				.AllDefaults();
 
-			var settings = new ConnectionConfiguration(virtualSettings.ConnectionPool, virtualSettings.Connection, Serializer)
+			var settings = new TransportConfiguration(virtualSettings.ConnectionPool, virtualSettings.Connection)
 				.DisablePing()
 				.EnableDebugMode();
-			return new ElasticLowLevelClient(settings);
+			return new Transport<TransportConfiguration>(settings);
 		}
 
 		public static ClientCallRule BulkResponse(this ClientCallRule rule, params int[] statusCodes) =>
@@ -37,9 +35,9 @@ namespace Elastic.Ingest.Tests
 			private int _retries;
 			private int _maxRetriesExceeded;
 
-			public TestSession(IElasticLowLevelClient client)
+			public TestSession(ITransport<ITransportConfigurationValues> transport)
 			{
-				Client = client;
+				Transport = transport;
 				BufferOptions = new BufferOptions<Base>()
 				{
 					ConcurrentConsumers = 1,
@@ -55,13 +53,13 @@ namespace Elastic.Ingest.Tests
 					RetryCallBack = (list) => Interlocked.Increment(ref _retries),
 					ExceptionCallback= (e) => LastException = e
 				};
-				ChannelOptions = new ElasticsearchChannelOptions<Base>(client) { BufferOptions = BufferOptions };
+				ChannelOptions = new ElasticsearchChannelOptions<Base>(transport) { BufferOptions = BufferOptions };
 				Channel = new ElasticsearchChannel<Base>(ChannelOptions);
 			}
 
 			public ElasticsearchChannel<Base> Channel { get; }
 
-			public IElasticLowLevelClient Client { get; }
+			public ITransport<ITransportConfigurationValues> Transport { get; }
 
 			public ElasticsearchChannelOptions<Base> ChannelOptions { get; }
 
@@ -89,8 +87,8 @@ namespace Elastic.Ingest.Tests
 			}
 		}
 
-		public static TestSession CreateTestSession(IElasticLowLevelClient client) =>
-			new TestSession(client);
+		public static TestSession CreateTestSession(ITransport<ITransportConfigurationValues> transport) =>
+			new TestSession(transport);
 
 		public static void WriteAndWait(this TestSession session, int events = 1)
 		{

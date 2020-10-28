@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using Elastic.CommonSchema;
 using Elastic.Elasticsearch.Xunit;
@@ -32,12 +33,14 @@ namespace Elasticsearch.Extensions.Logging.IntegrationTests
 		[Fact]
 		public async Task LogsEndUpInCluster()
 		{
-			using var _ = CreateLogger(out var logger, out var indexPrefix);
+			using var _ = CreateLogger(out var logger, out var indexPrefix, out var waitHandle);
 
 			logger.LogError("an error occured");
 
-			// TODO make sure we can await something here on ElasticsearchDataShipper
-			await Task.Delay(TimeSpan.FromSeconds(10));
+			if (!waitHandle.Wait(TimeSpan.FromSeconds(10)))
+				throw new Exception("Logs were not written to Elasticsearch within margin of 10 seconds");
+
+			var refresh = await Client.Indices.RefreshAsync($"{indexPrefix}-*");
 
 			var response = Client.Search<LogEvent>(new SearchRequest($"{indexPrefix}-*"));
 

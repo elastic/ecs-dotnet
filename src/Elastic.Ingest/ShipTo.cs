@@ -4,7 +4,7 @@
 
 using System;
 using System.Collections.Generic;
-using Elasticsearch.Net;
+using Elastic.Transport;
 
 namespace Elastic.Ingest
 {
@@ -19,11 +19,11 @@ namespace Elastic.Ingest
 		public string? Username { get; }
 		public string? Password { get; }
 
-		public IElasticLowLevelClient? Client { get; set; }
+		public ITransport<ITransportConfigurationValues>? Transport { get; set; }
 
 		public ShipTo() => ConnectionPool = ConnectionPoolType.SingleNode;
 
-		public ShipTo(IElasticLowLevelClient client) => Client = client;
+		public ShipTo(ITransport<ITransportConfigurationValues> client) => Transport = client;
 
 		public ShipTo(IEnumerable<Uri> nodeUris, ConnectionPoolType connectionPoolType)
 		{

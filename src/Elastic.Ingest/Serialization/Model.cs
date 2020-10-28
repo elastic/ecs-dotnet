@@ -3,23 +3,24 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Elasticsearch.Net;
+using Elastic.Transport;
+using Elastic.Transport.Products.Elasticsearch.Failures;
 
 namespace Elastic.Ingest.Serialization
 {
-	public class BulkResponse : IElasticsearchResponse
+	public class BulkResponse : ITransportResponse
 	{
 		[JsonIgnore]
-		IApiCallDetails IElasticsearchResponse.ApiCall { get; set; } = null!;
+		IApiCallDetails ITransportResponse.ApiCall { get; set; } = null!;
 		[JsonIgnore]
-		public IApiCallDetails ApiCall => ((IElasticsearchResponse)this).ApiCall;
+		public IApiCallDetails ApiCall => ((ITransportResponse)this).ApiCall;
 
 		[JsonPropertyName("items")]
 		[JsonConverter(typeof(ResponseItemsConverter))]
 		public IReadOnlyCollection<BulkResponseItem> Items { get; set; } = null!;
 
 		[JsonPropertyName("error")]
-		public ServerError? Error { get; set; }
+		public ErrorCause? Error { get; set; }
 
 		public bool TryGetServerErrorReason(out string? reason)
 		{
@@ -33,19 +34,8 @@ namespace Elastic.Ingest.Serialization
 	public class BulkResponseItem
 	{
 		public string Action { get; internal set; } = null!;
-		public ServerError? Error { get; internal set; }
+		public ErrorCause? Error { get; internal set; }
 		public int Status { get; internal set; }
-	}
-
-	// TODO reuse error from Elasticsearch.Net when it shifts to System.Text.Json
-	public class ServerError
-	{
-		[JsonPropertyName("index")]
-		public string Index { get; internal set; } = null!;
-		[JsonPropertyName("reason")]
-		public string Reason { get; internal set; } = null!;
-		[JsonPropertyName("type")]
-		public string Type { get; internal set; } = null!;
 	}
 
 	public class ResponseItemsConverter : JsonConverter<IReadOnlyCollection<BulkResponseItem>>
@@ -83,7 +73,7 @@ namespace Elastic.Ingest.Serialization
 			reader.Read();
 			var depth = reader.CurrentDepth;
 			var status = 0;
-			ServerError? error = null;
+			ErrorCause? error = null;
 			var action = reader.GetString();
 			while (reader.Read() && reader.CurrentDepth >= depth)
 			{
@@ -98,7 +88,7 @@ namespace Elastic.Ingest.Serialization
 						break;
 					case "error":
 						reader.Read();
-						error = JsonSerializer.Deserialize<ServerError>(ref reader, options);
+						error = JsonSerializer.Deserialize<ErrorCause>(ref reader, options);
 						break;
 				}
 			}
