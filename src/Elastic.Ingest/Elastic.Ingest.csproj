@@ -15,8 +15,5 @@
     <PackageReference Include="System.Threading.Channels" Version="4.7.1" />
   </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\Elastic.CommonSchema\Elastic.CommonSchema.csproj" />
-  </ItemGroup>
 
 </Project>
