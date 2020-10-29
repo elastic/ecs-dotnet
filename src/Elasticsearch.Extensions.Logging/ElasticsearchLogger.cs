@@ -9,7 +9,7 @@ using System.Diagnostics;
 using System.Text;
 using System.Threading;
 using Elastic.CommonSchema;
-using Elastic.Ingest;
+using Elastic.Ingest.Elasticsearch;
 using Microsoft.Extensions.Logging;
 
 namespace Elasticsearch.Extensions.Logging

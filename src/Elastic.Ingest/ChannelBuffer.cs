@@ -20,7 +20,7 @@ namespace Elastic.Ingest
 	/// every N messages OR in the case messages do no flow fast enough or stop before N messages were received every
 	/// M timespan.
 	/// </summary>
-	internal class ChannelBuffer<TEvent> : IChannelBuffer, IDisposable
+	public class ChannelBuffer<TEvent> : IChannelBuffer, IDisposable
 	{
 		private readonly int _maxBufferSize;
 		private CancellationTokenSource _breaker = new CancellationTokenSource();

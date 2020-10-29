@@ -6,6 +6,7 @@ using Elastic.CommonSchema;
 using Elastic.Elasticsearch.Xunit;
 using Elastic.Elasticsearch.Xunit.XunitPlumbing;
 using Elastic.Ingest;
+using Elastic.Ingest.Elasticsearch;
 using Elasticsearch.Net;
 using FluentAssertions;
 using Microsoft.Extensions.Logging;

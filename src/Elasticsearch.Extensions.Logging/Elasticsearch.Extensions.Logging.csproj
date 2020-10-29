@@ -18,7 +18,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Elastic.CommonSchema\Elastic.CommonSchema.csproj" />
-    <ProjectReference Include="..\Elastic.Ingest\Elastic.Ingest.csproj" />
+    <ProjectReference Include="..\Elastic.Ingest.Elasticsearch\Elastic.Ingest.Elasticsearch.csproj" />
   </ItemGroup>
   
 </Project>

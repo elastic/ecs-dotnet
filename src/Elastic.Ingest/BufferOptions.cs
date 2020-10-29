@@ -5,14 +5,13 @@
 using System;
 using System.Collections.Generic;
 using System.Threading;
-using Elastic.Ingest.Serialization;
 
 namespace Elastic.Ingest
 {
 	/// <summary>
 	/// Controls how instances of <see cref="TEvent"/>'s are batched and send to Elasticsearch. These can not be dynamically updated.
 	/// </summary>
-	public class BufferOptions<TEvent>
+	public class BufferOptions<TEvent, TResponse, TBulkResponseItem>
 	{
 		/// <summary>
 		/// The maximum number of <see cref="TEvent"/> instances that can be queued in memory. If this threshold is reached, events will be dropped
@@ -50,7 +49,7 @@ namespace Elastic.Ingest
 		public Action<TEvent>? PublishRejectionCallback { get; set; }
 
 		/// <summary> Subscribe to be notified of events that can not be stored in Elasticsearch</summary>
-		public Action<List<(TEvent, BulkResponseItem)>>? ServerRejectionCallback { get; set; }
+		public Action<List<(TEvent, TBulkResponseItem)>>? ServerRejectionCallback { get; set; }
 
 		/// <summary> Subscribe to be notified of events that are retryable but did not store correctly withing the boundaries of <see cref="MaxRetries"/></summary>
 		public Action<List<TEvent>>? MaxRetriesExceededCallback { get; set; }
@@ -59,7 +58,7 @@ namespace Elastic.Ingest
 		public Action<List<TEvent>>? RetryCallBack { get; set; }
 
 		/// <summary> A generic hook to be notified of any bulk request being initiated by <see cref="ElasticsearchChannel{TEvent}"/> </summary>
-		public Action<BulkResponse, IChannelBuffer> ElasticsearchResponseCallback { get; set; } = (r, b) => { };
+		public Action<TResponse, IChannelBuffer> ElasticsearchResponseCallback { get; set; } = (r, b) => { };
 
 		public Action<Exception>? ExceptionCallback { get; set; }
 

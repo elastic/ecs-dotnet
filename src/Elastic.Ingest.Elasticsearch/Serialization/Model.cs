@@ -6,7 +6,7 @@ using System.Text.Json.Serialization;
 using Elastic.Transport;
 using Elastic.Transport.Products.Elasticsearch.Failures;
 
-namespace Elastic.Ingest.Serialization
+namespace Elastic.Ingest.Elasticsearch.Serialization
 {
 	public class BulkResponse : ITransportResponse
 	{

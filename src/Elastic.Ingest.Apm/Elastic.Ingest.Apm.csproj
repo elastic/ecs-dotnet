@@ -1,0 +1,19 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <Description>TODO</Description>
+    <PackageTags>TODO</PackageTags>
+    <LangVersion>latest</LangVersion>
+    <Nullable>enable</Nullable>
+    <IsPackable>false</IsPackable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Elastic.Ingest\Elastic.Ingest.csproj" />
+<!--    <ProjectReference Include="..\..\..\elastic-transport-net\src\Elastic.Transport\Elastic.Transport.csproj" />-->
+    <PackageReference Include="Elastic.Transport" Version="0.1.3" />
+  </ItemGroup>
+
+
+</Project>
