@@ -22,14 +22,17 @@ namespace Elasticsearch.Extensions.Logging
 		private readonly IOptionsMonitor<ElasticsearchLoggerOptions> _options;
 
 		private readonly IDisposable _optionsReloadToken;
+
+		private IExternalScopeProvider _scopeProvider = default!;
 		private readonly ElasticsearchChannel<LogEvent> _shipper;
 
-		public ElasticsearchLoggerProvider(IOptionsMonitor<ElasticsearchLoggerOptions> options, 
-			IEnumerable<IChannelSetup> channelConfigurations)
+		public ElasticsearchLoggerProvider(IOptionsMonitor<ElasticsearchLoggerOptions> options,
+			IEnumerable<IChannelSetup> channelConfigurations
+		)
 		{
 			_options = options;
 			_channelConfigurations = channelConfigurations.ToArray();
-			
+
 			var channelOptions = CreateChannelOptions(options.CurrentValue, _channelConfigurations);
 			_shipper = new ElasticsearchChannel<LogEvent>(channelOptions);
 
@@ -37,8 +40,6 @@ namespace Elasticsearch.Extensions.Logging
 			ReloadLoggerOptions(options.CurrentValue);
 			_optionsReloadToken = _options.OnChange(ReloadLoggerOptions);
 		}
-
-		private IExternalScopeProvider _scopeProvider = default!;
 
 		public static Func<DateTimeOffset> LocalDateTimeProvider { get; set; } = () => DateTimeOffset.UtcNow;
 
@@ -60,7 +61,8 @@ namespace Elasticsearch.Extensions.Logging
 		}
 
 		private ElasticsearchChannelOptions<LogEvent> CreateChannelOptions(ElasticsearchLoggerOptions options,
-			IChannelSetup[] channelConfigurations)
+			IChannelSetup[] channelConfigurations
+		)
 		{
 			var channelOptions = new ElasticsearchChannelOptions<LogEvent>();
 			channelOptions.Index = options.Index;
@@ -71,25 +73,17 @@ namespace Elasticsearch.Extensions.Logging
 			channelOptions.TimestampLookup = l => l.Timestamp;
 
 			if (options.ShipTo.ConnectionPoolType == ConnectionPoolType.Cloud
-				|| (options.ShipTo.ConnectionPoolType == ConnectionPoolType.Unknown && !string.IsNullOrEmpty(options.ShipTo.CloudId))) {
+				|| options.ShipTo.ConnectionPoolType == ConnectionPoolType.Unknown && !string.IsNullOrEmpty(options.ShipTo.CloudId))
+			{
 				if (!string.IsNullOrWhiteSpace(options.ShipTo.Username))
-				{
 					channelOptions.ShipTo = new ShipTo(options.ShipTo.CloudId, options.ShipTo.Username, options.ShipTo.Password);
-				}
 				else
-				{
 					channelOptions.ShipTo = new ShipTo(options.ShipTo.CloudId, options.ShipTo.ApiKey);
-				}
-			} 
-			else 
-			{
+			}
+			else
 				channelOptions.ShipTo = new ShipTo(options.ShipTo.NodeUris, options.ShipTo.ConnectionPoolType);
-			}
 
-			foreach (var channelSetup in channelConfigurations)
-			{
-				channelSetup.ConfigureChannel(channelOptions);
-			}
+			foreach (var channelSetup in channelConfigurations) channelSetup.ConfigureChannel(channelOptions);
 
 			return channelOptions;
 		}
@@ -98,7 +92,7 @@ namespace Elasticsearch.Extensions.Logging
 		{
 			var channelOptions = CreateChannelOptions(options, _channelConfigurations);
 			_shipper.Options = channelOptions;
-			
+
 			foreach (var logger in _loggers) logger.Value.Options = options;
 		}
 	}
