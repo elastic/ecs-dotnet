@@ -6,9 +6,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
 using System.Text;
-using System.Text.RegularExpressions;
 using System.Threading;
 using Elastic.CommonSchema;
 using Elastic.Ingest;
@@ -108,22 +106,19 @@ namespace Elasticsearch.Extensions.Logging
 		{
 			if (state is IEnumerable<KeyValuePair<string, object>> stateValues)
 			{
-				if (stateValues.Count() > 0)
+				foreach (var kvp in stateValues)
 				{
-					if (logEvent.Labels == null) logEvent.Labels = new Dictionary<string, object>();
-
-					foreach (var kvp in stateValues)
+					if (kvp.Key == "{OriginalFormat}")
 					{
-						if (kvp.Key == "{OriginalFormat}")
-						{
-							logEvent.MessageTemplate = kvp.Value.ToString();
-							continue;
-						}
-
-						if (CheckTracingValues(logEvent, kvp)) continue;
-
-						logEvent.Labels[kvp.Key] = FormatValue(kvp.Value);
+						logEvent.MessageTemplate = kvp.Value.ToString();
+						continue;
 					}
+
+					if (CheckTracingValues(logEvent, kvp)) continue;
+
+					logEvent.Labels ??= new Dictionary<string, object>();
+
+					logEvent.Labels[kvp.Key] = FormatValue(kvp.Value);
 				}
 			}
 		}
