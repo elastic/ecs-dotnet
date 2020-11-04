@@ -304,7 +304,7 @@ namespace Elasticsearch.Extensions.Logging
 
 		private void WriteName(StringBuilder stringBuilder, string name)
 		{
-			foreach (var c in name.Cast<char>())
+			foreach (var c in name)
 			{
 				if (c == ' ')
 					stringBuilder.Append('_');
@@ -317,7 +317,7 @@ namespace Elasticsearch.Extensions.Logging
 
 		private void WriteValue(StringBuilder stringBuilder, string value)
 		{
-			foreach (var c in value.Cast<char>())
+			foreach (var c in value)
 			{
 				if (c == '"' || c == '\\')
 				{
