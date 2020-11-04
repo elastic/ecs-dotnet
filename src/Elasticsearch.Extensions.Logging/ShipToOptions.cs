@@ -19,7 +19,7 @@ namespace Elasticsearch.Extensions.Logging
 		/// </summary>
 		public string CloudId { get; set; } = "";
 
-   		/// <summary>
+		/// <summary>
 		/// Gets or sets the connection pool type. Default for multiple nodes is <c>Sniffing</c>; other supported values are
 		/// <c>Static</c>, <c>Sticky</c>, or force to <c>SingleNode</c>.
 		/// </summary>
@@ -40,5 +40,5 @@ namespace Elasticsearch.Extensions.Logging
 		/// Gets or sets the username, where connection pool type is Cloud, and authenticating via username/password.
 		/// </summary>
 		public string Username { get; set; } = "";
-    }
+	}
 }
