@@ -39,7 +39,7 @@ namespace Elasticsearch.Extensions.Logging
 
 		public void Dispose()
 		{
-			_optionsReloadToken?.Dispose();
+			_optionsReloadToken.Dispose();
 			_shipper.Dispose();
 		}
 
