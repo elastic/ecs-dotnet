@@ -26,5 +26,7 @@ namespace Elastic.Ingest.Elasticsearch
 		public TimeSpan? IndexOffset { get; set; }
 
 		public Func<TEvent, DateTimeOffset?> TimestampLookup { get; set; } = null!;
+
+		public Func<TEvent, string> BulkOperationIdLookup { get; set; } = null!;
 	}
 }

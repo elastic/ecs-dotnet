@@ -30,12 +30,14 @@ namespace Elastic.Ingest.Apm.Example
 				.EnableDebugMode()
 				.Authentication(new ApiKey(args[1]));
 			var transport = new Transport<TransportConfiguration>(config);
-			var numberOfEvents = 200;
+
+
+			var numberOfEvents = 800;
 			var options =
 				new ApmBufferOptions()
 				{
 					ConcurrentConsumers = 1,
-					MaxConsumerBufferSize = numberOfEvents,
+					MaxConsumerBufferSize = 200,
 					MaxConsumerBufferLifetime = TimeSpan.FromSeconds(10),
 					WaitHandle = handle,
 					MaxRetries = 3,
@@ -55,9 +57,6 @@ namespace Elastic.Ingest.Apm.Example
 			{
 				BufferOptions = options,
 				ShipTo = new ShipTo(transport)
-				{
-
-				}
 			};
 			var channel = new ApmChannel(channelOptions);
 

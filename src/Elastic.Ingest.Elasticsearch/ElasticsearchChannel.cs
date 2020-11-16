@@ -235,7 +235,11 @@ namespace Elastic.Ingest
 				if (_options.IndexOffset.HasValue) indexTime = indexTime.ToOffset(_options.IndexOffset.Value);
 
 				var index = string.Format(_options.Index, indexTime);
-				var indexHeader = new { index = new { _index = index } };
+				var id = Options.BulkOperationIdLookup?.Invoke(@event);
+				var indexHeader =
+					!string.IsNullOrWhiteSpace(id)
+						? new Dictionary<string, object> { { "index", new { _index = index, _id = id } } }
+						: new Dictionary<string, object> { { "create", new { _index = index } } };
 				await JsonSerializer.SerializeAsync(stream, indexHeader, indexHeader.GetType(), ElasticsearchChannelStatics.SerializerOptions, ctx)
 					.ConfigureAwait(false);
 				await stream.WriteAsync(ElasticsearchChannelStatics.LineFeed, 0, 1, ctx).ConfigureAwait(false);
