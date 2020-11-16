@@ -2,6 +2,7 @@
 // Elasticsearch B.V licenses this file to you under the Apache 2.0 License.
 // See the LICENSE file in the project root for more information
 
+using System;
 using System.Collections.Generic;
 using Elastic.CommonSchema;
 
@@ -14,5 +15,11 @@ namespace Elasticsearch.Extensions.Logging
 
 		// Custom field; use capitalisation as per ECS
 		public IList<string>? Scopes { get; set; }
+
+		protected override void WriteAdditionalProperties(Action<string, object> write)
+		{
+			if (MessageTemplate != null) write("MessageTemplate", MessageTemplate);
+			if (Scopes != null) write("Scopes", Scopes);
+		}
 	}
 }
