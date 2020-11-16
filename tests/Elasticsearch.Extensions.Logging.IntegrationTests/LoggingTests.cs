@@ -17,8 +17,6 @@ namespace Elasticsearch.Extensions.Logging.IntegrationTests
 {
 	public class LoggingTests : IClusterFixture<LoggingCluster>
 	{
-		private ElasticClient Client { get; }
-
 		public LoggingTests(LoggingCluster cluster) =>
 			Client = cluster.GetOrAddClient(c =>
 			{
@@ -29,28 +27,7 @@ namespace Elasticsearch.Extensions.Logging.IntegrationTests
 				return new ElasticClient(settings);
 			});
 
-		private IDisposable CreateLogger(out ILogger logger, out string indexPrefix)
-		{
-			var pre = $"logs-{Guid.NewGuid().ToString("N").ToLowerInvariant().Substring(0, 6)}";
-			var options = new ConfigureOptions<ElasticsearchLoggerOptions>(
-				o =>
-				{
-					o.Index = $"{pre}-{{0:yyyy.MM.dd}}";
-					var nodes = Client.ConnectionSettings.ConnectionPool.Nodes.Select(n => n.Uri).ToArray();
-					o.ShipTo = new ShipTo(nodes, ConnectionPoolType.Static);
-
-				});
-
-			var optionsFactory = new OptionsFactory<ElasticsearchLoggerOptions>(
-				new []{ options }, Enumerable.Empty<IPostConfigureOptions<ElasticsearchLoggerOptions>>());
-			var optionsMonitor = new OptionsMonitor<ElasticsearchLoggerOptions>(
-				optionsFactory, Enumerable.Empty<IOptionsChangeTokenSource<ElasticsearchLoggerOptions>>(), new OptionsCache<ElasticsearchLoggerOptions>());
-			var loggerFactory = new LoggerFactory(
-				new[] { new ElasticsearchLoggerProvider(optionsMonitor) }, new LoggerFilterOptions { MinLevel = LogLevel.Information });
-			logger = loggerFactory.CreateLogger<ElasticsearchLogger>();
-			indexPrefix = pre;
-			return loggerFactory;
-		}
+		private ElasticClient Client { get; }
 
 		[Fact]
 		public async Task LogsEndUpInCluster()
@@ -70,7 +47,30 @@ namespace Elasticsearch.Extensions.Logging.IntegrationTests
 			var loggedError = response.Documents.First();
 			loggedError.Message.Should().Be("an error occured");
 			loggedError.Ecs.Version.Should().Be(Base.Version);
+		}
 
+		private IDisposable CreateLogger(out ILogger logger, out string indexPrefix)
+		{
+			var pre = $"logs-{Guid.NewGuid().ToString("N").ToLowerInvariant().Substring(0, 6)}";
+			var options = new ConfigureOptions<ElasticsearchLoggerOptions>(
+				o =>
+				{
+					o.Index = $"{pre}-{{0:yyyy.MM.dd}}";
+					var nodes = Client.ConnectionSettings.ConnectionPool.Nodes.Select(n => n.Uri).ToArray();
+					o.ShipTo = new ShipToOptions() { NodeUris = nodes, ConnectionPoolType = ConnectionPoolType.Static };
+				});
+			var channelSetup = new IChannelSetup[] { };
+
+			var optionsFactory = new OptionsFactory<ElasticsearchLoggerOptions>(
+				new[] { options }, Enumerable.Empty<IPostConfigureOptions<ElasticsearchLoggerOptions>>());
+			var optionsMonitor = new OptionsMonitor<ElasticsearchLoggerOptions>(
+				optionsFactory, Enumerable.Empty<IOptionsChangeTokenSource<ElasticsearchLoggerOptions>>(),
+				new OptionsCache<ElasticsearchLoggerOptions>());
+			var loggerFactory = new LoggerFactory(
+				new[] { new ElasticsearchLoggerProvider(optionsMonitor, channelSetup) }, new LoggerFilterOptions { MinLevel = LogLevel.Information });
+			logger = loggerFactory.CreateLogger<ElasticsearchLogger>();
+			indexPrefix = pre;
+			return loggerFactory;
 		}
 	}
 }

@@ -23,18 +23,21 @@ namespace Elastic.Ingest
 		public static readonly BulkRequestParameters RequestParams =
 			new BulkRequestParameters { QueryString = { { "filter_path", "error, items.*.status,items.*.error" } } };
 
+		public static readonly HashSet<int> RetryStatusCodes = new HashSet<int>(new[] { 502, 503, 504, 429 });
+
 		public static readonly JsonSerializerOptions SerializerOptions = new JsonSerializerOptions
 		{
-			IgnoreNullValues = true,
-			Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
+			IgnoreNullValues = true, Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
 		};
-
-		public static readonly HashSet<int> RetryStatusCodes = new HashSet<int>(new[] { 502, 503, 504, 429 });
 	}
 
 	public class ElasticsearchChannel<TEvent> : IDisposable
 	{
 		private readonly List<Task> _backgroundTasks = new List<Task>();
+
+		private IElasticLowLevelClient _lowLevelClient = default!;
+
+		private ElasticsearchChannelOptions<TEvent> _options;
 
 		public ElasticsearchChannel(ElasticsearchChannelOptions<TEvent> options)
 		{
@@ -54,21 +57,23 @@ namespace Elastic.Ingest
 			});
 
 			var waitHandle = maxConsumers == 1 ? BufferOptions.WaitHandle : null;
-			Task ConsumeMessages() => Consume(BufferOptions.MaxConsumerBufferSize, BufferOptions.MaxConsumerBufferLifetime, waitHandle);
+
+			Task ConsumeMessages()
+			{
+				return Consume(BufferOptions.MaxConsumerBufferSize, BufferOptions.MaxConsumerBufferLifetime, waitHandle);
+			}
 
 			// TODO I Think Task.Run is actually fine here, also allows us to box and capture this in the lambda to StartNew.
 			// could be a config option
 			for (var i = 0; i < maxConsumers; i++)
-				_backgroundTasks.Add(Task.Factory.StartNew(async () => await ConsumeMessages().ConfigureAwait(false), TaskCreationOptions.LongRunning).Unwrap());
+				_backgroundTasks.Add(Task.Factory.StartNew(async () => await ConsumeMessages().ConfigureAwait(false), TaskCreationOptions.LongRunning)
+					.Unwrap());
 		}
 
-		private IElasticLowLevelClient _lowLevelClient = default!;
-
-		public Channel<TEvent> Channel { get; }
-		public ChannelWriter<TEvent> Writer => Channel.Writer;
 		public BufferOptions<TEvent> BufferOptions => _options.BufferOptions;
 
-		private ElasticsearchChannelOptions<TEvent> _options;
+		public Channel<TEvent> Channel { get; }
+
 		public ElasticsearchChannelOptions<TEvent> Options
 		{
 			get => _options;
@@ -79,6 +84,19 @@ namespace Elastic.Ingest
 			}
 		}
 
+		public ChannelWriter<TEvent> Writer => Channel.Writer;
+
+		// TODO private, make reload support very explicit (change shipto only?)
+
+		public void Dispose()
+		{
+			try
+			{
+				// TODO cancellation
+				foreach (var t in _backgroundTasks) t.Dispose();
+			}
+			catch { }
+		}
 
 
 		public bool TryWrite(TEvent item)
@@ -167,11 +185,51 @@ namespace Elastic.Ingest
 					// otherwise if retryable items still exist and the user wants to be notified notify the user
 					else if (items.Count > 0 && atEndOfRetries)
 						Options.BufferOptions.MaxRetriesExceededCallback?.Invoke(items);
-
 				}
 				buffer.Reset();
 				bufferOptionsWaitHandle?.Set();
 			}
+		}
+
+		private void UpdateClient()
+		{
+			if (_options.ShipTo.Client != null)
+			{
+				_lowLevelClient = _options.ShipTo.Client;
+				return;
+			}
+
+			// TODO: Check if Uri has changed before recreating
+			// TODO: Injectable factory? Or some way of testing.
+			var nodes = _options.ShipTo.NodeUris?.ToArray() ?? Array.Empty<Uri>();
+
+			ConnectionConfiguration settings;
+			var serializer = new SystemTextJsonSerializer();
+
+			if (nodes.Length == 0 && _options.ShipTo.ConnectionPool != ConnectionPoolType.Cloud)
+			{
+				// This is SingleNode with "http://localhost:9200"
+				var singleNodePool = new SingleNodeConnectionPool(new Uri("http://localhost:9200"));
+				settings = new ConnectionConfiguration(singleNodePool, serializer);
+			}
+			else if (_options.ConnectionPoolType == ConnectionPoolType.SingleNode
+				|| _options.ConnectionPoolType == ConnectionPoolType.Unknown && nodes.Length == 1)
+			{
+				var singleNodePool = new SingleNodeConnectionPool(nodes[0]);
+				settings = new ConnectionConfiguration(singleNodePool, serializer);
+			}
+			else
+			{
+				var connectionPool = _options.ShipTo.CreateConnectionPool();
+				settings = new ConnectionConfiguration(connectionPool, serializer);
+			}
+
+			settings = settings.Proxy(new Uri("http://localhost:8080"), "", "");
+			settings = settings.EnableDebugMode();
+
+			var lowlevelClient = new ElasticLowLevelClient(settings);
+
+			_ = Interlocked.Exchange(ref _lowLevelClient, lowlevelClient);
 		}
 
 		private async Task WriteBufferToStreamAsync(List<TEvent> b, Stream stream, CancellationToken ctx)
@@ -198,60 +256,6 @@ namespace Elastic.Ingest
 
 				await stream.WriteAsync(ElasticsearchChannelStatics.LineFeed, 0, 1, ctx).ConfigureAwait(false);
 			}
-		}
-
-		// TODO private, make reload support very explicit (change shipto only?)
-
-		public void Dispose()
-		{
-			try
-			{
-				// TODO cancellation
-				foreach (var t in _backgroundTasks) t.Dispose();
-			}
-			catch { }
-		}
-
-		private void UpdateClient()
-		{
-			if (_options.ShipTo.Client != null)
-			{
-				_lowLevelClient = _options.ShipTo.Client;
-				return;
-			}
-
-
-			// TODO: Check if Uri has changed before recreating
-			// TODO: Injectable factory? Or some way of testing.
-			var connectionPool = _options.ShipTo.CreateConnectionPool();
-			var nodes = _options.ShipTo.NodeUris?.ToArray() ?? Array.Empty<Uri>();
-
-			ConnectionConfiguration settings;
-			var serializer = new SystemTextJsonSerializer();
-
-			if (nodes.Length == 0 && _options.ShipTo.ConnectionPool != ConnectionPoolType.Cloud)
-			{
-				// This is SingleNode with "http://localhost:9200"
-				var singleNodePool = new SingleNodeConnectionPool(new Uri("http://localhost:9200"));
-				settings = new ConnectionConfiguration(singleNodePool, serializer: serializer);
-			}
-			else if (_options.ConnectionPoolType == ConnectionPoolType.SingleNode
-				|| _options.ConnectionPoolType == ConnectionPoolType.Unknown && nodes.Length == 1)
-			{
-				var singleNodePool = new SingleNodeConnectionPool(nodes[0]);
-				settings = new ConnectionConfiguration(singleNodePool, serializer: serializer);
-			}
-			else
-			{
-				settings = new ConnectionConfiguration(connectionPool, serializer: serializer);
-			}
-
-			settings = settings.Proxy(new Uri("http://localhost:8080"), "", "");
-			settings = settings.EnableDebugMode();
-
-			var lowlevelClient = new ElasticLowLevelClient(settings);
-
-			_ = Interlocked.Exchange(ref _lowLevelClient, lowlevelClient);
 		}
 	}
 }
