@@ -129,9 +129,22 @@ namespace Elasticsearch.Extensions.Logging
 
 			if (activity != null)
 			{
+				// Older version of Activity does not have TraceId, SpanId fields, but we can infer them.
+
 				// Unique identifier of the trace.
 				// A trace groups multiple events like transactions that belong together. For example, a user request handled by multiple inter-connected services.
 				logEvent.Trace = new Trace() { Id = activity.RootId };
+
+				// Use custom field Span.id to hold the span for ECS 1.5; can be replaced in ECS 1.6 with span.id
+				var spanId = ExtractW3cSpanIdFromActivityId(activity.Id);
+				if (spanId != null)
+				{
+					logEvent.Span = new Span() { Id = spanId };
+
+					// Use custom field Parent.id to hold the parent span ID
+					var parentId = ExtractW3cSpanIdFromActivityId(activity.ParentId);
+					logEvent.Parent = new ParentSpan() { Id = parentId ?? "0000000000000000" };
+				}
 			}
 			else
 			{
@@ -156,7 +169,6 @@ namespace Elasticsearch.Extensions.Logging
 				Log = new Log { Level = LogEventToEcsHelper.GetLogLevelString(logLevel), Logger = categoryName },
 				Event = new Event { Action = eventId.Name, Code = eventId.Id.ToString(), Severity = LogEventToEcsHelper.GetSeverity(logLevel) }
 			};
-
 
 			if (exception != null) AddException(exception, logEvent);
 
@@ -189,6 +201,32 @@ namespace Elasticsearch.Extensions.Logging
 
 		private bool CheckTracingValues(LogEvent logEvent, KeyValuePair<string, object> kvp)
 		{
+			if (kvp.Key == "parent.id")
+			{
+				var value = FormatValue(kvp.Value);
+				if (!string.IsNullOrWhiteSpace(value))
+				{
+					if (logEvent.Parent == null) logEvent.Parent = new ParentSpan();
+
+					logEvent.Parent.Id = value;
+				}
+
+				return true;
+			}
+
+			if (kvp.Key == "span.id")
+			{
+				var value = FormatValue(kvp.Value);
+				if (!string.IsNullOrWhiteSpace(value))
+				{
+					if (logEvent.Span == null) logEvent.Span = new Span();
+
+					logEvent.Span.Id = value;
+				}
+
+				return true;
+			}
+
 			if (kvp.Key == "trace.id")
 			{
 				var value = FormatValue(kvp.Value);
@@ -216,6 +254,30 @@ namespace Elasticsearch.Extensions.Logging
 			}
 
 			return false;
+		}
+
+		private string? ExtractW3cSpanIdFromActivityId(string? activityId)
+		{
+			if (activityId == null) return null;
+
+			// quick short circuit if unexpected length
+			if (activityId.Length != 2 + 32 + 16 + 2 + 3) return null;
+
+			// validate full format (must start with digit, etc)
+			for (var index = 0; index < activityId.Length; index++)
+			{
+				var c = activityId[index];
+				if (index == 2 || index == 2 + 1 + 32 || index == 2 + 1 + 32 + 1 + 16)
+				{
+					if (c != '-') return null;
+				}
+				else
+				{
+					if (c < '0' || c > 'f' || c > '9' && c < 'a') return null;
+				}
+			}
+
+			return activityId.Substring(2 + 1 + 32 + 1, 16);
 		}
 
 		private string FormatEnumerable(IEnumerable enumerable, int depth)
