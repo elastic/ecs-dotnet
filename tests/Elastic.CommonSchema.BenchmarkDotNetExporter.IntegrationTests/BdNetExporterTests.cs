@@ -40,12 +40,12 @@ namespace Elastic.CommonSchema.BenchmarkDotNetExporter.IntegrationTests
 		{
 			var jobs = new List<Job>
 			{
-				Job.ShortRun.With(CoreRuntime.Core30).WithInvocationCount(4).WithUnrollFactor(2),
+				Job.ShortRun.WithRuntime(CoreRuntime.Core30).WithInvocationCount(4).WithUnrollFactor(2),
 			};
 			var config = DefaultConfig.Instance
 				.KeepBenchmarkFiles()
-				.With(jobs.ToArray())
-				.With(MemoryDiagnoser.Default);
+				.AddDiagnoser(MemoryDiagnoser.Default)
+				.AddJob(jobs.ToArray());
 			return config;
 		}
 
@@ -60,7 +60,7 @@ namespace Elastic.CommonSchema.BenchmarkDotNetExporter.IntegrationTests
 				GitRepositoryIdentifier = "repository"
 			};
 			var exporter = new ElasticsearchBenchmarkExporter(options);
-			var config = CreateDefaultConfig().With(exporter);
+			var config = CreateDefaultConfig().AddExporter(exporter);
 			BenchmarkRunner.Run(typeof(Md5VsSha256), config);
 
 			var pipeline = Client.Ingest.GetPipeline(p => p.Id(options.PipelineName));

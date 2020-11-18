@@ -11,11 +11,15 @@
     <PackageReference Include="BenchmarkDotNet.Annotations" Version="0.12.0" />
     <PackageReference Include="Elastic.Elasticsearch.Xunit" Version="0.2.4" />
     <PackageReference Include="JunitXml.TestLogger" Version="2.1.15" />
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.2.0" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.8.0" />
     <PackageReference Include="FluentAssertions" Version="5.9.0" />
     <PackageReference Include="NEST" Version="7.8.1" />
-    <PackageReference Include="xunit" Version="2.4.0" />
-    <PackageReference Include="xunit.runner.visualstudio" Version="2.4.0" />
+    <PackageReference Include="System.Text.Json" Version="5.0.0" />
+    <PackageReference Include="xunit" Version="2.4.1" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.4.3">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
     <PackageReference Include="coverlet.collector" Version="1.0.1" />
   </ItemGroup>
 
