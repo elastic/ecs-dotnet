@@ -65,7 +65,7 @@ Foundational project that contains a full C# representation of ECS. [Learn more.
 
 ### [Elasticsearch.Extensions.Loggging](src/Elasticsearch.Extensions.Logging/ReadMe.md)
 
-Elasticsearch-Logstash-Kibana (ELK) stack logger provider for Microsoft.Extensions.Logging.
+Elastic Stack (ELK) logger provider for `Microsoft.Extensions.Logging`.
 
 Writes direct to Elasticsearch using the Elastic Common Schema, with semantic logging of structured data from message and scope values.
 
