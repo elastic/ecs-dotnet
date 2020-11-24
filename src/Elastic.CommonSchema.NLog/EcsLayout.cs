@@ -6,8 +6,6 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
-using System.Linq;
-using System.Reflection;
 using System.Text;
 using NLog;
 using NLog.Config;
@@ -193,8 +191,11 @@ namespace Elastic.CommonSchema.NLog
 			fullText.WriteLine($"Source: {error.TargetSite?.DeclaringType?.AssemblyQualifiedName}");
 			fullText.WriteLine($"Message: {error.Message}");
 			fullText.WriteLine($"Trace: {error.StackTrace}");
-			fullText.WriteLine($"Location: {frame.GetFileName()}");
-			fullText.WriteLine($"Method: {frame.GetMethod()} ({frame.GetFileLineNumber()}, {frame.GetFileColumnNumber()})");
+			if (frame != null)
+			{
+				fullText.WriteLine($"Location: {frame.GetFileName()}");
+				fullText.WriteLine($"Method: {frame.GetMethod()} ({frame.GetFileLineNumber()}, {frame.GetFileColumnNumber()})");
+			}
 
 			var exception = error.InnerException;
 			while (exception != null)
@@ -205,8 +206,11 @@ namespace Elastic.CommonSchema.NLog
 				fullText.WriteLine($"\tSource: {exception.TargetSite?.DeclaringType?.AssemblyQualifiedName}");
 				fullText.WriteLine($"\tMessage: {exception.Message}");
 				fullText.WriteLine($"\tTrace: {exception.StackTrace}");
-				fullText.WriteLine($"\tLocation: {frame.GetFileName()}");
-				fullText.WriteLine($"\tMethod: {frame.GetMethod()} ({frame.GetFileLineNumber()}, {frame.GetFileColumnNumber()})");
+				if (frame != null)
+				{
+					fullText.WriteLine($"\tLocation: {frame.GetFileName()}");
+					fullText.WriteLine($"\tMethod: {frame.GetMethod()} ({frame.GetFileLineNumber()}, {frame.GetFileColumnNumber()})");
+				}
 
 				exception = exception.InnerException;
 			}
