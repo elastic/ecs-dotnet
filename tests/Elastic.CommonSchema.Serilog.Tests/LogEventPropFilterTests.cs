@@ -4,9 +4,7 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
-using Elastic.Apm;
 using Elastic.Apm.SerilogEnricher;
 using FluentAssertions;
 using Serilog;
