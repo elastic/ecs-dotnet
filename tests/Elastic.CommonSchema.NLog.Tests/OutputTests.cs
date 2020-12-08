@@ -6,7 +6,6 @@ using System;
 using System.Linq;
 using FluentAssertions;
 using Xunit;
-using Xunit.Abstractions;
 
 namespace Elastic.CommonSchema.NLog.Tests
 {
