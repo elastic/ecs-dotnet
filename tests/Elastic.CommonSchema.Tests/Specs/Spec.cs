@@ -10,12 +10,10 @@ namespace Elastic.CommonSchema.Tests.Specs
 {
 	public static class Spec
 	{
-		private const string CommitHash = "868cdfb178bc1959003c62aefed4d5b0c10af4c0";
-
 		static Spec()
 		{
 			using var stream = typeof(Spec).Assembly
-				.GetManifestResourceStream($"Elastic.CommonSchema.Tests.Specs.{(char.IsDigit(CommitHash[0])? "_" + CommitHash : CommitHash)}.spec.json");
+				.GetManifestResourceStream($"Elastic.CommonSchema.Tests.Specs.spec.json");
 
 			using var memoryStream = new MemoryStream();
 			// ReSharper disable once PossibleNullReferenceException
@@ -43,7 +41,7 @@ namespace Elastic.CommonSchema.Tests.Specs
 				if (property != null)
 				{
 					ValidateIndex(property, log, specFieldValue);
-					ValidateType(property, log, specFieldValue);
+					ValidateType(property, specFieldValue);
 				}
 			}
 		}
@@ -61,7 +59,7 @@ namespace Elastic.CommonSchema.Tests.Specs
 		/// <summary>
 		/// Validates that the property value matches the type expected according to the spec.
 		/// </summary>
-		private static void ValidateType(JProperty property, JObject log, JObject specFieldValue)
+		private static void ValidateType(JProperty property, JObject specFieldValue)
 		{
 			if (specFieldValue.ContainsKey("type"))
 			{

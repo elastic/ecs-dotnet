@@ -20,7 +20,8 @@
     </ItemGroup>
 
     <ItemGroup>
-      <EmbeddedResource Include="Specs\868cdfb178bc1959003c62aefed4d5b0c10af4c0\spec.json" />
+      <EmbeddedResource Include="Specs\spec.json" />
+      <None Include="Specs\spec_version.txt" />
     </ItemGroup>
 
 </Project>
