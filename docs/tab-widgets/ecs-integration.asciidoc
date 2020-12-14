@@ -1,12 +1,12 @@
 // tag::serilog[]
 **Serilog Text Formatter**
 
-`EcsTextFormatter` is an `ITextFormatter` implementation in 
-Elastic.CommonSchema.Serilog that formats Serilog events into 
+`EcsTextFormatter` is an `ITextFormatter` implementation in
+Elastic.CommonSchema.Serilog that formats Serilog events into
 a JSON representation that adheres to the Elastic Common Schema specification.
 
 It can be configured in conjunction with a Serilog Sink. To configure
-with the file sink for example, first install 
+with the file sink for example, first install
 https://www.nuget.org/packages/Serilog.Sinks.File/[Serilog.Sinks.File] nuget
 package
 
@@ -33,7 +33,7 @@ logger.Information("Checkout contains {ItemCount} items", 12); <1>
 <1> log a message with the information level
 
 Each Serilog log event will be formatted as single line JSON in the file
-`/path/to/log.txt`. 
+`/path/to/log.txt`.
 
 // end::serilog[]
 
@@ -41,7 +41,7 @@ Each Serilog log event will be formatted as single line JSON in the file
 **NLog Layout**
 
 `EcsLayout` is a `Layout` implementation in Elastic.CommonSchema.NLog that
-formats an NLog event into a JSON representation that adheres to the 
+formats an NLog event into a JSON representation that adheres to the
 Elastic Common Schema specification.
 
 It can be configured as the layout of an NLog Target. To configure
@@ -50,7 +50,7 @@ with the file target for example, using code configuration:
 [source, csharp]
 ----
 var config = new LoggingConfiguration();
-var fileTarget = new FileTarget() 
+var fileTarget = new FileTarget()
 {
     Layout = new EcsLayout(), <1>
     FileName = "/path/to/log.txt"
@@ -61,7 +61,7 @@ var logger = LogManager.GetCurrentClassLogger();
 ----
 <1> Create a new instance of ECS layout
 
-In addition to code configuration, `EcsLayout` can be configured using 
+In addition to code configuration, `EcsLayout` can be configured using
 XML configuration in https://github.com/nlog/NLog/wiki/Configuration-file[`NLog.config`]:
 
 [source,xml]
@@ -98,7 +98,7 @@ Each NLog log event will be formatted as single line JSON in the file
 The following properties determine which properties should be included
 or excluded as metadata of an event
 
-|===
+|====
 | Parameter name | Type | Default | Description
 
 | `IncludeAllProperties`
@@ -113,23 +113,24 @@ or excluded as metadata of an event
 
 | `ExcludeProperties`
 | string
-| 
+|
 | Comma separated string of properties to exclude from metadata
+|====
 
 The following are NLog `Layout` properties used to capture
 information for an event
 
-|===
+|====
 | Parameter name | Type | Default | Description
 
 | `EventAction`
-| string 
-| 
+| string
+|
 | The action captured by the event
 
 | `EventCategory`
 | string
-| 
+|
 | The category of the event.
 
 | `EventId`
@@ -156,22 +157,22 @@ information for an event
 
 | `AgentId`
 | string
-| 
+|
 | The id of the agent collecting events
 
 | `AgentName`
 | string
-| 
+|
 | The name of the agent collecting events
 
 | `AgentType`
 | string
-| 
+|
 | The type of the agent collecting events
 
 | `AgentVersion`
 | string
-| 
+|
 | The version of the agent collecting events
 
 | `ProcessExecutable`
@@ -201,12 +202,12 @@ information for an event
 
 | `ServerAddress`
 | string
-| 
+|
 | The address of the server
 
 | `ServerIp`
 | string
-| 
+|
 | The IP address of the server
 
 | `ServerUser`
@@ -216,7 +217,7 @@ information for an event
 
 | `HostId`
 | string
-| 
+|
 | Unique host id. Hostnames are not always unique, so use an id that is meaningful in your environment
 
 | `HostIp`
@@ -244,6 +245,6 @@ information for an event
 |
 | The line number of the file containing the source code which originated the event
 
-|===
+|====
 
 // end::nlog[]
