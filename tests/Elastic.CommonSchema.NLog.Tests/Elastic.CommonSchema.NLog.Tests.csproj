@@ -26,6 +26,7 @@
     <ItemGroup>
       <ProjectReference Include="..\..\src\Elastic.Apm.NLog\Elastic.Apm.NLog.csproj" />
       <ProjectReference Include="..\..\src\Elastic.CommonSchema.NLog\Elastic.CommonSchema.NLog.csproj" />
+      <ProjectReference Include="..\Elastic.CommonSchema.Tests\Elastic.CommonSchema.Tests.csproj" />
     </ItemGroup>
 
 </Project>

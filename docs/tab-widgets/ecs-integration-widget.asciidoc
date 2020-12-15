@@ -1,0 +1,40 @@
+++++
+<div class="tabs" data-tab-group="os">
+  <div role="tablist" aria-label="ecs-integration">
+    <button role="tab"
+            aria-selected="true"
+            aria-controls="serilog-tab-ecs-integration"
+            id="serilog-ecs-integration">
+      Serilog
+    </button>
+    <button role="tab"
+            aria-selected="false"
+            aria-controls="nlog-tab-ecs-integration"
+            id="nlog-ecs-integration"
+            tabindex="-1">
+      NLog
+    </button>
+  </div>
+  <div tabindex="0"
+       role="tabpanel"
+       id="serilog-tab-ecs-integration"
+       aria-labelledby="serilog-ecs-integration">
+++++
+
+include::ecs-integration.asciidoc[tag=serilog]
+
+++++
+  </div>
+  <div tabindex="0"
+       role="tabpanel"
+       id="nlog-tab-ecs-integration"
+       aria-labelledby="nlog-ecs-integration"
+       hidden="">
+++++
+
+include::ecs-integration.asciidoc[tag=nlog]
+
+++++
+  </div>
+</div>
+++++
