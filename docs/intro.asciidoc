@@ -1,7 +1,7 @@
 [[intro]]
 == Introduction
 
-ECS loggers are formatter/encoder plugins for your favorite logging libraries.
+ECS logging are integrations for your favorite .NET logging libraries.
 They make it easy to format your logs into ECS-compatible JSON.
 
 TIP: Want to learn more about ECS, ECS logging, and other available language plugins?
