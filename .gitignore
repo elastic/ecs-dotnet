@@ -78,3 +78,5 @@ project.lock.json
 /src/.vs/restore.dg
 src/packages/
 BenchmarkDotNet.Artifacts
+
+html_docs
