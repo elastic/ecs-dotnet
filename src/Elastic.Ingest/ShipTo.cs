@@ -19,11 +19,11 @@ namespace Elastic.Ingest
 		public string? Username { get; }
 		public string? Password { get; }
 
-		public ITransport<ITransportConfigurationValues>? Transport { get; set; }
+		public ITransport<ITransportConfiguration>? Transport { get; set; }
 
 		public ShipTo() => ConnectionPool = ConnectionPoolType.SingleNode;
 
-		public ShipTo(ITransport<ITransportConfigurationValues> client) => Transport = client;
+		public ShipTo(ITransport<ITransportConfiguration> client) => Transport = client;
 
 		public ShipTo(IEnumerable<Uri> nodeUris, ConnectionPoolType connectionPoolType)
 		{
@@ -78,11 +78,11 @@ namespace Elastic.Ingest
 				case ConnectionPoolType.Cloud:
 					if (!string.IsNullOrEmpty(ApiKey))
 					{
-						var apiKeyCredentials = new ApiKeyAuthenticationCredentials(ApiKey);
+						var apiKeyCredentials = new ApiKey(ApiKey);
 						return new CloudConnectionPool(CloudId, apiKeyCredentials);
 					}
 
-					var basicAuthCredentials = new BasicAuthenticationCredentials(Username, Password);
+					var basicAuthCredentials = new BasicAuthentication(Username, Password);
 					return new CloudConnectionPool(CloudId, basicAuthCredentials);
 				default:
 					return null;

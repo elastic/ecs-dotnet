@@ -52,9 +52,11 @@ namespace Elasticsearch.Extensions.Logging.IntegrationTests
 			loggedError.Ecs.Version.Should().Be(Base.Version);
 		}
 
-		private IDisposable CreateLogger(out ILogger logger, out string indexPrefix)
+		private IDisposable CreateLogger(out ILogger logger, out string indexPrefix,  out ManualResetEventSlim waitHandle)
 		{
 			var pre = $"logs-{Guid.NewGuid().ToString("N").ToLowerInvariant().Substring(0, 6)}";
+			waitHandle = new ManualResetEventSlim();
+			var slim = waitHandle;
 			var options = new ConfigureOptions<ElasticsearchLoggerOptions>(
 				o =>
 				{
@@ -62,7 +64,11 @@ namespace Elasticsearch.Extensions.Logging.IntegrationTests
 					var nodes = Client.ConnectionSettings.ConnectionPool.Nodes.Select(n => n.Uri).ToArray();
 					o.ShipTo = new ShipToOptions() { NodeUris = nodes, ConnectionPoolType = ConnectionPoolType.Static };
 				});
-			var channelSetup = new IChannelSetup[] { };
+			var channelSetup = new IChannelSetup[] { new ChannelSetup(c =>
+			{
+				c.BufferOptions.WaitHandle = slim;
+				c.BufferOptions.ConcurrentConsumers = 1;
+			}) };
 
 			var optionsFactory = new OptionsFactory<ElasticsearchLoggerOptions>(
 				new[] { options }, Enumerable.Empty<IPostConfigureOptions<ElasticsearchLoggerOptions>>());

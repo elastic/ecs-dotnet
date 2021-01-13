@@ -21,7 +21,7 @@ namespace Elastic.Ingest
 		public static readonly byte[] LineFeed = { (byte)'\n' };
 
 		public static readonly RequestParameters RequestParams =
-			new RequestParameters(HttpMethod.GET, supportsBody: true) { QueryString = { { "filter_path", "error, items.*.status,items.*.error" } } };
+			new RequestParameters { QueryString = { { "filter_path", "error, items.*.status,items.*.error" } } };
 
 		public static readonly HashSet<int> RetryStatusCodes = new HashSet<int>(new[] { 502, 503, 504, 429 });
 
@@ -68,7 +68,7 @@ namespace Elastic.Ingest
 					.Unwrap());
 		}
 
-		private ITransport<ITransportConfigurationValues> _transport = default!;
+		private ITransport<ITransportConfiguration> _transport = default!;
 
 		public Channel<TEvent> Channel { get; }
 		public ChannelWriter<TEvent> Writer => Channel.Writer;

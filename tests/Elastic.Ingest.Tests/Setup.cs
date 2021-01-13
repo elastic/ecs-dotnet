@@ -4,6 +4,7 @@ using System.Threading;
 using Elastic.CommonSchema;
 using Elastic.Transport;
 using Elastic.Transport.VirtualizedCluster;
+using Elastic.Transport.VirtualizedCluster.Audit;
 using Elastic.Transport.VirtualizedCluster.Components;
 using Elastic.Transport.VirtualizedCluster.Rules;
 
@@ -11,12 +12,15 @@ namespace Elastic.Ingest.Tests
 {
 	public static class TestSetup
 	{
-		public static ITransport<ITransportConfigurationValues> CreateClient(Func<VirtualCluster, VirtualCluster> setup)
+		public static ITransport<ITransportConfiguration> CreateClient(Func<VirtualCluster, VirtualCluster> setup)
 		{
 			var cluster = Virtual.Elasticsearch.Bootstrap(numberOfNodes: 1).Ping(c=>c.SucceedAlways());
 			var virtualSettings = setup(cluster)
 				.StaticConnectionPool()
-				.AllDefaults();
+				.Settings(s=>s.DisablePing());
+
+			//var audit = new Auditor(() => virtualSettings);
+			//audit.VisualizeCalls(cluster.ClientCallRules.Count);
 
 			var settings = new TransportConfiguration(virtualSettings.ConnectionPool, virtualSettings.Connection)
 				.DisablePing()
@@ -35,7 +39,7 @@ namespace Elastic.Ingest.Tests
 			private int _retries;
 			private int _maxRetriesExceeded;
 
-			public TestSession(ITransport<ITransportConfigurationValues> transport)
+			public TestSession(ITransport<ITransportConfiguration> transport)
 			{
 				Transport = transport;
 				BufferOptions = new BufferOptions<Base>()
@@ -59,7 +63,7 @@ namespace Elastic.Ingest.Tests
 
 			public ElasticsearchChannel<Base> Channel { get; }
 
-			public ITransport<ITransportConfigurationValues> Transport { get; }
+			public ITransport<ITransportConfiguration> Transport { get; }
 
 			public ElasticsearchChannelOptions<Base> ChannelOptions { get; }
 
@@ -87,7 +91,7 @@ namespace Elastic.Ingest.Tests
 			}
 		}
 
-		public static TestSession CreateTestSession(ITransport<ITransportConfigurationValues> transport) =>
+		public static TestSession CreateTestSession(ITransport<ITransportConfiguration> transport) =>
 			new TestSession(transport);
 
 		public static void WriteAndWait(this TestSession session, int events = 1)

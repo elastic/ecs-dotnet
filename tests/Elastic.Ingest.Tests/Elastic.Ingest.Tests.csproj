@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp3.0</TargetFramework>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
 
   <ItemGroup>
@@ -12,7 +12,7 @@
     <PackageReference Include="xunit.runner.visualstudio" Version="2.3.1" />
 
 
-    <PackageReference Include="Elastic.Transport.VirtualizedCluster" Version="0.1.2" />
+    <PackageReference Include="Elastic.Transport.VirtualizedCluster" Version="0.2.3" />
   </ItemGroup>
 
   <ItemGroup>

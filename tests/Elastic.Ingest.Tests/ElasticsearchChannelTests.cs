@@ -17,6 +17,8 @@ namespace Elastic.Ingest.Tests
 			using var session = TestSetup.CreateTestSession(client);
 			session.WriteAndWait(events: 2);
 
+			session.LastException.Should().BeNull();
+
 			session.Rejections.Should().Be(1);
 			session.TotalBulkRequests.Should().Be(1);
 			session.TotalRetries.Should().Be(0);
@@ -45,6 +47,8 @@ namespace Elastic.Ingest.Tests
 			using var session = TestSetup.CreateTestSession(client);
 			session.WriteAndWait(events: 2);
 
+			session.LastException.Should().BeNull();
+
 			session.Rejections.Should().Be(0);
 			session.TotalBulkRequests.Should().Be(4);
 			session.TotalRetries.Should().Be(3);
@@ -72,6 +76,8 @@ namespace Elastic.Ingest.Tests
 			using var session = TestSetup.CreateTestSession(client);
 			session.WriteAndWait(events: 2);
 
+			session.LastException.Should().BeNull();
+
 			session.TotalBulkRequests.Should().Be(4);
 			session.TotalRetries.Should().Be(3);
 			session.MaxRetriesExceeded.Should().Be(1);
@@ -97,13 +103,14 @@ namespace Elastic.Ingest.Tests
 			using var session = TestSetup.CreateTestSession(client);
 			session.WriteAndWait(events: 2);
 
+			session.LastException.Should().NotBeNull();
+			session.LastException.Message.Should().Be("boom!");
+
 			session.TotalBulkRequests.Should().Be(1);
 			session.TotalBulkResponses.Should().Be(0);
 			session.TotalRetries.Should().Be(0);
 			session.MaxRetriesExceeded.Should().Be(0);
 			session.Rejections.Should().Be(0);
-			session.LastException.Should().NotBeNull();
-			session.LastException.Message.Should().Be("boom!");
 
 			session.WriteAndWait(events: 2);
 

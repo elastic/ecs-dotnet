@@ -83,7 +83,8 @@ namespace Elasticsearch.Extensions.Logging
 			else
 				channelOptions.ShipTo = new ShipTo(options.ShipTo.NodeUris, options.ShipTo.ConnectionPoolType);
 
-			foreach (var channelSetup in channelConfigurations) channelSetup.ConfigureChannel(channelOptions);
+			foreach (var channelSetup in channelConfigurations)
+				channelSetup.ConfigureChannel(channelOptions);
 
 			return channelOptions;
 		}

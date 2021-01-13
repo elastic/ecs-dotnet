@@ -52,7 +52,8 @@ namespace Elastic.Ingest.Serialization
 			while (reader.Read() && reader.CurrentDepth > depth)
 			{
 				var item = JsonSerializer.Deserialize<BulkResponseItem>(ref reader, options);
-				list.Add(item);
+				if (item != null)
+					list.Add(item);
 			}
 			return new ReadOnlyCollection<BulkResponseItem>(list);
 		}
@@ -74,7 +75,7 @@ namespace Elastic.Ingest.Serialization
 			var depth = reader.CurrentDepth;
 			var status = 0;
 			ErrorCause? error = null;
-			var action = reader.GetString();
+			var action = reader.GetString()!;
 			while (reader.Read() && reader.CurrentDepth >= depth)
 			{
 				if (reader.TokenType != JsonTokenType.PropertyName) continue;

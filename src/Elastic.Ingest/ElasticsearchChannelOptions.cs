@@ -10,7 +10,7 @@ namespace Elastic.Ingest
 	{
 		public ElasticsearchChannelOptions() { }
 
-		public ElasticsearchChannelOptions(ITransport<ITransportConfigurationValues> transport) => ShipTo = new ShipTo(transport);
+		public ElasticsearchChannelOptions(ITransport<ITransportConfiguration> transport) => ShipTo = new ShipTo(transport);
 
 		//TODO index patters are more complex then this, ILM, write alias, buffer tier, datastreams
 		/// <summary>
