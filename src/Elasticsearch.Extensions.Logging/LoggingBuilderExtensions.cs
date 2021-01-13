@@ -4,6 +4,7 @@
 
 using System;
 using Elastic.Ingest;
+using Elastic.Ingest.Elasticsearch;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Logging;

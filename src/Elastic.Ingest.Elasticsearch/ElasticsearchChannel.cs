@@ -11,10 +11,10 @@ using System.Text.Json;
 using System.Threading;
 using System.Threading.Channels;
 using System.Threading.Tasks;
-using Elastic.Ingest.Serialization;
+using Elastic.Ingest.Elasticsearch.Serialization;
 using Elastic.Transport;
 
-namespace Elastic.Ingest
+namespace Elastic.Ingest.Elasticsearch
 {
 	internal static class ElasticsearchChannelStatics
 	{
@@ -72,7 +72,7 @@ namespace Elastic.Ingest
 
 		public Channel<TEvent> Channel { get; }
 		public ChannelWriter<TEvent> Writer => Channel.Writer;
-		public BufferOptions<TEvent> BufferOptions => _options.BufferOptions;
+		public ElasticsearchBufferOptions<TEvent> BufferOptions => _options.BufferOptions;
 
 		public ElasticsearchChannelOptions<TEvent> Options
 		{

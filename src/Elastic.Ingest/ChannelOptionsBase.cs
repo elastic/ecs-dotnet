@@ -11,7 +11,7 @@ namespace Elastic.Ingest
 	{
 		protected ChannelOptionsBase() { }
 
-		protected ChannelOptionsBase(ITransport<ITransportConfigurationValues> transport) => ShipTo = new ShipTo(transport);
+		protected ChannelOptionsBase(ITransport<ITransportConfiguration> transport) => ShipTo = new ShipTo(transport);
 
 		/// <summary>
 		/// Gets or sets the ShipTo property of the Elasticsearch.

@@ -3,7 +3,7 @@
 // See the LICENSE file in the project root for more information
 
 using System;
-using Elastic.Ingest;
+using Elastic.Ingest.Elasticsearch;
 
 namespace Elasticsearch.Extensions.Logging
 {

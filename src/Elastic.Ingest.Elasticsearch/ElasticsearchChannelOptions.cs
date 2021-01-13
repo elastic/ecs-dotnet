@@ -10,7 +10,7 @@ namespace Elastic.Ingest.Elasticsearch
 	{
 		public ElasticsearchChannelOptions() : base() { }
 
-		public ElasticsearchChannelOptions(ITransport<ITransportConfigurationValues> transport) : base(transport) { }
+		public ElasticsearchChannelOptions(ITransport<ITransportConfiguration> transport) : base(transport) { }
 
 		//TODO index patters are more complex then this, ILM, write alias, buffer tier, datastreams
 		/// <summary>

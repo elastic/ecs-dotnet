@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using Elastic.Elasticsearch.Ephemeral;
 using Elastic.Ingest;
+using Elastic.Ingest.Elasticsearch;
 using Elasticsearch.Net;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -34,7 +35,7 @@ namespace Elasticsearch.Extensions.Logging.Example
 					loggingBuilder.AddElasticsearch(options => {}, configureChannel =>
 					{
 						if (highLoadUseCase)
-							configureChannel.BufferOptions = new BufferOptions<LogEvent> { ConcurrentConsumers = 4, PublishRejectionCallback = e => Console.Write("!") };
+							configureChannel.BufferOptions = new ElasticsearchBufferOptions<LogEvent> { ConcurrentConsumers = 4, PublishRejectionCallback = e => Console.Write("!") };
 
 						configureChannel.BufferOptions.ElasticsearchResponseCallback = (r, b) =>
 							Console.WriteLine($"Indexed: {r.ApiCall.Success} items: {b.Count} time since first read: {b.DurationSinceFirstRead}");

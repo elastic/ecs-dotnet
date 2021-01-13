@@ -8,7 +8,7 @@ namespace Elastic.Ingest.Apm
 	{
 		public ApmChannelOptions() : base() {}
 
-		public ApmChannelOptions(ITransport<ITransportConfigurationValues> transport) : base(transport) { }
+		public ApmChannelOptions(ITransport<ITransportConfiguration> transport) : base(transport) { }
 
 		//TODO index patters are more complex then this, ILM, write alias, buffer tier, datastreams
 		/// <summary>

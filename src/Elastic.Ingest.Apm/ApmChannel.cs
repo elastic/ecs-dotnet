@@ -21,12 +21,9 @@ namespace Elastic.Ingest.Apm
 	{
 		public static readonly byte[] LineFeed = { (byte)'\n' };
 
-		public static readonly RequestParameters RequestParams = new RequestParameters(HttpMethod.POST, supportsBody: true)
+		public static readonly RequestParameters RequestParams = new RequestParameters
 		{
-			RequestConfiguration = new RequestConfiguration
-			{
-				ContentType = "application/x-ndjson"
-			}
+			RequestConfiguration = new RequestConfiguration { ContentType = "application/x-ndjson" }
 		};
 
 		public static readonly JsonSerializerOptions SerializerOptions = new JsonSerializerOptions
@@ -69,7 +66,7 @@ namespace Elastic.Ingest.Apm
 				_backgroundTasks.Add(Task.Factory.StartNew(async () => await ConsumeMessages().ConfigureAwait(false), TaskCreationOptions.LongRunning).Unwrap());
 		}
 
-		private ITransport<ITransportConfigurationValues> _transport = default!;
+		private ITransport<ITransportConfiguration> _transport = default!;
 
 		public Channel<IIntakeObject> Channel { get; }
 		public ChannelWriter<IIntakeObject> Writer => Channel.Writer;
