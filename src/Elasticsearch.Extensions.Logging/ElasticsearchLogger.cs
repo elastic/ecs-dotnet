@@ -140,10 +140,6 @@ namespace Elasticsearch.Extensions.Logging
 				if (spanId != null)
 				{
 					logEvent.Span = new Span() { Id = spanId };
-
-					// Use custom field Parent.id to hold the parent span ID
-					var parentId = ExtractW3cSpanIdFromActivityId(activity.ParentId);
-					logEvent.Parent = new ParentSpan() { Id = parentId ?? "0000000000000000" };
 				}
 			}
 			else
@@ -201,19 +197,6 @@ namespace Elasticsearch.Extensions.Logging
 
 		private bool CheckTracingValues(LogEvent logEvent, KeyValuePair<string, object> kvp)
 		{
-			if (kvp.Key == "parent.id")
-			{
-				var value = FormatValue(kvp.Value);
-				if (!string.IsNullOrWhiteSpace(value))
-				{
-					if (logEvent.Parent == null) logEvent.Parent = new ParentSpan();
-
-					logEvent.Parent.Id = value;
-				}
-
-				return true;
-			}
-
 			if (kvp.Key == "span.id")
 			{
 				var value = FormatValue(kvp.Value);

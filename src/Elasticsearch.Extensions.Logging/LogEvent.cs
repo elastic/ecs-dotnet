@@ -19,11 +19,6 @@ namespace Elasticsearch.Extensions.Logging
 		public string? MessageTemplate { get; set; }
 
 		/// <summary>
-		/// Holds the ID of the parent span of the current span.
-		/// </summary>
-		public ParentSpan? Parent { get; set; }
-
-		/// <summary>
 		/// List of the converted string values of .NET logging scope stack context
 		/// </summary>
 		public IList<string>? Scopes { get; set; }
@@ -39,20 +34,9 @@ namespace Elasticsearch.Extensions.Logging
 		protected override void WriteAdditionalProperties(Action<string, object> write)
 		{
 			if (MessageTemplate != null) write(nameof(MessageTemplate), MessageTemplate);
-			if (Parent != null) write(nameof(Parent), Parent);
 			if (Scopes != null) write(nameof(Scopes), Scopes);
 			if (Span != null) write(nameof(Span), Span);
 		}
-	}
-
-	public class ParentSpan
-	{
-		/// <summary>
-		/// Unique identifier of the span that is the parent of the current span.<para/>
-		/// </summary>
-		/// <example>a0177b7435d7d545</example>
-		[DataMember(Name = "id")]
-		public string Id { get; set; } = string.Empty;
 	}
 
 	public class Span
