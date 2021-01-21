@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using Elastic.CommonSchema.Tests.Specs;
 using Serilog;
 using Serilog.Events;
 using Serilog.Sinks.TestCorrelator;
@@ -33,8 +34,17 @@ namespace Elastic.CommonSchema.Serilog.Tests
 			// Do not delete this line
 			using var context = TestCorrelator.CreateContext();
 
-			static List<LogEvent> GetLogEvents() => TestCorrelator.GetLogEventsFromCurrentContext().ToList();
-			act(LoggerConfiguration.CreateLogger().ForContext(GetType()), GetLogEvents);
+			List<LogEvent> GetAndValidateLogEvents()
+			{
+				var logEvents = TestCorrelator.GetLogEventsFromCurrentContext().ToList();
+
+				foreach (var logEvent in ToFormattedStrings(logEvents))
+					Spec.Validate(logEvent);
+
+				return logEvents;
+			}
+
+			act(LoggerConfiguration.CreateLogger().ForContext(GetType()), GetAndValidateLogEvents);
 		}
 
 		private List<string> ToFormattedStrings(List<LogEvent> logEvents) =>

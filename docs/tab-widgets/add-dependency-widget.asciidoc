@@ -1,0 +1,40 @@
+++++
+<div class="tabs" data-tab-group="os">
+  <div role="tablist" aria-label="dependency">
+    <button role="tab"
+            aria-selected="true"
+            aria-controls="serilog-tab-install"
+            id="serilog-install">
+      Serilog
+    </button>
+    <button role="tab"
+            aria-selected="false"
+            aria-controls="nlog-tab-install"
+            id="nlog-install"
+            tabindex="-1">
+      NLog
+    </button>
+  </div>
+  <div tabindex="0"
+       role="tabpanel"
+       id="serilog-tab-install"
+       aria-labelledby="serilog-install">
+++++
+
+include::add-dependency.asciidoc[tag=serilog]
+
+++++
+  </div>
+  <div tabindex="0"
+       role="tabpanel"
+       id="nlog-tab-install"
+       aria-labelledby="nlog-install"
+       hidden="">
+++++
+
+include::add-dependency.asciidoc[tag=nlog]
+
+++++
+  </div>
+</div>
+++++
