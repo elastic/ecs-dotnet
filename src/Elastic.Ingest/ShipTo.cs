@@ -85,7 +85,7 @@ namespace Elastic.Ingest
 					var basicAuthCredentials = new BasicAuthenticationCredentials(Username, Password);
 					return new CloudConnectionPool(CloudId, basicAuthCredentials);
 				default:
-					return null;
+					throw new NotImplementedException($"Unrecognised connection pool type '{ConnectionPool}' specified in the configuration.");
 			}
 		}
 	}
