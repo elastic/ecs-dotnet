@@ -227,9 +227,9 @@ namespace Elastic.Ingest
 			settings = settings.Proxy(new Uri("http://localhost:8080"), "", "");
 			settings = settings.EnableDebugMode();
 
-			var lowlevelClient = new ElasticLowLevelClient(settings);
+			var lowLevelClient = new ElasticLowLevelClient(settings);
 
-			_ = Interlocked.Exchange(ref _lowLevelClient, lowlevelClient);
+			_ = Interlocked.Exchange(ref _lowLevelClient, lowLevelClient);
 		}
 
 		private async Task WriteBufferToStreamAsync(List<TEvent> b, Stream stream, CancellationToken ctx)
