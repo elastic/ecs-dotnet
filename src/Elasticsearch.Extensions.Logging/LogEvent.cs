@@ -32,6 +32,7 @@ namespace Elasticsearch.Extensions.Logging
 		/// <summary>
 		/// Holds the ID of the current span.
 		/// </summary>
+		// TODO: Remove when ECS 1.6 is implemented in Base
 		public Span? Span { get; set; }
 
 		/// If <see cref="TryRead" /> returns <c>true</c> this will be called with the deserialized <paramref name="value" />
