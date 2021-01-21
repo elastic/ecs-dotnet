@@ -11,14 +11,11 @@ namespace Elastic.Ingest
 	public class ShipTo
 	{
 		public IEnumerable<Uri>? NodeUris { get; }
-		public ConnectionPoolType? ConnectionPool{ get; }
+		public ConnectionPoolType? ConnectionPool { get; }
 		public string? CloudId { get; }
-
 		public string? ApiKey { get; }
-
 		public string? Username { get; }
 		public string? Password { get; }
-
 		public IElasticLowLevelClient? Client { get; set; }
 
 		public ShipTo() => ConnectionPool = ConnectionPoolType.SingleNode;
@@ -62,7 +59,7 @@ namespace Elastic.Ingest
 			ConnectionPool = ConnectionPoolType.Cloud;
 		}
 
-		internal IConnectionPool? CreateConnectionPool()
+		internal IConnectionPool CreateConnectionPool()
 		{
 			switch (ConnectionPool)
 			{
@@ -89,5 +86,4 @@ namespace Elastic.Ingest
 			}
 		}
 	}
-
 }
