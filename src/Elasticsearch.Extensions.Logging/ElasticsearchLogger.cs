@@ -135,7 +135,7 @@ namespace Elasticsearch.Extensions.Logging
 				// A trace groups multiple events like transactions that belong together. For example, a user request handled by multiple inter-connected services.
 				logEvent.Trace = new Trace() { Id = activity.RootId };
 
-				// Use custom field Span.id to hold the span for ECS 1.5; can be replaced in ECS 1.6 with span.id
+				// Use field span.id forward compatible with ECS 1.6
 				var spanId = ExtractW3cSpanIdFromActivityId(activity.Id);
 				if (spanId != null)
 				{
