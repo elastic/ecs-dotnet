@@ -32,7 +32,11 @@ filesystem target and [Elastic Filebeat](https://www.elastic.co/downloads/beats/
   </extensions>
   <targets>
     <target name="console" type="console">
-      <layout xsi:type="EcsLayout" />
+      <layout xsi:type="EcsLayout">
+        <metadata name="MyProperty" layout="MyPropertyValue" /> <!-- repeated, optional -->
+        <label name="MyLabel" layout="MyLabelValue" />          <!-- repeated, optional -->
+        <tag layout="MyTagValue" />                             <!-- repeated, optional -->
+      </layout>
     </target>
   </targets>
   <rules>
@@ -40,6 +44,54 @@ filesystem target and [Elastic Filebeat](https://www.elastic.co/downloads/beats/
   </rules>
 </nlog>
 ```
+
+## EcsLayout Parameter Options
+
+* **Metadata Options**
+  - _IncludeAllProperties_ - Include LogEvent properties as metadata. Default: `true`
+  - _IncludeMdlc_ - Include NLog Scope Context Properties as metadata. Default: `false`
+  - _ExcludeProperties_ - Comma separated string with names which properties to exclude.
+
+* **Event Options**
+  - _EventAction_ - 
+  -	_EventCategory_ - 
+  -	_EventId_ - 
+  -	_EventKind_ - 
+  -	_EventSeverity_ - 
+
+* **Agent Options**
+  - _AgentId_ - 
+  - _AgentName_ - 
+  - _AgentType_ - 
+  - _AgentVersion_ - 
+
+* **Process Options**
+  - _ProcessExecutable_ - Default: `${processname:FullName=true}`
+  - _ProcessId_ - Default: `${processid}`
+  - _ProcessName_ - Default: `${processname:FullName=false}`
+  - _ProcessThreadId_ - Default: `${threadid}`
+  - _ProcessTitle_ - Default: `${processinfo:MainWindowTitle}`
+
+* **Server Options**
+  -	_ServerAddress_ -
+  -	_ServerIp_ -
+  -	_ServerUser_ - Default: `${environment-user}`
+
+* **Host Options**
+  -	_HostId_ -
+  -	_HostIp_ - Default: `${local-ip:cachedSeconds=60}`
+  -	_HostName_ - Default: `${machinename}`
+
+* **Log Origin Options**
+  - _LogOriginCallSiteMethod_ - Default: `${exception:format=method}`
+  - _LogOriginCallSiteFile_ - Default: `${exception:format=source}`
+  - _LogOriginCallSiteLine_ -
+
+* **Trace Options**
+  - _ApmTraceId_ - Default: `${ElasticApmTraceId}`
+
+* **Transaction Options**
+  - _ApmTransactionId_ - Default: `${ElasticApmTransactionId}`
 
 ## Example output from EcsLayout
 An example of the output is given below:

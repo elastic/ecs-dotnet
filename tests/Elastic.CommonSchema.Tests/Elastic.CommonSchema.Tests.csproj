@@ -12,10 +12,16 @@
         <PackageReference Include="xunit" Version="2.4.0" />
         <PackageReference Include="xunit.runner.visualstudio" Version="2.4.0" />
         <PackageReference Include="coverlet.collector" Version="1.0.1" />
+        <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
     </ItemGroup>
 
     <ItemGroup>
       <ProjectReference Include="..\..\src\Elastic.CommonSchema\Elastic.CommonSchema.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <EmbeddedResource Include="Specs\spec.json" />
+      <None Include="Specs\spec_version.txt" />
     </ItemGroup>
 
 </Project>

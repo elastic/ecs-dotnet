@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Elastic.Apm.NLog;
+using Elastic.CommonSchema.Tests.Specs;
 using NLog;
 using NLog.LayoutRenderers;
 using Config=NLog.Config;
@@ -34,9 +35,18 @@ namespace Elastic.CommonSchema.NLog.Tests
 			logConfig.DefaultCultureInfo = System.Globalization.CultureInfo.InvariantCulture;
 			logFactory.Configuration = logConfig;
 
-			List<string> GetLogEvents() => memoryTarget.Logs.ToList();
+			List<string> GetAndValidateLogEvents()
+			{
+				foreach (var log in memoryTarget.Logs)
+					Spec.Validate(log);
+
+				return memoryTarget.Logs.ToList();
+			}
+
 			var logger = logFactory.GetCurrentClassLogger();
-			act(logger, GetLogEvents);
+			act(logger, GetAndValidateLogEvents);
 		}
+
+
 	}
 }

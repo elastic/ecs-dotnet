@@ -1,5 +1,6 @@
 module Targets
 
+open System.Net.Http
 open Argu
 open System
 open System.IO
@@ -10,7 +11,7 @@ open ProcNet
 
     
 let exec binary args =
-    let r = Proc.Exec (binary, args |> List.map (fun a -> sprintf "\"%s\"" a) |> List.toArray)
+    let r = Proc.Exec (binary, args |> List.map (sprintf "\"%s\"") |> List.toArray)
     match r.HasValue with | true -> r.Value | false -> failwithf "invocation of `%s` timed out" binary
     
 let private restoreTools = lazy(exec "dotnet" ["tool"; "restore"])
@@ -127,12 +128,39 @@ let private createReleaseOnGithub (arguments:ParseResults<Arguments>) =
         
     exec "dotnet" (["release-notes"] @ releaseArgs) |> ignore
     
+let private updateLoggingSpec (arguments:ParseResults<Arguments>) =
+    let commit =
+        match arguments.TryGetResult Commit with
+        | None -> "master"
+        | Some commit -> commit       
+    async {
+        use client = new HttpClient()
+        try         
+            let! response =
+                let url = sprintf "https://raw.githubusercontent.com/elastic/ecs-logging/%s/spec/spec.json" commit
+                client.GetAsync(url, HttpCompletionOption.ResponseHeadersRead) |> Async.AwaitTask            
+            response.EnsureSuccessStatusCode() |> ignore
+            use! stream = response.Content.ReadAsStreamAsync() |> Async.AwaitTask
+            use fileStream =
+                new FileStream(
+                    Paths.RootRelative("tests/Elastic.CommonSchema.Tests/Specs/spec.json"),
+                    FileMode.Create, FileAccess.Write, FileShare.None)
+            do! stream.CopyToAsync(fileStream) |> Async.AwaitTask      
+            do! File.WriteAllTextAsync(
+                    Paths.RootRelative("tests/Elastic.CommonSchema.Tests/Specs/spec_version.txt"),
+                    commit) |> Async.AwaitTask
+        with
+          | ex -> printfn "Could not update logging spec: %A" ex
+    } |> Async.RunSynchronously
+        
+        
+        
 let private release (arguments:ParseResults<Arguments>) = printfn "release"
     
 let private publish (arguments:ParseResults<Arguments>) = printfn "publish" 
 
 let Setup (parsed:ParseResults<Arguments>) (subCommand:Arguments) =
-    let step (name:string) action = Targets.Target(name, new Action(fun _ -> action(parsed)))
+    let step (name:string) action = Targets.Target(name, Action(fun _ -> action(parsed)))
     
     let cmd (name:string) commandsBefore steps action =
         let singleTarget = (parsed.TryGetResult SingleTarget |> Option.defaultValue false)
@@ -148,6 +176,8 @@ let Setup (parsed:ParseResults<Arguments>) (subCommand:Arguments) =
     cmd Build.Name None (Some [Clean.Name]) <| fun _ -> build parsed
     
     cmd Test.Name (Some [Build.Name;]) None <| fun _ -> test parsed
+    
+    cmd UpdateSpec.Name None None <| fun _ -> updateLoggingSpec parsed
     
     step PristineCheck.Name pristineCheck
     step GeneratePackages.Name generatePackages 
