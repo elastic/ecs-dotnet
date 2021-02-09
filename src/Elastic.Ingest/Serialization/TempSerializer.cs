@@ -55,7 +55,7 @@ namespace Elastic.Ingest.Serialization
 			if (TryReturnDefault(stream, out object deserialize)) return deserialize;
 
 			var buffered = ToReadOnlySpan(stream);
-			return JsonSerializer.Deserialize(buffered, type, _none);
+			return JsonSerializer.Deserialize(buffered, type, _none)!;
 		}
 
 		public T Deserialize<T>(Stream stream)
@@ -63,7 +63,7 @@ namespace Elastic.Ingest.Serialization
 			if (TryReturnDefault(stream, out T deserialize)) return deserialize;
 
 			var buffered = ToReadOnlySpan(stream);
-			return JsonSerializer.Deserialize<T>(buffered, _indented);
+			return JsonSerializer.Deserialize<T>(buffered, _indented)!;
 		}
 
 		public void Serialize<T>(T data, Stream stream, SerializationFormatting formatting = None)
@@ -92,14 +92,14 @@ namespace Elastic.Ingest.Serialization
 		{
 			if (TryReturnDefault(stream, out object deserialize)) return Task.FromResult(deserialize);
 
-			return JsonSerializer.DeserializeAsync(stream, type, _none, cancellationToken).AsTask();
+			return JsonSerializer.DeserializeAsync(stream, type, _none, cancellationToken).AsTask()!;
 		}
 
 		public Task<T> DeserializeAsync<T>(Stream stream, CancellationToken cancellationToken = default)
 		{
 			if (TryReturnDefault(stream, out T deserialize)) return Task.FromResult(deserialize);
 
-			return JsonSerializer.DeserializeAsync<T>(stream, _indented, cancellationToken).AsTask();
+			return JsonSerializer.DeserializeAsync<T>(stream, _indented, cancellationToken).AsTask()!;
 		}
 	}
 }
