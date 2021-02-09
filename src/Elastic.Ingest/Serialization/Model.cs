@@ -62,7 +62,7 @@ namespace Elastic.Ingest.Serialization
 			while (reader.Read() && reader.CurrentDepth > depth)
 			{
 				var item = JsonSerializer.Deserialize<BulkResponseItem>(ref reader, options);
-				list.Add(item);
+				list.Add(item ?? new BulkResponseItem());
 			}
 			return new ReadOnlyCollection<BulkResponseItem>(list);
 		}
@@ -104,7 +104,7 @@ namespace Elastic.Ingest.Serialization
 			}
 			BulkResponseItem r = (status == 200)
 				? OkayBulkResponseItem
-				: new BulkResponseItem { Action = action, Status = status, Error = error };
+				: new BulkResponseItem { Action = action!, Status = status, Error = error };
 			return r;
 
 		}
