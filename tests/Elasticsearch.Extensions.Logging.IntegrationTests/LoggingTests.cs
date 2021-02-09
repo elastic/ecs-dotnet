@@ -34,7 +34,7 @@ namespace Elasticsearch.Extensions.Logging.IntegrationTests
 		{
 			using var _ = CreateLogger(out var logger, out var indexPrefix);
 
-			logger.LogError("an error occured");
+			logger.LogError("an error occurred");
 
 			// TODO make sure we can await something here on ElasticsearchDataShipper
 			await Task.Delay(TimeSpan.FromSeconds(10));
@@ -45,8 +45,32 @@ namespace Elasticsearch.Extensions.Logging.IntegrationTests
 			response.Total.Should().BeGreaterThan(0);
 
 			var loggedError = response.Documents.First();
-			loggedError.Message.Should().Be("an error occured");
+			loggedError.Message.Should().Be("an error occurred");
 			loggedError.Ecs.Version.Should().Be(Base.Version);
+		}
+
+		[Fact]
+		public async Task SerializesAndDeserializesMessageTemplateAndScope()
+		{
+			using var _ = CreateLogger(out var logger, out var indexPrefix);
+			using (logger.BeginScope("custom scope"))
+			{
+				var userId = 1;
+				logger.LogError("an error occurred for userId {UserId}", userId);
+
+				// TODO make sure we can await something here on ElasticsearchDataShipper
+				await Task.Delay(TimeSpan.FromSeconds(10));
+
+				var response = Client.Search<LogEvent>(new SearchRequest($"{indexPrefix}-*"));
+
+				response.IsValid.Should().BeTrue("{0}", response.DebugInformation);
+				response.Total.Should().BeGreaterThan(0);
+
+				var loggedError = response.Documents.First();
+				loggedError.Message.Should().Be("an error occurred for userId 1");
+				loggedError.MessageTemplate.Should().Be("an error occurred for userId {UserId}");
+				loggedError.Scopes.Should().ContainSingle(s => s == "custom scope");
+			}
 		}
 
 		private IDisposable CreateLogger(out ILogger logger, out string indexPrefix)
@@ -59,7 +83,7 @@ namespace Elasticsearch.Extensions.Logging.IntegrationTests
 					var nodes = Client.ConnectionSettings.ConnectionPool.Nodes.Select(n => n.Uri).ToArray();
 					o.ShipTo = new ShipToOptions() { NodeUris = nodes, ConnectionPoolType = ConnectionPoolType.Static };
 				});
-			var channelSetup = new IChannelSetup[] { };
+			var channelSetup = Array.Empty<IChannelSetup>();
 
 			var optionsFactory = new OptionsFactory<ElasticsearchLoggerOptions>(
 				new[] { options }, Enumerable.Empty<IPostConfigureOptions<ElasticsearchLoggerOptions>>());

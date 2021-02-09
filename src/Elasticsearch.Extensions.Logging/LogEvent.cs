@@ -4,7 +4,9 @@
 
 using System;
 using System.Collections.Generic;
+using System.Runtime.Serialization;
 using Elastic.CommonSchema;
+using Elastic.CommonSchema.Serialization;
 
 namespace Elasticsearch.Extensions.Logging
 {
@@ -17,11 +19,13 @@ namespace Elasticsearch.Extensions.Logging
 		/// <summary>
 		/// Custom field with the original message template, e.g. "Unexpected error processing customer {CustomerId}."
 		/// </summary>
+		[DataMember(Name = MessageTemplatePropertyName)]
 		public string? MessageTemplate { get; set; }
 
 		/// <summary>
 		/// Custom field with an array of string formatted scope values, in the order added.
 		/// </summary>
+		[DataMember(Name = ScopesPropertyName)]
 		public IList<string>? Scopes { get; set; }
 
 		/// <summary>
