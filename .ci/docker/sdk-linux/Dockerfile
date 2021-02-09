@@ -1,1 +1,1 @@
-FROM mcr.microsoft.com/dotnet/core/sdk:5.0.100
+FROM mcr.microsoft.com/dotnet/sdk:5.0.102-ca-patch-buster-slim
