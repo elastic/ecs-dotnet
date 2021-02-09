@@ -9,7 +9,11 @@
             "type": "datetime",
             "required": true,
             "index": 0,
-            "url": "https://www.elastic.co/guide/en/ecs/current/ecs-base.html"
+            "url": "https://www.elastic.co/guide/en/ecs/current/ecs-base.html",
+            "comment": [
+                "Field order, as specified by 'index', is RECOMMENDED.",
+                "ECS loggers must implement field order unless the logging framework makes that impossible."
+            ]
         },
         "log.level": {
             "type": "string",
