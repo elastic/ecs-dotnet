@@ -39,7 +39,7 @@ namespace Elastic.CommonSchema.BenchmarkDotNetExporter.IntegrationTests
 		{
 			var jobs = new List<Job>
 			{
-				Job.ShortRun.WithRuntime(CoreRuntime.Core30).WithInvocationCount(4).WithUnrollFactor(2),
+				Job.ShortRun.WithRuntime(CoreRuntime.Core50).WithInvocationCount(4).WithUnrollFactor(2),
 			};
 			var config = DefaultConfig.Instance
 				.KeepBenchmarkFiles()
@@ -60,7 +60,13 @@ namespace Elastic.CommonSchema.BenchmarkDotNetExporter.IntegrationTests
 			};
 			var exporter = new ElasticsearchBenchmarkExporter(options);
 			var config = CreateDefaultConfig().AddExporter(exporter);
-			BenchmarkRunner.Run(typeof(Md5VsSha256), config);
+			var summary = BenchmarkRunner.Run(typeof(Md5VsSha256), config);
+
+			if (summary.HasCriticalValidationErrors)
+			{
+				var errors = summary.ValidationErrors.Where(v => v.IsCritical).Select(v => v.Message);
+				throw new Exception($"summary has critical validation errors: {string.Join(Environment.NewLine, errors)}");
+			}
 
 			var pipeline = Client.Ingest.GetPipeline(p => p.Id(options.PipelineName));
 			if (!pipeline.IsValid)

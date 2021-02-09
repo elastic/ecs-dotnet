@@ -4,6 +4,9 @@
         <TargetFramework>net5.0</TargetFramework>
 
         <IsPackable>false</IsPackable>
+
+        <!-- BUG: workaround for https://github.com/dotnet/BenchmarkDotNet/issues/1452 -->
+        <LangVersion>9.0</LangVersion>
     </PropertyGroup>
 
     <ItemGroup>
