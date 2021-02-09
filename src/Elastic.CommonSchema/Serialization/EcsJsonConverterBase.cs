@@ -58,11 +58,8 @@ namespace Elastic.CommonSchema.Serialization
 		{
 			if (reader.TokenType == JsonTokenType.Null) return null;
 
-			var t = typeof(T);
 			var options = JsonConfiguration.SerializerOptions;
 
-			if (typeof(T) != typeof(object) && (options?.GetConverter(typeof(TValue)) is JsonConverter<TValue> keyConverter))
-				return keyConverter.Read(ref reader, t, options);
 			return JsonSerializer.Deserialize<TValue>(ref reader, options);
 		}
 
