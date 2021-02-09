@@ -407,7 +407,7 @@ namespace Elastic.CommonSchema.NLog
 				Name = processName,
 				Pid = !string.IsNullOrEmpty(processId) ? long.Parse(processId) : 0,
 				Executable = processExecutable,
-				Thread = !string.IsNullOrEmpty(processId) ? new ProcessThread { Id = long.Parse(processId) } : null
+				Thread = !string.IsNullOrEmpty(processThreadId) ? new ProcessThread { Id = long.Parse(processThreadId) } : null
 			};
 		}
 
