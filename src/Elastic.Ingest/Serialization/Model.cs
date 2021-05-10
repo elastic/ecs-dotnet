@@ -95,7 +95,7 @@ namespace Elastic.Ingest.Serialization
 			}
 			BulkResponseItem r = (status == 200)
 				? OkayBulkResponseItem
-				: new BulkResponseItem { Action = action, Status = status, Error = error };
+				: new BulkResponseItem { Action = action!, Status = status, Error = error };
 			return r;
 
 		}
