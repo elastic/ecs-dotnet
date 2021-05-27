@@ -90,7 +90,7 @@ namespace Elasticsearch.Extensions.Logging
 
 			builder.AddElasticsearch();
 			builder.Services.Configure(configure);
-			builder.Services.TryAddEnumerable(ServiceDescriptor.Singleton<IChannelSetup>(new InternalChannelSetup(configureChannel)));
+			builder.Services.TryAddEnumerable(ServiceDescriptor.Singleton<IChannelSetup>(new ChannelSetup(configureChannel)));
 			return builder;
 		}
 	}
