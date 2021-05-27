@@ -15,11 +15,12 @@
     </PackageReference>
 
 
-    <PackageReference Include="Elasticsearch.Net.VirtualizedCluster" Version="8.1.0-ci20200821T101114" />
+    <PackageReference Include="Elastic.Transport.VirtualizedCluster" Version="0.2.3" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\..\src\Elastic.Ingest\Elastic.Ingest.csproj" />
+    <ProjectReference Include="..\..\src\Elastic.CommonSchema\Elastic.CommonSchema.csproj" />
   </ItemGroup>
 
 </Project>
