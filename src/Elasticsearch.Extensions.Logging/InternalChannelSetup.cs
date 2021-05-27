@@ -7,11 +7,11 @@ using Elastic.Ingest;
 
 namespace Elasticsearch.Extensions.Logging
 {
-	internal class InternalChannelSetup : IChannelSetup
+	public class ChannelSetup : IChannelSetup
 	{
 		private readonly Action<ElasticsearchChannelOptions<LogEvent>> _configureChannel;
 
-		public InternalChannelSetup(Action<ElasticsearchChannelOptions<LogEvent>> configureChannel) => _configureChannel = configureChannel;
+		public ChannelSetup(Action<ElasticsearchChannelOptions<LogEvent>> configureChannel) => _configureChannel = configureChannel;
 
 		public void ConfigureChannel(ElasticsearchChannelOptions<LogEvent> channelConfiguration) => _configureChannel(channelConfiguration);
 	}

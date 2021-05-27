@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using Elastic.CommonSchema;
 using Elastic.Elasticsearch.Xunit;
@@ -32,12 +33,14 @@ namespace Elasticsearch.Extensions.Logging.IntegrationTests
 		[Fact]
 		public async Task LogsEndUpInCluster()
 		{
-			using var _ = CreateLogger(out var logger, out var indexPrefix);
+			using var _ = CreateLogger(out var logger, out var indexPrefix, out var waitHandle);
 
 			logger.LogError("an error occurred");
 
-			// TODO make sure we can await something here on ElasticsearchDataShipper
-			await Task.Delay(TimeSpan.FromSeconds(10));
+			if (!waitHandle.Wait(TimeSpan.FromSeconds(10)))
+				throw new Exception("Logs were not written to Elasticsearch within margin of 10 seconds");
+
+			var refresh = await Client.Indices.RefreshAsync($"{indexPrefix}-*");
 
 			var response = Client.Search<LogEvent>(new SearchRequest($"{indexPrefix}-*"));
 
@@ -52,7 +55,7 @@ namespace Elasticsearch.Extensions.Logging.IntegrationTests
 		[Fact]
 		public async Task SerializesAndDeserializesMessageTemplateAndScope()
 		{
-			using var _ = CreateLogger(out var logger, out var indexPrefix);
+			using var _ = CreateLogger(out var logger, out var indexPrefix, out var waitHandle);
 			using (logger.BeginScope("custom scope"))
 			{
 				var userId = 1;
@@ -73,9 +76,11 @@ namespace Elasticsearch.Extensions.Logging.IntegrationTests
 			}
 		}
 
-		private IDisposable CreateLogger(out ILogger logger, out string indexPrefix)
+		private IDisposable CreateLogger(out ILogger logger, out string indexPrefix,  out ManualResetEventSlim waitHandle)
 		{
 			var pre = $"logs-{Guid.NewGuid().ToString("N").ToLowerInvariant().Substring(0, 6)}";
+			waitHandle = new ManualResetEventSlim();
+			var slim = waitHandle;
 			var options = new ConfigureOptions<ElasticsearchLoggerOptions>(
 				o =>
 				{
@@ -83,7 +88,12 @@ namespace Elasticsearch.Extensions.Logging.IntegrationTests
 					var nodes = Client.ConnectionSettings.ConnectionPool.Nodes.Select(n => n.Uri).ToArray();
 					o.ShipTo = new ShipToOptions() { NodeUris = nodes, ConnectionPoolType = ConnectionPoolType.Static };
 				});
-			var channelSetup = Array.Empty<IChannelSetup>();
+
+			var channelSetup = new IChannelSetup[] { new ChannelSetup(c =>
+			{
+				c.BufferOptions.WaitHandle = slim;
+				c.BufferOptions.ConcurrentConsumers = 1;
+			}) };
 
 			var optionsFactory = new OptionsFactory<ElasticsearchLoggerOptions>(
 				new[] { options }, Enumerable.Empty<IPostConfigureOptions<ElasticsearchLoggerOptions>>());

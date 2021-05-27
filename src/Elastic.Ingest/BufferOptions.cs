@@ -6,7 +6,6 @@ using System;
 using System.Collections.Generic;
 using System.Threading;
 using Elastic.Ingest.Serialization;
-using Elasticsearch.Net;
 
 namespace Elastic.Ingest
 {
@@ -45,7 +44,7 @@ namespace Elastic.Ingest
 		//TODO these should be events since it's unknown if there will be typically one listener or multiple
 
 		/// <summary>
-		/// If <see cref="MaxInFlightMessages"/> is reached, <see cref="LogEvent"/>'s will fail to be published to the channel. You can be notified of dropped
+		/// If <see cref="MaxInFlightMessages"/> is reached, <see cref="TEvent"/>'s will fail to be published to the channel. You can be notified of dropped
 		/// events with this callback
 		/// </summary>
 		public Action<TEvent>? PublishRejectionCallback { get; set; }
