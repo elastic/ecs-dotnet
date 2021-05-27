@@ -18,10 +18,15 @@ namespace Generator.Schema
 		public YamlSchema Schema { get; set; }
 
 		/// <summary>
+		/// Specific CLR type
+		/// </summary>
+		public string ClrType { get; set; }
+
+		/// <summary>
 		///  Ordering of this field
 		/// </summary>
-		[JsonProperty("order", Required = Required.Always)]
-		public int Order { get; set; }
+		[JsonProperty("order")]
+		public int? Order { get; set; }
 
 		/// <summary>
 		///  Name of the field.

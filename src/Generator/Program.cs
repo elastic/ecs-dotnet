@@ -8,7 +8,7 @@ namespace Generator
 {
 	public static class Program
 	{
-		private const string DefaultDownloadBranch = "1.5";
+		private const string DefaultDownloadBranch = "1.6";
 
 		private static void Main(string[] args)
 		{

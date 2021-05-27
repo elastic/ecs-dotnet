@@ -74,15 +74,5 @@ namespace Generator.Schema
 		public IDictionary<int, string> Templates { get; set; }
 
 		public IList<YamlSchema> YamlSchemas { get; set; }
-
-		public IEnumerable<YamlSchema> YamlSchemasOrdered
-		{
-			get
-			{
-				var list = new List<YamlSchema> { BaseYamlSchema() };
-				list.AddRange(NonBaseYamlSchemas());
-				return list;
-			}
-		}
 	}
 }
