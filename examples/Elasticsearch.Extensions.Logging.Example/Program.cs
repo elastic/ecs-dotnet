@@ -19,7 +19,7 @@ namespace Elasticsearch.Extensions.Logging.Example
 
 		public static IHostBuilder CreateHostBuilder(string[] args)
 		{
-			var highLoadUseCase = args.Length > 0 && args[0] == "high";
+			var highLoadUseCase = args.Length == 0 || args[0] != "low";
 			return Host.CreateDefaultBuilder(args)
 				.UseConsoleLifetime()
 				.ConfigureAppConfiguration((hostContext, configurationBuilder) =>
@@ -43,9 +43,9 @@ namespace Elasticsearch.Extensions.Logging.Example
 				})
 				.ConfigureServices((hostContext, services) =>
 				{
-					if (args.Length > 0 && args[0] == "high")
-						services.AddHostedService<HighVolumeWorkSimulation>();
-					else services.AddHostedService<LowVolumeWorkSimulation>();
+					if (args.Length > 0 && args[0] == "low")
+						services.AddHostedService<LowVolumeWorkSimulation>();
+					else services.AddHostedService<HighVolumeWorkSimulation>();
 				});
 		}
 

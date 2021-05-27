@@ -105,7 +105,7 @@ namespace Elastic.Ingest.Elasticsearch
 			return false;
 		}
 
-		private async Task Consume(int maxQueuedMessages, TimeSpan maxInterval, ManualResetEventSlim? bufferOptionsWaitHandle)
+		private async Task Consume(int maxQueuedMessages, TimeSpan maxInterval, CountdownEvent? countdown)
 		{
 			using var buffer = new ChannelBuffer<TEvent>(maxQueuedMessages, maxInterval);
 
@@ -186,7 +186,7 @@ namespace Elastic.Ingest.Elasticsearch
 						Options.BufferOptions.MaxRetriesExceededCallback?.Invoke(items);
 				}
 				buffer.Reset();
-				bufferOptionsWaitHandle?.Set();
+				countdown?.Signal();
 			}
 		}
 

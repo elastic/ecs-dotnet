@@ -25,14 +25,15 @@ namespace Elastic.Ingest.Apm.Example
 				return 1;
 			}
 
-			var handle = new ManualResetEventSlim();
 			var config = new TransportConfiguration(new Uri(args[0]))
 				.EnableDebugMode()
 				.Authentication(new ApiKey(args[1]));
 			var transport = new Transport<TransportConfiguration>(config);
 
-
 			var numberOfEvents = 800;
+			var maxBufferSize = 200;
+			var handle = new CountdownEvent(numberOfEvents / maxBufferSize);
+
 			var options =
 				new ApmBufferOptions()
 				{
@@ -49,6 +50,7 @@ namespace Elastic.Ingest.Apm.Example
 						Interlocked.Increment(ref _responses);
 						Console.WriteLine(r.ApiCall.DebugInformation);
 					},
+					BufferFlushCallback = () => Console.WriteLine("Flushed"),
 					MaxRetriesExceededCallback = (list) => Interlocked.Increment(ref _maxRetriesExceeded),
 					RetryCallBack = (list) => Interlocked.Increment(ref _retries),
 					ExceptionCallback = (e) => _exception = e

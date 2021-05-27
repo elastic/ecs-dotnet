@@ -93,7 +93,7 @@ namespace Elastic.Ingest.Apm
 			return false;
 		}
 
-		private async Task Consume(int maxQueuedMessages, TimeSpan maxInterval, ManualResetEventSlim? bufferOptionsWaitHandle)
+		private async Task Consume(int maxQueuedMessages, TimeSpan maxInterval, CountdownEvent? countdown)
 		{
 			using var buffer = new ChannelBuffer<IIntakeObject>(maxQueuedMessages, maxInterval);
 
@@ -174,7 +174,8 @@ namespace Elastic.Ingest.Apm
 
 				}
 				buffer.Reset();
-				bufferOptionsWaitHandle?.Set();
+				Options.BufferOptions.BufferFlushCallback?.Invoke();
+				countdown?.Signal();
 			}
 		}
 
@@ -200,9 +201,6 @@ namespace Elastic.Ingest.Apm
 			foreach (var @event in b)
 			{
 				if (@event == null) continue;
-
-				var indexTime = Options.TimestampLookup?.Invoke(@event) ?? DateTimeOffset.Now;
-				if (_options.IndexOffset.HasValue) indexTime = indexTime.ToOffset(_options.IndexOffset.Value);
 
 				if (Options.WriteEvent != null)
 					await Options.WriteEvent(stream, ctx, @event).ConfigureAwait(false);

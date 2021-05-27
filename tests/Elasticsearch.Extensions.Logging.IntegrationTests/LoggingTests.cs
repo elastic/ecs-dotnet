@@ -38,7 +38,7 @@ namespace Elasticsearch.Extensions.Logging.IntegrationTests
 
 			logger.LogError("an error occurred");
 
-			if (!waitHandle.Wait(TimeSpan.FromSeconds(10)))
+			if (!waitHandle.WaitOne(TimeSpan.FromSeconds(10)))
 				throw new Exception("Logs were not written to Elasticsearch within margin of 10 seconds");
 
 			var refresh = await Client.Indices.RefreshAsync($"{indexPrefix}-*");
@@ -79,11 +79,11 @@ namespace Elasticsearch.Extensions.Logging.IntegrationTests
 			}
 		}
 
-		private IDisposable CreateLogger(out ILogger logger, out string indexPrefix,  out ManualResetEventSlim waitHandle)
+		private IDisposable CreateLogger(out ILogger logger, out string indexPrefix,  out WaitHandle waitHandle)
 		{
 			var pre = $"logs-{Guid.NewGuid().ToString("N").ToLowerInvariant().Substring(0, 6)}";
-			waitHandle = new ManualResetEventSlim();
-			var slim = waitHandle;
+			var slim = new CountdownEvent(1);
+			waitHandle = slim.WaitHandle;
 			var options = new ConfigureOptions<ElasticsearchLoggerOptions>(
 				o =>
 				{

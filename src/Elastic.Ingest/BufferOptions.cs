@@ -70,13 +70,16 @@ namespace Elastic.Ingest
 		/// </summary>
 		public Func<int, TimeSpan> BackoffPeriod { get; set; } = (i) => TimeSpan.FromSeconds(2 * (i + 1));
 
+		/// <summary>
+		/// Called once after a buffer has been flushed, if the buffer is retried this callback is only called once
+		/// all retries have been exhausted
+		/// </summary>
+		public Action? BufferFlushCallback { get; set; }
 
 		/// <summary>
-		/// Allows you to inject a wait handle that will be signalled everytime a consumer sends data.
-		/// NOTE: this option is ignored if <see cref="ConcurrentConsumers"/> is greater then 1.
-		/// NOTE: This is solely meant to be able to test <see cref="ElasticsearchChannel{TEvent}"/> without complicating its thread safety.
+		/// Allows you to inject a <see cref="CountdownEvent"/> to wait for N number of buffers to flush.
 		/// </summary>
-		public ManualResetEventSlim? WaitHandle { get; set; }
+		public CountdownEvent? WaitHandle { get; set; }
 	}
 
 }

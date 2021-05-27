@@ -71,7 +71,7 @@ namespace Elastic.Ingest.Tests
 
 			public ElasticsearchBufferOptions<EcsDocument> BufferOptions { get; }
 
-			public ManualResetEventSlim WaitHandle { get; } = new ManualResetEventSlim();
+			public CountdownEvent WaitHandle { get; } = new CountdownEvent(1);
 
 			public int Rejections => _rejections;
 			public int TotalBulkRequests => _requests;
