@@ -4,6 +4,7 @@
 
 using System;
 using System.Collections.Generic;
+using Elastic.Transport;
 
 namespace Elastic.Ingest
 {
@@ -59,7 +60,6 @@ namespace Elastic.Ingest
 		public ITransport<ITransportConfiguration>? Transport { get; set; }
 		public string? Username { get; }
 
-
 		internal IConnectionPool CreateConnectionPool()
 		{
 			switch (ConnectionPool)
@@ -83,7 +83,7 @@ namespace Elastic.Ingest
 					var basicAuthCredentials = new BasicAuthentication(Username, Password);
 					return new CloudConnectionPool(CloudId, basicAuthCredentials);
 				default:
-					throw new NotImplementedException($"Unrecognised connection pool type '{ConnectionPool}' specified in the configuration.");
+					throw new ArgumentException($"Unrecognised connection pool type '{ConnectionPool}' specified in the configuration.", nameof(ConnectionPool));
 			}
 		}
 	}

@@ -225,6 +225,7 @@ namespace Elastic.Ingest
 			config = config.EnableDebugMode();
 
 			var transport = new Transport<TransportConfiguration>(config);
+
 			_ = Interlocked.Exchange(ref _transport, transport);
 		}
 
