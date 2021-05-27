@@ -60,6 +60,18 @@ namespace Elastic.CommonSchema.Serialization
 
 			var options = JsonConfiguration.SerializerOptions;
 
+			/*
+			 * System.NullReferenceException : Object reference not set to an instance of an object.
+  Stack Trace:
+     at System.Text.Json.JsonSerializer.LookupProperty(Object obj, ReadOnlySpan`1 unescapedPropertyName, ReadStack& state, Boolean& useExtensionProperty, Boolean createExtensionProperty)
+   at System.Text.Json.Serialization.Converters.ObjectDefaultConverter`1.OnTryRead(Utf8JsonReader& reader, Type typeToConvert, JsonSerializerOptions options, ReadStack& state, T& value)
+   at System.Text.Json.Serialization.JsonConverter`1.TryRead(Utf8JsonReader& reader, Type typeToConvert, JsonSerializerOptions options, ReadStack& state, T& value)
+			 *
+			 * This used to be a documented fast path that appears to be broken with STJ 5.0. Leaving this commented out to revisit the true performance impact
+			 */
+
+			//if (typeof(T) != typeof(object) && (options?.GetConverter(typeof(TValue)) is JsonConverter<TValue> keyConverter))
+			//	return keyConverter.Read(ref reader, t, options);
 			return JsonSerializer.Deserialize<TValue>(ref reader, options);
 		}
 
