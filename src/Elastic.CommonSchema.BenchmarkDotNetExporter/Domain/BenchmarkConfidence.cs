@@ -4,6 +4,7 @@
 
 using System.Runtime.Serialization;
 using BenchmarkDotNet.Mathematics;
+using Perfolizer.Mathematics.Common;
 
 namespace Elastic.CommonSchema.BenchmarkDotNetExporter.Domain
 {

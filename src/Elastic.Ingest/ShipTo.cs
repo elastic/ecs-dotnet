@@ -4,7 +4,6 @@
 
 using System;
 using System.Collections.Generic;
-using Elasticsearch.Net;
 
 namespace Elastic.Ingest
 {
@@ -12,7 +11,7 @@ namespace Elastic.Ingest
 	{
 		public ShipTo() => ConnectionPool = ConnectionPoolType.SingleNode;
 
-		public ShipTo(IElasticLowLevelClient client) => Client = client;
+		public ShipTo(ITransport<ITransportConfiguration> client) => Transport = client;
 
 		public ShipTo(IEnumerable<Uri> nodeUris, ConnectionPoolType connectionPoolType)
 		{
@@ -57,7 +56,9 @@ namespace Elastic.Ingest
 		public ConnectionPoolType? ConnectionPool { get; }
 		public IEnumerable<Uri>? NodeUris { get; }
 		public string? Password { get; }
+		public ITransport<ITransportConfiguration>? Transport { get; set; }
 		public string? Username { get; }
+
 
 		internal IConnectionPool CreateConnectionPool()
 		{
@@ -75,11 +76,11 @@ namespace Elastic.Ingest
 				case ConnectionPoolType.Cloud:
 					if (!string.IsNullOrEmpty(ApiKey))
 					{
-						var apiKeyCredentials = new ApiKeyAuthenticationCredentials(ApiKey);
+						var apiKeyCredentials = new ApiKey(ApiKey);
 						return new CloudConnectionPool(CloudId, apiKeyCredentials);
 					}
 
-					var basicAuthCredentials = new BasicAuthenticationCredentials(Username, Password);
+					var basicAuthCredentials = new BasicAuthentication(Username, Password);
 					return new CloudConnectionPool(CloudId, basicAuthCredentials);
 				default:
 					throw new NotImplementedException($"Unrecognised connection pool type '{ConnectionPool}' specified in the configuration.");

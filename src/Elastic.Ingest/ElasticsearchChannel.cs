@@ -12,7 +12,7 @@ using System.Threading;
 using System.Threading.Channels;
 using System.Threading.Tasks;
 using Elastic.Ingest.Serialization;
-using Elasticsearch.Net;
+using Elastic.Transport;
 
 namespace Elastic.Ingest
 {
@@ -20,8 +20,8 @@ namespace Elastic.Ingest
 	{
 		public static readonly byte[] LineFeed = { (byte)'\n' };
 
-		public static readonly BulkRequestParameters RequestParams =
-			new BulkRequestParameters { QueryString = { { "filter_path", "error, items.*.status,items.*.error" } } };
+		public static readonly RequestParameters RequestParams =
+			new RequestParameters { QueryString = { { "filter_path", "error, items.*.status,items.*.error" } } };
 
 		public static readonly HashSet<int> RetryStatusCodes = new HashSet<int>(new[] { 502, 503, 504, 429 });
 
@@ -34,8 +34,6 @@ namespace Elastic.Ingest
 	public class ElasticsearchChannel<TEvent> : IDisposable
 	{
 		private readonly List<Task> _backgroundTasks = new List<Task>();
-
-		private IElasticLowLevelClient _lowLevelClient = default!;
 
 		private ElasticsearchChannelOptions<TEvent> _options;
 
@@ -70,9 +68,11 @@ namespace Elastic.Ingest
 					.Unwrap());
 		}
 
-		public BufferOptions<TEvent> BufferOptions => _options.BufferOptions;
+		private ITransport<ITransportConfiguration> _transport = default!;
 
 		public Channel<TEvent> Channel { get; }
+		public ChannelWriter<TEvent> Writer => Channel.Writer;
+		public BufferOptions<TEvent> BufferOptions => _options.BufferOptions;
 
 		public ElasticsearchChannelOptions<TEvent> Options
 		{
@@ -83,8 +83,6 @@ namespace Elastic.Ingest
 				UpdateClient();
 			}
 		}
-
-		public ChannelWriter<TEvent> Writer => Channel.Writer;
 
 		// TODO private, make reload support very explicit (change shipto only?)
 
@@ -132,7 +130,8 @@ namespace Elastic.Ingest
 					BulkResponse response = null!;
 					try
 					{
-						response = await _lowLevelClient.BulkAsync<BulkResponse>(
+						response = await _transport.RequestAsync<BulkResponse>(HttpMethod.POST, "/_bulk",
+								default,
 								PostData.StreamHandler(items,
 									(b, stream) =>
 									{
@@ -193,9 +192,9 @@ namespace Elastic.Ingest
 
 		private void UpdateClient()
 		{
-			if (_options.ShipTo.Client != null)
+			if (_options.ShipTo.Transport != null)
 			{
-				_lowLevelClient = _options.ShipTo.Client;
+				_transport = _options.ShipTo.Transport;
 				return;
 			}
 
@@ -203,33 +202,30 @@ namespace Elastic.Ingest
 			// TODO: Injectable factory? Or some way of testing.
 			var nodes = _options.ShipTo.NodeUris?.ToArray() ?? Array.Empty<Uri>();
 
-			ConnectionConfiguration settings;
-			var serializer = new SystemTextJsonSerializer();
-
+			TransportConfiguration config;
 			if (nodes.Length == 0 && _options.ShipTo.ConnectionPool != ConnectionPoolType.Cloud)
 			{
 				// This is SingleNode with "http://localhost:9200"
 				var singleNodePool = new SingleNodeConnectionPool(new Uri("http://localhost:9200"));
-				settings = new ConnectionConfiguration(singleNodePool, serializer);
+				config = new TransportConfiguration(singleNodePool);
 			}
 			else if (_options.ConnectionPoolType == ConnectionPoolType.SingleNode
 				|| _options.ConnectionPoolType == ConnectionPoolType.Unknown && nodes.Length == 1)
 			{
 				var singleNodePool = new SingleNodeConnectionPool(nodes[0]);
-				settings = new ConnectionConfiguration(singleNodePool, serializer);
+				config = new TransportConfiguration(singleNodePool);
 			}
 			else
 			{
 				var connectionPool = _options.ShipTo.CreateConnectionPool();
-				settings = new ConnectionConfiguration(connectionPool, serializer);
+				config = new TransportConfiguration(connectionPool);
 			}
 
-			settings = settings.Proxy(new Uri("http://localhost:8080"), "", "");
-			settings = settings.EnableDebugMode();
+			config = config.Proxy(new Uri("http://localhost:8080"), "", "");
+			config = config.EnableDebugMode();
 
-			var lowLevelClient = new ElasticLowLevelClient(settings);
-
-			_ = Interlocked.Exchange(ref _lowLevelClient, lowLevelClient);
+			var transport = new Transport<TransportConfiguration>(config);
+			_ = Interlocked.Exchange(ref _transport, transport);
 		}
 
 		private async Task WriteBufferToStreamAsync(List<TEvent> b, Stream stream, CancellationToken ctx)
