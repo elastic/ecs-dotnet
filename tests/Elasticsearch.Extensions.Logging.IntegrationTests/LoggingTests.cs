@@ -61,8 +61,10 @@ namespace Elasticsearch.Extensions.Logging.IntegrationTests
 				var userId = 1;
 				logger.LogError("an error occurred for userId {UserId}", userId);
 
-				// TODO make sure we can await something here on ElasticsearchDataShipper
-				await Task.Delay(TimeSpan.FromSeconds(10));
+				if (!waitHandle.Wait(TimeSpan.FromSeconds(10)))
+					throw new Exception("Logs were not written to Elasticsearch within margin of 10 seconds");
+
+				var refresh = await Client.Indices.RefreshAsync($"{indexPrefix}-*");
 
 				var response = Client.Search<LogEvent>(new SearchRequest($"{indexPrefix}-*"));
 
