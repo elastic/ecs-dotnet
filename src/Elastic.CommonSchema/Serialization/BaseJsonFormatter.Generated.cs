@@ -33,8 +33,9 @@ namespace Elastic.CommonSchema.Serialization
 				"log.level" => ReadString(ref reader, ref loglevel),
 				"message" => ReadProp<string>(ref reader, "message", ecsEvent, (b, v) => b.Message = v),
 				"metadata" => ReadProp<IDictionary<string, object>>(ref reader, "metadata", ecsEvent, (b, v) => b.Metadata = v),
-				"tags" => ReadProp<string[]>(ref reader, "tags", ecsEvent, (b, v) => b.Tags = v),
 				"labels" => ReadProp<IDictionary<string, object>>(ref reader, "labels", ecsEvent, (b, v) => b.Labels = v),
+				"tags" => ReadProp<string[]>(ref reader, "tags", ecsEvent, (b, v) => b.Tags = v),
+				"span" => ReadProp<Span>(ref reader, "span", ecsEvent, (b, v) => b.Span = v),
 				"trace" => ReadProp<Trace>(ref reader, "trace", ecsEvent, (b, v) => b.Trace = v),
 				"transaction" => ReadProp<Transaction>(ref reader, "transaction", ecsEvent, (b, v) => b.Transaction = v),
 				"agent" => ReadProp<Agent>(ref reader, "agent", ecsEvent, (b, v) => b.Agent = v),
@@ -91,9 +92,10 @@ namespace Elastic.CommonSchema.Serialization
 			WriteLogLevel(writer, value);
 			WriteMessage(writer, value);
 			WriteProp(writer, "metadata", value.Metadata);
-			WriteProp(writer, "tags", value.Tags);
 			WriteProp(writer, "labels", value.Labels);
+			WriteProp(writer, "tags", value.Tags);
 			// Complex types
+			WriteProp(writer, "span", value.Span);
 			WriteProp(writer, "trace", value.Trace);
 			WriteProp(writer, "transaction", value.Transaction);
 			WriteProp(writer, "agent", value.Agent);

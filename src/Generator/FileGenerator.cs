@@ -11,6 +11,7 @@ using System.Text.RegularExpressions;
 using CsQuery.ExtensionMethods;
 using Generator.Schema;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using RazorLight;
 using RazorLight.Razor;
 using ShellProgressBar;
@@ -145,8 +146,13 @@ namespace Generator
 			var contents = File.ReadAllText(file);
 			var yamlObject = deserializer.Deserialize(new StringReader(contents));
 			var asJson = yamlObject.ToJSON();
-
-			var jsonSerializer = JsonSerializer.Create();
+			var jsonSerializer = JsonSerializer.Create(new JsonSerializerSettings
+			{
+				Converters =
+				{
+					new ExpectedConverter()
+				}
+			});
 			var spec = jsonSerializer.Deserialize<Dictionary<string, YamlSchema>>(new JsonTextReader(new StringReader(asJson)));
 
 			var serialised = JsonConvert.SerializeObject(spec,
@@ -165,8 +171,7 @@ namespace Generator
 			var diffs = differ.Diff(asJson, serialised);
 			if (diffs != null)
 			{
-				foreach (var diff in diffs)
-					Warnings.Add($"{file}:{diff}");
+				Warnings.Add($"{file}:{diffs}");
 			}
 
 			return spec.Select(d => d.Value)

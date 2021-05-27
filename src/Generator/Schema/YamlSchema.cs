@@ -2,10 +2,12 @@
 // Elasticsearch B.V licenses this file to you under the Apache 2.0 License.
 // See the LICENSE file in the project root for more information
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 using Newtonsoft.Json;
+using RazorLight;
 
 namespace Generator.Schema
 {
@@ -60,6 +62,12 @@ namespace Generator.Schema
 		public YamlSchemaReusable Reusable { get; set; }
 
 		/// <summary>
+		///     Optional
+		/// </summary>
+		[JsonProperty("reused_here")]
+		public List<YamlSchemaReusedHere> ReusedHere { get; set; }
+
+		/// <summary>
 		///     Whether or not the fields of this field set should be nested under the field set name. (optional)
 		/// </summary>
 		[JsonProperty("root")]
@@ -86,47 +94,90 @@ namespace Generator.Schema
 		public IEnumerable<Field> GetFilteredFields() =>
 			Fields.Where(f => Nestings == null || !Nestings.Any(n => f.Key.StartsWith(n)))
 				  .Select(f => f.Value)
-				  .OrderBy(f => f.Order);
+				  .OrderBy(f => f.Order ?? 0);
 
 		public List<NestedFields> GetFieldsNested()
 		{
 			var nestedFields = new List<NestedFields>();
-			foreach (var nestedField in GetFilteredFields().Where(f => f.JsonFieldName().Contains(".")))
+			foreach (var nestedField in Fields
+				.Select(f => f.Value)
+				.OrderBy(f => f.Order ?? 0)
+				.Where(f => f.JsonFieldName().Contains(".")))
 			{
-				var split = nestedField.JsonFieldName().Split('.').ToArray();
-				var current = nestedFields.SingleOrDefault(n => n.Name == split.First());
+				var reusedHere = ReusedHere?.SingleOrDefault(n => nestedField.FlatName.StartsWith(n.Full));
+				// check if this is a reused_here field
+				if (reusedHere != null && reusedHere.Full.Split('.').Length == 2)
+				{
+					var schema = Specification.YamlSchemas.Single(s => s.Name == reusedHere.SchemaName);
+					var expected = schema.Reusable.Expected.Single(e => e.Full == reusedHere.Full);
 
-				if (current != null)
-					Add(current, split.Skip(1).ToArray(), nestedField);
+					var current = nestedFields.SingleOrDefault(n => n.Name == expected.As);
+					if (current is null)
+						nestedFields.Add(new NestedFields(this) { Name = expected.As, Description = reusedHere.Short });
+				}
 				else
 				{
-					var newRoot = new NestedFields(this) { Name = split.First() };
-					nestedFields.Add(newRoot);
+					var nameParts = nestedField.JsonFieldName().Split('.');
+					var current = nestedFields.SingleOrDefault(n => n.Name == nameParts[0]);
 
-					Add(newRoot, split.Skip(1).ToArray(), nestedField);
+					if (current != null)
+						Add(current, nameParts.Skip(1).ToArray(), nestedField);
+					else
+					{
+						var newRoot = new NestedFields(this) { Name = nameParts[0] };
+						nestedFields.Add(newRoot);
+
+						Add(newRoot, nameParts.Skip(1).ToArray(), nestedField);
+					}
 				}
 			}
 
 			return nestedFields;
 		}
 
-		private void Add(NestedFields root, string[] properties, Field field)
+		private void Add(NestedFields root, string[] nameParts, Field field)
 		{
-			if (properties.Length == 1)
+			// primitive property
+			if (nameParts.Length == 1)
 			{
 				root.Fields.Add(field);
 				return;
 			}
 
-			var existingRoot = root.Children.SingleOrDefault(c => c.Name == properties.First());
+			// Typed property. look into reused_here
+			if (ReusedHere != null)
+			{
+				var reusedHere = ReusedHere.SingleOrDefault(r => field.FlatName.StartsWith(r.Full));
+
+				if (reusedHere != null)
+				{
+					var schema = Specification.YamlSchemas.Single(s => s.Name == reusedHere.SchemaName);
+					var expected = schema.Reusable.Expected.Single(e => e.Full == reusedHere.Full);
+
+					// skip any fields that would be children of a reused_here field and add only the reused_here field
+					if (root.Fields.All(f => f.Name != expected.As))
+					{
+						root.Fields.Add(new Field
+						{
+							Name = expected.As,
+							Description = reusedHere.Short,
+							ClrType = FileGenerator.PascalCase(reusedHere.SchemaName)
+						});
+					}
+				}
+
+				return;
+			}
+
+			var existingRoot = root.Children.SingleOrDefault(c => c.Name == nameParts[0]);
 			if (existingRoot != null)
-				Add(existingRoot, properties.Skip(1).ToArray(), field);
+				Add(existingRoot, nameParts.Skip(1).ToArray(), field);
 			else
 			{
-				var newRoot = new NestedFields(this) { Name = properties.First() };
+				var newRoot = new NestedFields(this) { Name = nameParts[0] };
 				root.Children.Add(newRoot);
 
-				Add(newRoot, properties.Skip(1).ToArray(), field);
+				Add(newRoot, nameParts.Skip(1).ToArray(), field);
 			}
 		}
 

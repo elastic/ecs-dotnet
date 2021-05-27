@@ -1,8 +1,8 @@
+@using System
 @using System.Linq
 @using CsQuery.ExtensionMethods.Internal
 @using Generator
 @using Generator.Schema
-@using Newtonsoft.Json
 @inherits Generator.CodeTemplatePage<Generator.Schema.YamlSpecification>
 // Licensed to Elasticsearch B.V under one or more agreements.
 // Elasticsearch B.V licenses this file to you under the Apache 2.0 License.
@@ -94,7 +94,7 @@ namespace Elastic.CommonSchema
 	{
 		if (child.Children.Count > 0)
 		{
-			throw new System.ArgumentException("Template does not support grandchildren fields.");
+			throw new ArgumentException("Template does not support grandchildren fields.");
 		}
 		
 <text>	/// <summary>
@@ -128,11 +128,11 @@ namespace Elastic.CommonSchema
 	public class @nestedField.NamePCased
 	{
 @foreach (var child in nestedField.Children)
-	{<text>		/// <summary>
+{<text>		/// <summary>
 		/// @child.NamePCased property.
 		/// </summary>		   
 		[DataMember(Name = "@child.NamePCased.ToLower()")]
-		public @nestedField.NamePCased@child.NamePCased @child.NamePCased { get; set; }
+		public @child.NamePCased @child.NamePCased { get; set; }
 
 </text>}
 @foreach (var field in nestedField.Fields)
@@ -162,7 +162,7 @@ namespace Elastic.CommonSchema
 	{
 		if (child.Children.Count > 0)
 		{
-			throw new System.ArgumentException("Template does not support grandchildren fields.");
+			throw new ArgumentException("Template does not support grandchildren fields.");
 		}
 		
 <text>	/// <summary>
@@ -190,7 +190,8 @@ namespace Elastic.CommonSchema
 </text>
 	}
 		
-<text>	/// <summary>
+	if (nestedField.Fields.Any())	
+{<text>	/// <summary>
 	/// @nestedField.NamePCased, property of <see cref="@schema.NamePCased()" />
 	/// </summary>
 	public class @schema.NamePCased()@nestedField.NamePCased
@@ -213,13 +214,12 @@ namespace Elastic.CommonSchema
 <text>		/// <example>@Raw(field.ExampleSanitized())</example>
 </text> 
 		}
-		[DataMember(Name = "@Raw(string.Join(".", field.Name.ToLower().Split('.').Skip(1)))")]
+		[DataMember(Name = "@Raw(field.Name.Split('.').Length > 1 ? string.Join(".",  field.Name.ToLower().Split('.').Skip(1)) : field.Name.ToLower())")]
 		public @Raw(field.ClrType()) @FileGenerator.PascalCase(field.Name).Replace(nestedField.NamePCased, string.Empty) { get; set; }
 
 </text>}
 	}
-
-</text>
+</text>}
 	}
 
 foreach (var field in schema.Fields.Where(f => f.Value.IsCustomEnum()))
@@ -257,25 +257,12 @@ foreach (var field in schema.Fields.Where(f => f.Value.IsCustomEnum()))
 	}
 	public @(schema.Name == "log" ? "partial " : "")class @schema.NamePCased() 
 	{
-	@if (schema.Nestings != null)
-	{
-foreach (var nesting in schema.Nestings)
-{<text>		/// <summary>
-		/// @FileGenerator.PascalCase(nesting) nested field.
-		/// <para/>
-		/// @Raw(Model.YamlSchemas.Single(y => y.Name == nesting).DescriptionSanitized())
-		/// </summary>
-		[DataMember(Name = "@nesting")]
-		public @FileGenerator.PascalCase(nesting) @FileGenerator.PascalCase(nesting) { get; set; }
-
-</text>}
-	}
-@foreach (var field in schema.GetFieldsNested())
+	@foreach (var field in schema.GetFieldsNested())
 	{<text>		/// <summary>
 		/// @Raw(field.Description)
 		/// </summary>
 		[DataMember(Name = "@Raw(field.NamePCased.ToLower())")]
-		public @schema.NamePCased()@field.ClassNameType @field.NamePCased { get; set; }
+		public @(field.Fields.Any() ? schema.NamePCased() : "")@field.ClassNameType @field.NamePCased { get; set; }
 
 </text>}
 @foreach (var field in schema.GetFieldsFlat())
