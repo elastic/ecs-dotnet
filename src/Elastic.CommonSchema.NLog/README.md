@@ -101,7 +101,7 @@ An example of the output is given below:
    "@timestamp":"2020-02-20T16:07:06.7109766+11:00",
    "log.level":"Info",
    "message":"Info \"X\" 2.2",
-   "_metadata":{
+   "metadata":{
       "value_x":"X",
       "some_y":2.2
    },

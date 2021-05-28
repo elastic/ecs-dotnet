@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
 using Elastic.CommonSchema;
+using Elastic.CommonSchema.Serialization;
 
 namespace Elasticsearch.Extensions.Logging
 {
@@ -22,19 +23,23 @@ namespace Elasticsearch.Extensions.Logging
 		/// Custom field with the original template used to generate the message, with token placeholders
 		/// for inserted label values, e.g. "Unexpected error processing customer {CustomerId}."
 		/// </summary>
+		[DataMember(Name = MessageTemplatePropertyName)]
 		public string? MessageTemplate { get; set; }
 
 		/// <summary>
 		/// Custom field with an array of string formatted scope values, in the order added.
 		/// </summary>
+		[DataMember(Name = ScopesPropertyName)]
 		public IList<string>? Scopes { get; set; }
 
 		/// <summary>
 		/// Holds the ID of the current span.
 		/// </summary>
 		// TODO: Remove when ECS 1.6 is implemented in Base
+		[DataMember(Name = SpanPropertyName)]
 		public Span? Span { get; set; }
 
+		/// <summary>
 		/// If <see cref="TryRead" /> returns <c>true</c> this will be called with the deserialized <paramref name="value" />
 		/// </summary>
 		/// <param name="propertyName">The additional property <see cref="BaseJsonConverter" /> encountered</param>
