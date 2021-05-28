@@ -35,7 +35,7 @@ namespace Elasticsearch.Extensions.Logging.IntegrationTests
 		{
 			using var _ = CreateLogger(out var logger, out var indexPrefix, out var waitHandle);
 
-			logger.LogError("an error occured");
+			logger.LogError("an error occurred");
 
 			if (!waitHandle.Wait(TimeSpan.FromSeconds(10)))
 				throw new Exception("Logs were not written to Elasticsearch within margin of 10 seconds");
@@ -48,8 +48,34 @@ namespace Elasticsearch.Extensions.Logging.IntegrationTests
 			response.Total.Should().BeGreaterThan(0);
 
 			var loggedError = response.Documents.First();
-			loggedError.Message.Should().Be("an error occured");
+			loggedError.Message.Should().Be("an error occurred");
 			loggedError.Ecs.Version.Should().Be(Base.Version);
+		}
+
+		[Fact]
+		public async Task SerializesAndDeserializesMessageTemplateAndScope()
+		{
+			using var _ = CreateLogger(out var logger, out var indexPrefix, out var waitHandle);
+			using (logger.BeginScope("custom scope"))
+			{
+				var userId = 1;
+				logger.LogError("an error occurred for userId {UserId}", userId);
+
+				if (!waitHandle.Wait(TimeSpan.FromSeconds(10)))
+					throw new Exception("Logs were not written to Elasticsearch within margin of 10 seconds");
+
+				var refresh = await Client.Indices.RefreshAsync($"{indexPrefix}-*");
+
+				var response = Client.Search<LogEvent>(new SearchRequest($"{indexPrefix}-*"));
+
+				response.IsValid.Should().BeTrue("{0}", response.DebugInformation);
+				response.Total.Should().BeGreaterThan(0);
+
+				var loggedError = response.Documents.First();
+				loggedError.Message.Should().Be("an error occurred for userId 1");
+				loggedError.MessageTemplate.Should().Be("an error occurred for userId {UserId}");
+				loggedError.Scopes.Should().ContainSingle(s => s == "custom scope");
+			}
 		}
 
 		private IDisposable CreateLogger(out ILogger logger, out string indexPrefix,  out ManualResetEventSlim waitHandle)
@@ -64,6 +90,7 @@ namespace Elasticsearch.Extensions.Logging.IntegrationTests
 					var nodes = Client.ConnectionSettings.ConnectionPool.Nodes.Select(n => n.Uri).ToArray();
 					o.ShipTo = new ShipToOptions() { NodeUris = nodes, ConnectionPoolType = ConnectionPoolType.Static };
 				});
+
 			var channelSetup = new IChannelSetup[] { new ChannelSetup(c =>
 			{
 				c.BufferOptions.WaitHandle = slim;
