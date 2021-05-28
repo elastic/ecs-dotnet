@@ -51,7 +51,7 @@ namespace Generator.Schema
 			if (value.FlatName == "labels") return "IDictionary<string, object>";
 
 			// C# custom property
-			if (value.Name == "_metadata") return "IDictionary<string, object>";
+			if (value.Name == "metadata") return "IDictionary<string, object>";
 
 			var tipe = "";
 			switch (value.Type)
