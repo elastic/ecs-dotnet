@@ -181,7 +181,7 @@ The C# `Base` type includes a property called `Metadata` with the signature:
 /// <summary>
 /// Container for additional metadata against this event.
 /// </summary>
-[DataMember(Name = "_metadata")]
+[DataMember(Name = "metadata")]
 public IDictionary<string, object> Metadata { get; set; }
 ```
 

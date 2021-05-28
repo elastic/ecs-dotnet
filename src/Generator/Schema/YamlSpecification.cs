@@ -57,7 +57,7 @@ namespace Generator.Schema
 					// HACK in the log.level
 					Tuple.Create("WriteLogLevel", new Field { Name = LogLevelFieldName, Schema = baseRootObject, FlatName = LogLevelFieldName }),
 					Tuple.Create("WriteMessage", baseRootObject.Fields.Single(f => f.Key == MessageFieldName).Value),
-					Tuple.Create("WriteProp", new Field { Name = "_metadata", Schema = baseRootObject, FlatName = "_metadata" })
+					Tuple.Create("WriteProp", new Field { Name = "metadata", Schema = baseRootObject, FlatName = "metadata" })
 				};
 
 				list.AddRange(baseRootObject.GetFieldsFlat()
