@@ -52,7 +52,6 @@ namespace Elastic.Ingest
 		}
 
 		public string? ApiKey { get; }
-		public IElasticLowLevelClient? Client { get; set; }
 		public string? CloudId { get; }
 		public ConnectionPoolType? ConnectionPool { get; }
 		public IEnumerable<Uri>? NodeUris { get; }
