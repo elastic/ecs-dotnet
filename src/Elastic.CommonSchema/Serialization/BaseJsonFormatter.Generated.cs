@@ -38,10 +38,8 @@ namespace Elastic.CommonSchema.Serialization
 				"trace" => ReadProp<Trace>(ref reader, "trace", ecsEvent, (b, v) => b.Trace = v),
 				"transaction" => ReadProp<Transaction>(ref reader, "transaction", ecsEvent, (b, v) => b.Transaction = v),
 				"agent" => ReadProp<Agent>(ref reader, "agent", ecsEvent, (b, v) => b.Agent = v),
-				"as" => ReadProp<As>(ref reader, "as", ecsEvent, (b, v) => b.As = v),
 				"client" => ReadProp<Client>(ref reader, "client", ecsEvent, (b, v) => b.Client = v),
 				"cloud" => ReadProp<Cloud>(ref reader, "cloud", ecsEvent, (b, v) => b.Cloud = v),
-				"code_signature" => ReadProp<CodeSignature>(ref reader, "code_signature", ecsEvent, (b, v) => b.CodeSignature = v),
 				"container" => ReadProp<Container>(ref reader, "container", ecsEvent, (b, v) => b.Container = v),
 				"destination" => ReadProp<Destination>(ref reader, "destination", ecsEvent, (b, v) => b.Destination = v),
 				"dll" => ReadProp<Dll>(ref reader, "dll", ecsEvent, (b, v) => b.Dll = v),
@@ -50,19 +48,14 @@ namespace Elastic.CommonSchema.Serialization
 				"error" => ReadProp<Error>(ref reader, "error", ecsEvent, (b, v) => b.Error = v),
 				"event" => ReadProp<Event>(ref reader, "event", ecsEvent, (b, v) => b.Event = v),
 				"file" => ReadProp<File>(ref reader, "file", ecsEvent, (b, v) => b.File = v),
-				"geo" => ReadProp<Geo>(ref reader, "geo", ecsEvent, (b, v) => b.Geo = v),
 				"group" => ReadProp<Group>(ref reader, "group", ecsEvent, (b, v) => b.Group = v),
-				"hash" => ReadProp<Hash>(ref reader, "hash", ecsEvent, (b, v) => b.Hash = v),
 				"host" => ReadProp<Host>(ref reader, "host", ecsEvent, (b, v) => b.Host = v),
 				"http" => ReadProp<Http>(ref reader, "http", ecsEvent, (b, v) => b.Http = v),
-				"interface" => ReadProp<Interface>(ref reader, "interface", ecsEvent, (b, v) => b.Interface = v),
 				"log" => ReadProp<Log>(ref reader, "log", ecsEvent, (b, v) => b.Log = v),
 				"network" => ReadProp<Network>(ref reader, "network", ecsEvent, (b, v) => b.Network = v),
 				"observer" => ReadProp<Observer>(ref reader, "observer", ecsEvent, (b, v) => b.Observer = v),
 				"organization" => ReadProp<Organization>(ref reader, "organization", ecsEvent, (b, v) => b.Organization = v),
-				"os" => ReadProp<Os>(ref reader, "os", ecsEvent, (b, v) => b.Os = v),
 				"package" => ReadProp<Package>(ref reader, "package", ecsEvent, (b, v) => b.Package = v),
-				"pe" => ReadProp<Pe>(ref reader, "pe", ecsEvent, (b, v) => b.Pe = v),
 				"process" => ReadProp<Process>(ref reader, "process", ecsEvent, (b, v) => b.Process = v),
 				"registry" => ReadProp<Registry>(ref reader, "registry", ecsEvent, (b, v) => b.Registry = v),
 				"related" => ReadProp<Related>(ref reader, "related", ecsEvent, (b, v) => b.Related = v),
@@ -75,7 +68,6 @@ namespace Elastic.CommonSchema.Serialization
 				"url" => ReadProp<Url>(ref reader, "url", ecsEvent, (b, v) => b.Url = v),
 				"user" => ReadProp<User>(ref reader, "user", ecsEvent, (b, v) => b.User = v),
 				"user_agent" => ReadProp<UserAgent>(ref reader, "user_agent", ecsEvent, (b, v) => b.UserAgent = v),
-				"vlan" => ReadProp<Vlan>(ref reader, "vlan", ecsEvent, (b, v) => b.Vlan = v),
 				"vulnerability" => ReadProp<Vulnerability>(ref reader, "vulnerability", ecsEvent, (b, v) => b.Vulnerability = v),
 				_ =>
 					typeof(Base) == ecsEvent.GetType()
@@ -105,10 +97,8 @@ namespace Elastic.CommonSchema.Serialization
 			WriteProp(writer, "trace", value.Trace);
 			WriteProp(writer, "transaction", value.Transaction);
 			WriteProp(writer, "agent", value.Agent);
-			WriteProp(writer, "as", value.As);
 			WriteProp(writer, "client", value.Client);
 			WriteProp(writer, "cloud", value.Cloud);
-			WriteProp(writer, "code_signature", value.CodeSignature);
 			WriteProp(writer, "container", value.Container);
 			WriteProp(writer, "destination", value.Destination);
 			WriteProp(writer, "dll", value.Dll);
@@ -117,19 +107,14 @@ namespace Elastic.CommonSchema.Serialization
 			WriteProp(writer, "error", value.Error);
 			WriteProp(writer, "event", value.Event);
 			WriteProp(writer, "file", value.File);
-			WriteProp(writer, "geo", value.Geo);
 			WriteProp(writer, "group", value.Group);
-			WriteProp(writer, "hash", value.Hash);
 			WriteProp(writer, "host", value.Host);
 			WriteProp(writer, "http", value.Http);
-			WriteProp(writer, "interface", value.Interface);
 			WriteProp(writer, "log", value.Log);
 			WriteProp(writer, "network", value.Network);
 			WriteProp(writer, "observer", value.Observer);
 			WriteProp(writer, "organization", value.Organization);
-			WriteProp(writer, "os", value.Os);
 			WriteProp(writer, "package", value.Package);
-			WriteProp(writer, "pe", value.Pe);
 			WriteProp(writer, "process", value.Process);
 			WriteProp(writer, "registry", value.Registry);
 			WriteProp(writer, "related", value.Related);
@@ -142,7 +127,6 @@ namespace Elastic.CommonSchema.Serialization
 			WriteProp(writer, "url", value.Url);
 			WriteProp(writer, "user", value.User);
 			WriteProp(writer, "user_agent", value.UserAgent);
-			WriteProp(writer, "vlan", value.Vlan);
 			WriteProp(writer, "vulnerability", value.Vulnerability);
 			if (typeof(Base) != value.GetType())
 				value.WriteAdditionalProperties((k, v) => WriteProp(writer, k, v));

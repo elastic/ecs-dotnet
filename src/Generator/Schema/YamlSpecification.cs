@@ -44,7 +44,11 @@ namespace Generator.Schema
 			return _baseSchema;
 		}
 
-		public IEnumerable<YamlSchema> NonBaseYamlSchemas() => YamlSchemas.Where(s => !string.IsNullOrWhiteSpace(s.Prefix)).OrderBy(s => s.Name);
+		public IEnumerable<YamlSchema> NonBaseNonReusableYamlSchemas() => NonBaseYamlSchemas()
+			.Where(s => s.Reusable?.TopLevel ?? true).OrderBy(s => s.Name);
+
+		public IEnumerable<YamlSchema> NonBaseYamlSchemas() => YamlSchemas
+			.Where(s => !string.IsNullOrWhiteSpace(s.Prefix)).OrderBy(s => s.Name);
 
 		public IEnumerable<Tuple<string, Field>> BaseFieldsOrdered
 		{

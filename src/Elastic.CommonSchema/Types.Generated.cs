@@ -51,12 +51,6 @@ namespace Elastic.CommonSchema
 		public Agent Agent { get; set; }
 
 		/// <summary>
-		/// An autonomous system (AS) is a collection of connected Internet Protocol (IP) routing prefixes under the control of one or more network operators on behalf of a single administrative entity or domain that presents a common, clearly defined routing policy to the internet.
-		/// </summary>
-		[DataMember(Name = "as")]
-		public As As { get; set; }
-
-		/// <summary>
 		/// A client is defined as the initiator of a network connection for events regarding sessions, connections, or bidirectional flow records.<para/><para/>For TCP events, the client is the initiator of the TCP connection that sends the SYN packet(s). For other protocols, the client is generally the initiator or requestor in the network transaction. Some systems use the term "originator" to refer the client in TCP connections. The client fields describe details about the system acting as the client in the network event. Client fields are usually populated in conjunction with server fields. Client fields are generally not populated for packet-level events.<para/><para/>Client / server representations can add semantic context to an exchange, which is helpful to visualize the data in certain situations. If your context falls in that category, you should still ensure that source and destination are filled appropriately.
 		/// </summary>
 		[DataMember(Name = "client")]
@@ -67,12 +61,6 @@ namespace Elastic.CommonSchema
 		/// </summary>
 		[DataMember(Name = "cloud")]
 		public Cloud Cloud { get; set; }
-
-		/// <summary>
-		/// These fields contain information about binary code signatures.
-		/// </summary>
-		[DataMember(Name = "code_signature")]
-		public CodeSignature CodeSignature { get; set; }
 
 		/// <summary>
 		/// Container fields are used for meta information about the specific container that is the source of information.<para/><para/>These fields help correlate data based containers from any runtime.
@@ -123,22 +111,10 @@ namespace Elastic.CommonSchema
 		public File File { get; set; }
 
 		/// <summary>
-		/// Geo fields can carry data about a specific location related to an event.<para/><para/>This geolocation information can be derived from techniques such as Geo IP, or be user-supplied.
-		/// </summary>
-		[DataMember(Name = "geo")]
-		public Geo Geo { get; set; }
-
-		/// <summary>
 		/// The group fields are meant to represent groups that are relevant to the event.
 		/// </summary>
 		[DataMember(Name = "group")]
 		public Group Group { get; set; }
-
-		/// <summary>
-		/// The hash fields represent different hash algorithms and their values.<para/><para/>Field names for common hashes (e.g. MD5, SHA1) are predefined. Add fields for other hashes by lowercasing the hash algorithm name and using underscore separators as appropriate (snake case, e.g. sha3_512).
-		/// </summary>
-		[DataMember(Name = "hash")]
-		public Hash Hash { get; set; }
 
 		/// <summary>
 		/// A host is defined as a general computing instance.<para/><para/>ECS host.* fields should be populated with details about the host on which the event happened, or from which the measurement was taken. Host types include hardware, virtual machines, Docker containers, and Kubernetes nodes.
@@ -151,12 +127,6 @@ namespace Elastic.CommonSchema
 		/// </summary>
 		[DataMember(Name = "http")]
 		public Http Http { get; set; }
-
-		/// <summary>
-		/// The interface fields are used to record ingress and egress interface information when reported by an observer (e.g. firewall, router, load balancer) in the context of the observer handling a network connection.  In the case of a single observer interface (e.g. network sensor on a span port) only the observer.ingress information should be populated.
-		/// </summary>
-		[DataMember(Name = "interface")]
-		public Interface Interface { get; set; }
 
 		/// <summary>
 		/// Details about the event's logging mechanism or logging transport.<para/><para/>The log.* fields are typically populated with details about the logging mechanism used to create and/or transport the event. For example, syslog details belong under `log.syslog.*`.<para/><para/>The details specific to your event source are typically not logged under `log.*`, but rather in `event.*` or in other ECS fields.
@@ -183,22 +153,10 @@ namespace Elastic.CommonSchema
 		public Organization Organization { get; set; }
 
 		/// <summary>
-		/// The OS fields contain information about the operating system.
-		/// </summary>
-		[DataMember(Name = "os")]
-		public Os Os { get; set; }
-
-		/// <summary>
 		/// These fields contain information about an installed software package. It contains general information about a package, such as name, version or size. It also contains installation details, such as time or location.
 		/// </summary>
 		[DataMember(Name = "package")]
 		public Package Package { get; set; }
-
-		/// <summary>
-		/// These fields contain Windows Portable Executable (PE) metadata.
-		/// </summary>
-		[DataMember(Name = "pe")]
-		public Pe Pe { get; set; }
 
 		/// <summary>
 		/// These fields contain information about a process.<para/><para/>These fields can help you correlate metrics information with a process id/name from a log message.  The `process.pid` often stays in the metric itself and is copied to the global field for correlation.
@@ -271,12 +229,6 @@ namespace Elastic.CommonSchema
 		/// </summary>
 		[DataMember(Name = "user_agent")]
 		public UserAgent UserAgent { get; set; }
-
-		/// <summary>
-		/// The VLAN fields are used to identify 802.1q tag(s) of a packet, as well as ingress and egress VLAN associations of an observer in relation to a specific packet or connection.<para/><para/>Network.vlan fields are used to record a single VLAN tag, or the outer tag in the case of q-in-q encapsulations, for a packet or connection as observed, typically provided by a network sensor (e.g. Zeek, Wireshark) passively reporting on traffic.<para/><para/>Network.inner VLAN fields are used to report inner q-in-q 802.1q tags (multiple 802.1q encapsulations) as observed, typically provided by a network sensor  (e.g. Zeek, Wireshark) passively reporting on traffic. Network.inner VLAN fields should only be used in addition to network.vlan fields to indicate q-in-q tagging.<para/><para/>Observer.ingress and observer.egress VLAN values are used to record observer specific information when observer events contain discrete ingress and egress VLAN information, typically provided by firewalls, routers, or load balancers.
-		/// </summary>
-		[DataMember(Name = "vlan")]
-		public Vlan Vlan { get; set; }
 
 		/// <summary>
 		/// The vulnerability fields describe information about a vulnerability that is relevant to an event.

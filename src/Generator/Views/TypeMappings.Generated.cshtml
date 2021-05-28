@@ -94,7 +94,7 @@ namespace Elastic.CommonSchema.Elasticsearch
 {
 <text>							.@(Raw(field.MappingType()))(p => p.Name(n => n.@(field.PropertyName()))@(field.Extras()))
 </text> 
-}@foreach (var schema in Model.NonBaseYamlSchemas())
+}@foreach (var schema in Model.NonBaseNonReusableYamlSchemas())
 {
 <text>							.Object<@schema.NamePCased()>(o =>
 								o.Properties(a => a
