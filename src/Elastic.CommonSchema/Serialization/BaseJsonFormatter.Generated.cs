@@ -32,7 +32,7 @@ namespace Elastic.CommonSchema.Serialization
 				"@timestamp" => ReadDateTime(ref reader, ref @timestamp),
 				"log.level" => ReadString(ref reader, ref loglevel),
 				"message" => ReadProp<string>(ref reader, "message", ecsEvent, (b, v) => b.Message = v),
-				"_metadata" => ReadProp<IDictionary<string, object>>(ref reader, "_metadata", ecsEvent, (b, v) => b.Metadata = v),
+				"metadata" => ReadProp<IDictionary<string, object>>(ref reader, "metadata", ecsEvent, (b, v) => b.Metadata = v),
 				"tags" => ReadProp<string[]>(ref reader, "tags", ecsEvent, (b, v) => b.Tags = v),
 				"labels" => ReadProp<IDictionary<string, object>>(ref reader, "labels", ecsEvent, (b, v) => b.Labels = v),
 				"trace" => ReadProp<Trace>(ref reader, "trace", ecsEvent, (b, v) => b.Trace = v),
@@ -98,7 +98,7 @@ namespace Elastic.CommonSchema.Serialization
 			WriteTimestamp(writer, value);
 			WriteLogLevel(writer, value);
 			WriteMessage(writer, value);
-			WriteProp(writer, "_metadata", value.Metadata);
+			WriteProp(writer, "metadata", value.Metadata);
 			WriteProp(writer, "tags", value.Tags);
 			WriteProp(writer, "labels", value.Labels);
 			// Complex types

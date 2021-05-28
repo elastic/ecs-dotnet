@@ -63,7 +63,7 @@ On run, the console will show various events written in ECS format, an example g
   "@timestamp": "2020-03-13T14:17:18.4976763+11:00",
   "log.level": "Information",
   "message": "Request finished in 353.60360000000003ms 200 application/json; charset=utf-8",
-  "_metadata": {
+  "metadata": {
     "message_template": "{HostingRequestFinishedLog:l}",
     "elapsed_milliseconds": 353.60360000000003,
     "status_code": 200,
