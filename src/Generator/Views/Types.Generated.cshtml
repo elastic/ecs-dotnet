@@ -50,7 +50,7 @@ namespace Elastic.CommonSchema
 		[DataMember(Name = "metadata")]
 		public @Raw("IDictionary<string, object>") Metadata { get; set; }
 
-@foreach (var schema in Model.NonBaseYamlSchemas())
+@foreach (var schema in Model.NonBaseNonReusableYamlSchemas())
 {
 <text>		/// <summary>
 		/// @Raw(schema.DescriptionSanitized())
