@@ -301,7 +301,7 @@ namespace Elastic.CommonSchema.NLog
 
 		private string[] GetTags(LogEventInfo e)
 		{
-			if (Tags?.Count == 0)
+			if (Tags is null || Tags.Count == 0)
 				return null;
 
 			if (Tags.Count == 1)
@@ -496,30 +496,34 @@ namespace Elastic.CommonSchema.NLog
 			if (string.IsNullOrEmpty(key))
 				return;
 
-			while (propertyBag.ContainsKey(key))
+			var usedKey = key;
+			var count = 0;
+			while (propertyBag.ContainsKey(usedKey))
 			{
-				if (string.Equals(value?.ToString(), propertyBag[key]?.ToString(), StringComparison.Ordinal))
+				if (string.Equals(value?.ToString(), propertyBag[usedKey]?.ToString(), StringComparison.Ordinal))
 					return;
 
-				key += "_1";
+				usedKey = $"{key}_{++count}";
 			}
 
-			propertyBag.Add(key, value);
+			propertyBag.Add(usedKey, value);
 		}
 		private static void Populate(IDictionary<string, string> propertyBag, string key, string value)
 		{
 			if (string.IsNullOrEmpty(key))
 				return;
 
-			while (propertyBag.ContainsKey(key))
+			var usedKey = key;
+			var count = 0;
+			while (propertyBag.ContainsKey(usedKey))
 			{
-				if (string.Equals(value.ToString(), propertyBag[key], StringComparison.Ordinal))
+				if (string.Equals(value, propertyBag[usedKey], StringComparison.Ordinal))
 					return;
 
-				key += "_1";
+				usedKey = $"{key}_{++count}";
 			}
 
-			propertyBag.Add(key, value);
+			propertyBag.Add(usedKey, value);
 		}
 	}
 }
