@@ -6,7 +6,7 @@ pipeline {
   agent { label 'linux && immutable' }
   environment {
     REPO = 'ecs-dotnet'
-    BASE_DIR = "src/go.elastic.co/apm/${env.REPO}"
+    BASE_DIR = "ecs-dotnet"
     NOTIFY_TO = credentials('notify-to')
     JOB_GCS_BUCKET = credentials('gcs-bucket')
     DOTNET_CLI_TELEMETRY_OPTOUT = 'true'
@@ -199,14 +199,18 @@ def dotnet(Closure body){
 def deploy(Map args = [:]) {
   def secret = args.secret
   def repo = getVaultSecret(secret: secret)
-  withEnvMask(vars: [ [var: 'REPO_API_KEY', password: repo.data.apiKey],
-                      [var: 'REPO_API_URL', password: repo.data.url] ]) {
+  wrap([$class: 'MaskPasswordsBuildWrapper', varPasswordPairs: [
+    [var: 'REPO_API_KEY', password: repo.data.apiKey],
+    [var: 'REPO_API_URL', password: repo.data.url],
+    ]]) {
     if (isUnix()) {
-      dotnet(){
-        sh(label: 'Deploy', script: ".ci/deploy.sh ${REPO_API_KEY} ${REPO_API_URL}")
+      withEnv(["REPO_API_KEY=${repo.data.apiKey}", "REPO_API_URL=${repo.data.url}"]) {
+        sh(label: 'Deploy', script: '.ci/linux/deploy.sh ${REPO_API_KEY} ${REPO_API_URL}')
       }
     } else {
-      bat(label: 'Deploy', script: ".ci/deploy.bat ${REPO_API_KEY} ${REPO_API_URL}")
+      withEnv(["REPO_API_KEY=${repo.data.apiKey}", "REPO_API_URL=${repo.data.url}"]) {
+        bat(label: 'Deploy', script: '.ci/deploy.bat ${REPO_API_KEY} ${REPO_API_URL}')
+      }
     }
   }
 }

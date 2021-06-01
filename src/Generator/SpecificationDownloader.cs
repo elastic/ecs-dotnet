@@ -57,7 +57,7 @@ namespace Generator
 
 		private static void DownloadDefinitions(Specification spec, IProgressBar progress, string filenameMatch)
 		{
-			using var client = new WebClient();
+			var client = new WebClient();
 			var html = client.DownloadString(spec.GithubListingUrl);
 			if (!Directory.Exists(CodeConfiguration.SpecificationFolder))
 				Directory.CreateDirectory(CodeConfiguration.SpecificationFolder);
@@ -74,11 +74,10 @@ namespace Generator
 			using var subBar = progress.Spawn(endpoints.Count, "fetching individual files", SubProgressBarOptions);
 			endpoints.ForEach(s => {
 				var rawFile = spec.GithubDownloadUrl(s);
-				using var endpointClient = new WebClient();
 				var fileName = rawFile.Split('/').Last();
-				var contents = endpointClient.DownloadString(rawFile);
+				var contents = client.DownloadString(rawFile);
 				WriteToFolder(spec.FolderOnDisk, fileName, contents);
-				((IProgressBar)subBar).Tick($"Downloading {fileName}");
+				subBar.Tick($"Downloading {fileName}");
 			});
 		}
 

@@ -1,10 +1,4 @@
-@using RazorLight
-@using System.Linq
-@using System.Collections.Generic
-@using CsQuery.ExtensionMethods.Internal
-@using Generator
 @using Generator.Schema
-@using Newtonsoft.Json
 @inherits Generator.CodeTemplatePage<Generator.Schema.YamlSpecification>
 // Licensed to Elasticsearch B.V under one or more agreements.
 // Elasticsearch B.V licenses this file to you under the Apache 2.0 License.
@@ -94,7 +88,7 @@ namespace Elastic.CommonSchema.Elasticsearch
 {
 <text>							.@(Raw(field.MappingType()))(p => p.Name(n => n.@(field.PropertyName()))@(field.Extras()))
 </text> 
-}@foreach (var schema in Model.NonBaseYamlSchemas())
+}@foreach (var schema in Model.NonBaseNonReusableYamlSchemas())
 {
 <text>							.Object<@schema.NamePCased()>(o =>
 								o.Properties(a => a
