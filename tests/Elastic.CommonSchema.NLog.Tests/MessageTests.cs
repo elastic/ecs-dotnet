@@ -6,6 +6,7 @@ using System;
 using System.Linq;
 using FluentAssertions;
 using Xunit;
+using NLog;
 
 namespace Elastic.CommonSchema.NLog.Tests
 {
@@ -70,6 +71,33 @@ namespace Elastic.CommonSchema.NLog.Tests
 			info.Log.Origin.Function.Should().Contain(nameof(SeesMessageWithException));
 			info.Error.Message.Should().Be("Logger Exception");
 			info.Error.Type.Should().Be(typeof(ArgumentException).ToString());
+		});
+
+		[Fact]
+		public void MetadataWithSameKeys() => TestLogger((logger, getLogEvents) =>
+		{
+			using (MappedDiagnosticsLogicalContext.SetScoped("DupKey", "Mdlc"))
+			{
+				logger.Info("Info {DupKey}", "LoggerArg");
+
+				var logEvents = getLogEvents();
+				logEvents.Should().HaveCount(1);
+
+				var ecsEvents = ToEcsEvents(logEvents);
+
+				var (json, info) = ecsEvents.First();
+
+				json.Should().Contain("\"metadata\":{\"dup_key\":\"LoggerArg\",\"dup_key_1\":\"Mdlc\"}");
+				info.Message.Should().Be("Info \"LoggerArg\"");
+				info.Metadata.Should().ContainKey("dup_key");
+				info.Metadata.Should().ContainKey("dup_key_1");
+
+				var x = info.Metadata["dup_key"] as string;
+				x.Should().NotBeNull().And.Be("LoggerArg");
+
+				var y = info.Metadata["dup_key_1"] as string;
+				y.Should().NotBeNull().And.Be("Mdlc");
+			}
 		});
 	}
 }

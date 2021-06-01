@@ -290,7 +290,7 @@ namespace Elastic.CommonSchema.Elasticsearch
 	/// </summary>
 	public static class IndexTemplates
 	{
-@foreach (var template in Model.Templates)
+@foreach (var template in Model.Templates.OrderBy(kv=>kv.Key))
 {<text>		/// <summary>
 		/// Elastic Common Schema version @(Model.FullVersion) index template for Elasticsearch version @(template.Key)
 		/// See the Put Index Template API documentation: https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-templates.html
