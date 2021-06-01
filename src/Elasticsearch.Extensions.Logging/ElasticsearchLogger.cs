@@ -133,21 +133,19 @@ namespace Elasticsearch.Extensions.Logging
 
 				// Unique identifier of the trace.
 				// A trace groups multiple events like transactions that belong together. For example, a user request handled by multiple inter-connected services.
-				logEvent.Trace = new Trace() { Id = activity.RootId };
+				logEvent.Trace = new Trace { Id = activity.RootId };
 
 				// Use field span.id forward compatible with ECS 1.6
 				var spanId = ExtractW3cSpanIdFromActivityId(activity.Id);
 				if (spanId != null)
-				{
-					logEvent.Span = new Span() { Id = spanId };
-				}
+					logEvent.Span = new Span { Id = spanId };
 			}
 			else
 			{
 				if (!System.Diagnostics.Trace.CorrelationManager.ActivityId.Equals(Guid.Empty))
 				{
 					logEvent.Trace =
-						new Trace() { Id = System.Diagnostics.Trace.CorrelationManager.ActivityId.ToString() };
+						new Trace { Id = System.Diagnostics.Trace.CorrelationManager.ActivityId.ToString() };
 				}
 			}
 		}
@@ -202,8 +200,7 @@ namespace Elasticsearch.Extensions.Logging
 				var value = FormatValue(kvp.Value);
 				if (!string.IsNullOrWhiteSpace(value))
 				{
-					if (logEvent.Span == null) logEvent.Span = new Span();
-
+					logEvent.Span ??= new Span();
 					logEvent.Span.Id = value;
 				}
 
@@ -215,8 +212,7 @@ namespace Elasticsearch.Extensions.Logging
 				var value = FormatValue(kvp.Value);
 				if (!string.IsNullOrWhiteSpace(value))
 				{
-					if (logEvent.Trace == null) logEvent.Trace = new Trace();
-
+					logEvent.Trace ??= new Trace();
 					logEvent.Trace.Id = value;
 				}
 
@@ -228,8 +224,7 @@ namespace Elasticsearch.Extensions.Logging
 				var value = FormatValue(kvp.Value);
 				if (!string.IsNullOrWhiteSpace(value))
 				{
-					if (logEvent.Transaction == null) logEvent.Transaction = new Transaction();
-
+					logEvent.Transaction ??= new Transaction();
 					logEvent.Transaction.Id = value;
 				}
 

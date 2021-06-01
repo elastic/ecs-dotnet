@@ -16,9 +16,6 @@ namespace Elasticsearch.Extensions.Logging
 		private const string MessageTemplatePropertyName = nameof(MessageTemplate);
 		private const string ScopesPropertyName = nameof(Scopes);
 
-		// Use name forward compatible with ECS 1.6
-		private const string SpanPropertyName = "span";
-
 		/// <summary>
 		/// Custom field with the original template used to generate the message, with token placeholders
 		/// for inserted label values, e.g. "Unexpected error processing customer {CustomerId}."
@@ -31,13 +28,6 @@ namespace Elasticsearch.Extensions.Logging
 		/// </summary>
 		[DataMember(Name = ScopesPropertyName)]
 		public IList<string>? Scopes { get; set; }
-
-		/// <summary>
-		/// Holds the ID of the current span.
-		/// </summary>
-		// TODO: Remove when ECS 1.6 is implemented in Base
-		[DataMember(Name = SpanPropertyName)]
-		public Span? Span { get; set; }
 
 		/// <summary>
 		/// If <see cref="TryRead" /> returns <c>true</c> this will be called with the deserialized <paramref name="value" />
@@ -53,7 +43,6 @@ namespace Elasticsearch.Extensions.Logging
 			{
 				MessageTemplatePropertyName => null != (MessageTemplate = value as string),
 				ScopesPropertyName => null != (Scopes = value as IList<string>),
-				SpanPropertyName => null != (Span = value as Span),
 				_ => false
 			};
 
@@ -71,7 +60,6 @@ namespace Elasticsearch.Extensions.Logging
 			{
 				MessageTemplatePropertyName => typeof(string),
 				ScopesPropertyName => typeof(IList<string>),
-				SpanPropertyName => typeof(Span),
 				_ => null
 			};
 			return type != null;
@@ -85,17 +73,6 @@ namespace Elasticsearch.Extensions.Logging
 		{
 			if (MessageTemplate != null) write(MessageTemplatePropertyName, MessageTemplate);
 			if (Scopes != null) write(ScopesPropertyName, Scopes);
-			if (Span != null) write(SpanPropertyName, Span);
 		}
-	}
-
-	public class Span
-	{
-		/// <summary>
-		/// Unique identifier of the span.<para/>
-		/// </summary>
-		/// <example>e7bc32771d164a92</example><example>a0177b7435d7d545</example>
-		[DataMember(Name = "id")]
-		public string Id { get; set; } = string.Empty;
 	}
 }
