@@ -75,7 +75,7 @@ namespace Elasticsearch.Extensions.Logging
 			{
 				scopeProvider.ForEachScope((scope, innerData) =>
 				{
-					if (logEvent.Labels == null) logEvent.Labels = new Dictionary<string, object>();
+					if (logEvent.Labels == null) logEvent.Labels = new Dictionary<string, string>();
 
 					if (logEvent.Scopes == null) logEvent.Scopes = new List<string>();
 
@@ -116,7 +116,7 @@ namespace Elasticsearch.Extensions.Logging
 
 					if (CheckTracingValues(logEvent, kvp)) continue;
 
-					logEvent.Labels ??= new Dictionary<string, object>();
+					logEvent.Labels ??= new Dictionary<string, string>();
 
 					logEvent.Labels[kvp.Key] = FormatValue(kvp.Value);
 				}
