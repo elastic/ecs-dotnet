@@ -20,25 +20,30 @@ namespace Elastic.CommonSchema.NLog.Tests
 
 			string traceId = null;
 			string transactionId = null;
+			string spanId = null;
 
 			// Start a new activity to make sure it does not override Tracing.Trace.Id
 			Activity.Current = new Activity("test").Start();
-
-			Apm.Agent.Tracer.CaptureTransaction("test", "test", (transaction) =>
+			Apm.Agent.Tracer.CaptureTransaction("test", "test", t =>
 			{
-				traceId = transaction.TraceId;
-				transactionId = transaction.Id;
-				logger.Info("My log message!");
-
-				var logEvents = getLogEvents();
-				logEvents.Should().HaveCount(1);
-
-				var ecsEvents = ToEcsEvents(logEvents);
-				var (_, info) = ecsEvents.First();
-
-				info.Trace.Id.Should().Be(traceId);
-				info.Transaction.Id.Should().Be(transactionId);
+				t.CaptureSpan("span", "test", s =>
+				{
+					traceId = t.TraceId;
+					transactionId = t.Id;
+					spanId = s.Id;
+					logger.Info("My log message!");
+				});
 			});
+
+			var logEvents = getLogEvents();
+			logEvents.Should().HaveCount(1);
+
+			var ecsEvents = ToEcsEvents(logEvents);
+			var (_, info) = ecsEvents.First();
+
+			info.Trace.Id.Should().Be(traceId);
+			info.Transaction.Id.Should().Be(transactionId);
+			info.Span.Id.Should().Be(spanId);
 		});
 	}
 }

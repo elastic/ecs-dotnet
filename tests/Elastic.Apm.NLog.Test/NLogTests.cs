@@ -13,8 +13,8 @@ namespace Elastic.Apm.NLog.Test
 	public class NLogTests
 	{
 		/// <summary>
-		/// Creates 1 simple transaction and makes sure that the log line created within the transaction has
-		/// the transaction and trace ids, and logs prior to and after the transaction do not have those.
+		/// Creates 1 simple transaction and span and makes sure that the log line created within the transaction and span have
+		/// the transaction, trace and span ids, and logs prior to and after the transaction do not have those.
 		/// </summary>
 		[Fact]
 		public void NLogWithTransaction()
@@ -24,7 +24,7 @@ namespace Elastic.Apm.NLog.Test
 			Agent.Setup(new AgentComponents(payloadSender: new NoopPayloadSender()));
 
 			var target = new MemoryTarget();
-			target.Layout = "${ElasticApmTraceId}|${ElasticApmTransactionId}|${message}";
+			target.Layout = "${ElasticApmTraceId}|${ElasticApmTransactionId}|${ElasticApmSpanId}|${message}";
 
 			global::NLog.Config.SimpleConfigurator.ConfigureForTargetLogging(target, LogLevel.Debug);
 
@@ -34,21 +34,28 @@ namespace Elastic.Apm.NLog.Test
 
 			string traceId = null;
 			string transactionId = null;
+			string spanId = null;
 
 			Agent.Tracer.CaptureTransaction("TestTransaction", "Test", t =>
 			{
 				traceId = t.TraceId;
 				transactionId = t.Id;
 				logger.Debug("InTransaction");
+
+				t.CaptureSpan("TestSpan", "Test", s =>
+				{
+					spanId = s.Id;
+					logger.Debug("InSpan");
+				});
 			});
 
 			logger.Debug("PostTransaction");
 
-			target.Logs.Count.Should().Be(3);
-
-			target.Logs[0].Should().Be("||PreTransaction");
-			target.Logs[1].Should().Be($"{traceId}|{transactionId}|InTransaction");
-			target.Logs[2].Should().Be("||PostTransaction");
+			target.Logs.Count.Should().Be(4);
+			target.Logs[0].Should().Be("|||PreTransaction");
+			target.Logs[1].Should().Be($"{traceId}|{transactionId}||InTransaction");
+			target.Logs[2].Should().Be($"{traceId}|{transactionId}|{spanId}|InSpan");
+			target.Logs[3].Should().Be("|||PostTransaction");
 		}
 	}
 }

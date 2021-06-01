@@ -27,7 +27,7 @@ include::./tab-widgets/ecs-integration-widget.asciidoc[]
 === Step 2: Enable APM log correlation (optional)
 If you are using the Elastic APM .NET agent,
 {apm-dotnet-ref}/log-correlation.html[log correlation can be configured] to
-inject trace id fields into log events.
+inject trace, transaction and span id fields into log events.
 
 [float]
 [[setup-step-3]]

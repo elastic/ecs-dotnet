@@ -18,7 +18,7 @@ namespace Elastic.Apm.NLog
 		protected override void Append(StringBuilder builder, LogEventInfo logEvent)
 		{
 			if (!Agent.IsConfigured) return;
-			if (Agent.Tracer?.CurrentTransaction == null) return;
+			if (Agent.Tracer?.CurrentTransaction is null) return;
 
 			builder.Append(Agent.Tracer.CurrentTransaction.TraceId);
 		}

@@ -23,8 +23,8 @@ namespace Elastic.Apm.SerilogEnricher.Test
 		}
 
 		/// <summary>
-		/// Creates 1 simple transaction and makes sure that the log line created within the transaction has
-		/// the transaction and trace ids, and logs prior to and after the transaction do not have those.
+		/// Creates 1 simple transaction and span and makes sure that the log line created within the transaction has
+		/// the transaction, span and trace ids, and logs prior to and after the transaction do not have those.
 		/// </summary>
 		[Fact]
 		public void SerilogEnricherWithSimpleSyncTransaction()
@@ -36,43 +36,74 @@ namespace Elastic.Apm.SerilogEnricher.Test
 
 			string traceId = null;
 			string transactionId = null;
+			string spanId = null;
 
 			logger.Information("Line1");
 
 			Agent.Tracer.CaptureTransaction("Test", "Test", (t) =>
 			{
-				traceId = t.TraceId;
-				transactionId = t.Id;
-				logger.Information("Line2");
+				t.CaptureSpan("Span", "Test", s =>
+				{
+					traceId = t.TraceId;
+					transactionId = t.Id;
+					spanId = s.Id;
+					logger.Information("Line2");
+				});
+
+				logger.Information("Line3");
 			});
 
-			logger.Information("Line3");
+			logger.Information("Line4");
 
 			InMemorySink.Instance
 				.LogEvents.Should()
-				.HaveCount(3);
+				.HaveCount(4);
 
 			InMemorySink.Instance
 				.LogEvents.ElementAt(0)
 				.Properties.Should()
 				.BeEmpty();
 
-			InMemorySink.Instance
-				.LogEvents.ElementAt(1)
+			var logEvent1 = InMemorySink.Instance.LogEvents.ElementAt(1);
+
+			logEvent1
 				.Properties["ElasticApmTraceId"]
 				.ToString()
 				.Should()
 				.Be($"\"{traceId}\"");
 
-			InMemorySink.Instance
-				.LogEvents.ElementAt(1)
+			logEvent1
 				.Properties["ElasticApmTransactionId"]
 				.ToString()
 				.Should()
 				.Be($"\"{transactionId}\"");
 
+			logEvent1
+				.Properties["ElasticApmSpanId"]
+				.ToString()
+				.Should()
+				.Be($"\"{spanId}\"");
+
+			var logEvent2 = InMemorySink.Instance.LogEvents.ElementAt(2);
+
+			logEvent2
+				.Properties["ElasticApmTraceId"]
+				.ToString()
+				.Should()
+				.Be($"\"{traceId}\"");
+
+			logEvent2
+				.Properties["ElasticApmTransactionId"]
+				.ToString()
+				.Should()
+				.Be($"\"{transactionId}\"");
+
+			logEvent2
+				.Properties.Should()
+				.NotContain(kv => kv.Key == "ElasticApmSpanId");
+
 			InMemorySink.Instance
-				.LogEvents.ElementAt(2)
+				.LogEvents.ElementAt(3)
 				.Properties.Should()
 				.BeEmpty();
 		}

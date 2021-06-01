@@ -26,6 +26,7 @@ namespace Elastic.CommonSchema.NLog.Tests
 			// These layout renderers need to registered statically as ultimately ConfigurationItemFactory.Default is called in the call stack.
 			LayoutRenderer.Register<ApmTraceIdLayoutRenderer>(ApmTraceIdLayoutRenderer.Name); //generic
 			LayoutRenderer.Register<ApmTransactionIdLayoutRenderer>(ApmTransactionIdLayoutRenderer.Name); //generic
+			LayoutRenderer.Register<ApmSpanIdLayoutRenderer>(ApmSpanIdLayoutRenderer.Name); //generic
 
 			var logFactory = new LogFactory();
 			var logConfig = new Config.LoggingConfiguration(logFactory);
