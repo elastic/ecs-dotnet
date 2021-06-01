@@ -55,6 +55,7 @@ namespace Elastic.CommonSchema.NLog
 			{
 				ApmTraceId = "${ElasticApmTraceId}";
 				ApmTransactionId = "${ElasticApmTransactionId}";
+				ApmSpanId = "${ElasticApmSpanId}";
 			}
 		}
 
@@ -65,6 +66,8 @@ namespace Elastic.CommonSchema.NLog
 
 		public Layout ApmTraceId { get; set; }
 		public Layout ApmTransactionId { get; set; }
+
+		public Layout ApmSpanId { get; set; }
 
 		/// <summary>
 		/// Allow dynamically disabling <see cref="ThreadAgnosticAttribute" /> to
@@ -133,6 +136,7 @@ namespace Elastic.CommonSchema.NLog
 				Process = GetProcess(logEvent),
 				Trace = GetTrace(logEvent),
 				Transaction = GetTransaction(logEvent),
+				Span = GetSpan(logEvent),
 				Error = GetError(logEvent.Exception),
 				Tags = GetTags(logEvent),
 				Labels = GetLabels(logEvent),
@@ -450,6 +454,18 @@ namespace Elastic.CommonSchema.NLog
 			return new Transaction
 			{
 				Id = transactionId
+			};
+		}
+
+		private Span GetSpan(LogEventInfo logEventInfo)
+		{
+			var spanId = ApmSpanId?.Render(logEventInfo);
+			if (string.IsNullOrEmpty(spanId))
+				return null;
+
+			return new Span
+			{
+				Id = spanId
 			};
 		}
 

@@ -4,6 +4,7 @@ Allows you to add the following place holders in your NLog templates:
 
 * `ElasticApmTraceId`
 * `ElasticApmTransactionId`
+* `ElasticApmSpanId`
 
 Which will be replaced with the appropriate Elastic APM variables if available
 
@@ -14,10 +15,11 @@ The .NET assemblies are published to NuGet under the package name [Elastic.Apm.N
 ## How to use from API
 
 ```csharp
-// Logged message will be in format of `trace-id|transation-id|InTransaction`
-// or `||InTransaction` if the place holders are not available
+// Logged message will be in format of `trace-id|transation-id|span-id|InTransaction`
+// or `|||InTransaction` if the place holders are not available
 var consoleTarget = new ConsoleTarget("console");
-consoleTarget.Layout = "${ElasticApmTraceId}|${ElasticApmTransactionId}|${message}";
+consoleTarget.Layout = 
+    "${ElasticApmTraceId}|${ElasticApmTransactionId}|${ElasticApmSpanId}|${message}";
 config.AddRule(LogLevel.Debug, LogLevel.Fatal, consoleTarget);
 LogManager.Configuration = config;
 var logger = LogManager.GetCurrentClassLogger();
@@ -31,7 +33,9 @@ var logger = LogManager.GetCurrentClassLogger();
     <add assembly="Elastic.Apm.NLog"/>
   </extensions>
   <targets>
-    <target name="console" type="console" layout="${ElasticApmTraceId}|${ElasticApmTransactionId}|${message}" />
+    <target name="console" 
+        type="console" 
+        layout="${ElasticApmTraceId}|${ElasticApmTransactionId}|${ElasticApmSpanId}|${message}" />
   </targets>
   <rules>
     <logger name="*" minLevel="Debug" writeTo="Console" />

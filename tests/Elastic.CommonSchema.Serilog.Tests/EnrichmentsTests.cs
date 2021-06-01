@@ -53,16 +53,20 @@ namespace Elastic.CommonSchema.Serilog.Tests
 
 			string traceId = null;
 			string transactionId = null;
+			string spanId = null;
 
 			// Start a new activity to make sure it does not override Tracing.Trace.Id
 			Activity.Current = new Activity("test").Start();
 
-			Apm.Agent.Tracer.CaptureTransaction("test", "test", (t)
-				=>
+			Apm.Agent.Tracer.CaptureTransaction("test", "test", t =>
 			{
-				traceId = t.TraceId;
-				transactionId = t.Id;
-				logger.Information("My log message!");
+				t.CaptureSpan("span", "test", s =>
+				{
+					traceId = t.TraceId;
+					transactionId = t.Id;
+					spanId = s.Id;
+					logger.Information("My log message!");
+				});
 			});
 
 			var logEvents = getLogEvents();
@@ -73,6 +77,7 @@ namespace Elastic.CommonSchema.Serilog.Tests
 
 			info.Trace.Id.Should().Be(traceId);
 			info.Transaction.Id.Should().Be(transactionId);
+			info.Span.Id.Should().Be(spanId);
 		});
 	}
 }
