@@ -15,6 +15,8 @@ a feature request, please include one and only one of the below blocks
 in your new issue.
 -->
 
+**ECS integration/library project(s) (e.g. Elastic.CommonSchema.Serilog)**:
+
 **ECS schema version (e.g. 1.4.0)**:
 
 **ECS .NET assembly version (e.g. 1.4.2)**:

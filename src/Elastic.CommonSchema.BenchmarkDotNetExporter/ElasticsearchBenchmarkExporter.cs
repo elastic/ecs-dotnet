@@ -194,7 +194,6 @@ namespace Elastic.CommonSchema.BenchmarkDotNetExporter
 						Timestamp = DateTime.UtcNow,
 						Host = host,
 						Agent = agent,
-						Os = new Os { Version = summary.HostEnvironmentInfo.OsVersion.Value, Name = OsName(), Platform = OsPlatform() },
 						Event = @event,
 						Benchmark = new BenchmarkData(r.ResultStatistics),
 					};
@@ -262,7 +261,13 @@ namespace Elastic.CommonSchema.BenchmarkDotNetExporter
 				InDocker = summary.HostEnvironmentInfo.InDocker,
 				HasAttachedDebugger = summary.HostEnvironmentInfo.HasAttachedDebugger,
 				ChronometerFrequencyHertz = summary.HostEnvironmentInfo.ChronometerFrequency.Hertz,
-				HardwareTimerKind = summary.HostEnvironmentInfo.HardwareTimerKind.ToString()
+				HardwareTimerKind = summary.HostEnvironmentInfo.HardwareTimerKind.ToString(),
+				Os = new Os
+				{
+					Version = summary.HostEnvironmentInfo.OsVersion.Value,
+					Name = OsName(),
+					Platform = OsPlatform()
+				}
 			};
 			return environmentInfo;
 		}

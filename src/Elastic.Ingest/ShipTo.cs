@@ -4,26 +4,15 @@
 
 using System;
 using System.Collections.Generic;
-using Elasticsearch.Net;
+using Elastic.Transport;
 
 namespace Elastic.Ingest
 {
 	public class ShipTo
 	{
-		public IEnumerable<Uri>? NodeUris { get; }
-		public ConnectionPoolType? ConnectionPool{ get; }
-		public string? CloudId { get; }
-
-		public string? ApiKey { get; }
-
-		public string? Username { get; }
-		public string? Password { get; }
-
-		public IElasticLowLevelClient? Client { get; set; }
-
 		public ShipTo() => ConnectionPool = ConnectionPoolType.SingleNode;
 
-		public ShipTo(IElasticLowLevelClient client) => Client = client;
+		public ShipTo(ITransport<ITransportConfiguration> client) => Transport = client;
 
 		public ShipTo(IEnumerable<Uri> nodeUris, ConnectionPoolType connectionPoolType)
 		{
@@ -62,7 +51,15 @@ namespace Elastic.Ingest
 			ConnectionPool = ConnectionPoolType.Cloud;
 		}
 
-		internal IConnectionPool? CreateConnectionPool()
+		public string? ApiKey { get; }
+		public string? CloudId { get; }
+		public ConnectionPoolType? ConnectionPool { get; }
+		public IEnumerable<Uri>? NodeUris { get; }
+		public string? Password { get; }
+		public ITransport<ITransportConfiguration>? Transport { get; set; }
+		public string? Username { get; }
+
+		internal IConnectionPool CreateConnectionPool()
 		{
 			switch (ConnectionPool)
 			{
@@ -78,16 +75,15 @@ namespace Elastic.Ingest
 				case ConnectionPoolType.Cloud:
 					if (!string.IsNullOrEmpty(ApiKey))
 					{
-						var apiKeyCredentials = new ApiKeyAuthenticationCredentials(ApiKey);
+						var apiKeyCredentials = new ApiKey(ApiKey);
 						return new CloudConnectionPool(CloudId, apiKeyCredentials);
 					}
 
-					var basicAuthCredentials = new BasicAuthenticationCredentials(Username, Password);
+					var basicAuthCredentials = new BasicAuthentication(Username, Password);
 					return new CloudConnectionPool(CloudId, basicAuthCredentials);
 				default:
-					return null;
+					throw new ArgumentException($"Unrecognised connection pool type '{ConnectionPool}' specified in the configuration.", nameof(ConnectionPool));
 			}
 		}
 	}
-
 }

@@ -55,6 +55,7 @@ namespace Elastic.CommonSchema.NLog
 			{
 				ApmTraceId = "${ElasticApmTraceId}";
 				ApmTransactionId = "${ElasticApmTransactionId}";
+				ApmSpanId = "${ElasticApmSpanId}";
 			}
 		}
 
@@ -65,6 +66,8 @@ namespace Elastic.CommonSchema.NLog
 
 		public Layout ApmTraceId { get; set; }
 		public Layout ApmTransactionId { get; set; }
+
+		public Layout ApmSpanId { get; set; }
 
 		/// <summary>
 		/// Allow dynamically disabling <see cref="ThreadAgnosticAttribute" /> to
@@ -133,6 +136,7 @@ namespace Elastic.CommonSchema.NLog
 				Process = GetProcess(logEvent),
 				Trace = GetTrace(logEvent),
 				Transaction = GetTransaction(logEvent),
+				Span = GetSpan(logEvent),
 				Error = GetError(logEvent.Exception),
 				Tags = GetTags(logEvent),
 				Labels = GetLabels(logEvent),
@@ -301,7 +305,7 @@ namespace Elastic.CommonSchema.NLog
 
 		private string[] GetTags(LogEventInfo e)
 		{
-			if (Tags?.Count == 0)
+			if (Tags is null || Tags.Count == 0)
 				return null;
 
 			if (Tags.Count == 1)
@@ -324,12 +328,12 @@ namespace Elastic.CommonSchema.NLog
 				? Array.Empty<string>()
 				: tags.Split(new[] { ';', ',', ' ', '\t', '\n' }, StringSplitOptions.RemoveEmptyEntries);
 
-		private IDictionary<string, object> GetLabels(LogEventInfo e)
+		private IDictionary<string, string> GetLabels(LogEventInfo e)
 		{
 			if (Labels?.Count == 0)
 				return null;
 
-			var labels = new Dictionary<string, object>();
+			var labels = new Dictionary<string, string>();
 			for (var i = 0; i < Labels?.Count; ++i)
 			{
 				var value = Labels[i].Layout?.Render(e);
@@ -407,7 +411,7 @@ namespace Elastic.CommonSchema.NLog
 				Name = processName,
 				Pid = !string.IsNullOrEmpty(processId) ? long.Parse(processId) : 0,
 				Executable = processExecutable,
-				Thread = !string.IsNullOrEmpty(processId) ? new ProcessThread { Id = long.Parse(processId) } : null
+				Thread = !string.IsNullOrEmpty(processThreadId) ? new ProcessThread { Id = long.Parse(processThreadId) } : null
 			};
 		}
 
@@ -450,6 +454,18 @@ namespace Elastic.CommonSchema.NLog
 			return new Transaction
 			{
 				Id = transactionId
+			};
+		}
+
+		private Span GetSpan(LogEventInfo logEventInfo)
+		{
+			var spanId = ApmSpanId?.Render(logEventInfo);
+			if (string.IsNullOrEmpty(spanId))
+				return null;
+
+			return new Span
+			{
+				Id = spanId
 			};
 		}
 
@@ -496,15 +512,34 @@ namespace Elastic.CommonSchema.NLog
 			if (string.IsNullOrEmpty(key))
 				return;
 
-			while (propertyBag.ContainsKey(key))
+			var usedKey = key;
+			var count = 0;
+			while (propertyBag.ContainsKey(usedKey))
 			{
-				if (string.Equals(value?.ToString(), propertyBag[key]?.ToString(), StringComparison.Ordinal))
+				if (string.Equals(value?.ToString(), propertyBag[usedKey]?.ToString(), StringComparison.Ordinal))
 					return;
 
-				key += "_1";
+				usedKey = $"{key}_{++count}";
 			}
 
-			propertyBag.Add(key, value);
+			propertyBag.Add(usedKey, value);
+		}
+		private static void Populate(IDictionary<string, string> propertyBag, string key, string value)
+		{
+			if (string.IsNullOrEmpty(key))
+				return;
+
+			var usedKey = key;
+			var count = 0;
+			while (propertyBag.ContainsKey(usedKey))
+			{
+				if (string.Equals(value, propertyBag[usedKey], StringComparison.Ordinal))
+					return;
+
+				usedKey = $"{key}_{++count}";
+			}
+
+			propertyBag.Add(usedKey, value);
 		}
 	}
 }

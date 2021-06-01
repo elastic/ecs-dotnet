@@ -22,7 +22,7 @@ namespace Generator.Schema
 						? "[" + string.Join(',', value.Example.ToString().Trim('[').Trim(']').Split(',').Select(s => s.Trim())) + "]"
 						: JsonConvert.SerializeObject(value.Example).Trim('"');
 
-		private static string Sanitized(this string value) =>
+		public static string Sanitized(this string value) =>
 			Regex.Replace(value.TrimEnd(), @"[\r\n]+", "<para/><para/>");
 
 		public static string DescriptionSanitized(this Field value) =>
@@ -44,49 +44,54 @@ namespace Generator.Schema
 
 		public static string ClrType(this Field value)
 		{
+			if (!string.IsNullOrEmpty(value.ClrType))
+				return value.ClrType;
+
 			var isArray = value.IsArray() ||
 				value.FlatName == "registry.data.strings";
 
 			// Special cases.
-			if (value.FlatName == "labels") return "IDictionary<string, object>";
+			if (value.FlatName == "labels") return "IDictionary<string, string>";
+
+			if (value.FlatName == "container.labels") return "IDictionary<string, string>";
 
 			// C# custom property
-			if (value.Name == "_metadata") return "IDictionary<string, object>";
+			if (value.Name == "metadata") return "IDictionary<string, object>";
 
-			var tipe = "";
+			string clrType;
 			switch (value.Type)
 			{
 				case FieldType.Keyword:
 				case FieldType.Text:
 				case FieldType.Ip:
-					tipe = "string";
+					clrType = "string";
 					break;
 				case FieldType.Long:
-					tipe = "long?";
+					clrType = "long?";
 					break;
 				case FieldType.Integer:
-					tipe = "int?";
+					clrType = "int?";
 					break;
 				case FieldType.Date:
-					tipe = "DateTimeOffset?";
+					clrType = "DateTimeOffset?";
 					break;
 				case FieldType.Object:
-					tipe = "object";
+					clrType = "object";
 					break;
 				case FieldType.Float:
-					tipe = "float?";
+					clrType = "float?";
 					break;
 				case FieldType.GeoPoint:
-					tipe = "Location";
+					clrType = "Location";
 					break;
 				case FieldType.Boolean:
-					tipe = "bool?";
+					clrType = "bool?";
 					break;
 				default:
 					throw new ArgumentOutOfRangeException();
 			}
 
-			return isArray ? $"{tipe}[]" : tipe;
+			return isArray ? $"{clrType}[]" : clrType;
 		}
 
 		public static string Extras(this Field value)

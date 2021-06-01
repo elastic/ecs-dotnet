@@ -14,6 +14,7 @@ namespace Generator.Schema
 		public NestedFields(YamlSchema schema) => _schema = schema;
 
 		public readonly List<NestedFields> Children = new List<NestedFields>();
+		private string _description;
 
 		public string Name { get; set; }
 
@@ -23,6 +24,7 @@ namespace Generator.Schema
 			_schema.Name switch
 			{
 				"dns" when Name == "answers" && _schema.Fields.Single(f => f.Value.Name == "answers").Value.IsArray() => (NamePCased + "[]"),
+				"process" when Name == "parent" => FileGenerator.PascalCase(_schema.Name),
 				_ => NamePCased
 			};
 
@@ -30,6 +32,9 @@ namespace Generator.Schema
 		{
 			get
 			{
+				if (!string.IsNullOrEmpty(_description))
+					return _description;
+
 				if (_schema.Name == "dns" && Name == "answers")
 					return _schema.Fields.Single(f => f.Value.FlatName == "dns.answers").Value.DescriptionSanitized();
 
@@ -53,6 +58,7 @@ namespace Generator.Schema
 
 				return $"{NamePCased} property.";
 			}
+			set => _description = value;
 		}
 
 		public List<Field> Fields { get; set; } = new List<Field>();

@@ -44,7 +44,11 @@ namespace Generator.Schema
 			return _baseSchema;
 		}
 
-		public IEnumerable<YamlSchema> NonBaseYamlSchemas() => YamlSchemas.Where(s => !string.IsNullOrWhiteSpace(s.Prefix)).OrderBy(s => s.Name);
+		public IEnumerable<YamlSchema> NonBaseNonReusableYamlSchemas() => NonBaseYamlSchemas()
+			.Where(s => s.Reusable?.TopLevel ?? true).OrderBy(s => s.Name);
+
+		public IEnumerable<YamlSchema> NonBaseYamlSchemas() => YamlSchemas
+			.Where(s => !string.IsNullOrWhiteSpace(s.Prefix)).OrderBy(s => s.Name);
 
 		public IEnumerable<Tuple<string, Field>> BaseFieldsOrdered
 		{
@@ -57,7 +61,7 @@ namespace Generator.Schema
 					// HACK in the log.level
 					Tuple.Create("WriteLogLevel", new Field { Name = LogLevelFieldName, Schema = baseRootObject, FlatName = LogLevelFieldName }),
 					Tuple.Create("WriteMessage", baseRootObject.Fields.Single(f => f.Key == MessageFieldName).Value),
-					Tuple.Create("WriteProp", new Field { Name = "_metadata", Schema = baseRootObject, FlatName = "_metadata" })
+					Tuple.Create("WriteProp", new Field { Name = "metadata", Schema = baseRootObject, FlatName = "metadata" })
 				};
 
 				list.AddRange(baseRootObject.GetFieldsFlat()
@@ -70,15 +74,5 @@ namespace Generator.Schema
 		public IDictionary<int, string> Templates { get; set; }
 
 		public IList<YamlSchema> YamlSchemas { get; set; }
-
-		public IEnumerable<YamlSchema> YamlSchemasOrdered
-		{
-			get
-			{
-				var list = new List<YamlSchema> { BaseYamlSchema() };
-				list.AddRange(NonBaseYamlSchemas());
-				return list;
-			}
-		}
 	}
 }

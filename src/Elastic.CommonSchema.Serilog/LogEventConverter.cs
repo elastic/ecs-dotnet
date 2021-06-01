@@ -60,7 +60,8 @@ namespace Elastic.CommonSchema.Serilog
 				Process = GetProcess(logEvent, configuration.MapCurrentThread),
 				Host = GetHost(logEvent),
 				Trace = GetTrace(logEvent),
-				Transaction = GetTransaction(logEvent)
+				Transaction = GetTransaction(logEvent),
+				Span = GetSpan(logEvent)
 			};
 
 			if (configuration.MapHttpAdapter != null)
@@ -90,6 +91,11 @@ namespace Elastic.CommonSchema.Serilog
 			!logEvent.TryGetScalarPropertyValue("ElasticApmTransactionId", out var transactionId)
 				? null
 				: new Transaction { Id = transactionId.Value.ToString() };
+
+		private static Span GetSpan(LogEvent logEvent) =>
+			!logEvent.TryGetScalarPropertyValue("ElasticApmSpanId", out var spanId)
+				? null
+				: new Span { Id = spanId.Value.ToString() };
 
 		private static IDictionary<string, object> GetMetadata(LogEvent logEvent, ISet<string> logEventPropertiesToFilter)
 		{

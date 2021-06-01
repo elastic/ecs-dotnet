@@ -9,6 +9,7 @@ using Elastic.Apm.NLog;
 using Elastic.CommonSchema.Tests.Specs;
 using NLog;
 using NLog.LayoutRenderers;
+using NLog.Layouts;
 using Config=NLog.Config;
 using NLog.Targets;
 
@@ -25,10 +26,11 @@ namespace Elastic.CommonSchema.NLog.Tests
 			// These layout renderers need to registered statically as ultimately ConfigurationItemFactory.Default is called in the call stack.
 			LayoutRenderer.Register<ApmTraceIdLayoutRenderer>(ApmTraceIdLayoutRenderer.Name); //generic
 			LayoutRenderer.Register<ApmTransactionIdLayoutRenderer>(ApmTransactionIdLayoutRenderer.Name); //generic
+			LayoutRenderer.Register<ApmSpanIdLayoutRenderer>(ApmSpanIdLayoutRenderer.Name); //generic
 
 			var logFactory = new LogFactory();
 			var logConfig = new Config.LoggingConfiguration(logFactory);
-			var ecsLayout = new EcsLayout();
+			var ecsLayout = new EcsLayout { IncludeMdlc = true };
 			ecsLayout.ExcludeProperties.Add("NotX");
 			var memoryTarget = new MemoryTarget { Layout = ecsLayout, OptimizeBufferReuse = true };
 			logConfig.AddRule(LogLevel.Trace, LogLevel.Fatal, memoryTarget);

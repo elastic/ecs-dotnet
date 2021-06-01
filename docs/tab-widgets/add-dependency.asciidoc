@@ -18,6 +18,7 @@ The minimum required Serilog version is 2.9.0.
 
 Add a dependency to your application project file:
 [source,xml]
+[subs="attributes"]
 ----
 <Project Sdk="Microsoft.NET.Sdk">
     <!-- other details excluded for brevity... -->
@@ -29,12 +30,14 @@ Add a dependency to your application project file:
 
 or install with the .NET CLI
 [source,sh]
+[subs="attributes"]
 ----
 dotnet add package Elastic.CommonSchema.Serilog --version ${ecs-logging-dotnet.version}
 ----
 
 or nuget CLI
 [source,sh]
+[subs="attributes"]
 ----
 Install-Package Elastic.CommonSchema.Serilog -Version ${ecs-logging-dotnet.version}
 ----
@@ -61,6 +64,7 @@ The minimum required NLog version is 4.5.4.
 
 Add a dependency to your application project file:
 [source,xml]
+[subs="attributes"]
 ----
 <Project Sdk="Microsoft.NET.Sdk">
     <!-- other details excluded for brevity... -->
@@ -72,12 +76,14 @@ Add a dependency to your application project file:
 
 or install with the .NET CLI
 [source,sh]
+[subs="attributes"]
 ----
 dotnet add package Elastic.CommonSchema.NLog --version ${ecs-logging-dotnet.version}
 ----
 
 or nuget CLI
 [source,sh]
+[subs="attributes"]
 ----
 Install-Package Elastic.CommonSchema.NLog -Version ${ecs-logging-dotnet.version}
 ----
