@@ -5,11 +5,10 @@
     <Authors>Elastic and contributors</Authors>
     <Copyright>Elasticsearch BV</Copyright>
     <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
-    <RepositoryUrl>https://github.com/elastic/elasticsearch-net-abstractions</RepositoryUrl>
-    <PackageProjectUrl>https://github.com/elastic/elasticsearch-net-abstractions</PackageProjectUrl>
-    <PackageReleaseNotes>https://github.com/elastic/elasticsearch-net-abstractions/releases</PackageReleaseNotes>
-
-
+    <RepositoryUrl>https://github.com/elastic/ecs-dotnet</RepositoryUrl>
+    <PackageProjectUrl>https://github.com/elastic/ecs-dotnet</PackageProjectUrl>
+    <PackageReleaseNotes>https://github.com/elastic/ecs-dotnet/releases</PackageReleaseNotes>
+    
     <SignAssembly>true</SignAssembly>
     <AssemblyOriginatorKeyFile>..\..\build\keys\keypair.snk</AssemblyOriginatorKeyFile>
 
