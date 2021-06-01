@@ -129,16 +129,18 @@ namespace Elasticsearch.Extensions.Logging
 
 			if (activity != null)
 			{
-				// Older version of Activity does not have TraceId, SpanId fields, but we can infer them.
-
-				// Unique identifier of the trace.
-				// A trace groups multiple events like transactions that belong together. For example, a user request handled by multiple inter-connected services.
-				logEvent.Trace = new Trace { Id = activity.RootId };
-
-				// Use field span.id forward compatible with ECS 1.6
-				var spanId = ExtractW3cSpanIdFromActivityId(activity.Id);
-				if (spanId != null)
-					logEvent.Span = new Span { Id = spanId };
+				if (activity.IdFormat == ActivityIdFormat.W3C)
+				{
+					// Unique identifier of the trace.
+					// A trace groups multiple events like transactions that belong together. For example, a user request handled by multiple inter-connected services.
+					logEvent.Trace = new Trace { Id = activity.TraceId.ToString() };
+					logEvent.Span = new Span { Id = activity.SpanId.ToString() };
+				}
+				else
+				{
+					if (activity.RootId != null) logEvent.Trace = new Trace { Id = activity.RootId };
+					if (activity.Id != null) logEvent.Span = new Span { Id = activity.Id };
+				}
 			}
 			else
 			{
@@ -232,30 +234,6 @@ namespace Elasticsearch.Extensions.Logging
 			}
 
 			return false;
-		}
-
-		private string? ExtractW3cSpanIdFromActivityId(string? activityId)
-		{
-			if (activityId == null) return null;
-
-			// quick short circuit if unexpected length
-			if (activityId.Length != 2 + 32 + 16 + 2 + 3) return null;
-
-			// validate full format (must start with digit, etc)
-			for (var index = 0; index < activityId.Length; index++)
-			{
-				var c = activityId[index];
-				if (index == 2 || index == 2 + 1 + 32 || index == 2 + 1 + 32 + 1 + 16)
-				{
-					if (c != '-') return null;
-				}
-				else
-				{
-					if (c < '0' || c > 'f' || c > '9' && c < 'a') return null;
-				}
-			}
-
-			return activityId.Substring(2 + 1 + 32 + 1, 16);
 		}
 
 		private string FormatEnumerable(IEnumerable enumerable, int depth)
