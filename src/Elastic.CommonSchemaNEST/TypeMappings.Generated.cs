@@ -83,7 +83,7 @@ namespace Elastic.CommonSchema.Elasticsearch
 					.Properties<Base>(properties =>
 						properties
 							.Date(p => p.Name(n => n.Timestamp))
-							.Object<IDictionary<string, object>>(p => p.Name(n => n.Labels))
+							.Object<IDictionary<string, string>>(p => p.Name(n => n.Labels))
 							.Text(p => p.Name(n => n.Message).Norms(false))
 							.Keyword(p => p.Name(n => n.Tags).IgnoreAbove(1024))
 							.Object<Agent>(o =>

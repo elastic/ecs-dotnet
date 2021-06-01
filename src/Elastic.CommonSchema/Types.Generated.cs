@@ -250,7 +250,7 @@ namespace Elastic.CommonSchema
 		/// <remarks>(ECS Core)</remarks>
 		/// <example>{\"application\": \"foo-bar\", \"env\": \"production\"}</example>
 		[DataMember(Name = "labels")]
-		public IDictionary<string, object> Labels { get; set; }
+		public IDictionary<string, string> Labels { get; set; }
 
 		/// <summary>
 		/// For log events the message field contains the log message, optimized for viewing in a log viewer.<para/><para/>For structured logs without an original message field, other fields can be concatenated to form a human-readable summary of the event.<para/><para/>If multiple messages exist, they can be combined into one message.
