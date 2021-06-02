@@ -16,13 +16,8 @@ namespace Elasticsearch.Extensions.Logging
 	public class ElasticsearchLoggerProvider : ILoggerProvider, ISupportExternalScope
 	{
 		private readonly IChannelSetup[] _channelConfigurations;
-
-		private readonly ConcurrentDictionary<string, ElasticsearchLogger> _loggers;
-
 		private readonly IOptionsMonitor<ElasticsearchLoggerOptions> _options;
-
 		private readonly IDisposable _optionsReloadToken;
-
 		private IExternalScopeProvider _scopeProvider = default!;
 		private readonly ElasticsearchChannel<LogEvent> _shipper;
 
@@ -36,7 +31,6 @@ namespace Elasticsearch.Extensions.Logging
 			var channelOptions = CreateChannelOptions(options.CurrentValue, _channelConfigurations);
 			_shipper = new ElasticsearchChannel<LogEvent>(channelOptions);
 
-			_loggers = new ConcurrentDictionary<string, ElasticsearchLogger>();
 			ReloadLoggerOptions(options.CurrentValue);
 			_optionsReloadToken = _options.OnChange(ReloadLoggerOptions);
 		}
@@ -44,9 +38,7 @@ namespace Elasticsearch.Extensions.Logging
 		public static Func<DateTimeOffset> LocalDateTimeProvider { get; set; } = () => DateTimeOffset.UtcNow;
 
 		public ILogger CreateLogger(string name) =>
-			_loggers.GetOrAdd(name,
-				loggerName =>
-					new ElasticsearchLogger(name, _shipper) { Options = _options.CurrentValue, ScopeProvider = _scopeProvider });
+			new ElasticsearchLogger(name, _shipper) { Options = _options.CurrentValue, ScopeProvider = _scopeProvider };
 
 		public void Dispose()
 		{
@@ -54,15 +46,9 @@ namespace Elasticsearch.Extensions.Logging
 			_shipper.Dispose();
 		}
 
-		public void SetScopeProvider(IExternalScopeProvider scopeProvider)
-		{
-			_scopeProvider = scopeProvider;
-			foreach (var logger in _loggers) logger.Value.ScopeProvider = scopeProvider;
-		}
+		public void SetScopeProvider(IExternalScopeProvider scopeProvider) => _scopeProvider = scopeProvider;
 
-		private ElasticsearchChannelOptions<LogEvent> CreateChannelOptions(ElasticsearchLoggerOptions options,
-			IChannelSetup[] channelConfigurations
-		)
+		private ElasticsearchChannelOptions<LogEvent> CreateChannelOptions(ElasticsearchLoggerOptions options, IChannelSetup[] channelConfigurations)
 		{
 			var channelOptions = new ElasticsearchChannelOptions<LogEvent>
 			{
@@ -89,12 +75,7 @@ namespace Elasticsearch.Extensions.Logging
 			return channelOptions;
 		}
 
-		private void ReloadLoggerOptions(ElasticsearchLoggerOptions options)
-		{
-			var channelOptions = CreateChannelOptions(options, _channelConfigurations);
-			_shipper.Options = channelOptions;
-
-			foreach (var logger in _loggers) logger.Value.Options = options;
-		}
+		private void ReloadLoggerOptions(ElasticsearchLoggerOptions options) =>
+			_shipper.Options = CreateChannelOptions(options, _channelConfigurations);
 	}
 }
