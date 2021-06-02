@@ -23,10 +23,10 @@ namespace Elastic.Ingest
 		public ShipTo(string cloudId, string apiKey)
 		{
 			if (string.IsNullOrEmpty(cloudId))
-				throw new ArgumentException("cloudId may not be null.", nameof(cloudId));
+				throw new ArgumentException("cloudId may not be null or empty.", nameof(cloudId));
 
 			if (string.IsNullOrEmpty(apiKey))
-				throw new ArgumentException("apiKey may not be null.", nameof(apiKey));
+				throw new ArgumentException("apiKey may not be null or empty.", nameof(apiKey));
 
 			CloudId = cloudId;
 			ApiKey = apiKey;
@@ -36,13 +36,13 @@ namespace Elastic.Ingest
 		public ShipTo(string cloudId, string username, string password)
 		{
 			if (string.IsNullOrEmpty(cloudId))
-				throw new ArgumentException("cloudId may not be null.", nameof(cloudId));
+				throw new ArgumentException("cloudId may not be null or empty.", nameof(cloudId));
 
 			if (string.IsNullOrEmpty(username))
-				throw new ArgumentException("username may not be null.", nameof(username));
+				throw new ArgumentException("username may not be null or empty.", nameof(username));
 
 			if (string.IsNullOrEmpty(password))
-				throw new ArgumentException("password may not be null.", nameof(password));
+				throw new ArgumentException("password may not be null or empty.", nameof(password));
 
 			CloudId = cloudId;
 			Username = username;
