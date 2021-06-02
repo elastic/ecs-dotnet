@@ -17,7 +17,8 @@ namespace Elasticsearch.Extensions.Logging
 		private const string ScopesPropertyName = nameof(Scopes);
 
 		/// <summary>
-		/// Custom field with the original message template, e.g. "Unexpected error processing customer {CustomerId}."
+		/// Custom field with the original template used to generate the message, with token placeholders
+		/// for inserted label values, e.g. "Unexpected error processing customer {CustomerId}."
 		/// </summary>
 		[DataMember(Name = MessageTemplatePropertyName)]
 		public string? MessageTemplate { get; set; }
