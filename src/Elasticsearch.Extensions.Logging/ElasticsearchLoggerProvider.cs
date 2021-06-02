@@ -64,21 +64,21 @@ namespace Elasticsearch.Extensions.Logging
 			IChannelSetup[] channelConfigurations
 		)
 		{
-			var channelOptions = new ElasticsearchChannelOptions<LogEvent>();
-			channelOptions.Index = options.Index;
-			channelOptions.IndexOffset = options.IndexOffset;
-			channelOptions.ConnectionPoolType = options.ShipTo.ConnectionPoolType;
-
-			channelOptions.WriteEvent = async (stream, ctx, l) => await l.SerializeAsync(stream, ctx).ConfigureAwait(false);
-			channelOptions.TimestampLookup = l => l.Timestamp;
+			var channelOptions = new ElasticsearchChannelOptions<LogEvent>
+			{
+				Index = options.Index,
+				IndexOffset = options.IndexOffset,
+				ConnectionPoolType = options.ShipTo.ConnectionPoolType,
+				WriteEvent = async (stream, ctx, logEvent) => await logEvent.SerializeAsync(stream, ctx).ConfigureAwait(false),
+				TimestampLookup = l => l.Timestamp
+			};
 
 			if (options.ShipTo.ConnectionPoolType == ConnectionPoolType.Cloud
 				|| options.ShipTo.ConnectionPoolType == ConnectionPoolType.Unknown && !string.IsNullOrEmpty(options.ShipTo.CloudId))
 			{
-				if (!string.IsNullOrWhiteSpace(options.ShipTo.Username))
-					channelOptions.ShipTo = new ShipTo(options.ShipTo.CloudId, options.ShipTo.Username, options.ShipTo.Password);
-				else
-					channelOptions.ShipTo = new ShipTo(options.ShipTo.CloudId, options.ShipTo.ApiKey);
+				channelOptions.ShipTo = !string.IsNullOrWhiteSpace(options.ShipTo.Username)
+					? new ShipTo(options.ShipTo.CloudId, options.ShipTo.Username, options.ShipTo.Password)
+					: new ShipTo(options.ShipTo.CloudId, options.ShipTo.ApiKey);
 			}
 			else
 				channelOptions.ShipTo = new ShipTo(options.ShipTo.NodeUris, options.ShipTo.ConnectionPoolType);
