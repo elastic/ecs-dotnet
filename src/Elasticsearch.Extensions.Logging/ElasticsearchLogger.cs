@@ -309,7 +309,7 @@ namespace Elasticsearch.Extensions.Logging
 			}
 		}
 
-		private void WriteName(StringBuilder stringBuilder, string name)
+		private static void WriteName(StringBuilder stringBuilder, string name)
 		{
 			foreach (var c in name)
 			{
@@ -322,7 +322,7 @@ namespace Elasticsearch.Extensions.Logging
 			}
 		}
 
-		private void WriteValue(StringBuilder stringBuilder, string value)
+		private static void WriteValue(StringBuilder stringBuilder, string value)
 		{
 			foreach (var c in value)
 			{
