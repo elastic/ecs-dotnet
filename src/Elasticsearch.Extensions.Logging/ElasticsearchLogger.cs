@@ -34,7 +34,6 @@ namespace Elasticsearch.Extensions.Logging
 
 		public bool IsEnabled(LogLevel logLevel) => Options.IsEnabled;
 
-
 		public void Log<TState>(LogLevel logLevel, EventId eventId, TState state, Exception exception,
 			Func<TState, Exception, string> formatter
 		)
@@ -42,16 +41,13 @@ namespace Elasticsearch.Extensions.Logging
 			try
 			{
 				if (!IsEnabled(logLevel)) return;
-
-				if (formatter == null) throw new ArgumentNullException(nameof(formatter));
+				if (formatter is null) throw new ArgumentNullException(nameof(formatter));
 
 				// TODO: Want to render state values (separate from message) to pass to log event, for semantic logging
 				// Maybe render to JSON in-process, then queue bytes for sending to index ??
 
-				var elasticsearchData =
-					BuildLogEvent(_categoryName, logLevel, eventId, state, exception, formatter);
-
-				_channel.TryWrite(elasticsearchData);
+				var logEvent = BuildLogEvent(_categoryName, logLevel, eventId, state, exception, formatter);
+				_channel.TryWrite(logEvent);
 			}
 			catch (Exception ex)
 			{
@@ -75,9 +71,8 @@ namespace Elasticsearch.Extensions.Logging
 			{
 				scopeProvider.ForEachScope((scope, innerData) =>
 				{
-					if (logEvent.Labels == null) logEvent.Labels = new Dictionary<string, string>();
-
-					if (logEvent.Scopes == null) logEvent.Scopes = new List<string>();
+					logEvent.Labels ??= new Dictionary<string, string>();
+					logEvent.Scopes ??= new List<string>();
 
 					var isFormattedLogValues = false;
 					if (scope is IEnumerable<KeyValuePair<string, object>> scopeValues)
@@ -117,7 +112,6 @@ namespace Elasticsearch.Extensions.Logging
 					if (CheckTracingValues(logEvent, kvp)) continue;
 
 					logEvent.Labels ??= new Dictionary<string, string>();
-
 					logEvent.Labels[kvp.Key] = FormatValue(kvp.Value);
 				}
 			}
