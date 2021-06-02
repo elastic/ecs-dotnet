@@ -18,27 +18,31 @@ namespace Elasticsearch.Extensions.Logging
 		private readonly IChannelSetup[] _channelConfigurations;
 		private readonly IOptionsMonitor<ElasticsearchLoggerOptions> _options;
 		private readonly IDisposable _optionsReloadToken;
-		private IExternalScopeProvider _scopeProvider = default!;
+		private IExternalScopeProvider? _scopeProvider;
 		private readonly ElasticsearchChannel<LogEvent> _shipper;
 
 		public ElasticsearchLoggerProvider(IOptionsMonitor<ElasticsearchLoggerOptions> options,
 			IEnumerable<IChannelSetup> channelConfigurations
 		)
 		{
-			_options = options;
+			_options = options ?? throw new ArgumentNullException(nameof(options));
+
+			if (channelConfigurations is null)
+				throw new ArgumentNullException(nameof(channelConfigurations));
+
 			_channelConfigurations = channelConfigurations.ToArray();
 
 			var channelOptions = CreateChannelOptions(options.CurrentValue, _channelConfigurations);
 			_shipper = new ElasticsearchChannel<LogEvent>(channelOptions);
 
 			ReloadLoggerOptions(options.CurrentValue);
-			_optionsReloadToken = _options.OnChange(ReloadLoggerOptions);
+			_optionsReloadToken = _options.OnChange(o => ReloadLoggerOptions(o));
 		}
 
 		public static Func<DateTimeOffset> LocalDateTimeProvider { get; set; } = () => DateTimeOffset.UtcNow;
 
 		public ILogger CreateLogger(string name) =>
-			new ElasticsearchLogger(name, _shipper) { Options = _options.CurrentValue, ScopeProvider = _scopeProvider };
+			new ElasticsearchLogger(name, _shipper, _options.CurrentValue, _scopeProvider);
 
 		public void Dispose()
 		{
@@ -48,7 +52,7 @@ namespace Elasticsearch.Extensions.Logging
 
 		public void SetScopeProvider(IExternalScopeProvider scopeProvider) => _scopeProvider = scopeProvider;
 
-		private ElasticsearchChannelOptions<LogEvent> CreateChannelOptions(ElasticsearchLoggerOptions options, IChannelSetup[] channelConfigurations)
+		private static ElasticsearchChannelOptions<LogEvent> CreateChannelOptions(ElasticsearchLoggerOptions options, IChannelSetup[] channelConfigurations)
 		{
 			var channelOptions = new ElasticsearchChannelOptions<LogEvent>
 			{

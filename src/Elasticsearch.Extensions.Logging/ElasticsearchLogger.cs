@@ -19,18 +19,19 @@ namespace Elasticsearch.Extensions.Logging
 	{
 		private readonly string _categoryName;
 		private readonly ElasticsearchChannel<LogEvent> _channel;
+		private readonly IExternalScopeProvider? _scopeProvider;
 
-		internal ElasticsearchLogger(string categoryName, ElasticsearchChannel<LogEvent> channel)
+		internal ElasticsearchLogger(string categoryName, ElasticsearchChannel<LogEvent> channel,
+			ElasticsearchLoggerOptions elasticsearchLoggerOptions, IExternalScopeProvider? scopeProvider
+		)
 		{
 			_categoryName = categoryName;
 			_channel = channel;
+			_scopeProvider = scopeProvider;
 		}
 
 		internal ElasticsearchLoggerOptions Options { get; set; } = default!;
-
-		internal IExternalScopeProvider ScopeProvider { get; set; } = default!;
-
-		public IDisposable BeginScope<TState>(TState state) => ScopeProvider.Push(state);
+		public IDisposable? BeginScope<TState>(TState state) => _scopeProvider?.Push(state);
 
 		public bool IsEnabled(LogLevel logLevel) => Options.IsEnabled;
 
@@ -66,13 +67,12 @@ namespace Elasticsearch.Extensions.Logging
 
 		private void AddScopeValues(LogEvent logEvent)
 		{
-			var scopeProvider = ScopeProvider;
-			if (Options.IncludeScopes && scopeProvider != null)
+			if (Options.IncludeScopes)
 			{
-				scopeProvider.ForEachScope((scope, innerData) =>
+				_scopeProvider?.ForEachScope((scope, le) =>
 				{
-					logEvent.Labels ??= new Dictionary<string, string>();
-					logEvent.Scopes ??= new List<string>();
+					le.Labels ??= new Dictionary<string, string>();
+					le.Scopes ??= new List<string>();
 
 					var isFormattedLogValues = false;
 					if (scope is IEnumerable<KeyValuePair<string, object>> scopeValues)
@@ -85,14 +85,14 @@ namespace Elasticsearch.Extensions.Logging
 								continue;
 							}
 
-							if (CheckTracingValues(logEvent, kvp)) continue;
+							if (CheckTracingValues(le, kvp)) continue;
 
-							logEvent.Labels[kvp.Key] = FormatValue(kvp.Value);
+							le.Labels[kvp.Key] = FormatValue(kvp.Value);
 						}
 					}
 
 					var formattedScope = isFormattedLogValues ? scope.ToString() : FormatValue(scope);
-					logEvent.Scopes.Add(formattedScope);
+					le.Scopes.Add(formattedScope);
 				}, logEvent);
 			}
 		}
