@@ -64,22 +64,16 @@ namespace Elasticsearch.Extensions.Logging
 		{
 			if (!(_host is null)) return _host;
 
-			// Architecture osArchitecture = RuntimeInformation.OSArchitecture;
-			// if (osDescription.Contains('#'))
-			// {
-			//     int indexOfHash = osDescription.IndexOf('#');
-			//     osDescription = osDescription.Substring(0, Math.Max(0, indexOfHash - 1));
-			// }
-
-			var operatingSystem = new Os
-			{
-				Full = RuntimeInformation.OSDescription,
-				Platform = Environment.OSVersion.Platform.ToString(),
-				Version = Environment.OSVersion.Version.ToString()
-			};
 			_host = new Host
 			{
-				Hostname = Environment.MachineName, Architecture = RuntimeInformation.OSArchitecture.ToString(), Os = operatingSystem
+				Hostname = Environment.MachineName,
+				Architecture = RuntimeInformation.OSArchitecture.ToString(),
+				Os = new Os
+				{
+					Full = RuntimeInformation.OSDescription,
+					Platform = Environment.OSVersion.Platform.ToString(),
+					Version = Environment.OSVersion.Version.ToString()
+				}
 			};
 
 			return _host;
@@ -87,7 +81,7 @@ namespace Elasticsearch.Extensions.Logging
 
 		public static Process GetProcess()
 		{
-			if (_processName == null)
+			if (_processName is null)
 			{
 				using var process = System.Diagnostics.Process.GetCurrentProcess();
 				_processId = process.Id;

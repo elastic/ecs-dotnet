@@ -221,11 +221,7 @@ namespace Elastic.Ingest
 				config = new TransportConfiguration(connectionPool);
 			}
 
-			config = config.Proxy(new Uri("http://localhost:8080"), "", "");
-			config = config.EnableDebugMode();
-
 			var transport = new Transport<TransportConfiguration>(config);
-
 			_ = Interlocked.Exchange(ref _transport, transport);
 		}
 

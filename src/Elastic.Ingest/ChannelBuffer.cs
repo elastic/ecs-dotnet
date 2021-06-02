@@ -23,6 +23,7 @@ namespace Elastic.Ingest
 	internal class ChannelBuffer<TEvent> : IChannelBuffer, IDisposable
 	{
 		private readonly int _maxBufferSize;
+		private CancellationTokenSource _breaker = new CancellationTokenSource();
 
 		public TimeSpan ForceFlushAfter { get; }
 		public List<TEvent> Buffer { get; }
@@ -64,9 +65,6 @@ namespace Elastic.Ingest
 				return d < ForceFlushAfter ? ForceFlushAfter - d : ForceFlushAfter;
 			}
 		}
-
-		private CancellationTokenSource _breaker = new CancellationTokenSource();
-
 
 		/// <summary>
 		/// Call <see cref="ChannelReader{T}.WaitToReadAsync"/> with a timeout to force a flush to happen every

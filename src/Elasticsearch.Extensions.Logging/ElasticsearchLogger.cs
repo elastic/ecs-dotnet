@@ -19,21 +19,25 @@ namespace Elasticsearch.Extensions.Logging
 	{
 		private readonly string _categoryName;
 		private readonly ElasticsearchChannel<LogEvent> _channel;
+		private readonly ElasticsearchLoggerOptions _options;
+		private readonly IExternalScopeProvider? _scopeProvider;
 
-		internal ElasticsearchLogger(string categoryName, ElasticsearchChannel<LogEvent> channel)
+		internal ElasticsearchLogger(
+			string categoryName,
+			ElasticsearchChannel<LogEvent> channel,
+			ElasticsearchLoggerOptions options,
+			IExternalScopeProvider? scopeProvider
+		)
 		{
 			_categoryName = categoryName;
 			_channel = channel;
+			_options = options;
+			_scopeProvider = scopeProvider;
 		}
 
-		internal ElasticsearchLoggerOptions Options { get; set; } = default!;
+		public IDisposable? BeginScope<TState>(TState state) => _scopeProvider?.Push(state);
 
-		internal IExternalScopeProvider ScopeProvider { get; set; } = default!;
-
-		public IDisposable BeginScope<TState>(TState state) => ScopeProvider.Push(state);
-
-		public bool IsEnabled(LogLevel logLevel) => Options.IsEnabled;
-
+		public bool IsEnabled(LogLevel logLevel) => _options.IsEnabled;
 
 		public void Log<TState>(LogLevel logLevel, EventId eventId, TState state, Exception exception,
 			Func<TState, Exception, string> formatter
@@ -42,16 +46,13 @@ namespace Elasticsearch.Extensions.Logging
 			try
 			{
 				if (!IsEnabled(logLevel)) return;
-
-				if (formatter == null) throw new ArgumentNullException(nameof(formatter));
+				if (formatter is null) throw new ArgumentNullException(nameof(formatter));
 
 				// TODO: Want to render state values (separate from message) to pass to log event, for semantic logging
 				// Maybe render to JSON in-process, then queue bytes for sending to index ??
 
-				var elasticsearchData =
-					BuildLogEvent(_categoryName, logLevel, eventId, state, exception, formatter);
-
-				_channel.TryWrite(elasticsearchData);
+				var logEvent = BuildLogEvent(_categoryName, logLevel, eventId, state, exception, formatter);
+				_channel.TryWrite(logEvent);
 			}
 			catch (Exception ex)
 			{
@@ -70,14 +71,12 @@ namespace Elasticsearch.Extensions.Logging
 
 		private void AddScopeValues(LogEvent logEvent)
 		{
-			var scopeProvider = ScopeProvider;
-			if (Options.IncludeScopes && scopeProvider != null)
+			if (_options.IncludeScopes)
 			{
-				scopeProvider.ForEachScope((scope, innerData) =>
+				_scopeProvider?.ForEachScope((scope, le) =>
 				{
-					if (logEvent.Labels == null) logEvent.Labels = new Dictionary<string, string>();
-
-					if (logEvent.Scopes == null) logEvent.Scopes = new List<string>();
+					le.Labels ??= new Dictionary<string, string>();
+					le.Scopes ??= new List<string>();
 
 					var isFormattedLogValues = false;
 					if (scope is IEnumerable<KeyValuePair<string, object>> scopeValues)
@@ -90,14 +89,14 @@ namespace Elasticsearch.Extensions.Logging
 								continue;
 							}
 
-							if (CheckTracingValues(logEvent, kvp)) continue;
+							if (CheckTracingValues(le, kvp)) continue;
 
-							logEvent.Labels[kvp.Key] = FormatValue(kvp.Value);
+							le.Labels[kvp.Key] = FormatValue(kvp.Value);
 						}
 					}
 
 					var formattedScope = isFormattedLogValues ? scope.ToString() : FormatValue(scope);
-					logEvent.Scopes.Add(formattedScope);
+					le.Scopes.Add(formattedScope);
 				}, logEvent);
 			}
 		}
@@ -117,7 +116,6 @@ namespace Elasticsearch.Extensions.Logging
 					if (CheckTracingValues(logEvent, kvp)) continue;
 
 					logEvent.Labels ??= new Dictionary<string, string>();
-
 					logEvent.Labels[kvp.Key] = FormatValue(kvp.Value);
 				}
 			}
@@ -171,13 +169,13 @@ namespace Elasticsearch.Extensions.Logging
 			logEvent.Agent = LogEventToEcsHelper.GetAgent();
 			logEvent.Service = LogEventToEcsHelper.GetService();
 
-			if (Options.Tags != null && Options.Tags.Length > 0) logEvent.Tags = Options.Tags;
+			if (_options.Tags != null && _options.Tags.Length > 0) logEvent.Tags = _options.Tags;
 
-			if (Options.IncludeHost) logEvent.Host = LogEventToEcsHelper.GetHost();
+			if (_options.IncludeHost) logEvent.Host = LogEventToEcsHelper.GetHost();
 
-			if (Options.IncludeProcess) logEvent.Process = LogEventToEcsHelper.GetProcess();
+			if (_options.IncludeProcess) logEvent.Process = LogEventToEcsHelper.GetProcess();
 
-			if (Options.IncludeUser)
+			if (_options.IncludeUser)
 			{
 				logEvent.User = new User
 				{
@@ -187,7 +185,7 @@ namespace Elasticsearch.Extensions.Logging
 
 			AddTracing(logEvent);
 
-			if (Options.IncludeScopes) AddScopeValues(logEvent);
+			if (_options.IncludeScopes) AddScopeValues(logEvent);
 
 			// These will overwrite any scope values with the same name
 			AddStateValues(state, logEvent);
@@ -245,7 +243,7 @@ namespace Elasticsearch.Extensions.Logging
 			var index = 0;
 			foreach (var item in enumerable)
 			{
-				if (index > 0) stringBuilder.Append(Options.ListSeparator);
+				if (index > 0) stringBuilder.Append(_options.ListSeparator);
 
 				var value = FormatValue(item, depth);
 				stringBuilder.Append(value);
@@ -315,7 +313,7 @@ namespace Elasticsearch.Extensions.Logging
 			}
 		}
 
-		private void WriteName(StringBuilder stringBuilder, string name)
+		private static void WriteName(StringBuilder stringBuilder, string name)
 		{
 			foreach (var c in name)
 			{
@@ -328,7 +326,7 @@ namespace Elasticsearch.Extensions.Logging
 			}
 		}
 
-		private void WriteValue(StringBuilder stringBuilder, string value)
+		private static void WriteValue(StringBuilder stringBuilder, string value)
 		{
 			foreach (var c in value)
 			{

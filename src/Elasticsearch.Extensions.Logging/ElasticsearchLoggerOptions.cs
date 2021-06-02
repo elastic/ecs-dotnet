@@ -24,7 +24,7 @@ namespace Elasticsearch.Extensions.Logging
 		/// </summary>
 		public bool IncludeUser { get; set; } = true;
 
-		//TODO index patters are more complex then this, ILM, write alias, buffer tier, datastreams
+		//TODO index patterns are more complex then this, ILM, write alias, buffer tier, datastreams
 		/// <summary>
 		/// Gets or sets the format string for the Elastic search index. The current <c>DateTimeOffset</c> is passed as parameter
 		/// 0.

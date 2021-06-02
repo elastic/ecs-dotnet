@@ -93,16 +93,16 @@ namespace Elastic.Ingest.Serialization
 						break;
 				}
 			}
-			BulkResponseItem r = (status == 200)
+			BulkResponseItem r = status == 200
 				? OkayBulkResponseItem
 				: new BulkResponseItem { Action = action!, Status = status, Error = error };
-			return r;
 
+			return r;
 		}
 
 		public override void Write(Utf8JsonWriter writer, BulkResponseItem value, JsonSerializerOptions options)
 		{
-			if (value == null)
+			if (value is null)
 			{
 				writer.WriteNullValue();
 				return;
@@ -118,9 +118,7 @@ namespace Elastic.Ingest.Serialization
 				JsonSerializer.Serialize(writer, value.Error, options);
 			}
 
-			writer.WritePropertyName("status");
 			writer.WriteNumber("status", value.Status);
-
 			writer.WriteEndObject();
 			writer.WriteEndObject();
 		}
