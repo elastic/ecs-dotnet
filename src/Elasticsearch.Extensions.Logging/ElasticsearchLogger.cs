@@ -129,16 +129,25 @@ namespace Elasticsearch.Extensions.Logging
 
 			if (activity != null)
 			{
-				// Unique identifier of the trace.
-				// A trace groups multiple events like transactions that belong together. For example, a user request handled by multiple inter-connected services.
-				logEvent.Trace = new Trace() { Id = activity.RootId };
+				if (activity.IdFormat == ActivityIdFormat.W3C)
+				{
+					// Unique identifier of the trace.
+					// A trace groups multiple events like transactions that belong together. For example, a user request handled by multiple inter-connected services.
+					logEvent.Trace = new Trace { Id = activity.TraceId.ToString() };
+					logEvent.Span = new Span { Id = activity.SpanId.ToString() };
+				}
+				else
+				{
+					if (activity.RootId != null) logEvent.Trace = new Trace { Id = activity.RootId };
+					if (activity.Id != null) logEvent.Span = new Span { Id = activity.Id };
+				}
 			}
 			else
 			{
 				if (!System.Diagnostics.Trace.CorrelationManager.ActivityId.Equals(Guid.Empty))
 				{
 					logEvent.Trace =
-						new Trace() { Id = System.Diagnostics.Trace.CorrelationManager.ActivityId.ToString() };
+						new Trace { Id = System.Diagnostics.Trace.CorrelationManager.ActivityId.ToString() };
 				}
 			}
 		}
@@ -156,7 +165,6 @@ namespace Elasticsearch.Extensions.Logging
 				Log = new Log { Level = LogEventToEcsHelper.GetLogLevelString(logLevel), Logger = categoryName },
 				Event = new Event { Action = eventId.Name, Code = eventId.Id.ToString(), Severity = LogEventToEcsHelper.GetSeverity(logLevel) }
 			};
-
 
 			if (exception != null) AddException(exception, logEvent);
 
@@ -189,13 +197,24 @@ namespace Elasticsearch.Extensions.Logging
 
 		private bool CheckTracingValues(LogEvent logEvent, KeyValuePair<string, object> kvp)
 		{
+			if (kvp.Key == "span.id")
+			{
+				var value = FormatValue(kvp.Value);
+				if (!string.IsNullOrWhiteSpace(value))
+				{
+					logEvent.Span ??= new Span();
+					logEvent.Span.Id = value;
+				}
+
+				return true;
+			}
+
 			if (kvp.Key == "trace.id")
 			{
 				var value = FormatValue(kvp.Value);
 				if (!string.IsNullOrWhiteSpace(value))
 				{
-					if (logEvent.Trace == null) logEvent.Trace = new Trace();
-
+					logEvent.Trace ??= new Trace();
 					logEvent.Trace.Id = value;
 				}
 
@@ -207,8 +226,7 @@ namespace Elasticsearch.Extensions.Logging
 				var value = FormatValue(kvp.Value);
 				if (!string.IsNullOrWhiteSpace(value))
 				{
-					if (logEvent.Transaction == null) logEvent.Transaction = new Transaction();
-
+					logEvent.Transaction ??= new Transaction();
 					logEvent.Transaction.Id = value;
 				}
 
