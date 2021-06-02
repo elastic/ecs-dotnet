@@ -19,21 +19,25 @@ namespace Elasticsearch.Extensions.Logging
 	{
 		private readonly string _categoryName;
 		private readonly ElasticsearchChannel<LogEvent> _channel;
+		private readonly ElasticsearchLoggerOptions _options;
 		private readonly IExternalScopeProvider? _scopeProvider;
 
-		internal ElasticsearchLogger(string categoryName, ElasticsearchChannel<LogEvent> channel,
-			ElasticsearchLoggerOptions elasticsearchLoggerOptions, IExternalScopeProvider? scopeProvider
+		internal ElasticsearchLogger(
+			string categoryName,
+			ElasticsearchChannel<LogEvent> channel,
+			ElasticsearchLoggerOptions options,
+			IExternalScopeProvider? scopeProvider
 		)
 		{
 			_categoryName = categoryName;
 			_channel = channel;
+			_options = options;
 			_scopeProvider = scopeProvider;
 		}
 
-		internal ElasticsearchLoggerOptions Options { get; set; } = default!;
 		public IDisposable? BeginScope<TState>(TState state) => _scopeProvider?.Push(state);
 
-		public bool IsEnabled(LogLevel logLevel) => Options.IsEnabled;
+		public bool IsEnabled(LogLevel logLevel) => _options.IsEnabled;
 
 		public void Log<TState>(LogLevel logLevel, EventId eventId, TState state, Exception exception,
 			Func<TState, Exception, string> formatter
@@ -67,7 +71,7 @@ namespace Elasticsearch.Extensions.Logging
 
 		private void AddScopeValues(LogEvent logEvent)
 		{
-			if (Options.IncludeScopes)
+			if (_options.IncludeScopes)
 			{
 				_scopeProvider?.ForEachScope((scope, le) =>
 				{
@@ -165,13 +169,13 @@ namespace Elasticsearch.Extensions.Logging
 			logEvent.Agent = LogEventToEcsHelper.GetAgent();
 			logEvent.Service = LogEventToEcsHelper.GetService();
 
-			if (Options.Tags != null && Options.Tags.Length > 0) logEvent.Tags = Options.Tags;
+			if (_options.Tags != null && _options.Tags.Length > 0) logEvent.Tags = _options.Tags;
 
-			if (Options.IncludeHost) logEvent.Host = LogEventToEcsHelper.GetHost();
+			if (_options.IncludeHost) logEvent.Host = LogEventToEcsHelper.GetHost();
 
-			if (Options.IncludeProcess) logEvent.Process = LogEventToEcsHelper.GetProcess();
+			if (_options.IncludeProcess) logEvent.Process = LogEventToEcsHelper.GetProcess();
 
-			if (Options.IncludeUser)
+			if (_options.IncludeUser)
 			{
 				logEvent.User = new User
 				{
@@ -181,7 +185,7 @@ namespace Elasticsearch.Extensions.Logging
 
 			AddTracing(logEvent);
 
-			if (Options.IncludeScopes) AddScopeValues(logEvent);
+			if (_options.IncludeScopes) AddScopeValues(logEvent);
 
 			// These will overwrite any scope values with the same name
 			AddStateValues(state, logEvent);
@@ -239,7 +243,7 @@ namespace Elasticsearch.Extensions.Logging
 			var index = 0;
 			foreach (var item in enumerable)
 			{
-				if (index > 0) stringBuilder.Append(Options.ListSeparator);
+				if (index > 0) stringBuilder.Append(_options.ListSeparator);
 
 				var value = FormatValue(item, depth);
 				stringBuilder.Append(value);
