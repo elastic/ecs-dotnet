@@ -205,7 +205,7 @@ def deploy(Map args = [:]) {
     ]]) {
     if (isUnix()) {
       withEnv(["REPO_API_KEY=${repo.data.apiKey}", "REPO_API_URL=${repo.data.url}"]) {
-        sh(label: 'Deploy', script: '.ci/linux/deploy.sh ${REPO_API_KEY} ${REPO_API_URL}')
+        sh(label: 'Deploy', script: '.ci/deploy.sh ${REPO_API_KEY} ${REPO_API_URL}')
       }
     } else {
       withEnv(["REPO_API_KEY=${repo.data.apiKey}", "REPO_API_URL=${repo.data.url}"]) {
