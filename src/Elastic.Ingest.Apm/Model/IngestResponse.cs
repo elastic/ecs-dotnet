@@ -14,7 +14,6 @@ namespace Elastic.Ingest.Apm.Model
 		[JsonPropertyName("accepted")]
 		public long Accepted { get; set; }
 
-
 		[JsonPropertyName("errors")]
 		//[JsonConverter(typeof(ResponseItemsConverter))]
 		public IReadOnlyCollection<IntakeErrorItem> Errors { get; set; } = null!;

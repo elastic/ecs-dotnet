@@ -57,8 +57,8 @@ namespace Elastic.Ingest
 		/// <summary> Subscribe to be notified of events that are retryable but did not store correctly within the number of configured <see cref="MaxRetries"/></summary>
 		public Action<List<TEvent>>? RetryCallBack { get; set; }
 
-		/// <summary> A generic hook to be notified of any bulk request being initiated by <see cref="ElasticsearchChannel{TEvent}"/> </summary>
-		public Action<TResponse, IChannelBuffer> ElasticsearchResponseCallback { get; set; } = (r, b) => { };
+		/// <summary> A generic hook to be notified of any bulk request being initiated by <see cref="ChannelBuffer{TEvent}"/> </summary>
+		public Action<TResponse, IChannelBuffer> ResponseCallback { get; set; } = (r, b) => { };
 
 		public Action<Exception>? ExceptionCallback { get; set; }
 

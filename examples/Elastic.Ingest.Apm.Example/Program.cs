@@ -45,7 +45,7 @@ namespace Elastic.Ingest.Apm.Example
 					BackoffPeriod = times => TimeSpan.FromMilliseconds(1),
 					ServerRejectionCallback = (list) => Interlocked.Increment(ref _rejections),
 					BulkAttemptCallback = (c, a) => Interlocked.Increment(ref _requests),
-					ElasticsearchResponseCallback = (r, b) =>
+					ResponseCallback = (r, b) =>
 					{
 						Interlocked.Increment(ref _responses);
 						Console.WriteLine(r.ApiCall.DebugInformation);

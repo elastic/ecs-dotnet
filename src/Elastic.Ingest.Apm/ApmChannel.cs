@@ -136,7 +136,7 @@ namespace Elastic.Ingest.Apm
 					// TODO to callback receives buffer but only sees IBufferChannel values which could
 					// get updated when the callback executes, not thread safe. Sent an isolated copy and decouple
 					// IChannelBuffer from ChannelBuffer
-					Options.BufferOptions.ElasticsearchResponseCallback?.Invoke(response, buffer);
+					Options.BufferOptions.ResponseCallback?.Invoke(response, buffer);
 
 					// TODO https://github.com/elastic/elasticsearch/issues/60442
 					// allows us to check for `207` before doing expensive LINQ/array manipulations

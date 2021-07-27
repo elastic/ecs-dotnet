@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace Elastic.Ingest
 {
 	/// <summary>
-	/// Information about the consumers local buffer, available to users in <see cref="BufferOptions{TEvent}.ElasticsearchResponseCallback" />
+	/// Information about the consumers local buffer, available to users in <see cref="BufferOptions{TEvent,TResponse,TBulkResponseItem}.ResponseCallback" />
 	/// </summary>
 	public interface IChannelBuffer
 	{

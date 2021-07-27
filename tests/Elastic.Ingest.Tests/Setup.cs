@@ -54,7 +54,7 @@ namespace Elastic.Ingest.Tests
 					BackoffPeriod = times => TimeSpan.FromMilliseconds(1),
 					ServerRejectionCallback = (list) => Interlocked.Increment(ref _rejections),
 					BulkAttemptCallback = (c, a) => Interlocked.Increment(ref _requests),
-					ElasticsearchResponseCallback = (r, b) => Interlocked.Increment(ref _responses),
+					ResponseCallback = (r, b) => Interlocked.Increment(ref _responses),
 					MaxRetriesExceededCallback = (list) => Interlocked.Increment(ref _maxRetriesExceeded),
 					RetryCallBack = (list) => Interlocked.Increment(ref _retries),
 					ExceptionCallback= (e) => LastException = e

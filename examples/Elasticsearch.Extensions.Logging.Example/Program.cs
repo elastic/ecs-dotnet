@@ -37,7 +37,7 @@ namespace Elasticsearch.Extensions.Logging.Example
 						if (highLoadUseCase)
 							configureChannel.BufferOptions = new ElasticsearchBufferOptions<LogEvent> { ConcurrentConsumers = 4, PublishRejectionCallback = e => Console.Write("!") };
 
-						configureChannel.BufferOptions.ElasticsearchResponseCallback = (r, b) =>
+						configureChannel.BufferOptions.ResponseCallback = (r, b) =>
 							Console.WriteLine($"Indexed: {r.ApiCall.Success} items: {b.Count} time since first read: {b.DurationSinceFirstRead}");
 					});
 				})
