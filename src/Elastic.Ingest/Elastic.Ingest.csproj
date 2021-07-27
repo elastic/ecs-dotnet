@@ -7,7 +7,7 @@
     <PackageTags>elastic, elasticsearch, ingest, search</PackageTags>
     <LangVersion>latest</LangVersion>
     <Nullable>enable</Nullable>
-    <IsPackable>True</IsPackable>
+    <IsPackable>False</IsPackable>
   </PropertyGroup>
 
   <ItemGroup>
