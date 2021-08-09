@@ -9,10 +9,10 @@ namespace Elasticsearch.Extensions.Logging
 {
 	public class ChannelSetup : IChannelSetup
 	{
-		private readonly Action<ElasticsearchChannelOptions<LogEvent>> _configureChannel;
+		private readonly Action<IndexChannelOptions<LogEvent>> _configureChannel;
 
-		public ChannelSetup(Action<ElasticsearchChannelOptions<LogEvent>> configureChannel) => _configureChannel = configureChannel;
+		public ChannelSetup(Action<IndexChannelOptions<LogEvent>> configureChannel) => _configureChannel = configureChannel;
 
-		public void ConfigureChannel(ElasticsearchChannelOptions<LogEvent> channelConfiguration) => _configureChannel(channelConfiguration);
+		public void ConfigureChannel(IndexChannelOptions<LogEvent> channelConfiguration) => _configureChannel(channelConfiguration);
 	}
 }

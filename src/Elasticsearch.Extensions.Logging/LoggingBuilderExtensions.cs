@@ -83,7 +83,7 @@ namespace Elasticsearch.Extensions.Logging
 		}
 
 		public static ILoggingBuilder AddElasticsearch(this ILoggingBuilder builder, Action<ElasticsearchLoggerOptions> configure,
-			Action<ElasticsearchChannelOptions<LogEvent>> configureChannel
+			Action<IndexChannelOptions<LogEvent>> configureChannel
 		)
 		{
 			if (configure == null) throw new ArgumentNullException(nameof(configure));

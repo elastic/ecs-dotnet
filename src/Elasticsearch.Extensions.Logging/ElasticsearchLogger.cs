@@ -17,13 +17,13 @@ namespace Elasticsearch.Extensions.Logging
 	public class ElasticsearchLogger : ILogger
 	{
 		private readonly string _categoryName;
-		private readonly ElasticsearchChannel<LogEvent> _channel;
+		private readonly IndexChannel<LogEvent> _channel;
 		private readonly ElasticsearchLoggerOptions _options;
 		private readonly IExternalScopeProvider? _scopeProvider;
 
 		internal ElasticsearchLogger(
 			string categoryName,
-			ElasticsearchChannel<LogEvent> channel,
+			IndexChannel<LogEvent> channel,
 			ElasticsearchLoggerOptions options,
 			IExternalScopeProvider? scopeProvider
 		)

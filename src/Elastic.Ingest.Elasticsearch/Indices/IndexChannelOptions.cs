@@ -4,15 +4,13 @@ using Elastic.Transport;
 
 namespace Elastic.Ingest.Elasticsearch
 {
-	public class ElasticsearchBufferOptions<TEvent> : BufferOptions<TEvent, BulkResponse, BulkResponseItem> { }
-
-	public class ElasticsearchChannelOptions<TEvent> : ChannelOptionsBase<TEvent, BulkResponse, BulkResponseItem, ElasticsearchBufferOptions<TEvent>>
+	public class IndexChannelOptions<TEvent> : ChannelOptionsBase<TEvent, BulkResponse, BulkResponseItem, ElasticsearchBufferOptions<TEvent>>
 	{
-		public ElasticsearchChannelOptions() : base() { }
+		public IndexChannelOptions() : base() { }
 
-		public ElasticsearchChannelOptions(ITransport<ITransportConfiguration> transport) : base(transport) { }
+		public IndexChannelOptions(ITransport<ITransportConfiguration> transport) : base(transport) { }
 
-		//TODO index patters are more complex then this, ILM, write alias, buffer tier, datastreams
+		//TODO index patterns are more complex then this, ILM, write alias, buffer tier, datastreams
 		/// <summary>
 		/// Gets or sets the format string for the Elastic search index. The current <c>DateTimeOffset</c> is passed as parameter
 		/// 0.

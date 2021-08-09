@@ -20,7 +20,7 @@ namespace Elasticsearch.Extensions.Logging
 		private readonly IOptionsMonitor<ElasticsearchLoggerOptions> _options;
 		private readonly IDisposable _optionsReloadToken;
 		private IExternalScopeProvider? _scopeProvider;
-		private readonly ElasticsearchChannel<LogEvent> _shipper;
+		private readonly IndexChannel<LogEvent> _shipper;
 
 		public ElasticsearchLoggerProvider(IOptionsMonitor<ElasticsearchLoggerOptions> options,
 			IEnumerable<IChannelSetup> channelConfigurations
@@ -34,7 +34,7 @@ namespace Elasticsearch.Extensions.Logging
 			_channelConfigurations = channelConfigurations.ToArray();
 
 			var channelOptions = CreateChannelOptions(options.CurrentValue, _channelConfigurations);
-			_shipper = new ElasticsearchChannel<LogEvent>(channelOptions);
+			_shipper = new IndexChannel<LogEvent>(channelOptions);
 
 			ReloadLoggerOptions(options.CurrentValue);
 			_optionsReloadToken = _options.OnChange(o => ReloadLoggerOptions(o));
@@ -53,9 +53,9 @@ namespace Elasticsearch.Extensions.Logging
 
 		public void SetScopeProvider(IExternalScopeProvider scopeProvider) => _scopeProvider = scopeProvider;
 
-		private static ElasticsearchChannelOptions<LogEvent> CreateChannelOptions(ElasticsearchLoggerOptions options, IChannelSetup[] channelConfigurations)
+		private static IndexChannelOptions<LogEvent> CreateChannelOptions(ElasticsearchLoggerOptions options, IChannelSetup[] channelConfigurations)
 		{
-			var channelOptions = new ElasticsearchChannelOptions<LogEvent>
+			var channelOptions = new IndexChannelOptions<LogEvent>
 			{
 				Index = options.Index,
 				IndexOffset = options.IndexOffset,
