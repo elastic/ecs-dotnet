@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Threading;
-using System.Threading.Channels;
 using Elastic.Ingest.Apm.Helpers;
 using Elastic.Ingest.Apm.Model;
 using Elastic.Transport;
@@ -55,10 +53,9 @@ namespace Elastic.Ingest.Apm.Example
 					RetryCallBack = (list) => Interlocked.Increment(ref _retries),
 					ExceptionCallback = (e) => _exception = e
 				};
-			var channelOptions = new ApmChannelOptions
+			var channelOptions = new ApmChannelOptions(transport)
 			{
-				BufferOptions = options,
-				ShipTo = new ShipTo(transport)
+				BufferOptions = options
 			};
 			var channel = new ApmChannel(channelOptions);
 

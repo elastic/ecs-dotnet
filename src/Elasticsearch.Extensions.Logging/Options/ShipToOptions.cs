@@ -3,9 +3,8 @@
 // See the LICENSE file in the project root for more information
 
 using System;
-using Elastic.Ingest;
 
-namespace Elasticsearch.Extensions.Logging
+namespace Elasticsearch.Extensions.Logging.Options
 {
 	public class ShipToOptions
 	{

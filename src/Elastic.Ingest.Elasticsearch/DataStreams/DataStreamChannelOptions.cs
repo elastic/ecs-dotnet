@@ -1,19 +1,12 @@
-using Elastic.Ingest.Elasticsearch.Serialization;
 using Elastic.Transport;
 
-namespace Elastic.Ingest.Elasticsearch
+namespace Elastic.Ingest.Elasticsearch.DataStreams
 {
-	public class DataStreamChannelOptions<TEvent> : ChannelOptionsBase<TEvent, BulkResponse, BulkResponseItem, ElasticsearchBufferOptions<TEvent>>
+	public class DataStreamChannelOptions<TEvent> : ElasticsearchChannelOptionsBase<TEvent>
 	{
-		public DataStreamChannelOptions() : base() =>
-			DataStream = new DataStreamName(typeof(TEvent).Name.ToLowerInvariant());
-
 		public DataStreamChannelOptions(ITransport<ITransportConfiguration> transport) : base(transport) =>
 			DataStream = new DataStreamName(typeof(TEvent).Name.ToLowerInvariant());
 
-		public DataStreamChannelOptions(ITransport<ITransportConfiguration> transport, DataStreamName name) : base(transport) =>
-			DataStream = name;
-
-		public DataStreamName DataStream { get; }
+		public DataStreamName DataStream { get; set; }
 	}
 }

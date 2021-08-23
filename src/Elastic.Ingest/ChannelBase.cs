@@ -12,18 +12,22 @@ using Elastic.Transport;
 
 namespace Elastic.Ingest
 {
-	public abstract class TransportChannelBase<TChannelOptions, TBuffer, TEvent, TResponse, TBulkResponseItem> : IDisposable
+	public interface IIngestChannel<in TEvent> : IDisposable
+	{
+		bool TryWrite(TEvent item);
+	}
+
+	public abstract class ChannelBase<TChannelOptions, TBuffer, TEvent, TResponse, TBulkResponseItem>
+		: IIngestChannel<TEvent>
 		where TChannelOptions : ChannelOptionsBase<TEvent, TResponse, TBulkResponseItem, TBuffer>
 		where TBuffer : BufferOptions<TEvent, TResponse, TBulkResponseItem>, new()
 		where TResponse : class, ITransportResponse, new()
-
 	{
 		private readonly List<Task> _backgroundTasks = new();
 
-		protected TransportChannelBase(TChannelOptions options)
+		protected ChannelBase(TChannelOptions options)
 		{
-			_options = options;
-			UpdateClient();
+			Options = options;
 
 			var maxConsumers = Math.Max(1, BufferOptions.ConcurrentConsumers);
 			Channel = System.Threading.Channels.Channel.CreateBounded<TEvent>(new BoundedChannelOptions(BufferOptions.MaxInFlightMessages)
@@ -46,22 +50,11 @@ namespace Elastic.Ingest
 				_backgroundTasks.Add(Task.Factory.StartNew(async () => await ConsumeMessages().ConfigureAwait(false), TaskCreationOptions.LongRunning).Unwrap());
 		}
 
-		private ITransport<ITransportConfiguration> _transport = default!;
-
 		protected Channel<TEvent> Channel { get; }
 		protected ChannelWriter<TEvent> Writer => Channel.Writer;
-		protected BufferOptions<TEvent, TResponse, TBulkResponseItem> BufferOptions => _options.BufferOptions;
+		protected BufferOptions<TEvent, TResponse, TBulkResponseItem> BufferOptions => Options.BufferOptions;
 
-		private TChannelOptions _options;
-		public TChannelOptions Options
-		{
-			get => _options;
-			set
-			{
-				_options = value;
-				UpdateClient();
-			}
-		}
+		public TChannelOptions Options { get; }
 
 		public virtual bool TryWrite(TEvent item)
 		{
@@ -71,12 +64,7 @@ namespace Elastic.Ingest
 			return false;
 		}
 
-		/// <summary> Implement sending the current <paramref name="page"/> of the buffer to the output. </summary>
-		/// <param name="transport"></param>
-		/// <param name="page">Active page of the buffer that needs to be send to the output</param>
-		/// <returns><see cref="TResponse"/></returns>
-		protected abstract Task<TResponse> Send(ITransport<ITransportConfiguration> transport, List<TEvent> page);
-
+		protected abstract Task<TResponse> Send(List<TEvent> page);
 
 		protected abstract bool BackOffRequest(TResponse response);
 		protected abstract List<(TEvent, TBulkResponseItem)> Zip(TResponse response, List<TEvent> page);
@@ -106,7 +94,7 @@ namespace Elastic.Ingest
 					TResponse response = null!;
 					try
 					{
-						response = await Send(_transport, items).ConfigureAwait(false);
+						response = await Send(items).ConfigureAwait(false);
 					}
 					catch (Exception e)
 					{
@@ -176,44 +164,5 @@ namespace Elastic.Ingest
 			catch { }
 		}
 
-		private void UpdateClient()
-		{
-			if (_options.ShipTo.Transport != null)
-			{
-				_transport = _options.ShipTo.Transport;
-				return;
-			}
-
-
-			// TODO: Check if Uri has changed before recreating
-			// TODO: Injectable factory? Or some way of testing.
-			var connectionPool = _options.ShipTo.CreateConnectionPool();
-			var nodes = _options.ShipTo.NodeUris?.ToArray() ?? Array.Empty<Uri>();
-
-			TransportConfiguration config;
-			if (nodes.Length == 0 && _options.ShipTo.ConnectionPool != ConnectionPoolType.Cloud)
-			{
-				// This is SingleNode with "http://localhost:9200"
-				var singleNodePool = new SingleNodeConnectionPool(new Uri("http://localhost:9200"));
-				config = new TransportConfiguration(singleNodePool);
-			}
-			else if (_options.ConnectionPoolType == ConnectionPoolType.SingleNode
-				|| _options.ConnectionPoolType == ConnectionPoolType.Unknown && nodes.Length == 1)
-			{
-				var singleNodePool = new SingleNodeConnectionPool(nodes[0]);
-				config = new TransportConfiguration(singleNodePool);
-			}
-			else
-			{
-				config = new TransportConfiguration(connectionPool);
-			}
-
-			config = config.Proxy(new Uri("http://localhost:8080"), "", "");
-			config = config.EnableDebugMode();
-
-			var transport = new Transport<TransportConfiguration>(config);
-
-			_ = Interlocked.Exchange(ref _transport, transport);
-		}
 	}
 }

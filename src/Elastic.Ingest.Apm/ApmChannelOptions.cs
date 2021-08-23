@@ -1,13 +1,12 @@
 using System;
 using Elastic.Ingest.Apm.Model;
+using Elastic.Ingest.Transport;
 using Elastic.Transport;
 
 namespace Elastic.Ingest.Apm
 {
-	public class ApmChannelOptions : ChannelOptionsBase<IIntakeObject, EventIntakeResponse, IntakeErrorItem, ApmBufferOptions>
+	public class ApmChannelOptions : TransportChannelOptionsBase<IIntakeObject, EventIntakeResponse, IntakeErrorItem, ApmBufferOptions>
 	{
-		public ApmChannelOptions() : base() {}
-
 		public ApmChannelOptions(ITransport<ITransportConfiguration> transport) : base(transport) { }
 	}
 

@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Elastic.Ingest.Elasticsearch
+namespace Elastic.Ingest.Elasticsearch.Indices
 {
 	public class IndexChannel<TEvent> : ElasticsearchChannelBase<TEvent, IndexChannelOptions<TEvent>>
 	{

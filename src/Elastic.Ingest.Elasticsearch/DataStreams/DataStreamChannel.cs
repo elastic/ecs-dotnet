@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace Elastic.Ingest.Elasticsearch
+namespace Elastic.Ingest.Elasticsearch.DataStreams
 {
 	public class DataStreamChannel<TEvent> : ElasticsearchChannelBase<TEvent, DataStreamChannelOptions<TEvent>>
 	{

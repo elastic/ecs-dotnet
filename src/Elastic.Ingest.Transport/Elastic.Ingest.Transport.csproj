@@ -1,0 +1,20 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <Title>A buffer-backed channel for indexing documents into Elasticsearch</Title>
+    <Description>Provides components to build a buffer-backed channel for publishing events to distributed systems over HTTP through Elastic.Transport</Description>
+    <PackageTags>elastic, elasticsearch, ingest, search</PackageTags>
+    <LangVersion>latest</LangVersion>
+    <Nullable>enable</Nullable>
+    <IsPackable>True</IsPackable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Elastic.Ingest\Elastic.Ingest.csproj" />
+    <PackageReference Include="Elastic.Transport" Version="0.2.3" />
+    <PackageReference Include="System.Threading.Channels" Version="4.7.1" />
+    <PackageReference Include="System.Text.Encodings.Web" Version="5.0.0" />
+  </ItemGroup>
+
+</Project>

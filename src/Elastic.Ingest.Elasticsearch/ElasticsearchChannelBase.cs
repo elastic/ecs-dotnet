@@ -5,13 +5,14 @@ using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Elastic.Ingest.Elasticsearch.Serialization;
+using Elastic.Ingest.Transport;
 using Elastic.Transport;
 
 namespace Elastic.Ingest.Elasticsearch
 {
 	public abstract class ElasticsearchChannelBase<TEvent, TChannelOptions>
 		: TransportChannelBase<TChannelOptions, ElasticsearchBufferOptions<TEvent>, TEvent, BulkResponse, BulkResponseItem>
-		where TChannelOptions : ChannelOptionsBase<TEvent, BulkResponse, BulkResponseItem, ElasticsearchBufferOptions<TEvent>>
+		where TChannelOptions : TransportChannelOptionsBase<TEvent, BulkResponse, BulkResponseItem, ElasticsearchBufferOptions<TEvent>>
 	{
 		public ElasticsearchChannelBase(TChannelOptions options) : base(options) { }
 

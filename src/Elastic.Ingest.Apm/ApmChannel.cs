@@ -11,6 +11,7 @@ using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Elastic.Ingest.Apm.Model;
+using Elastic.Ingest.Transport;
 using Elastic.Transport;
 
 namespace Elastic.Ingest.Apm

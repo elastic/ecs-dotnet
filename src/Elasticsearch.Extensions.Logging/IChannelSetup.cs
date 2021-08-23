@@ -8,6 +8,6 @@ namespace Elasticsearch.Extensions.Logging
 {
 	public interface IChannelSetup
 	{
-		void ConfigureChannel(IndexChannelOptions<LogEvent> channelConfiguration);
+		void ConfigureChannel(ElasticsearchChannelOptionsBase<LogEvent> channelOptions);
 	}
 }

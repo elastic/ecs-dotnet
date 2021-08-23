@@ -3,8 +3,9 @@
 // See the LICENSE file in the project root for more information
 
 using System;
-using Elastic.Ingest;
 using Elastic.Ingest.Elasticsearch;
+using Elastic.Ingest.Transport;
+using Elasticsearch.Extensions.Logging.Options;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Logging;
@@ -83,7 +84,7 @@ namespace Elasticsearch.Extensions.Logging
 		}
 
 		public static ILoggingBuilder AddElasticsearch(this ILoggingBuilder builder, Action<ElasticsearchLoggerOptions> configure,
-			Action<IndexChannelOptions<LogEvent>> configureChannel
+			Action<ElasticsearchChannelOptionsBase<LogEvent>> configureChannel
 		)
 		{
 			if (configure == null) throw new ArgumentNullException(nameof(configure));

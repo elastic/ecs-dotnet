@@ -3,6 +3,7 @@ using System.Linq;
 using System.Threading;
 using Elastic.CommonSchema;
 using Elastic.Ingest.Elasticsearch;
+using Elastic.Ingest.Elasticsearch.Indices;
 using Elastic.Ingest.Elasticsearch.Serialization;
 using Elastic.Transport;
 using Elastic.Transport.VirtualizedCluster;

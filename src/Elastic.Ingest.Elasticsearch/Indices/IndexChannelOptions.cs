@@ -1,16 +1,12 @@
 using System;
-using Elastic.Ingest.Elasticsearch.Serialization;
 using Elastic.Transport;
 
-namespace Elastic.Ingest.Elasticsearch
+namespace Elastic.Ingest.Elasticsearch.Indices
 {
-	public class IndexChannelOptions<TEvent> : ChannelOptionsBase<TEvent, BulkResponse, BulkResponseItem, ElasticsearchBufferOptions<TEvent>>
+	public class IndexChannelOptions<TEvent> : ElasticsearchChannelOptionsBase<TEvent>
 	{
-		public IndexChannelOptions() : base() { }
-
 		public IndexChannelOptions(ITransport<ITransportConfiguration> transport) : base(transport) { }
 
-		//TODO index patterns are more complex then this, ILM, write alias, buffer tier, datastreams
 		/// <summary>
 		/// Gets or sets the format string for the Elastic search index. The current <c>DateTimeOffset</c> is passed as parameter
 		/// 0.

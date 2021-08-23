@@ -11,9 +11,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Elastic.Ingest\Elastic.Ingest.csproj" />
-    <!--    <ProjectReference Include="..\..\..\elastic-transport-net\src\Elastic.Transport\Elastic.Transport.csproj" />-->
-    
+    <ProjectReference Include="..\Elastic.Ingest.Transport\Elastic.Ingest.Transport.csproj" />
   </ItemGroup>
 
 </Project>
