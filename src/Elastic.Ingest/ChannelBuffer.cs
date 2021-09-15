@@ -9,7 +9,7 @@ namespace Elastic.Ingest
 	/// <summary>
 	/// Information about the consumers local buffer, available to users in <see cref="BufferOptions{TEvent,TResponse,TBulkResponseItem}.ResponseCallback" />
 	/// </summary>
-	public interface IChannelBuffer
+	public interface IConsumedBufferStatistics
 	{
 		int Count { get; }
 		TimeSpan? DurationSinceFirstRead { get; }
@@ -20,7 +20,7 @@ namespace Elastic.Ingest
 	/// every N messages OR in the case messages do no flow fast enough or stop before N messages were received every
 	/// M timespan.
 	/// </summary>
-	public class ChannelBuffer<TEvent> : IChannelBuffer, IDisposable
+	public class ChannelBuffer<TEvent> : IConsumedBufferStatistics, IDisposable
 	{
 		private readonly int _maxBufferSize;
 		private CancellationTokenSource _breaker = new CancellationTokenSource();

@@ -3,9 +3,9 @@ using OpenTelemetry;
 
 namespace Elastic.Ingest.OpenTelemetry
 {
-	public class CustomActivityExporter : BatchActivityExportProcessor
+	public class CustomActivityProcessor : BatchActivityExportProcessor
 	{
-		public CustomActivityExporter(
+		public CustomActivityProcessor(
 			BaseExporter<Activity> exporter,
 			int maxQueueSize = 2048,
 			int scheduledDelayMilliseconds = 5000,
@@ -19,5 +19,6 @@ namespace Elastic.Ingest.OpenTelemetry
 		}
 
 		public void Add(Activity a) => OnExport(a);
+
 	}
 }

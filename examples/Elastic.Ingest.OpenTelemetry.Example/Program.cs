@@ -3,7 +3,7 @@ using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
 using Elastic.Ingest.OpenTelemetry;
-using OpenTelemetry.Exporter;
+
 
 if (args.Length != 2)
 {
@@ -11,12 +11,16 @@ if (args.Length != 2)
 	Environment.Exit(1);
 }
 
-var o = new OtlpExporterOptions();
-o.Endpoint = new Uri(args[0]);
-o.Headers = $"Authorization=Bearer {args[1]}";
-var x = new CustomOtlpTraceExporter(o);
+var channel = new TraceChannel(new TraceChannelOptions
+{
+	ServiceName = "hello-world",
+	Endpoint = new Uri(args[0]),
+	SecretToken = args[1],
+	BufferOptions = new TraceBufferOptions
+	{
 
-using var xx = new CustomActivityExporter(x, maxExportBatchSize: 20);
+	}
+});
 
 var random = new Random();
 long numTraces = 0;
@@ -33,11 +37,11 @@ while (true)
 		await Task.Delay(TimeSpan.FromMilliseconds(random.Next(5, 50))).ConfigureAwait(false);
 		innerActivity.SetStatus(ActivityStatusCode.Ok);
 		innerActivity.Stop();
-		xx.Add(innerActivity);
+		channel.TryWrite(innerActivity);
 	}
 	outerActivity.SetStatus(ActivityStatusCode.Ok);
 	outerActivity.Stop();
-	xx.Add(outerActivity);
+	channel.TryWrite(outerActivity);
 	Interlocked.Increment(ref numTraces);
 	Console.Write($"\r Queued {numTraces} traces");
 }

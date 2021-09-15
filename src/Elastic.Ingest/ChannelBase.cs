@@ -8,7 +8,6 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Channels;
 using System.Threading.Tasks;
-using Elastic.Transport;
 
 namespace Elastic.Ingest
 {
@@ -17,18 +16,17 @@ namespace Elastic.Ingest
 		bool TryWrite(TEvent item);
 	}
 
-	public abstract class ChannelBase<TChannelOptions, TBuffer, TEvent, TResponse, TBulkResponseItem>
+	public abstract class ChannelBase<TChannelOptions, TBuffer, TEvent, TResponse>
 		: IIngestChannel<TEvent>
-		where TChannelOptions : ChannelOptionsBase<TEvent, TResponse, TBulkResponseItem, TBuffer>
-		where TBuffer : BufferOptions<TEvent, TResponse, TBulkResponseItem>, new()
-		where TResponse : class, ITransportResponse, new()
+		where TChannelOptions : ChannelOptionsBase<TEvent, TBuffer>
+		where TBuffer : BufferOptions<TEvent>, new()
+		where TResponse : class, new()
 	{
 		private readonly List<Task> _backgroundTasks = new();
 
 		protected ChannelBase(TChannelOptions options)
 		{
 			Options = options;
-
 			var maxConsumers = Math.Max(1, BufferOptions.ConcurrentConsumers);
 			Channel = System.Threading.Channels.Channel.CreateBounded<TEvent>(new BoundedChannelOptions(BufferOptions.MaxInFlightMessages)
 			{
@@ -48,13 +46,14 @@ namespace Elastic.Ingest
 			// could be a config option
 			for (var i = 0; i < maxConsumers; i++)
 				_backgroundTasks.Add(Task.Factory.StartNew(async () => await ConsumeMessages().ConfigureAwait(false), TaskCreationOptions.LongRunning).Unwrap());
+
 		}
 
+		public TChannelOptions Options { get; }
 		protected Channel<TEvent> Channel { get; }
 		protected ChannelWriter<TEvent> Writer => Channel.Writer;
-		protected BufferOptions<TEvent, TResponse, TBulkResponseItem> BufferOptions => Options.BufferOptions;
+		protected TBuffer BufferOptions => Options.BufferOptions;
 
-		public TChannelOptions Options { get; }
 
 		public virtual bool TryWrite(TEvent item)
 		{
@@ -66,10 +65,7 @@ namespace Elastic.Ingest
 
 		protected abstract Task<TResponse> Send(List<TEvent> page);
 
-		protected abstract bool BackOffRequest(TResponse response);
-		protected abstract List<(TEvent, TBulkResponseItem)> Zip(TResponse response, List<TEvent> page);
-		protected abstract bool RetryEvent((TEvent, TBulkResponseItem) @event);
-		protected abstract bool RejectEvent((TEvent, TBulkResponseItem) @event);
+		protected virtual List<TEvent> RetryBuffer(TResponse response, List<TEvent> currentBuffer, IConsumedBufferStatistics statistics) => currentBuffer;
 
 		private async Task Consume(int maxQueuedMessages, TimeSpan maxInterval, CountdownEvent? countdown)
 		{
@@ -95,6 +91,7 @@ namespace Elastic.Ingest
 					try
 					{
 						response = await Send(items).ConfigureAwait(false);
+						Options.BufferOptions.
 					}
 					catch (Exception e)
 					{
@@ -102,37 +99,7 @@ namespace Elastic.Ingest
 						break;
 					}
 
-					// TODO to callback receives buffer but only sees IBufferChannel values which could
-					// get updated when the callback executes, not thread safe. Sent an isolated copy and decouple
-					// IChannelBuffer from ChannelBuffer
-					Options.BufferOptions.ResponseCallback?.Invoke(response, buffer);
-					var backOffWholeRequest = BackOffRequest(response);
-					// if we are not retrying the whole request find out if individual items need retrying
-					if (!backOffWholeRequest)
-					{
-						// TODO https://github.com/elastic/elasticsearch/issues/60442
-						// allows us to check for `207` before doing expensive LINQ/array manipulations
-
-						//TODO handle retries?
-						var zipped = Zip(response, items);
-						//ApmChannelStatics.RetryStatusCodes.Contains(t.item.Status))
-						//(t.item.Status < 200 || t.item.Status > 300)
-
-						// retry any 429,502,503,504
-						items = zipped
-						 	.Where(t => RetryEvent(t))
-						 	.Select(t => t.Item1)
-						 	.ToList();
-
-						// report any events that are going to be dropped
-						if (Options.BufferOptions.ServerRejectionCallback != null)
-						{
-							var rejected = zipped
-								.Where(t => RejectEvent(t) && !RetryEvent(t))
-								.ToList();
-							if (rejected.Count > 0) Options.BufferOptions.ServerRejectionCallback(rejected);
-						}
-					}
+					items = RetryBuffer(response, items, buffer);
 
 					// delay if we still have items and we are not at the end of the max retry cycle
 					var atEndOfRetries = i == maxRetries;
@@ -152,9 +119,7 @@ namespace Elastic.Ingest
 			}
 		}
 
-		// TODO private, make reload support very explicit (change shipto only?)
-
-		public void Dispose()
+		public virtual void Dispose()
 		{
 			try
 			{
@@ -164,5 +129,73 @@ namespace Elastic.Ingest
 			catch { }
 		}
 
+	}
+
+	public abstract class ChannelBase<TChannelOptions, TBuffer, TEvent>
+		: ChannelBase<TChannelOptions, TBuffer, TEvent, object>
+		where TChannelOptions : ChannelOptionsBase<TEvent, TBuffer>
+		where TBuffer : BufferOptions<TEvent>, new()
+	{
+		protected ChannelBase(TChannelOptions options) : base(options) { }
+
+		private static readonly object _noop = new();
+
+		protected override async Task<object> Send(List<TEvent> page)
+		{
+			await FireAndForget(page).ConfigureAwait(false);
+			return _noop;
+		}
+
+		protected abstract Task FireAndForget(List<TEvent> page);
+	}
+
+	public abstract class ChannelBase<TChannelOptions, TBuffer, TEvent, TResponse, TBulkResponseItem>
+		: ChannelBase<TChannelOptions, TBuffer, TEvent, TResponse>
+		where TChannelOptions : ChannelOptionsBase<TEvent, TResponse, TBulkResponseItem, TBuffer>
+		where TBuffer : BufferOptions<TEvent, TResponse, TBulkResponseItem>, new()
+		where TResponse : class, new()
+	{
+		protected ChannelBase(TChannelOptions options) : base(options) { }
+
+		protected abstract bool BackOffRequest(TResponse response);
+		protected abstract List<(TEvent, TBulkResponseItem)> Zip(TResponse response, List<TEvent> page);
+		protected abstract bool RetryEvent((TEvent, TBulkResponseItem) @event);
+		protected abstract bool RejectEvent((TEvent, TBulkResponseItem) @event);
+
+		protected override List<TEvent> RetryBuffer(TResponse response, List<TEvent> events, IConsumedBufferStatistics consumedBufferStatistics)
+		{
+			// TODO to callback receives buffer but only sees IBufferChannel values which could
+			// get updated when the callback executes, not thread safe. Sent an isolated copy and decouple
+			// IChannelBuffer from ChannelBuffer
+			Options.BufferOptions.ResponseCallback?.Invoke(response, consumedBufferStatistics);
+			var backOffWholeRequest = BackOffRequest(response);
+			// if we are not retrying the whole request find out if individual items need retrying
+			if (!backOffWholeRequest)
+			{
+				// TODO https://github.com/elastic/elasticsearch/issues/60442
+				// allows us to check for `207` before doing expensive LINQ/array manipulations
+
+				//TODO handle retries?
+				var zipped = Zip(response, events);
+				//ApmChannelStatics.RetryStatusCodes.Contains(t.item.Status))
+				//(t.item.Status < 200 || t.item.Status > 300)
+
+				// retry any 429,502,503,504
+				events = zipped
+					.Where(t => RetryEvent(t))
+					.Select(t => t.Item1)
+					.ToList();
+
+				// report any events that are going to be dropped
+				if (Options.BufferOptions.ServerRejectionCallback != null)
+				{
+					var rejected = zipped
+						.Where(t => RejectEvent(t) && !RetryEvent(t))
+						.ToList();
+					if (rejected.Count > 0) Options.BufferOptions.ServerRejectionCallback(rejected);
+				}
+			}
+			return events;
+		}
 	}
 }
