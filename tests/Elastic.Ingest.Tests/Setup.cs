@@ -53,6 +53,10 @@ namespace Elastic.Ingest.Tests
 					WaitHandle = WaitHandle,
 					MaxRetries = 3,
 					BackoffPeriod = times => TimeSpan.FromMilliseconds(1),
+				};
+				ChannelOptions = new IndexChannelOptions<EcsDocument>(transport)
+				{
+					BufferOptions = BufferOptions,
 					ServerRejectionCallback = (list) => Interlocked.Increment(ref _rejections),
 					BulkAttemptCallback = (c, a) => Interlocked.Increment(ref _requests),
 					ResponseCallback = (r, b) => Interlocked.Increment(ref _responses),
@@ -60,7 +64,6 @@ namespace Elastic.Ingest.Tests
 					RetryCallBack = (list) => Interlocked.Increment(ref _retries),
 					ExceptionCallback= (e) => LastException = e
 				};
-				ChannelOptions = new IndexChannelOptions<EcsDocument>(transport) { BufferOptions = BufferOptions };
 				Channel = new IndexChannel<EcsDocument>(ChannelOptions);
 			}
 

@@ -18,7 +18,7 @@ namespace Elastic.Ingest
 
 	public abstract class ChannelBase<TChannelOptions, TBuffer, TEvent, TResponse>
 		: IIngestChannel<TEvent>
-		where TChannelOptions : ChannelOptionsBase<TEvent, TBuffer>
+		where TChannelOptions : ChannelOptionsBase<TEvent, TBuffer, TResponse>
 		where TBuffer : BufferOptions<TEvent>, new()
 		where TResponse : class, new()
 	{
@@ -59,7 +59,7 @@ namespace Elastic.Ingest
 		{
 			if (Writer.TryWrite(item)) return true;
 
-			Options.BufferOptions.PublishRejectionCallback?.Invoke(item);
+			Options.PublishRejectionCallback?.Invoke(item);
 			return false;
 		}
 
@@ -86,16 +86,16 @@ namespace Elastic.Ingest
 				var maxRetries = Options.BufferOptions.MaxRetries;
 				for (var i = 0; i <= maxRetries && items.Count > 0; i++)
 				{
-					Options.BufferOptions.BulkAttemptCallback?.Invoke(i, items.Count);
+					Options.BulkAttemptCallback?.Invoke(i, items.Count);
 					TResponse response = null!;
 					try
 					{
 						response = await Send(items).ConfigureAwait(false);
-						Options.BufferOptions.
+						Options.ResponseCallback(response, buffer);
 					}
 					catch (Exception e)
 					{
-						Options.BufferOptions.ExceptionCallback?.Invoke(e);
+						Options.ExceptionCallback?.Invoke(e);
 						break;
 					}
 
@@ -106,11 +106,11 @@ namespace Elastic.Ingest
 					if (items.Count > 0 && !atEndOfRetries)
 					{
 						await Task.Delay(Options.BufferOptions.BackoffPeriod(i)).ConfigureAwait(false);
-						Options.BufferOptions.RetryCallBack?.Invoke(items);
+						Options.RetryCallBack?.Invoke(items);
 					}
 					// otherwise if retryable items still exist and the user wants to be notified notify the user
 					else if (items.Count > 0 && atEndOfRetries)
-						Options.BufferOptions.MaxRetriesExceededCallback?.Invoke(items);
+						Options.MaxRetriesExceededCallback?.Invoke(items);
 
 				}
 				buffer.Reset();
@@ -131,28 +131,10 @@ namespace Elastic.Ingest
 
 	}
 
-	public abstract class ChannelBase<TChannelOptions, TBuffer, TEvent>
-		: ChannelBase<TChannelOptions, TBuffer, TEvent, object>
-		where TChannelOptions : ChannelOptionsBase<TEvent, TBuffer>
-		where TBuffer : BufferOptions<TEvent>, new()
-	{
-		protected ChannelBase(TChannelOptions options) : base(options) { }
-
-		private static readonly object _noop = new();
-
-		protected override async Task<object> Send(List<TEvent> page)
-		{
-			await FireAndForget(page).ConfigureAwait(false);
-			return _noop;
-		}
-
-		protected abstract Task FireAndForget(List<TEvent> page);
-	}
-
 	public abstract class ChannelBase<TChannelOptions, TBuffer, TEvent, TResponse, TBulkResponseItem>
 		: ChannelBase<TChannelOptions, TBuffer, TEvent, TResponse>
-		where TChannelOptions : ChannelOptionsBase<TEvent, TResponse, TBulkResponseItem, TBuffer>
-		where TBuffer : BufferOptions<TEvent, TResponse, TBulkResponseItem>, new()
+		where TChannelOptions : ChannelOptionsBase<TEvent, TBuffer, TResponse, TBulkResponseItem>
+		where TBuffer : BufferOptions<TEvent>, new()
 		where TResponse : class, new()
 	{
 		protected ChannelBase(TChannelOptions options) : base(options) { }
@@ -164,10 +146,7 @@ namespace Elastic.Ingest
 
 		protected override List<TEvent> RetryBuffer(TResponse response, List<TEvent> events, IConsumedBufferStatistics consumedBufferStatistics)
 		{
-			// TODO to callback receives buffer but only sees IBufferChannel values which could
-			// get updated when the callback executes, not thread safe. Sent an isolated copy and decouple
-			// IChannelBuffer from ChannelBuffer
-			Options.BufferOptions.ResponseCallback?.Invoke(response, consumedBufferStatistics);
+			Options.ResponseCallback?.Invoke(response, consumedBufferStatistics);
 			var backOffWholeRequest = BackOffRequest(response);
 			// if we are not retrying the whole request find out if individual items need retrying
 			if (!backOffWholeRequest)
@@ -187,12 +166,12 @@ namespace Elastic.Ingest
 					.ToList();
 
 				// report any events that are going to be dropped
-				if (Options.BufferOptions.ServerRejectionCallback != null)
+				if (Options.ServerRejectionCallback != null)
 				{
 					var rejected = zipped
 						.Where(t => RejectEvent(t) && !RetryEvent(t))
 						.ToList();
-					if (rejected.Count > 0) Options.BufferOptions.ServerRejectionCallback(rejected);
+					if (rejected.Count > 0) Options.ServerRejectionCallback(rejected);
 				}
 			}
 			return events;

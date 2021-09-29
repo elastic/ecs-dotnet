@@ -11,7 +11,7 @@ namespace Elastic.Ingest.Apm
 	}
 
 
-	public class ApmBufferOptions : BufferOptions<IIntakeObject, EventIntakeResponse, IntakeErrorItem>
+	public class ApmBufferOptions : BufferOptions<IIntakeObject>
 	{
 	}
 }

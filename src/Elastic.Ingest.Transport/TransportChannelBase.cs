@@ -13,7 +13,7 @@ namespace Elastic.Ingest.Transport
 	public abstract class TransportChannelBase<TChannelOptions, TBuffer, TEvent, TResponse, TBulkResponseItem> :
 		ChannelBase<TChannelOptions, TBuffer, TEvent, TResponse, TBulkResponseItem>, IDisposable
 		where TChannelOptions : TransportChannelOptionsBase<TEvent, TResponse, TBulkResponseItem, TBuffer>
-		where TBuffer : BufferOptions<TEvent, TResponse, TBulkResponseItem>, new()
+		where TBuffer : BufferOptions<TEvent>, new()
 		where TResponse : class, ITransportResponse, new()
 
 	{

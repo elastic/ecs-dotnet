@@ -34,7 +34,7 @@ namespace Elastic.Ingest.OpenTelemetry
 	{
 	}
 
-	public class TraceChannelOptions : ChannelOptionsBase<Activity, TraceBufferOptions>
+	public class TraceChannelOptions : ChannelOptionsBase<Activity, TraceBufferOptions, TraceExportResult>
 	{
 		public string? ServiceName { get; set; }
 		public Uri? Endpoint { get; set; }
