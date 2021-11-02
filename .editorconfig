@@ -3,26 +3,23 @@ root=true
 [*.cs]
 trim_trailing_whitespace=true
 insert_final_newline=true
-end_of_line = lf
 
 [*]
+charset = utf-8
 indent_style = tab
 indent_size = 4
 
 [*.cshtml]
 indent_style = tab
 indent_size = 4
-end_of_line = lf
 
 [*.{fs,fsx,yml}]
 indent_style = space
 indent_size = 4
-end_of_line = lf
 
 [*.{md,markdown,json,js,csproj,fsproj,targets,targets,props}]
 indent_style = space
 indent_size = 2
-end_of_line = lf
 
 # Dotnet code style settings:
 [*.{cs,vb}]
@@ -33,15 +30,86 @@ end_of_line = lf
 # ---
 
 # ---
-# langugage conventions https://docs.microsoft.com/en-us/visualstudio/ide/editorconfig-code-style-settings-reference#language-conventions
+# language conventions https://docs.microsoft.com/en-us/visualstudio/ide/editorconfig-code-style-settings-reference#language-conventions
 
 # Sort using and Import directives with System.* appearing first
 dotnet_sort_system_directives_first = true
 
-# Prefer this.X except for _fields
-# TODO can we force _ for private fields?
-# TODO elevate severity after code cleanup to warning minimum
-# TODO use language latest
+# Style rules
+# https://docs.microsoft.com/en-us/dotnet/fundamentals/code-analysis/style-rules/naming-rules?view=vs-2017
+
+# Constants always pascal case
+dotnet_naming_rule.constants_should_be_pascal_case.symbols  = consts
+dotnet_naming_rule.constants_should_be_pascal_case.style    = consts
+dotnet_naming_rule.constants_should_be_pascal_case.severity = suggestion
+
+dotnet_naming_symbols.consts.applicable_kinds           = field
+dotnet_naming_symbols.consts.applicable_accessibilities = *
+dotnet_naming_symbols.consts.required_modifiers = const
+
+dotnet_naming_style.consts.capitalization = pascal_case
+
+# Non-public static fields always pascal case
+dotnet_naming_rule.non_public_static_fields_should_be_pascal_case.symbols  = non_public_static_fields
+dotnet_naming_rule.non_public_static_fields_should_be_pascal_case.style    = non_public_static_fields
+dotnet_naming_rule.non_public_static_fields_should_be_pascal_case.severity = suggestion
+
+dotnet_naming_symbols.non_public_static_fields.applicable_kinds           = field
+dotnet_naming_symbols.non_public_static_fields.applicable_accessibilities = private,protected,internal,protected_internal,private_protected
+dotnet_naming_symbols.non_public_static_fields.required_modifiers = static
+
+dotnet_naming_style.non_public_static_fields.capitalization = pascal_case
+
+# Non-private readonly fields are pascal case
+dotnet_naming_rule.non_private_readonly_fields_should_be_pascal_case.severity = suggestion
+dotnet_naming_rule.non_private_readonly_fields_should_be_pascal_case.symbols = non_private_readonly_fields
+dotnet_naming_rule.non_private_readonly_fields_should_be_pascal_case.style = non_private_readonly_fields
+
+dotnet_naming_symbols.non_private_readonly_fields.applicable_kinds = field
+dotnet_naming_symbols.non_private_readonly_fields.applicable_accessibilities = public,protected,internal,protected_internal,private_protected
+dotnet_naming_symbols.non_private_readonly_fields.required_modifiers = readonly
+
+dotnet_naming_style.non_private_readonly_fields.capitalization = pascal_case
+
+# Private instance fields are camel case prefixed underscore
+dotnet_naming_rule.private_fields_should_be_camelcase_prefix_underscore.symbols  = private_fields
+dotnet_naming_rule.private_fields_should_be_camelcase_prefix_underscore.style    = private_fields
+dotnet_naming_rule.private_fields_should_be_camelcase_prefix_underscore.severity = suggestion
+
+dotnet_naming_symbols.private_fields.applicable_kinds           = field
+dotnet_naming_symbols.private_fields.applicable_accessibilities = private
+
+dotnet_naming_style.private_fields.capitalization = camel_case
+dotnet_naming_style.private_fields.required_prefix = _
+
+# Locals and parameters are camel case
+dotnet_naming_rule.locals.severity = suggestion
+dotnet_naming_rule.locals.symbols = locals
+dotnet_naming_rule.locals.style = locals
+
+dotnet_naming_symbols.locals.applicable_kinds = parameter, local
+
+dotnet_naming_style.locals.capitalization = camel_case
+
+# Local functions are pascal case
+dotnet_naming_rule.local_functions.severity = suggestion
+dotnet_naming_rule.local_functions.symbols = local_functions
+dotnet_naming_rule.local_functions.style = local_functions
+
+dotnet_naming_symbols.local_functions.applicable_kinds = local_function
+
+dotnet_naming_style.local_functions.capitalization = pascal_case
+
+# Public members always pascal case
+dotnet_naming_rule.public_members_should_be_pascal_case.symbols  = public_members
+dotnet_naming_rule.public_members_should_be_pascal_case.style    = public_members
+dotnet_naming_rule.public_members_should_be_pascal_case.severity = suggestion
+
+dotnet_naming_symbols.public_members.applicable_kinds           = property,method,field,event,delegate
+dotnet_naming_symbols.public_members.applicable_accessibilities = public
+
+dotnet_naming_style.public_members.capitalization = pascal_case
+
 dotnet_style_qualification_for_field = false:error
 dotnet_style_qualification_for_property = false:error
 dotnet_style_qualification_for_method = false:error
@@ -94,26 +162,26 @@ csharp_preferred_modifier_order = public,private,protected,internal,static,exter
 
 # Newline settings (Allman yo!)
 csharp_new_line_before_open_brace = all
-csharp_new_line_before_else = true:error
-csharp_new_line_before_catch = true:error
-csharp_new_line_before_finally = true:error
+csharp_new_line_before_else = true
+csharp_new_line_before_catch = true
+csharp_new_line_before_finally = true
 csharp_new_line_before_members_in_object_initializers = true
 # just a suggestion do to our JSON tests that use anonymous types to 
 # represent json quite a bit (makes copy paste easier).
-csharp_new_line_before_members_in_anonymous_types = true:suggestion
-csharp_new_line_between_query_expression_clauses = true:error
+csharp_new_line_before_members_in_anonymous_types = true
+csharp_new_line_between_query_expression_clauses = true
 
 # Indent
-csharp_indent_case_contents = true:error
-csharp_indent_switch_labels = true:error
-csharp_space_after_cast = false:error
-csharp_space_after_keywords_in_control_flow_statements = true:error
-csharp_space_between_method_declaration_parameter_list_parentheses = false:error
-csharp_space_between_method_call_parameter_list_parentheses = false:error
+csharp_indent_case_contents = true
+csharp_indent_switch_labels = true
+csharp_space_after_cast = false
+csharp_space_after_keywords_in_control_flow_statements = true
+csharp_space_between_method_declaration_parameter_list_parentheses = false
+csharp_space_between_method_call_parameter_list_parentheses = false
 
 #Wrap
-csharp_preserve_single_line_statements = false:error
-csharp_preserve_single_line_blocks = true:error
+csharp_preserve_single_line_statements = false
+csharp_preserve_single_line_blocks = true
 
 # Resharper
 resharper_csharp_braces_for_lock=required_for_multiline
@@ -126,6 +194,9 @@ resharper_csharp_braces_for_ifelse=required_for_multiline
 
 resharper_csharp_accessor_owner_body=expression_body
 
+resharper_redundant_case_label_highlighting=do_not_show
+resharper_redundant_argument_default_value_highlighting=do_not_show
+
 [Jenkinsfile]
 indent_style = space
 indent_size = 2
@@ -137,3 +208,6 @@ insert_final_newline = true
 [*.{sh,bat,ps1}]
 trim_trailing_whitespace=true
 insert_final_newline=true
+
+[*.sh]
+end_of_line = lf
