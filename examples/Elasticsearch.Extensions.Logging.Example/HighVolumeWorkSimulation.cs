@@ -1,8 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Net;
-using System.Security.Claims;
-using System.Security.Principal;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Hosting;

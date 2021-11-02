@@ -3,7 +3,7 @@ using Elastic.Ingest.Serialization;
 using FluentAssertions;
 using Xunit;
 
-namespace Elastic.Ingest.Tests
+namespace Elastic.Ingest.Tests.Elasticsearch
 {
 	public class SerializationTests
 	{

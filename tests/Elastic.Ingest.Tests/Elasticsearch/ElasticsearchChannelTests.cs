@@ -3,7 +3,7 @@ using Elastic.Transport.VirtualizedCluster.Rules;
 using FluentAssertions;
 using Xunit;
 
-namespace Elastic.Ingest.Tests
+namespace Elastic.Ingest.Tests.Elasticsearch
 {
 	public class ElasticsearchChannelTests
 	{
@@ -28,7 +28,6 @@ namespace Elastic.Ingest.Tests
 			session.Rejections.Should().Be(1);
 			session.TotalBulkRequests.Should().Be(2);
 			session.TotalRetries.Should().Be(0);
-
 		}
 
 		[Fact]
@@ -88,7 +87,6 @@ namespace Elastic.Ingest.Tests
 			session.TotalBulkRequests.Should().Be(5);
 			session.TotalRetries.Should().Be(3);
 			session.Rejections.Should().Be(0);
-
 		}
 
 		[Fact]

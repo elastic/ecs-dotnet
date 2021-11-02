@@ -22,15 +22,29 @@ namespace Elastic.Ingest
 		where TBuffer : BufferOptions<TEvent>, new()
 		where TResponse : class, new()
 	{
-		private readonly List<Task> _backgroundTasks = new();
+		private readonly Task _inThread;
+		private readonly Task _outThread;
+		private readonly SemaphoreSlim _throttleTasks;
 
 		protected ChannelBase(TChannelOptions options)
 		{
 			Options = options;
 			var maxConsumers = Math.Max(1, BufferOptions.ConcurrentConsumers);
-			Channel = System.Threading.Channels.Channel.CreateBounded<TEvent>(new BoundedChannelOptions(BufferOptions.MaxInFlightMessages)
+			_throttleTasks = new SemaphoreSlim(maxConsumers, maxConsumers);
+			InChannel = Channel.CreateBounded<TEvent>(new BoundedChannelOptions(BufferOptions.MaxInFlightMessages)
 			{
-				SingleReader = maxConsumers == 1,
+				SingleReader = false,
+				// Stephen Toub comment: https://github.com/dotnet/runtime/issues/26338#issuecomment-393720727
+				// AFAICT this is fine since we run in a dedicated long running task.
+				AllowSynchronousContinuations = true,
+				// wait does not block it simply signals that Writer.TryWrite should return false and be retried
+				// DropWrite will make `TryWrite` always return true, which is not what we want.
+				FullMode = BoundedChannelFullMode.Wait
+			});
+			OutChannel = Channel.CreateBounded<ConsumedBuffer<TEvent>>(new BoundedChannelOptions(BufferOptions.MaxInFlightMessages / BufferOptions.MaxConsumerBufferSize)
+			{
+				SingleReader = false,
+				SingleWriter = true,
 				// Stephen Toub comment: https://github.com/dotnet/runtime/issues/26338#issuecomment-393720727
 				// AFAICT this is fine since we run in a dedicated long running task.
 				AllowSynchronousContinuations = true,
@@ -39,41 +53,116 @@ namespace Elastic.Ingest
 				FullMode = BoundedChannelFullMode.Wait
 			});
 
-			var waitHandle = maxConsumers == 1 ? BufferOptions.WaitHandle : null;
-			Task ConsumeMessages() => Consume(BufferOptions.MaxConsumerBufferSize, BufferOptions.MaxConsumerBufferLifetime, waitHandle);
+			var waitHandle = BufferOptions.WaitHandle;
+			_inThread = Task.Factory.StartNew(async () =>
+					await ConsumeInboundEvents(BufferOptions.MaxConsumerBufferSize, BufferOptions.MaxConsumerBufferLifetime, waitHandle)
+						.ConfigureAwait(false)
+				, TaskCreationOptions.LongRunning
+			);
 
-			// TODO I Think Task.Run is actually fine here, also allows us to box and capture this in the lambda to StartNew.
-			// could be a config option
-			for (var i = 0; i < maxConsumers; i++)
-				_backgroundTasks.Add(Task.Factory.StartNew(async () => await ConsumeMessages().ConfigureAwait(false), TaskCreationOptions.LongRunning).Unwrap());
-
+			_outThread = Task.Factory.StartNew(async () =>
+					await ConsumeOutboundEvents(BufferOptions.MaxConsumerBufferSize, BufferOptions.MaxConsumerBufferLifetime, waitHandle)
+						.ConfigureAwait(false)
+				, TaskCreationOptions.LongRunning
+			);
 		}
 
 		public TChannelOptions Options { get; }
-		protected Channel<TEvent> Channel { get; }
-		protected ChannelWriter<TEvent> Writer => Channel.Writer;
+		protected Channel<ConsumedBuffer<TEvent>> OutChannel { get; }
+		protected Channel<TEvent> InChannel { get; }
 		protected TBuffer BufferOptions => Options.BufferOptions;
-
 
 		public virtual bool TryWrite(TEvent item)
 		{
-			if (Writer.TryWrite(item)) return true;
+			if (InChannel.Writer.TryWrite(item)) return true;
 
 			Options.PublishRejectionCallback?.Invoke(item);
 			return false;
 		}
 
-		protected abstract Task<TResponse> Send(List<TEvent> page);
+		public virtual async Task<bool> WaitToWriteAsync(TEvent item, CancellationToken ctx = default)
+		{
+			if ((await InChannel.Writer.WaitToWriteAsync(ctx).ConfigureAwait(false)) &&
+				InChannel.Writer.TryWrite(item)) return true;
 
-		protected virtual List<TEvent> RetryBuffer(TResponse response, List<TEvent> currentBuffer, IConsumedBufferStatistics statistics) => currentBuffer;
+			Options.PublishRejectionCallback?.Invoke(item);
+			return false;
+		}
 
-		private async Task Consume(int maxQueuedMessages, TimeSpan maxInterval, CountdownEvent? countdown)
+		protected abstract Task<TResponse> Send(IReadOnlyCollection<TEvent> page);
+
+		private static IReadOnlyCollection<TEvent> _defaultRetryBuffer = new TEvent[] { };
+		protected virtual IReadOnlyCollection<TEvent> RetryBuffer(TResponse response, IReadOnlyCollection<TEvent> currentBuffer,
+			IConsumedBufferStatistics statistics
+		) => _defaultRetryBuffer;
+
+		private async Task ConsumeOutboundEvents(int maxQueuedMessages, TimeSpan maxInterval, CountdownEvent? countdown)
+		{
+			var maxConsumers = Options.BufferOptions.ConcurrentConsumers;
+			var taskList = new List<Task>(maxConsumers);
+
+			while (await OutChannel.Reader.WaitToReadAsync().ConfigureAwait(false))
+			{
+				while (OutChannel.Reader.TryRead(out var buffer))
+				{
+					var items = buffer.Items;
+					await _throttleTasks.WaitAsync().ConfigureAwait(false);
+					var t = ExportBuffer(countdown, items, buffer);
+					taskList.Add(t);
+
+					if (taskList.Count >= maxConsumers)
+					{
+						var completedTask = await Task.WhenAny(taskList).ConfigureAwait(false);
+						taskList.Remove(completedTask);
+					}
+					_throttleTasks.Release();
+				}
+			}
+			await Task.WhenAll(taskList).ConfigureAwait(false);
+		}
+
+		private async Task ExportBuffer(CountdownEvent? countdown, IReadOnlyCollection<TEvent> items, IConsumedBufferStatistics buffer)
+		{
+			var maxRetries = Options.BufferOptions.MaxRetries;
+			for (var i = 0; i <= maxRetries && items.Count > 0; i++)
+			{
+				Options.BulkAttemptCallback?.Invoke(i, items.Count);
+				TResponse response = null!;
+				try
+				{
+					response = await Send(items).ConfigureAwait(false);
+					Options.ResponseCallback(response, buffer);
+				}
+				catch (Exception e)
+				{
+					Options.ExceptionCallback?.Invoke(e);
+					break;
+				}
+
+				items = RetryBuffer(response, items, buffer);
+
+				// delay if we still have items and we are not at the end of the max retry cycle
+				var atEndOfRetries = i == maxRetries;
+				if (items.Count > 0 && !atEndOfRetries)
+				{
+					await Task.Delay(Options.BufferOptions.BackoffPeriod(i)).ConfigureAwait(false);
+					Options.RetryCallBack?.Invoke(items);
+				}
+				// otherwise if retryable items still exist and the user wants to be notified notify the user
+				else if (items.Count > 0 && atEndOfRetries)
+					Options.MaxRetriesExceededCallback?.Invoke(items);
+			}
+			Options.BufferOptions.BufferFlushCallback?.Invoke();
+			countdown?.Signal();
+		}
+
+		private async Task ConsumeInboundEvents(int maxQueuedMessages, TimeSpan maxInterval, CountdownEvent? countdown)
 		{
 			using var buffer = new ChannelBuffer<TEvent>(maxQueuedMessages, maxInterval);
 
-			while (await buffer.WaitToReadAsync(Channel.Reader).ConfigureAwait(false))
+			while (await buffer.WaitToReadAsync(InChannel.Reader).ConfigureAwait(false))
 			{
-				while (buffer.Count < maxQueuedMessages && Channel.Reader.TryRead(out var item))
+				while (buffer.Count < maxQueuedMessages && InChannel.Reader.TryRead(out var item))
 				{
 					if (buffer.DurationSinceFirstRead > maxInterval) break;
 
@@ -82,53 +171,29 @@ namespace Elastic.Ingest
 
 				if (buffer.NoThresholdsHit) continue;
 
-				var items = buffer.Buffer;
-				var maxRetries = Options.BufferOptions.MaxRetries;
-				for (var i = 0; i <= maxRetries && items.Count > 0; i++)
-				{
-					Options.BulkAttemptCallback?.Invoke(i, items.Count);
-					TResponse response = null!;
-					try
-					{
-						response = await Send(items).ConfigureAwait(false);
-						Options.ResponseCallback(response, buffer);
-					}
-					catch (Exception e)
-					{
-						Options.ExceptionCallback?.Invoke(e);
-						break;
-					}
+				var localBuffer = new ConsumedBuffer<TEvent>(buffer);
+				if (OutChannel.Writer.TryWrite(localBuffer))
+					continue;
 
-					items = RetryBuffer(response, items, buffer);
-
-					// delay if we still have items and we are not at the end of the max retry cycle
-					var atEndOfRetries = i == maxRetries;
-					if (items.Count > 0 && !atEndOfRetries)
-					{
-						await Task.Delay(Options.BufferOptions.BackoffPeriod(i)).ConfigureAwait(false);
-						Options.RetryCallBack?.Invoke(items);
-					}
-					// otherwise if retryable items still exist and the user wants to be notified notify the user
-					else if (items.Count > 0 && atEndOfRetries)
-						Options.MaxRetriesExceededCallback?.Invoke(items);
-
-				}
-				buffer.Reset();
-				Options.BufferOptions.BufferFlushCallback?.Invoke();
-				countdown?.Signal();
+				foreach (var e in buffer.Buffer)
+					Options.PublishRejectionCallback?.Invoke(e);
 			}
+			//return Task.CompletedTask;
 		}
 
 		public virtual void Dispose()
 		{
 			try
 			{
-				// TODO cancellation
-				foreach (var t in _backgroundTasks) t.Dispose();
+				_inThread.Dispose();
+			}
+			catch { }
+			try
+			{
+				_outThread.Dispose();
 			}
 			catch { }
 		}
-
 	}
 
 	public abstract class ChannelBase<TChannelOptions, TBuffer, TEvent, TResponse, TBulkResponseItem>
@@ -140,26 +205,22 @@ namespace Elastic.Ingest
 		protected ChannelBase(TChannelOptions options) : base(options) { }
 
 		protected abstract bool BackOffRequest(TResponse response);
-		protected abstract List<(TEvent, TBulkResponseItem)> Zip(TResponse response, List<TEvent> page);
+
+		protected abstract List<(TEvent, TBulkResponseItem)> Zip(TResponse response, IReadOnlyCollection<TEvent> page);
+
 		protected abstract bool RetryEvent((TEvent, TBulkResponseItem) @event);
+
 		protected abstract bool RejectEvent((TEvent, TBulkResponseItem) @event);
 
-		protected override List<TEvent> RetryBuffer(TResponse response, List<TEvent> events, IConsumedBufferStatistics consumedBufferStatistics)
+		protected override IReadOnlyCollection<TEvent> RetryBuffer(TResponse response, IReadOnlyCollection<TEvent> events,
+			IConsumedBufferStatistics consumedBufferStatistics
+		)
 		{
-			Options.ResponseCallback?.Invoke(response, consumedBufferStatistics);
 			var backOffWholeRequest = BackOffRequest(response);
 			// if we are not retrying the whole request find out if individual items need retrying
 			if (!backOffWholeRequest)
 			{
-				// TODO https://github.com/elastic/elasticsearch/issues/60442
-				// allows us to check for `207` before doing expensive LINQ/array manipulations
-
-				//TODO handle retries?
 				var zipped = Zip(response, events);
-				//ApmChannelStatics.RetryStatusCodes.Contains(t.item.Status))
-				//(t.item.Status < 200 || t.item.Status > 300)
-
-				// retry any 429,502,503,504
 				events = zipped
 					.Where(t => RetryEvent(t))
 					.Select(t => t.Item1)

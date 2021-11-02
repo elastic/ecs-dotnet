@@ -24,10 +24,10 @@ namespace Elastic.Ingest
 		public Action<int, int>? BulkAttemptCallback { get; set; }
 
 		/// <summary> Subscribe to be notified of events that are retryable but did not store correctly withing the boundaries of <see cref="MaxRetries"/></summary>
-		public Action<List<TEvent>>? MaxRetriesExceededCallback { get; set; }
+		public Action<IReadOnlyCollection<TEvent>>? MaxRetriesExceededCallback { get; set; }
 
 		/// <summary> Subscribe to be notified of events that are retryable but did not store correctly within the number of configured <see cref="MaxRetries"/></summary>
-		public Action<List<TEvent>>? RetryCallBack { get; set; }
+		public Action<IReadOnlyCollection<TEvent>>? RetryCallBack { get; set; }
 
 
 	}

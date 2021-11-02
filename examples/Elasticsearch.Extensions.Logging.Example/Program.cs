@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Elastic.Elasticsearch.Ephemeral;
-using Elastic.Ingest;
 using Elastic.Ingest.Elasticsearch;
 using Elasticsearch.Net;
 using Microsoft.Extensions.Configuration;

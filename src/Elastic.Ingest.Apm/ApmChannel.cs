@@ -42,11 +42,11 @@ namespace Elastic.Ingest.Apm
 
 		//APM does not return the status for all events sent. Therefor we always return an empty set for individual items to retry
 		private List<(IIntakeObject, IntakeErrorItem)> _emptyZip = new();
-		protected override List<(IIntakeObject, IntakeErrorItem)> Zip(EventIntakeResponse response, List<IIntakeObject> page) => _emptyZip;
+		protected override List<(IIntakeObject, IntakeErrorItem)> Zip(EventIntakeResponse response, IReadOnlyCollection<IIntakeObject> page) => _emptyZip;
 		protected override bool RetryEvent((IIntakeObject, IntakeErrorItem) @event) => false;
 		protected override bool RejectEvent((IIntakeObject, IntakeErrorItem) @event) => false;
 
-		protected override Task<EventIntakeResponse> Send(ITransport<ITransportConfiguration> transport, List<IIntakeObject> page) =>
+		protected override Task<EventIntakeResponse> Send(ITransport<ITransportConfiguration> transport, IReadOnlyCollection<IIntakeObject> page) =>
 			transport.RequestAsync<EventIntakeResponse>(HttpMethod.POST, "/intake/v2/events",
 				default,
 				PostData.StreamHandler(page,
@@ -72,7 +72,7 @@ namespace Elastic.Ingest.Apm
 			await stream.WriteAsync(ApmChannelStatics.LineFeed, 0, 1, ctx).ConfigureAwait(false);
 		}
 
-		private async Task WriteBufferToStreamAsync(List<IIntakeObject> b, Stream stream, CancellationToken ctx)
+		private async Task WriteBufferToStreamAsync(IReadOnlyCollection<IIntakeObject> b, Stream stream, CancellationToken ctx)
 		{
 			await WriteStanzaToStreamAsync(stream, ctx).ConfigureAwait(false);
 			foreach (var @event in b)

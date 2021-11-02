@@ -4,14 +4,12 @@ using System.Threading;
 using Elastic.CommonSchema;
 using Elastic.Ingest.Elasticsearch;
 using Elastic.Ingest.Elasticsearch.Indices;
-using Elastic.Ingest.Elasticsearch.Serialization;
 using Elastic.Transport;
 using Elastic.Transport.VirtualizedCluster;
-using Elastic.Transport.VirtualizedCluster.Audit;
 using Elastic.Transport.VirtualizedCluster.Components;
 using Elastic.Transport.VirtualizedCluster.Rules;
 
-namespace Elastic.Ingest.Tests
+namespace Elastic.Ingest.Tests.Elasticsearch
 {
 	public static class TestSetup
 	{

@@ -23,8 +23,8 @@ namespace Elastic.Ingest.Transport
 		/// <param name="transport"></param>
 		/// <param name="page">Active page of the buffer that needs to be send to the output</param>
 		/// <returns><see cref="TResponse"/></returns>
-		protected abstract Task<TResponse> Send(ITransport<ITransportConfiguration> transport, List<TEvent> page);
+		protected abstract Task<TResponse> Send(ITransport<ITransportConfiguration> transport, IReadOnlyCollection<TEvent> page);
 
-		protected override Task<TResponse> Send(List<TEvent> page) => Send(Options.Transport, page);
+		protected override Task<TResponse> Send(IReadOnlyCollection<TEvent> page) => Send(Options.Transport, page);
 	}
 }

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Threading;
 using System.Threading.Channels;
 using System.Threading.Tasks;
@@ -13,6 +14,25 @@ namespace Elastic.Ingest
 	{
 		int Count { get; }
 		TimeSpan? DurationSinceFirstRead { get; }
+	}
+
+	public class ConsumedBuffer<TEVent> : IConsumedBufferStatistics
+	{
+		private readonly TEVent[] _buffer;
+		public IReadOnlyCollection<TEVent> Items { get; }
+
+		public ConsumedBuffer(ChannelBuffer<TEVent> buffer)
+		{
+			_buffer = new TEVent[buffer.Count];
+			buffer.Buffer.CopyTo(_buffer);
+			Count = buffer.Count;
+			DurationSinceFirstRead = buffer.DurationSinceFirstRead;
+			Items = new ReadOnlyCollection<TEVent>(_buffer);
+			buffer.Reset();
+		}
+
+		public int Count { get; }
+		public TimeSpan? DurationSinceFirstRead { get; }
 	}
 
 	/// <summary>

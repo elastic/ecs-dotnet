@@ -77,13 +77,13 @@ namespace Elastic.Ingest.OpenTelemetry
 
 		}
 
-		private Func<List<Activity>, Batch<Activity>> BatchCreator { get; }
+		private Func<IReadOnlyCollection<Activity>, Batch<Activity>> BatchCreator { get; }
 
 		public CustomOtlpTraceExporter TraceExporter { get; }
 
 		public CustomActivityProcessor Processor { get; }
 
-		protected override Task<TraceExportResult> Send(List<Activity> page)
+		protected override Task<TraceExportResult> Send(IReadOnlyCollection<Activity> page)
 		{
 			var batch = BatchCreator(page);
 			var result = TraceExporter.Export(batch);

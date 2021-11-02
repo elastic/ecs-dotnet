@@ -18,7 +18,7 @@ namespace Elastic.Ingest.Elasticsearch
 
 		protected override bool BackOffRequest(BulkResponse response) => response.ApiCall.HttpStatusCode == 429;
 
-		protected override List<(TEvent, BulkResponseItem)> Zip(BulkResponse response, List<TEvent> page) =>
+		protected override List<(TEvent, BulkResponseItem)> Zip(BulkResponse response, IReadOnlyCollection<TEvent> page) =>
 			page.Zip(response.Items, (doc, item) => (doc, item)).ToList();
 
 		protected override bool RetryEvent((TEvent, BulkResponseItem) @event) =>
@@ -27,7 +27,7 @@ namespace Elastic.Ingest.Elasticsearch
 		protected override bool RejectEvent((TEvent, BulkResponseItem) @event) =>
 			@event.Item2.Status < 200 || @event.Item2.Status > 300;
 
-		protected override Task<BulkResponse> Send(ITransport<ITransportConfiguration> transport, List<TEvent> page) =>
+		protected override Task<BulkResponse> Send(ITransport<ITransportConfiguration> transport, IReadOnlyCollection<TEvent> page) =>
 			transport.RequestAsync<BulkResponse>(HttpMethod.POST, "/_bulk",
 				default,
 				PostData.StreamHandler(page,
@@ -40,7 +40,7 @@ namespace Elastic.Ingest.Elasticsearch
 
 		protected abstract object CreateBulkOperationHeader(TEvent @event);
 
-		private async Task WriteBufferToStreamAsync(List<TEvent> b, Stream stream, CancellationToken ctx)
+		private async Task WriteBufferToStreamAsync(IReadOnlyCollection<TEvent> b, Stream stream, CancellationToken ctx)
 		{
 			foreach (var @event in b)
 			{

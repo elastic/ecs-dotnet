@@ -1,6 +1,6 @@
 using System.Linq;
 
-namespace Elastic.Ingest.Tests
+namespace Elastic.Ingest.Tests.Elasticsearch
 {
 	public static class BulkResponseBuilder
 	{
