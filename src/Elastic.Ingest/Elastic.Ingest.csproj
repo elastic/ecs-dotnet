@@ -13,7 +13,7 @@
   <ItemGroup>
     <PackageReference Include="Elastic.Transport" Version="0.2.3" />
     <PackageReference Include="System.Threading.Channels" Version="4.7.1" />
-    <PackageReference Include="System.Text.Encodings.Web" Version="5.0.0"/>
+    <PackageReference Include="System.Text.Encodings.Web" Version="5.0.1"/>
   </ItemGroup>
 
 
