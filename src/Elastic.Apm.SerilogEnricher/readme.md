@@ -37,4 +37,4 @@ If the agent is not configured the enricher won't add anything to the logs.
 
 This software is Copyright (c) 2014-2020 by Elasticsearch BV.
 
-This is free software, licensed under: [The Apache License Version 2.0](https://github.com/elastic/ecs-dotnet/blob/master/license.txt).
+This is free software, licensed under: [The Apache License Version 2.0](https://github.com/elastic/ecs-dotnet/blob/main/license.txt).

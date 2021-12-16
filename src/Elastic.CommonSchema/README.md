@@ -10,7 +10,7 @@ These types can be used in either as-is, or in conjunction with, the [Official .
 
 The .NET assemblies are published to NuGet under the package name [Elastic.CommonSchema](http://nuget.org/packages/Elastic.CommonSchema)
 
-The master branch pushes new NuGet packages on successful CI builds to https://ci.appveyor.com/nuget/ecs-dotnet
+The main branch pushes new NuGet packages on successful CI builds to https://ci.appveyor.com/nuget/ecs-dotnet
 
 ## Versioning
 
@@ -191,10 +191,10 @@ This property is not part of the ECS specification, but is included as a means t
 
 In instances where using the `IDictionary<string, object> Metadata` property is not sufficient, or there is a clearer definition of the structure of the ECS-compatible document you would like to index, it is possible to subclass the `Base` object and provide your own property definitions.
 
-The Elastic.CommonSchema.BenchmarkDotNetExporter project takes this approach, in the [Domain source directory](https://github.com/elastic/ecs-dotnet/tree/master/src/Elastic.CommonSchema.BenchmarkDotNetExporter), where the BenchmarkDocument subclasses Base.
+The Elastic.CommonSchema.BenchmarkDotNetExporter project takes this approach, in the [Domain source directory](https://github.com/elastic/ecs-dotnet/tree/main/src/Elastic.CommonSchema.BenchmarkDotNetExporter), where the BenchmarkDocument subclasses Base.
 
 ## Copyright and License
 
 This software is Copyright (c) 2014-2020 by Elasticsearch BV.
 
-This is free software, licensed under: [The Apache License Version 2.0](https://github.com/elastic/ecs-dotnet/blob/master/license.txt).
+This is free software, licensed under: [The Apache License Version 2.0](https://github.com/elastic/ecs-dotnet/blob/main/license.txt).

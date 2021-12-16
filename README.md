@@ -2,13 +2,13 @@
 
 # Elastic Common Schema .NET
 
-[![Build Status](https://apm-ci.elastic.co/buildStatus/icon?job=apm-agent-dotnet%2Fecs-dotnet-mbp%2Fmaster)](https://apm-ci.elastic.co/job/apm-agent-dotnet/job/ecs-dotnet-mbp/job/master/)
+[![Build Status](https://apm-ci.elastic.co/buildStatus/icon?job=apm-agent-dotnet%2Fecs-dotnet-mbp%2Fmain)](https://apm-ci.elastic.co/job/apm-agent-dotnet/job/ecs-dotnet-mbp/job/main/)
 
 This repository contains .NET integrations that use the Elastic Common Schema (ECS), including popular .NET logging frameworks. Read the [announcement post](https://www.elastic.co/blog/elastic-common-schema-dotnet-library-and-integrations-released-for-elasticsearch).
 
 The Elastic Common Schema defines a common set of fields for ingesting data into Elasticsearch. A common schema helps you correlate data from sources like logs and metrics or IT operations analytics and security analytics. Further information on ECS can be found in the official [Elastic documentation](https://www.elastic.co/guide/en/ecs/current/index.html) or [github repository](https://github.com/elastic/ecs).
 
-Contributions are welcome, please read our [guidelines](https://github.com/elastic/ecs-dotnet/tree/master/contributing.md).
+Contributions are welcome, please read our [guidelines](https://github.com/elastic/ecs-dotnet/tree/main/contributing.md).
 
 ---
 
@@ -57,9 +57,9 @@ Official NuGet packages can be referenced from [NuGet.org](https://www.nuget.org
 
 ## Foundation Library
 
-### [Elastic.CommonSchema](https://github.com/elastic/ecs-dotnet/tree/master/src/Elastic.CommonSchema)
+### [Elastic.CommonSchema](https://github.com/elastic/ecs-dotnet/tree/main/src/Elastic.CommonSchema)
 
-Foundational project that contains a full C# representation of ECS. [Learn more...](https://github.com/elastic/ecs-dotnet/tree/master/src/Elastic.CommonSchema)
+Foundational project that contains a full C# representation of ECS. [Learn more...](https://github.com/elastic/ecs-dotnet/tree/main/src/Elastic.CommonSchema)
 
 ## Logging
 
@@ -82,9 +82,9 @@ using Elasticsearch.Extensions.Logging;
     })
 ```
 
-### [Elastic.CommonSchema.Serilog](https://github.com/elastic/ecs-dotnet/tree/master/src/Elastic.CommonSchema.Serilog)
+### [Elastic.CommonSchema.Serilog](https://github.com/elastic/ecs-dotnet/tree/main/src/Elastic.CommonSchema.Serilog)
 
-Formats a Serilog event into a JSON representation that adheres to the Elastic Common Schema. [Learn more...](https://github.com/elastic/ecs-dotnet/tree/master/src/Elastic.CommonSchema.Serilog)
+Formats a Serilog event into a JSON representation that adheres to the Elastic Common Schema. [Learn more...](https://github.com/elastic/ecs-dotnet/tree/main/src/Elastic.CommonSchema.Serilog)
 
 ```csharp
 var logger = new LoggerConfiguration()
@@ -92,9 +92,9 @@ var logger = new LoggerConfiguration()
     .CreateLogger();
 ```
 
-### [Elastic.CommonSchema.NLog](https://github.com/elastic/ecs-dotnet/tree/master/src/Elastic.CommonSchema.NLog)
+### [Elastic.CommonSchema.NLog](https://github.com/elastic/ecs-dotnet/tree/main/src/Elastic.CommonSchema.NLog)
 
-Formats an NLog event into a JSON representation that adheres to the Elastic Common Schema. [Learn more...](https://github.com/elastic/ecs-dotnet/tree/master/src/Elastic.CommonSchema.NLog)
+Formats an NLog event into a JSON representation that adheres to the Elastic Common Schema. [Learn more...](https://github.com/elastic/ecs-dotnet/tree/main/src/Elastic.CommonSchema.NLog)
 
 ```csharp
 Layout.Register<EcsLayout>("EcsLayout"); // Register the ECS layout.
@@ -107,9 +107,9 @@ var logger = LogManager.GetCurrentClassLogger();
 
 ## APM
 
-### [Elastic.Apm.SerilogEnricher](https://github.com/elastic/ecs-dotnet/tree/master/src/Elastic.Apm.SerilogEnricher)
+### [Elastic.Apm.SerilogEnricher](https://github.com/elastic/ecs-dotnet/tree/main/src/Elastic.Apm.SerilogEnricher)
 
-Adds transaction id and trace id to every Serilog log message that is created during a transaction. [Learn more...](https://github.com/elastic/ecs-dotnet/tree/master/src/Elastic.Apm.SerilogEnricher)
+Adds transaction id and trace id to every Serilog log message that is created during a transaction. [Learn more...](https://github.com/elastic/ecs-dotnet/tree/main/src/Elastic.Apm.SerilogEnricher)
 
 ```csharp
 var logger = new LoggerConfiguration()
@@ -127,10 +127,10 @@ var logger = new LoggerConfiguration()
     .CreateLogger();
 ```
 
-### [Elastic.Apm.NLog](https://github.com/elastic/ecs-dotnet/tree/master/src/Elastic.Apm.NLog)
+### [Elastic.Apm.NLog](https://github.com/elastic/ecs-dotnet/tree/main/src/Elastic.Apm.NLog)
 
 Introduce two special place holder variables (`ElasticApmTraceId`, `ElasticApmTransactionId`) easily into your NLog templates.
-[Learn more...](https://github.com/elastic/ecs-dotnet/tree/master/src/Elastic.Apm.NLog)
+[Learn more...](https://github.com/elastic/ecs-dotnet/tree/main/src/Elastic.Apm.NLog)
 
 ```csharp
 // Logged message will be in format of `trace-id|transation-id|InTransaction`
@@ -146,9 +146,9 @@ When using EcsLayout from `Elastic.CommonSchema.NLog` then trace and transaction
 
 ## Benchmarking
 
-### [Elastic.CommonSchema.BenchmarkDotNetExporter](https://github.com/elastic/ecs-dotnet/tree/master/src/Elastic.CommonSchema.BenchmarkDotNetExporter)
+### [Elastic.CommonSchema.BenchmarkDotNetExporter](https://github.com/elastic/ecs-dotnet/tree/main/src/Elastic.CommonSchema.BenchmarkDotNetExporter)
 
-An exporter for [BenchmarkDotnet](https://github.com/dotnet/BenchmarkDotNet) that can index benchmarking result output directly into Elasticsearch. [Learn more...](https://github.com/elastic/ecs-dotnet/tree/master/src/Elastic.CommonSchema.BenchmarkDotNetExporter)
+An exporter for [BenchmarkDotnet](https://github.com/dotnet/BenchmarkDotNet) that can index benchmarking result output directly into Elasticsearch. [Learn more...](https://github.com/elastic/ecs-dotnet/tree/main/src/Elastic.CommonSchema.BenchmarkDotNetExporter)
 
 ```csharp
 var options = new ElasticsearchBenchmarkExporterOptions(url)
@@ -171,4 +171,4 @@ BenchmarkRunner.Run(typeof(Md5VsSha256), config);
 
 This software is Copyright (c) 2014-2020 by Elasticsearch BV.
 
-This is free software, licensed under: [The Apache License Version 2.0](https://github.com/elastic/ecs-dotnet/blob/master/license.txt).
+This is free software, licensed under: [The Apache License Version 2.0](https://github.com/elastic/ecs-dotnet/blob/main/license.txt).

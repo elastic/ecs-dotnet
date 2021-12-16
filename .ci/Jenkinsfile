@@ -127,7 +127,7 @@ pipeline {
         beforeAgent true
         anyOf {
           tag pattern: '\\d+\\.\\d+\\.\\d+(-(alpha|beta|rc)\\d*)?', comparator: 'REGEXP'
-          branch 'master'
+          branch 'main'
         }
       }
       stages {
@@ -145,7 +145,7 @@ pipeline {
           }
         }
         stage('Release to feedz.io') {
-          when { branch 'master' }
+          when { branch 'main' }
           steps {
             dir("${BASE_DIR}"){
               deploy(secret: 'secret/apm-team/ci/elastic-observability-feedz.io')
