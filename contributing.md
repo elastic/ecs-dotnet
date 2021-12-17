@@ -31,12 +31,12 @@ In those cases we tend to pull your code locally and write tests ourselves, but 
 
 Convention:
 
-- `master` reflects the latest Elastic Common Schema (ECS) version, this is typically the `current latest major + 1`
+- `main` reflects the latest Elastic Common Schema (ECS) version, this is typically the `current latest major + 1`
 - `X.Y.Z` where `X` is the major version, `Y` is the minor component and `Z` is the patch component, typically opened as integration branch for a specific minor.
 
 Examples:
 
-- `master` for the latest ECS version
+- `main` for the latest ECS version
 - `1.2.0` for ECS 1.2.0 compatible integrations
 
 # Building the solution

@@ -131,7 +131,7 @@ let private createReleaseOnGithub (arguments:ParseResults<Arguments>) =
 let private updateLoggingSpec (arguments:ParseResults<Arguments>) =
     let commit =
         match arguments.TryGetResult Commit with
-        | None -> "master"
+        | None -> "main"
         | Some commit -> commit       
     async {
         use client = new HttpClient()
