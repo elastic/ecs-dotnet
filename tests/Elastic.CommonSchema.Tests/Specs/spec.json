@@ -73,22 +73,40 @@
             "url": "https://www.elastic.co/guide/en/ecs/current/ecs-service.html",
             "comment": [
                 "Configurable by users.",
-                "When an APM agent is active, they should auto-configure it if not already set."
+                "When an APM agent is active, it should auto-configure this field if not already set."
+            ]
+        },
+        "service.node.name": {
+            "type": "string",
+            "required": false,
+            "url": "https://www.elastic.co/guide/en/ecs/current/ecs-service.html",
+            "comment": [
+                "Configurable by users.",
+                "When an APM agent is active and `service_node_name` is manually configured, the agent should auto-configure this field if not already set."
+            ]
+        },
+        "service.version": {
+            "type": "string",
+            "required": false,
+            "url": "https://www.elastic.co/guide/en/ecs/current/ecs-service.html#field-service-version",
+            "comment": [
+                "Configurable by users.",
+                "When an APM agent is active, it should auto-configure it if not already set."
             ]
         },
         "event.dataset": {
             "type": "string",
             "required": false,
             "url": "https://www.elastic.co/guide/en/ecs/current/ecs-event.html",
-            "default": "${service.name}.log OR ${service.name}.${appender.name}",
+            "default": "${service.name} OR ${service.name}.${appender.name}",
             "comment": [
                 "Configurable by users.",
                 "If the user manually configures the service name,",
-                "the logging library should set `event.dataset=${service.name}.log` if not explicitly configured otherwise.",
+                "the logging library should set `event.dataset=${service.name}` if not explicitly configured otherwise.",
                 "",
                 "When agents auto-configure the app to use an ECS logger,",
                 "they should set `event.dataset=${service.name}.${appender.name}` if the appender name is available in the logging library.",
-                "Otherwise, agents should also set `event.dataset=${service.name}.log`",
+                "Otherwise, agents should also set `event.dataset=${service.name}`",
                 "",
                 "The field helps to filter for different log streams from the same pod, for example and is required for log anomaly detection."
             ]
