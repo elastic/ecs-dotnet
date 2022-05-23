@@ -8,7 +8,7 @@ namespace Generator
 {
 	public static class Program
 	{
-		private const string DefaultDownloadBranch = "1.6";
+		private const string DefaultDownloadBranch = "8.2.0";
 
 		private static void Main(string[] args)
 		{
@@ -23,7 +23,7 @@ namespace Generator
 				redownloadCoreSpecification = answer == "y";
 			}
 
-			Console.Write($"Branch to use (default {downloadBranch}): ");
+			Console.Write($"Taag to use (default {downloadBranch}): ");
 			var readBranch = Console.ReadLine()?.Trim();
 			if (!string.IsNullOrEmpty(readBranch)) downloadBranch = readBranch;
 
