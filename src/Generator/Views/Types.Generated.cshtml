@@ -315,7 +315,7 @@ foreach (var field in schema.Fields.Where(f => f.Value.IsCustomEnum()))
 	@if (!schema.Footnote.IsNullOrEmpty())
 	{
 <text>	/// <remarks>
-	/// @Raw(schema.Footnote)
+	/// @Raw(schema.Footnote.Replace("\n", "").Replace("\r", ""))
 	/// </remarks>
 </text>
 	}

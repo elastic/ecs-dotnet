@@ -83,6 +83,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "console-with-extensions-log
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = ".ci", ".ci\.ci.csproj", "{80D7CE12-D0C9-44E2-9BF9-5762D52ADA05}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Elastic.CommonSchema.Generator", "src\Elastic.CommonSchema.Generator\Elastic.CommonSchema.Generator.csproj", "{D6F0D170-39D7-4868-86EE-990B6B05C14D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -191,6 +193,10 @@ Global
 		{80D7CE12-D0C9-44E2-9BF9-5762D52ADA05}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{80D7CE12-D0C9-44E2-9BF9-5762D52ADA05}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{80D7CE12-D0C9-44E2-9BF9-5762D52ADA05}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D6F0D170-39D7-4868-86EE-990B6B05C14D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D6F0D170-39D7-4868-86EE-990B6B05C14D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D6F0D170-39D7-4868-86EE-990B6B05C14D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D6F0D170-39D7-4868-86EE-990B6B05C14D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -223,6 +229,7 @@ Global
 		{2FBE4070-D8D6-4787-B3D3-18016F9D09CC} = {3582B07D-C2B0-49CC-B676-EAF806EB010E}
 		{D87AE73E-8112-444C-8F2F-CFBC4F738026} = {05075402-8669-45BD-913A-BD40A29BBEAB}
 		{80D7CE12-D0C9-44E2-9BF9-5762D52ADA05} = {441B3323-3651-4B6E-95B3-7CD43E5E223A}
+		{D6F0D170-39D7-4868-86EE-990B6B05C14D} = {7610B796-BB3E-4CB2-8296-79BBFF6D23FC}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {7F60C4BB-6216-4E50-B1E4-9C38EB484843}

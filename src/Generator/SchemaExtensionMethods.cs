@@ -16,12 +16,21 @@ namespace Generator.Schema
 		public static string NamePCased(this YamlSchema value) =>
 			FileGenerator.PascalCase(value.Name);
 
-		public static string ExampleSanitized(this Field value) =>
-			value.Example.ToString().StartsWith("{") && value.Example.ToString().Contains("lat")
-				? value.Example.ToString()
-				: value.Example.ToString().StartsWith("[")
-						? "[" + string.Join(',', value.Example.ToString().Trim('[').Trim(']').Split(',').Select(s => s.Trim())) + "]"
-						: JsonConvert.SerializeObject(value.Example).Trim('"');
+		public static string ExampleSanitized(this Field value)
+		{
+			if (value.Example == null) return string.Empty;
+
+			if (value.Example.ToString()!.StartsWith("{") && value.Example.ToString().Contains("lat"))
+				return value.Example.ToString();
+
+			if (value.Example.ToString()!.StartsWith("["))
+			{
+				return "[" + string.Join(',', value.Example.ToString().Trim('[').Trim(']').Split(',').Select(s => s.Trim())) + "]";
+			}
+			var text = JsonConvert.SerializeObject(value.Example).Trim('"');
+
+			return text.Replace("\r\n", "").Replace("\n", "");
+		}
 
 		public static string Sanitized(this string value) =>
 			Regex.Replace(value.TrimEnd(), @"[\r\n]+", "<para/><para/>");
