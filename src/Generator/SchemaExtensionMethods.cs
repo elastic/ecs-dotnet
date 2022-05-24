@@ -3,6 +3,7 @@
 // See the LICENSE file in the project root for more information
 
 using System;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -122,6 +123,9 @@ namespace Generator.Schema
 				builder.AppendFormat(".Type(NumberType.{0:f})", value.Type);
 
 			// TODO add nested path
+
+			if (value.ScalingFactor.HasValue)
+				builder.AppendFormat(".ScalingFactor({0})", value.ScalingFactor.Value.ToString(CultureInfo.InvariantCulture));
 
 			return builder.ToString();
 		}
