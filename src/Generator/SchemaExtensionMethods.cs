@@ -62,6 +62,10 @@ namespace Generator.Schema
 			switch (value.Type)
 			{
 				case FieldType.Keyword:
+				case FieldType.ConstantKeyword:
+				case FieldType.Flattened:
+				case FieldType.MatchOnlyText:
+				case FieldType.Wildcard:
 				case FieldType.Text:
 				case FieldType.Ip:
 					clrType = "string";
@@ -75,9 +79,11 @@ namespace Generator.Schema
 				case FieldType.Date:
 					clrType = "DateTimeOffset?";
 					break;
+				case FieldType.Nested:
 				case FieldType.Object:
 					clrType = "object";
 					break;
+				case FieldType.ScaledFloat:
 				case FieldType.Float:
 					clrType = "float?";
 					break;
@@ -115,6 +121,8 @@ namespace Generator.Schema
 				|| value.Type == FieldType.Float)
 				builder.AppendFormat(".Type(NumberType.{0:f})", value.Type);
 
+			// TODO add nested path
+
 			return builder.ToString();
 		}
 
@@ -136,6 +144,12 @@ namespace Generator.Schema
 				FieldType.Float => "Number",
 				FieldType.GeoPoint => "GeoPoint",
 				FieldType.Boolean => "Boolean",
+				FieldType.ConstantKeyword => "ConstantKeyword",
+				FieldType.MatchOnlyText => "MatchOnlyText",
+				FieldType.Flattened => "Flattened",
+				FieldType.Wildcard => "Wildcard",
+				FieldType.ScaledFloat => "ScaledFloat",
+				FieldType.Nested => "Nested",
 				_ => throw new ArgumentOutOfRangeException()
 			};
 

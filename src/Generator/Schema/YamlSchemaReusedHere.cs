@@ -7,11 +7,20 @@ namespace Generator.Schema
 	{
 		[JsonProperty("full")]
 		public string Full { get; set; }
-		
+
 		[JsonProperty("schema_name")]
 		public string SchemaName { get; set; }
 
 		[JsonProperty("short")]
 		public string Short { get; set; }
+
+		[JsonProperty("beta")]
+		public string Beta { get; set; }
+
+		/// <summary>
+		/// Describes the normalisation of this field (e.g. array)
+		/// </summary>
+		[JsonProperty("normalize")]
+		public string[] Normalize { get; set; }
 	}
 }

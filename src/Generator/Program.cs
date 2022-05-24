@@ -23,7 +23,7 @@ namespace Generator
 				redownloadCoreSpecification = answer == "y";
 			}
 
-			Console.Write($"Taag to use (default {downloadBranch}): ");
+			Console.Write($"Tag to use (default {downloadBranch}): ");
 			var readBranch = Console.ReadLine()?.Trim();
 			if (!string.IsNullOrEmpty(readBranch)) downloadBranch = readBranch;
 

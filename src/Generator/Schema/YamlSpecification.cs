@@ -71,7 +71,7 @@ namespace Generator.Schema
 			}
 		}
 
-		public IDictionary<int, string> Templates { get; set; }
+		public IDictionary<string, string> Templates { get; set; }
 
 		public IList<YamlSchema> YamlSchemas { get; set; }
 	}

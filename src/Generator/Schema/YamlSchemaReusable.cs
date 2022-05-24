@@ -30,6 +30,18 @@ namespace Generator.Schema
 
 		[JsonProperty("full")]
 		public string Full { get; set; }
+
+		[JsonProperty("beta")]
+		public string Beta { get; set; }
+
+		[JsonProperty("short_override")]
+		public string ShortOverride { get; set; }
+
+		/// <summary>
+		/// Describes the normalisation of this field (e.g. array)
+		/// </summary>
+		[JsonProperty("normalize")]
+		public string[] Normalize { get; set; }
 	}
 
 	public class ExpectedConverter : JsonConverter

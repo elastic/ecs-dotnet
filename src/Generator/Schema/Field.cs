@@ -23,16 +23,16 @@ namespace Generator.Schema
 		public string ClrType { get; set; }
 
 		/// <summary>
-		///  Ordering of this field
-		/// </summary>
-		[JsonProperty("order")]
-		public int? Order { get; set; }
-
-		/// <summary>
 		///  Name of the field.
 		/// </summary>
 		[JsonProperty("name", Required = Required.Always)]
 		public string Name { get; set; }
+
+		/// <summary>
+		///  indicates the beta header appropriate for this field
+		/// </summary>
+		[JsonProperty("beta")]
+		public string Beta { get; set; }
 
 		/// <summary>
 		///  The name of this field, separated by hyphens.
@@ -162,5 +162,11 @@ namespace Generator.Schema
 		/// </summary>
 		[JsonProperty("norms")]
 		public bool? Norms { get; set; }
+
+		/// <summary>
+		///  If <see cref="Type"/> is set to <see cref="FieldType.ScaledFloat"/> this configures the scaling factor
+		/// </summary>
+		[JsonProperty("scaling_factor")]
+		public int? ScalingFactor { get; set; }
 	}
 }

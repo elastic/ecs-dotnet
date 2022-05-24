@@ -21,7 +21,7 @@ using System.Runtime.Serialization;
 namespace Elastic.CommonSchema
 {
 	/// <summary>
-	/// Elastic Common Schema version 1.6.0
+	/// Elastic Common Schema version v8.2.0.0
 	/// <para/>
 	/// The Elastic Common Schema (ECS) defines a common set of fields for ingesting data into Elasticsearch.
 	/// A common schema helps you correlate data from sources like logs and metrics or IT operations analytics
@@ -29,14 +29,14 @@ namespace Elastic.CommonSchema
 	/// <para/>
 	/// ECS Repostory: https://github.com/elastic/ecs
 	/// <para/>
-	/// ECS field reference: https://www.elastic.co/guide/en/ecs/1.6/ecs-base.html
+	/// ECS field reference: https://www.elastic.co/guide/en/ecs/v8.2.0/ecs-base.html
 	/// </summary>
 	public partial class Base
 	{
 		/// <summary>
-		/// Elastic Common Schema version 1.6.0
+		/// Elastic Common Schema version v8.2.0.0
 		/// </summary>
-		public static string Version => "1.6.0";
+		public static string Version => "v8.2.0.0";
 
 		/// <summary>
 		/// Container for additional metadata against this event.
@@ -69,7 +69,13 @@ namespace Elastic.CommonSchema
 		public Container Container { get; set; }
 
 		/// <summary>
-		/// Destination fields describe details about the destination of a packet/event.<para/><para/>Destination fields are usually populated in conjunction with source fields.
+		/// The data_stream fields take part in defining the new data stream naming scheme.<para/><para/>In the new data stream naming scheme the value of the data stream fields combine to the name of the actual data stream in the following manner: `{data_stream.type}-{data_stream.dataset}-{data_stream.namespace}`. This means the fields can only contain characters that are valid as part of names of data streams. More details about this can be found in this https://www.elastic.co/blog/an-introduction-to-the-elastic-data-stream-naming-scheme[blog post].<para/><para/>An Elasticsearch data stream consists of one or more backing indices, and a data stream name forms part of the backing indices names. Due to this convention, data streams must also follow index naming restrictions. For example, data stream names cannot include `\`, `/`, `*`, `?`, `"`, `<`, `>`, `|`, ` ` (space character), `,`, or `#`. Please see the Elasticsearch reference for additional https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-create-index.html#indices-create-api-path-params[restrictions].
+		/// </summary>
+		[DataMember(Name = "data_stream")]
+		public DataStream DataStream { get; set; }
+
+		/// <summary>
+		/// Destination fields capture details about the receiver of a network exchange/packet. These fields are populated from a network event, packet, or other event containing details of a network transaction.<para/><para/>Destination fields are usually populated in conjunction with source fields. The source and destination fields are considered the baseline and should always be filled if an event contains source and destination details from a network transaction. If the event also contains identification of the client and server roles, then the client and server fields should also be populated.
 		/// </summary>
 		[DataMember(Name = "destination")]
 		public Destination Destination { get; set; }
@@ -93,6 +99,12 @@ namespace Elastic.CommonSchema
 		public Ecs Ecs { get; set; }
 
 		/// <summary>
+		/// Event details relating to an email transaction.<para/><para/>This field set focuses on the email message header, body, and attachments. Network protocols that send and receive email messages such as SMTP are outside the scope of the `email.*` fields.
+		/// </summary>
+		[DataMember(Name = "email")]
+		public Email Email { get; set; }
+
+		/// <summary>
 		/// These fields can represent errors of any kind.<para/><para/>Use them for errors that happen while fetching events or in cases where the event itself contains an error.
 		/// </summary>
 		[DataMember(Name = "error")]
@@ -103,6 +115,12 @@ namespace Elastic.CommonSchema
 		/// </summary>
 		[DataMember(Name = "event")]
 		public Event Event { get; set; }
+
+		/// <summary>
+		/// The user fields describe information about the function as a service (FaaS) that is relevant to the event.
+		/// </summary>
+		[DataMember(Name = "faas")]
+		public Faas Faas { get; set; }
 
 		/// <summary>
 		/// A file is defined as a set of information that has been created on, or has existed on a filesystem.<para/><para/>File objects can be associated with host events, network events, and/or file events (e.g., those produced by File Integrity Monitoring [FIM] products or services). File fields provide details about the affected file associated with the event or metric.
@@ -145,6 +163,12 @@ namespace Elastic.CommonSchema
 		/// </summary>
 		[DataMember(Name = "observer")]
 		public Observer Observer { get; set; }
+
+		/// <summary>
+		/// Fields that describe the resources which container orchestrators manage or act upon.
+		/// </summary>
+		[DataMember(Name = "orchestrator")]
+		public Orchestrator Orchestrator { get; set; }
 
 		/// <summary>
 		/// The organization fields enrich data with information about the company or entity the data is associated with.<para/><para/>These fields help you arrange or filter data stored in an index by one or multiple organizations.
@@ -195,13 +219,13 @@ namespace Elastic.CommonSchema
 		public Service Service { get; set; }
 
 		/// <summary>
-		/// Source fields describe details about the source of a packet/event.<para/><para/>Source fields are usually populated in conjunction with destination fields.
+		/// Source fields capture details about the sender of a network exchange/packet. These fields are populated from a network event, packet, or other event containing details of a network transaction.<para/><para/>Source fields are usually populated in conjunction with destination fields. The source and destination fields are considered the baseline and should always be filled if an event contains source and destination details from a network transaction. If the event also contains identification of the client and server roles, then the client and server fields should also be populated.
 		/// </summary>
 		[DataMember(Name = "source")]
 		public Source Source { get; set; }
 
 		/// <summary>
-		/// Fields to classify events and alerts according to a threat taxonomy such as the MITRE ATT&CK® framework.<para/><para/>These fields are for users to classify alerts from all of their sources (e.g. IDS, NGFW, etc.) within a common taxonomy. The threat.tactic.* are meant to capture the high level category of the threat (e.g. "impact"). The threat.technique.* fields are meant to capture which kind of approach is used by this detected threat, to accomplish the goal (e.g. "endpoint denial of service").
+		/// Fields to classify events and alerts according to a threat taxonomy such as the MITRE ATT&CK® framework.<para/><para/>These fields are for users to classify alerts from all of their sources (e.g. IDS, NGFW, etc.) within a common taxonomy. The threat.tactic.* fields are meant to capture the high level category of the threat (e.g. "impact"). The threat.technique.* fields are meant to capture which kind of approach is used by this detected threat, to accomplish the goal (e.g. "endpoint denial of service").
 		/// </summary>
 		[DataMember(Name = "threat")]
 		public Threat Threat { get; set; }
@@ -275,13 +299,13 @@ namespace Elastic.CommonSchema
 		public Span Span { get; set; }
 
 		/// <summary>
-		/// Distributed tracing makes it possible to analyze performance throughout a microservice architecture all in one view. This is accomplished by tracing all of the requests - from the initial web request in the front-end service - to queries made through multiple back-end services.<para/>Trace property.
+		/// Distributed tracing makes it possible to analyze performance throughout a microservice architecture all in one view. This is accomplished by tracing all of the requests - from the initial web request in the front-end service - to queries made through multiple back-end services.<para/><para/>Unlike most field sets in ECS, the tracing fields are *not* nested under the field set name. In other words, the correct field name is `trace.id`, not `tracing.trace.id`, and so on.<para/>Trace property.
 		/// </summary>
 		[DataMember(Name = "trace")]
 		public Trace Trace { get; set; }
 
 		/// <summary>
-		/// Distributed tracing makes it possible to analyze performance throughout a microservice architecture all in one view. This is accomplished by tracing all of the requests - from the initial web request in the front-end service - to queries made through multiple back-end services.<para/>Transaction property.
+		/// Distributed tracing makes it possible to analyze performance throughout a microservice architecture all in one view. This is accomplished by tracing all of the requests - from the initial web request in the front-end service - to queries made through multiple back-end services.<para/><para/>Unlike most field sets in ECS, the tracing fields are *not* nested under the field set name. In other words, the correct field name is `trace.id`, not `tracing.trace.id`, and so on.<para/>Transaction property.
 		/// </summary>
 		[DataMember(Name = "transaction")]
 		public Transaction Transaction { get; set; }
@@ -351,7 +375,7 @@ namespace Elastic.CommonSchema
 	/// <summary>
 	/// The agent fields contain the data about the software entity, if any, that collects, detects, or observes events on a host, or takes measurements on a host.<para/><para/>Examples include Beats. Agents may also run on observers. ECS agent.* fields shall be populated with details of the agent running on the host or observer where the event happened or the measurement was taken.
 	/// <para/>
-	/// ECS field reference: https://www.elastic.co/guide/en/ecs/1.6/ecs-agent.html
+	/// ECS field reference: https://www.elastic.co/guide/en/ecs/v8.2.0/ecs-agent.html
 	/// </summary>
 	/// <remarks>
 	/// Examples: In the case of Beats for logs, the agent.name is filebeat. For APM, it is the agent running in the app/service. The agent information does not change if data is sent through queuing systems like Kafka, Redis, or processing systems such as Logstash or APM Server.
@@ -423,7 +447,7 @@ namespace Elastic.CommonSchema
 	/// <summary>
 	/// An autonomous system (AS) is a collection of connected Internet Protocol (IP) routing prefixes under the control of one or more network operators on behalf of a single administrative entity or domain that presents a common, clearly defined routing policy to the internet.
 	/// <para/>
-	/// ECS field reference: https://www.elastic.co/guide/en/ecs/1.6/ecs-as.html
+	/// ECS field reference: https://www.elastic.co/guide/en/ecs/v8.2.0/ecs-as.html
 	/// </summary>
 	public class As 
 	{
@@ -466,21 +490,21 @@ namespace Elastic.CommonSchema
 	/// <summary>
 	/// A client is defined as the initiator of a network connection for events regarding sessions, connections, or bidirectional flow records.<para/><para/>For TCP events, the client is the initiator of the TCP connection that sends the SYN packet(s). For other protocols, the client is generally the initiator or requestor in the network transaction. Some systems use the term "originator" to refer the client in TCP connections. The client fields describe details about the system acting as the client in the network event. Client fields are usually populated in conjunction with server fields. Client fields are generally not populated for packet-level events.<para/><para/>Client / server representations can add semantic context to an exchange, which is helpful to visualize the data in certain situations. If your context falls in that category, you should still ensure that source and destination are filled appropriately.
 	/// <para/>
-	/// ECS field reference: https://www.elastic.co/guide/en/ecs/1.6/ecs-client.html
+	/// ECS field reference: https://www.elastic.co/guide/en/ecs/v8.2.0/ecs-client.html
 	/// </summary>
 	public class Client 
 	{
-		/// <summary>
-		/// Fields describing an Autonomous System (Internet routing prefix).
-		/// </summary>
-		[DataMember(Name = "as")]
-		public As As { get; set; }
-
 		/// <summary>
 		/// Fields describing a location.
 		/// </summary>
 		[DataMember(Name = "geo")]
 		public Geo Geo { get; set; }
+
+		/// <summary>
+		/// Fields to describe the user relevant to the event.
+		/// </summary>
+		[DataMember(Name = "user")]
+		public User User { get; set; }
 
 		/// <summary>
 		/// Nat property.
@@ -489,10 +513,10 @@ namespace Elastic.CommonSchema
 		public ClientNat Nat { get; set; }
 
 		/// <summary>
-		/// Fields to describe the user relevant to the event.
+		/// Fields describing an Autonomous System (Internet routing prefix).
 		/// </summary>
-		[DataMember(Name = "user")]
-		public User User { get; set; }
+		[DataMember(Name = "as")]
+		public As As { get; set; }
 
 		/// <summary>
 		/// Some event client addresses are defined ambiguously. The event will sometimes list an IP, a domain or a unix socket.  You should always store the raw address in the `.address` field.<para/><para/>Then it should be duplicated to `.ip` or `.domain`, depending on which one it is.
@@ -510,9 +534,10 @@ namespace Elastic.CommonSchema
 		public long? Bytes { get; set; }
 
 		/// <summary>
-		/// Client domain.
+		/// The domain name of the client system.<para/><para/>This value may be a host name, a fully qualified domain name, or another host naming format. The value may derive from the original event or be added from enrichment.
 		/// </summary>
 		/// <remarks>(ECS Core)</remarks>
+		/// <example>foo.example.com</example>
 		[DataMember(Name = "domain")]
 		public string Domain { get; set; }
 
@@ -524,9 +549,10 @@ namespace Elastic.CommonSchema
 		public string Ip { get; set; }
 
 		/// <summary>
-		/// MAC address of the client.
+		/// MAC address of the client.<para/><para/>The notation format from RFC 7042 is suggested: Each octet (that is, 8-bit byte) is represented by two [uppercase] hexadecimal digits giving the value of the octet as an unsigned integer. Successive octets are separated by a hyphen.
 		/// </summary>
 		/// <remarks>(ECS Core)</remarks>
+		/// <example>00-00-5E-00-53-23</example>
 		[DataMember(Name = "mac")]
 		public string Mac { get; set; }
 
@@ -552,6 +578,14 @@ namespace Elastic.CommonSchema
 		/// <example>example.com</example>
 		[DataMember(Name = "registered_domain")]
 		public string RegisteredDomain { get; set; }
+
+		/// <summary>
+		/// The subdomain portion of a fully qualified domain name includes all of the names except the host name under the registered_domain.  In a partially qualified domain, or if the the qualification level of the full name cannot be determined, subdomain contains all of the names below the registered domain.<para/><para/>For example the subdomain portion of "www.east.mydomain.co.uk" is "east". If the domain has multiple levels of subdomain, such as "sub2.sub1.example.com", the subdomain field should contain "sub2.sub1", with no trailing period.
+		/// </summary>
+		/// <remarks>(ECS Extended)</remarks>
+		/// <example>east</example>
+		[DataMember(Name = "subdomain")]
+		public string Subdomain { get; set; }
 
 		/// <summary>
 		/// The effective top level domain (eTLD), also known as the domain suffix, is the last part of the domain name. For example, the top level domain for example.com is "com".<para/><para/>This value can be determined precisely with a list like the public suffix list (http://publicsuffix.org). Trying to approximate this by simply taking the last label will not work well for effective TLDs such as "co.uk".
@@ -643,12 +677,27 @@ namespace Elastic.CommonSchema
 
 	}
 	/// <summary>
+	/// Service, property of <see cref="Cloud" />
+	/// </summary>
+	public class CloudService
+	{
+		/// <summary>
+		/// The cloud service name is intended to distinguish services running on different platforms within a provider, eg AWS EC2 vs Lambda, GCP GCE vs App Engine, Azure VM vs App Server.<para/><para/>Examples: app engine, app service, cloud run, fargate, lambda.
+		/// </summary>
+		/// <remarks>(ECS Extended)</remarks>
+		/// <example>lambda</example>
+		[DataMember(Name = "name")]
+		public string Name { get; set; }
+
+	}
+	/// <summary>
 	/// Fields related to the cloud or infrastructure the events are coming from.
 	/// <para/>
-	/// ECS field reference: https://www.elastic.co/guide/en/ecs/1.6/ecs-cloud.html
+	/// ECS field reference: https://www.elastic.co/guide/en/ecs/v8.2.0/ecs-cloud.html
 	/// </summary>
 	/// <remarks>
 	/// Examples: If Metricbeat is running on an EC2 host and fetches data from its host, the cloud info contains the data about this machine. If Metricbeat runs on a remote machine outside the cloud and fetches data from a service running in the cloud, the field contains cloud data from the machine the service is running on.
+The cloud fields may be self-nested under cloud.origin.* and cloud.target.* to describe origin or target service's cloud information in the context of incoming or outgoing requests, respectively. However, the fieldsets cloud.origin.* and cloud.target.* must not be confused with the root cloud fieldset that is used to describe the cloud context of the actual service under observation. The fieldset cloud.origin.* may only be used in the context of incoming requests or events to provide the originating service's cloud information. The fieldset cloud.target.* may only be used in the context of outgoing requests or events to describe the target service's cloud information.
 	/// </remarks>
 	public class Cloud 
 	{
@@ -657,6 +706,18 @@ namespace Elastic.CommonSchema
 		/// </summary>
 		[DataMember(Name = "account")]
 		public CloudAccount Account { get; set; }
+
+		/// <summary>
+		/// Origin property.
+		/// </summary>
+		[DataMember(Name = "origin")]
+		public Origin Origin { get; set; }
+
+		/// <summary>
+		/// Target property.
+		/// </summary>
+		[DataMember(Name = "target")]
+		public Target Target { get; set; }
 
 		/// <summary>
 		/// Instance property.
@@ -677,7 +738,13 @@ namespace Elastic.CommonSchema
 		public CloudProject Project { get; set; }
 
 		/// <summary>
-		/// Availability zone in which this host is running.
+		/// Service property.
+		/// </summary>
+		[DataMember(Name = "service")]
+		public CloudService Service { get; set; }
+
+		/// <summary>
+		/// Availability zone in which this host, resource, or service is located.
 		/// </summary>
 		/// <remarks>(ECS Extended)</remarks>
 		/// <example>us-east-1c</example>
@@ -693,7 +760,7 @@ namespace Elastic.CommonSchema
 		public string Provider { get; set; }
 
 		/// <summary>
-		/// Region in which this host is running.
+		/// Region in which this host, resource, or service is located.
 		/// </summary>
 		/// <remarks>(ECS Extended)</remarks>
 		/// <example>us-east-1</example>
@@ -705,10 +772,18 @@ namespace Elastic.CommonSchema
 	/// <summary>
 	/// These fields contain information about binary code signatures.
 	/// <para/>
-	/// ECS field reference: https://www.elastic.co/guide/en/ecs/1.6/ecs-code_signature.html
+	/// ECS field reference: https://www.elastic.co/guide/en/ecs/v8.2.0/ecs-code_signature.html
 	/// </summary>
 	public class CodeSignature 
 	{
+		/// <summary>
+		/// The hashing algorithm used to sign the process.<para/><para/>This value can distinguish signatures when a file is signed multiple times by the same signer but with a different digest algorithm.
+		/// </summary>
+		/// <remarks>(ECS Extended)</remarks>
+		/// <example>sha256</example>
+		[DataMember(Name = "digest_algorithm")]
+		public string DigestAlgorithm { get; set; }
+
 		/// <summary>
 		/// Boolean to capture if a signature is present.
 		/// </summary>
@@ -716,6 +791,14 @@ namespace Elastic.CommonSchema
 		/// <example>true</example>
 		[DataMember(Name = "exists")]
 		public bool? Exists { get; set; }
+
+		/// <summary>
+		/// The identifier used to sign the process.<para/><para/>This is used to identify the application manufactured by a software vendor. The field is relevant to Apple *OS only.
+		/// </summary>
+		/// <remarks>(ECS Extended)</remarks>
+		/// <example>com.apple.xpc.proxy</example>
+		[DataMember(Name = "signing_id")]
+		public string SigningId { get; set; }
 
 		/// <summary>
 		/// Additional information about the certificate status.<para/><para/>This is useful for logging cryptographic errors with the certificate validity or trust status. Leave unpopulated if the validity or trust of the certificate was unchecked.
@@ -734,6 +817,22 @@ namespace Elastic.CommonSchema
 		public string SubjectName { get; set; }
 
 		/// <summary>
+		/// The team identifier used to sign the process.<para/><para/>This is used to identify the team or vendor of a software product. The field is relevant to Apple *OS only.
+		/// </summary>
+		/// <remarks>(ECS Extended)</remarks>
+		/// <example>EQHXZ8M8AV</example>
+		[DataMember(Name = "team_id")]
+		public string TeamId { get; set; }
+
+		/// <summary>
+		/// Date and time when the code signature was generated and signed.
+		/// </summary>
+		/// <remarks>(ECS Extended)</remarks>
+		/// <example>2021-01-01T12:10:30Z</example>
+		[DataMember(Name = "timestamp")]
+		public DateTimeOffset? Timestamp { get; set; }
+
+		/// <summary>
 		/// Stores the trust status of the certificate chain.<para/><para/>Validating the trust of the certificate chain may be complicated, and this field should only be populated by tools that actively check the status.
 		/// </summary>
 		/// <remarks>(ECS Extended)</remarks>
@@ -748,6 +847,47 @@ namespace Elastic.CommonSchema
 		/// <example>true</example>
 		[DataMember(Name = "valid")]
 		public bool? Valid { get; set; }
+
+	}
+
+	/// <summary>
+	/// Cpu, property of <see cref="Container" />
+	/// </summary>
+	public class ContainerCpu
+	{
+		/// <summary>
+		/// Percent CPU used which is normalized by the number of CPU cores and it ranges from 0 to 1. Scaling factor: 1000.
+		/// </summary>
+		/// <remarks>(ECS Extended)</remarks>
+		[DataMember(Name = "usage")]
+		public float? Usage { get; set; }
+
+	}
+	/// <summary>
+	/// DiskRead, property of <see cref="ContainerDisk" />
+	/// </summary>
+	public class DiskRead
+	{
+		/// <summary>
+		/// Disk The total number of bytes (gauge) read successfully (aggregated from all disks) since the last metric collection.
+		/// </summary>
+		/// <remarks>(ECS Extended)</remarks>
+		[DataMember(Name = "bytes")]
+		public long? Bytes { get; set; }
+
+	}
+
+	/// <summary>
+	/// DiskWrite, property of <see cref="ContainerDisk" />
+	/// </summary>
+	public class DiskWrite
+	{
+		/// <summary>
+		/// Disk The total number of bytes (gauge) written successfully (aggregated from all disks) since the last metric collection.
+		/// </summary>
+		/// <remarks>(ECS Extended)</remarks>
+		[DataMember(Name = "bytes")]
+		public long? Bytes { get; set; }
 
 	}
 
@@ -772,17 +912,82 @@ namespace Elastic.CommonSchema
 
 	}
 	/// <summary>
+	/// Memory, property of <see cref="Container" />
+	/// </summary>
+	public class ContainerMemory
+	{
+		/// <summary>
+		/// Memory usage percentage and it ranges from 0 to 1. Scaling factor: 1000.
+		/// </summary>
+		/// <remarks>(ECS Extended)</remarks>
+		[DataMember(Name = "usage")]
+		public float? Usage { get; set; }
+
+	}
+	/// <summary>
+	/// NetworkEgress, property of <see cref="ContainerNetwork" />
+	/// </summary>
+	public class NetworkEgress
+	{
+		/// <summary>
+		/// Network The number of bytes (gauge) sent out on all network interfaces by the container since the last metric collection.
+		/// </summary>
+		/// <remarks>(ECS Extended)</remarks>
+		[DataMember(Name = "bytes")]
+		public long? Bytes { get; set; }
+
+	}
+
+	/// <summary>
+	/// NetworkIngress, property of <see cref="ContainerNetwork" />
+	/// </summary>
+	public class NetworkIngress
+	{
+		/// <summary>
+		/// Network The number of bytes received (gauge) on all network interfaces by the container since the last metric collection.
+		/// </summary>
+		/// <remarks>(ECS Extended)</remarks>
+		[DataMember(Name = "bytes")]
+		public long? Bytes { get; set; }
+
+	}
+
+	/// <summary>
 	/// Container fields are used for meta information about the specific container that is the source of information.<para/><para/>These fields help correlate data based containers from any runtime.
 	/// <para/>
-	/// ECS field reference: https://www.elastic.co/guide/en/ecs/1.6/ecs-container.html
+	/// ECS field reference: https://www.elastic.co/guide/en/ecs/v8.2.0/ecs-container.html
 	/// </summary>
 	public class Container 
 	{
+		/// <summary>
+		/// Cpu property.
+		/// </summary>
+		[DataMember(Name = "cpu")]
+		public ContainerCpu Cpu { get; set; }
+
+		/// <summary>
+		/// Disk property.
+		/// </summary>
+		[DataMember(Name = "disk")]
+		public Disk Disk { get; set; }
+
 		/// <summary>
 		/// Image property.
 		/// </summary>
 		[DataMember(Name = "image")]
 		public ContainerImage Image { get; set; }
+
+		/// <summary>
+		/// Memory property.
+		/// </summary>
+		[DataMember(Name = "memory")]
+		public ContainerMemory Memory { get; set; }
+
+		/// <summary>
+		/// Network property.
+		/// </summary>
+		[DataMember(Name = "network")]
+		public Network Network { get; set; }
 
 		/// <summary>
 		/// Unique container id.
@@ -816,6 +1021,39 @@ namespace Elastic.CommonSchema
 	}
 
 	/// <summary>
+	/// The data_stream fields take part in defining the new data stream naming scheme.<para/><para/>In the new data stream naming scheme the value of the data stream fields combine to the name of the actual data stream in the following manner: `{data_stream.type}-{data_stream.dataset}-{data_stream.namespace}`. This means the fields can only contain characters that are valid as part of names of data streams. More details about this can be found in this https://www.elastic.co/blog/an-introduction-to-the-elastic-data-stream-naming-scheme[blog post].<para/><para/>An Elasticsearch data stream consists of one or more backing indices, and a data stream name forms part of the backing indices names. Due to this convention, data streams must also follow index naming restrictions. For example, data stream names cannot include `\`, `/`, `*`, `?`, `"`, `<`, `>`, `|`, ` ` (space character), `,`, or `#`. Please see the Elasticsearch reference for additional https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-create-index.html#indices-create-api-path-params[restrictions].
+	/// <para/>
+	/// ECS field reference: https://www.elastic.co/guide/en/ecs/v8.2.0/ecs-data_stream.html
+	/// </summary>
+	public class DataStream 
+	{
+		/// <summary>
+		/// The field can contain anything that makes sense to signify the source of the data.<para/><para/>Examples include `nginx.access`, `prometheus`, `endpoint` etc. For data streams that otherwise fit, but that do not have dataset set we use the value "generic" for the dataset value. `event.dataset` should have the same value as `data_stream.dataset`.<para/><para/>Beyond the Elasticsearch data stream naming criteria noted above, the `dataset` value has additional restrictions:<para/><para/>  * Must not contain `-`<para/><para/>  * No longer than 100 characters
+		/// </summary>
+		/// <remarks>(ECS Extended)</remarks>
+		/// <example>nginx.access</example>
+		[DataMember(Name = "dataset")]
+		public string Dataset { get; set; }
+
+		/// <summary>
+		/// A user defined namespace. Namespaces are useful to allow grouping of data.<para/><para/>Many users already organize their indices this way, and the data stream naming scheme now provides this best practice as a default. Many users will populate this field with `default`. If no value is used, it falls back to `default`.<para/><para/>Beyond the Elasticsearch index naming criteria noted above, `namespace` value has the additional restrictions:<para/><para/>  * Must not contain `-`<para/><para/>  * No longer than 100 characters
+		/// </summary>
+		/// <remarks>(ECS Extended)</remarks>
+		/// <example>production</example>
+		[DataMember(Name = "namespace")]
+		public string Namespace { get; set; }
+
+		/// <summary>
+		/// An overarching type for the data stream.<para/><para/>Currently allowed values are "logs" and "metrics". We expect to also add "traces" and "synthetics" in the near future.
+		/// </summary>
+		/// <remarks>(ECS Extended)</remarks>
+		/// <example>logs</example>
+		[DataMember(Name = "type")]
+		public string Type { get; set; }
+
+	}
+
+	/// <summary>
 	/// Nat, property of <see cref="Destination" />
 	/// </summary>
 	public class DestinationNat
@@ -836,23 +1074,23 @@ namespace Elastic.CommonSchema
 
 	}
 	/// <summary>
-	/// Destination fields describe details about the destination of a packet/event.<para/><para/>Destination fields are usually populated in conjunction with source fields.
+	/// Destination fields capture details about the receiver of a network exchange/packet. These fields are populated from a network event, packet, or other event containing details of a network transaction.<para/><para/>Destination fields are usually populated in conjunction with source fields. The source and destination fields are considered the baseline and should always be filled if an event contains source and destination details from a network transaction. If the event also contains identification of the client and server roles, then the client and server fields should also be populated.
 	/// <para/>
-	/// ECS field reference: https://www.elastic.co/guide/en/ecs/1.6/ecs-destination.html
+	/// ECS field reference: https://www.elastic.co/guide/en/ecs/v8.2.0/ecs-destination.html
 	/// </summary>
 	public class Destination 
 	{
-		/// <summary>
-		/// Fields describing an Autonomous System (Internet routing prefix).
-		/// </summary>
-		[DataMember(Name = "as")]
-		public As As { get; set; }
-
 		/// <summary>
 		/// Fields describing a location.
 		/// </summary>
 		[DataMember(Name = "geo")]
 		public Geo Geo { get; set; }
+
+		/// <summary>
+		/// Fields to describe the user relevant to the event.
+		/// </summary>
+		[DataMember(Name = "user")]
+		public User User { get; set; }
 
 		/// <summary>
 		/// Nat property.
@@ -861,10 +1099,10 @@ namespace Elastic.CommonSchema
 		public DestinationNat Nat { get; set; }
 
 		/// <summary>
-		/// Fields to describe the user relevant to the event.
+		/// Fields describing an Autonomous System (Internet routing prefix).
 		/// </summary>
-		[DataMember(Name = "user")]
-		public User User { get; set; }
+		[DataMember(Name = "as")]
+		public As As { get; set; }
 
 		/// <summary>
 		/// Some event destination addresses are defined ambiguously. The event will sometimes list an IP, a domain or a unix socket.  You should always store the raw address in the `.address` field.<para/><para/>Then it should be duplicated to `.ip` or `.domain`, depending on which one it is.
@@ -882,9 +1120,10 @@ namespace Elastic.CommonSchema
 		public long? Bytes { get; set; }
 
 		/// <summary>
-		/// Destination domain.
+		/// The domain name of the destination system.<para/><para/>This value may be a host name, a fully qualified domain name, or another host naming format. The value may derive from the original event or be added from enrichment.
 		/// </summary>
 		/// <remarks>(ECS Core)</remarks>
+		/// <example>foo.example.com</example>
 		[DataMember(Name = "domain")]
 		public string Domain { get; set; }
 
@@ -896,9 +1135,10 @@ namespace Elastic.CommonSchema
 		public string Ip { get; set; }
 
 		/// <summary>
-		/// MAC address of the destination.
+		/// MAC address of the destination.<para/><para/>The notation format from RFC 7042 is suggested: Each octet (that is, 8-bit byte) is represented by two [uppercase] hexadecimal digits giving the value of the octet as an unsigned integer. Successive octets are separated by a hyphen.
 		/// </summary>
 		/// <remarks>(ECS Core)</remarks>
+		/// <example>00-00-5E-00-53-23</example>
 		[DataMember(Name = "mac")]
 		public string Mac { get; set; }
 
@@ -926,6 +1166,14 @@ namespace Elastic.CommonSchema
 		public string RegisteredDomain { get; set; }
 
 		/// <summary>
+		/// The subdomain portion of a fully qualified domain name includes all of the names except the host name under the registered_domain.  In a partially qualified domain, or if the the qualification level of the full name cannot be determined, subdomain contains all of the names below the registered domain.<para/><para/>For example the subdomain portion of "www.east.mydomain.co.uk" is "east". If the domain has multiple levels of subdomain, such as "sub2.sub1.example.com", the subdomain field should contain "sub2.sub1", with no trailing period.
+		/// </summary>
+		/// <remarks>(ECS Extended)</remarks>
+		/// <example>east</example>
+		[DataMember(Name = "subdomain")]
+		public string Subdomain { get; set; }
+
+		/// <summary>
 		/// The effective top level domain (eTLD), also known as the domain suffix, is the last part of the domain name. For example, the top level domain for example.com is "com".<para/><para/>This value can be determined precisely with a list like the public suffix list (http://publicsuffix.org). Trying to approximate this by simply taking the last label will not work well for effective TLDs such as "co.uk".
 		/// </summary>
 		/// <remarks>(ECS Extended)</remarks>
@@ -938,10 +1186,16 @@ namespace Elastic.CommonSchema
 	/// <summary>
 	/// These fields contain information about code libraries dynamically loaded into processes.<para/><para/>Many operating systems refer to "shared code libraries" with different names, but this field set refers to all of the following:<para/><para/>* Dynamic-link library (`.dll`) commonly used on Windows<para/><para/>* Shared Object (`.so`) commonly used on Unix-like operating systems<para/><para/>* Dynamic library (`.dylib`) commonly used on macOS
 	/// <para/>
-	/// ECS field reference: https://www.elastic.co/guide/en/ecs/1.6/ecs-dll.html
+	/// ECS field reference: https://www.elastic.co/guide/en/ecs/v8.2.0/ecs-dll.html
 	/// </summary>
 	public class Dll 
 	{
+		/// <summary>
+		/// These fields contain Windows Portable Executable (PE) metadata.
+		/// </summary>
+		[DataMember(Name = "pe")]
+		public Pe Pe { get; set; }
+
 		/// <summary>
 		/// These fields contain information about binary code signatures.
 		/// </summary>
@@ -953,12 +1207,6 @@ namespace Elastic.CommonSchema
 		/// </summary>
 		[DataMember(Name = "hash")]
 		public Hash Hash { get; set; }
-
-		/// <summary>
-		/// These fields contain Windows Portable Executable (PE) metadata.
-		/// </summary>
-		[DataMember(Name = "pe")]
-		public Pe Pe { get; set; }
 
 		/// <summary>
 		/// Name of the library.<para/><para/>This generally maps to the name of the file on disk.
@@ -1081,7 +1329,7 @@ namespace Elastic.CommonSchema
 	/// <summary>
 	/// Fields describing DNS queries and answers.<para/><para/>DNS events should either represent a single DNS query prior to getting answers (`dns.type:query`) or they should represent a full exchange and contain the query details as well as all of the answers that were provided for this query (`dns.type:answer`).
 	/// <para/>
-	/// ECS field reference: https://www.elastic.co/guide/en/ecs/1.6/ecs-dns.html
+	/// ECS field reference: https://www.elastic.co/guide/en/ecs/v8.2.0/ecs-dns.html
 	/// </summary>
 	public class Dns 
 	{
@@ -1150,7 +1398,7 @@ namespace Elastic.CommonSchema
 	/// <summary>
 	/// Meta-information specific to ECS.
 	/// <para/>
-	/// ECS field reference: https://www.elastic.co/guide/en/ecs/1.6/ecs-ecs.html
+	/// ECS field reference: https://www.elastic.co/guide/en/ecs/v8.2.0/ecs-ecs.html
 	/// </summary>
 	public class Ecs 
 	{
@@ -1165,9 +1413,478 @@ namespace Elastic.CommonSchema
 	}
 
 	/// <summary>
+	/// Header, property of <see cref="Elf" />
+	/// </summary>
+	public class ElfHeader
+	{
+		/// <summary>
+		/// Version of the ELF Application Binary Interface (ABI).
+		/// </summary>
+		/// <remarks>(ECS Extended)</remarks>
+		[DataMember(Name = "abi_version")]
+		public string AbiVersion { get; set; }
+
+		/// <summary>
+		/// Header class of the ELF file.
+		/// </summary>
+		/// <remarks>(ECS Extended)</remarks>
+		[DataMember(Name = "class")]
+		public string Class { get; set; }
+
+		/// <summary>
+		/// Data table of the ELF header.
+		/// </summary>
+		/// <remarks>(ECS Extended)</remarks>
+		[DataMember(Name = "data")]
+		public string Data { get; set; }
+
+		/// <summary>
+		/// Header entrypoint of the ELF file.
+		/// </summary>
+		/// <remarks>(ECS Extended)</remarks>
+		[DataMember(Name = "entrypoint")]
+		public long? Entrypoint { get; set; }
+
+		/// <summary>
+		/// "0x1" for original ELF files.
+		/// </summary>
+		/// <remarks>(ECS Extended)</remarks>
+		[DataMember(Name = "object_version")]
+		public string ObjectVersion { get; set; }
+
+		/// <summary>
+		/// Application Binary Interface (ABI) of the Linux OS.
+		/// </summary>
+		/// <remarks>(ECS Extended)</remarks>
+		[DataMember(Name = "os_abi")]
+		public string OsAbi { get; set; }
+
+		/// <summary>
+		/// Header type of the ELF file.
+		/// </summary>
+		/// <remarks>(ECS Extended)</remarks>
+		[DataMember(Name = "type")]
+		public string Type { get; set; }
+
+		/// <summary>
+		/// Version of the ELF header.
+		/// </summary>
+		/// <remarks>(ECS Extended)</remarks>
+		[DataMember(Name = "version")]
+		public string Version { get; set; }
+
+	}
+	/// <summary>
+	/// Sections, property of <see cref="Elf" />
+	/// </summary>
+	public class ElfSections
+	{
+		/// <summary>
+		/// Chi-square probability distribution of the section.
+		/// </summary>
+		/// <remarks>(ECS Extended)</remarks>
+		[DataMember(Name = "chi2")]
+		public long? Chi2 { get; set; }
+
+		/// <summary>
+		/// Shannon entropy calculation from the section.
+		/// </summary>
+		/// <remarks>(ECS Extended)</remarks>
+		[DataMember(Name = "entropy")]
+		public long? Entropy { get; set; }
+
+		/// <summary>
+		/// ELF Section List flags.
+		/// </summary>
+		/// <remarks>(ECS Extended)</remarks>
+		[DataMember(Name = "flags")]
+		public string Flags { get; set; }
+
+		/// <summary>
+		/// ELF Section List name.
+		/// </summary>
+		/// <remarks>(ECS Extended)</remarks>
+		[DataMember(Name = "name")]
+		public string Name { get; set; }
+
+		/// <summary>
+		/// ELF Section List offset.
+		/// </summary>
+		/// <remarks>(ECS Extended)</remarks>
+		[DataMember(Name = "physical_offset")]
+		public string PhysicalOffset { get; set; }
+
+		/// <summary>
+		/// ELF Section List physical size.
+		/// </summary>
+		/// <remarks>(ECS Extended)</remarks>
+		[DataMember(Name = "physical_size")]
+		public long? PhysicalSize { get; set; }
+
+		/// <summary>
+		/// ELF Section List type.
+		/// </summary>
+		/// <remarks>(ECS Extended)</remarks>
+		[DataMember(Name = "type")]
+		public string Type { get; set; }
+
+		/// <summary>
+		/// ELF Section List virtual address.
+		/// </summary>
+		/// <remarks>(ECS Extended)</remarks>
+		[DataMember(Name = "virtual_address")]
+		public long? VirtualAddress { get; set; }
+
+		/// <summary>
+		/// ELF Section List virtual size.
+		/// </summary>
+		/// <remarks>(ECS Extended)</remarks>
+		[DataMember(Name = "virtual_size")]
+		public long? VirtualSize { get; set; }
+
+	}
+	/// <summary>
+	/// Segments, property of <see cref="Elf" />
+	/// </summary>
+	public class ElfSegments
+	{
+		/// <summary>
+		/// ELF object segment sections.
+		/// </summary>
+		/// <remarks>(ECS Extended)</remarks>
+		[DataMember(Name = "sections")]
+		public string Sections { get; set; }
+
+		/// <summary>
+		/// ELF object segment type.
+		/// </summary>
+		/// <remarks>(ECS Extended)</remarks>
+		[DataMember(Name = "type")]
+		public string Type { get; set; }
+
+	}
+	/// <summary>
+	/// These fields contain Linux Executable Linkable Format (ELF) metadata.
+	/// <para/>
+	/// ECS field reference: https://www.elastic.co/guide/en/ecs/v8.2.0/ecs-elf.html
+	/// </summary>
+	public class Elf 
+	{
+		/// <summary>
+		/// Header property.
+		/// </summary>
+		[DataMember(Name = "header")]
+		public ElfHeader Header { get; set; }
+
+		/// <summary>
+		/// Sections property.
+		/// </summary>
+		[DataMember(Name = "sections")]
+		public ElfSections Sections { get; set; }
+
+		/// <summary>
+		/// Segments property.
+		/// </summary>
+		[DataMember(Name = "segments")]
+		public ElfSegments Segments { get; set; }
+
+		/// <summary>
+		/// Machine architecture of the ELF file.
+		/// </summary>
+		/// <remarks>(ECS Extended)</remarks>
+		/// <example>x86-64</example>
+		[DataMember(Name = "architecture")]
+		public string Architecture { get; set; }
+
+		/// <summary>
+		/// Byte sequence of ELF file.
+		/// </summary>
+		/// <remarks>(ECS Extended)</remarks>
+		/// <example>Little Endian</example>
+		[DataMember(Name = "byte_order")]
+		public string ByteOrder { get; set; }
+
+		/// <summary>
+		/// CPU type of the ELF file.
+		/// </summary>
+		/// <remarks>(ECS Extended)</remarks>
+		/// <example>Intel</example>
+		[DataMember(Name = "cpu_type")]
+		public string CpuType { get; set; }
+
+		/// <summary>
+		/// Extracted when possible from the file's metadata. Indicates when it was built or compiled. It can also be faked by malware creators.
+		/// </summary>
+		/// <remarks>(ECS Extended)</remarks>
+		[DataMember(Name = "creation_date")]
+		public DateTimeOffset? CreationDate { get; set; }
+
+		/// <summary>
+		/// List of exported element names and types.
+		/// </summary>
+		/// <remarks>(ECS Extended)</remarks>
+		[DataMember(Name = "exports")]
+		public string[] Exports { get; set; }
+
+		/// <summary>
+		/// List of imported element names and types.
+		/// </summary>
+		/// <remarks>(ECS Extended)</remarks>
+		[DataMember(Name = "imports")]
+		public string[] Imports { get; set; }
+
+		/// <summary>
+		/// An array containing an object for each section of the ELF file.<para/><para/>The keys that should be present in these objects are defined by sub-fields underneath `elf.sections.*`.
+		/// </summary>
+		/// <remarks>(ECS Extended)</remarks>
+		[DataMember(Name = "sections")]
+		public object[] Sections { get; set; }
+
+		/// <summary>
+		/// An array containing an object for each segment of the ELF file.<para/><para/>The keys that should be present in these objects are defined by sub-fields underneath `elf.segments.*`.
+		/// </summary>
+		/// <remarks>(ECS Extended)</remarks>
+		[DataMember(Name = "segments")]
+		public object[] Segments { get; set; }
+
+		/// <summary>
+		/// List of shared libraries used by this ELF object.
+		/// </summary>
+		/// <remarks>(ECS Extended)</remarks>
+		[DataMember(Name = "shared_libraries")]
+		public string[] SharedLibraries { get; set; }
+
+		/// <summary>
+		/// telfhash symbol hash for ELF file.
+		/// </summary>
+		/// <remarks>(ECS Extended)</remarks>
+		[DataMember(Name = "telfhash")]
+		public string Telfhash { get; set; }
+
+	}
+
+	/// <summary>
+	/// Attachments, property of <see cref="Email" />
+	/// </summary>
+	public class EmailAttachments
+	{
+		/// <summary>
+		/// Hashes, usually file hashes.
+		/// </summary>
+		/// <remarks>(ECS Core)</remarks>
+		[DataMember(Name = "hash")]
+		public Hash Hash { get; set; }
+
+	}
+	/// <summary>
+	/// Bcc, property of <see cref="Email" />
+	/// </summary>
+	public class EmailBcc
+	{
+		/// <summary>
+		/// The email address of BCC recipient
+		/// </summary>
+		/// <remarks>(ECS Extended)</remarks>
+		/// <example>bcc.user1@example.com</example>
+		[DataMember(Name = "address")]
+		public string[] Address { get; set; }
+
+	}
+	/// <summary>
+	/// Cc, property of <see cref="Email" />
+	/// </summary>
+	public class EmailCc
+	{
+		/// <summary>
+		/// The email address of CC recipient
+		/// </summary>
+		/// <remarks>(ECS Extended)</remarks>
+		/// <example>cc.user1@example.com</example>
+		[DataMember(Name = "address")]
+		public string[] Address { get; set; }
+
+	}
+	/// <summary>
+	/// From, property of <see cref="Email" />
+	/// </summary>
+	public class EmailFrom
+	{
+		/// <summary>
+		/// The email address of the sender, typically from the RFC 5322 `From:` header field.
+		/// </summary>
+		/// <remarks>(ECS Extended)</remarks>
+		/// <example>sender@example.com</example>
+		[DataMember(Name = "address")]
+		public string[] Address { get; set; }
+
+	}
+	/// <summary>
+	/// ReplyTo, property of <see cref="Email" />
+	/// </summary>
+	public class EmailReplyTo
+	{
+		/// <summary>
+		/// The address that replies should be delivered to based on the value in the RFC 5322 `Reply-To:` header.
+		/// </summary>
+		/// <remarks>(ECS Extended)</remarks>
+		/// <example>reply.here@example.com</example>
+		[DataMember(Name = "address")]
+		public string[] Address { get; set; }
+
+	}
+	/// <summary>
+	/// Sender, property of <see cref="Email" />
+	/// </summary>
+	public class EmailSender
+	{
+		/// <summary>
+		/// Per RFC 5322, specifies the address responsible for the actual transmission of the message.
+		/// </summary>
+		/// <remarks>(ECS Extended)</remarks>
+		[DataMember(Name = "address")]
+		public string Address { get; set; }
+
+	}
+	/// <summary>
+	/// To, property of <see cref="Email" />
+	/// </summary>
+	public class EmailTo
+	{
+		/// <summary>
+		/// The email address of recipient
+		/// </summary>
+		/// <remarks>(ECS Extended)</remarks>
+		/// <example>user1@example.com</example>
+		[DataMember(Name = "address")]
+		public string[] Address { get; set; }
+
+	}
+	/// <summary>
+	/// Event details relating to an email transaction.<para/><para/>This field set focuses on the email message header, body, and attachments. Network protocols that send and receive email messages such as SMTP are outside the scope of the `email.*` fields.
+	/// <para/>
+	/// ECS field reference: https://www.elastic.co/guide/en/ecs/v8.2.0/ecs-email.html
+	/// </summary>
+	public class Email 
+	{
+		/// <summary>
+		/// Attachments property.
+		/// </summary>
+		[DataMember(Name = "attachments")]
+		public EmailAttachments Attachments { get; set; }
+
+		/// <summary>
+		/// Bcc property.
+		/// </summary>
+		[DataMember(Name = "bcc")]
+		public EmailBcc Bcc { get; set; }
+
+		/// <summary>
+		/// Cc property.
+		/// </summary>
+		[DataMember(Name = "cc")]
+		public EmailCc Cc { get; set; }
+
+		/// <summary>
+		/// From property.
+		/// </summary>
+		[DataMember(Name = "from")]
+		public EmailFrom From { get; set; }
+
+		/// <summary>
+		/// ReplyTo property.
+		/// </summary>
+		[DataMember(Name = "replyto")]
+		public EmailReplyTo ReplyTo { get; set; }
+
+		/// <summary>
+		/// Sender property.
+		/// </summary>
+		[DataMember(Name = "sender")]
+		public EmailSender Sender { get; set; }
+
+		/// <summary>
+		/// To property.
+		/// </summary>
+		[DataMember(Name = "to")]
+		public EmailTo To { get; set; }
+
+		/// <summary>
+		/// A list of objects describing the attachment files sent along with an email message.
+		/// </summary>
+		/// <remarks>(ECS Extended)</remarks>
+		[DataMember(Name = "attachments")]
+		public object[] Attachments { get; set; }
+
+		/// <summary>
+		/// Information about how the message is to be displayed.<para/><para/>Typically a MIME type.
+		/// </summary>
+		/// <remarks>(ECS Extended)</remarks>
+		/// <example>text/plain</example>
+		[DataMember(Name = "content_type")]
+		public string ContentType { get; set; }
+
+		/// <summary>
+		/// The date and time when the email message was received by the service or client.
+		/// </summary>
+		/// <remarks>(ECS Extended)</remarks>
+		/// <example>2020-11-10T22:12:34.8196921Z</example>
+		[DataMember(Name = "delivery_timestamp")]
+		public DateTimeOffset? DeliveryTimestamp { get; set; }
+
+		/// <summary>
+		/// The direction of the message based on the sending and receiving domains.
+		/// </summary>
+		/// <remarks>(ECS Extended)</remarks>
+		/// <example>inbound</example>
+		[DataMember(Name = "direction")]
+		public string Direction { get; set; }
+
+		/// <summary>
+		/// Unique identifier given to the email by the source that created the event.<para/><para/>Identifier is not persistent across hops.
+		/// </summary>
+		/// <remarks>(ECS Extended)</remarks>
+		/// <example>c26dbea0-80d5-463b-b93c-4e8b708219ce</example>
+		[DataMember(Name = "local_id")]
+		public string LocalId { get; set; }
+
+		/// <summary>
+		/// Identifier from the RFC 5322 `Message-ID:` email header that refers to a particular email message.
+		/// </summary>
+		/// <remarks>(ECS Extended)</remarks>
+		/// <example>81ce15$8r2j59@mail01.example.com</example>
+		[DataMember(Name = "message_id")]
+		public string MessageId { get; set; }
+
+		/// <summary>
+		/// The date and time the email message was composed. Many email clients will fill in this value automatically when the message is sent by a user.
+		/// </summary>
+		/// <remarks>(ECS Extended)</remarks>
+		/// <example>2020-11-10T22:12:34.8196921Z</example>
+		[DataMember(Name = "origination_timestamp")]
+		public DateTimeOffset? OriginationTimestamp { get; set; }
+
+		/// <summary>
+		/// A brief summary of the topic of the message.
+		/// </summary>
+		/// <remarks>(ECS Extended)</remarks>
+		/// <example>Please see this important message.</example>
+		[DataMember(Name = "subject")]
+		public string Subject { get; set; }
+
+		/// <summary>
+		/// The name of the application that was used to draft and send the original email message.
+		/// </summary>
+		/// <remarks>(ECS Extended)</remarks>
+		/// <example>Spambot v2.5</example>
+		[DataMember(Name = "x_mailer")]
+		public string XMailer { get; set; }
+
+	}
+
+	/// <summary>
 	/// These fields can represent errors of any kind.<para/><para/>Use them for errors that happen while fetching events or in cases where the event itself contains an error.
 	/// <para/>
-	/// ECS field reference: https://www.elastic.co/guide/en/ecs/1.6/ecs-error.html
+	/// ECS field reference: https://www.elastic.co/guide/en/ecs/v8.2.0/ecs-error.html
 	/// </summary>
 	public class Error 
 	{
@@ -1220,6 +1937,11 @@ namespace Elastic.CommonSchema
 		public const string Authentication = "authentication";
 
         /// <summary>
+        /// Events in the configuration category have to deal with creating, modifying, or deleting the settings or parameters of an application, process, or system.<para/><para/>Example sources include security policy change logs, configuration auditing logging, and system integrity monitoring.
+		/// </summary>
+		public const string Configuration = "configuration";
+
+        /// <summary>
         /// The database category denotes events and metrics relating to a data storage and retrieval system. Note that use of this category is not limited to relational database systems. Examples include event logs from MS SQL, MySQL, Elasticsearch, MongoDB, etc. Use this category to visualize and analyze database activity such as accesses and changes.
 		/// </summary>
 		public const string Database = "database";
@@ -1228,6 +1950,11 @@ namespace Elastic.CommonSchema
         /// Events in the driver category have to do with operating system device drivers and similar software entities such as Windows drivers, kernel extensions, kernel modules, etc.<para/><para/>Use events and metrics in this category to visualize and analyze driver-related activity and status on hosts.
 		/// </summary>
 		public const string Driver = "driver";
+
+        /// <summary>
+        /// This category is used for events relating to email messages, email attachments, and email network or protocol activity.<para/><para/>Emails events can be produced by email security gateways, mail transfer agents, email cloud service providers, or mail server monitoring applications.
+		/// </summary>
+		public const string Email = "email";
 
         /// <summary>
         /// Relating to a set of information that has been created on, or has existed on a filesystem. Use this category of events to visualize and analyze the creation, access, and deletions of files. Events in this category can come from both host-based and network-based sources. An example source of a network-based detection of a file transfer would be the Zeek file.log.
@@ -1270,6 +1997,21 @@ namespace Elastic.CommonSchema
 		public const string Process = "process";
 
         /// <summary>
+        /// Having to do with settings and assets stored in the Windows registry. Use this category to visualize and analyze activity such as registry access and modifications.
+		/// </summary>
+		public const string Registry = "registry";
+
+        /// <summary>
+        /// The session category is applied to events and metrics regarding logical persistent connections to hosts and services. Use this category to visualize and analyze interactive or automated persistent connections between assets. Data for this category may come from Windows Event logs, SSH logs, or stateless sessions such as HTTP cookie-based sessions, etc.
+		/// </summary>
+		public const string Session = "session";
+
+        /// <summary>
+        /// Use this category to visualize and analyze events describing threat actors' targets, motives, or behaviors.
+		/// </summary>
+		public const string Threat = "threat";
+
+        /// <summary>
         /// Relating to web server access. Use this category to create a dashboard of web server/proxy activity from apache, IIS, nginx web servers, etc. Note: events from network observers such as Zeek http log may also be included in this category.
 		/// </summary>
 		public const string Web = "web";
@@ -1282,9 +2024,14 @@ namespace Elastic.CommonSchema
 	public class EventKind
 	{
         /// <summary>
-        /// This value indicates an event that describes an alert or notable event, triggered by a detection rule.<para/><para/>`event.kind:alert` is often populated for events coming from firewalls, intrusion detection systems, endpoint detection and response systems, and so on.
+        /// This value indicates an event such as an alert or notable event, triggered by a detection rule executing externally to the Elastic Stack.<para/><para/>`event.kind:alert` is often populated for events coming from firewalls, intrusion detection systems, endpoint detection and response systems, and so on.<para/><para/>This value is not used by Elastic solutions for alert documents that are created by rules executing within the Kibana alerting framework.
 		/// </summary>
 		public const string Alert = "alert";
+
+        /// <summary>
+        /// The `enrichment` value indicates an event collected to provide additional context, often to other events.<para/><para/>An example is collecting indicators of compromise (IOCs) from a threat intelligence provider with the intent to use those values to enrich other events. The IOC events from the intelligence provider should be categorized as `event.kind:enrichment`.
+		/// </summary>
+		public const string Enrichment = "enrichment";
 
         /// <summary>
         /// This value is the most general and most common value for this field. It is used to represent events that indicate that something happened.
@@ -1307,7 +2054,7 @@ namespace Elastic.CommonSchema
 		public const string PipelineError = "pipeline_error";
 
         /// <summary>
-        /// This value is used by the Elastic SIEM app to denote an Elasticsearch document that was created by a SIEM detection engine rule.<para/><para/>A signal will typically trigger a notification that something meaningful happened and should be investigated.<para/><para/>Usage of this value is reserved, and pipelines should not populate `event.kind` with the value "signal".
+        /// This value is used by Elastic solutions (e.g., Security, Observability) for alert documents that are created by rules executing within the Kibana alerting framework.<para/><para/>Usage of this value is reserved, and data ingestion pipelines must not populate `event.kind` with the value "signal".
 		/// </summary>
 		public const string Signal = "signal";
 
@@ -1396,6 +2143,11 @@ namespace Elastic.CommonSchema
 		public const string Group = "group";
 
         /// <summary>
+        /// The indicator event type is used for the subset of events within a category that contain details about indicators of compromise (IOCs).<para/><para/>A common example is `event.category:threat AND event.type:indicator`.
+		/// </summary>
+		public const string Indicator = "indicator";
+
+        /// <summary>
         /// The info event type is used for the subset of events within a category that indicate that they are purely informational, and don't report a state change, or any type of action. For example, an initial run of a file integrity monitoring system (FIM), where an agent reports all files under management, would fall into the "info" subcategory. Similarly, an event containing a dump of all currently running processes (as opposed to reporting that a process started/ended) would fall into the "info" subcategory. An additional common examples is `event.category:intrusion_detection AND event.type:info`.
 		/// </summary>
 		public const string Info = "info";
@@ -1425,7 +2177,7 @@ namespace Elastic.CommonSchema
 	/// <summary>
 	/// The event fields are used for context information about the log or metric event itself.<para/><para/>A log is defined as an event containing details of something that happened. Log events must include the time at which the thing happened. Examples of log events include a process starting on a host, a network packet being sent from a source to a destination, or a network connection between a client and a server being initiated or closed. A metric is defined as an event containing one or more numerical measurements and the time at which the measurement was taken. Examples of metric events include memory pressure measured on a host and device temperature. See the `event.kind` definition in this section for additional details about metric and state events.
 	/// <para/>
-	/// ECS field reference: https://www.elastic.co/guide/en/ecs/1.6/ecs-event.html
+	/// ECS field reference: https://www.elastic.co/guide/en/ecs/v8.2.0/ecs-event.html
 	/// </summary>
 	public class Event 
 	{
@@ -1436,6 +2188,14 @@ namespace Elastic.CommonSchema
 		/// <example>user-password-change</example>
 		[DataMember(Name = "action")]
 		public string Action { get; set; }
+
+		/// <summary>
+		/// Agents are normally responsible for populating the `agent.id` field value. If the system receiving events is capable of validating the value based on authentication information for the client then this field can be used to reflect the outcome of that validation.<para/><para/>For example if the agent's connection is authenticated with mTLS and the client cert contains the ID of the agent to which the cert was issued then the `agent.id` value in events can be checked against the certificate. If the values match then `event.agent_id_status: verified` is added to the event, otherwise one of the other allowed values should be used.<para/><para/>If no validation is performed then the field should be omitted.<para/><para/>The allowed values are:<para/><para/>`verified` - The `agent.id` field value matches expected value obtained from auth metadata.<para/><para/>`mismatch` - The `agent.id` field value does not match the expected value obtained from auth metadata.<para/><para/>`missing` - There was no `agent.id` field in the event to validate.<para/><para/>`auth_metadata_missing` - There was no auth metadata or it was missing information about the agent ID.
+		/// </summary>
+		/// <remarks>(ECS Extended)</remarks>
+		/// <example>verified</example>
+		[DataMember(Name = "agent_id_status")]
+		public string AgentIdStatus { get; set; }
 
 		/// <summary>
 		/// This is one of four ECS Categorization Fields, and indicates the second level in the ECS category hierarchy.<para/><para/>`event.category` represents the "big buckets" of ECS categories. For example, filtering on `event.category:process` yields all events relating to process activity. This field is closely related to `event.type`, which is used as a subcategory.<para/><para/>This field is an array. This will allow proper categorization of some events that fall in multiple categories.
@@ -1524,7 +2284,7 @@ namespace Elastic.CommonSchema
 		public string Module { get; set; }
 
 		/// <summary>
-		/// Raw text message of entire event. Used to demonstrate log integrity.<para/><para/>This field is not indexed and doc_values are disabled. It cannot be searched, but it can be retrieved from `_source`.
+		/// Raw text message of entire event. Used to demonstrate log integrity or where the full log message (before splitting it up in multiple parts) may be required, e.g. for reindex.<para/><para/>This field is not indexed and doc_values are disabled. It cannot be searched, but it can be retrieved from `_source`. If users wish to override this and index this field, please see `Field data types` in the `Elasticsearch Reference`.
 		/// </summary>
 		/// <remarks>(ECS Core)</remarks>
 		/// <example>Sep 19 08:26:10 host CEF:0&#124;Security&#124; threatmanager&#124;1.0&#124;100&#124; worm successfully stopped&#124;10&#124;src=10.0.0.1 dst=2.1.2.2spt=1232</example>
@@ -1556,7 +2316,7 @@ namespace Elastic.CommonSchema
 		public string Reason { get; set; }
 
 		/// <summary>
-		/// Reference URL linking to additional information about this event.<para/><para/>This URL links to a static definition of the this event. Alert events, indicated by `event.kind:alert`, are a common use case for this field.
+		/// Reference URL linking to additional information about this event.<para/><para/>This URL links to a static definition of this event. Alert events, indicated by `event.kind:alert`, are a common use case for this field.
 		/// </summary>
 		/// <remarks>(ECS Extended)</remarks>
 		/// <example>https://system.example.com/event/#0001234</example>
@@ -1624,12 +2384,113 @@ namespace Elastic.CommonSchema
 	}
 
 	/// <summary>
+	/// Trigger, property of <see cref="Faas" />
+	/// </summary>
+	public class FaasTrigger
+	{
+		/// <summary>
+		/// The ID of the trigger request , message, event, etc.
+		/// </summary>
+		/// <remarks>(ECS Extended)</remarks>
+		/// <example>123456789</example>
+		[DataMember(Name = "request_id")]
+		public string RequestId { get; set; }
+
+		/// <summary>
+		/// The trigger for the function execution.<para/><para/>Expected values are:<para/><para/>  * http<para/><para/>  * pubsub<para/><para/>  * datasource<para/><para/>  * timer<para/><para/>  * other
+		/// </summary>
+		/// <remarks>(ECS Extended)</remarks>
+		/// <example>http</example>
+		[DataMember(Name = "type")]
+		public string Type { get; set; }
+
+	}
+	/// <summary>
+	/// The user fields describe information about the function as a service (FaaS) that is relevant to the event.
+	/// <para/>
+	/// ECS field reference: https://www.elastic.co/guide/en/ecs/v8.2.0/ecs-faas.html
+	/// </summary>
+	public class Faas 
+	{
+		/// <summary>
+		/// Trigger property.
+		/// </summary>
+		[DataMember(Name = "trigger")]
+		public FaasTrigger Trigger { get; set; }
+
+		/// <summary>
+		/// Boolean value indicating a cold start of a function.
+		/// </summary>
+		/// <remarks>(ECS Extended)</remarks>
+		[DataMember(Name = "coldstart")]
+		public bool? Coldstart { get; set; }
+
+		/// <summary>
+		/// The execution ID of the current function execution.
+		/// </summary>
+		/// <remarks>(ECS Extended)</remarks>
+		/// <example>af9d5aa4-a685-4c5f-a22b-444f80b3cc28</example>
+		[DataMember(Name = "execution")]
+		public string Execution { get; set; }
+
+		/// <summary>
+		/// The unique identifier of a serverless function.<para/><para/>For AWS Lambda it's the function ARN (Amazon Resource Name) without a version or alias suffix.
+		/// </summary>
+		/// <remarks>(ECS Extended)</remarks>
+		/// <example>arn:aws:lambda:us-west-2:123456789012:function:my-function</example>
+		[DataMember(Name = "id")]
+		public string Id { get; set; }
+
+		/// <summary>
+		/// The name of a serverless function.
+		/// </summary>
+		/// <remarks>(ECS Extended)</remarks>
+		/// <example>my-function</example>
+		[DataMember(Name = "name")]
+		public string Name { get; set; }
+
+		/// <summary>
+		/// Details about the function trigger.
+		/// </summary>
+		/// <remarks>(ECS Extended)</remarks>
+		[DataMember(Name = "trigger")]
+		public object Trigger { get; set; }
+
+		/// <summary>
+		/// The version of a serverless function.
+		/// </summary>
+		/// <remarks>(ECS Extended)</remarks>
+		/// <example>123</example>
+		[DataMember(Name = "version")]
+		public string Version { get; set; }
+
+	}
+
+	/// <summary>
 	/// A file is defined as a set of information that has been created on, or has existed on a filesystem.<para/><para/>File objects can be associated with host events, network events, and/or file events (e.g., those produced by File Integrity Monitoring [FIM] products or services). File fields provide details about the affected file associated with the event or metric.
 	/// <para/>
-	/// ECS field reference: https://www.elastic.co/guide/en/ecs/1.6/ecs-file.html
+	/// ECS field reference: https://www.elastic.co/guide/en/ecs/v8.2.0/ecs-file.html
 	/// </summary>
 	public class File 
 	{
+		/// <summary>
+		/// These fields contain x509 certificate metadata.
+		/// </summary>
+		[DataMember(Name = "x509")]
+		public X509 X509 { get; set; }
+
+		/// <summary>
+		/// These fields contain Linux Executable Linkable Format (ELF) metadata.
+		/// </summary>
+		[DataMember(Name = "elf")]
+		public Elf Elf { get; set; }
+
+		/// <summary>
+		/// These fields contain Windows Portable Executable (PE) metadata.
+		/// </summary>
+		[DataMember(Name = "pe")]
+		public Pe Pe { get; set; }
+
 		/// <summary>
 		/// These fields contain information about binary code signatures.
 		/// </summary>
@@ -1641,18 +2502,6 @@ namespace Elastic.CommonSchema
 		/// </summary>
 		[DataMember(Name = "hash")]
 		public Hash Hash { get; set; }
-
-		/// <summary>
-		/// These fields contain Windows Portable Executable (PE) metadata.
-		/// </summary>
-		[DataMember(Name = "pe")]
-		public Pe Pe { get; set; }
-
-		/// <summary>
-		/// These fields contain x509 certificate metadata.
-		/// </summary>
-		[DataMember(Name = "x509")]
-		public X509 X509 { get; set; }
 
 		/// <summary>
 		/// Last time the file was accessed.<para/><para/>Note that not all filesystems keep track of access time.
@@ -1714,6 +2563,14 @@ namespace Elastic.CommonSchema
 		/// <example>png</example>
 		[DataMember(Name = "extension")]
 		public string Extension { get; set; }
+
+		/// <summary>
+		/// A fork is additional data associated with a filesystem object.<para/><para/>On Linux, a resource fork is used to store additional data with a filesystem object. A file always has at least one fork for the data portion, and additional forks may exist.<para/><para/>On NTFS, this is analogous to an Alternate Data Stream (ADS), and the default data stream for a file is just called $DATA. Zone.Identifier is commonly used by Windows to track contents downloaded from the Internet. An ADS is typically of the form: `C:\path\to\filename.extension:some_fork_name`, and `some_fork_name` is the value that should populate `fork_name`. `filename.extension` should populate `file.name`, and `extension` should populate `file.extension`. The full path, `file.path`, will include the fork name.
+		/// </summary>
+		/// <remarks>(ECS Extended)</remarks>
+		/// <example>Zone.Identifer</example>
+		[DataMember(Name = "fork_name")]
+		public string ForkName { get; set; }
 
 		/// <summary>
 		/// Primary group ID (GID) of the file.
@@ -1821,7 +2678,7 @@ namespace Elastic.CommonSchema
 	/// <summary>
 	/// Geo fields can carry data about a specific location related to an event.<para/><para/>This geolocation information can be derived from techniques such as Geo IP, or be user-supplied.
 	/// <para/>
-	/// ECS field reference: https://www.elastic.co/guide/en/ecs/1.6/ecs-geo.html
+	/// ECS field reference: https://www.elastic.co/guide/en/ecs/v8.2.0/ecs-geo.html
 	/// </summary>
 	public class Geo 
 	{
@@ -1832,6 +2689,14 @@ namespace Elastic.CommonSchema
 		/// <example>Montreal</example>
 		[DataMember(Name = "city_name")]
 		public string CityName { get; set; }
+
+		/// <summary>
+		/// Two-letter code representing continent's name.
+		/// </summary>
+		/// <remarks>(ECS Core)</remarks>
+		/// <example>NA</example>
+		[DataMember(Name = "continent_code")]
+		public string ContinentCode { get; set; }
 
 		/// <summary>
 		/// Name of the continent.
@@ -1874,6 +2739,14 @@ namespace Elastic.CommonSchema
 		public string Name { get; set; }
 
 		/// <summary>
+		/// Postal code associated with the location.<para/><para/>Values appropriate for this field may also be known as a postcode or ZIP code and will vary widely from country to country.
+		/// </summary>
+		/// <remarks>(ECS Core)</remarks>
+		/// <example>94040</example>
+		[DataMember(Name = "postal_code")]
+		public string PostalCode { get; set; }
+
+		/// <summary>
 		/// Region ISO code.
 		/// </summary>
 		/// <remarks>(ECS Core)</remarks>
@@ -1889,12 +2762,20 @@ namespace Elastic.CommonSchema
 		[DataMember(Name = "region_name")]
 		public string RegionName { get; set; }
 
+		/// <summary>
+		/// The time zone of the location, such as IANA time zone name.
+		/// </summary>
+		/// <remarks>(ECS Core)</remarks>
+		/// <example>America/Argentina/Buenos_Aires</example>
+		[DataMember(Name = "timezone")]
+		public string Timezone { get; set; }
+
 	}
 
 	/// <summary>
 	/// The group fields are meant to represent groups that are relevant to the event.
 	/// <para/>
-	/// ECS field reference: https://www.elastic.co/guide/en/ecs/1.6/ecs-group.html
+	/// ECS field reference: https://www.elastic.co/guide/en/ecs/v8.2.0/ecs-group.html
 	/// </summary>
 	public class Group 
 	{
@@ -1922,9 +2803,9 @@ namespace Elastic.CommonSchema
 	}
 
 	/// <summary>
-	/// The hash fields represent different hash algorithms and their values.<para/><para/>Field names for common hashes (e.g. MD5, SHA1) are predefined. Add fields for other hashes by lowercasing the hash algorithm name and using underscore separators as appropriate (snake case, e.g. sha3_512).
+	/// The hash fields represent different bitwise hash algorithms and their values.<para/><para/>Field names for common hashes (e.g. MD5, SHA1) are predefined. Add fields for other hashes by lowercasing the hash algorithm name and using underscore separators as appropriate (snake case, e.g. sha3_512).<para/><para/>Note that this fieldset is used for common hashes that may be computed over a range of generic bytes. Entity-specific hashes such as ja3 or imphash are placed in the fieldsets to which they relate (tls and pe, respectively).
 	/// <para/>
-	/// ECS field reference: https://www.elastic.co/guide/en/ecs/1.6/ecs-hash.html
+	/// ECS field reference: https://www.elastic.co/guide/en/ecs/v8.2.0/ecs-hash.html
 	/// </summary>
 	public class Hash 
 	{
@@ -1950,26 +2831,92 @@ namespace Elastic.CommonSchema
 		public string Sha256 { get; set; }
 
 		/// <summary>
+		/// SHA384 hash.
+		/// </summary>
+		/// <remarks>(ECS Extended)</remarks>
+		[DataMember(Name = "sha384")]
+		public string Sha384 { get; set; }
+
+		/// <summary>
 		/// SHA512 hash.
 		/// </summary>
 		/// <remarks>(ECS Extended)</remarks>
 		[DataMember(Name = "sha512")]
 		public string Sha512 { get; set; }
 
+		/// <summary>
+		/// SSDEEP hash.
+		/// </summary>
+		/// <remarks>(ECS Extended)</remarks>
+		[DataMember(Name = "ssdeep")]
+		public string Ssdeep { get; set; }
+
+		/// <summary>
+		/// TLSH hash.
+		/// </summary>
+		/// <remarks>(ECS Extended)</remarks>
+		[DataMember(Name = "tlsh")]
+		public string Tlsh { get; set; }
+
 	}
 
 	/// <summary>
+	/// Boot, property of <see cref="Host" />
+	/// </summary>
+	public class HostBoot
+	{
+		/// <summary>
+		/// Linux boot uuid taken from /proc/sys/kernel/random/boot_id. Note the boot_id value from /proc may or may not be the same in containers as on the host. Some container runtimes will bind mount a new boot_id value onto the proc file in each container.
+		/// </summary>
+		/// <remarks>(ECS Extended)</remarks>
+		/// <example>88a1f0ed-5ae5-41ee-af6b-41921c311872</example>
+		[DataMember(Name = "id")]
+		public string Id { get; set; }
+
+	}
+	/// <summary>
+	/// Cpu, property of <see cref="Host" />
+	/// </summary>
+	public class HostCpu
+	{
+		/// <summary>
+		/// Percent CPU used which is normalized by the number of CPU cores and it ranges from 0 to 1.<para/><para/>Scaling factor: 1000.<para/><para/>For example: For a two core host, this value should be the average of the two cores, between 0 and 1.
+		/// </summary>
+		/// <remarks>(ECS Extended)</remarks>
+		[DataMember(Name = "usage")]
+		public float? Usage { get; set; }
+
+	}
+	/// <summary>
 	/// A host is defined as a general computing instance.<para/><para/>ECS host.* fields should be populated with details about the host on which the event happened, or from which the measurement was taken. Host types include hardware, virtual machines, Docker containers, and Kubernetes nodes.
 	/// <para/>
-	/// ECS field reference: https://www.elastic.co/guide/en/ecs/1.6/ecs-host.html
+	/// ECS field reference: https://www.elastic.co/guide/en/ecs/v8.2.0/ecs-host.html
 	/// </summary>
 	public class Host 
 	{
+		/// <summary>
+		/// Boot property.
+		/// </summary>
+		[DataMember(Name = "boot")]
+		public HostBoot Boot { get; set; }
+
 		/// <summary>
 		/// Fields describing a location.
 		/// </summary>
 		[DataMember(Name = "geo")]
 		public Geo Geo { get; set; }
+
+		/// <summary>
+		/// Cpu property.
+		/// </summary>
+		[DataMember(Name = "cpu")]
+		public HostCpu Cpu { get; set; }
+
+		/// <summary>
+		/// Disk property.
+		/// </summary>
+		[DataMember(Name = "disk")]
+		public Disk Disk { get; set; }
 
 		/// <summary>
 		/// OS fields contain information about the operating system.
@@ -1978,10 +2925,10 @@ namespace Elastic.CommonSchema
 		public Os Os { get; set; }
 
 		/// <summary>
-		/// Fields to describe the user relevant to the event.
+		/// Network property.
 		/// </summary>
-		[DataMember(Name = "user")]
-		public User User { get; set; }
+		[DataMember(Name = "network")]
+		public Network Network { get; set; }
 
 		/// <summary>
 		/// Operating system architecture.
@@ -2021,9 +2968,10 @@ namespace Elastic.CommonSchema
 		public string[] Ip { get; set; }
 
 		/// <summary>
-		/// Host mac addresses.
+		/// Host MAC addresses.<para/><para/>The notation format from RFC 7042 is suggested: Each octet (that is, 8-bit byte) is represented by two [uppercase] hexadecimal digits giving the value of the octet as an unsigned integer. Successive octets are separated by a hyphen.
 		/// </summary>
 		/// <remarks>(ECS Core)</remarks>
+		/// <example>["00-00-5E-00-53-23","00-00-5E-00-53-24"]</example>
 		[DataMember(Name = "mac")]
 		public string[] Mac { get; set; }
 
@@ -2033,6 +2981,14 @@ namespace Elastic.CommonSchema
 		/// <remarks>(ECS Core)</remarks>
 		[DataMember(Name = "name")]
 		public string Name { get; set; }
+
+		/// <summary>
+		/// This is the inode number of the namespace in the namespace file system (nsfs). Unsigned int inum in include/linux/ns_common.h.
+		/// </summary>
+		/// <remarks>(ECS Extended)</remarks>
+		/// <example>256383</example>
+		[DataMember(Name = "pid_ns_ino")]
+		public string PidNsIno { get; set; }
 
 		/// <summary>
 		/// Type of host.<para/><para/>For Cloud providers this can be the machine type like `t2.medium`. If vm, this could be the container, for example, or other information meaningful in your environment.
@@ -2094,12 +3050,28 @@ namespace Elastic.CommonSchema
 		public long? Bytes { get; set; }
 
 		/// <summary>
-		/// HTTP request method.<para/><para/>Prior to ECS 1.6.0 the following guidance was provided:<para/><para/>"The field value must be normalized to lowercase for querying."<para/><para/>As of ECS 1.6.0, the guidance is deprecated because the original case of the method may be useful in anomaly detection.  Original case will be mandated in ECS 2.0.0
+		/// A unique identifier for each HTTP request to correlate logs between clients and servers in transactions.<para/><para/>The id may be contained in a non-standard HTTP header, such as `X-Request-ID` or `X-Correlation-ID`.
 		/// </summary>
 		/// <remarks>(ECS Extended)</remarks>
-		/// <example>GET, POST, PUT, PoST</example>
+		/// <example>123e4567-e89b-12d3-a456-426614174000</example>
+		[DataMember(Name = "id")]
+		public string Id { get; set; }
+
+		/// <summary>
+		/// HTTP request method.<para/><para/>The value should retain its casing from the original event. For example, `GET`, `get`, and `GeT` are all considered valid values for this field.
+		/// </summary>
+		/// <remarks>(ECS Extended)</remarks>
+		/// <example>POST</example>
 		[DataMember(Name = "method")]
 		public string Method { get; set; }
+
+		/// <summary>
+		/// Mime type of the body of the request.<para/><para/>This value must only be populated based on the content of the request body, not on the `Content-Type` header. Comparing the mime type of a request with the request's Content-Type header can be helpful in detecting threats or misconfigured clients.
+		/// </summary>
+		/// <remarks>(ECS Extended)</remarks>
+		/// <example>image/gif</example>
+		[DataMember(Name = "mime_type")]
+		public string MimeType { get; set; }
 
 		/// <summary>
 		/// Referrer for this HTTP request.
@@ -2153,6 +3125,14 @@ namespace Elastic.CommonSchema
 		public long? Bytes { get; set; }
 
 		/// <summary>
+		/// Mime type of the body of the response.<para/><para/>This value must only be populated based on the content of the response body, not on the `Content-Type` header. Comparing the mime type of a response with the response's Content-Type header can be helpful in detecting misconfigured servers.
+		/// </summary>
+		/// <remarks>(ECS Extended)</remarks>
+		/// <example>image/gif</example>
+		[DataMember(Name = "mime_type")]
+		public string MimeType { get; set; }
+
+		/// <summary>
 		/// HTTP response status code.
 		/// </summary>
 		/// <remarks>(ECS Extended)</remarks>
@@ -2164,7 +3144,7 @@ namespace Elastic.CommonSchema
 	/// <summary>
 	/// Fields related to HTTP activity. Use the `url` field set to store the url of the request.
 	/// <para/>
-	/// ECS field reference: https://www.elastic.co/guide/en/ecs/1.6/ecs-http.html
+	/// ECS field reference: https://www.elastic.co/guide/en/ecs/v8.2.0/ecs-http.html
 	/// </summary>
 	public class Http 
 	{
@@ -2193,7 +3173,7 @@ namespace Elastic.CommonSchema
 	/// <summary>
 	/// The interface fields are used to record ingress and egress interface information when reported by an observer (e.g. firewall, router, load balancer) in the context of the observer handling a network connection.  In the case of a single observer interface (e.g. network sensor on a span port) only the observer.ingress information should be populated.
 	/// <para/>
-	/// ECS field reference: https://www.elastic.co/guide/en/ecs/1.6/ecs-interface.html
+	/// ECS field reference: https://www.elastic.co/guide/en/ecs/v8.2.0/ecs-interface.html
 	/// </summary>
 	public class Interface 
 	{
@@ -2248,7 +3228,7 @@ namespace Elastic.CommonSchema
 		/// <remarks>(ECS Extended)</remarks>
 		/// <example>42</example>
 		[DataMember(Name = "line")]
-		public int? Line { get; set; }
+		public long? Line { get; set; }
 
 		/// <summary>
 		/// Origin The name of the file containing the source code which originated the log event.<para/><para/>Note that this field is not meant to capture the log file. The correct field to capture the log file is `log.file.path`.
@@ -2344,6 +3324,30 @@ namespace Elastic.CommonSchema
 		public SyslogSeverity Severity { get; set; }
 
 		/// <summary>
+		/// The device or application that originated the Syslog message, if available.
+		/// </summary>
+		/// <remarks>(ECS Extended)</remarks>
+		/// <example>sshd</example>
+		[DataMember(Name = "appname")]
+		public string Appname { get; set; }
+
+		/// <summary>
+		/// The hostname, FQDN, or IP of the machine that originally sent the Syslog message. This is sourced from the hostname field of the syslog header. Depending on the environment, this value may be different from the host that handled the event, especially if the host handling the events is acting as a collector.
+		/// </summary>
+		/// <remarks>(ECS Extended)</remarks>
+		/// <example>example-host</example>
+		[DataMember(Name = "hostname")]
+		public string Hostname { get; set; }
+
+		/// <summary>
+		/// An identifier for the type of Syslog message, if available. Only applicable for RFC 5424 messages.
+		/// </summary>
+		/// <remarks>(ECS Extended)</remarks>
+		/// <example>ID47</example>
+		[DataMember(Name = "msgid")]
+		public string Msgid { get; set; }
+
+		/// <summary>
 		/// Syslog numeric priority of the event, if available.<para/><para/>According to RFCs 5424 and 3164, the priority is 8 * facility + severity. This number is therefore expected to contain a value between 0 and 191.
 		/// </summary>
 		/// <remarks>(ECS Extended)</remarks>
@@ -2351,11 +3355,34 @@ namespace Elastic.CommonSchema
 		[DataMember(Name = "priority")]
 		public long? Priority { get; set; }
 
+		/// <summary>
+		/// The process name or ID that originated the Syslog message, if available.
+		/// </summary>
+		/// <remarks>(ECS Extended)</remarks>
+		/// <example>12345</example>
+		[DataMember(Name = "procid")]
+		public string Procid { get; set; }
+
+		/// <summary>
+		/// Structured data expressed in RFC 5424 messages, if available. These are key-value pairs formed from the structured data portion of the syslog message, as defined in RFC 5424 Section 6.3.
+		/// </summary>
+		/// <remarks>(ECS Extended)</remarks>
+		[DataMember(Name = "structured_data")]
+		public string StructuredData { get; set; }
+
+		/// <summary>
+		/// The version of the Syslog protocol specification. Only applicable for RFC 5424 messages.
+		/// </summary>
+		/// <remarks>(ECS Extended)</remarks>
+		/// <example>1</example>
+		[DataMember(Name = "version")]
+		public string Version { get; set; }
+
 	}
 	/// <summary>
 	/// Details about the event's logging mechanism or logging transport.<para/><para/>The log.* fields are typically populated with details about the logging mechanism used to create and/or transport the event. For example, syslog details belong under `log.syslog.*`.<para/><para/>The details specific to your event source are typically not logged under `log.*`, but rather in `event.*` or in other ECS fields.
 	/// <para/>
-	/// ECS field reference: https://www.elastic.co/guide/en/ecs/1.6/ecs-log.html
+	/// ECS field reference: https://www.elastic.co/guide/en/ecs/v8.2.0/ecs-log.html
 	/// </summary>
 	public partial class Log 
 	{
@@ -2393,14 +3420,6 @@ namespace Elastic.CommonSchema
 		[DataMember(Name = "logger")]
 		public string Logger { get; set; }
 
-		/// <summary>
-		/// This is the original log message and contains the full log message before splitting it up in multiple parts.<para/><para/>In contrast to the `message` field which can contain an extracted part of the log message, this field contains the original, full log message. It can have already some modifications applied like encoding or new lines removed to clean up the log message.<para/><para/>This field is not indexed and doc_values are disabled so it can't be queried but the value can be retrieved from `_source`.
-		/// </summary>
-		/// <remarks>(ECS Core)</remarks>
-		/// <example>Sep 19 08:26:10 localhost My log</example>
-		[DataMember(Name = "original")]
-		public string Original { get; set; }
-
 	}
 
 	/// <summary>
@@ -2419,12 +3438,12 @@ namespace Elastic.CommonSchema
 	/// <summary>
 	/// The network is defined as the communication path over which a host or network event happens.<para/><para/>The network.* fields should be populated with details about the network activity associated with an event.
 	/// <para/>
-	/// ECS field reference: https://www.elastic.co/guide/en/ecs/1.6/ecs-network.html
+	/// ECS field reference: https://www.elastic.co/guide/en/ecs/v8.2.0/ecs-network.html
 	/// </summary>
 	public class Network 
 	{
 		/// <summary>
-		/// Network.inner fields are added in addition to network.vlan fields to describe  the innermost VLAN when q-in-q VLAN tagging is present. Allowed fields include  vlan.id and vlan.name. Inner vlan fields are typically used when sending traffic with multiple 802.1q encapsulations to a network sensor (e.g. Zeek, Wireshark.)
+		/// Network.inner fields are added in addition to network.vlan fields to describe the innermost VLAN when q-in-q VLAN tagging is present. Allowed fields include vlan.id and vlan.name. Inner vlan fields are typically used when sending traffic with multiple 802.1q encapsulations to a network sensor (e.g. Zeek, Wireshark.)
 		/// </summary>
 		[DataMember(Name = "inner")]
 		public NetworkInner Inner { get; set; }
@@ -2436,7 +3455,7 @@ namespace Elastic.CommonSchema
 		public Vlan Vlan { get; set; }
 
 		/// <summary>
-		/// A name given to an application level protocol. This can be arbitrarily assigned for things like microservices, but also apply to things like skype, icq, facebook, twitter. This would be used in situations where the vendor or service can be decoded such as from the source/dest IP owners, ports, or wire format.<para/><para/>The field value must be normalized to lowercase for querying. See the documentation section "Implementing ECS".
+		/// When a specific application or service is identified from network connection details (source/dest IPs, ports, certificates, or wire format), this field captures the application's or service's name.<para/><para/>For example, the original event identifies the network connection being from a specific web service in a `https` network connection, like `facebook` or `twitter`.<para/><para/>The field value must be normalized to lowercase for querying.
 		/// </summary>
 		/// <remarks>(ECS Extended)</remarks>
 		/// <example>aim</example>
@@ -2460,7 +3479,7 @@ namespace Elastic.CommonSchema
 		public string CommunityId { get; set; }
 
 		/// <summary>
-		/// Direction of the network traffic.<para/><para/>Recommended values are:<para/><para/>  * inbound<para/><para/>  * outbound<para/><para/>  * internal<para/><para/>  * external<para/><para/>  * unknown<para/><para/>When mapping events from a host-based monitoring context, populate this field from the host's point of view.<para/><para/>When mapping events from a network or perimeter-based monitoring context, populate this field from the point of view of your network perimeter.
+		/// Direction of the network traffic.<para/><para/>Recommended values are:<para/><para/>  * ingress<para/><para/>  * egress<para/><para/>  * inbound<para/><para/>  * outbound<para/><para/>  * internal<para/><para/>  * external<para/><para/>  * unknown<para/><para/>When mapping events from a host-based monitoring context, populate this field from the host's point of view, using the values "ingress" or "egress".<para/><para/>When mapping events from a network or perimeter-based monitoring context, populate this field from the point of view of the network perimeter, using the values "inbound", "outbound", "internal" or "external".<para/><para/>Note that "internal" is not crossing perimeter boundaries, and is meant to describe communication between two hosts within the perimeter. Note also that "external" is meant to describe traffic between two hosts that are external to the perimeter. This could for example be useful for ISPs or VPN service providers.
 		/// </summary>
 		/// <remarks>(ECS Core)</remarks>
 		/// <example>inbound</example>
@@ -2500,7 +3519,7 @@ namespace Elastic.CommonSchema
 		public long? Packets { get; set; }
 
 		/// <summary>
-		/// L7 Network protocol name. ex. http, lumberjack, transport protocol.<para/><para/>The field value must be normalized to lowercase for querying. See the documentation section "Implementing ECS".
+		/// In the OSI Model this would be the Application Layer protocol. For example, `http`, `dns`, or `ssh`.<para/><para/>The field value must be normalized to lowercase for querying.
 		/// </summary>
 		/// <remarks>(ECS Core)</remarks>
 		/// <example>http</example>
@@ -2508,7 +3527,7 @@ namespace Elastic.CommonSchema
 		public string Protocol { get; set; }
 
 		/// <summary>
-		/// Same as network.iana_number, but instead using the Keyword name of the transport layer (udp, tcp, ipv6-icmp, etc.)<para/><para/>The field value must be normalized to lowercase for querying. See the documentation section "Implementing ECS".
+		/// Same as network.iana_number, but instead using the Keyword name of the transport layer (udp, tcp, ipv6-icmp, etc.)<para/><para/>The field value must be normalized to lowercase for querying.
 		/// </summary>
 		/// <remarks>(ECS Core)</remarks>
 		/// <example>tcp</example>
@@ -2516,7 +3535,7 @@ namespace Elastic.CommonSchema
 		public string Transport { get; set; }
 
 		/// <summary>
-		/// In the OSI Model this would be the Network Layer. ipv4, ipv6, ipsec, pim, etc<para/><para/>The field value must be normalized to lowercase for querying. See the documentation section "Implementing ECS".
+		/// In the OSI Model this would be the Network Layer. ipv4, ipv6, ipsec, pim, etc<para/><para/>The field value must be normalized to lowercase for querying.
 		/// </summary>
 		/// <remarks>(ECS Core)</remarks>
 		/// <example>ipv4</example>
@@ -2538,19 +3557,19 @@ namespace Elastic.CommonSchema
 		public Interface Interface { get; set; }
 
 		/// <summary>
-		/// Fields to describe observed VLAN information.
-		/// </summary>
-		/// <remarks>(ECS Core)</remarks>
-		[DataMember(Name = "vlan")]
-		public Vlan Vlan { get; set; }
-
-		/// <summary>
-		/// Network zone of outbound traffic as reported by the observer to categorize the destination area of egress  traffic, e.g. Internal, External, DMZ, HR, Legal, etc.
+		/// Network zone of outbound traffic as reported by the observer to categorize the destination area of egress traffic, e.g. Internal, External, DMZ, HR, Legal, etc.
 		/// </summary>
 		/// <remarks>(ECS Extended)</remarks>
 		/// <example>Public_Internet</example>
 		[DataMember(Name = "zone")]
 		public string Zone { get; set; }
+
+		/// <summary>
+		/// Fields to describe observed VLAN information.
+		/// </summary>
+		/// <remarks>(ECS Core)</remarks>
+		[DataMember(Name = "vlan")]
+		public Vlan Vlan { get; set; }
 
 	}
 	/// <summary>
@@ -2573,7 +3592,7 @@ namespace Elastic.CommonSchema
 		public Vlan Vlan { get; set; }
 
 		/// <summary>
-		/// Network zone of incoming traffic as reported by the observer to categorize the source area of ingress  traffic. e.g. internal, External, DMZ, HR, Legal, etc.
+		/// Network zone of incoming traffic as reported by the observer to categorize the source area of ingress traffic. e.g. internal, External, DMZ, HR, Legal, etc.
 		/// </summary>
 		/// <remarks>(ECS Extended)</remarks>
 		/// <example>DMZ</example>
@@ -2584,27 +3603,27 @@ namespace Elastic.CommonSchema
 	/// <summary>
 	/// An observer is defined as a special network, security, or application device used to detect, observe, or create network, security, or application-related events and metrics.<para/><para/>This could be a custom hardware appliance or a server that has been configured to run special network, security, or application software. Examples include firewalls, web proxies, intrusion detection/prevention systems, network monitoring sensors, web application firewalls, data loss prevention systems, and APM servers. The observer.* fields shall be populated with details of the system, if any, that detects, observes and/or creates a network, security, or application event or metric. Message queues and ETL components used in processing events or metrics are not considered observers in ECS.
 	/// <para/>
-	/// ECS field reference: https://www.elastic.co/guide/en/ecs/1.6/ecs-observer.html
+	/// ECS field reference: https://www.elastic.co/guide/en/ecs/v8.2.0/ecs-observer.html
 	/// </summary>
 	public class Observer 
 	{
 		/// <summary>
-		/// Observer.egress holds information like interface number and name, vlan, and zone information to  classify egress traffic.  Single armed monitoring such as a network sensor on a span port should  only use observer.ingress to categorize traffic.
+		/// Observer.egress holds information like interface number and name, vlan, and zone information to classify egress traffic.  Single armed monitoring such as a network sensor on a span port should only use observer.ingress to categorize traffic.
 		/// </summary>
 		[DataMember(Name = "egress")]
 		public ObserverEgress Egress { get; set; }
+
+		/// <summary>
+		/// Observer.ingress holds information like interface number and name, vlan, and zone information to classify ingress traffic.  Single armed monitoring such as a network sensor on a span port should only use observer.ingress to categorize traffic.
+		/// </summary>
+		[DataMember(Name = "ingress")]
+		public ObserverIngress Ingress { get; set; }
 
 		/// <summary>
 		/// Fields describing a location.
 		/// </summary>
 		[DataMember(Name = "geo")]
 		public Geo Geo { get; set; }
-
-		/// <summary>
-		/// Observer.ingress holds information like interface number and name, vlan, and zone information to  classify ingress traffic.  Single armed monitoring such as a network sensor on a span port should  only use observer.ingress to categorize traffic.
-		/// </summary>
-		[DataMember(Name = "ingress")]
-		public ObserverIngress Ingress { get; set; }
 
 		/// <summary>
 		/// OS fields contain information about the operating system.
@@ -2627,9 +3646,10 @@ namespace Elastic.CommonSchema
 		public string[] Ip { get; set; }
 
 		/// <summary>
-		/// MAC addresses of the observer
+		/// MAC addresses of the observer.<para/><para/>The notation format from RFC 7042 is suggested: Each octet (that is, 8-bit byte) is represented by two [uppercase] hexadecimal digits giving the value of the octet as an unsigned integer. Successive octets are separated by a hyphen.
 		/// </summary>
 		/// <remarks>(ECS Core)</remarks>
+		/// <example>["00-00-5E-00-53-23","00-00-5E-00-53-24"]</example>
 		[DataMember(Name = "mac")]
 		public string[] Mac { get; set; }
 
@@ -2682,9 +3702,111 @@ namespace Elastic.CommonSchema
 	}
 
 	/// <summary>
+	/// Cluster, property of <see cref="Orchestrator" />
+	/// </summary>
+	public class OrchestratorCluster
+	{
+		/// <summary>
+		/// Name of the cluster.
+		/// </summary>
+		/// <remarks>(ECS Extended)</remarks>
+		[DataMember(Name = "name")]
+		public string Name { get; set; }
+
+		/// <summary>
+		/// URL of the API used to manage the cluster.
+		/// </summary>
+		/// <remarks>(ECS Extended)</remarks>
+		[DataMember(Name = "url")]
+		public string Url { get; set; }
+
+		/// <summary>
+		/// The version of the cluster.
+		/// </summary>
+		/// <remarks>(ECS Extended)</remarks>
+		[DataMember(Name = "version")]
+		public string Version { get; set; }
+
+	}
+	/// <summary>
+	/// Resource, property of <see cref="Orchestrator" />
+	/// </summary>
+	public class OrchestratorResource
+	{
+		/// <summary>
+		/// Name of the resource being acted upon.
+		/// </summary>
+		/// <remarks>(ECS Extended)</remarks>
+		/// <example>test-pod-cdcws</example>
+		[DataMember(Name = "name")]
+		public string Name { get; set; }
+
+		/// <summary>
+		/// Type of resource being acted upon.
+		/// </summary>
+		/// <remarks>(ECS Extended)</remarks>
+		/// <example>service</example>
+		[DataMember(Name = "type")]
+		public string Type { get; set; }
+
+	}
+	/// <summary>
+	/// Fields that describe the resources which container orchestrators manage or act upon.
+	/// <para/>
+	/// ECS field reference: https://www.elastic.co/guide/en/ecs/v8.2.0/ecs-orchestrator.html
+	/// </summary>
+	public class Orchestrator 
+	{
+		/// <summary>
+		/// Cluster property.
+		/// </summary>
+		[DataMember(Name = "cluster")]
+		public OrchestratorCluster Cluster { get; set; }
+
+		/// <summary>
+		/// Resource property.
+		/// </summary>
+		[DataMember(Name = "resource")]
+		public OrchestratorResource Resource { get; set; }
+
+		/// <summary>
+		/// API version being used to carry out the action
+		/// </summary>
+		/// <remarks>(ECS Extended)</remarks>
+		/// <example>v1beta1</example>
+		[DataMember(Name = "api_version")]
+		public string ApiVersion { get; set; }
+
+		/// <summary>
+		/// Namespace in which the action is taking place.
+		/// </summary>
+		/// <remarks>(ECS Extended)</remarks>
+		/// <example>kube-system</example>
+		[DataMember(Name = "namespace")]
+		public string Namespace { get; set; }
+
+		/// <summary>
+		/// Organization affected by the event (for multi-tenant orchestrator setups).
+		/// </summary>
+		/// <remarks>(ECS Extended)</remarks>
+		/// <example>elastic</example>
+		[DataMember(Name = "organization")]
+		public string Organization { get; set; }
+
+		/// <summary>
+		/// Orchestrator cluster type (e.g. kubernetes, nomad or cloudfoundry).
+		/// </summary>
+		/// <remarks>(ECS Extended)</remarks>
+		/// <example>kubernetes</example>
+		[DataMember(Name = "type")]
+		public string Type { get; set; }
+
+	}
+
+	/// <summary>
 	/// The organization fields enrich data with information about the company or entity the data is associated with.<para/><para/>These fields help you arrange or filter data stored in an index by one or multiple organizations.
 	/// <para/>
-	/// ECS field reference: https://www.elastic.co/guide/en/ecs/1.6/ecs-organization.html
+	/// ECS field reference: https://www.elastic.co/guide/en/ecs/v8.2.0/ecs-organization.html
 	/// </summary>
 	public class Organization 
 	{
@@ -2707,7 +3829,7 @@ namespace Elastic.CommonSchema
 	/// <summary>
 	/// The OS fields contain information about the operating system.
 	/// <para/>
-	/// ECS field reference: https://www.elastic.co/guide/en/ecs/1.6/ecs-os.html
+	/// ECS field reference: https://www.elastic.co/guide/en/ecs/v8.2.0/ecs-os.html
 	/// </summary>
 	public class Os 
 	{
@@ -2752,6 +3874,14 @@ namespace Elastic.CommonSchema
 		public string Platform { get; set; }
 
 		/// <summary>
+		/// Use the `os.type` field to categorize the operating system into one of the broad commercial families.<para/><para/>One of these following values should be used (lowercase): linux, macos, unix, windows.<para/><para/>If the OS you're dealing with is not in the list, the field should not be populated. Please let us know by opening an issue with ECS, to propose its addition.
+		/// </summary>
+		/// <remarks>(ECS Extended)</remarks>
+		/// <example>macos</example>
+		[DataMember(Name = "type")]
+		public string Type { get; set; }
+
+		/// <summary>
 		/// Operating system version as a raw string.
 		/// </summary>
 		/// <remarks>(ECS Extended)</remarks>
@@ -2764,7 +3894,7 @@ namespace Elastic.CommonSchema
 	/// <summary>
 	/// These fields contain information about an installed software package. It contains general information about a package, such as name, version or size. It also contains installation details, such as time or location.
 	/// <para/>
-	/// ECS field reference: https://www.elastic.co/guide/en/ecs/1.6/ecs-package.html
+	/// ECS field reference: https://www.elastic.co/guide/en/ecs/v8.2.0/ecs-package.html
 	/// </summary>
 	public class Package 
 	{
@@ -2876,7 +4006,7 @@ namespace Elastic.CommonSchema
 	/// <summary>
 	/// These fields contain Windows Portable Executable (PE) metadata.
 	/// <para/>
-	/// ECS field reference: https://www.elastic.co/guide/en/ecs/1.6/ecs-pe.html
+	/// ECS field reference: https://www.elastic.co/guide/en/ecs/v8.2.0/ecs-pe.html
 	/// </summary>
 	public class Pe 
 	{
@@ -2929,6 +4059,14 @@ namespace Elastic.CommonSchema
 		public string OriginalFileName { get; set; }
 
 		/// <summary>
+		/// A hash of the PE header and data from one or more PE sections. An pehash can be used to cluster files by transforming structural information about a file into a hash value.<para/><para/>Learn more at https://www.usenix.org/legacy/events/leet09/tech/full_papers/wicherski/wicherski_html/index.html.
+		/// </summary>
+		/// <remarks>(ECS Extended)</remarks>
+		/// <example>73ff189b63cd6be375a7ff25179a38d347651975</example>
+		[DataMember(Name = "pehash")]
+		public string Pehash { get; set; }
+
+		/// <summary>
 		/// Internal product name of the file, provided at compile-time.
 		/// </summary>
 		/// <remarks>(ECS Extended)</remarks>
@@ -2938,6 +4076,59 @@ namespace Elastic.CommonSchema
 
 	}
 
+	/// <summary>
+	/// Parent, property of <see cref="Process" />
+	/// </summary>
+	public class ProcessParent
+	{
+		/// <summary>
+		/// Information about the parent's process group leader. Only pid, start and entity_id fields are set.
+		/// </summary>
+		/// <remarks>(ECS Core)</remarks>
+		[DataMember(Name = "group_leader")]
+		public Process GroupLeader { get; set; }
+
+	}
+	/// <summary>
+	/// EntryLeader, property of <see cref="Process" />
+	/// </summary>
+	public class ProcessEntryLeader
+	{
+		/// <summary>
+		/// Information about the entry leader's parent process. Only pid, start and entity_id fields are set.
+		/// </summary>
+		/// <remarks>(ECS Core)</remarks>
+		[DataMember(Name = "parent")]
+		public Process Parent { get; set; }
+
+		/// <summary>
+		/// Information about the parent session of the entry leader. Only pid, start and entity_id fields are set.
+		/// </summary>
+		/// <remarks>(ECS Core)</remarks>
+		[DataMember(Name = "session_leader")]
+		public Process SessionLeader { get; set; }
+
+	}
+	/// <summary>
+	/// SessionLeader, property of <see cref="Process" />
+	/// </summary>
+	public class ProcessSessionLeader
+	{
+		/// <summary>
+		/// Information about the session leader's parent process. Only pid, start and entity_id fields are set.
+		/// </summary>
+		/// <remarks>(ECS Core)</remarks>
+		[DataMember(Name = "parent")]
+		public Process Parent { get; set; }
+
+		/// <summary>
+		/// Information about the parent session of the session leader. Only pid, start and entity_id fields are set.
+		/// </summary>
+		/// <remarks>(ECS Core)</remarks>
+		[DataMember(Name = "session_leader")]
+		public Process  { get; set; }
+
+	}
 	/// <summary>
 	/// Thread, property of <see cref="Process" />
 	/// </summary>
@@ -2963,27 +4154,21 @@ namespace Elastic.CommonSchema
 	/// <summary>
 	/// These fields contain information about a process.<para/><para/>These fields can help you correlate metrics information with a process id/name from a log message.  The `process.pid` often stays in the metric itself and is copied to the global field for correlation.
 	/// <para/>
-	/// ECS field reference: https://www.elastic.co/guide/en/ecs/1.6/ecs-process.html
+	/// ECS field reference: https://www.elastic.co/guide/en/ecs/v8.2.0/ecs-process.html
 	/// </summary>
 	public class Process 
 	{
 		/// <summary>
-		/// These fields contain information about binary code signatures.
+		/// These fields contain Linux Executable Linkable Format (ELF) metadata.
 		/// </summary>
-		[DataMember(Name = "codesignature")]
-		public CodeSignature CodeSignature { get; set; }
+		[DataMember(Name = "elf")]
+		public Elf Elf { get; set; }
 
 		/// <summary>
-		/// Hashes, usually file hashes.
-		/// </summary>
-		[DataMember(Name = "hash")]
-		public Hash Hash { get; set; }
-
-		/// <summary>
-		/// These fields contain information about a process.
+		/// Parent property.
 		/// </summary>
 		[DataMember(Name = "parent")]
-		public Process Parent { get; set; }
+		public ProcessProcess Parent { get; set; }
 
 		/// <summary>
 		/// These fields contain Windows Portable Executable (PE) metadata.
@@ -2992,10 +4177,88 @@ namespace Elastic.CommonSchema
 		public Pe Pe { get; set; }
 
 		/// <summary>
+		/// First process from terminal or remote access via SSH, SSM, etc OR a service directly started by the init process.
+		/// </summary>
+		[DataMember(Name = "entryleader")]
+		public ProcessEntryLeader EntryLeader { get; set; }
+
+		/// <summary>
+		/// Information about the process group leader. In some cases this may be the same as the top level process.
+		/// </summary>
+		[DataMember(Name = "groupleader")]
+		public GroupLeader GroupLeader { get; set; }
+
+		/// <summary>
+		/// An array of previous executions for the process, including the initial fork. Only executable and args are set.
+		/// </summary>
+		[DataMember(Name = "previous")]
+		public Previous Previous { get; set; }
+
+		/// <summary>
+		/// Often the same as entry_leader. When it differs, it represents a session started within another session. e.g. using tmux
+		/// </summary>
+		[DataMember(Name = "sessionleader")]
+		public ProcessSessionLeader SessionLeader { get; set; }
+
+		/// <summary>
+		/// These fields contain information about binary code signatures.
+		/// </summary>
+		[DataMember(Name = "codesignature")]
+		public CodeSignature CodeSignature { get; set; }
+
+		/// <summary>
+		/// The real group (rgid).
+		/// </summary>
+		[DataMember(Name = "realgroup")]
+		public RealGroup RealGroup { get; set; }
+
+		/// <summary>
+		/// The real user (ruid). Identifies the real owner of the process.
+		/// </summary>
+		[DataMember(Name = "realuser")]
+		public RealUser RealUser { get; set; }
+
+		/// <summary>
+		/// The saved group (sgid).
+		/// </summary>
+		[DataMember(Name = "savedgroup")]
+		public SavedGroup SavedGroup { get; set; }
+
+		/// <summary>
+		/// The saved user (suid).
+		/// </summary>
+		[DataMember(Name = "saveduser")]
+		public SavedUser SavedUser { get; set; }
+
+		/// <summary>
+		/// An array of supplemental groups.
+		/// </summary>
+		[DataMember(Name = "supplementalgroups")]
+		public SupplementalGroups SupplementalGroups { get; set; }
+
+		/// <summary>
+		/// The effective user (euid).
+		/// </summary>
+		[DataMember(Name = "user")]
+		public User User { get; set; }
+
+		/// <summary>
+		/// Hashes, usually file hashes.
+		/// </summary>
+		[DataMember(Name = "hash")]
+		public Hash Hash { get; set; }
+
+		/// <summary>
 		/// Thread property.
 		/// </summary>
 		[DataMember(Name = "thread")]
 		public ProcessThread Thread { get; set; }
+
+		/// <summary>
+		/// Tty property.
+		/// </summary>
+		[DataMember(Name = "tty")]
+		public Tty Tty { get; set; }
 
 		/// <summary>
 		/// Array of process arguments, starting with the absolute path to the executable.<para/><para/>May be filtered to protect sensitive information.
@@ -3022,12 +4285,28 @@ namespace Elastic.CommonSchema
 		public string CommandLine { get; set; }
 
 		/// <summary>
+		/// The time the process ended.
+		/// </summary>
+		/// <remarks>(ECS Extended)</remarks>
+		/// <example>2016-05-23T08:05:34.853Z</example>
+		[DataMember(Name = "end")]
+		public DateTimeOffset? End { get; set; }
+
+		/// <summary>
 		/// Unique identifier for the process.<para/><para/>The implementation of this is specified by the data source, but some examples of what could be used here are a process-generated UUID, Sysmon Process GUIDs, or a hash of some uniquely identifying components of a process.<para/><para/>Constructing a globally unique identifier is a common practice to mitigate PID reuse as well as to identify a specific process over time, across multiple monitored hosts.
 		/// </summary>
 		/// <remarks>(ECS Extended)</remarks>
 		/// <example>c2c455d9f99375d</example>
 		[DataMember(Name = "entity_id")]
 		public string EntityId { get; set; }
+
+		/// <summary>
+		/// Environment variables (`env_vars`) set at the time of the event. May be filtered to protect sensitive information.<para/><para/>The field should not contain nested objects. All values should use `keyword`.
+		/// </summary>
+		/// <remarks>(ECS Extended)</remarks>
+		/// <example>{\"USER\": \"elastic\",\"LANG\": \"en_US.UTF-8\",\"HOME\": \"/home/elastic\"}</example>
+		[DataMember(Name = "env_vars")]
+		public object EnvVars { get; set; }
 
 		/// <summary>
 		/// Absolute path to the process executable.
@@ -3046,6 +4325,14 @@ namespace Elastic.CommonSchema
 		public long? ExitCode { get; set; }
 
 		/// <summary>
+		/// Whether the process is connected to an interactive shell.<para/><para/>Process interactivity is inferred from the processes file descriptors. If the character device for the controlling tty is the same as stdin and stderr for the process, the process is considered interactive.<para/><para/>Note: A non-interactive process can belong to an interactive session and is simply one that does not have open file descriptors reading the controlling TTY on FD 0 (stdin) or writing to the controlling TTY on FD 2 (stderr). A backgrounded process is still considered interactive if stdin and stderr are connected to the controlling TTY.
+		/// </summary>
+		/// <remarks>(ECS Extended)</remarks>
+		/// <example>true</example>
+		[DataMember(Name = "interactive")]
+		public bool? Interactive { get; set; }
+
+		/// <summary>
 		/// Process name.<para/><para/>Sometimes called program name or similar.
 		/// </summary>
 		/// <remarks>(ECS Extended)</remarks>
@@ -3054,7 +4341,7 @@ namespace Elastic.CommonSchema
 		public string Name { get; set; }
 
 		/// <summary>
-		/// Identifier of the group of processes the process belongs to.
+		/// Deprecated for removal in next major version release. This field is superseded by `process.group_leader.pid`.<para/><para/>Identifier of the group of processes the process belongs to.
 		/// </summary>
 		/// <remarks>(ECS Extended)</remarks>
 		[DataMember(Name = "pgid")]
@@ -3067,14 +4354,6 @@ namespace Elastic.CommonSchema
 		/// <example>4242</example>
 		[DataMember(Name = "pid")]
 		public long? Pid { get; set; }
-
-		/// <summary>
-		/// Parent process' pid.
-		/// </summary>
-		/// <remarks>(ECS Extended)</remarks>
-		/// <example>4241</example>
-		[DataMember(Name = "ppid")]
-		public long? Ppid { get; set; }
 
 		/// <summary>
 		/// The time the process started.
@@ -3090,6 +4369,13 @@ namespace Elastic.CommonSchema
 		/// <remarks>(ECS Extended)</remarks>
 		[DataMember(Name = "title")]
 		public string Title { get; set; }
+
+		/// <summary>
+		/// Information about the controlling TTY device. If set, the process belongs to an interactive session.
+		/// </summary>
+		/// <remarks>(ECS Extended)</remarks>
+		[DataMember(Name = "tty")]
+		public object Tty { get; set; }
 
 		/// <summary>
 		/// Seconds the process has been up.
@@ -3142,7 +4428,7 @@ namespace Elastic.CommonSchema
 	/// <summary>
 	/// Fields related to Windows Registry operations.
 	/// <para/>
-	/// ECS field reference: https://www.elastic.co/guide/en/ecs/1.6/ecs-registry.html
+	/// ECS field reference: https://www.elastic.co/guide/en/ecs/v8.2.0/ecs-registry.html
 	/// </summary>
 	public class Registry 
 	{
@@ -3189,7 +4475,7 @@ namespace Elastic.CommonSchema
 	/// <summary>
 	/// This field set is meant to facilitate pivoting around a piece of data.<para/><para/>Some pieces of information can be seen in many places in an ECS event. To facilitate searching for them, store an array of all seen values to their corresponding field in `related.`.<para/><para/>A concrete example is IP addresses, which can be under host, observer, source, destination, client, server, and network.forwarded_ip. If you append all IPs to `related.ip`, you can then search for a given IP trivially, no matter where it appeared, by querying `related.ip:192.0.2.15`.
 	/// <para/>
-	/// ECS field reference: https://www.elastic.co/guide/en/ecs/1.6/ecs-related.html
+	/// ECS field reference: https://www.elastic.co/guide/en/ecs/v8.2.0/ecs-related.html
 	/// </summary>
 	public class Related 
 	{
@@ -3215,7 +4501,7 @@ namespace Elastic.CommonSchema
 		public string[] Ip { get; set; }
 
 		/// <summary>
-		/// All the user names seen on your event.
+		/// All the user names or other user identifiers seen on the event.
 		/// </summary>
 		/// <remarks>(ECS Extended)</remarks>
 		[DataMember(Name = "user")]
@@ -3226,7 +4512,7 @@ namespace Elastic.CommonSchema
 	/// <summary>
 	/// Rule fields are used to capture the specifics of any observer or agent rules that generate alerts or other notable events.<para/><para/>Examples of data sources that would populate the rule fields include: network admission control platforms, network or host IDS/IPS, network firewalls, web application firewalls, url filters, endpoint detection and response (EDR) systems, etc.
 	/// <para/>
-	/// ECS field reference: https://www.elastic.co/guide/en/ecs/1.6/ecs-rule.html
+	/// ECS field reference: https://www.elastic.co/guide/en/ecs/v8.2.0/ecs-rule.html
 	/// </summary>
 	public class Rule 
 	{
@@ -3335,21 +4621,21 @@ namespace Elastic.CommonSchema
 	/// <summary>
 	/// A Server is defined as the responder in a network connection for events regarding sessions, connections, or bidirectional flow records.<para/><para/>For TCP events, the server is the receiver of the initial SYN packet(s) of the TCP connection. For other protocols, the server is generally the responder in the network transaction. Some systems actually use the term "responder" to refer the server in TCP connections. The server fields describe details about the system acting as the server in the network event. Server fields are usually populated in conjunction with client fields. Server fields are generally not populated for packet-level events.<para/><para/>Client / server representations can add semantic context to an exchange, which is helpful to visualize the data in certain situations. If your context falls in that category, you should still ensure that source and destination are filled appropriately.
 	/// <para/>
-	/// ECS field reference: https://www.elastic.co/guide/en/ecs/1.6/ecs-server.html
+	/// ECS field reference: https://www.elastic.co/guide/en/ecs/v8.2.0/ecs-server.html
 	/// </summary>
 	public class Server 
 	{
-		/// <summary>
-		/// Fields describing an Autonomous System (Internet routing prefix).
-		/// </summary>
-		[DataMember(Name = "as")]
-		public As As { get; set; }
-
 		/// <summary>
 		/// Fields describing a location.
 		/// </summary>
 		[DataMember(Name = "geo")]
 		public Geo Geo { get; set; }
+
+		/// <summary>
+		/// Fields to describe the user relevant to the event.
+		/// </summary>
+		[DataMember(Name = "user")]
+		public User User { get; set; }
 
 		/// <summary>
 		/// Nat property.
@@ -3358,10 +4644,10 @@ namespace Elastic.CommonSchema
 		public ServerNat Nat { get; set; }
 
 		/// <summary>
-		/// Fields to describe the user relevant to the event.
+		/// Fields describing an Autonomous System (Internet routing prefix).
 		/// </summary>
-		[DataMember(Name = "user")]
-		public User User { get; set; }
+		[DataMember(Name = "as")]
+		public As As { get; set; }
 
 		/// <summary>
 		/// Some event server addresses are defined ambiguously. The event will sometimes list an IP, a domain or a unix socket.  You should always store the raw address in the `.address` field.<para/><para/>Then it should be duplicated to `.ip` or `.domain`, depending on which one it is.
@@ -3379,9 +4665,10 @@ namespace Elastic.CommonSchema
 		public long? Bytes { get; set; }
 
 		/// <summary>
-		/// Server domain.
+		/// The domain name of the server system.<para/><para/>This value may be a host name, a fully qualified domain name, or another host naming format. The value may derive from the original event or be added from enrichment.
 		/// </summary>
 		/// <remarks>(ECS Core)</remarks>
+		/// <example>foo.example.com</example>
 		[DataMember(Name = "domain")]
 		public string Domain { get; set; }
 
@@ -3393,9 +4680,10 @@ namespace Elastic.CommonSchema
 		public string Ip { get; set; }
 
 		/// <summary>
-		/// MAC address of the server.
+		/// MAC address of the server.<para/><para/>The notation format from RFC 7042 is suggested: Each octet (that is, 8-bit byte) is represented by two [uppercase] hexadecimal digits giving the value of the octet as an unsigned integer. Successive octets are separated by a hyphen.
 		/// </summary>
 		/// <remarks>(ECS Core)</remarks>
+		/// <example>00-00-5E-00-53-23</example>
 		[DataMember(Name = "mac")]
 		public string Mac { get; set; }
 
@@ -3421,6 +4709,14 @@ namespace Elastic.CommonSchema
 		/// <example>example.com</example>
 		[DataMember(Name = "registered_domain")]
 		public string RegisteredDomain { get; set; }
+
+		/// <summary>
+		/// The subdomain portion of a fully qualified domain name includes all of the names except the host name under the registered_domain.  In a partially qualified domain, or if the the qualification level of the full name cannot be determined, subdomain contains all of the names below the registered domain.<para/><para/>For example the subdomain portion of "www.east.mydomain.co.uk" is "east". If the domain has multiple levels of subdomain, such as "sub2.sub1.example.com", the subdomain field should contain "sub2.sub1", with no trailing period.
+		/// </summary>
+		/// <remarks>(ECS Extended)</remarks>
+		/// <example>east</example>
+		[DataMember(Name = "subdomain")]
+		public string Subdomain { get; set; }
 
 		/// <summary>
 		/// The effective top level domain (eTLD), also known as the domain suffix, is the last part of the domain name. For example, the top level domain for example.com is "com".<para/><para/>This value can be determined precisely with a list like the public suffix list (http://publicsuffix.org). Trying to approximate this by simply taking the last label will not work well for effective TLDs such as "co.uk".
@@ -3449,15 +4745,46 @@ namespace Elastic.CommonSchema
 	/// <summary>
 	/// The service fields describe the service for or from which the data was collected.<para/><para/>These fields help you find and correlate logs for a specific service and version.
 	/// <para/>
-	/// ECS field reference: https://www.elastic.co/guide/en/ecs/1.6/ecs-service.html
+	/// ECS field reference: https://www.elastic.co/guide/en/ecs/v8.2.0/ecs-service.html
 	/// </summary>
+	/// <remarks>
+	/// The service fields may be self-nested under service.origin.* and service.target.* to describe origin or target services in the context of incoming or outgoing requests, respectively. However, the fieldsets service.origin.* and service.target.* must not be confused with the root service fieldset that is used to describe the actual service under observation. The fieldset service.origin.* may only be used in the context of incoming requests or events to describe the originating service of the request. The fieldset service.target.* may only be used in the context of outgoing requests or events to describe the target service of the request.
+	/// </remarks>
 	public class Service 
 	{
+		/// <summary>
+		/// Describes the origin service in case of an incoming request or event.
+		/// </summary>
+		[DataMember(Name = "origin")]
+		public Origin Origin { get; set; }
+
+		/// <summary>
+		/// Describes the target service in case of an outgoing request or event.
+		/// </summary>
+		[DataMember(Name = "target")]
+		public Target Target { get; set; }
+
 		/// <summary>
 		/// Node property.
 		/// </summary>
 		[DataMember(Name = "node")]
 		public ServiceNode Node { get; set; }
+
+		/// <summary>
+		/// Address where data about this service was collected from.<para/><para/>This should be a URI, network address (ipv4:port or [ipv6]:port) or a resource path (sockets).
+		/// </summary>
+		/// <remarks>(ECS Extended)</remarks>
+		/// <example>172.26.0.2:5432</example>
+		[DataMember(Name = "address")]
+		public string Address { get; set; }
+
+		/// <summary>
+		/// Identifies the environment where the service is running.<para/><para/>If the same service runs in different environments (production, staging, QA, development, etc.), the environment can identify other instances of the same service. Can also group services and applications from the same environment.
+		/// </summary>
+		/// <remarks>(ECS Extended)</remarks>
+		/// <example>production</example>
+		[DataMember(Name = "environment")]
+		public string Environment { get; set; }
 
 		/// <summary>
 		/// Ephemeral identifier of this service (if one exists).<para/><para/>This id normally changes across restarts, but `service.id` does not.
@@ -3529,23 +4856,23 @@ namespace Elastic.CommonSchema
 
 	}
 	/// <summary>
-	/// Source fields describe details about the source of a packet/event.<para/><para/>Source fields are usually populated in conjunction with destination fields.
+	/// Source fields capture details about the sender of a network exchange/packet. These fields are populated from a network event, packet, or other event containing details of a network transaction.<para/><para/>Source fields are usually populated in conjunction with destination fields. The source and destination fields are considered the baseline and should always be filled if an event contains source and destination details from a network transaction. If the event also contains identification of the client and server roles, then the client and server fields should also be populated.
 	/// <para/>
-	/// ECS field reference: https://www.elastic.co/guide/en/ecs/1.6/ecs-source.html
+	/// ECS field reference: https://www.elastic.co/guide/en/ecs/v8.2.0/ecs-source.html
 	/// </summary>
 	public class Source 
 	{
-		/// <summary>
-		/// Fields describing an Autonomous System (Internet routing prefix).
-		/// </summary>
-		[DataMember(Name = "as")]
-		public As As { get; set; }
-
 		/// <summary>
 		/// Fields describing a location.
 		/// </summary>
 		[DataMember(Name = "geo")]
 		public Geo Geo { get; set; }
+
+		/// <summary>
+		/// Fields to describe the user relevant to the event.
+		/// </summary>
+		[DataMember(Name = "user")]
+		public User User { get; set; }
 
 		/// <summary>
 		/// Nat property.
@@ -3554,10 +4881,10 @@ namespace Elastic.CommonSchema
 		public SourceNat Nat { get; set; }
 
 		/// <summary>
-		/// Fields to describe the user relevant to the event.
+		/// Fields describing an Autonomous System (Internet routing prefix).
 		/// </summary>
-		[DataMember(Name = "user")]
-		public User User { get; set; }
+		[DataMember(Name = "as")]
+		public As As { get; set; }
 
 		/// <summary>
 		/// Some event source addresses are defined ambiguously. The event will sometimes list an IP, a domain or a unix socket.  You should always store the raw address in the `.address` field.<para/><para/>Then it should be duplicated to `.ip` or `.domain`, depending on which one it is.
@@ -3575,9 +4902,10 @@ namespace Elastic.CommonSchema
 		public long? Bytes { get; set; }
 
 		/// <summary>
-		/// Source domain.
+		/// The domain name of the source system.<para/><para/>This value may be a host name, a fully qualified domain name, or another host naming format. The value may derive from the original event or be added from enrichment.
 		/// </summary>
 		/// <remarks>(ECS Core)</remarks>
+		/// <example>foo.example.com</example>
 		[DataMember(Name = "domain")]
 		public string Domain { get; set; }
 
@@ -3589,9 +4917,10 @@ namespace Elastic.CommonSchema
 		public string Ip { get; set; }
 
 		/// <summary>
-		/// MAC address of the source.
+		/// MAC address of the source.<para/><para/>The notation format from RFC 7042 is suggested: Each octet (that is, 8-bit byte) is represented by two [uppercase] hexadecimal digits giving the value of the octet as an unsigned integer. Successive octets are separated by a hyphen.
 		/// </summary>
 		/// <remarks>(ECS Core)</remarks>
+		/// <example>00-00-5E-00-53-23</example>
 		[DataMember(Name = "mac")]
 		public string Mac { get; set; }
 
@@ -3619,6 +4948,14 @@ namespace Elastic.CommonSchema
 		public string RegisteredDomain { get; set; }
 
 		/// <summary>
+		/// The subdomain portion of a fully qualified domain name includes all of the names except the host name under the registered_domain.  In a partially qualified domain, or if the the qualification level of the full name cannot be determined, subdomain contains all of the names below the registered domain.<para/><para/>For example the subdomain portion of "www.east.mydomain.co.uk" is "east". If the domain has multiple levels of subdomain, such as "sub2.sub1.example.com", the subdomain field should contain "sub2.sub1", with no trailing period.
+		/// </summary>
+		/// <remarks>(ECS Extended)</remarks>
+		/// <example>east</example>
+		[DataMember(Name = "subdomain")]
+		public string Subdomain { get; set; }
+
+		/// <summary>
 		/// The effective top level domain (eTLD), also known as the domain suffix, is the last part of the domain name. For example, the top level domain for example.com is "com".<para/><para/>This value can be determined precisely with a list like the public suffix list (http://publicsuffix.org). Trying to approximate this by simply taking the last label will not work well for effective TLDs such as "co.uk".
 		/// </summary>
 		/// <remarks>(ECS Extended)</remarks>
@@ -3629,31 +4966,360 @@ namespace Elastic.CommonSchema
 	}
 
 	/// <summary>
+	/// Enrichments, property of <see cref="Threat" />
+	/// </summary>
+	public class ThreatEnrichments
+	{
+		/// <summary>
+		/// Fields describing files.
+		/// </summary>
+		/// <remarks>(ECS Core)</remarks>
+		[DataMember(Name = "file")]
+		public File File { get; set; }
+
+		/// <summary>
+		/// These fields contain x509 certificate metadata.
+		/// </summary>
+		/// <remarks>(ECS Core)</remarks>
+		[DataMember(Name = "x509")]
+		public X509 X509 { get; set; }
+
+		/// <summary>
+		/// Fields describing a location.
+		/// </summary>
+		/// <remarks>(ECS Core)</remarks>
+		[DataMember(Name = "geo")]
+		public Geo Geo { get; set; }
+
+		/// <summary>
+		/// Fields that let you store URLs in various forms.
+		/// </summary>
+		/// <remarks>(ECS Core)</remarks>
+		[DataMember(Name = "url")]
+		public Url Url { get; set; }
+
+		/// <summary>
+		/// Object containing associated indicators enriching the event.
+		/// </summary>
+		/// <remarks>(ECS Extended)</remarks>
+		[DataMember(Name = "indicator")]
+		public object Indicator { get; set; }
+
+		/// <summary>
+		/// Fields related to Windows Registry operations.
+		/// </summary>
+		/// <remarks>(ECS Core)</remarks>
+		[DataMember(Name = "registry")]
+		public Registry Registry { get; set; }
+
+		/// <summary>
+		/// Fields describing an Autonomous System (Internet routing prefix).
+		/// </summary>
+		/// <remarks>(ECS Core)</remarks>
+		[DataMember(Name = "as")]
+		public As As { get; set; }
+
+	}
+	/// <summary>
+	/// Indicator, property of <see cref="Threat" />
+	/// </summary>
+	public class ThreatIndicator
+	{
+		/// <summary>
+		/// Fields describing files.
+		/// </summary>
+		/// <remarks>(ECS Core)</remarks>
+		[DataMember(Name = "file")]
+		public File File { get; set; }
+
+		/// <summary>
+		/// These fields contain x509 certificate metadata.
+		/// </summary>
+		/// <remarks>(ECS Core)</remarks>
+		[DataMember(Name = "x509")]
+		public X509 X509 { get; set; }
+
+		/// <summary>
+		/// Fields describing a location.
+		/// </summary>
+		/// <remarks>(ECS Core)</remarks>
+		[DataMember(Name = "geo")]
+		public Geo Geo { get; set; }
+
+		/// <summary>
+		/// Fields that let you store URLs in various forms.
+		/// </summary>
+		/// <remarks>(ECS Core)</remarks>
+		[DataMember(Name = "url")]
+		public Url Url { get; set; }
+
+		/// <summary>
+		/// Fields related to Windows Registry operations.
+		/// </summary>
+		/// <remarks>(ECS Core)</remarks>
+		[DataMember(Name = "registry")]
+		public Registry Registry { get; set; }
+
+		/// <summary>
+		/// Identifies the vendor-neutral confidence rating using the None/Low/Medium/High scale defined in Appendix A of the STIX 2.1 framework. Vendor-specific confidence scales may be added as custom fields.<para/><para/>Expected values are:<para/><para/>  * Not Specified<para/><para/>  * None<para/><para/>  * Low<para/><para/>  * Medium<para/><para/>  * High
+		/// </summary>
+		/// <remarks>(ECS Extended)</remarks>
+		/// <example>Medium</example>
+		[DataMember(Name = "confidence")]
+		public string Confidence { get; set; }
+
+		/// <summary>
+		/// Describes the type of action conducted by the threat.
+		/// </summary>
+		/// <remarks>(ECS Extended)</remarks>
+		/// <example>IP x.x.x.x was observed delivering the Angler EK.</example>
+		[DataMember(Name = "description")]
+		public string Description { get; set; }
+
+		/// <summary>
+		/// The date and time when intelligence source first reported sighting this indicator.
+		/// </summary>
+		/// <remarks>(ECS Extended)</remarks>
+		/// <example>2020-11-05T17:25:47Z</example>
+		[DataMember(Name = "first_seen")]
+		public DateTimeOffset? FirstSeen { get; set; }
+
+		/// <summary>
+		/// Identifies a threat indicator as an IP address (irrespective of direction).
+		/// </summary>
+		/// <remarks>(ECS Extended)</remarks>
+		/// <example>1.2.3.4</example>
+		[DataMember(Name = "ip")]
+		public string Ip { get; set; }
+
+		/// <summary>
+		/// The date and time when intelligence source last reported sighting this indicator.
+		/// </summary>
+		/// <remarks>(ECS Extended)</remarks>
+		/// <example>2020-11-05T17:25:47Z</example>
+		[DataMember(Name = "last_seen")]
+		public DateTimeOffset? LastSeen { get; set; }
+
+		/// <summary>
+		/// The date and time when intelligence source last modified information for this indicator.
+		/// </summary>
+		/// <remarks>(ECS Extended)</remarks>
+		/// <example>2020-11-05T17:25:47Z</example>
+		[DataMember(Name = "modified_at")]
+		public DateTimeOffset? ModifiedAt { get; set; }
+
+		/// <summary>
+		/// Identifies a threat indicator as a port number (irrespective of direction).
+		/// </summary>
+		/// <remarks>(ECS Extended)</remarks>
+		/// <example>443</example>
+		[DataMember(Name = "port")]
+		public long? Port { get; set; }
+
+		/// <summary>
+		/// The name of the indicator's provider.
+		/// </summary>
+		/// <remarks>(ECS Extended)</remarks>
+		/// <example>lrz_urlhaus</example>
+		[DataMember(Name = "provider")]
+		public string Provider { get; set; }
+
+		/// <summary>
+		/// Reference URL linking to additional information about this indicator.
+		/// </summary>
+		/// <remarks>(ECS Extended)</remarks>
+		/// <example>https://system.example.com/indicator/0001234</example>
+		[DataMember(Name = "reference")]
+		public string Reference { get; set; }
+
+		/// <summary>
+		/// Count of AV/EDR vendors that successfully detected malicious file or URL.
+		/// </summary>
+		/// <remarks>(ECS Extended)</remarks>
+		/// <example>4</example>
+		[DataMember(Name = "scanner_stats")]
+		public long? ScannerStats { get; set; }
+
+		/// <summary>
+		/// Number of times this indicator was observed conducting threat activity.
+		/// </summary>
+		/// <remarks>(ECS Extended)</remarks>
+		/// <example>20</example>
+		[DataMember(Name = "sightings")]
+		public long? Sightings { get; set; }
+
+		/// <summary>
+		/// Type of indicator as represented by Cyber Observable in STIX 2.0.<para/><para/>Recommended values:<para/><para/>  * autonomous-system<para/><para/>  * artifact<para/><para/>  * directory<para/><para/>  * domain-name<para/><para/>  * email-addr<para/><para/>  * file<para/><para/>  * ipv4-addr<para/><para/>  * ipv6-addr<para/><para/>  * mac-addr<para/><para/>  * mutex<para/><para/>  * port<para/><para/>  * process<para/><para/>  * software<para/><para/>  * url<para/><para/>  * user-account<para/><para/>  * windows-registry-key<para/><para/>  * x509-certificate
+		/// </summary>
+		/// <remarks>(ECS Extended)</remarks>
+		/// <example>ipv4-addr</example>
+		[DataMember(Name = "type")]
+		public string Type { get; set; }
+
+		/// <summary>
+		/// Fields describing an Autonomous System (Internet routing prefix).
+		/// </summary>
+		/// <remarks>(ECS Core)</remarks>
+		[DataMember(Name = "as")]
+		public As As { get; set; }
+
+	}
+	/// <summary>
+	/// Feed, property of <see cref="Threat" />
+	/// </summary>
+	public class ThreatFeed
+	{
+		/// <summary>
+		/// The saved object ID of the dashboard belonging to the threat feed for displaying dashboard links to threat feeds in Kibana.
+		/// </summary>
+		/// <remarks>(ECS Extended)</remarks>
+		/// <example>5ba16340-72e6-11eb-a3e3-b3cc7c78a70f</example>
+		[DataMember(Name = "dashboard_id")]
+		public string DashboardId { get; set; }
+
+		/// <summary>
+		/// Description of the threat feed in a UI friendly format.
+		/// </summary>
+		/// <remarks>(ECS Extended)</remarks>
+		/// <example>Threat feed from the AlienVault Open Threat eXchange network.</example>
+		[DataMember(Name = "description")]
+		public string Description { get; set; }
+
+		/// <summary>
+		/// The name of the threat feed in UI friendly format.
+		/// </summary>
+		/// <remarks>(ECS Extended)</remarks>
+		/// <example>AlienVault OTX</example>
+		[DataMember(Name = "name")]
+		public string Name { get; set; }
+
+		/// <summary>
+		/// Reference information for the threat feed in a UI friendly format.
+		/// </summary>
+		/// <remarks>(ECS Extended)</remarks>
+		/// <example>https://otx.alienvault.com</example>
+		[DataMember(Name = "reference")]
+		public string Reference { get; set; }
+
+	}
+	/// <summary>
+	/// Group, property of <see cref="Threat" />
+	/// </summary>
+	public class ThreatGroup
+	{
+		/// <summary>
+		/// The alias(es) of the group for a set of related intrusion activity that are tracked by a common name in the security community.<para/><para/>While not required, you can use a MITRE ATT&CK® group alias(es).
+		/// </summary>
+		/// <remarks>(ECS Extended)</remarks>
+		/// <example>["Magecart Group 6"]</example>
+		[DataMember(Name = "alias")]
+		public string[] Alias { get; set; }
+
+		/// <summary>
+		/// The id of the group for a set of related intrusion activity that are tracked by a common name in the security community.<para/><para/>While not required, you can use a MITRE ATT&CK® group id.
+		/// </summary>
+		/// <remarks>(ECS Extended)</remarks>
+		/// <example>G0037</example>
+		[DataMember(Name = "id")]
+		public string Id { get; set; }
+
+		/// <summary>
+		/// The name of the group for a set of related intrusion activity that are tracked by a common name in the security community.<para/><para/>While not required, you can use a MITRE ATT&CK® group name.
+		/// </summary>
+		/// <remarks>(ECS Extended)</remarks>
+		/// <example>FIN6</example>
+		[DataMember(Name = "name")]
+		public string Name { get; set; }
+
+		/// <summary>
+		/// The reference URL of the group for a set of related intrusion activity that are tracked by a common name in the security community.<para/><para/>While not required, you can use a MITRE ATT&CK® group reference URL.
+		/// </summary>
+		/// <remarks>(ECS Extended)</remarks>
+		/// <example>https://attack.mitre.org/groups/G0037/</example>
+		[DataMember(Name = "reference")]
+		public string Reference { get; set; }
+
+	}
+	/// <summary>
+	/// Software, property of <see cref="Threat" />
+	/// </summary>
+	public class ThreatSoftware
+	{
+		/// <summary>
+		/// The alias(es) of the software for a set of related intrusion activity that are tracked by a common name in the security community.<para/><para/>While not required, you can use a MITRE ATT&CK® associated software description.
+		/// </summary>
+		/// <remarks>(ECS Extended)</remarks>
+		/// <example>["X-Agent"]</example>
+		[DataMember(Name = "alias")]
+		public string[] Alias { get; set; }
+
+		/// <summary>
+		/// The id of the software used by this threat to conduct behavior commonly modeled using MITRE ATT&CK®.<para/><para/>While not required, you can use a MITRE ATT&CK® software id.
+		/// </summary>
+		/// <remarks>(ECS Extended)</remarks>
+		/// <example>S0552</example>
+		[DataMember(Name = "id")]
+		public string Id { get; set; }
+
+		/// <summary>
+		/// The name of the software used by this threat to conduct behavior commonly modeled using MITRE ATT&CK®.<para/><para/>While not required, you can use a MITRE ATT&CK® software name.
+		/// </summary>
+		/// <remarks>(ECS Extended)</remarks>
+		/// <example>AdFind</example>
+		[DataMember(Name = "name")]
+		public string Name { get; set; }
+
+		/// <summary>
+		/// The platforms of the software used by this threat to conduct behavior commonly modeled using MITRE ATT&CK®.<para/><para/>Recommended Values:<para/><para/>  * AWS<para/><para/>  * Azure<para/><para/>  * Azure AD<para/><para/>  * GCP<para/><para/>  * Linux<para/><para/>  * macOS<para/><para/>  * Network<para/><para/>  * Office 365<para/><para/>  * SaaS<para/><para/>  * Windows<para/><para/>While not required, you can use a MITRE ATT&CK® software platforms.
+		/// </summary>
+		/// <remarks>(ECS Extended)</remarks>
+		/// <example>["Windows"]</example>
+		[DataMember(Name = "platforms")]
+		public string[] Platforms { get; set; }
+
+		/// <summary>
+		/// The reference URL of the software used by this threat to conduct behavior commonly modeled using MITRE ATT&CK®.<para/><para/>While not required, you can use a MITRE ATT&CK® software reference URL.
+		/// </summary>
+		/// <remarks>(ECS Extended)</remarks>
+		/// <example>https://attack.mitre.org/software/S0552/</example>
+		[DataMember(Name = "reference")]
+		public string Reference { get; set; }
+
+		/// <summary>
+		/// The type of software used by this threat to conduct behavior commonly modeled using MITRE ATT&CK®.<para/><para/>Recommended values<para/><para/>  * Malware<para/><para/>  * Tool<para/><para/> While not required, you can use a MITRE ATT&CK® software type.
+		/// </summary>
+		/// <remarks>(ECS Extended)</remarks>
+		/// <example>Tool</example>
+		[DataMember(Name = "type")]
+		public string Type { get; set; }
+
+	}
+	/// <summary>
 	/// Tactic, property of <see cref="Threat" />
 	/// </summary>
 	public class ThreatTactic
 	{
 		/// <summary>
-		/// The id of tactic used by this threat. You can use a MITRE ATT&CK® tactic, for example. (ex. https://attack.mitre.org/tactics/TA0040/ )
+		/// The id of tactic used by this threat. You can use a MITRE ATT&CK® tactic, for example. (ex. https://attack.mitre.org/tactics/TA0002/ )
 		/// </summary>
 		/// <remarks>(ECS Extended)</remarks>
-		/// <example>TA0040</example>
+		/// <example>TA0002</example>
 		[DataMember(Name = "id")]
 		public string[] Id { get; set; }
 
 		/// <summary>
-		/// Name of the type of tactic used by this threat. You can use a MITRE ATT&CK® tactic, for example. (ex. https://attack.mitre.org/tactics/TA0040/)
+		/// Name of the type of tactic used by this threat. You can use a MITRE ATT&CK® tactic, for example. (ex. https://attack.mitre.org/tactics/TA0002/)
 		/// </summary>
 		/// <remarks>(ECS Extended)</remarks>
-		/// <example>impact</example>
+		/// <example>Execution</example>
 		[DataMember(Name = "name")]
 		public string[] Name { get; set; }
 
 		/// <summary>
-		/// The reference url of tactic used by this threat. You can use a MITRE ATT&CK® tactic, for example. (ex. https://attack.mitre.org/tactics/TA0040/ )
+		/// The reference url of tactic used by this threat. You can use a MITRE ATT&CK® tactic, for example. (ex. https://attack.mitre.org/tactics/TA0002/ )
 		/// </summary>
 		/// <remarks>(ECS Extended)</remarks>
-		/// <example>https://attack.mitre.org/tactics/TA0040/</example>
+		/// <example>https://attack.mitre.org/tactics/TA0002/</example>
 		[DataMember(Name = "reference")]
 		public string[] Reference { get; set; }
 
@@ -3664,37 +5330,67 @@ namespace Elastic.CommonSchema
 	public class ThreatTechnique
 	{
 		/// <summary>
-		/// The id of technique used by this threat. You can use a MITRE ATT&CK® technique, for example. (ex. https://attack.mitre.org/techniques/T1499/)
+		/// The id of technique used by this threat. You can use a MITRE ATT&CK® technique, for example. (ex. https://attack.mitre.org/techniques/T1059/)
 		/// </summary>
 		/// <remarks>(ECS Extended)</remarks>
-		/// <example>T1499</example>
+		/// <example>T1059</example>
 		[DataMember(Name = "id")]
 		public string[] Id { get; set; }
 
 		/// <summary>
-		/// The name of technique used by this threat. You can use a MITRE ATT&CK® technique, for example. (ex. https://attack.mitre.org/techniques/T1499/)
+		/// The name of technique used by this threat. You can use a MITRE ATT&CK® technique, for example. (ex. https://attack.mitre.org/techniques/T1059/)
 		/// </summary>
 		/// <remarks>(ECS Extended)</remarks>
-		/// <example>Endpoint Denial of Service</example>
+		/// <example>Command and Scripting Interpreter</example>
 		[DataMember(Name = "name")]
 		public string[] Name { get; set; }
 
 		/// <summary>
-		/// The reference url of technique used by this threat. You can use a MITRE ATT&CK® technique, for example. (ex. https://attack.mitre.org/techniques/T1499/ )
+		/// The reference url of technique used by this threat. You can use a MITRE ATT&CK® technique, for example. (ex. https://attack.mitre.org/techniques/T1059/)
 		/// </summary>
 		/// <remarks>(ECS Extended)</remarks>
-		/// <example>https://attack.mitre.org/techniques/T1499/</example>
+		/// <example>https://attack.mitre.org/techniques/T1059/</example>
 		[DataMember(Name = "reference")]
 		public string[] Reference { get; set; }
 
 	}
 	/// <summary>
-	/// Fields to classify events and alerts according to a threat taxonomy such as the MITRE ATT&CK® framework.<para/><para/>These fields are for users to classify alerts from all of their sources (e.g. IDS, NGFW, etc.) within a common taxonomy. The threat.tactic.* are meant to capture the high level category of the threat (e.g. "impact"). The threat.technique.* fields are meant to capture which kind of approach is used by this detected threat, to accomplish the goal (e.g. "endpoint denial of service").
+	/// Fields to classify events and alerts according to a threat taxonomy such as the MITRE ATT&CK® framework.<para/><para/>These fields are for users to classify alerts from all of their sources (e.g. IDS, NGFW, etc.) within a common taxonomy. The threat.tactic.* fields are meant to capture the high level category of the threat (e.g. "impact"). The threat.technique.* fields are meant to capture which kind of approach is used by this detected threat, to accomplish the goal (e.g. "endpoint denial of service").
 	/// <para/>
-	/// ECS field reference: https://www.elastic.co/guide/en/ecs/1.6/ecs-threat.html
+	/// ECS field reference: https://www.elastic.co/guide/en/ecs/v8.2.0/ecs-threat.html
 	/// </summary>
 	public class Threat 
 	{
+		/// <summary>
+		/// Enrichments property.
+		/// </summary>
+		[DataMember(Name = "enrichments")]
+		public ThreatEnrichments Enrichments { get; set; }
+
+		/// <summary>
+		/// Indicator property.
+		/// </summary>
+		[DataMember(Name = "indicator")]
+		public ThreatIndicator Indicator { get; set; }
+
+		/// <summary>
+		/// Feed property.
+		/// </summary>
+		[DataMember(Name = "feed")]
+		public ThreatFeed Feed { get; set; }
+
+		/// <summary>
+		/// Group property.
+		/// </summary>
+		[DataMember(Name = "group")]
+		public ThreatGroup Group { get; set; }
+
+		/// <summary>
+		/// Software property.
+		/// </summary>
+		[DataMember(Name = "software")]
+		public ThreatSoftware Software { get; set; }
+
 		/// <summary>
 		/// Tactic property.
 		/// </summary>
@@ -3706,6 +5402,13 @@ namespace Elastic.CommonSchema
 		/// </summary>
 		[DataMember(Name = "technique")]
 		public ThreatTechnique Technique { get; set; }
+
+		/// <summary>
+		/// A list of associated indicators objects enriching the event, and the context of that association/enrichment.
+		/// </summary>
+		/// <remarks>(ECS Extended)</remarks>
+		[DataMember(Name = "enrichments")]
+		public object[] Enrichments { get; set; }
 
 		/// <summary>
 		/// Name of the threat framework used to further categorize and classify the tactic and technique of the reported threat. Framework classification can be provided by detecting systems, evaluated at ingest time, or retrospectively tagged to events.
@@ -3722,6 +5425,13 @@ namespace Elastic.CommonSchema
 	/// </summary>
 	public class TlsClient
 	{
+		/// <summary>
+		/// These fields contain x509 certificate metadata.
+		/// </summary>
+		/// <remarks>(ECS Core)</remarks>
+		[DataMember(Name = "x509")]
+		public X509 X509 { get; set; }
+
 		/// <summary>
 		/// PEM-encoded stand-alone certificate offered by the client. This is usually mutually-exclusive of `client.certificate_chain` since this value also exists in that list.
 		/// </summary>
@@ -3794,6 +5504,12 @@ namespace Elastic.CommonSchema
 		[DataMember(Name = "supported_ciphers")]
 		public string[] SupportedCiphers { get; set; }
 
+	}
+	/// <summary>
+	/// Server, property of <see cref="Tls" />
+	/// </summary>
+	public class TlsServer
+	{
 		/// <summary>
 		/// These fields contain x509 certificate metadata.
 		/// </summary>
@@ -3801,12 +5517,6 @@ namespace Elastic.CommonSchema
 		[DataMember(Name = "x509")]
 		public X509 X509 { get; set; }
 
-	}
-	/// <summary>
-	/// Server, property of <see cref="Tls" />
-	/// </summary>
-	public class TlsServer
-	{
 		/// <summary>
 		/// PEM-encoded stand-alone certificate offered by the server. This is usually mutually-exclusive of `server.certificate_chain` since this value also exists in that list.
 		/// </summary>
@@ -3863,18 +5573,11 @@ namespace Elastic.CommonSchema
 		[DataMember(Name = "subject")]
 		public string Subject { get; set; }
 
-		/// <summary>
-		/// These fields contain x509 certificate metadata.
-		/// </summary>
-		/// <remarks>(ECS Core)</remarks>
-		[DataMember(Name = "x509")]
-		public X509 X509 { get; set; }
-
 	}
 	/// <summary>
 	/// Fields related to a TLS connection. These fields focus on the TLS protocol itself and intentionally avoids in-depth analysis of the related x.509 certificate files.
 	/// <para/>
-	/// ECS field reference: https://www.elastic.co/guide/en/ecs/1.6/ecs-tls.html
+	/// ECS field reference: https://www.elastic.co/guide/en/ecs/v8.2.0/ecs-tls.html
 	/// </summary>
 	public class Tls 
 	{
@@ -3949,12 +5652,12 @@ namespace Elastic.CommonSchema
 	/// <summary>
 	/// URL fields provide support for complete or partial URLs, and supports the breaking down into scheme, domain, path, and so on.
 	/// <para/>
-	/// ECS field reference: https://www.elastic.co/guide/en/ecs/1.6/ecs-url.html
+	/// ECS field reference: https://www.elastic.co/guide/en/ecs/v8.2.0/ecs-url.html
 	/// </summary>
 	public class Url 
 	{
 		/// <summary>
-		/// Domain of the url, such as "www.elastic.co".<para/><para/>In some cases a URL may refer to an IP and/or port directly, without a domain name. In this case, the IP address would go to the `domain` field.
+		/// Domain of the url, such as "www.elastic.co".<para/><para/>In some cases a URL may refer to an IP and/or port directly, without a domain name. In this case, the IP address would go to the `domain` field.<para/><para/>If the URL contains a literal IPv6 address enclosed by `[` and `]` (IETF RFC 2732), the `[` and `]` characters should also be captured in the `domain` field.
 		/// </summary>
 		/// <remarks>(ECS Extended)</remarks>
 		/// <example>www.elastic.co</example>
@@ -3962,7 +5665,7 @@ namespace Elastic.CommonSchema
 		public string Domain { get; set; }
 
 		/// <summary>
-		/// The field contains the file extension from the original request url.<para/><para/>The file extension is only set if it exists, as not every url has a file extension.<para/><para/>The leading period must not be included. For example, the value must be "png", not ".png".
+		/// The field contains the file extension from the original request url, excluding the leading dot.<para/><para/>The file extension is only set if it exists, as not every url has a file extension.<para/><para/>The leading period must not be included. For example, the value must be "png", not ".png".<para/><para/>Note that when the file name has multiple extensions (example.tar.gz), only the last one should be captured ("gz", not "tar.gz").
 		/// </summary>
 		/// <remarks>(ECS Extended)</remarks>
 		/// <example>png</example>
@@ -4038,6 +5741,14 @@ namespace Elastic.CommonSchema
 		public string Scheme { get; set; }
 
 		/// <summary>
+		/// The subdomain portion of a fully qualified domain name includes all of the names except the host name under the registered_domain.  In a partially qualified domain, or if the the qualification level of the full name cannot be determined, subdomain contains all of the names below the registered domain.<para/><para/>For example the subdomain portion of "www.east.mydomain.co.uk" is "east". If the domain has multiple levels of subdomain, such as "sub2.sub1.example.com", the subdomain field should contain "sub2.sub1", with no trailing period.
+		/// </summary>
+		/// <remarks>(ECS Extended)</remarks>
+		/// <example>east</example>
+		[DataMember(Name = "subdomain")]
+		public string Subdomain { get; set; }
+
+		/// <summary>
 		/// The effective top level domain (eTLD), also known as the domain suffix, is the last part of the domain name. For example, the top level domain for example.com is "com".<para/><para/>This value can be determined precisely with a list like the public suffix list (http://publicsuffix.org). Trying to approximate this by simply taking the last label will not work well for effective TLDs such as "co.uk".
 		/// </summary>
 		/// <remarks>(ECS Extended)</remarks>
@@ -4057,15 +5768,33 @@ namespace Elastic.CommonSchema
 	/// <summary>
 	/// The user fields describe information about the user that is relevant to the event.<para/><para/>Fields can have one entry or multiple entries. If a user has more than one id, provide an array that includes all of them.
 	/// <para/>
-	/// ECS field reference: https://www.elastic.co/guide/en/ecs/1.6/ecs-user.html
+	/// ECS field reference: https://www.elastic.co/guide/en/ecs/v8.2.0/ecs-user.html
 	/// </summary>
 	public class User 
 	{
+		/// <summary>
+		/// Captures changes made to a user.
+		/// </summary>
+		[DataMember(Name = "changes")]
+		public Changes Changes { get; set; }
+
+		/// <summary>
+		/// User whose privileges were assumed.
+		/// </summary>
+		[DataMember(Name = "effective")]
+		public Effective Effective { get; set; }
+
 		/// <summary>
 		/// User's group relevant to the event.
 		/// </summary>
 		[DataMember(Name = "group")]
 		public Group Group { get; set; }
+
+		/// <summary>
+		/// Targeted user of action taken.
+		/// </summary>
+		[DataMember(Name = "target")]
+		public Target Target { get; set; }
 
 		/// <summary>
 		/// Name of the directory the user is a member of.<para/><para/>For example, an LDAP or Active Directory domain name.
@@ -4100,6 +5829,7 @@ namespace Elastic.CommonSchema
 		/// Unique identifier of the user.
 		/// </summary>
 		/// <remarks>(ECS Core)</remarks>
+		/// <example>S-1-5-21-202424912787-2692429404-2351956786-1000</example>
 		[DataMember(Name = "id")]
 		public string Id { get; set; }
 
@@ -4107,7 +5837,7 @@ namespace Elastic.CommonSchema
 		/// Short name or login of the user.
 		/// </summary>
 		/// <remarks>(ECS Core)</remarks>
-		/// <example>albert</example>
+		/// <example>a.einstein</example>
 		[DataMember(Name = "name")]
 		public string Name { get; set; }
 
@@ -4138,7 +5868,7 @@ namespace Elastic.CommonSchema
 	/// <summary>
 	/// The user_agent fields normally come from a browser request.<para/><para/>They often show up in web service logs coming from the parsed user agent string.
 	/// <para/>
-	/// ECS field reference: https://www.elastic.co/guide/en/ecs/1.6/ecs-user_agent.html
+	/// ECS field reference: https://www.elastic.co/guide/en/ecs/v8.2.0/ecs-user_agent.html
 	/// </summary>
 	public class UserAgent 
 	{
@@ -4183,7 +5913,7 @@ namespace Elastic.CommonSchema
 	/// <summary>
 	/// The VLAN fields are used to identify 802.1q tag(s) of a packet, as well as ingress and egress VLAN associations of an observer in relation to a specific packet or connection.<para/><para/>Network.vlan fields are used to record a single VLAN tag, or the outer tag in the case of q-in-q encapsulations, for a packet or connection as observed, typically provided by a network sensor (e.g. Zeek, Wireshark) passively reporting on traffic.<para/><para/>Network.inner VLAN fields are used to report inner q-in-q 802.1q tags (multiple 802.1q encapsulations) as observed, typically provided by a network sensor  (e.g. Zeek, Wireshark) passively reporting on traffic. Network.inner VLAN fields should only be used in addition to network.vlan fields to indicate q-in-q tagging.<para/><para/>Observer.ingress and observer.egress VLAN values are used to record observer specific information when observer events contain discrete ingress and egress VLAN information, typically provided by firewalls, routers, or load balancers.
 	/// <para/>
-	/// ECS field reference: https://www.elastic.co/guide/en/ecs/1.6/ecs-vlan.html
+	/// ECS field reference: https://www.elastic.co/guide/en/ecs/v8.2.0/ecs-vlan.html
 	/// </summary>
 	public class Vlan 
 	{
@@ -4259,7 +5989,7 @@ namespace Elastic.CommonSchema
 	/// <summary>
 	/// The vulnerability fields describe information about a vulnerability that is relevant to an event.
 	/// <para/>
-	/// ECS field reference: https://www.elastic.co/guide/en/ecs/1.6/ecs-vulnerability.html
+	/// ECS field reference: https://www.elastic.co/guide/en/ecs/v8.2.0/ecs-vulnerability.html
 	/// </summary>
 	public class Vulnerability 
 	{
@@ -4465,9 +6195,9 @@ namespace Elastic.CommonSchema
 
 	}
 	/// <summary>
-	/// This implements the common core fields for x509 certificates. This information is likely logged with TLS sessions, digital signatures found in executable binaries, S/MIME information in email bodies, or analysis of files on disk. When only a single certificate is logged in an event, it should be nested under `file`. When hashes of the DER-encoded certificate are available, the `hash` data set should be populated as well (e.g. `file.hash.sha256`). For events that contain certificate information for both sides of the connection, the x509 object could be nested under the respective side of the connection information (e.g. `tls.server.x509`).
+	/// This implements the common core fields for x509 certificates. This information is likely logged with TLS sessions, digital signatures found in executable binaries, S/MIME information in email bodies, or analysis of files on disk.<para/><para/>When the certificate relates to a file, use the fields at `file.x509`. When hashes of the DER-encoded certificate are available, the `hash` data set should be populated as well (e.g. `file.hash.sha256`).<para/><para/>Events that contain certificate information about network connections, should use the x509 fields under the relevant TLS fields: `tls.server.x509` and/or `tls.client.x509`.
 	/// <para/>
-	/// ECS field reference: https://www.elastic.co/guide/en/ecs/1.6/ecs-x509.html
+	/// ECS field reference: https://www.elastic.co/guide/en/ecs/v8.2.0/ecs-x509.html
 	/// </summary>
 	public class X509 
 	{
@@ -4570,23 +6300,23 @@ namespace Elastic.CommonSchema
 namespace Elastic.CommonSchema.Elasticsearch
 {
 	/// <summary>
-	/// Elastic Common Schema version 1.6.0 index templates to be used with Elasticsearch.
+	/// Elastic Common Schema version v8.2.0.0 index templates to be used with Elasticsearch.
 	/// </summary>
 	public static class IndexTemplates
 	{
 		/// <summary>
-		/// Elastic Common Schema version 1.6.0 index template for Elasticsearch version 6
+		/// Elastic Common Schema version v8.2.0.0 composable index template  
 		/// See the Put Index Template API documentation: https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-templates.html
 		/// </summary>
 		/// <returns>Index template string that can be used with the Put Index Template API.</returns>
-		public static string GetIndexTemplateForElasticsearch6(string indexPattern = "ecs-*") { return "{  \"index_patterns\": [    \"" + indexPattern + "\"  ],  \"mappings\": {    \"_doc\": {      \"_meta\": {        \"version\": \"1.6.0\"      },      \"date_detection\": false,      \"dynamic_templates\": [        {          \"strings_as_keyword\": {            \"mapping\": {              \"ignore_above\": 1024,              \"type\": \"keyword\"            },            \"match_mapping_type\": \"string\"          }        }      ],      \"properties\": {        \"@timestamp\": {          \"type\": \"date\"        },        \"agent\": {          \"properties\": {            \"build\": {              \"properties\": {                \"original\": {                  \"ignore_above\": 1024,                  \"type\": \"keyword\"                }              }            },            \"ephemeral_id\": {              \"ignore_above\": 1024,              \"type\": \"keyword\"            },            \"id\": {              \"ignore_above\": 1024,              \"type\": \"keyword\"            },            \"name\": {              \"ignore_above\": 1024,              \"type\": \"keyword\"            },            \"type\": {              \"ignore_above\": 1024,              \"type\": \"keyword\"            },            \"version\": {              \"ignore_above\": 1024,              \"type\": \"keyword\"            }          }        },        \"client\": {          \"properties\": {            \"address\": {              \"ignore_above\": 1024,              \"type\": \"keyword\"            },            \"as\": {              \"properties\": {                \"number\": {                  \"type\": \"long\"                },                \"organization\": {                  \"properties\": {                    \"name\": {                      \"fields\": {                        \"text\": {                          \"norms\": false,                          \"type\": \"text\"                        }                      },                      \"ignore_above\": 1024,                      \"type\": \"keyword\"                    }                  }                }              }            },            \"bytes\": {              \"type\": \"long\"            },            \"domain\": {              \"ignore_above\": 1024,              \"type\": \"keyword\"            },            \"geo\": {              \"properties\": {                \"city_name\": {                  \"ignore_above\": 1024,                  \"type\": \"keyword\"                },                \"continent_name\": {                  \"ignore_above\": 1024,                  \"type\": \"keyword\"                },                \"country_iso_code\": {                  \"ignore_above\": 1024,                  \"type\": \"keyword\"                },                \"country_name\": {                  \"ignore_above\": 1024,                  \"type\": \"keyword\"                },                \"location\": {                  \"type\": \"geo_point\"                },                \"name\": {                  \"ignore_above\": 1024,                  \"type\": \"keyword\"                },                \"region_iso_code\": {                  \"ignore_above\": 1024,                  \"type\": \"keyword\"                },                \"region_name\": {                  \"ignore_above\": 1024,                  \"type\": \"keyword\"                }              }            },            \"ip\": {              \"type\": \"ip\"            },            \"mac\": {              \"ignore_above\": 1024,              \"type\": \"keyword\"            },            \"nat\": {              \"properties\": {                \"ip\": {                  \"type\": \"ip\"                },                \"port\": {                  \"type\": \"long\"                }              }            },            \"packets\": {              \"type\": \"long\"            },            \"port\": {              \"type\": \"long\"            },            \"registered_domain\": {              \"ignore_above\": 1024,              \"type\": \"keyword\"            },            \"top_level_domain\": {              \"ignore_above\": 1024,              \"type\": \"keyword\"            },            \"user\": {              \"properties\": {                \"domain\": {                  \"ignore_above\": 1024,                  \"type\": \"keyword\"                },                \"email\": {                  \"ignore_above\": 1024,                  \"type\": \"keyword\"                },                \"full_name\": {                  \"fields\": {                    \"text\": {                      \"norms\": false,                      \"type\": \"text\"                    }                  },                  \"ignore_above\": 1024,                  \"type\": \"keyword\"                },                \"group\": {                  \"properties\": {                    \"domain\": {                      \"ignore_above\": 1024,                      \"type\": \"keyword\"                    },                    \"id\": {                      \"ignore_above\": 1024,                      \"type\": \"keyword\"                    },                    \"name\": {                      \"ignore_above\": 1024,                      \"type\": \"keyword\"                    }                  }                },                \"hash\": {                  \"ignore_above\": 1024,                  \"type\": \"keyword\"                },                \"id\": {                  \"ignore_above\": 1024,                  \"type\": \"keyword\"                },                \"name\": {                  \"fields\": {                    \"text\": {                      \"norms\": false,                      \"type\": \"text\"                    }                  },                  \"ignore_above\": 1024,                  \"type\": \"keyword\"                },                \"roles\": {                  \"ignore_above\": 1024,                  \"type\": \"keyword\"                }              }            }          }        },        \"cloud\": {          \"properties\": {            \"account\": {              \"properties\": {                \"id\": {                  \"ignore_above\": 1024,                  \"type\": \"keyword\"                },                \"name\": {                  \"ignore_above\": 1024,                  \"type\": \"keyword\"                }              }            },            \"availability_zone\": {              \"ignore_above\": 1024,              \"type\": \"keyword\"            },            \"instance\": {              \"properties\": {                \"id\": {                  \"ignore_above\": 1024,                  \"type\": \"keyword\"                },                \"name\": {                  \"ignore_above\": 1024,                  \"type\": \"keyword\"                }              }            },            \"machine\": {              \"properties\": {                \"type\": {                  \"ignore_above\": 1024,                  \"type\": \"keyword\"                }              }            },            \"project\": {              \"properties\": {                \"id\": {                  \"ignore_above\": 1024,                  \"type\": \"keyword\"                },                \"name\": {                  \"ignore_above\": 1024,                  \"type\": \"keyword\"                }              }            },            \"provider\": {              \"ignore_above\": 1024,              \"type\": \"keyword\"            },            \"region\": {              \"ignore_above\": 1024,              \"type\": \"keyword\"            }          }        },        \"container\": {          \"properties\": {            \"id\": {              \"ignore_above\": 1024,              \"type\": \"keyword\"            },            \"image\": {              \"properties\": {                \"name\": {                  \"ignore_above\": 1024,                  \"type\": \"keyword\"                },                \"tag\": {                  \"ignore_above\": 1024,                  \"type\": \"keyword\"                }              }            },            \"labels\": {              \"type\": \"object\"            },            \"name\": {              \"ignore_above\": 1024,              \"type\": \"keyword\"            },            \"runtime\": {              \"ignore_above\": 1024,              \"type\": \"keyword\"            }          }        },        \"destination\": {          \"properties\": {            \"address\": {              \"ignore_above\": 1024,              \"type\": \"keyword\"            },            \"as\": {              \"properties\": {                \"number\": {                  \"type\": \"long\"                },                \"organization\": {                  \"properties\": {                    \"name\": {                      \"fields\": {                        \"text\": {                          \"norms\": false,                          \"type\": \"text\"                        }                      },                      \"ignore_above\": 1024,                      \"type\": \"keyword\"                    }                  }                }              }            },            \"bytes\": {              \"type\": \"long\"            },            \"domain\": {              \"ignore_above\": 1024,              \"type\": \"keyword\"            },            \"geo\": {              \"properties\": {                \"city_name\": {                  \"ignore_above\": 1024,                  \"type\": \"keyword\"                },                \"continent_name\": {                  \"ignore_above\": 1024,                  \"type\": \"keyword\"                },                \"country_iso_code\": {                  \"ignore_above\": 1024,                  \"type\": \"keyword\"                },                \"country_name\": {                  \"ignore_above\": 1024,                  \"type\": \"keyword\"                },                \"location\": {                  \"type\": \"geo_point\"                },                \"name\": {                  \"ignore_above\": 1024,                  \"type\": \"keyword\"                },                \"region_iso_code\": {                  \"ignore_above\": 1024,                  \"type\": \"keyword\"                },                \"region_name\": {                  \"ignore_above\": 1024,                  \"type\": \"keyword\"                }              }            },            \"ip\": {              \"type\": \"ip\"            },            \"mac\": {              \"ignore_above\": 1024,              \"type\": \"keyword\"            },            \"nat\": {              \"properties\": {                \"ip\": {                  \"type\": \"ip\"                },                \"port\": {                  \"type\": \"long\"                }              }            },            \"packets\": {              \"type\": \"long\"            },            \"port\": {              \"type\": \"long\"            },            \"registered_domain\": {              \"ignore_above\": 1024,              \"type\": \"keyword\"            },            \"top_level_domain\": {              \"ignore_above\": 1024,              \"type\": \"keyword\"            },            \"user\": {              \"properties\": {                \"domain\": {                  \"ignore_above\": 1024,                  \"type\": \"keyword\"                },                \"email\": {                  \"ignore_above\": 1024,                  \"type\": \"keyword\"                },                \"full_name\": {                  \"fields\": {                    \"text\": {                      \"norms\": false,                      \"type\": \"text\"                    }                  },                  \"ignore_above\": 1024,                  \"type\": \"keyword\"                },                \"group\": {                  \"properties\": {                    \"domain\": {                      \"ignore_above\": 1024,                      \"type\": \"keyword\"                    },                    \"id\": {                      \"ignore_above\": 1024,                      \"type\": \"keyword\"                    },                    \"name\": {                      \"ignore_above\": 1024,                      \"type\": \"keyword\"                    }                  }                },                \"hash\": {                  \"ignore_above\": 1024,                  \"type\": \"keyword\"                },                \"id\": {                  \"ignore_above\": 1024,                  \"type\": \"keyword\"                },                \"name\": {                  \"fields\": {                    \"text\": {                      \"norms\": false,                      \"type\": \"text\"                    }                  },                  \"ignore_above\": 1024,                  \"type\": \"keyword\"                },                \"roles\": {                  \"ignore_above\": 1024,                  \"type\": \"keyword\"                }              }            }          }        },        \"dll\": {          \"properties\": {            \"code_signature\": {              \"properties\": {                \"exists\": {                  \"type\": \"boolean\"                },                \"status\": {                  \"ignore_above\": 1024,                  \"type\": \"keyword\"                },                \"subject_name\": {                  \"ignore_above\": 1024,                  \"type\": \"keyword\"                },                \"trusted\": {                  \"type\": \"boolean\"                },                \"valid\": {                  \"type\": \"boolean\"                }              }            },            \"hash\": {              \"properties\": {                \"md5\": {                  \"ignore_above\": 1024,                  \"type\": \"keyword\"                },                \"sha1\": {                  \"ignore_above\": 1024,                  \"type\": \"keyword\"                },                \"sha256\": {                  \"ignore_above\": 1024,                  \"type\": \"keyword\"                },                \"sha512\": {                  \"ignore_above\": 1024,                  \"type\": \"keyword\"                }              }            },            \"name\": {              \"ignore_above\": 1024,              \"type\": \"keyword\"            },            \"path\": {              \"ignore_above\": 1024,              \"type\": \"keyword\"            },            \"pe\": {              \"properties\": {                \"architecture\": {                  \"ignore_above\": 1024,                  \"type\": \"keyword\"                },                \"company\": {                  \"ignore_above\": 1024,                  \"type\": \"keyword\"                },                \"description\": {                  \"ignore_above\": 1024,                  \"type\": \"keyword\"                },                \"file_version\": {                  \"ignore_above\": 1024,                  \"type\": \"keyword\"                },                \"imphash\": {                  \"ignore_above\": 1024,                  \"type\": \"keyword\"                },                \"original_file_name\": {                  \"ignore_above\": 1024,                  \"type\": \"keyword\"                },                \"product\": {                  \"ignore_above\": 1024,                  \"type\": \"keyword\"                }              }            }          }        },        \"dns\": {          \"properties\": {            \"answers\": {              \"properties\": {                \"class\": {                  \"ignore_above\": 1024,                  \"type\": \"keyword\"                },                \"data\": {                  \"ignore_above\": 1024,                  \"type\": \"keyword\"                },                \"name\": {                  \"ignore_above\": 1024,                  \"type\": \"keyword\"                },                \"ttl\": {                  \"type\": \"long\"                },                \"type\": {                  \"ignore_above\": 1024,                  \"type\": \"keyword\"                }              },              \"type\": \"object\"            },            \"header_flags\": {              \"ignore_above\": 1024,              \"type\": \"keyword\"            },            \"id\": {              \"ignore_above\": 1024,              \"type\": \"keyword\"            },            \"op_code\": {              \"ignore_above\": 1024,              \"type\": \"keyword\"            },            \"question\": {              \"properties\": {                \"class\": {                  \"ignore_above\": 1024,                  \"type\": \"keyword\"                },                \"name\": {                  \"ignore_above\": 1024,                  \"type\": \"keyword\"                },                \"registered_domain\": {                  \"ignore_above\": 1024,                  \"type\": \"keyword\"                },                \"subdomain\": {                  \"ignore_above\": 1024,                  \"type\": \"keyword\"                },                \"top_level_domain\": {                  \"ignore_above\": 1024,                  \"type\": \"keyword\"                },                \"type\": {                  \"ignore_above\": 1024,                  \"type\": \"keyword\"                }              }            },            \"resolved_ip\": {              \"type\": \"ip\"            },            \"response_code\": {              \"ignore_above\": 1024,              \"type\": \"keyword\"            },            \"type\": {              \"ignore_above\": 1024,              \"type\": \"keyword\"            }          }        },        \"ecs\": {          \"properties\": {            \"version\": {              \"ignore_above\": 1024,              \"type\": \"keyword\"            }          }        },        \"error\": {          \"properties\": {            \"code\": {              \"ignore_above\": 1024,              \"type\": \"keyword\"            },            \"id\": {              \"ignore_above\": 1024,              \"type\": \"keyword\"            },            \"message\": {              \"norms\": false,              \"type\": \"text\"            },            \"stack_trace\": {              \"doc_values\": false,              \"fields\": {                \"text\": {                  \"norms\": false,                  \"type\": \"text\"                }              },              \"ignore_above\": 1024,              \"index\": false,              \"type\": \"keyword\"            },            \"type\": {              \"ignore_above\": 1024,              \"type\": \"keyword\"            }          }        },        \"event\": {          \"properties\": {            \"action\": {              \"ignore_above\": 1024,              \"type\": \"keyword\"            },            \"category\": {              \"ignore_above\": 1024,              \"type\": \"keyword\"            },            \"code\": {              \"ignore_above\": 1024,              \"type\": \"keyword\"            },            \"created\": {              \"type\": \"date\"            },            \"dataset\": {              \"ignore_above\": 1024,              \"type\": \"keyword\"            },            \"duration\": {              \"type\": \"long\"            },            \"end\": {              \"type\": \"date\"            },            \"hash\": {              \"ignore_above\": 1024,              \"type\": \"keyword\"            },            \"id\": {              \"ignore_above\": 1024,              \"type\": \"keyword\"            },            \"ingested\": {              \"type\": \"date\"            },            \"kind\": {              \"ignore_above\": 1024,              \"type\": \"keyword\"            },            \"module\": {              \"ignore_above\": 1024,              \"type\": \"keyword\"            },            \"original\": {              \"doc_values\": false,              \"ignore_above\": 1024,              \"index\": false,              \"type\": \"keyword\"            },            \"outcome\": {              \"ignore_above\": 1024,              \"type\": \"keyword\"            },            \"provider\": {              \"ignore_above\": 1024,              \"type\": \"keyword\"            },            \"reason\": {              \"ignore_above\": 1024,              \"type\": \"keyword\"            },            \"reference\": {              \"ignore_above\": 1024,              \"type\": \"keyword\"            },            \"risk_score\": {              \"type\": \"float\"            },            \"risk_score_norm\": {              \"type\": \"float\"            },            \"sequence\": {              \"type\": \"long\"            },            \"severity\": {              \"type\": \"long\"            },            \"start\": {              \"type\": \"date\"            },            \"timezone\": {              \"ignore_above\": 1024,              \"type\": \"keyword\"            },            \"type\": {              \"ignore_above\": 1024,              \"type\": \"keyword\"            },            \"url\": {              \"ignore_above\": 1024,              \"type\": \"keyword\"            }          }        },        \"file\": {          \"properties\": {            \"accessed\": {              \"type\": \"date\"            },            \"attributes\": {              \"ignore_above\": 1024,              \"type\": \"keyword\"            },            \"code_signature\": {              \"properties\": {                \"exists\": {                  \"type\": \"boolean\"                },                \"status\": {                  \"ignore_above\": 1024,                  \"type\": \"keyword\"                },                \"subject_name\": {                  \"ignore_above\": 1024,                  \"type\": \"keyword\"                },                \"trusted\": {                  \"type\": \"boolean\"                },                \"valid\": {                  \"type\": \"boolean\"                }              }            },            \"created\": {              \"type\": \"date\"            },            \"ctime\": {              \"type\": \"date\"            },            \"device\": {              \"ignore_above\": 1024,              \"type\": \"keyword\"            },            \"directory\": {              \"ignore_above\": 1024,              \"type\": \"keyword\"            },            \"drive_letter\": {              \"ignore_above\": 1,              \"type\": \"keyword\"            },            \"extension\": {              \"ignore_above\": 1024,              \"type\": \"keyword\"            },            \"gid\": {              \"ignore_above\": 1024,              \"type\": \"keyword\"            },            \"group\": {              \"ignore_above\": 1024,              \"type\": \"keyword\"            },            \"hash\": {              \"properties\": {                \"md5\": {                  \"ignore_above\": 1024,                  \"type\": \"keyword\"                },                \"sha1\": {                  \"ignore_above\": 1024,                  \"type\": \"keyword\"                },                \"sha256\": {                  \"ignore_above\": 1024,                  \"type\": \"keyword\"                },                \"sha512\": {                  \"ignore_above\": 1024,                  \"type\": \"keyword\"                }              }            },            \"inode\": {              \"ignore_above\": 1024,              \"type\": \"keyword\"            },            \"mime_type\": {              \"ignore_above\": 1024,              \"type\": \"keyword\"            },            \"mode\": {              \"ignore_above\": 1024,              \"type\": \"keyword\"            },            \"mtime\": {              \"type\": \"date\"            },            \"name\": {              \"ignore_above\": 1024,              \"type\": \"keyword\"            },            \"owner\": {              \"ignore_above\": 1024,              \"type\": \"keyword\"            },            \"path\": {              \"fields\": {                \"text\": {                  \"norms\": false,                  \"type\": \"text\"                }              },              \"ignore_above\": 1024,              \"type\": \"keyword\"            },            \"pe\": {              \"properties\": {                \"architecture\": {                  \"ignore_above\": 1024,                  \"type\": \"keyword\"                },                \"company\": {                  \"ignore_above\": 1024,                  \"type\": \"keyword\"                },                \"description\": {                  \"ignore_above\": 1024,                  \"type\": \"keyword\"                },                \"file_version\": {                  \"ignore_above\": 1024,                  \"type\": \"keyword\"                },                \"imphash\": {                  \"ignore_above\": 1024,                  \"type\": \"keyword\"                },                \"original_file_name\": {                  \"ignore_above\": 1024,                  \"type\": \"keyword\"                },                \"product\": {                  \"ignore_above\": 1024,                  \"type\": \"keyword\"                }              }            },            \"size\": {              \"type\": \"long\"            },            \"target_path\": {              \"fields\": {                \"text\": {                  \"norms\": false,                  \"type\": \"text\"                }              },              \"ignore_above\": 1024,              \"type\": \"keyword\"            },            \"type\": {              \"ignore_above\": 1024,              \"type\": \"keyword\"            },            \"uid\": {              \"ignore_above\": 1024,              \"type\": \"keyword\"            },            \"x509\": {              \"properties\": {                \"alternative_names\": {                  \"ignore_above\": 1024,                  \"type\": \"keyword\"                },                \"issuer\": {                  \"properties\": {                    \"common_name\": {                      \"ignore_above\": 1024,                      \"type\": \"keyword\"                    },                    \"country\": {                      \"ignore_above\": 1024,                      \"type\": \"keyword\"                    },                    \"distinguished_name\": {                      \"ignore_above\": 1024,                      \"type\": \"keyword\"                    },                    \"locality\": {                      \"ignore_above\": 1024,                      \"type\": \"keyword\"                    },                    \"organization\": {                      \"ignore_above\": 1024,                      \"type\": \"keyword\"                    },                    \"organizational_unit\": {                      \"ignore_above\": 1024,                      \"type\": \"keyword\"                    },                    \"state_or_province\": {                      \"ignore_above\": 1024,                      \"type\": \"keyword\"                    }                  }                },                \"not_after\": {                  \"type\": \"date\"                },                \"not_before\": {                  \"type\": \"date\"                },                \"public_key_algorithm\": {                  \"ignore_above\": 1024,                  \"type\": \"keyword\"                },                \"public_key_curve\": {                  \"ignore_above\": 1024,                  \"type\": \"keyword\"                },                \"public_key_exponent\": {                  \"doc_values\": false,                  \"index\": false,                  \"type\": \"long\"                },                \"public_key_size\": {                  \"type\": \"long\"                },                \"serial_number\": {                  \"ignore_above\": 1024,                  \"type\": \"keyword\"                },                \"signature_algorithm\": {                  \"ignore_above\": 1024,                  \"type\": \"keyword\"                },                \"subject\": {                  \"properties\": {                    \"common_name\": {                      \"ignore_above\": 1024,                      \"type\": \"keyword\"                    },                    \"country\": {                      \"ignore_above\": 1024,                      \"type\": \"keyword\"                    },                    \"distinguished_name\": {                      \"ignore_above\": 1024,                      \"type\": \"keyword\"                    },                    \"locality\": {                      \"ignore_above\": 1024,                      \"type\": \"keyword\"                    },                    \"organization\": {                      \"ignore_above\": 1024,                      \"type\": \"keyword\"                    },                    \"organizational_unit\": {                      \"ignore_above\": 1024,                      \"type\": \"keyword\"                    },                    \"state_or_province\": {                      \"ignore_above\": 1024,                      \"type\": \"keyword\"                    }                  }                },                \"version_number\": {                  \"ignore_above\": 1024,                  \"type\": \"keyword\"                }              }            }          }        },        \"group\": {          \"properties\": {            \"domain\": {              \"ignore_above\": 1024,              \"type\": \"keyword\"            },            \"id\": {              \"ignore_above\": 1024,              \"type\": \"keyword\"            },            \"name\": {              \"ignore_above\": 1024,              \"type\": \"keyword\"            }          }        },        \"host\": {          \"properties\": {            \"architecture\": {              \"ignore_above\": 1024,              \"type\": \"keyword\"            },            \"domain\": {              \"ignore_above\": 1024,              \"type\": \"keyword\"            },            \"geo\": {              \"properties\": {                \"city_name\": {                  \"ignore_above\": 1024,                  \"type\": \"keyword\"                },                \"continent_name\": {                  \"ignore_above\": 1024,                  \"type\": \"keyword\"                },                \"country_iso_code\": {                  \"ignore_above\": 1024,                  \"type\": \"keyword\"                },                \"country_name\": {                  \"ignore_above\": 1024,                  \"type\": \"keyword\"                },                \"location\": {                  \"type\": \"geo_point\"                },                \"name\": {                  \"ignore_above\": 1024,                  \"type\": \"keyword\"                },                \"region_iso_code\": {                  \"ignore_above\": 1024,                  \"type\": \"keyword\"                },                \"region_name\": {                  \"ignore_above\": 1024,                  \"type\": \"keyword\"                }              }            },            \"hostname\": {              \"ignore_above\": 1024,              \"type\": \"keyword\"            },            \"id\": {              \"ignore_above\": 1024,              \"type\": \"keyword\"            },            \"ip\": {              \"type\": \"ip\"            },            \"mac\": {              \"ignore_above\": 1024,              \"type\": \"keyword\"            },            \"name\": {              \"ignore_above\": 1024,              \"type\": \"keyword\"            },            \"os\": {              \"properties\": {                \"family\": {                  \"ignore_above\": 1024,                  \"type\": \"keyword\"                },                \"full\": {                  \"fields\": {                    \"text\": {                      \"norms\": false,                      \"type\": \"text\"                    }                  },                  \"ignore_above\": 1024,                  \"type\": \"keyword\"                },                \"kernel\": {                  \"ignore_above\": 1024,                  \"type\": \"keyword\"                },                \"name\": {                  \"fields\": {                    \"text\": {                      \"norms\": false,                      \"type\": \"text\"                    }                  },                  \"ignore_above\": 1024,                  \"type\": \"keyword\"                },                \"platform\": {                  \"ignore_above\": 1024,                  \"type\": \"keyword\"                },                \"version\": {                  \"ignore_above\": 1024,                  \"type\": \"keyword\"                }              }            },            \"type\": {              \"ignore_above\": 1024,              \"type\": \"keyword\"            },            \"uptime\": {              \"type\": \"long\"            },            \"user\": {              \"properties\": {                \"domain\": {                  \"ignore_above\": 1024,                  \"type\": \"keyword\"                },                \"email\": {                  \"ignore_above\": 1024,                  \"type\": \"keyword\"                },                \"full_name\": {                  \"fields\": {                    \"text\": {                      \"norms\": false,                      \"type\": \"text\"                    }                  },                  \"ignore_above\": 1024,                  \"type\": \"keyword\"                },                \"group\": {                  \"properties\": {                    \"domain\": {                      \"ignore_above\": 1024,                      \"type\": \"keyword\"                    },                    \"id\": {                      \"ignore_above\": 1024,                      \"type\": \"keyword\"                    },                    \"name\": {                      \"ignore_above\": 1024,                      \"type\": \"keyword\"                    }                  }                },                \"hash\": {                  \"ignore_above\": 1024,                  \"type\": \"keyword\"                },                \"id\": {                  \"ignore_above\": 1024,                  \"type\": \"keyword\"                },                \"name\": {                  \"fields\": {                    \"text\": {                      \"norms\": false,                      \"type\": \"text\"                    }                  },                  \"ignore_above\": 1024,                  \"type\": \"keyword\"                },                \"roles\": {                  \"ignore_above\": 1024,                  \"type\": \"keyword\"                }              }            }          }        },        \"http\": {          \"properties\": {            \"request\": {              \"properties\": {                \"body\": {                  \"properties\": {                    \"bytes\": {                      \"type\": \"long\"                    },                    \"content\": {                      \"fields\": {                        \"text\": {                          \"norms\": false,                          \"type\": \"text\"                        }                      },                      \"ignore_above\": 1024,                      \"type\": \"keyword\"                    }                  }                },                \"bytes\": {                  \"type\": \"long\"                },                \"method\": {                  \"ignore_above\": 1024,                  \"type\": \"keyword\"                },                \"referrer\": {                  \"ignore_above\": 1024,                  \"type\": \"keyword\"                }              }            },            \"response\": {              \"properties\": {                \"body\": {                  \"properties\": {                    \"bytes\": {                      \"type\": \"long\"                    },                    \"content\": {                      \"fields\": {                        \"text\": {                          \"norms\": false,                          \"type\": \"text\"                        }                      },                      \"ignore_above\": 1024,                      \"type\": \"keyword\"                    }                  }                },                \"bytes\": {                  \"type\": \"long\"                },                \"status_code\": {                  \"type\": \"long\"                }              }            },            \"version\": {              \"ignore_above\": 1024,              \"type\": \"keyword\"            }          }        },        \"labels\": {          \"type\": \"object\"        },        \"log\": {          \"properties\": {            \"file\": {              \"properties\": {                \"path\": {                  \"ignore_above\": 1024,                  \"type\": \"keyword\"                }              }            },            \"level\": {              \"ignore_above\": 1024,              \"type\": \"keyword\"            },            \"logger\": {              \"ignore_above\": 1024,              \"type\": \"keyword\"            },            \"origin\": {              \"properties\": {                \"file\": {                  \"properties\": {                    \"line\": {                      \"type\": \"integer\"                    },                    \"name\": {                      \"ignore_above\": 1024,                      \"type\": \"keyword\"                    }                  }                },                \"function\": {                  \"ignore_above\": 1024,                  \"type\": \"keyword\"                }              }            },            \"original\": {              \"doc_values\": false,              \"ignore_above\": 1024,              \"index\": false,              \"type\": \"keyword\"            },            \"syslog\": {              \"properties\": {                \"facility\": {                  \"properties\": {                    \"code\": {                      \"type\": \"long\"                    },                    \"name\": {                      \"ignore_above\": 1024,                      \"type\": \"keyword\"                    }                  }                },                \"priority\": {                  \"type\": \"long\"                },                \"severity\": {                  \"properties\": {                    \"code\": {                      \"type\": \"long\"                    },                    \"name\": {                      \"ignore_above\": 1024,                      \"type\": \"keyword\"                    }                  }                }              },              \"type\": \"object\"            }          }        },        \"message\": {          \"norms\": false,          \"type\": \"text\"        },        \"network\": {          \"properties\": {            \"application\": {              \"ignore_above\": 1024,              \"type\": \"keyword\"            },            \"bytes\": {              \"type\": \"long\"            },            \"community_id\": {              \"ignore_above\": 1024,              \"type\": \"keyword\"            },            \"direction\": {              \"ignore_above\": 1024,              \"type\": \"keyword\"            },            \"forwarded_ip\": {              \"type\": \"ip\"            },            \"iana_number\": {              \"ignore_above\": 1024,              \"type\": \"keyword\"            },            \"inner\": {              \"properties\": {                \"vlan\": {                  \"properties\": {                    \"id\": {                      \"ignore_above\": 1024,                      \"type\": \"keyword\"                    },                    \"name\": {                      \"ignore_above\": 1024,                      \"type\": \"keyword\"                    }                  }                }              },              \"type\": \"object\"            },            \"name\": {              \"ignore_above\": 1024,              \"type\": \"keyword\"            },            \"packets\": {              \"type\": \"long\"            },            \"protocol\": {              \"ignore_above\": 1024,              \"type\": \"keyword\"            },            \"transport\": {              \"ignore_above\": 1024,              \"type\": \"keyword\"            },            \"type\": {              \"ignore_above\": 1024,              \"type\": \"keyword\"            },            \"vlan\": {              \"properties\": {                \"id\": {                  \"ignore_above\": 1024,                  \"type\": \"keyword\"                },                \"name\": {                  \"ignore_above\": 1024,                  \"type\": \"keyword\"                }              }            }          }        },        \"observer\": {          \"properties\": {            \"egress\": {              \"properties\": {                \"interface\": {                  \"properties\": {                    \"alias\": {                      \"ignore_above\": 1024,                      \"type\": \"keyword\"                    },                    \"id\": {                      \"ignore_above\": 1024,                      \"type\": \"keyword\"                    },                    \"name\": {                      \"ignore_above\": 1024,                      \"type\": \"keyword\"                    }                  }                },                \"vlan\": {                  \"properties\": {                    \"id\": {                      \"ignore_above\": 1024,                      \"type\": \"keyword\"                    },                    \"name\": {                      \"ignore_above\": 1024,                      \"type\": \"keyword\"                    }                  }                },                \"zone\": {                  \"ignore_above\": 1024,                  \"type\": \"keyword\"                }              },              \"type\": \"object\"            },            \"geo\": {              \"properties\": {                \"city_name\": {                  \"ignore_above\": 1024,                  \"type\": \"keyword\"                },                \"continent_name\": {                  \"ignore_above\": 1024,                  \"type\": \"keyword\"                },                \"country_iso_code\": {                  \"ignore_above\": 1024,                  \"type\": \"keyword\"                },                \"country_name\": {                  \"ignore_above\": 1024,                  \"type\": \"keyword\"                },                \"location\": {                  \"type\": \"geo_point\"                },                \"name\": {                  \"ignore_above\": 1024,                  \"type\": \"keyword\"                },                \"region_iso_code\": {                  \"ignore_above\": 1024,                  \"type\": \"keyword\"                },                \"region_name\": {                  \"ignore_above\": 1024,                  \"type\": \"keyword\"                }              }            },            \"hostname\": {              \"ignore_above\": 1024,              \"type\": \"keyword\"            },            \"ingress\": {              \"properties\": {                \"interface\": {                  \"properties\": {                    \"alias\": {                      \"ignore_above\": 1024,                      \"type\": \"keyword\"                    },                    \"id\": {                      \"ignore_above\": 1024,                      \"type\": \"keyword\"                    },                    \"name\": {                      \"ignore_above\": 1024,                      \"type\": \"keyword\"                    }                  }                },                \"vlan\": {                  \"properties\": {                    \"id\": {                      \"ignore_above\": 1024,                      \"type\": \"keyword\"                    },                    \"name\": {                      \"ignore_above\": 1024,                      \"type\": \"keyword\"                    }                  }                },                \"zone\": {                  \"ignore_above\": 1024,                  \"type\": \"keyword\"                }              },              \"type\": \"object\"            },            \"ip\": {              \"type\": \"ip\"            },            \"mac\": {              \"ignore_above\": 1024,              \"type\": \"keyword\"            },            \"name\": {              \"ignore_above\": 1024,              \"type\": \"keyword\"            },            \"os\": {              \"properties\": {                \"family\": {                  \"ignore_above\": 1024,                  \"type\": \"keyword\"                },                \"full\": {                  \"fields\": {                    \"text\": {                      \"norms\": false,                      \"type\": \"text\"                    }                  },                  \"ignore_above\": 1024,                  \"type\": \"keyword\"                },                \"kernel\": {                  \"ignore_above\": 1024,                  \"type\": \"keyword\"                },                \"name\": {                  \"fields\": {                    \"text\": {                      \"norms\": false,                      \"type\": \"text\"                    }                  },                  \"ignore_above\": 1024,                  \"type\": \"keyword\"                },                \"platform\": {                  \"ignore_above\": 1024,                  \"type\": \"keyword\"                },                \"version\": {                  \"ignore_above\": 1024,                  \"type\": \"keyword\"                }              }            },            \"product\": {              \"ignore_above\": 1024,              \"type\": \"keyword\"            },            \"serial_number\": {              \"ignore_above\": 1024,              \"type\": \"keyword\"            },            \"type\": {              \"ignore_above\": 1024,              \"type\": \"keyword\"            },            \"vendor\": {              \"ignore_above\": 1024,              \"type\": \"keyword\"            },            \"version\": {              \"ignore_above\": 1024,              \"type\": \"keyword\"            }          }        },        \"organization\": {          \"properties\": {            \"id\": {              \"ignore_above\": 1024,              \"type\": \"keyword\"            },            \"name\": {              \"fields\": {                \"text\": {                  \"norms\": false,                  \"type\": \"text\"                }              },              \"ignore_above\": 1024,              \"type\": \"keyword\"            }          }        },        \"package\": {          \"properties\": {            \"architecture\": {              \"ignore_above\": 1024,              \"type\": \"keyword\"            },            \"build_version\": {              \"ignore_above\": 1024,              \"type\": \"keyword\"            },            \"checksum\": {              \"ignore_above\": 1024,              \"type\": \"keyword\"            },            \"description\": {              \"ignore_above\": 1024,              \"type\": \"keyword\"            },            \"install_scope\": {              \"ignore_above\": 1024,              \"type\": \"keyword\"            },            \"installed\": {              \"type\": \"date\"            },            \"license\": {              \"ignore_above\": 1024,              \"type\": \"keyword\"            },            \"name\": {              \"ignore_above\": 1024,              \"type\": \"keyword\"            },            \"path\": {              \"ignore_above\": 1024,              \"type\": \"keyword\"            },            \"reference\": {              \"ignore_above\": 1024,              \"type\": \"keyword\"            },            \"size\": {              \"type\": \"long\"            },            \"type\": {              \"ignore_above\": 1024,              \"type\": \"keyword\"            },            \"version\": {              \"ignore_above\": 1024,              \"type\": \"keyword\"            }          }        },        \"process\": {          \"properties\": {            \"args\": {              \"ignore_above\": 1024,              \"type\": \"keyword\"            },            \"args_count\": {              \"type\": \"long\"            },            \"code_signature\": {              \"properties\": {                \"exists\": {                  \"type\": \"boolean\"                },                \"status\": {                  \"ignore_above\": 1024,                  \"type\": \"keyword\"                },                \"subject_name\": {                  \"ignore_above\": 1024,                  \"type\": \"keyword\"                },                \"trusted\": {                  \"type\": \"boolean\"                },                \"valid\": {                  \"type\": \"boolean\"                }              }            },            \"command_line\": {              \"fields\": {                \"text\": {                  \"norms\": false,                  \"type\": \"text\"                }              },              \"ignore_above\": 1024,              \"type\": \"keyword\"            },            \"entity_id\": {              \"ignore_above\": 1024,              \"type\": \"keyword\"            },            \"executable\": {              \"fields\": {                \"text\": {                  \"norms\": false,                  \"type\": \"text\"                }              },              \"ignore_above\": 1024,              \"type\": \"keyword\"            },            \"exit_code\": {              \"type\": \"long\"            },            \"hash\": {              \"properties\": {                \"md5\": {                  \"ignore_above\": 1024,                  \"type\": \"keyword\"                },                \"sha1\": {                  \"ignore_above\": 1024,                  \"type\": \"keyword\"                },                \"sha256\": {                  \"ignore_above\": 1024,                  \"type\": \"keyword\"                },                \"sha512\": {                  \"ignore_above\": 1024,                  \"type\": \"keyword\"                }              }            },            \"name\": {              \"fields\": {                \"text\": {                  \"norms\": false,                  \"type\": \"text\"                }              },              \"ignore_above\": 1024,              \"type\": \"keyword\"            },            \"parent\": {              \"properties\": {                \"args\": {                  \"ignore_above\": 1024,                  \"type\": \"keyword\"                },                \"args_count\": {                  \"type\": \"long\"                },                \"code_signature\": {                  \"properties\": {                    \"exists\": {                      \"type\": \"boolean\"                    },                    \"status\": {                      \"ignore_above\": 1024,                      \"type\": \"keyword\"                    },                    \"subject_name\": {                      \"ignore_above\": 1024,                      \"type\": \"keyword\"                    },                    \"trusted\": {                      \"type\": \"boolean\"                    },                    \"valid\": {                      \"type\": \"boolean\"                    }                  }                },                \"command_line\": {                  \"fields\": {                    \"text\": {                      \"norms\": false,                      \"type\": \"text\"                    }                  },                  \"ignore_above\": 1024,                  \"type\": \"keyword\"                },                \"entity_id\": {                  \"ignore_above\": 1024,                  \"type\": \"keyword\"                },                \"executable\": {                  \"fields\": {                    \"text\": {                      \"norms\": false,                      \"type\": \"text\"                    }                  },                  \"ignore_above\": 1024,                  \"type\": \"keyword\"                },                \"exit_code\": {                  \"type\": \"long\"                },                \"hash\": {                  \"properties\": {                    \"md5\": {                      \"ignore_above\": 1024,                      \"type\": \"keyword\"                    },                    \"sha1\": {                      \"ignore_above\": 1024,                      \"type\": \"keyword\"                    },                    \"sha256\": {                      \"ignore_above\": 1024,                      \"type\": \"keyword\"                    },                    \"sha512\": {                      \"ignore_above\": 1024,                      \"type\": \"keyword\"                    }                  }                },                \"name\": {                  \"fields\": {                    \"text\": {                      \"norms\": false,                      \"type\": \"text\"                    }                  },                  \"ignore_above\": 1024,                  \"type\": \"keyword\"                },                \"pe\": {                  \"properties\": {                    \"architecture\": {                      \"ignore_above\": 1024,                      \"type\": \"keyword\"                    },                    \"company\": {                      \"ignore_above\": 1024,                      \"type\": \"keyword\"                    },                    \"description\": {                      \"ignore_above\": 1024,                      \"type\": \"keyword\"                    },                    \"file_version\": {                      \"ignore_above\": 1024,                      \"type\": \"keyword\"                    },                    \"imphash\": {                      \"ignore_above\": 1024,                      \"type\": \"keyword\"                    },                    \"original_file_name\": {                      \"ignore_above\": 1024,                      \"type\": \"keyword\"                    },                    \"product\": {                      \"ignore_above\": 1024,                      \"type\": \"keyword\"                    }                  }                },                \"pgid\": {                  \"type\": \"long\"                },                \"pid\": {                  \"type\": \"long\"                },                \"ppid\": {                  \"type\": \"long\"                },                \"start\": {                  \"type\": \"date\"                },                \"thread\": {                  \"properties\": {                    \"id\": {                      \"type\": \"long\"                    },                    \"name\": {                      \"ignore_above\": 1024,                      \"type\": \"keyword\"                    }                  }                },                \"title\": {                  \"fields\": {                    \"text\": {                      \"norms\": false,                      \"type\": \"text\"                    }                  },                  \"ignore_above\": 1024,                  \"type\": \"keyword\"                },                \"uptime\": {                  \"type\": \"long\"                },                \"working_directory\": {                  \"fields\": {                    \"text\": {                      \"norms\": false,                      \"type\": \"text\"                    }                  },                  \"ignore_above\": 1024,                  \"type\": \"keyword\"                }              }            },            \"pe\": {              \"properties\": {                \"architecture\": {                  \"ignore_above\": 1024,                  \"type\": \"keyword\"                },                \"company\": {                  \"ignore_above\": 1024,                  \"type\": \"keyword\"                },                \"description\": {                  \"ignore_above\": 1024,                  \"type\": \"keyword\"                },                \"file_version\": {                  \"ignore_above\": 1024,                  \"type\": \"keyword\"                },                \"imphash\": {                  \"ignore_above\": 1024,                  \"type\": \"keyword\"                },                \"original_file_name\": {                  \"ignore_above\": 1024,                  \"type\": \"keyword\"                },                \"product\": {                  \"ignore_above\": 1024,                  \"type\": \"keyword\"                }              }            },            \"pgid\": {              \"type\": \"long\"            },            \"pid\": {              \"type\": \"long\"            },            \"ppid\": {              \"type\": \"long\"            },            \"start\": {              \"type\": \"date\"            },            \"thread\": {              \"properties\": {                \"id\": {                  \"type\": \"long\"                },                \"name\": {                  \"ignore_above\": 1024,                  \"type\": \"keyword\"                }              }            },            \"title\": {              \"fields\": {                \"text\": {                  \"norms\": false,                  \"type\": \"text\"                }              },              \"ignore_above\": 1024,              \"type\": \"keyword\"            },            \"uptime\": {              \"type\": \"long\"            },            \"working_directory\": {              \"fields\": {                \"text\": {                  \"norms\": false,                  \"type\": \"text\"                }              },              \"ignore_above\": 1024,              \"type\": \"keyword\"            }          }        },        \"registry\": {          \"properties\": {            \"data\": {              \"properties\": {                \"bytes\": {                  \"ignore_above\": 1024,                  \"type\": \"keyword\"                },                \"strings\": {                  \"ignore_above\": 1024,                  \"type\": \"keyword\"                },                \"type\": {                  \"ignore_above\": 1024,                  \"type\": \"keyword\"                }              }            },            \"hive\": {              \"ignore_above\": 1024,              \"type\": \"keyword\"            },            \"key\": {              \"ignore_above\": 1024,              \"type\": \"keyword\"            },            \"path\": {              \"ignore_above\": 1024,              \"type\": \"keyword\"            },            \"value\": {              \"ignore_above\": 1024,              \"type\": \"keyword\"            }          }        },        \"related\": {          \"properties\": {            \"hash\": {              \"ignore_above\": 1024,              \"type\": \"keyword\"            },            \"hosts\": {              \"ignore_above\": 1024,              \"type\": \"keyword\"            },            \"ip\": {              \"type\": \"ip\"            },            \"user\": {              \"ignore_above\": 1024,              \"type\": \"keyword\"            }          }        },        \"rule\": {          \"properties\": {            \"author\": {              \"ignore_above\": 1024,              \"type\": \"keyword\"            },            \"category\": {              \"ignore_above\": 1024,              \"type\": \"keyword\"            },            \"description\": {              \"ignore_above\": 1024,              \"type\": \"keyword\"            },            \"id\": {              \"ignore_above\": 1024,              \"type\": \"keyword\"            },            \"license\": {              \"ignore_above\": 1024,              \"type\": \"keyword\"            },            \"name\": {              \"ignore_above\": 1024,              \"type\": \"keyword\"            },            \"reference\": {              \"ignore_above\": 1024,              \"type\": \"keyword\"            },            \"ruleset\": {              \"ignore_above\": 1024,              \"type\": \"keyword\"            },            \"uuid\": {              \"ignore_above\": 1024,              \"type\": \"keyword\"            },            \"version\": {              \"ignore_above\": 1024,              \"type\": \"keyword\"            }          }        },        \"server\": {          \"properties\": {            \"address\": {              \"ignore_above\": 1024,              \"type\": \"keyword\"            },            \"as\": {              \"properties\": {                \"number\": {                  \"type\": \"long\"                },                \"organization\": {                  \"properties\": {                    \"name\": {                      \"fields\": {                        \"text\": {                          \"norms\": false,                          \"type\": \"text\"                        }                      },                      \"ignore_above\": 1024,                      \"type\": \"keyword\"                    }                  }                }              }            },            \"bytes\": {              \"type\": \"long\"            },            \"domain\": {              \"ignore_above\": 1024,              \"type\": \"keyword\"            },            \"geo\": {              \"properties\": {                \"city_name\": {                  \"ignore_above\": 1024,                  \"type\": \"keyword\"                },                \"continent_name\": {                  \"ignore_above\": 1024,                  \"type\": \"keyword\"                },                \"country_iso_code\": {                  \"ignore_above\": 1024,                  \"type\": \"keyword\"                },                \"country_name\": {                  \"ignore_above\": 1024,                  \"type\": \"keyword\"                },                \"location\": {                  \"type\": \"geo_point\"                },                \"name\": {                  \"ignore_above\": 1024,                  \"type\": \"keyword\"                },                \"region_iso_code\": {                  \"ignore_above\": 1024,                  \"type\": \"keyword\"                },                \"region_name\": {                  \"ignore_above\": 1024,                  \"type\": \"keyword\"                }              }            },            \"ip\": {              \"type\": \"ip\"            },            \"mac\": {              \"ignore_above\": 1024,              \"type\": \"keyword\"            },            \"nat\": {              \"properties\": {                \"ip\": {                  \"type\": \"ip\"                },                \"port\": {                  \"type\": \"long\"                }              }            },            \"packets\": {              \"type\": \"long\"            },            \"port\": {              \"type\": \"long\"            },            \"registered_domain\": {              \"ignore_above\": 1024,              \"type\": \"keyword\"            },            \"top_level_domain\": {              \"ignore_above\": 1024,              \"type\": \"keyword\"            },            \"user\": {              \"properties\": {                \"domain\": {                  \"ignore_above\": 1024,                  \"type\": \"keyword\"                },                \"email\": {                  \"ignore_above\": 1024,                  \"type\": \"keyword\"                },                \"full_name\": {                  \"fields\": {                    \"text\": {                      \"norms\": false,                      \"type\": \"text\"                    }                  },                  \"ignore_above\": 1024,                  \"type\": \"keyword\"                },                \"group\": {                  \"properties\": {                    \"domain\": {                      \"ignore_above\": 1024,                      \"type\": \"keyword\"                    },                    \"id\": {                      \"ignore_above\": 1024,                      \"type\": \"keyword\"                    },                    \"name\": {                      \"ignore_above\": 1024,                      \"type\": \"keyword\"                    }                  }                },                \"hash\": {                  \"ignore_above\": 1024,                  \"type\": \"keyword\"                },                \"id\": {                  \"ignore_above\": 1024,                  \"type\": \"keyword\"                },                \"name\": {                  \"fields\": {                    \"text\": {                      \"norms\": false,                      \"type\": \"text\"                    }                  },                  \"ignore_above\": 1024,                  \"type\": \"keyword\"                },                \"roles\": {                  \"ignore_above\": 1024,                  \"type\": \"keyword\"                }              }            }          }        },        \"service\": {          \"properties\": {            \"ephemeral_id\": {              \"ignore_above\": 1024,              \"type\": \"keyword\"            },            \"id\": {              \"ignore_above\": 1024,              \"type\": \"keyword\"            },            \"name\": {              \"ignore_above\": 1024,              \"type\": \"keyword\"            },            \"node\": {              \"properties\": {                \"name\": {                  \"ignore_above\": 1024,                  \"type\": \"keyword\"                }              }            },            \"state\": {              \"ignore_above\": 1024,              \"type\": \"keyword\"            },            \"type\": {              \"ignore_above\": 1024,              \"type\": \"keyword\"            },            \"version\": {              \"ignore_above\": 1024,              \"type\": \"keyword\"            }          }        },        \"source\": {          \"properties\": {            \"address\": {              \"ignore_above\": 1024,              \"type\": \"keyword\"            },            \"as\": {              \"properties\": {                \"number\": {                  \"type\": \"long\"                },                \"organization\": {                  \"properties\": {                    \"name\": {                      \"fields\": {                        \"text\": {                          \"norms\": false,                          \"type\": \"text\"                        }                      },                      \"ignore_above\": 1024,                      \"type\": \"keyword\"                    }                  }                }              }            },            \"bytes\": {              \"type\": \"long\"            },            \"domain\": {              \"ignore_above\": 1024,              \"type\": \"keyword\"            },            \"geo\": {              \"properties\": {                \"city_name\": {                  \"ignore_above\": 1024,                  \"type\": \"keyword\"                },                \"continent_name\": {                  \"ignore_above\": 1024,                  \"type\": \"keyword\"                },                \"country_iso_code\": {                  \"ignore_above\": 1024,                  \"type\": \"keyword\"                },                \"country_name\": {                  \"ignore_above\": 1024,                  \"type\": \"keyword\"                },                \"location\": {                  \"type\": \"geo_point\"                },                \"name\": {                  \"ignore_above\": 1024,                  \"type\": \"keyword\"                },                \"region_iso_code\": {                  \"ignore_above\": 1024,                  \"type\": \"keyword\"                },                \"region_name\": {                  \"ignore_above\": 1024,                  \"type\": \"keyword\"                }              }            },            \"ip\": {              \"type\": \"ip\"            },            \"mac\": {              \"ignore_above\": 1024,              \"type\": \"keyword\"            },            \"nat\": {              \"properties\": {                \"ip\": {                  \"type\": \"ip\"                },                \"port\": {                  \"type\": \"long\"                }              }            },            \"packets\": {              \"type\": \"long\"            },            \"port\": {              \"type\": \"long\"            },            \"registered_domain\": {              \"ignore_above\": 1024,              \"type\": \"keyword\"            },            \"top_level_domain\": {              \"ignore_above\": 1024,              \"type\": \"keyword\"            },            \"user\": {              \"properties\": {                \"domain\": {                  \"ignore_above\": 1024,                  \"type\": \"keyword\"                },                \"email\": {                  \"ignore_above\": 1024,                  \"type\": \"keyword\"                },                \"full_name\": {                  \"fields\": {                    \"text\": {                      \"norms\": false,                      \"type\": \"text\"                    }                  },                  \"ignore_above\": 1024,                  \"type\": \"keyword\"                },                \"group\": {                  \"properties\": {                    \"domain\": {                      \"ignore_above\": 1024,                      \"type\": \"keyword\"                    },                    \"id\": {                      \"ignore_above\": 1024,                      \"type\": \"keyword\"                    },                    \"name\": {                      \"ignore_above\": 1024,                      \"type\": \"keyword\"                    }                  }                },                \"hash\": {                  \"ignore_above\": 1024,                  \"type\": \"keyword\"                },                \"id\": {                  \"ignore_above\": 1024,                  \"type\": \"keyword\"                },                \"name\": {                  \"fields\": {                    \"text\": {                      \"norms\": false,                      \"type\": \"text\"                    }                  },                  \"ignore_above\": 1024,                  \"type\": \"keyword\"                },                \"roles\": {                  \"ignore_above\": 1024,                  \"type\": \"keyword\"                }              }            }          }        },        \"span\": {          \"properties\": {            \"id\": {              \"ignore_above\": 1024,              \"type\": \"keyword\"            }          }        },        \"tags\": {          \"ignore_above\": 1024,          \"type\": \"keyword\"        },        \"threat\": {          \"properties\": {            \"framework\": {              \"ignore_above\": 1024,              \"type\": \"keyword\"            },            \"tactic\": {              \"properties\": {                \"id\": {                  \"ignore_above\": 1024,                  \"type\": \"keyword\"                },                \"name\": {                  \"ignore_above\": 1024,                  \"type\": \"keyword\"                },                \"reference\": {                  \"ignore_above\": 1024,                  \"type\": \"keyword\"                }              }            },            \"technique\": {              \"properties\": {                \"id\": {                  \"ignore_above\": 1024,                  \"type\": \"keyword\"                },                \"name\": {                  \"fields\": {                    \"text\": {                      \"norms\": false,                      \"type\": \"text\"                    }                  },                  \"ignore_above\": 1024,                  \"type\": \"keyword\"                },                \"reference\": {                  \"ignore_above\": 1024,                  \"type\": \"keyword\"                }              }            }          }        },        \"tls\": {          \"properties\": {            \"cipher\": {              \"ignore_above\": 1024,              \"type\": \"keyword\"            },            \"client\": {              \"properties\": {                \"certificate\": {                  \"ignore_above\": 1024,                  \"type\": \"keyword\"                },                \"certificate_chain\": {                  \"ignore_above\": 1024,                  \"type\": \"keyword\"                },                \"hash\": {                  \"properties\": {                    \"md5\": {                      \"ignore_above\": 1024,                      \"type\": \"keyword\"                    },                    \"sha1\": {                      \"ignore_above\": 1024,                      \"type\": \"keyword\"                    },                    \"sha256\": {                      \"ignore_above\": 1024,                      \"type\": \"keyword\"                    }                  }                },                \"issuer\": {                  \"ignore_above\": 1024,                  \"type\": \"keyword\"                },                \"ja3\": {                  \"ignore_above\": 1024,                  \"type\": \"keyword\"                },                \"not_after\": {                  \"type\": \"date\"                },                \"not_before\": {                  \"type\": \"date\"                },                \"server_name\": {                  \"ignore_above\": 1024,                  \"type\": \"keyword\"                },                \"subject\": {                  \"ignore_above\": 1024,                  \"type\": \"keyword\"                },                \"supported_ciphers\": {                  \"ignore_above\": 1024,                  \"type\": \"keyword\"                },                \"x509\": {                  \"properties\": {                    \"alternative_names\": {                      \"ignore_above\": 1024,                      \"type\": \"keyword\"                    },                    \"issuer\": {                      \"properties\": {                        \"common_name\": {                          \"ignore_above\": 1024,                          \"type\": \"keyword\"                        },                        \"country\": {                          \"ignore_above\": 1024,                          \"type\": \"keyword\"                        },                        \"distinguished_name\": {                          \"ignore_above\": 1024,                          \"type\": \"keyword\"                        },                        \"locality\": {                          \"ignore_above\": 1024,                          \"type\": \"keyword\"                        },                        \"organization\": {                          \"ignore_above\": 1024,                          \"type\": \"keyword\"                        },                        \"organizational_unit\": {                          \"ignore_above\": 1024,                          \"type\": \"keyword\"                        },                        \"state_or_province\": {                          \"ignore_above\": 1024,                          \"type\": \"keyword\"                        }                      }                    },                    \"not_after\": {                      \"type\": \"date\"                    },                    \"not_before\": {                      \"type\": \"date\"                    },                    \"public_key_algorithm\": {                      \"ignore_above\": 1024,                      \"type\": \"keyword\"                    },                    \"public_key_curve\": {                      \"ignore_above\": 1024,                      \"type\": \"keyword\"                    },                    \"public_key_exponent\": {                      \"doc_values\": false,                      \"index\": false,                      \"type\": \"long\"                    },                    \"public_key_size\": {                      \"type\": \"long\"                    },                    \"serial_number\": {                      \"ignore_above\": 1024,                      \"type\": \"keyword\"                    },                    \"signature_algorithm\": {                      \"ignore_above\": 1024,                      \"type\": \"keyword\"                    },                    \"subject\": {                      \"properties\": {                        \"common_name\": {                          \"ignore_above\": 1024,                          \"type\": \"keyword\"                        },                        \"country\": {                          \"ignore_above\": 1024,                          \"type\": \"keyword\"                        },                        \"distinguished_name\": {                          \"ignore_above\": 1024,                          \"type\": \"keyword\"                        },                        \"locality\": {                          \"ignore_above\": 1024,                          \"type\": \"keyword\"                        },                        \"organization\": {                          \"ignore_above\": 1024,                          \"type\": \"keyword\"                        },                        \"organizational_unit\": {                          \"ignore_above\": 1024,                          \"type\": \"keyword\"                        },                        \"state_or_province\": {                          \"ignore_above\": 1024,                          \"type\": \"keyword\"                        }                      }                    },                    \"version_number\": {                      \"ignore_above\": 1024,                      \"type\": \"keyword\"                    }                  }                }              }            },            \"curve\": {              \"ignore_above\": 1024,              \"type\": \"keyword\"            },            \"established\": {              \"type\": \"boolean\"            },            \"next_protocol\": {              \"ignore_above\": 1024,              \"type\": \"keyword\"            },            \"resumed\": {              \"type\": \"boolean\"            },            \"server\": {              \"properties\": {                \"certificate\": {                  \"ignore_above\": 1024,                  \"type\": \"keyword\"                },                \"certificate_chain\": {                  \"ignore_above\": 1024,                  \"type\": \"keyword\"                },                \"hash\": {                  \"properties\": {                    \"md5\": {                      \"ignore_above\": 1024,                      \"type\": \"keyword\"                    },                    \"sha1\": {                      \"ignore_above\": 1024,                      \"type\": \"keyword\"                    },                    \"sha256\": {                      \"ignore_above\": 1024,                      \"type\": \"keyword\"                    }                  }                },                \"issuer\": {                  \"ignore_above\": 1024,                  \"type\": \"keyword\"                },                \"ja3s\": {                  \"ignore_above\": 1024,                  \"type\": \"keyword\"                },                \"not_after\": {                  \"type\": \"date\"                },                \"not_before\": {                  \"type\": \"date\"                },                \"subject\": {                  \"ignore_above\": 1024,                  \"type\": \"keyword\"                },                \"x509\": {                  \"properties\": {                    \"alternative_names\": {                      \"ignore_above\": 1024,                      \"type\": \"keyword\"                    },                    \"issuer\": {                      \"properties\": {                        \"common_name\": {                          \"ignore_above\": 1024,                          \"type\": \"keyword\"                        },                        \"country\": {                          \"ignore_above\": 1024,                          \"type\": \"keyword\"                        },                        \"distinguished_name\": {                          \"ignore_above\": 1024,                          \"type\": \"keyword\"                        },                        \"locality\": {                          \"ignore_above\": 1024,                          \"type\": \"keyword\"                        },                        \"organization\": {                          \"ignore_above\": 1024,                          \"type\": \"keyword\"                        },                        \"organizational_unit\": {                          \"ignore_above\": 1024,                          \"type\": \"keyword\"                        },                        \"state_or_province\": {                          \"ignore_above\": 1024,                          \"type\": \"keyword\"                        }                      }                    },                    \"not_after\": {                      \"type\": \"date\"                    },                    \"not_before\": {                      \"type\": \"date\"                    },                    \"public_key_algorithm\": {                      \"ignore_above\": 1024,                      \"type\": \"keyword\"                    },                    \"public_key_curve\": {                      \"ignore_above\": 1024,                      \"type\": \"keyword\"                    },                    \"public_key_exponent\": {                      \"doc_values\": false,                      \"index\": false,                      \"type\": \"long\"                    },                    \"public_key_size\": {                      \"type\": \"long\"                    },                    \"serial_number\": {                      \"ignore_above\": 1024,                      \"type\": \"keyword\"                    },                    \"signature_algorithm\": {                      \"ignore_above\": 1024,                      \"type\": \"keyword\"                    },                    \"subject\": {                      \"properties\": {                        \"common_name\": {                          \"ignore_above\": 1024,                          \"type\": \"keyword\"                        },                        \"country\": {                          \"ignore_above\": 1024,                          \"type\": \"keyword\"                        },                        \"distinguished_name\": {                          \"ignore_above\": 1024,                          \"type\": \"keyword\"                        },                        \"locality\": {                          \"ignore_above\": 1024,                          \"type\": \"keyword\"                        },                        \"organization\": {                          \"ignore_above\": 1024,                          \"type\": \"keyword\"                        },                        \"organizational_unit\": {                          \"ignore_above\": 1024,                          \"type\": \"keyword\"                        },                        \"state_or_province\": {                          \"ignore_above\": 1024,                          \"type\": \"keyword\"                        }                      }                    },                    \"version_number\": {                      \"ignore_above\": 1024,                      \"type\": \"keyword\"                    }                  }                }              }            },            \"version\": {              \"ignore_above\": 1024,              \"type\": \"keyword\"            },            \"version_protocol\": {              \"ignore_above\": 1024,              \"type\": \"keyword\"            }          }        },        \"trace\": {          \"properties\": {            \"id\": {              \"ignore_above\": 1024,              \"type\": \"keyword\"            }          }        },        \"transaction\": {          \"properties\": {            \"id\": {              \"ignore_above\": 1024,              \"type\": \"keyword\"            }          }        },        \"url\": {          \"properties\": {            \"domain\": {              \"ignore_above\": 1024,              \"type\": \"keyword\"            },            \"extension\": {              \"ignore_above\": 1024,              \"type\": \"keyword\"            },            \"fragment\": {              \"ignore_above\": 1024,              \"type\": \"keyword\"            },            \"full\": {              \"fields\": {                \"text\": {                  \"norms\": false,                  \"type\": \"text\"                }              },              \"ignore_above\": 1024,              \"type\": \"keyword\"            },            \"original\": {              \"fields\": {                \"text\": {                  \"norms\": false,                  \"type\": \"text\"                }              },              \"ignore_above\": 1024,              \"type\": \"keyword\"            },            \"password\": {              \"ignore_above\": 1024,              \"type\": \"keyword\"            },            \"path\": {              \"ignore_above\": 1024,              \"type\": \"keyword\"            },            \"port\": {              \"type\": \"long\"            },            \"query\": {              \"ignore_above\": 1024,              \"type\": \"keyword\"            },            \"registered_domain\": {              \"ignore_above\": 1024,              \"type\": \"keyword\"            },            \"scheme\": {              \"ignore_above\": 1024,              \"type\": \"keyword\"            },            \"top_level_domain\": {              \"ignore_above\": 1024,              \"type\": \"keyword\"            },            \"username\": {              \"ignore_above\": 1024,              \"type\": \"keyword\"            }          }        },        \"user\": {          \"properties\": {            \"domain\": {              \"ignore_above\": 1024,              \"type\": \"keyword\"            },            \"email\": {              \"ignore_above\": 1024,              \"type\": \"keyword\"            },            \"full_name\": {              \"fields\": {                \"text\": {                  \"norms\": false,                  \"type\": \"text\"                }              },              \"ignore_above\": 1024,              \"type\": \"keyword\"            },            \"group\": {              \"properties\": {                \"domain\": {                  \"ignore_above\": 1024,                  \"type\": \"keyword\"                },                \"id\": {                  \"ignore_above\": 1024,                  \"type\": \"keyword\"                },                \"name\": {                  \"ignore_above\": 1024,                  \"type\": \"keyword\"                }              }            },            \"hash\": {              \"ignore_above\": 1024,              \"type\": \"keyword\"            },            \"id\": {              \"ignore_above\": 1024,              \"type\": \"keyword\"            },            \"name\": {              \"fields\": {                \"text\": {                  \"norms\": false,                  \"type\": \"text\"                }              },              \"ignore_above\": 1024,              \"type\": \"keyword\"            },            \"roles\": {              \"ignore_above\": 1024,              \"type\": \"keyword\"            }          }        },        \"user_agent\": {          \"properties\": {            \"device\": {              \"properties\": {                \"name\": {                  \"ignore_above\": 1024,                  \"type\": \"keyword\"                }              }            },            \"name\": {              \"ignore_above\": 1024,              \"type\": \"keyword\"            },            \"original\": {              \"fields\": {                \"text\": {                  \"norms\": false,                  \"type\": \"text\"                }              },              \"ignore_above\": 1024,              \"type\": \"keyword\"            },            \"os\": {              \"properties\": {                \"family\": {                  \"ignore_above\": 1024,                  \"type\": \"keyword\"                },                \"full\": {                  \"fields\": {                    \"text\": {                      \"norms\": false,                      \"type\": \"text\"                    }                  },                  \"ignore_above\": 1024,                  \"type\": \"keyword\"                },                \"kernel\": {                  \"ignore_above\": 1024,                  \"type\": \"keyword\"                },                \"name\": {                  \"fields\": {                    \"text\": {                      \"norms\": false,                      \"type\": \"text\"                    }                  },                  \"ignore_above\": 1024,                  \"type\": \"keyword\"                },                \"platform\": {                  \"ignore_above\": 1024,                  \"type\": \"keyword\"                },                \"version\": {                  \"ignore_above\": 1024,                  \"type\": \"keyword\"                }              }            },            \"version\": {              \"ignore_above\": 1024,              \"type\": \"keyword\"            }          }        },        \"vulnerability\": {          \"properties\": {            \"category\": {              \"ignore_above\": 1024,              \"type\": \"keyword\"            },            \"classification\": {              \"ignore_above\": 1024,              \"type\": \"keyword\"            },            \"description\": {              \"fields\": {                \"text\": {                  \"norms\": false,                  \"type\": \"text\"                }              },              \"ignore_above\": 1024,              \"type\": \"keyword\"            },            \"enumeration\": {              \"ignore_above\": 1024,              \"type\": \"keyword\"            },            \"id\": {              \"ignore_above\": 1024,              \"type\": \"keyword\"            },            \"reference\": {              \"ignore_above\": 1024,              \"type\": \"keyword\"            },            \"report_id\": {              \"ignore_above\": 1024,              \"type\": \"keyword\"            },            \"scanner\": {              \"properties\": {                \"vendor\": {                  \"ignore_above\": 1024,                  \"type\": \"keyword\"                }              }            },            \"score\": {              \"properties\": {                \"base\": {                  \"type\": \"float\"                },                \"environmental\": {                  \"type\": \"float\"                },                \"temporal\": {                  \"type\": \"float\"                },                \"version\": {                  \"ignore_above\": 1024,                  \"type\": \"keyword\"                }              }            },            \"severity\": {              \"ignore_above\": 1024,              \"type\": \"keyword\"            }          }        }      }    }  },  \"order\": 1,  \"settings\": {    \"index\": {      \"mapping\": {        \"total_fields\": {          \"limit\": 10000        }      },      \"refresh_interval\": \"5s\"    }  }}"; }
+		public static string GetIndexTemplateForElasticsearchcomposable(string indexPattern = "ecs-*") { return "{  \"index_patterns\": [    \"try-" + indexPattern + "\"  ],  \"mappings\": {    \"_meta\": {      \"version\": \"8.2.0\"    },    \"date_detection\": false,    \"dynamic_templates\": [      {        \"strings_as_keyword\": {          \"mapping\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"match_mapping_type\": \"string\"        }      }    ],    \"properties\": {      \"@timestamp\": {        \"type\": \"date\"      },      \"agent\": {        \"properties\": {          \"build\": {            \"properties\": {              \"original\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              }            }          },          \"ephemeral_id\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"id\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"name\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"type\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"version\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          }        }      },      \"client\": {        \"properties\": {          \"address\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"as\": {            \"properties\": {              \"number\": {                \"type\": \"long\"              },              \"organization\": {                \"properties\": {                  \"name\": {                    \"fields\": {                      \"text\": {                        \"type\": \"match_only_text\"                      }                    },                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  }                }              }            }          },          \"bytes\": {            \"type\": \"long\"          },          \"domain\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"geo\": {            \"properties\": {              \"city_name\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"continent_code\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"continent_name\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"country_iso_code\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"country_name\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"location\": {                \"type\": \"geo_point\"              },              \"name\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"postal_code\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"region_iso_code\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"region_name\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"timezone\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              }            }          },          \"ip\": {            \"type\": \"ip\"          },          \"mac\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"nat\": {            \"properties\": {              \"ip\": {                \"type\": \"ip\"              },              \"port\": {                \"type\": \"long\"              }            }          },          \"packets\": {            \"type\": \"long\"          },          \"port\": {            \"type\": \"long\"          },          \"registered_domain\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"subdomain\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"top_level_domain\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"user\": {            \"properties\": {              \"domain\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"email\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"full_name\": {                \"fields\": {                  \"text\": {                    \"type\": \"match_only_text\"                  }                },                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"group\": {                \"properties\": {                  \"domain\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  },                  \"id\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  },                  \"name\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  }                }              },              \"hash\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"id\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"name\": {                \"fields\": {                  \"text\": {                    \"type\": \"match_only_text\"                  }                },                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"roles\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              }            }          }        }      },      \"cloud\": {        \"properties\": {          \"account\": {            \"properties\": {              \"id\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"name\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              }            }          },          \"availability_zone\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"instance\": {            \"properties\": {              \"id\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"name\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              }            }          },          \"machine\": {            \"properties\": {              \"type\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              }            }          },          \"origin\": {            \"properties\": {              \"account\": {                \"properties\": {                  \"id\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  },                  \"name\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  }                }              },              \"availability_zone\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"instance\": {                \"properties\": {                  \"id\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  },                  \"name\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  }                }              },              \"machine\": {                \"properties\": {                  \"type\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  }                }              },              \"project\": {                \"properties\": {                  \"id\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  },                  \"name\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  }                }              },              \"provider\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"region\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"service\": {                \"properties\": {                  \"name\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  }                }              }            }          },          \"project\": {            \"properties\": {              \"id\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"name\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              }            }          },          \"provider\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"region\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"service\": {            \"properties\": {              \"name\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              }            }          },          \"target\": {            \"properties\": {              \"account\": {                \"properties\": {                  \"id\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  },                  \"name\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  }                }              },              \"availability_zone\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"instance\": {                \"properties\": {                  \"id\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  },                  \"name\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  }                }              },              \"machine\": {                \"properties\": {                  \"type\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  }                }              },              \"project\": {                \"properties\": {                  \"id\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  },                  \"name\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  }                }              },              \"provider\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"region\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"service\": {                \"properties\": {                  \"name\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  }                }              }            }          }        }      },      \"container\": {        \"properties\": {          \"cpu\": {            \"properties\": {              \"usage\": {                \"scaling_factor\": 1000,                \"type\": \"scaled_float\"              }            }          },          \"disk\": {            \"properties\": {              \"read\": {                \"properties\": {                  \"bytes\": {                    \"type\": \"long\"                  }                }              },              \"write\": {                \"properties\": {                  \"bytes\": {                    \"type\": \"long\"                  }                }              }            }          },          \"id\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"image\": {            \"properties\": {              \"name\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"tag\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              }            }          },          \"labels\": {            \"type\": \"object\"          },          \"memory\": {            \"properties\": {              \"usage\": {                \"scaling_factor\": 1000,                \"type\": \"scaled_float\"              }            }          },          \"name\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"network\": {            \"properties\": {              \"egress\": {                \"properties\": {                  \"bytes\": {                    \"type\": \"long\"                  }                }              },              \"ingress\": {                \"properties\": {                  \"bytes\": {                    \"type\": \"long\"                  }                }              }            }          },          \"runtime\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          }        }      },      \"data_stream\": {        \"properties\": {          \"dataset\": {            \"type\": \"constant_keyword\"          },          \"namespace\": {            \"type\": \"constant_keyword\"          },          \"type\": {            \"type\": \"constant_keyword\"          }        }      },      \"destination\": {        \"properties\": {          \"address\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"as\": {            \"properties\": {              \"number\": {                \"type\": \"long\"              },              \"organization\": {                \"properties\": {                  \"name\": {                    \"fields\": {                      \"text\": {                        \"type\": \"match_only_text\"                      }                    },                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  }                }              }            }          },          \"bytes\": {            \"type\": \"long\"          },          \"domain\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"geo\": {            \"properties\": {              \"city_name\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"continent_code\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"continent_name\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"country_iso_code\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"country_name\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"location\": {                \"type\": \"geo_point\"              },              \"name\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"postal_code\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"region_iso_code\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"region_name\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"timezone\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              }            }          },          \"ip\": {            \"type\": \"ip\"          },          \"mac\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"nat\": {            \"properties\": {              \"ip\": {                \"type\": \"ip\"              },              \"port\": {                \"type\": \"long\"              }            }          },          \"packets\": {            \"type\": \"long\"          },          \"port\": {            \"type\": \"long\"          },          \"registered_domain\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"subdomain\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"top_level_domain\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"user\": {            \"properties\": {              \"domain\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"email\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"full_name\": {                \"fields\": {                  \"text\": {                    \"type\": \"match_only_text\"                  }                },                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"group\": {                \"properties\": {                  \"domain\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  },                  \"id\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  },                  \"name\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  }                }              },              \"hash\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"id\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"name\": {                \"fields\": {                  \"text\": {                    \"type\": \"match_only_text\"                  }                },                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"roles\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              }            }          }        }      },      \"dll\": {        \"properties\": {          \"code_signature\": {            \"properties\": {              \"digest_algorithm\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"exists\": {                \"type\": \"boolean\"              },              \"signing_id\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"status\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"subject_name\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"team_id\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"timestamp\": {                \"type\": \"date\"              },              \"trusted\": {                \"type\": \"boolean\"              },              \"valid\": {                \"type\": \"boolean\"              }            }          },          \"hash\": {            \"properties\": {              \"md5\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"sha1\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"sha256\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"sha384\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"sha512\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"ssdeep\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"tlsh\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              }            }          },          \"name\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"path\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"pe\": {            \"properties\": {              \"architecture\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"company\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"description\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"file_version\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"imphash\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"original_file_name\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"pehash\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"product\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              }            }          }        }      },      \"dns\": {        \"properties\": {          \"answers\": {            \"properties\": {              \"class\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"data\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"name\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"ttl\": {                \"type\": \"long\"              },              \"type\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              }            },            \"type\": \"object\"          },          \"header_flags\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"id\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"op_code\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"question\": {            \"properties\": {              \"class\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"name\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"registered_domain\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"subdomain\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"top_level_domain\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"type\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              }            }          },          \"resolved_ip\": {            \"type\": \"ip\"          },          \"response_code\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"type\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          }        }      },      \"ecs\": {        \"properties\": {          \"version\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          }        }      },      \"email\": {        \"properties\": {          \"attachments\": {            \"properties\": {              \"file\": {                \"properties\": {                  \"extension\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  },                  \"hash\": {                    \"properties\": {                      \"md5\": {                        \"ignore_above\": 1024,                        \"type\": \"keyword\"                      },                      \"sha1\": {                        \"ignore_above\": 1024,                        \"type\": \"keyword\"                      },                      \"sha256\": {                        \"ignore_above\": 1024,                        \"type\": \"keyword\"                      },                      \"sha384\": {                        \"ignore_above\": 1024,                        \"type\": \"keyword\"                      },                      \"sha512\": {                        \"ignore_above\": 1024,                        \"type\": \"keyword\"                      },                      \"ssdeep\": {                        \"ignore_above\": 1024,                        \"type\": \"keyword\"                      },                      \"tlsh\": {                        \"ignore_above\": 1024,                        \"type\": \"keyword\"                      }                    }                  },                  \"mime_type\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  },                  \"name\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  },                  \"size\": {                    \"type\": \"long\"                  }                }              }            },            \"type\": \"nested\"          },          \"bcc\": {            \"properties\": {              \"address\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              }            }          },          \"cc\": {            \"properties\": {              \"address\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              }            }          },          \"content_type\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"delivery_timestamp\": {            \"type\": \"date\"          },          \"direction\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"from\": {            \"properties\": {              \"address\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              }            }          },          \"local_id\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"message_id\": {            \"type\": \"wildcard\"          },          \"origination_timestamp\": {            \"type\": \"date\"          },          \"reply_to\": {            \"properties\": {              \"address\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              }            }          },          \"sender\": {            \"properties\": {              \"address\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              }            }          },          \"subject\": {            \"fields\": {              \"text\": {                \"type\": \"match_only_text\"              }            },            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"to\": {            \"properties\": {              \"address\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              }            }          },          \"x_mailer\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          }        }      },      \"error\": {        \"properties\": {          \"code\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"id\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"message\": {            \"type\": \"match_only_text\"          },          \"stack_trace\": {            \"fields\": {              \"text\": {                \"type\": \"match_only_text\"              }            },            \"type\": \"wildcard\"          },          \"type\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          }        }      },      \"event\": {        \"properties\": {          \"action\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"agent_id_status\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"category\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"code\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"created\": {            \"type\": \"date\"          },          \"dataset\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"duration\": {            \"type\": \"long\"          },          \"end\": {            \"type\": \"date\"          },          \"hash\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"id\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"ingested\": {            \"type\": \"date\"          },          \"kind\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"module\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"original\": {            \"doc_values\": false,            \"index\": false,            \"type\": \"keyword\"          },          \"outcome\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"provider\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"reason\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"reference\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"risk_score\": {            \"type\": \"float\"          },          \"risk_score_norm\": {            \"type\": \"float\"          },          \"sequence\": {            \"type\": \"long\"          },          \"severity\": {            \"type\": \"long\"          },          \"start\": {            \"type\": \"date\"          },          \"timezone\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"type\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"url\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          }        }      },      \"faas\": {        \"properties\": {          \"coldstart\": {            \"type\": \"boolean\"          },          \"execution\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"id\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"name\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"trigger\": {            \"properties\": {              \"request_id\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"type\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              }            },            \"type\": \"nested\"          },          \"version\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          }        }      },      \"file\": {        \"properties\": {          \"accessed\": {            \"type\": \"date\"          },          \"attributes\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"code_signature\": {            \"properties\": {              \"digest_algorithm\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"exists\": {                \"type\": \"boolean\"              },              \"signing_id\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"status\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"subject_name\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"team_id\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"timestamp\": {                \"type\": \"date\"              },              \"trusted\": {                \"type\": \"boolean\"              },              \"valid\": {                \"type\": \"boolean\"              }            }          },          \"created\": {            \"type\": \"date\"          },          \"ctime\": {            \"type\": \"date\"          },          \"device\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"directory\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"drive_letter\": {            \"ignore_above\": 1,            \"type\": \"keyword\"          },          \"elf\": {            \"properties\": {              \"architecture\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"byte_order\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"cpu_type\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"creation_date\": {                \"type\": \"date\"              },              \"exports\": {                \"type\": \"flattened\"              },              \"header\": {                \"properties\": {                  \"abi_version\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  },                  \"class\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  },                  \"data\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  },                  \"entrypoint\": {                    \"type\": \"long\"                  },                  \"object_version\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  },                  \"os_abi\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  },                  \"type\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  },                  \"version\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  }                }              },              \"imports\": {                \"type\": \"flattened\"              },              \"sections\": {                \"properties\": {                  \"chi2\": {                    \"type\": \"long\"                  },                  \"entropy\": {                    \"type\": \"long\"                  },                  \"flags\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  },                  \"name\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  },                  \"physical_offset\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  },                  \"physical_size\": {                    \"type\": \"long\"                  },                  \"type\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  },                  \"virtual_address\": {                    \"type\": \"long\"                  },                  \"virtual_size\": {                    \"type\": \"long\"                  }                },                \"type\": \"nested\"              },              \"segments\": {                \"properties\": {                  \"sections\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  },                  \"type\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  }                },                \"type\": \"nested\"              },              \"shared_libraries\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"telfhash\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              }            }          },          \"extension\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"fork_name\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"gid\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"group\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"hash\": {            \"properties\": {              \"md5\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"sha1\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"sha256\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"sha384\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"sha512\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"ssdeep\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"tlsh\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              }            }          },          \"inode\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"mime_type\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"mode\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"mtime\": {            \"type\": \"date\"          },          \"name\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"owner\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"path\": {            \"fields\": {              \"text\": {                \"type\": \"match_only_text\"              }            },            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"pe\": {            \"properties\": {              \"architecture\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"company\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"description\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"file_version\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"imphash\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"original_file_name\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"pehash\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"product\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              }            }          },          \"size\": {            \"type\": \"long\"          },          \"target_path\": {            \"fields\": {              \"text\": {                \"type\": \"match_only_text\"              }            },            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"type\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"uid\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"x509\": {            \"properties\": {              \"alternative_names\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"issuer\": {                \"properties\": {                  \"common_name\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  },                  \"country\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  },                  \"distinguished_name\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  },                  \"locality\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  },                  \"organization\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  },                  \"organizational_unit\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  },                  \"state_or_province\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  }                }              },              \"not_after\": {                \"type\": \"date\"              },              \"not_before\": {                \"type\": \"date\"              },              \"public_key_algorithm\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"public_key_curve\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"public_key_exponent\": {                \"doc_values\": false,                \"index\": false,                \"type\": \"long\"              },              \"public_key_size\": {                \"type\": \"long\"              },              \"serial_number\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"signature_algorithm\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"subject\": {                \"properties\": {                  \"common_name\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  },                  \"country\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  },                  \"distinguished_name\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  },                  \"locality\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  },                  \"organization\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  },                  \"organizational_unit\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  },                  \"state_or_province\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  }                }              },              \"version_number\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              }            }          }        }      },      \"group\": {        \"properties\": {          \"domain\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"id\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"name\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          }        }      },      \"host\": {        \"properties\": {          \"architecture\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"boot\": {            \"properties\": {              \"id\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              }            }          },          \"cpu\": {            \"properties\": {              \"usage\": {                \"scaling_factor\": 1000,                \"type\": \"scaled_float\"              }            }          },          \"disk\": {            \"properties\": {              \"read\": {                \"properties\": {                  \"bytes\": {                    \"type\": \"long\"                  }                }              },              \"write\": {                \"properties\": {                  \"bytes\": {                    \"type\": \"long\"                  }                }              }            }          },          \"domain\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"geo\": {            \"properties\": {              \"city_name\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"continent_code\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"continent_name\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"country_iso_code\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"country_name\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"location\": {                \"type\": \"geo_point\"              },              \"name\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"postal_code\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"region_iso_code\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"region_name\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"timezone\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              }            }          },          \"hostname\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"id\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"ip\": {            \"type\": \"ip\"          },          \"mac\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"name\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"network\": {            \"properties\": {              \"egress\": {                \"properties\": {                  \"bytes\": {                    \"type\": \"long\"                  },                  \"packets\": {                    \"type\": \"long\"                  }                }              },              \"ingress\": {                \"properties\": {                  \"bytes\": {                    \"type\": \"long\"                  },                  \"packets\": {                    \"type\": \"long\"                  }                }              }            }          },          \"os\": {            \"properties\": {              \"family\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"full\": {                \"fields\": {                  \"text\": {                    \"type\": \"match_only_text\"                  }                },                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"kernel\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"name\": {                \"fields\": {                  \"text\": {                    \"type\": \"match_only_text\"                  }                },                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"platform\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"type\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"version\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              }            }          },          \"pid_ns_ino\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"type\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"uptime\": {            \"type\": \"long\"          }        }      },      \"http\": {        \"properties\": {          \"request\": {            \"properties\": {              \"body\": {                \"properties\": {                  \"bytes\": {                    \"type\": \"long\"                  },                  \"content\": {                    \"fields\": {                      \"text\": {                        \"type\": \"match_only_text\"                      }                    },                    \"type\": \"wildcard\"                  }                }              },              \"bytes\": {                \"type\": \"long\"              },              \"id\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"method\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"mime_type\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"referrer\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              }            }          },          \"response\": {            \"properties\": {              \"body\": {                \"properties\": {                  \"bytes\": {                    \"type\": \"long\"                  },                  \"content\": {                    \"fields\": {                      \"text\": {                        \"type\": \"match_only_text\"                      }                    },                    \"type\": \"wildcard\"                  }                }              },              \"bytes\": {                \"type\": \"long\"              },              \"mime_type\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"status_code\": {                \"type\": \"long\"              }            }          },          \"version\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          }        }      },      \"labels\": {        \"type\": \"object\"      },      \"log\": {        \"properties\": {          \"file\": {            \"properties\": {              \"path\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              }            }          },          \"level\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"logger\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"origin\": {            \"properties\": {              \"file\": {                \"properties\": {                  \"line\": {                    \"type\": \"long\"                  },                  \"name\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  }                }              },              \"function\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              }            }          },          \"syslog\": {            \"properties\": {              \"appname\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"facility\": {                \"properties\": {                  \"code\": {                    \"type\": \"long\"                  },                  \"name\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  }                }              },              \"hostname\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"msgid\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"priority\": {                \"type\": \"long\"              },              \"procid\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"severity\": {                \"properties\": {                  \"code\": {                    \"type\": \"long\"                  },                  \"name\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  }                }              },              \"structured_data\": {                \"type\": \"flattened\"              },              \"version\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              }            },            \"type\": \"object\"          }        }      },      \"message\": {        \"type\": \"match_only_text\"      },      \"network\": {        \"properties\": {          \"application\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"bytes\": {            \"type\": \"long\"          },          \"community_id\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"direction\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"forwarded_ip\": {            \"type\": \"ip\"          },          \"iana_number\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"inner\": {            \"properties\": {              \"vlan\": {                \"properties\": {                  \"id\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  },                  \"name\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  }                }              }            },            \"type\": \"object\"          },          \"name\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"packets\": {            \"type\": \"long\"          },          \"protocol\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"transport\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"type\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"vlan\": {            \"properties\": {              \"id\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"name\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              }            }          }        }      },      \"observer\": {        \"properties\": {          \"egress\": {            \"properties\": {              \"interface\": {                \"properties\": {                  \"alias\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  },                  \"id\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  },                  \"name\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  }                }              },              \"vlan\": {                \"properties\": {                  \"id\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  },                  \"name\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  }                }              },              \"zone\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              }            },            \"type\": \"object\"          },          \"geo\": {            \"properties\": {              \"city_name\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"continent_code\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"continent_name\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"country_iso_code\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"country_name\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"location\": {                \"type\": \"geo_point\"              },              \"name\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"postal_code\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"region_iso_code\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"region_name\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"timezone\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              }            }          },          \"hostname\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"ingress\": {            \"properties\": {              \"interface\": {                \"properties\": {                  \"alias\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  },                  \"id\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  },                  \"name\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  }                }              },              \"vlan\": {                \"properties\": {                  \"id\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  },                  \"name\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  }                }              },              \"zone\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              }            },            \"type\": \"object\"          },          \"ip\": {            \"type\": \"ip\"          },          \"mac\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"name\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"os\": {            \"properties\": {              \"family\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"full\": {                \"fields\": {                  \"text\": {                    \"type\": \"match_only_text\"                  }                },                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"kernel\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"name\": {                \"fields\": {                  \"text\": {                    \"type\": \"match_only_text\"                  }                },                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"platform\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"type\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"version\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              }            }          },          \"product\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"serial_number\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"type\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"vendor\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"version\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          }        }      },      \"orchestrator\": {        \"properties\": {          \"api_version\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"cluster\": {            \"properties\": {              \"name\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"url\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"version\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              }            }          },          \"namespace\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"organization\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"resource\": {            \"properties\": {              \"name\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"type\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              }            }          },          \"type\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          }        }      },      \"organization\": {        \"properties\": {          \"id\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"name\": {            \"fields\": {              \"text\": {                \"type\": \"match_only_text\"              }            },            \"ignore_above\": 1024,            \"type\": \"keyword\"          }        }      },      \"package\": {        \"properties\": {          \"architecture\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"build_version\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"checksum\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"description\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"install_scope\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"installed\": {            \"type\": \"date\"          },          \"license\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"name\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"path\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"reference\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"size\": {            \"type\": \"long\"          },          \"type\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"version\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          }        }      },      \"process\": {        \"properties\": {          \"args\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"args_count\": {            \"type\": \"long\"          },          \"code_signature\": {            \"properties\": {              \"digest_algorithm\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"exists\": {                \"type\": \"boolean\"              },              \"signing_id\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"status\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"subject_name\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"team_id\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"timestamp\": {                \"type\": \"date\"              },              \"trusted\": {                \"type\": \"boolean\"              },              \"valid\": {                \"type\": \"boolean\"              }            }          },          \"command_line\": {            \"fields\": {              \"text\": {                \"type\": \"match_only_text\"              }            },            \"type\": \"wildcard\"          },          \"elf\": {            \"properties\": {              \"architecture\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"byte_order\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"cpu_type\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"creation_date\": {                \"type\": \"date\"              },              \"exports\": {                \"type\": \"flattened\"              },              \"header\": {                \"properties\": {                  \"abi_version\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  },                  \"class\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  },                  \"data\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  },                  \"entrypoint\": {                    \"type\": \"long\"                  },                  \"object_version\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  },                  \"os_abi\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  },                  \"type\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  },                  \"version\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  }                }              },              \"imports\": {                \"type\": \"flattened\"              },              \"sections\": {                \"properties\": {                  \"chi2\": {                    \"type\": \"long\"                  },                  \"entropy\": {                    \"type\": \"long\"                  },                  \"flags\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  },                  \"name\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  },                  \"physical_offset\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  },                  \"physical_size\": {                    \"type\": \"long\"                  },                  \"type\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  },                  \"virtual_address\": {                    \"type\": \"long\"                  },                  \"virtual_size\": {                    \"type\": \"long\"                  }                },                \"type\": \"nested\"              },              \"segments\": {                \"properties\": {                  \"sections\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  },                  \"type\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  }                },                \"type\": \"nested\"              },              \"shared_libraries\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"telfhash\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              }            }          },          \"end\": {            \"type\": \"date\"          },          \"entity_id\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"entry_leader\": {            \"properties\": {              \"args\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"args_count\": {                \"type\": \"long\"              },              \"command_line\": {                \"fields\": {                  \"text\": {                    \"type\": \"match_only_text\"                  }                },                \"type\": \"wildcard\"              },              \"entity_id\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"entry_meta\": {                \"properties\": {                  \"source\": {                    \"properties\": {                      \"ip\": {                        \"type\": \"ip\"                      }                    }                  },                  \"type\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  }                }              },              \"executable\": {                \"fields\": {                  \"text\": {                    \"type\": \"match_only_text\"                  }                },                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"group\": {                \"properties\": {                  \"id\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  },                  \"name\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  }                }              },              \"interactive\": {                \"type\": \"boolean\"              },              \"name\": {                \"fields\": {                  \"text\": {                    \"type\": \"match_only_text\"                  }                },                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"parent\": {                \"properties\": {                  \"entity_id\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  },                  \"pid\": {                    \"type\": \"long\"                  },                  \"session_leader\": {                    \"properties\": {                      \"entity_id\": {                        \"ignore_above\": 1024,                        \"type\": \"keyword\"                      },                      \"pid\": {                        \"type\": \"long\"                      },                      \"start\": {                        \"type\": \"date\"                      }                    }                  },                  \"start\": {                    \"type\": \"date\"                  }                }              },              \"pid\": {                \"type\": \"long\"              },              \"real_group\": {                \"properties\": {                  \"id\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  },                  \"name\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  }                }              },              \"real_user\": {                \"properties\": {                  \"id\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  },                  \"name\": {                    \"fields\": {                      \"text\": {                        \"type\": \"match_only_text\"                      }                    },                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  }                }              },              \"same_as_process\": {                \"type\": \"boolean\"              },              \"saved_group\": {                \"properties\": {                  \"id\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  },                  \"name\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  }                }              },              \"saved_user\": {                \"properties\": {                  \"id\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  },                  \"name\": {                    \"fields\": {                      \"text\": {                        \"type\": \"match_only_text\"                      }                    },                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  }                }              },              \"start\": {                \"type\": \"date\"              },              \"supplemental_groups\": {                \"properties\": {                  \"id\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  },                  \"name\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  }                }              },              \"tty\": {                \"properties\": {                  \"char_device\": {                    \"properties\": {                      \"major\": {                        \"type\": \"long\"                      },                      \"minor\": {                        \"type\": \"long\"                      }                    }                  }                },                \"type\": \"object\"              },              \"user\": {                \"properties\": {                  \"id\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  },                  \"name\": {                    \"fields\": {                      \"text\": {                        \"type\": \"match_only_text\"                      }                    },                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  }                }              },              \"working_directory\": {                \"fields\": {                  \"text\": {                    \"type\": \"match_only_text\"                  }                },                \"ignore_above\": 1024,                \"type\": \"keyword\"              }            }          },          \"env_vars\": {            \"type\": \"object\"          },          \"executable\": {            \"fields\": {              \"text\": {                \"type\": \"match_only_text\"              }            },            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"exit_code\": {            \"type\": \"long\"          },          \"group_leader\": {            \"properties\": {              \"args\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"args_count\": {                \"type\": \"long\"              },              \"command_line\": {                \"fields\": {                  \"text\": {                    \"type\": \"match_only_text\"                  }                },                \"type\": \"wildcard\"              },              \"entity_id\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"executable\": {                \"fields\": {                  \"text\": {                    \"type\": \"match_only_text\"                  }                },                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"group\": {                \"properties\": {                  \"id\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  },                  \"name\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  }                }              },              \"interactive\": {                \"type\": \"boolean\"              },              \"name\": {                \"fields\": {                  \"text\": {                    \"type\": \"match_only_text\"                  }                },                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"pid\": {                \"type\": \"long\"              },              \"real_group\": {                \"properties\": {                  \"id\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  },                  \"name\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  }                }              },              \"real_user\": {                \"properties\": {                  \"id\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  },                  \"name\": {                    \"fields\": {                      \"text\": {                        \"type\": \"match_only_text\"                      }                    },                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  }                }              },              \"same_as_process\": {                \"type\": \"boolean\"              },              \"saved_group\": {                \"properties\": {                  \"id\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  },                  \"name\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  }                }              },              \"saved_user\": {                \"properties\": {                  \"id\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  },                  \"name\": {                    \"fields\": {                      \"text\": {                        \"type\": \"match_only_text\"                      }                    },                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  }                }              },              \"start\": {                \"type\": \"date\"              },              \"supplemental_groups\": {                \"properties\": {                  \"id\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  },                  \"name\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  }                }              },              \"tty\": {                \"properties\": {                  \"char_device\": {                    \"properties\": {                      \"major\": {                        \"type\": \"long\"                      },                      \"minor\": {                        \"type\": \"long\"                      }                    }                  }                },                \"type\": \"object\"              },              \"user\": {                \"properties\": {                  \"id\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  },                  \"name\": {                    \"fields\": {                      \"text\": {                        \"type\": \"match_only_text\"                      }                    },                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  }                }              },              \"working_directory\": {                \"fields\": {                  \"text\": {                    \"type\": \"match_only_text\"                  }                },                \"ignore_above\": 1024,                \"type\": \"keyword\"              }            }          },          \"hash\": {            \"properties\": {              \"md5\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"sha1\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"sha256\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"sha384\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"sha512\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"ssdeep\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"tlsh\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              }            }          },          \"interactive\": {            \"type\": \"boolean\"          },          \"name\": {            \"fields\": {              \"text\": {                \"type\": \"match_only_text\"              }            },            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"parent\": {            \"properties\": {              \"args\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"args_count\": {                \"type\": \"long\"              },              \"code_signature\": {                \"properties\": {                  \"digest_algorithm\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  },                  \"exists\": {                    \"type\": \"boolean\"                  },                  \"signing_id\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  },                  \"status\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  },                  \"subject_name\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  },                  \"team_id\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  },                  \"timestamp\": {                    \"type\": \"date\"                  },                  \"trusted\": {                    \"type\": \"boolean\"                  },                  \"valid\": {                    \"type\": \"boolean\"                  }                }              },              \"command_line\": {                \"fields\": {                  \"text\": {                    \"type\": \"match_only_text\"                  }                },                \"type\": \"wildcard\"              },              \"elf\": {                \"properties\": {                  \"architecture\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  },                  \"byte_order\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  },                  \"cpu_type\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  },                  \"creation_date\": {                    \"type\": \"date\"                  },                  \"exports\": {                    \"type\": \"flattened\"                  },                  \"header\": {                    \"properties\": {                      \"abi_version\": {                        \"ignore_above\": 1024,                        \"type\": \"keyword\"                      },                      \"class\": {                        \"ignore_above\": 1024,                        \"type\": \"keyword\"                      },                      \"data\": {                        \"ignore_above\": 1024,                        \"type\": \"keyword\"                      },                      \"entrypoint\": {                        \"type\": \"long\"                      },                      \"object_version\": {                        \"ignore_above\": 1024,                        \"type\": \"keyword\"                      },                      \"os_abi\": {                        \"ignore_above\": 1024,                        \"type\": \"keyword\"                      },                      \"type\": {                        \"ignore_above\": 1024,                        \"type\": \"keyword\"                      },                      \"version\": {                        \"ignore_above\": 1024,                        \"type\": \"keyword\"                      }                    }                  },                  \"imports\": {                    \"type\": \"flattened\"                  },                  \"sections\": {                    \"properties\": {                      \"chi2\": {                        \"type\": \"long\"                      },                      \"entropy\": {                        \"type\": \"long\"                      },                      \"flags\": {                        \"ignore_above\": 1024,                        \"type\": \"keyword\"                      },                      \"name\": {                        \"ignore_above\": 1024,                        \"type\": \"keyword\"                      },                      \"physical_offset\": {                        \"ignore_above\": 1024,                        \"type\": \"keyword\"                      },                      \"physical_size\": {                        \"type\": \"long\"                      },                      \"type\": {                        \"ignore_above\": 1024,                        \"type\": \"keyword\"                      },                      \"virtual_address\": {                        \"type\": \"long\"                      },                      \"virtual_size\": {                        \"type\": \"long\"                      }                    },                    \"type\": \"nested\"                  },                  \"segments\": {                    \"properties\": {                      \"sections\": {                        \"ignore_above\": 1024,                        \"type\": \"keyword\"                      },                      \"type\": {                        \"ignore_above\": 1024,                        \"type\": \"keyword\"                      }                    },                    \"type\": \"nested\"                  },                  \"shared_libraries\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  },                  \"telfhash\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  }                }              },              \"end\": {                \"type\": \"date\"              },              \"entity_id\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"executable\": {                \"fields\": {                  \"text\": {                    \"type\": \"match_only_text\"                  }                },                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"exit_code\": {                \"type\": \"long\"              },              \"group\": {                \"properties\": {                  \"id\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  },                  \"name\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  }                }              },              \"group_leader\": {                \"properties\": {                  \"entity_id\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  },                  \"pid\": {                    \"type\": \"long\"                  },                  \"start\": {                    \"type\": \"date\"                  }                }              },              \"hash\": {                \"properties\": {                  \"md5\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  },                  \"sha1\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  },                  \"sha256\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  },                  \"sha384\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  },                  \"sha512\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  },                  \"ssdeep\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  },                  \"tlsh\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  }                }              },              \"interactive\": {                \"type\": \"boolean\"              },              \"name\": {                \"fields\": {                  \"text\": {                    \"type\": \"match_only_text\"                  }                },                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"pe\": {                \"properties\": {                  \"architecture\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  },                  \"company\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  },                  \"description\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  },                  \"file_version\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  },                  \"imphash\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  },                  \"original_file_name\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  },                  \"pehash\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  },                  \"product\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  }                }              },              \"pgid\": {                \"type\": \"long\"              },              \"pid\": {                \"type\": \"long\"              },              \"real_group\": {                \"properties\": {                  \"id\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  },                  \"name\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  }                }              },              \"real_user\": {                \"properties\": {                  \"id\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  },                  \"name\": {                    \"fields\": {                      \"text\": {                        \"type\": \"match_only_text\"                      }                    },                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  }                }              },              \"saved_group\": {                \"properties\": {                  \"id\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  },                  \"name\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  }                }              },              \"saved_user\": {                \"properties\": {                  \"id\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  },                  \"name\": {                    \"fields\": {                      \"text\": {                        \"type\": \"match_only_text\"                      }                    },                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  }                }              },              \"start\": {                \"type\": \"date\"              },              \"supplemental_groups\": {                \"properties\": {                  \"id\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  },                  \"name\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  }                }              },              \"thread\": {                \"properties\": {                  \"id\": {                    \"type\": \"long\"                  },                  \"name\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  }                }              },              \"title\": {                \"fields\": {                  \"text\": {                    \"type\": \"match_only_text\"                  }                },                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"tty\": {                \"properties\": {                  \"char_device\": {                    \"properties\": {                      \"major\": {                        \"type\": \"long\"                      },                      \"minor\": {                        \"type\": \"long\"                      }                    }                  }                },                \"type\": \"object\"              },              \"uptime\": {                \"type\": \"long\"              },              \"user\": {                \"properties\": {                  \"id\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  },                  \"name\": {                    \"fields\": {                      \"text\": {                        \"type\": \"match_only_text\"                      }                    },                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  }                }              },              \"working_directory\": {                \"fields\": {                  \"text\": {                    \"type\": \"match_only_text\"                  }                },                \"ignore_above\": 1024,                \"type\": \"keyword\"              }            }          },          \"pe\": {            \"properties\": {              \"architecture\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"company\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"description\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"file_version\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"imphash\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"original_file_name\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"pehash\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"product\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              }            }          },          \"pgid\": {            \"type\": \"long\"          },          \"pid\": {            \"type\": \"long\"          },          \"previous\": {            \"properties\": {              \"args\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"args_count\": {                \"type\": \"long\"              },              \"executable\": {                \"fields\": {                  \"text\": {                    \"type\": \"match_only_text\"                  }                },                \"ignore_above\": 1024,                \"type\": \"keyword\"              }            }          },          \"real_group\": {            \"properties\": {              \"id\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"name\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              }            }          },          \"real_user\": {            \"properties\": {              \"id\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"name\": {                \"fields\": {                  \"text\": {                    \"type\": \"match_only_text\"                  }                },                \"ignore_above\": 1024,                \"type\": \"keyword\"              }            }          },          \"saved_group\": {            \"properties\": {              \"id\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"name\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              }            }          },          \"saved_user\": {            \"properties\": {              \"id\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"name\": {                \"fields\": {                  \"text\": {                    \"type\": \"match_only_text\"                  }                },                \"ignore_above\": 1024,                \"type\": \"keyword\"              }            }          },          \"session_leader\": {            \"properties\": {              \"args\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"args_count\": {                \"type\": \"long\"              },              \"command_line\": {                \"fields\": {                  \"text\": {                    \"type\": \"match_only_text\"                  }                },                \"type\": \"wildcard\"              },              \"entity_id\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"executable\": {                \"fields\": {                  \"text\": {                    \"type\": \"match_only_text\"                  }                },                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"group\": {                \"properties\": {                  \"id\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  },                  \"name\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  }                }              },              \"interactive\": {                \"type\": \"boolean\"              },              \"name\": {                \"fields\": {                  \"text\": {                    \"type\": \"match_only_text\"                  }                },                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"parent\": {                \"properties\": {                  \"entity_id\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  },                  \"pid\": {                    \"type\": \"long\"                  },                  \"session_leader\": {                    \"properties\": {                      \"entity_id\": {                        \"ignore_above\": 1024,                        \"type\": \"keyword\"                      },                      \"pid\": {                        \"type\": \"long\"                      },                      \"start\": {                        \"type\": \"date\"                      }                    }                  },                  \"start\": {                    \"type\": \"date\"                  }                }              },              \"pid\": {                \"type\": \"long\"              },              \"real_group\": {                \"properties\": {                  \"id\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  },                  \"name\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  }                }              },              \"real_user\": {                \"properties\": {                  \"id\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  },                  \"name\": {                    \"fields\": {                      \"text\": {                        \"type\": \"match_only_text\"                      }                    },                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  }                }              },              \"same_as_process\": {                \"type\": \"boolean\"              },              \"saved_group\": {                \"properties\": {                  \"id\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  },                  \"name\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  }                }              },              \"saved_user\": {                \"properties\": {                  \"id\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  },                  \"name\": {                    \"fields\": {                      \"text\": {                        \"type\": \"match_only_text\"                      }                    },                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  }                }              },              \"start\": {                \"type\": \"date\"              },              \"supplemental_groups\": {                \"properties\": {                  \"id\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  },                  \"name\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  }                }              },              \"tty\": {                \"properties\": {                  \"char_device\": {                    \"properties\": {                      \"major\": {                        \"type\": \"long\"                      },                      \"minor\": {                        \"type\": \"long\"                      }                    }                  }                },                \"type\": \"object\"              },              \"user\": {                \"properties\": {                  \"id\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  },                  \"name\": {                    \"fields\": {                      \"text\": {                        \"type\": \"match_only_text\"                      }                    },                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  }                }              },              \"working_directory\": {                \"fields\": {                  \"text\": {                    \"type\": \"match_only_text\"                  }                },                \"ignore_above\": 1024,                \"type\": \"keyword\"              }            }          },          \"start\": {            \"type\": \"date\"          },          \"supplemental_groups\": {            \"properties\": {              \"id\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"name\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              }            }          },          \"thread\": {            \"properties\": {              \"id\": {                \"type\": \"long\"              },              \"name\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              }            }          },          \"title\": {            \"fields\": {              \"text\": {                \"type\": \"match_only_text\"              }            },            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"tty\": {            \"properties\": {              \"char_device\": {                \"properties\": {                  \"major\": {                    \"type\": \"long\"                  },                  \"minor\": {                    \"type\": \"long\"                  }                }              }            },            \"type\": \"object\"          },          \"uptime\": {            \"type\": \"long\"          },          \"user\": {            \"properties\": {              \"id\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"name\": {                \"fields\": {                  \"text\": {                    \"type\": \"match_only_text\"                  }                },                \"ignore_above\": 1024,                \"type\": \"keyword\"              }            }          },          \"working_directory\": {            \"fields\": {              \"text\": {                \"type\": \"match_only_text\"              }            },            \"ignore_above\": 1024,            \"type\": \"keyword\"          }        }      },      \"registry\": {        \"properties\": {          \"data\": {            \"properties\": {              \"bytes\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"strings\": {                \"type\": \"wildcard\"              },              \"type\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              }            }          },          \"hive\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"key\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"path\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"value\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          }        }      },      \"related\": {        \"properties\": {          \"hash\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"hosts\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"ip\": {            \"type\": \"ip\"          },          \"user\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          }        }      },      \"rule\": {        \"properties\": {          \"author\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"category\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"description\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"id\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"license\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"name\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"reference\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"ruleset\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"uuid\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"version\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          }        }      },      \"server\": {        \"properties\": {          \"address\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"as\": {            \"properties\": {              \"number\": {                \"type\": \"long\"              },              \"organization\": {                \"properties\": {                  \"name\": {                    \"fields\": {                      \"text\": {                        \"type\": \"match_only_text\"                      }                    },                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  }                }              }            }          },          \"bytes\": {            \"type\": \"long\"          },          \"domain\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"geo\": {            \"properties\": {              \"city_name\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"continent_code\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"continent_name\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"country_iso_code\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"country_name\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"location\": {                \"type\": \"geo_point\"              },              \"name\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"postal_code\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"region_iso_code\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"region_name\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"timezone\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              }            }          },          \"ip\": {            \"type\": \"ip\"          },          \"mac\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"nat\": {            \"properties\": {              \"ip\": {                \"type\": \"ip\"              },              \"port\": {                \"type\": \"long\"              }            }          },          \"packets\": {            \"type\": \"long\"          },          \"port\": {            \"type\": \"long\"          },          \"registered_domain\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"subdomain\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"top_level_domain\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"user\": {            \"properties\": {              \"domain\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"email\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"full_name\": {                \"fields\": {                  \"text\": {                    \"type\": \"match_only_text\"                  }                },                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"group\": {                \"properties\": {                  \"domain\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  },                  \"id\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  },                  \"name\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  }                }              },              \"hash\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"id\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"name\": {                \"fields\": {                  \"text\": {                    \"type\": \"match_only_text\"                  }                },                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"roles\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              }            }          }        }      },      \"service\": {        \"properties\": {          \"address\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"environment\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"ephemeral_id\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"id\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"name\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"node\": {            \"properties\": {              \"name\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              }            }          },          \"origin\": {            \"properties\": {              \"address\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"environment\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"ephemeral_id\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"id\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"name\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"node\": {                \"properties\": {                  \"name\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  }                }              },              \"state\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"type\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"version\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              }            }          },          \"state\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"target\": {            \"properties\": {              \"address\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"environment\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"ephemeral_id\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"id\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"name\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"node\": {                \"properties\": {                  \"name\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  }                }              },              \"state\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"type\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"version\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              }            }          },          \"type\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"version\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          }        }      },      \"source\": {        \"properties\": {          \"address\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"as\": {            \"properties\": {              \"number\": {                \"type\": \"long\"              },              \"organization\": {                \"properties\": {                  \"name\": {                    \"fields\": {                      \"text\": {                        \"type\": \"match_only_text\"                      }                    },                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  }                }              }            }          },          \"bytes\": {            \"type\": \"long\"          },          \"domain\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"geo\": {            \"properties\": {              \"city_name\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"continent_code\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"continent_name\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"country_iso_code\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"country_name\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"location\": {                \"type\": \"geo_point\"              },              \"name\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"postal_code\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"region_iso_code\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"region_name\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"timezone\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              }            }          },          \"ip\": {            \"type\": \"ip\"          },          \"mac\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"nat\": {            \"properties\": {              \"ip\": {                \"type\": \"ip\"              },              \"port\": {                \"type\": \"long\"              }            }          },          \"packets\": {            \"type\": \"long\"          },          \"port\": {            \"type\": \"long\"          },          \"registered_domain\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"subdomain\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"top_level_domain\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"user\": {            \"properties\": {              \"domain\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"email\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"full_name\": {                \"fields\": {                  \"text\": {                    \"type\": \"match_only_text\"                  }                },                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"group\": {                \"properties\": {                  \"domain\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  },                  \"id\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  },                  \"name\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  }                }              },              \"hash\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"id\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"name\": {                \"fields\": {                  \"text\": {                    \"type\": \"match_only_text\"                  }                },                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"roles\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              }            }          }        }      },      \"span\": {        \"properties\": {          \"id\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          }        }      },      \"tags\": {        \"ignore_above\": 1024,        \"type\": \"keyword\"      },      \"threat\": {        \"properties\": {          \"enrichments\": {            \"properties\": {              \"indicator\": {                \"properties\": {                  \"as\": {                    \"properties\": {                      \"number\": {                        \"type\": \"long\"                      },                      \"organization\": {                        \"properties\": {                          \"name\": {                            \"fields\": {                              \"text\": {                                \"type\": \"match_only_text\"                              }                            },                            \"ignore_above\": 1024,                            \"type\": \"keyword\"                          }                        }                      }                    }                  },                  \"confidence\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  },                  \"description\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  },                  \"email\": {                    \"properties\": {                      \"address\": {                        \"ignore_above\": 1024,                        \"type\": \"keyword\"                      }                    }                  },                  \"file\": {                    \"properties\": {                      \"accessed\": {                        \"type\": \"date\"                      },                      \"attributes\": {                        \"ignore_above\": 1024,                        \"type\": \"keyword\"                      },                      \"code_signature\": {                        \"properties\": {                          \"digest_algorithm\": {                            \"ignore_above\": 1024,                            \"type\": \"keyword\"                          },                          \"exists\": {                            \"type\": \"boolean\"                          },                          \"signing_id\": {                            \"ignore_above\": 1024,                            \"type\": \"keyword\"                          },                          \"status\": {                            \"ignore_above\": 1024,                            \"type\": \"keyword\"                          },                          \"subject_name\": {                            \"ignore_above\": 1024,                            \"type\": \"keyword\"                          },                          \"team_id\": {                            \"ignore_above\": 1024,                            \"type\": \"keyword\"                          },                          \"timestamp\": {                            \"type\": \"date\"                          },                          \"trusted\": {                            \"type\": \"boolean\"                          },                          \"valid\": {                            \"type\": \"boolean\"                          }                        }                      },                      \"created\": {                        \"type\": \"date\"                      },                      \"ctime\": {                        \"type\": \"date\"                      },                      \"device\": {                        \"ignore_above\": 1024,                        \"type\": \"keyword\"                      },                      \"directory\": {                        \"ignore_above\": 1024,                        \"type\": \"keyword\"                      },                      \"drive_letter\": {                        \"ignore_above\": 1,                        \"type\": \"keyword\"                      },                      \"elf\": {                        \"properties\": {                          \"architecture\": {                            \"ignore_above\": 1024,                            \"type\": \"keyword\"                          },                          \"byte_order\": {                            \"ignore_above\": 1024,                            \"type\": \"keyword\"                          },                          \"cpu_type\": {                            \"ignore_above\": 1024,                            \"type\": \"keyword\"                          },                          \"creation_date\": {                            \"type\": \"date\"                          },                          \"exports\": {                            \"type\": \"flattened\"                          },                          \"header\": {                            \"properties\": {                              \"abi_version\": {                                \"ignore_above\": 1024,                                \"type\": \"keyword\"                              },                              \"class\": {                                \"ignore_above\": 1024,                                \"type\": \"keyword\"                              },                              \"data\": {                                \"ignore_above\": 1024,                                \"type\": \"keyword\"                              },                              \"entrypoint\": {                                \"type\": \"long\"                              },                              \"object_version\": {                                \"ignore_above\": 1024,                                \"type\": \"keyword\"                              },                              \"os_abi\": {                                \"ignore_above\": 1024,                                \"type\": \"keyword\"                              },                              \"type\": {                                \"ignore_above\": 1024,                                \"type\": \"keyword\"                              },                              \"version\": {                                \"ignore_above\": 1024,                                \"type\": \"keyword\"                              }                            }                          },                          \"imports\": {                            \"type\": \"flattened\"                          },                          \"sections\": {                            \"properties\": {                              \"chi2\": {                                \"type\": \"long\"                              },                              \"entropy\": {                                \"type\": \"long\"                              },                              \"flags\": {                                \"ignore_above\": 1024,                                \"type\": \"keyword\"                              },                              \"name\": {                                \"ignore_above\": 1024,                                \"type\": \"keyword\"                              },                              \"physical_offset\": {                                \"ignore_above\": 1024,                                \"type\": \"keyword\"                              },                              \"physical_size\": {                                \"type\": \"long\"                              },                              \"type\": {                                \"ignore_above\": 1024,                                \"type\": \"keyword\"                              },                              \"virtual_address\": {                                \"type\": \"long\"                              },                              \"virtual_size\": {                                \"type\": \"long\"                              }                            },                            \"type\": \"nested\"                          },                          \"segments\": {                            \"properties\": {                              \"sections\": {                                \"ignore_above\": 1024,                                \"type\": \"keyword\"                              },                              \"type\": {                                \"ignore_above\": 1024,                                \"type\": \"keyword\"                              }                            },                            \"type\": \"nested\"                          },                          \"shared_libraries\": {                            \"ignore_above\": 1024,                            \"type\": \"keyword\"                          },                          \"telfhash\": {                            \"ignore_above\": 1024,                            \"type\": \"keyword\"                          }                        }                      },                      \"extension\": {                        \"ignore_above\": 1024,                        \"type\": \"keyword\"                      },                      \"fork_name\": {                        \"ignore_above\": 1024,                        \"type\": \"keyword\"                      },                      \"gid\": {                        \"ignore_above\": 1024,                        \"type\": \"keyword\"                      },                      \"group\": {                        \"ignore_above\": 1024,                        \"type\": \"keyword\"                      },                      \"hash\": {                        \"properties\": {                          \"md5\": {                            \"ignore_above\": 1024,                            \"type\": \"keyword\"                          },                          \"sha1\": {                            \"ignore_above\": 1024,                            \"type\": \"keyword\"                          },                          \"sha256\": {                            \"ignore_above\": 1024,                            \"type\": \"keyword\"                          },                          \"sha384\": {                            \"ignore_above\": 1024,                            \"type\": \"keyword\"                          },                          \"sha512\": {                            \"ignore_above\": 1024,                            \"type\": \"keyword\"                          },                          \"ssdeep\": {                            \"ignore_above\": 1024,                            \"type\": \"keyword\"                          },                          \"tlsh\": {                            \"ignore_above\": 1024,                            \"type\": \"keyword\"                          }                        }                      },                      \"inode\": {                        \"ignore_above\": 1024,                        \"type\": \"keyword\"                      },                      \"mime_type\": {                        \"ignore_above\": 1024,                        \"type\": \"keyword\"                      },                      \"mode\": {                        \"ignore_above\": 1024,                        \"type\": \"keyword\"                      },                      \"mtime\": {                        \"type\": \"date\"                      },                      \"name\": {                        \"ignore_above\": 1024,                        \"type\": \"keyword\"                      },                      \"owner\": {                        \"ignore_above\": 1024,                        \"type\": \"keyword\"                      },                      \"path\": {                        \"fields\": {                          \"text\": {                            \"type\": \"match_only_text\"                          }                        },                        \"ignore_above\": 1024,                        \"type\": \"keyword\"                      },                      \"pe\": {                        \"properties\": {                          \"architecture\": {                            \"ignore_above\": 1024,                            \"type\": \"keyword\"                          },                          \"company\": {                            \"ignore_above\": 1024,                            \"type\": \"keyword\"                          },                          \"description\": {                            \"ignore_above\": 1024,                            \"type\": \"keyword\"                          },                          \"file_version\": {                            \"ignore_above\": 1024,                            \"type\": \"keyword\"                          },                          \"imphash\": {                            \"ignore_above\": 1024,                            \"type\": \"keyword\"                          },                          \"original_file_name\": {                            \"ignore_above\": 1024,                            \"type\": \"keyword\"                          },                          \"pehash\": {                            \"ignore_above\": 1024,                            \"type\": \"keyword\"                          },                          \"product\": {                            \"ignore_above\": 1024,                            \"type\": \"keyword\"                          }                        }                      },                      \"size\": {                        \"type\": \"long\"                      },                      \"target_path\": {                        \"fields\": {                          \"text\": {                            \"type\": \"match_only_text\"                          }                        },                        \"ignore_above\": 1024,                        \"type\": \"keyword\"                      },                      \"type\": {                        \"ignore_above\": 1024,                        \"type\": \"keyword\"                      },                      \"uid\": {                        \"ignore_above\": 1024,                        \"type\": \"keyword\"                      },                      \"x509\": {                        \"properties\": {                          \"alternative_names\": {                            \"ignore_above\": 1024,                            \"type\": \"keyword\"                          },                          \"issuer\": {                            \"properties\": {                              \"common_name\": {                                \"ignore_above\": 1024,                                \"type\": \"keyword\"                              },                              \"country\": {                                \"ignore_above\": 1024,                                \"type\": \"keyword\"                              },                              \"distinguished_name\": {                                \"ignore_above\": 1024,                                \"type\": \"keyword\"                              },                              \"locality\": {                                \"ignore_above\": 1024,                                \"type\": \"keyword\"                              },                              \"organization\": {                                \"ignore_above\": 1024,                                \"type\": \"keyword\"                              },                              \"organizational_unit\": {                                \"ignore_above\": 1024,                                \"type\": \"keyword\"                              },                              \"state_or_province\": {                                \"ignore_above\": 1024,                                \"type\": \"keyword\"                              }                            }                          },                          \"not_after\": {                            \"type\": \"date\"                          },                          \"not_before\": {                            \"type\": \"date\"                          },                          \"public_key_algorithm\": {                            \"ignore_above\": 1024,                            \"type\": \"keyword\"                          },                          \"public_key_curve\": {                            \"ignore_above\": 1024,                            \"type\": \"keyword\"                          },                          \"public_key_exponent\": {                            \"doc_values\": false,                            \"index\": false,                            \"type\": \"long\"                          },                          \"public_key_size\": {                            \"type\": \"long\"                          },                          \"serial_number\": {                            \"ignore_above\": 1024,                            \"type\": \"keyword\"                          },                          \"signature_algorithm\": {                            \"ignore_above\": 1024,                            \"type\": \"keyword\"                          },                          \"subject\": {                            \"properties\": {                              \"common_name\": {                                \"ignore_above\": 1024,                                \"type\": \"keyword\"                              },                              \"country\": {                                \"ignore_above\": 1024,                                \"type\": \"keyword\"                              },                              \"distinguished_name\": {                                \"ignore_above\": 1024,                                \"type\": \"keyword\"                              },                              \"locality\": {                                \"ignore_above\": 1024,                                \"type\": \"keyword\"                              },                              \"organization\": {                                \"ignore_above\": 1024,                                \"type\": \"keyword\"                              },                              \"organizational_unit\": {                                \"ignore_above\": 1024,                                \"type\": \"keyword\"                              },                              \"state_or_province\": {                                \"ignore_above\": 1024,                                \"type\": \"keyword\"                              }                            }                          },                          \"version_number\": {                            \"ignore_above\": 1024,                            \"type\": \"keyword\"                          }                        }                      }                    }                  },                  \"first_seen\": {                    \"type\": \"date\"                  },                  \"geo\": {                    \"properties\": {                      \"city_name\": {                        \"ignore_above\": 1024,                        \"type\": \"keyword\"                      },                      \"continent_code\": {                        \"ignore_above\": 1024,                        \"type\": \"keyword\"                      },                      \"continent_name\": {                        \"ignore_above\": 1024,                        \"type\": \"keyword\"                      },                      \"country_iso_code\": {                        \"ignore_above\": 1024,                        \"type\": \"keyword\"                      },                      \"country_name\": {                        \"ignore_above\": 1024,                        \"type\": \"keyword\"                      },                      \"location\": {                        \"type\": \"geo_point\"                      },                      \"name\": {                        \"ignore_above\": 1024,                        \"type\": \"keyword\"                      },                      \"postal_code\": {                        \"ignore_above\": 1024,                        \"type\": \"keyword\"                      },                      \"region_iso_code\": {                        \"ignore_above\": 1024,                        \"type\": \"keyword\"                      },                      \"region_name\": {                        \"ignore_above\": 1024,                        \"type\": \"keyword\"                      },                      \"timezone\": {                        \"ignore_above\": 1024,                        \"type\": \"keyword\"                      }                    }                  },                  \"ip\": {                    \"type\": \"ip\"                  },                  \"last_seen\": {                    \"type\": \"date\"                  },                  \"marking\": {                    \"properties\": {                      \"tlp\": {                        \"ignore_above\": 1024,                        \"type\": \"keyword\"                      }                    }                  },                  \"modified_at\": {                    \"type\": \"date\"                  },                  \"port\": {                    \"type\": \"long\"                  },                  \"provider\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  },                  \"reference\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  },                  \"registry\": {                    \"properties\": {                      \"data\": {                        \"properties\": {                          \"bytes\": {                            \"ignore_above\": 1024,                            \"type\": \"keyword\"                          },                          \"strings\": {                            \"type\": \"wildcard\"                          },                          \"type\": {                            \"ignore_above\": 1024,                            \"type\": \"keyword\"                          }                        }                      },                      \"hive\": {                        \"ignore_above\": 1024,                        \"type\": \"keyword\"                      },                      \"key\": {                        \"ignore_above\": 1024,                        \"type\": \"keyword\"                      },                      \"path\": {                        \"ignore_above\": 1024,                        \"type\": \"keyword\"                      },                      \"value\": {                        \"ignore_above\": 1024,                        \"type\": \"keyword\"                      }                    }                  },                  \"scanner_stats\": {                    \"type\": \"long\"                  },                  \"sightings\": {                    \"type\": \"long\"                  },                  \"type\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  },                  \"url\": {                    \"properties\": {                      \"domain\": {                        \"ignore_above\": 1024,                        \"type\": \"keyword\"                      },                      \"extension\": {                        \"ignore_above\": 1024,                        \"type\": \"keyword\"                      },                      \"fragment\": {                        \"ignore_above\": 1024,                        \"type\": \"keyword\"                      },                      \"full\": {                        \"fields\": {                          \"text\": {                            \"type\": \"match_only_text\"                          }                        },                        \"type\": \"wildcard\"                      },                      \"original\": {                        \"fields\": {                          \"text\": {                            \"type\": \"match_only_text\"                          }                        },                        \"type\": \"wildcard\"                      },                      \"password\": {                        \"ignore_above\": 1024,                        \"type\": \"keyword\"                      },                      \"path\": {                        \"type\": \"wildcard\"                      },                      \"port\": {                        \"type\": \"long\"                      },                      \"query\": {                        \"ignore_above\": 1024,                        \"type\": \"keyword\"                      },                      \"registered_domain\": {                        \"ignore_above\": 1024,                        \"type\": \"keyword\"                      },                      \"scheme\": {                        \"ignore_above\": 1024,                        \"type\": \"keyword\"                      },                      \"subdomain\": {                        \"ignore_above\": 1024,                        \"type\": \"keyword\"                      },                      \"top_level_domain\": {                        \"ignore_above\": 1024,                        \"type\": \"keyword\"                      },                      \"username\": {                        \"ignore_above\": 1024,                        \"type\": \"keyword\"                      }                    }                  },                  \"x509\": {                    \"properties\": {                      \"alternative_names\": {                        \"ignore_above\": 1024,                        \"type\": \"keyword\"                      },                      \"issuer\": {                        \"properties\": {                          \"common_name\": {                            \"ignore_above\": 1024,                            \"type\": \"keyword\"                          },                          \"country\": {                            \"ignore_above\": 1024,                            \"type\": \"keyword\"                          },                          \"distinguished_name\": {                            \"ignore_above\": 1024,                            \"type\": \"keyword\"                          },                          \"locality\": {                            \"ignore_above\": 1024,                            \"type\": \"keyword\"                          },                          \"organization\": {                            \"ignore_above\": 1024,                            \"type\": \"keyword\"                          },                          \"organizational_unit\": {                            \"ignore_above\": 1024,                            \"type\": \"keyword\"                          },                          \"state_or_province\": {                            \"ignore_above\": 1024,                            \"type\": \"keyword\"                          }                        }                      },                      \"not_after\": {                        \"type\": \"date\"                      },                      \"not_before\": {                        \"type\": \"date\"                      },                      \"public_key_algorithm\": {                        \"ignore_above\": 1024,                        \"type\": \"keyword\"                      },                      \"public_key_curve\": {                        \"ignore_above\": 1024,                        \"type\": \"keyword\"                      },                      \"public_key_exponent\": {                        \"doc_values\": false,                        \"index\": false,                        \"type\": \"long\"                      },                      \"public_key_size\": {                        \"type\": \"long\"                      },                      \"serial_number\": {                        \"ignore_above\": 1024,                        \"type\": \"keyword\"                      },                      \"signature_algorithm\": {                        \"ignore_above\": 1024,                        \"type\": \"keyword\"                      },                      \"subject\": {                        \"properties\": {                          \"common_name\": {                            \"ignore_above\": 1024,                            \"type\": \"keyword\"                          },                          \"country\": {                            \"ignore_above\": 1024,                            \"type\": \"keyword\"                          },                          \"distinguished_name\": {                            \"ignore_above\": 1024,                            \"type\": \"keyword\"                          },                          \"locality\": {                            \"ignore_above\": 1024,                            \"type\": \"keyword\"                          },                          \"organization\": {                            \"ignore_above\": 1024,                            \"type\": \"keyword\"                          },                          \"organizational_unit\": {                            \"ignore_above\": 1024,                            \"type\": \"keyword\"                          },                          \"state_or_province\": {                            \"ignore_above\": 1024,                            \"type\": \"keyword\"                          }                        }                      },                      \"version_number\": {                        \"ignore_above\": 1024,                        \"type\": \"keyword\"                      }                    }                  }                },                \"type\": \"object\"              },              \"matched\": {                \"properties\": {                  \"atomic\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  },                  \"field\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  },                  \"id\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  },                  \"index\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  },                  \"occurred\": {                    \"type\": \"date\"                  },                  \"type\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  }                }              }            },            \"type\": \"nested\"          },          \"feed\": {            \"properties\": {              \"dashboard_id\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"description\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"name\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"reference\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              }            }          },          \"framework\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"group\": {            \"properties\": {              \"alias\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"id\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"name\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"reference\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              }            }          },          \"indicator\": {            \"properties\": {              \"as\": {                \"properties\": {                  \"number\": {                    \"type\": \"long\"                  },                  \"organization\": {                    \"properties\": {                      \"name\": {                        \"fields\": {                          \"text\": {                            \"type\": \"match_only_text\"                          }                        },                        \"ignore_above\": 1024,                        \"type\": \"keyword\"                      }                    }                  }                }              },              \"confidence\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"description\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"email\": {                \"properties\": {                  \"address\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  }                }              },              \"file\": {                \"properties\": {                  \"accessed\": {                    \"type\": \"date\"                  },                  \"attributes\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  },                  \"code_signature\": {                    \"properties\": {                      \"digest_algorithm\": {                        \"ignore_above\": 1024,                        \"type\": \"keyword\"                      },                      \"exists\": {                        \"type\": \"boolean\"                      },                      \"signing_id\": {                        \"ignore_above\": 1024,                        \"type\": \"keyword\"                      },                      \"status\": {                        \"ignore_above\": 1024,                        \"type\": \"keyword\"                      },                      \"subject_name\": {                        \"ignore_above\": 1024,                        \"type\": \"keyword\"                      },                      \"team_id\": {                        \"ignore_above\": 1024,                        \"type\": \"keyword\"                      },                      \"timestamp\": {                        \"type\": \"date\"                      },                      \"trusted\": {                        \"type\": \"boolean\"                      },                      \"valid\": {                        \"type\": \"boolean\"                      }                    }                  },                  \"created\": {                    \"type\": \"date\"                  },                  \"ctime\": {                    \"type\": \"date\"                  },                  \"device\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  },                  \"directory\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  },                  \"drive_letter\": {                    \"ignore_above\": 1,                    \"type\": \"keyword\"                  },                  \"elf\": {                    \"properties\": {                      \"architecture\": {                        \"ignore_above\": 1024,                        \"type\": \"keyword\"                      },                      \"byte_order\": {                        \"ignore_above\": 1024,                        \"type\": \"keyword\"                      },                      \"cpu_type\": {                        \"ignore_above\": 1024,                        \"type\": \"keyword\"                      },                      \"creation_date\": {                        \"type\": \"date\"                      },                      \"exports\": {                        \"type\": \"flattened\"                      },                      \"header\": {                        \"properties\": {                          \"abi_version\": {                            \"ignore_above\": 1024,                            \"type\": \"keyword\"                          },                          \"class\": {                            \"ignore_above\": 1024,                            \"type\": \"keyword\"                          },                          \"data\": {                            \"ignore_above\": 1024,                            \"type\": \"keyword\"                          },                          \"entrypoint\": {                            \"type\": \"long\"                          },                          \"object_version\": {                            \"ignore_above\": 1024,                            \"type\": \"keyword\"                          },                          \"os_abi\": {                            \"ignore_above\": 1024,                            \"type\": \"keyword\"                          },                          \"type\": {                            \"ignore_above\": 1024,                            \"type\": \"keyword\"                          },                          \"version\": {                            \"ignore_above\": 1024,                            \"type\": \"keyword\"                          }                        }                      },                      \"imports\": {                        \"type\": \"flattened\"                      },                      \"sections\": {                        \"properties\": {                          \"chi2\": {                            \"type\": \"long\"                          },                          \"entropy\": {                            \"type\": \"long\"                          },                          \"flags\": {                            \"ignore_above\": 1024,                            \"type\": \"keyword\"                          },                          \"name\": {                            \"ignore_above\": 1024,                            \"type\": \"keyword\"                          },                          \"physical_offset\": {                            \"ignore_above\": 1024,                            \"type\": \"keyword\"                          },                          \"physical_size\": {                            \"type\": \"long\"                          },                          \"type\": {                            \"ignore_above\": 1024,                            \"type\": \"keyword\"                          },                          \"virtual_address\": {                            \"type\": \"long\"                          },                          \"virtual_size\": {                            \"type\": \"long\"                          }                        },                        \"type\": \"nested\"                      },                      \"segments\": {                        \"properties\": {                          \"sections\": {                            \"ignore_above\": 1024,                            \"type\": \"keyword\"                          },                          \"type\": {                            \"ignore_above\": 1024,                            \"type\": \"keyword\"                          }                        },                        \"type\": \"nested\"                      },                      \"shared_libraries\": {                        \"ignore_above\": 1024,                        \"type\": \"keyword\"                      },                      \"telfhash\": {                        \"ignore_above\": 1024,                        \"type\": \"keyword\"                      }                    }                  },                  \"extension\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  },                  \"fork_name\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  },                  \"gid\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  },                  \"group\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  },                  \"hash\": {                    \"properties\": {                      \"md5\": {                        \"ignore_above\": 1024,                        \"type\": \"keyword\"                      },                      \"sha1\": {                        \"ignore_above\": 1024,                        \"type\": \"keyword\"                      },                      \"sha256\": {                        \"ignore_above\": 1024,                        \"type\": \"keyword\"                      },                      \"sha384\": {                        \"ignore_above\": 1024,                        \"type\": \"keyword\"                      },                      \"sha512\": {                        \"ignore_above\": 1024,                        \"type\": \"keyword\"                      },                      \"ssdeep\": {                        \"ignore_above\": 1024,                        \"type\": \"keyword\"                      },                      \"tlsh\": {                        \"ignore_above\": 1024,                        \"type\": \"keyword\"                      }                    }                  },                  \"inode\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  },                  \"mime_type\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  },                  \"mode\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  },                  \"mtime\": {                    \"type\": \"date\"                  },                  \"name\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  },                  \"owner\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  },                  \"path\": {                    \"fields\": {                      \"text\": {                        \"type\": \"match_only_text\"                      }                    },                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  },                  \"pe\": {                    \"properties\": {                      \"architecture\": {                        \"ignore_above\": 1024,                        \"type\": \"keyword\"                      },                      \"company\": {                        \"ignore_above\": 1024,                        \"type\": \"keyword\"                      },                      \"description\": {                        \"ignore_above\": 1024,                        \"type\": \"keyword\"                      },                      \"file_version\": {                        \"ignore_above\": 1024,                        \"type\": \"keyword\"                      },                      \"imphash\": {                        \"ignore_above\": 1024,                        \"type\": \"keyword\"                      },                      \"original_file_name\": {                        \"ignore_above\": 1024,                        \"type\": \"keyword\"                      },                      \"pehash\": {                        \"ignore_above\": 1024,                        \"type\": \"keyword\"                      },                      \"product\": {                        \"ignore_above\": 1024,                        \"type\": \"keyword\"                      }                    }                  },                  \"size\": {                    \"type\": \"long\"                  },                  \"target_path\": {                    \"fields\": {                      \"text\": {                        \"type\": \"match_only_text\"                      }                    },                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  },                  \"type\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  },                  \"uid\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  },                  \"x509\": {                    \"properties\": {                      \"alternative_names\": {                        \"ignore_above\": 1024,                        \"type\": \"keyword\"                      },                      \"issuer\": {                        \"properties\": {                          \"common_name\": {                            \"ignore_above\": 1024,                            \"type\": \"keyword\"                          },                          \"country\": {                            \"ignore_above\": 1024,                            \"type\": \"keyword\"                          },                          \"distinguished_name\": {                            \"ignore_above\": 1024,                            \"type\": \"keyword\"                          },                          \"locality\": {                            \"ignore_above\": 1024,                            \"type\": \"keyword\"                          },                          \"organization\": {                            \"ignore_above\": 1024,                            \"type\": \"keyword\"                          },                          \"organizational_unit\": {                            \"ignore_above\": 1024,                            \"type\": \"keyword\"                          },                          \"state_or_province\": {                            \"ignore_above\": 1024,                            \"type\": \"keyword\"                          }                        }                      },                      \"not_after\": {                        \"type\": \"date\"                      },                      \"not_before\": {                        \"type\": \"date\"                      },                      \"public_key_algorithm\": {                        \"ignore_above\": 1024,                        \"type\": \"keyword\"                      },                      \"public_key_curve\": {                        \"ignore_above\": 1024,                        \"type\": \"keyword\"                      },                      \"public_key_exponent\": {                        \"doc_values\": false,                        \"index\": false,                        \"type\": \"long\"                      },                      \"public_key_size\": {                        \"type\": \"long\"                      },                      \"serial_number\": {                        \"ignore_above\": 1024,                        \"type\": \"keyword\"                      },                      \"signature_algorithm\": {                        \"ignore_above\": 1024,                        \"type\": \"keyword\"                      },                      \"subject\": {                        \"properties\": {                          \"common_name\": {                            \"ignore_above\": 1024,                            \"type\": \"keyword\"                          },                          \"country\": {                            \"ignore_above\": 1024,                            \"type\": \"keyword\"                          },                          \"distinguished_name\": {                            \"ignore_above\": 1024,                            \"type\": \"keyword\"                          },                          \"locality\": {                            \"ignore_above\": 1024,                            \"type\": \"keyword\"                          },                          \"organization\": {                            \"ignore_above\": 1024,                            \"type\": \"keyword\"                          },                          \"organizational_unit\": {                            \"ignore_above\": 1024,                            \"type\": \"keyword\"                          },                          \"state_or_province\": {                            \"ignore_above\": 1024,                            \"type\": \"keyword\"                          }                        }                      },                      \"version_number\": {                        \"ignore_above\": 1024,                        \"type\": \"keyword\"                      }                    }                  }                }              },              \"first_seen\": {                \"type\": \"date\"              },              \"geo\": {                \"properties\": {                  \"city_name\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  },                  \"continent_code\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  },                  \"continent_name\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  },                  \"country_iso_code\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  },                  \"country_name\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  },                  \"location\": {                    \"type\": \"geo_point\"                  },                  \"name\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  },                  \"postal_code\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  },                  \"region_iso_code\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  },                  \"region_name\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  },                  \"timezone\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  }                }              },              \"ip\": {                \"type\": \"ip\"              },              \"last_seen\": {                \"type\": \"date\"              },              \"marking\": {                \"properties\": {                  \"tlp\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  }                }              },              \"modified_at\": {                \"type\": \"date\"              },              \"port\": {                \"type\": \"long\"              },              \"provider\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"reference\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"registry\": {                \"properties\": {                  \"data\": {                    \"properties\": {                      \"bytes\": {                        \"ignore_above\": 1024,                        \"type\": \"keyword\"                      },                      \"strings\": {                        \"type\": \"wildcard\"                      },                      \"type\": {                        \"ignore_above\": 1024,                        \"type\": \"keyword\"                      }                    }                  },                  \"hive\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  },                  \"key\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  },                  \"path\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  },                  \"value\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  }                }              },              \"scanner_stats\": {                \"type\": \"long\"              },              \"sightings\": {                \"type\": \"long\"              },              \"type\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"url\": {                \"properties\": {                  \"domain\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  },                  \"extension\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  },                  \"fragment\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  },                  \"full\": {                    \"fields\": {                      \"text\": {                        \"type\": \"match_only_text\"                      }                    },                    \"type\": \"wildcard\"                  },                  \"original\": {                    \"fields\": {                      \"text\": {                        \"type\": \"match_only_text\"                      }                    },                    \"type\": \"wildcard\"                  },                  \"password\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  },                  \"path\": {                    \"type\": \"wildcard\"                  },                  \"port\": {                    \"type\": \"long\"                  },                  \"query\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  },                  \"registered_domain\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  },                  \"scheme\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  },                  \"subdomain\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  },                  \"top_level_domain\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  },                  \"username\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  }                }              },              \"x509\": {                \"properties\": {                  \"alternative_names\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  },                  \"issuer\": {                    \"properties\": {                      \"common_name\": {                        \"ignore_above\": 1024,                        \"type\": \"keyword\"                      },                      \"country\": {                        \"ignore_above\": 1024,                        \"type\": \"keyword\"                      },                      \"distinguished_name\": {                        \"ignore_above\": 1024,                        \"type\": \"keyword\"                      },                      \"locality\": {                        \"ignore_above\": 1024,                        \"type\": \"keyword\"                      },                      \"organization\": {                        \"ignore_above\": 1024,                        \"type\": \"keyword\"                      },                      \"organizational_unit\": {                        \"ignore_above\": 1024,                        \"type\": \"keyword\"                      },                      \"state_or_province\": {                        \"ignore_above\": 1024,                        \"type\": \"keyword\"                      }                    }                  },                  \"not_after\": {                    \"type\": \"date\"                  },                  \"not_before\": {                    \"type\": \"date\"                  },                  \"public_key_algorithm\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  },                  \"public_key_curve\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  },                  \"public_key_exponent\": {                    \"doc_values\": false,                    \"index\": false,                    \"type\": \"long\"                  },                  \"public_key_size\": {                    \"type\": \"long\"                  },                  \"serial_number\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  },                  \"signature_algorithm\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  },                  \"subject\": {                    \"properties\": {                      \"common_name\": {                        \"ignore_above\": 1024,                        \"type\": \"keyword\"                      },                      \"country\": {                        \"ignore_above\": 1024,                        \"type\": \"keyword\"                      },                      \"distinguished_name\": {                        \"ignore_above\": 1024,                        \"type\": \"keyword\"                      },                      \"locality\": {                        \"ignore_above\": 1024,                        \"type\": \"keyword\"                      },                      \"organization\": {                        \"ignore_above\": 1024,                        \"type\": \"keyword\"                      },                      \"organizational_unit\": {                        \"ignore_above\": 1024,                        \"type\": \"keyword\"                      },                      \"state_or_province\": {                        \"ignore_above\": 1024,                        \"type\": \"keyword\"                      }                    }                  },                  \"version_number\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  }                }              }            }          },          \"software\": {            \"properties\": {              \"alias\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"id\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"name\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"platforms\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"reference\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"type\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              }            }          },          \"tactic\": {            \"properties\": {              \"id\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"name\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"reference\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              }            }          },          \"technique\": {            \"properties\": {              \"id\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"name\": {                \"fields\": {                  \"text\": {                    \"type\": \"match_only_text\"                  }                },                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"reference\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"subtechnique\": {                \"properties\": {                  \"id\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  },                  \"name\": {                    \"fields\": {                      \"text\": {                        \"type\": \"match_only_text\"                      }                    },                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  },                  \"reference\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  }                }              }            }          }        }      },      \"tls\": {        \"properties\": {          \"cipher\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"client\": {            \"properties\": {              \"certificate\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"certificate_chain\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"hash\": {                \"properties\": {                  \"md5\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  },                  \"sha1\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  },                  \"sha256\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  }                }              },              \"issuer\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"ja3\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"not_after\": {                \"type\": \"date\"              },              \"not_before\": {                \"type\": \"date\"              },              \"server_name\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"subject\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"supported_ciphers\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"x509\": {                \"properties\": {                  \"alternative_names\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  },                  \"issuer\": {                    \"properties\": {                      \"common_name\": {                        \"ignore_above\": 1024,                        \"type\": \"keyword\"                      },                      \"country\": {                        \"ignore_above\": 1024,                        \"type\": \"keyword\"                      },                      \"distinguished_name\": {                        \"ignore_above\": 1024,                        \"type\": \"keyword\"                      },                      \"locality\": {                        \"ignore_above\": 1024,                        \"type\": \"keyword\"                      },                      \"organization\": {                        \"ignore_above\": 1024,                        \"type\": \"keyword\"                      },                      \"organizational_unit\": {                        \"ignore_above\": 1024,                        \"type\": \"keyword\"                      },                      \"state_or_province\": {                        \"ignore_above\": 1024,                        \"type\": \"keyword\"                      }                    }                  },                  \"not_after\": {                    \"type\": \"date\"                  },                  \"not_before\": {                    \"type\": \"date\"                  },                  \"public_key_algorithm\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  },                  \"public_key_curve\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  },                  \"public_key_exponent\": {                    \"doc_values\": false,                    \"index\": false,                    \"type\": \"long\"                  },                  \"public_key_size\": {                    \"type\": \"long\"                  },                  \"serial_number\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  },                  \"signature_algorithm\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  },                  \"subject\": {                    \"properties\": {                      \"common_name\": {                        \"ignore_above\": 1024,                        \"type\": \"keyword\"                      },                      \"country\": {                        \"ignore_above\": 1024,                        \"type\": \"keyword\"                      },                      \"distinguished_name\": {                        \"ignore_above\": 1024,                        \"type\": \"keyword\"                      },                      \"locality\": {                        \"ignore_above\": 1024,                        \"type\": \"keyword\"                      },                      \"organization\": {                        \"ignore_above\": 1024,                        \"type\": \"keyword\"                      },                      \"organizational_unit\": {                        \"ignore_above\": 1024,                        \"type\": \"keyword\"                      },                      \"state_or_province\": {                        \"ignore_above\": 1024,                        \"type\": \"keyword\"                      }                    }                  },                  \"version_number\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  }                }              }            }          },          \"curve\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"established\": {            \"type\": \"boolean\"          },          \"next_protocol\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"resumed\": {            \"type\": \"boolean\"          },          \"server\": {            \"properties\": {              \"certificate\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"certificate_chain\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"hash\": {                \"properties\": {                  \"md5\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  },                  \"sha1\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  },                  \"sha256\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  }                }              },              \"issuer\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"ja3s\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"not_after\": {                \"type\": \"date\"              },              \"not_before\": {                \"type\": \"date\"              },              \"subject\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"x509\": {                \"properties\": {                  \"alternative_names\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  },                  \"issuer\": {                    \"properties\": {                      \"common_name\": {                        \"ignore_above\": 1024,                        \"type\": \"keyword\"                      },                      \"country\": {                        \"ignore_above\": 1024,                        \"type\": \"keyword\"                      },                      \"distinguished_name\": {                        \"ignore_above\": 1024,                        \"type\": \"keyword\"                      },                      \"locality\": {                        \"ignore_above\": 1024,                        \"type\": \"keyword\"                      },                      \"organization\": {                        \"ignore_above\": 1024,                        \"type\": \"keyword\"                      },                      \"organizational_unit\": {                        \"ignore_above\": 1024,                        \"type\": \"keyword\"                      },                      \"state_or_province\": {                        \"ignore_above\": 1024,                        \"type\": \"keyword\"                      }                    }                  },                  \"not_after\": {                    \"type\": \"date\"                  },                  \"not_before\": {                    \"type\": \"date\"                  },                  \"public_key_algorithm\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  },                  \"public_key_curve\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  },                  \"public_key_exponent\": {                    \"doc_values\": false,                    \"index\": false,                    \"type\": \"long\"                  },                  \"public_key_size\": {                    \"type\": \"long\"                  },                  \"serial_number\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  },                  \"signature_algorithm\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  },                  \"subject\": {                    \"properties\": {                      \"common_name\": {                        \"ignore_above\": 1024,                        \"type\": \"keyword\"                      },                      \"country\": {                        \"ignore_above\": 1024,                        \"type\": \"keyword\"                      },                      \"distinguished_name\": {                        \"ignore_above\": 1024,                        \"type\": \"keyword\"                      },                      \"locality\": {                        \"ignore_above\": 1024,                        \"type\": \"keyword\"                      },                      \"organization\": {                        \"ignore_above\": 1024,                        \"type\": \"keyword\"                      },                      \"organizational_unit\": {                        \"ignore_above\": 1024,                        \"type\": \"keyword\"                      },                      \"state_or_province\": {                        \"ignore_above\": 1024,                        \"type\": \"keyword\"                      }                    }                  },                  \"version_number\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  }                }              }            }          },          \"version\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"version_protocol\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          }        }      },      \"trace\": {        \"properties\": {          \"id\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          }        }      },      \"transaction\": {        \"properties\": {          \"id\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          }        }      },      \"url\": {        \"properties\": {          \"domain\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"extension\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"fragment\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"full\": {            \"fields\": {              \"text\": {                \"type\": \"match_only_text\"              }            },            \"type\": \"wildcard\"          },          \"original\": {            \"fields\": {              \"text\": {                \"type\": \"match_only_text\"              }            },            \"type\": \"wildcard\"          },          \"password\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"path\": {            \"type\": \"wildcard\"          },          \"port\": {            \"type\": \"long\"          },          \"query\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"registered_domain\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"scheme\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"subdomain\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"top_level_domain\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"username\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          }        }      },      \"user\": {        \"properties\": {          \"changes\": {            \"properties\": {              \"domain\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"email\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"full_name\": {                \"fields\": {                  \"text\": {                    \"type\": \"match_only_text\"                  }                },                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"group\": {                \"properties\": {                  \"domain\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  },                  \"id\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  },                  \"name\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  }                }              },              \"hash\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"id\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"name\": {                \"fields\": {                  \"text\": {                    \"type\": \"match_only_text\"                  }                },                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"roles\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              }            }          },          \"domain\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"effective\": {            \"properties\": {              \"domain\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"email\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"full_name\": {                \"fields\": {                  \"text\": {                    \"type\": \"match_only_text\"                  }                },                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"group\": {                \"properties\": {                  \"domain\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  },                  \"id\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  },                  \"name\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  }                }              },              \"hash\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"id\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"name\": {                \"fields\": {                  \"text\": {                    \"type\": \"match_only_text\"                  }                },                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"roles\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              }            }          },          \"email\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"full_name\": {            \"fields\": {              \"text\": {                \"type\": \"match_only_text\"              }            },            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"group\": {            \"properties\": {              \"domain\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"id\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"name\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              }            }          },          \"hash\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"id\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"name\": {            \"fields\": {              \"text\": {                \"type\": \"match_only_text\"              }            },            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"roles\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"target\": {            \"properties\": {              \"domain\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"email\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"full_name\": {                \"fields\": {                  \"text\": {                    \"type\": \"match_only_text\"                  }                },                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"group\": {                \"properties\": {                  \"domain\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  },                  \"id\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  },                  \"name\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  }                }              },              \"hash\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"id\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"name\": {                \"fields\": {                  \"text\": {                    \"type\": \"match_only_text\"                  }                },                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"roles\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              }            }          }        }      },      \"user_agent\": {        \"properties\": {          \"device\": {            \"properties\": {              \"name\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              }            }          },          \"name\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"original\": {            \"fields\": {              \"text\": {                \"type\": \"match_only_text\"              }            },            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"os\": {            \"properties\": {              \"family\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"full\": {                \"fields\": {                  \"text\": {                    \"type\": \"match_only_text\"                  }                },                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"kernel\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"name\": {                \"fields\": {                  \"text\": {                    \"type\": \"match_only_text\"                  }                },                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"platform\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"type\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"version\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              }            }          },          \"version\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          }        }      },      \"vulnerability\": {        \"properties\": {          \"category\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"classification\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"description\": {            \"fields\": {              \"text\": {                \"type\": \"match_only_text\"              }            },            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"enumeration\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"id\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"reference\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"report_id\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"scanner\": {            \"properties\": {              \"vendor\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              }            }          },          \"score\": {            \"properties\": {              \"base\": {                \"type\": \"float\"              },              \"environmental\": {                \"type\": \"float\"              },              \"temporal\": {                \"type\": \"float\"              },              \"version\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              }            }          },          \"severity\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          }        }      }    }  },  \"order\": 1,  \"settings\": {    \"index\": {      \"mapping\": {        \"total_fields\": {          \"limit\": 10000        }      },      \"refresh_interval\": \"5s\"    }  }}"; }
 
 		/// <summary>
-		/// Elastic Common Schema version 1.6.0 index template for Elasticsearch version 7
+		/// Elastic Common Schema version v8.2.0.0 legacy index template  
 		/// See the Put Index Template API documentation: https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-templates.html
 		/// </summary>
 		/// <returns>Index template string that can be used with the Put Index Template API.</returns>
-		public static string GetIndexTemplateForElasticsearch7(string indexPattern = "ecs-*") { return "{  \"index_patterns\": [    \"" + indexPattern + "\"  ],  \"mappings\": {    \"_meta\": {      \"version\": \"1.6.0\"    },    \"date_detection\": false,    \"dynamic_templates\": [      {        \"strings_as_keyword\": {          \"mapping\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"match_mapping_type\": \"string\"        }      }    ],    \"properties\": {      \"@timestamp\": {        \"type\": \"date\"      },      \"agent\": {        \"properties\": {          \"build\": {            \"properties\": {              \"original\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              }            }          },          \"ephemeral_id\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"id\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"name\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"type\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"version\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          }        }      },      \"client\": {        \"properties\": {          \"address\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"as\": {            \"properties\": {              \"number\": {                \"type\": \"long\"              },              \"organization\": {                \"properties\": {                  \"name\": {                    \"fields\": {                      \"text\": {                        \"norms\": false,                        \"type\": \"text\"                      }                    },                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  }                }              }            }          },          \"bytes\": {            \"type\": \"long\"          },          \"domain\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"geo\": {            \"properties\": {              \"city_name\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"continent_name\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"country_iso_code\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"country_name\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"location\": {                \"type\": \"geo_point\"              },              \"name\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"region_iso_code\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"region_name\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              }            }          },          \"ip\": {            \"type\": \"ip\"          },          \"mac\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"nat\": {            \"properties\": {              \"ip\": {                \"type\": \"ip\"              },              \"port\": {                \"type\": \"long\"              }            }          },          \"packets\": {            \"type\": \"long\"          },          \"port\": {            \"type\": \"long\"          },          \"registered_domain\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"top_level_domain\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"user\": {            \"properties\": {              \"domain\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"email\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"full_name\": {                \"fields\": {                  \"text\": {                    \"norms\": false,                    \"type\": \"text\"                  }                },                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"group\": {                \"properties\": {                  \"domain\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  },                  \"id\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  },                  \"name\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  }                }              },              \"hash\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"id\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"name\": {                \"fields\": {                  \"text\": {                    \"norms\": false,                    \"type\": \"text\"                  }                },                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"roles\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              }            }          }        }      },      \"cloud\": {        \"properties\": {          \"account\": {            \"properties\": {              \"id\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"name\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              }            }          },          \"availability_zone\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"instance\": {            \"properties\": {              \"id\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"name\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              }            }          },          \"machine\": {            \"properties\": {              \"type\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              }            }          },          \"project\": {            \"properties\": {              \"id\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"name\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              }            }          },          \"provider\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"region\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          }        }      },      \"container\": {        \"properties\": {          \"id\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"image\": {            \"properties\": {              \"name\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"tag\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              }            }          },          \"labels\": {            \"type\": \"object\"          },          \"name\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"runtime\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          }        }      },      \"destination\": {        \"properties\": {          \"address\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"as\": {            \"properties\": {              \"number\": {                \"type\": \"long\"              },              \"organization\": {                \"properties\": {                  \"name\": {                    \"fields\": {                      \"text\": {                        \"norms\": false,                        \"type\": \"text\"                      }                    },                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  }                }              }            }          },          \"bytes\": {            \"type\": \"long\"          },          \"domain\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"geo\": {            \"properties\": {              \"city_name\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"continent_name\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"country_iso_code\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"country_name\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"location\": {                \"type\": \"geo_point\"              },              \"name\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"region_iso_code\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"region_name\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              }            }          },          \"ip\": {            \"type\": \"ip\"          },          \"mac\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"nat\": {            \"properties\": {              \"ip\": {                \"type\": \"ip\"              },              \"port\": {                \"type\": \"long\"              }            }          },          \"packets\": {            \"type\": \"long\"          },          \"port\": {            \"type\": \"long\"          },          \"registered_domain\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"top_level_domain\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"user\": {            \"properties\": {              \"domain\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"email\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"full_name\": {                \"fields\": {                  \"text\": {                    \"norms\": false,                    \"type\": \"text\"                  }                },                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"group\": {                \"properties\": {                  \"domain\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  },                  \"id\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  },                  \"name\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  }                }              },              \"hash\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"id\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"name\": {                \"fields\": {                  \"text\": {                    \"norms\": false,                    \"type\": \"text\"                  }                },                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"roles\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              }            }          }        }      },      \"dll\": {        \"properties\": {          \"code_signature\": {            \"properties\": {              \"exists\": {                \"type\": \"boolean\"              },              \"status\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"subject_name\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"trusted\": {                \"type\": \"boolean\"              },              \"valid\": {                \"type\": \"boolean\"              }            }          },          \"hash\": {            \"properties\": {              \"md5\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"sha1\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"sha256\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"sha512\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              }            }          },          \"name\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"path\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"pe\": {            \"properties\": {              \"architecture\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"company\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"description\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"file_version\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"imphash\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"original_file_name\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"product\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              }            }          }        }      },      \"dns\": {        \"properties\": {          \"answers\": {            \"properties\": {              \"class\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"data\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"name\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"ttl\": {                \"type\": \"long\"              },              \"type\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              }            },            \"type\": \"object\"          },          \"header_flags\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"id\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"op_code\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"question\": {            \"properties\": {              \"class\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"name\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"registered_domain\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"subdomain\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"top_level_domain\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"type\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              }            }          },          \"resolved_ip\": {            \"type\": \"ip\"          },          \"response_code\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"type\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          }        }      },      \"ecs\": {        \"properties\": {          \"version\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          }        }      },      \"error\": {        \"properties\": {          \"code\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"id\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"message\": {            \"norms\": false,            \"type\": \"text\"          },          \"stack_trace\": {            \"doc_values\": false,            \"fields\": {              \"text\": {                \"norms\": false,                \"type\": \"text\"              }            },            \"ignore_above\": 1024,            \"index\": false,            \"type\": \"keyword\"          },          \"type\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          }        }      },      \"event\": {        \"properties\": {          \"action\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"category\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"code\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"created\": {            \"type\": \"date\"          },          \"dataset\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"duration\": {            \"type\": \"long\"          },          \"end\": {            \"type\": \"date\"          },          \"hash\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"id\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"ingested\": {            \"type\": \"date\"          },          \"kind\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"module\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"original\": {            \"doc_values\": false,            \"ignore_above\": 1024,            \"index\": false,            \"type\": \"keyword\"          },          \"outcome\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"provider\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"reason\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"reference\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"risk_score\": {            \"type\": \"float\"          },          \"risk_score_norm\": {            \"type\": \"float\"          },          \"sequence\": {            \"type\": \"long\"          },          \"severity\": {            \"type\": \"long\"          },          \"start\": {            \"type\": \"date\"          },          \"timezone\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"type\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"url\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          }        }      },      \"file\": {        \"properties\": {          \"accessed\": {            \"type\": \"date\"          },          \"attributes\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"code_signature\": {            \"properties\": {              \"exists\": {                \"type\": \"boolean\"              },              \"status\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"subject_name\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"trusted\": {                \"type\": \"boolean\"              },              \"valid\": {                \"type\": \"boolean\"              }            }          },          \"created\": {            \"type\": \"date\"          },          \"ctime\": {            \"type\": \"date\"          },          \"device\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"directory\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"drive_letter\": {            \"ignore_above\": 1,            \"type\": \"keyword\"          },          \"extension\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"gid\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"group\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"hash\": {            \"properties\": {              \"md5\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"sha1\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"sha256\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"sha512\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              }            }          },          \"inode\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"mime_type\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"mode\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"mtime\": {            \"type\": \"date\"          },          \"name\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"owner\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"path\": {            \"fields\": {              \"text\": {                \"norms\": false,                \"type\": \"text\"              }            },            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"pe\": {            \"properties\": {              \"architecture\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"company\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"description\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"file_version\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"imphash\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"original_file_name\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"product\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              }            }          },          \"size\": {            \"type\": \"long\"          },          \"target_path\": {            \"fields\": {              \"text\": {                \"norms\": false,                \"type\": \"text\"              }            },            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"type\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"uid\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"x509\": {            \"properties\": {              \"alternative_names\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"issuer\": {                \"properties\": {                  \"common_name\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  },                  \"country\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  },                  \"distinguished_name\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  },                  \"locality\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  },                  \"organization\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  },                  \"organizational_unit\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  },                  \"state_or_province\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  }                }              },              \"not_after\": {                \"type\": \"date\"              },              \"not_before\": {                \"type\": \"date\"              },              \"public_key_algorithm\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"public_key_curve\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"public_key_exponent\": {                \"doc_values\": false,                \"index\": false,                \"type\": \"long\"              },              \"public_key_size\": {                \"type\": \"long\"              },              \"serial_number\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"signature_algorithm\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"subject\": {                \"properties\": {                  \"common_name\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  },                  \"country\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  },                  \"distinguished_name\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  },                  \"locality\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  },                  \"organization\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  },                  \"organizational_unit\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  },                  \"state_or_province\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  }                }              },              \"version_number\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              }            }          }        }      },      \"group\": {        \"properties\": {          \"domain\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"id\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"name\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          }        }      },      \"host\": {        \"properties\": {          \"architecture\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"domain\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"geo\": {            \"properties\": {              \"city_name\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"continent_name\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"country_iso_code\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"country_name\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"location\": {                \"type\": \"geo_point\"              },              \"name\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"region_iso_code\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"region_name\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              }            }          },          \"hostname\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"id\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"ip\": {            \"type\": \"ip\"          },          \"mac\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"name\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"os\": {            \"properties\": {              \"family\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"full\": {                \"fields\": {                  \"text\": {                    \"norms\": false,                    \"type\": \"text\"                  }                },                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"kernel\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"name\": {                \"fields\": {                  \"text\": {                    \"norms\": false,                    \"type\": \"text\"                  }                },                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"platform\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"version\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              }            }          },          \"type\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"uptime\": {            \"type\": \"long\"          },          \"user\": {            \"properties\": {              \"domain\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"email\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"full_name\": {                \"fields\": {                  \"text\": {                    \"norms\": false,                    \"type\": \"text\"                  }                },                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"group\": {                \"properties\": {                  \"domain\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  },                  \"id\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  },                  \"name\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  }                }              },              \"hash\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"id\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"name\": {                \"fields\": {                  \"text\": {                    \"norms\": false,                    \"type\": \"text\"                  }                },                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"roles\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              }            }          }        }      },      \"http\": {        \"properties\": {          \"request\": {            \"properties\": {              \"body\": {                \"properties\": {                  \"bytes\": {                    \"type\": \"long\"                  },                  \"content\": {                    \"fields\": {                      \"text\": {                        \"norms\": false,                        \"type\": \"text\"                      }                    },                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  }                }              },              \"bytes\": {                \"type\": \"long\"              },              \"method\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"referrer\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              }            }          },          \"response\": {            \"properties\": {              \"body\": {                \"properties\": {                  \"bytes\": {                    \"type\": \"long\"                  },                  \"content\": {                    \"fields\": {                      \"text\": {                        \"norms\": false,                        \"type\": \"text\"                      }                    },                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  }                }              },              \"bytes\": {                \"type\": \"long\"              },              \"status_code\": {                \"type\": \"long\"              }            }          },          \"version\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          }        }      },      \"labels\": {        \"type\": \"object\"      },      \"log\": {        \"properties\": {          \"file\": {            \"properties\": {              \"path\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              }            }          },          \"level\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"logger\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"origin\": {            \"properties\": {              \"file\": {                \"properties\": {                  \"line\": {                    \"type\": \"integer\"                  },                  \"name\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  }                }              },              \"function\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              }            }          },          \"original\": {            \"doc_values\": false,            \"ignore_above\": 1024,            \"index\": false,            \"type\": \"keyword\"          },          \"syslog\": {            \"properties\": {              \"facility\": {                \"properties\": {                  \"code\": {                    \"type\": \"long\"                  },                  \"name\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  }                }              },              \"priority\": {                \"type\": \"long\"              },              \"severity\": {                \"properties\": {                  \"code\": {                    \"type\": \"long\"                  },                  \"name\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  }                }              }            },            \"type\": \"object\"          }        }      },      \"message\": {        \"norms\": false,        \"type\": \"text\"      },      \"network\": {        \"properties\": {          \"application\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"bytes\": {            \"type\": \"long\"          },          \"community_id\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"direction\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"forwarded_ip\": {            \"type\": \"ip\"          },          \"iana_number\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"inner\": {            \"properties\": {              \"vlan\": {                \"properties\": {                  \"id\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  },                  \"name\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  }                }              }            },            \"type\": \"object\"          },          \"name\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"packets\": {            \"type\": \"long\"          },          \"protocol\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"transport\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"type\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"vlan\": {            \"properties\": {              \"id\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"name\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              }            }          }        }      },      \"observer\": {        \"properties\": {          \"egress\": {            \"properties\": {              \"interface\": {                \"properties\": {                  \"alias\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  },                  \"id\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  },                  \"name\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  }                }              },              \"vlan\": {                \"properties\": {                  \"id\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  },                  \"name\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  }                }              },              \"zone\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              }            },            \"type\": \"object\"          },          \"geo\": {            \"properties\": {              \"city_name\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"continent_name\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"country_iso_code\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"country_name\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"location\": {                \"type\": \"geo_point\"              },              \"name\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"region_iso_code\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"region_name\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              }            }          },          \"hostname\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"ingress\": {            \"properties\": {              \"interface\": {                \"properties\": {                  \"alias\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  },                  \"id\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  },                  \"name\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  }                }              },              \"vlan\": {                \"properties\": {                  \"id\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  },                  \"name\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  }                }              },              \"zone\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              }            },            \"type\": \"object\"          },          \"ip\": {            \"type\": \"ip\"          },          \"mac\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"name\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"os\": {            \"properties\": {              \"family\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"full\": {                \"fields\": {                  \"text\": {                    \"norms\": false,                    \"type\": \"text\"                  }                },                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"kernel\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"name\": {                \"fields\": {                  \"text\": {                    \"norms\": false,                    \"type\": \"text\"                  }                },                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"platform\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"version\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              }            }          },          \"product\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"serial_number\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"type\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"vendor\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"version\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          }        }      },      \"organization\": {        \"properties\": {          \"id\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"name\": {            \"fields\": {              \"text\": {                \"norms\": false,                \"type\": \"text\"              }            },            \"ignore_above\": 1024,            \"type\": \"keyword\"          }        }      },      \"package\": {        \"properties\": {          \"architecture\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"build_version\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"checksum\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"description\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"install_scope\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"installed\": {            \"type\": \"date\"          },          \"license\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"name\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"path\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"reference\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"size\": {            \"type\": \"long\"          },          \"type\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"version\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          }        }      },      \"process\": {        \"properties\": {          \"args\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"args_count\": {            \"type\": \"long\"          },          \"code_signature\": {            \"properties\": {              \"exists\": {                \"type\": \"boolean\"              },              \"status\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"subject_name\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"trusted\": {                \"type\": \"boolean\"              },              \"valid\": {                \"type\": \"boolean\"              }            }          },          \"command_line\": {            \"fields\": {              \"text\": {                \"norms\": false,                \"type\": \"text\"              }            },            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"entity_id\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"executable\": {            \"fields\": {              \"text\": {                \"norms\": false,                \"type\": \"text\"              }            },            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"exit_code\": {            \"type\": \"long\"          },          \"hash\": {            \"properties\": {              \"md5\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"sha1\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"sha256\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"sha512\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              }            }          },          \"name\": {            \"fields\": {              \"text\": {                \"norms\": false,                \"type\": \"text\"              }            },            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"parent\": {            \"properties\": {              \"args\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"args_count\": {                \"type\": \"long\"              },              \"code_signature\": {                \"properties\": {                  \"exists\": {                    \"type\": \"boolean\"                  },                  \"status\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  },                  \"subject_name\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  },                  \"trusted\": {                    \"type\": \"boolean\"                  },                  \"valid\": {                    \"type\": \"boolean\"                  }                }              },              \"command_line\": {                \"fields\": {                  \"text\": {                    \"norms\": false,                    \"type\": \"text\"                  }                },                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"entity_id\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"executable\": {                \"fields\": {                  \"text\": {                    \"norms\": false,                    \"type\": \"text\"                  }                },                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"exit_code\": {                \"type\": \"long\"              },              \"hash\": {                \"properties\": {                  \"md5\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  },                  \"sha1\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  },                  \"sha256\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  },                  \"sha512\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  }                }              },              \"name\": {                \"fields\": {                  \"text\": {                    \"norms\": false,                    \"type\": \"text\"                  }                },                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"pe\": {                \"properties\": {                  \"architecture\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  },                  \"company\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  },                  \"description\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  },                  \"file_version\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  },                  \"imphash\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  },                  \"original_file_name\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  },                  \"product\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  }                }              },              \"pgid\": {                \"type\": \"long\"              },              \"pid\": {                \"type\": \"long\"              },              \"ppid\": {                \"type\": \"long\"              },              \"start\": {                \"type\": \"date\"              },              \"thread\": {                \"properties\": {                  \"id\": {                    \"type\": \"long\"                  },                  \"name\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  }                }              },              \"title\": {                \"fields\": {                  \"text\": {                    \"norms\": false,                    \"type\": \"text\"                  }                },                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"uptime\": {                \"type\": \"long\"              },              \"working_directory\": {                \"fields\": {                  \"text\": {                    \"norms\": false,                    \"type\": \"text\"                  }                },                \"ignore_above\": 1024,                \"type\": \"keyword\"              }            }          },          \"pe\": {            \"properties\": {              \"architecture\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"company\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"description\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"file_version\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"imphash\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"original_file_name\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"product\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              }            }          },          \"pgid\": {            \"type\": \"long\"          },          \"pid\": {            \"type\": \"long\"          },          \"ppid\": {            \"type\": \"long\"          },          \"start\": {            \"type\": \"date\"          },          \"thread\": {            \"properties\": {              \"id\": {                \"type\": \"long\"              },              \"name\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              }            }          },          \"title\": {            \"fields\": {              \"text\": {                \"norms\": false,                \"type\": \"text\"              }            },            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"uptime\": {            \"type\": \"long\"          },          \"working_directory\": {            \"fields\": {              \"text\": {                \"norms\": false,                \"type\": \"text\"              }            },            \"ignore_above\": 1024,            \"type\": \"keyword\"          }        }      },      \"registry\": {        \"properties\": {          \"data\": {            \"properties\": {              \"bytes\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"strings\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"type\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              }            }          },          \"hive\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"key\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"path\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"value\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          }        }      },      \"related\": {        \"properties\": {          \"hash\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"hosts\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"ip\": {            \"type\": \"ip\"          },          \"user\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          }        }      },      \"rule\": {        \"properties\": {          \"author\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"category\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"description\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"id\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"license\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"name\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"reference\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"ruleset\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"uuid\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"version\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          }        }      },      \"server\": {        \"properties\": {          \"address\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"as\": {            \"properties\": {              \"number\": {                \"type\": \"long\"              },              \"organization\": {                \"properties\": {                  \"name\": {                    \"fields\": {                      \"text\": {                        \"norms\": false,                        \"type\": \"text\"                      }                    },                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  }                }              }            }          },          \"bytes\": {            \"type\": \"long\"          },          \"domain\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"geo\": {            \"properties\": {              \"city_name\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"continent_name\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"country_iso_code\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"country_name\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"location\": {                \"type\": \"geo_point\"              },              \"name\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"region_iso_code\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"region_name\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              }            }          },          \"ip\": {            \"type\": \"ip\"          },          \"mac\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"nat\": {            \"properties\": {              \"ip\": {                \"type\": \"ip\"              },              \"port\": {                \"type\": \"long\"              }            }          },          \"packets\": {            \"type\": \"long\"          },          \"port\": {            \"type\": \"long\"          },          \"registered_domain\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"top_level_domain\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"user\": {            \"properties\": {              \"domain\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"email\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"full_name\": {                \"fields\": {                  \"text\": {                    \"norms\": false,                    \"type\": \"text\"                  }                },                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"group\": {                \"properties\": {                  \"domain\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  },                  \"id\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  },                  \"name\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  }                }              },              \"hash\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"id\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"name\": {                \"fields\": {                  \"text\": {                    \"norms\": false,                    \"type\": \"text\"                  }                },                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"roles\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              }            }          }        }      },      \"service\": {        \"properties\": {          \"ephemeral_id\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"id\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"name\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"node\": {            \"properties\": {              \"name\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              }            }          },          \"state\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"type\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"version\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          }        }      },      \"source\": {        \"properties\": {          \"address\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"as\": {            \"properties\": {              \"number\": {                \"type\": \"long\"              },              \"organization\": {                \"properties\": {                  \"name\": {                    \"fields\": {                      \"text\": {                        \"norms\": false,                        \"type\": \"text\"                      }                    },                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  }                }              }            }          },          \"bytes\": {            \"type\": \"long\"          },          \"domain\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"geo\": {            \"properties\": {              \"city_name\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"continent_name\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"country_iso_code\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"country_name\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"location\": {                \"type\": \"geo_point\"              },              \"name\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"region_iso_code\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"region_name\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              }            }          },          \"ip\": {            \"type\": \"ip\"          },          \"mac\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"nat\": {            \"properties\": {              \"ip\": {                \"type\": \"ip\"              },              \"port\": {                \"type\": \"long\"              }            }          },          \"packets\": {            \"type\": \"long\"          },          \"port\": {            \"type\": \"long\"          },          \"registered_domain\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"top_level_domain\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"user\": {            \"properties\": {              \"domain\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"email\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"full_name\": {                \"fields\": {                  \"text\": {                    \"norms\": false,                    \"type\": \"text\"                  }                },                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"group\": {                \"properties\": {                  \"domain\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  },                  \"id\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  },                  \"name\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  }                }              },              \"hash\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"id\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"name\": {                \"fields\": {                  \"text\": {                    \"norms\": false,                    \"type\": \"text\"                  }                },                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"roles\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              }            }          }        }      },      \"span\": {        \"properties\": {          \"id\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          }        }      },      \"tags\": {        \"ignore_above\": 1024,        \"type\": \"keyword\"      },      \"threat\": {        \"properties\": {          \"framework\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"tactic\": {            \"properties\": {              \"id\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"name\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"reference\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              }            }          },          \"technique\": {            \"properties\": {              \"id\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"name\": {                \"fields\": {                  \"text\": {                    \"norms\": false,                    \"type\": \"text\"                  }                },                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"reference\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              }            }          }        }      },      \"tls\": {        \"properties\": {          \"cipher\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"client\": {            \"properties\": {              \"certificate\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"certificate_chain\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"hash\": {                \"properties\": {                  \"md5\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  },                  \"sha1\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  },                  \"sha256\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  }                }              },              \"issuer\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"ja3\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"not_after\": {                \"type\": \"date\"              },              \"not_before\": {                \"type\": \"date\"              },              \"server_name\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"subject\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"supported_ciphers\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"x509\": {                \"properties\": {                  \"alternative_names\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  },                  \"issuer\": {                    \"properties\": {                      \"common_name\": {                        \"ignore_above\": 1024,                        \"type\": \"keyword\"                      },                      \"country\": {                        \"ignore_above\": 1024,                        \"type\": \"keyword\"                      },                      \"distinguished_name\": {                        \"ignore_above\": 1024,                        \"type\": \"keyword\"                      },                      \"locality\": {                        \"ignore_above\": 1024,                        \"type\": \"keyword\"                      },                      \"organization\": {                        \"ignore_above\": 1024,                        \"type\": \"keyword\"                      },                      \"organizational_unit\": {                        \"ignore_above\": 1024,                        \"type\": \"keyword\"                      },                      \"state_or_province\": {                        \"ignore_above\": 1024,                        \"type\": \"keyword\"                      }                    }                  },                  \"not_after\": {                    \"type\": \"date\"                  },                  \"not_before\": {                    \"type\": \"date\"                  },                  \"public_key_algorithm\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  },                  \"public_key_curve\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  },                  \"public_key_exponent\": {                    \"doc_values\": false,                    \"index\": false,                    \"type\": \"long\"                  },                  \"public_key_size\": {                    \"type\": \"long\"                  },                  \"serial_number\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  },                  \"signature_algorithm\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  },                  \"subject\": {                    \"properties\": {                      \"common_name\": {                        \"ignore_above\": 1024,                        \"type\": \"keyword\"                      },                      \"country\": {                        \"ignore_above\": 1024,                        \"type\": \"keyword\"                      },                      \"distinguished_name\": {                        \"ignore_above\": 1024,                        \"type\": \"keyword\"                      },                      \"locality\": {                        \"ignore_above\": 1024,                        \"type\": \"keyword\"                      },                      \"organization\": {                        \"ignore_above\": 1024,                        \"type\": \"keyword\"                      },                      \"organizational_unit\": {                        \"ignore_above\": 1024,                        \"type\": \"keyword\"                      },                      \"state_or_province\": {                        \"ignore_above\": 1024,                        \"type\": \"keyword\"                      }                    }                  },                  \"version_number\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  }                }              }            }          },          \"curve\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"established\": {            \"type\": \"boolean\"          },          \"next_protocol\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"resumed\": {            \"type\": \"boolean\"          },          \"server\": {            \"properties\": {              \"certificate\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"certificate_chain\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"hash\": {                \"properties\": {                  \"md5\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  },                  \"sha1\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  },                  \"sha256\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  }                }              },              \"issuer\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"ja3s\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"not_after\": {                \"type\": \"date\"              },              \"not_before\": {                \"type\": \"date\"              },              \"subject\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"x509\": {                \"properties\": {                  \"alternative_names\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  },                  \"issuer\": {                    \"properties\": {                      \"common_name\": {                        \"ignore_above\": 1024,                        \"type\": \"keyword\"                      },                      \"country\": {                        \"ignore_above\": 1024,                        \"type\": \"keyword\"                      },                      \"distinguished_name\": {                        \"ignore_above\": 1024,                        \"type\": \"keyword\"                      },                      \"locality\": {                        \"ignore_above\": 1024,                        \"type\": \"keyword\"                      },                      \"organization\": {                        \"ignore_above\": 1024,                        \"type\": \"keyword\"                      },                      \"organizational_unit\": {                        \"ignore_above\": 1024,                        \"type\": \"keyword\"                      },                      \"state_or_province\": {                        \"ignore_above\": 1024,                        \"type\": \"keyword\"                      }                    }                  },                  \"not_after\": {                    \"type\": \"date\"                  },                  \"not_before\": {                    \"type\": \"date\"                  },                  \"public_key_algorithm\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  },                  \"public_key_curve\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  },                  \"public_key_exponent\": {                    \"doc_values\": false,                    \"index\": false,                    \"type\": \"long\"                  },                  \"public_key_size\": {                    \"type\": \"long\"                  },                  \"serial_number\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  },                  \"signature_algorithm\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  },                  \"subject\": {                    \"properties\": {                      \"common_name\": {                        \"ignore_above\": 1024,                        \"type\": \"keyword\"                      },                      \"country\": {                        \"ignore_above\": 1024,                        \"type\": \"keyword\"                      },                      \"distinguished_name\": {                        \"ignore_above\": 1024,                        \"type\": \"keyword\"                      },                      \"locality\": {                        \"ignore_above\": 1024,                        \"type\": \"keyword\"                      },                      \"organization\": {                        \"ignore_above\": 1024,                        \"type\": \"keyword\"                      },                      \"organizational_unit\": {                        \"ignore_above\": 1024,                        \"type\": \"keyword\"                      },                      \"state_or_province\": {                        \"ignore_above\": 1024,                        \"type\": \"keyword\"                      }                    }                  },                  \"version_number\": {                    \"ignore_above\": 1024,                    \"type\": \"keyword\"                  }                }              }            }          },          \"version\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"version_protocol\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          }        }      },      \"trace\": {        \"properties\": {          \"id\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          }        }      },      \"transaction\": {        \"properties\": {          \"id\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          }        }      },      \"url\": {        \"properties\": {          \"domain\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"extension\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"fragment\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"full\": {            \"fields\": {              \"text\": {                \"norms\": false,                \"type\": \"text\"              }            },            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"original\": {            \"fields\": {              \"text\": {                \"norms\": false,                \"type\": \"text\"              }            },            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"password\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"path\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"port\": {            \"type\": \"long\"          },          \"query\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"registered_domain\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"scheme\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"top_level_domain\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"username\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          }        }      },      \"user\": {        \"properties\": {          \"domain\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"email\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"full_name\": {            \"fields\": {              \"text\": {                \"norms\": false,                \"type\": \"text\"              }            },            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"group\": {            \"properties\": {              \"domain\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"id\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"name\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              }            }          },          \"hash\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"id\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"name\": {            \"fields\": {              \"text\": {                \"norms\": false,                \"type\": \"text\"              }            },            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"roles\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          }        }      },      \"user_agent\": {        \"properties\": {          \"device\": {            \"properties\": {              \"name\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              }            }          },          \"name\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"original\": {            \"fields\": {              \"text\": {                \"norms\": false,                \"type\": \"text\"              }            },            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"os\": {            \"properties\": {              \"family\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"full\": {                \"fields\": {                  \"text\": {                    \"norms\": false,                    \"type\": \"text\"                  }                },                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"kernel\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"name\": {                \"fields\": {                  \"text\": {                    \"norms\": false,                    \"type\": \"text\"                  }                },                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"platform\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              },              \"version\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              }            }          },          \"version\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          }        }      },      \"vulnerability\": {        \"properties\": {          \"category\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"classification\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"description\": {            \"fields\": {              \"text\": {                \"norms\": false,                \"type\": \"text\"              }            },            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"enumeration\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"id\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"reference\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"report_id\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          },          \"scanner\": {            \"properties\": {              \"vendor\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              }            }          },          \"score\": {            \"properties\": {              \"base\": {                \"type\": \"float\"              },              \"environmental\": {                \"type\": \"float\"              },              \"temporal\": {                \"type\": \"float\"              },              \"version\": {                \"ignore_above\": 1024,                \"type\": \"keyword\"              }            }          },          \"severity\": {            \"ignore_above\": 1024,            \"type\": \"keyword\"          }        }      }    }  },  \"order\": 1,  \"settings\": {    \"index\": {      \"mapping\": {        \"total_fields\": {          \"limit\": 10000        }      },      \"refresh_interval\": \"5s\"    }  }}"; }
+		public static string GetIndexTemplateForElasticsearchlegacy(string indexPattern = "ecs-*") { return "{  \"_meta\": {    \"description\": \"Sample composable template that includes all ECS fields\",    \"ecs_version\": \"8.2.0\"  },  \"composed_of\": [    \"ecs_8.2.0_base\",    \"ecs_8.2.0_agent\",    \"ecs_8.2.0_client\",    \"ecs_8.2.0_cloud\",    \"ecs_8.2.0_container\",    \"ecs_8.2.0_data_stream\",    \"ecs_8.2.0_destination\",    \"ecs_8.2.0_dll\",    \"ecs_8.2.0_dns\",    \"ecs_8.2.0_ecs\",    \"ecs_8.2.0_email\",    \"ecs_8.2.0_error\",    \"ecs_8.2.0_event\",    \"ecs_8.2.0_faas\",    \"ecs_8.2.0_file\",    \"ecs_8.2.0_group\",    \"ecs_8.2.0_host\",    \"ecs_8.2.0_http\",    \"ecs_8.2.0_log\",    \"ecs_8.2.0_network\",    \"ecs_8.2.0_observer\",    \"ecs_8.2.0_orchestrator\",    \"ecs_8.2.0_organization\",    \"ecs_8.2.0_package\",    \"ecs_8.2.0_process\",    \"ecs_8.2.0_registry\",    \"ecs_8.2.0_related\",    \"ecs_8.2.0_rule\",    \"ecs_8.2.0_server\",    \"ecs_8.2.0_service\",    \"ecs_8.2.0_source\",    \"ecs_8.2.0_threat\",    \"ecs_8.2.0_tls\",    \"ecs_8.2.0_tracing\",    \"ecs_8.2.0_url\",    \"ecs_8.2.0_user_agent\",    \"ecs_8.2.0_user\",    \"ecs_8.2.0_vulnerability\"  ],  \"index_patterns\": [    \"try-" + indexPattern + "\"  ],  \"priority\": 1,  \"template\": {    \"mappings\": {      \"date_detection\": false,      \"dynamic_templates\": [        {          \"strings_as_keyword\": {            \"mapping\": {              \"ignore_above\": 1024,              \"type\": \"keyword\"            },            \"match_mapping_type\": \"string\"          }        }      ]    },    \"settings\": {      \"index\": {        \"codec\": \"best_compression\",        \"mapping\": {          \"total_fields\": {            \"limit\": 2000          }        }      }    }  }}"; }
 
 	}
 }

@@ -20,10 +20,16 @@ namespace Generator.Schema
 		public YamlSpecification Specification { get; set; }
 
 		/// <summary>
-		/// vDescription of the field set
+		/// Description of the field set
 		/// </summary>
 		[JsonProperty("description", Required = Required.Always)]
 		public string Description { get; set; }
+
+		/// <summary>
+		///  Indicates the beta notification appropriate for this asset
+		/// </summary>
+		[JsonProperty("beta")]
+		public string Beta { get; set; }
 
 		/// <summary>
 		///  The fields within the schema
@@ -94,17 +100,20 @@ namespace Generator.Schema
 		public IEnumerable<Field> GetFilteredFields() =>
 			Fields.Where(f => Nestings == null || !Nestings.Any(n => f.Key.StartsWith(n)))
 				  .Select(f => f.Value)
-				  .OrderBy(f => f.Order ?? 0);
+				  .OrderBy(f => f.Name);
 
 		public List<NestedFields> GetFieldsNested()
 		{
 			var nestedFields = new List<NestedFields>();
 			foreach (var nestedField in Fields
 				.Select(f => f.Value)
-				.OrderBy(f => f.Order ?? 0)
+				.OrderBy(f => f.Name)
 				.Where(f => f.JsonFieldName().Contains(".")))
 			{
-				var reusedHere = ReusedHere?.SingleOrDefault(n => nestedField.FlatName.StartsWith(n.Full));
+				// Regex to ensure we select the most complete reused declaration
+				// `process.entry_leader.parent.entity_id` should target `process.entry_leader.parent` and not `process.entry_leader`
+				var reusedHere = ReusedHere?.SingleOrDefault(n => new Regex($"^{n.Full}\\.[^\\.]+$").IsMatch(nestedField.FlatName));
+
 				// check if this is a reused_here field
 				if (reusedHere != null && reusedHere.Full.Split('.').Length == 2)
 				{
@@ -147,7 +156,7 @@ namespace Generator.Schema
 			// Typed property. look into reused_here
 			if (ReusedHere != null)
 			{
-				var reusedHere = ReusedHere.SingleOrDefault(r => field.FlatName.StartsWith(r.Full));
+				var reusedHere = ReusedHere?.SingleOrDefault(n => new Regex($"^{n.Full}\\.[^\\.]+$").IsMatch(field.FlatName));
 
 				if (reusedHere != null)
 				{

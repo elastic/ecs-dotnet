@@ -74,7 +74,7 @@ namespace Generator
 				.ToList();
 
 			var yamlSchemas = new List<YamlSchema>();
-			var templates = new Dictionary<int, string>();
+			var templates = new Dictionary<string, string>();
 
 			using (var progressBar = new ProgressBar(directories.Count, $"Listing {directories.Count} directories",
 				new ProgressBarOptions { BackgroundColor = ConsoleColor.DarkGray }))
@@ -109,11 +109,11 @@ namespace Generator
 					{
 						foreach (var file in files)
 						{
-							var groupCollection = Regex.Match(file, ".*Template(\\d).*").Groups;
-							var versionString = groupCollection[1].Value;
-							var version = int.Parse(versionString);
+							// TODO these templates ship with `try-ecs-*`
+							var groupCollection = Regex.Match(file, "(legacy|composable).*").Groups;
+							var templateType = groupCollection[1].Value;
 							var contents = File.ReadAllText(file);
-							templates.Add(version, contents);
+							templates.Add(templateType, contents);
 						}
 					}
 

@@ -42,12 +42,15 @@ namespace Elastic.CommonSchema.Serialization
 				"client" => ReadProp<Client>(ref reader, "client", ecsEvent, (b, v) => b.Client = v),
 				"cloud" => ReadProp<Cloud>(ref reader, "cloud", ecsEvent, (b, v) => b.Cloud = v),
 				"container" => ReadProp<Container>(ref reader, "container", ecsEvent, (b, v) => b.Container = v),
+				"data_stream" => ReadProp<DataStream>(ref reader, "data_stream", ecsEvent, (b, v) => b.DataStream = v),
 				"destination" => ReadProp<Destination>(ref reader, "destination", ecsEvent, (b, v) => b.Destination = v),
 				"dll" => ReadProp<Dll>(ref reader, "dll", ecsEvent, (b, v) => b.Dll = v),
 				"dns" => ReadProp<Dns>(ref reader, "dns", ecsEvent, (b, v) => b.Dns = v),
 				"ecs" => ReadProp<Ecs>(ref reader, "ecs", ecsEvent, (b, v) => b.Ecs = v),
+				"email" => ReadProp<Email>(ref reader, "email", ecsEvent, (b, v) => b.Email = v),
 				"error" => ReadProp<Error>(ref reader, "error", ecsEvent, (b, v) => b.Error = v),
 				"event" => ReadProp<Event>(ref reader, "event", ecsEvent, (b, v) => b.Event = v),
+				"faas" => ReadProp<Faas>(ref reader, "faas", ecsEvent, (b, v) => b.Faas = v),
 				"file" => ReadProp<File>(ref reader, "file", ecsEvent, (b, v) => b.File = v),
 				"group" => ReadProp<Group>(ref reader, "group", ecsEvent, (b, v) => b.Group = v),
 				"host" => ReadProp<Host>(ref reader, "host", ecsEvent, (b, v) => b.Host = v),
@@ -55,6 +58,7 @@ namespace Elastic.CommonSchema.Serialization
 				"log" => ReadProp<Log>(ref reader, "log", ecsEvent, (b, v) => b.Log = v),
 				"network" => ReadProp<Network>(ref reader, "network", ecsEvent, (b, v) => b.Network = v),
 				"observer" => ReadProp<Observer>(ref reader, "observer", ecsEvent, (b, v) => b.Observer = v),
+				"orchestrator" => ReadProp<Orchestrator>(ref reader, "orchestrator", ecsEvent, (b, v) => b.Orchestrator = v),
 				"organization" => ReadProp<Organization>(ref reader, "organization", ecsEvent, (b, v) => b.Organization = v),
 				"package" => ReadProp<Package>(ref reader, "package", ecsEvent, (b, v) => b.Package = v),
 				"process" => ReadProp<Process>(ref reader, "process", ecsEvent, (b, v) => b.Process = v),
@@ -102,12 +106,15 @@ namespace Elastic.CommonSchema.Serialization
 			WriteProp(writer, "client", value.Client);
 			WriteProp(writer, "cloud", value.Cloud);
 			WriteProp(writer, "container", value.Container);
+			WriteProp(writer, "data_stream", value.DataStream);
 			WriteProp(writer, "destination", value.Destination);
 			WriteProp(writer, "dll", value.Dll);
 			WriteProp(writer, "dns", value.Dns);
 			WriteProp(writer, "ecs", value.Ecs);
+			WriteProp(writer, "email", value.Email);
 			WriteProp(writer, "error", value.Error);
 			WriteProp(writer, "event", value.Event);
+			WriteProp(writer, "faas", value.Faas);
 			WriteProp(writer, "file", value.File);
 			WriteProp(writer, "group", value.Group);
 			WriteProp(writer, "host", value.Host);
@@ -115,6 +122,7 @@ namespace Elastic.CommonSchema.Serialization
 			WriteProp(writer, "log", value.Log);
 			WriteProp(writer, "network", value.Network);
 			WriteProp(writer, "observer", value.Observer);
+			WriteProp(writer, "orchestrator", value.Orchestrator);
 			WriteProp(writer, "organization", value.Organization);
 			WriteProp(writer, "package", value.Package);
 			WriteProp(writer, "process", value.Process);
