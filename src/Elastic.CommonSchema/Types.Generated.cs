@@ -70,6 +70,7 @@ namespace Elastic.CommonSchema
 
 		/// <summary>
 		/// The data_stream fields take part in defining the new data stream naming scheme.<para/><para/>In the new data stream naming scheme the value of the data stream fields combine to the name of the actual data stream in the following manner: `{data_stream.type}-{data_stream.dataset}-{data_stream.namespace}`. This means the fields can only contain characters that are valid as part of names of data streams. More details about this can be found in this https://www.elastic.co/blog/an-introduction-to-the-elastic-data-stream-naming-scheme[blog post].<para/><para/>An Elasticsearch data stream consists of one or more backing indices, and a data stream name forms part of the backing indices names. Due to this convention, data streams must also follow index naming restrictions. For example, data stream names cannot include `\`, `/`, `*`, `?`, `"`, `<`, `>`, `|`, ` ` (space character), `,`, or `#`. Please see the Elasticsearch reference for additional https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-create-index.html#indices-create-api-path-params[restrictions].
+		/// <para>These fields are in beta and are subject to change.</para>
 		/// </summary>
 		[DataMember(Name = "data_stream")]
 		public DataStream DataStream { get; set; }
@@ -118,6 +119,7 @@ namespace Elastic.CommonSchema
 
 		/// <summary>
 		/// The user fields describe information about the function as a service (FaaS) that is relevant to the event.
+		/// <para>These fields are in beta and are subject to change.</para>
 		/// </summary>
 		[DataMember(Name = "faas")]
 		public Faas Faas { get; set; }
@@ -857,6 +859,7 @@ The cloud fields may be self-nested under cloud.origin.* and cloud.target.* to d
 	{
 		/// <summary>
 		/// Percent CPU used which is normalized by the number of CPU cores and it ranges from 0 to 1. Scaling factor: 1000.
+		/// <para>This field is beta and subject to change.</para>
 		/// </summary>
 		/// <remarks>(ECS Extended)</remarks>
 		[DataMember(Name = "usage")]
@@ -918,6 +921,7 @@ The cloud fields may be self-nested under cloud.origin.* and cloud.target.* to d
 	{
 		/// <summary>
 		/// Memory usage percentage and it ranges from 0 to 1. Scaling factor: 1000.
+		/// <para>This field is beta and subject to change.</para>
 		/// </summary>
 		/// <remarks>(ECS Extended)</remarks>
 		[DataMember(Name = "usage")]
@@ -1024,6 +1028,7 @@ The cloud fields may be self-nested under cloud.origin.* and cloud.target.* to d
 	/// The data_stream fields take part in defining the new data stream naming scheme.<para/><para/>In the new data stream naming scheme the value of the data stream fields combine to the name of the actual data stream in the following manner: `{data_stream.type}-{data_stream.dataset}-{data_stream.namespace}`. This means the fields can only contain characters that are valid as part of names of data streams. More details about this can be found in this https://www.elastic.co/blog/an-introduction-to-the-elastic-data-stream-naming-scheme[blog post].<para/><para/>An Elasticsearch data stream consists of one or more backing indices, and a data stream name forms part of the backing indices names. Due to this convention, data streams must also follow index naming restrictions. For example, data stream names cannot include `\`, `/`, `*`, `?`, `"`, `<`, `>`, `|`, ` ` (space character), `,`, or `#`. Please see the Elasticsearch reference for additional https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-create-index.html#indices-create-api-path-params[restrictions].
 	/// <para/>
 	/// ECS field reference: https://www.elastic.co/guide/en/ecs/v8.2.0/ecs-data_stream.html
+	/// <para>These fields are in beta and are subject to change.</para>
 	/// </summary>
 	public class DataStream 
 	{
@@ -1567,6 +1572,7 @@ The cloud fields may be self-nested under cloud.origin.* and cloud.target.* to d
 	/// These fields contain Linux Executable Linkable Format (ELF) metadata.
 	/// <para/>
 	/// ECS field reference: https://www.elastic.co/guide/en/ecs/v8.2.0/ecs-elf.html
+	/// <para>These fields are in beta and are subject to change.</para>
 	/// </summary>
 	public class Elf 
 	{
@@ -2409,6 +2415,7 @@ The cloud fields may be self-nested under cloud.origin.* and cloud.target.* to d
 	/// The user fields describe information about the function as a service (FaaS) that is relevant to the event.
 	/// <para/>
 	/// ECS field reference: https://www.elastic.co/guide/en/ecs/v8.2.0/ecs-faas.html
+	/// <para>These fields are in beta and are subject to change.</para>
 	/// </summary>
 	public class Faas 
 	{
@@ -2867,6 +2874,7 @@ The cloud fields may be self-nested under cloud.origin.* and cloud.target.* to d
 	{
 		/// <summary>
 		/// Linux boot uuid taken from /proc/sys/kernel/random/boot_id. Note the boot_id value from /proc may or may not be the same in containers as on the host. Some container runtimes will bind mount a new boot_id value onto the proc file in each container.
+		/// <para>This field is beta and subject to change.</para>
 		/// </summary>
 		/// <remarks>(ECS Extended)</remarks>
 		/// <example>88a1f0ed-5ae5-41ee-af6b-41921c311872</example>
@@ -2984,6 +2992,7 @@ The cloud fields may be self-nested under cloud.origin.* and cloud.target.* to d
 
 		/// <summary>
 		/// This is the inode number of the namespace in the namespace file system (nsfs). Unsigned int inum in include/linux/ns_common.h.
+		/// <para>This field is beta and subject to change.</para>
 		/// </summary>
 		/// <remarks>(ECS Extended)</remarks>
 		/// <example>256383</example>
@@ -4302,6 +4311,7 @@ The cloud fields may be self-nested under cloud.origin.* and cloud.target.* to d
 
 		/// <summary>
 		/// Environment variables (`env_vars`) set at the time of the event. May be filtered to protect sensitive information.<para/><para/>The field should not contain nested objects. All values should use `keyword`.
+		/// <para>This field is beta and subject to change.</para>
 		/// </summary>
 		/// <remarks>(ECS Extended)</remarks>
 		/// <example>{\"USER\": \"elastic\",\"LANG\": \"en_US.UTF-8\",\"HOME\": \"/home/elastic\"}</example>
@@ -4326,6 +4336,7 @@ The cloud fields may be self-nested under cloud.origin.* and cloud.target.* to d
 
 		/// <summary>
 		/// Whether the process is connected to an interactive shell.<para/><para/>Process interactivity is inferred from the processes file descriptors. If the character device for the controlling tty is the same as stdin and stderr for the process, the process is considered interactive.<para/><para/>Note: A non-interactive process can belong to an interactive session and is simply one that does not have open file descriptors reading the controlling TTY on FD 0 (stdin) or writing to the controlling TTY on FD 2 (stderr). A backgrounded process is still considered interactive if stdin and stderr are connected to the controlling TTY.
+		/// <para>This field is beta and subject to change.</para>
 		/// </summary>
 		/// <remarks>(ECS Extended)</remarks>
 		/// <example>true</example>
@@ -4372,6 +4383,7 @@ The cloud fields may be self-nested under cloud.origin.* and cloud.target.* to d
 
 		/// <summary>
 		/// Information about the controlling TTY device. If set, the process belongs to an interactive session.
+		/// <para>This field is beta and subject to change.</para>
 		/// </summary>
 		/// <remarks>(ECS Extended)</remarks>
 		[DataMember(Name = "tty")]
@@ -4780,6 +4792,7 @@ The cloud fields may be self-nested under cloud.origin.* and cloud.target.* to d
 
 		/// <summary>
 		/// Identifies the environment where the service is running.<para/><para/>If the same service runs in different environments (production, staging, QA, development, etc.), the environment can identify other instances of the same service. Can also group services and applications from the same environment.
+		/// <para>This field is beta and subject to change.</para>
 		/// </summary>
 		/// <remarks>(ECS Extended)</remarks>
 		/// <example>production</example>
@@ -5000,6 +5013,7 @@ The cloud fields may be self-nested under cloud.origin.* and cloud.target.* to d
 
 		/// <summary>
 		/// Object containing associated indicators enriching the event.
+		/// <para>This field is beta and subject to change.</para>
 		/// </summary>
 		/// <remarks>(ECS Extended)</remarks>
 		[DataMember(Name = "indicator")]
@@ -5405,6 +5419,7 @@ The cloud fields may be self-nested under cloud.origin.* and cloud.target.* to d
 
 		/// <summary>
 		/// A list of associated indicators objects enriching the event, and the context of that association/enrichment.
+		/// <para>This field is beta and subject to change.</para>
 		/// </summary>
 		/// <remarks>(ECS Extended)</remarks>
 		[DataMember(Name = "enrichments")]

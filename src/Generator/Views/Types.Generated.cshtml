@@ -54,6 +54,10 @@ namespace Elastic.CommonSchema
 {
 <text>		/// <summary>
 		/// @Raw(schema.DescriptionSanitized())
+		@if (!schema.Beta.IsNullOrEmpty()) {
+			<text>		/// <para>@schema.Beta</para>
+</text>
+		}
 		/// </summary>
 		[DataMember(Name = "@Raw(schema.Name)")]
 		public @schema.NamePCased() @schema.NamePCased() { get; set; }
@@ -64,6 +68,10 @@ namespace Elastic.CommonSchema
 {
 <text>		/// <summary>
 		/// @Raw(field.DescriptionSanitized())
+		@if (!field.Beta.IsNullOrEmpty()) {
+			<text>		/// <para>@field.Beta</para>
+</text>
+		}
 		/// </summary>
 		/// <remarks>(ECS @field.Level.ToString("f"))</remarks>
 		@if (field.Example != null)
@@ -138,6 +146,10 @@ namespace Elastic.CommonSchema
 @foreach (var field in nestedField.Fields)
 	{<text>		/// <summary>
 		/// @Raw(field.DescriptionSanitized())
+		@if (!field.Beta.IsNullOrEmpty()) {
+			<text>		/// <para>@field.Beta</para>
+</text>
+		}
 		/// </summary>
 		/// <remarks>(ECS @field.Level.ToString("f"))</remarks>
 		@if (field.Example != null)
@@ -207,6 +219,10 @@ namespace Elastic.CommonSchema
 @foreach (var field in nestedField.Fields)
 	{<text>		/// <summary>
 		/// @Raw(field.DescriptionSanitized())
+		@if (!field.Beta.IsNullOrEmpty()) {
+			<text>		/// <para>@field.Beta</para>
+</text>
+		}
 		/// </summary>
 		/// <remarks>(ECS @field.Level.ToString("f"))</remarks>
 		@if (field.Example != null)
@@ -226,6 +242,10 @@ foreach (var field in schema.Fields.Where(f => f.Value.IsCustomEnum()))
 {
 <text>	/// <summary>
 	/// @Raw(field.Value.DescriptionSanitized())
+@if (!field.Value.Beta.IsNullOrEmpty()) {
+<text>	/// <para>@field.Value.Beta</para>
+</text>
+		}
     /// </summary>
 	public class @field.Value.GetEnumClrTypeName()
 	{
@@ -247,6 +267,10 @@ foreach (var field in schema.Fields.Where(f => f.Value.IsCustomEnum()))
 	/// @Raw(schema.DescriptionSanitized())
 	/// <para/>
 	/// ECS field reference: https://www.elastic.co/guide/en/ecs/@(Model.DownloadBranch)/ecs-@(schema.Name.ToLower()).html
+		@if (!schema.Beta.IsNullOrEmpty()) {
+			<text>	/// <para>@schema.Beta</para>
+</text>
+		}
 	/// </summary>
 	@if (!schema.Footnote.IsNullOrEmpty())
 	{
@@ -268,6 +292,10 @@ foreach (var field in schema.Fields.Where(f => f.Value.IsCustomEnum()))
 @foreach (var field in schema.GetFieldsFlat())
 	{<text>		/// <summary>
 		/// @Raw(field.DescriptionSanitized())
+		@if (!field.Beta.IsNullOrEmpty()) {
+			<text>		/// <para>@field.Beta</para>
+</text>
+		}
 		/// </summary>
 		/// <remarks>(ECS @field.Level.ToString("f"))</remarks>
 		@if (field.Example != null)
