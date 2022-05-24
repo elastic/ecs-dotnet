@@ -122,7 +122,12 @@ namespace Generator.Schema
 
 					var current = nestedFields.SingleOrDefault(n => n.Name == expected.As);
 					if (current is null)
-						nestedFields.Add(new NestedFields(this) { Name = expected.As, Description = reusedHere.Short });
+						nestedFields.Add(new NestedFields(this)
+						{
+							Name = expected.As,
+							Description = reusedHere.Short,
+							Beta = reusedHere.Beta
+						});
 				}
 				else
 				{
@@ -170,7 +175,8 @@ namespace Generator.Schema
 						{
 							Name = expected.As,
 							Description = reusedHere.Short,
-							ClrType = FileGenerator.PascalCase(reusedHere.SchemaName)
+							ClrType = FileGenerator.PascalCase(reusedHere.SchemaName),
+							Beta = expected.Beta,
 						});
 					}
 				}

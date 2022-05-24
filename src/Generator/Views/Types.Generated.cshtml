@@ -88,6 +88,10 @@ namespace Elastic.CommonSchema
 {
 <text>		/// <summary>
 		/// @Raw(field.Description)
+		@if (!field.Beta.IsNullOrEmpty()) {
+			<text>		/// <para>@field.Beta</para>
+</text>
+		}
 		/// </summary>
 		[DataMember(Name = "@Raw(field.Name)")]
 		public @field.ClassNameType @field.NamePCased { get; set; }
@@ -107,6 +111,10 @@ namespace Elastic.CommonSchema
 		
 <text>	/// <summary>
 	/// @nestedField.NamePCased@child.NamePCased, property of <see cref="@FileGenerator.PascalCase(Model.BaseYamlSchema().Name)@nestedField.NamePCased" />
+		@if (!nestedField.Beta.IsNullOrEmpty()) {
+			<text>		/// <para>@nestedField.Beta</para>
+</text>
+		}
 	/// </summary>
 	public class @child.NamePCased
 	{
@@ -114,6 +122,10 @@ namespace Elastic.CommonSchema
 	{
 <text>		/// <summary>
 		/// @nestedField.NamePCased @Raw(field.DescriptionSanitized())
+		@if (!nestedField.Beta.IsNullOrEmpty()) {
+			<text>		/// <para>@nestedField.Beta</para>
+</text>
+		}
 		/// </summary>
 		/// <remarks>(ECS @field.Level.ToString("f"))</remarks>
 		@if (field.Example != null)
@@ -132,12 +144,20 @@ namespace Elastic.CommonSchema
 		
 <text>	/// <summary>
 	/// @nestedField.NamePCased, property of <see cref="@FileGenerator.PascalCase(Model.BaseYamlSchema().Name)" />
+		@if (!nestedField.Beta.IsNullOrEmpty()) {
+			<text>		/// <para>@nestedField.Beta</para>
+</text>
+		}
 	/// </summary>
 	public class @nestedField.NamePCased
 	{
 @foreach (var child in nestedField.Children)
 {<text>		/// <summary>
 		/// @child.NamePCased property.
+		@if (!child.Beta.IsNullOrEmpty()) {
+			<text>		/// <para>@child.Beta</para>
+</text>
+		}
 		/// </summary>		   
 		[DataMember(Name = "@child.NamePCased.ToLower()")]
 		public @child.NamePCased @child.NamePCased { get; set; }
@@ -179,6 +199,10 @@ namespace Elastic.CommonSchema
 		
 <text>	/// <summary>
 	/// @nestedField.NamePCased@child.NamePCased, property of <see cref="@schema.NamePCased()@nestedField.NamePCased" />
+		@if (!nestedField.Beta.IsNullOrEmpty()) {
+			<text>		/// <para>@nestedField.Beta</para>
+</text>
+		}
 	/// </summary>
 	public class @nestedField.NamePCased@child.NamePCased
 	{
@@ -186,6 +210,10 @@ namespace Elastic.CommonSchema
 	{
 <text>		/// <summary>
 		/// @nestedField.NamePCased @Raw(field.DescriptionSanitized())
+		@if (!nestedField.Beta.IsNullOrEmpty()) {
+			<text>		/// <para>@nestedField.Beta</para>
+</text>
+		}
 		/// </summary>
 		/// <remarks>(ECS @field.Level.ToString("f"))</remarks>
 		@if (field.Example != null)
@@ -205,12 +233,20 @@ namespace Elastic.CommonSchema
 	if (nestedField.Fields.Any())	
 {<text>	/// <summary>
 	/// @nestedField.NamePCased, property of <see cref="@schema.NamePCased()" />
+		@if (!nestedField.Beta.IsNullOrEmpty()) {
+			<text>		/// <para>@nestedField.Beta</para>
+</text>
+		}
 	/// </summary>
 	public class @schema.NamePCased()@nestedField.NamePCased
 	{
 @foreach (var child in nestedField.Children)
 	{<text>		/// <summary>
 		/// @child.NamePCased property.
+		@if (!child.Beta.IsNullOrEmpty()) {
+			<text>		/// <para>@child.Beta</para>
+</text>
+		}
 		/// </summary>		   
 		[DataMember(Name = "@child.NamePCased.ToLower()")]
 		public @nestedField.NamePCased@child.NamePCased @child.NamePCased { get; set; }
@@ -265,6 +301,10 @@ foreach (var field in schema.Fields.Where(f => f.Value.IsCustomEnum()))
 	
 <text>	/// <summary>
 	/// @Raw(schema.DescriptionSanitized())
+		@if (!schema.Beta.IsNullOrEmpty()) {
+			<text>		/// <para>@schema.Beta</para>
+</text>
+		}
 	/// <para/>
 	/// ECS field reference: https://www.elastic.co/guide/en/ecs/@(Model.DownloadBranch)/ecs-@(schema.Name.ToLower()).html
 		@if (!schema.Beta.IsNullOrEmpty()) {
@@ -284,6 +324,10 @@ foreach (var field in schema.Fields.Where(f => f.Value.IsCustomEnum()))
 	@foreach (var field in schema.GetFieldsNested())
 	{<text>		/// <summary>
 		/// @Raw(field.Description)
+		@if (!field.Beta.IsNullOrEmpty()) {
+			<text>		/// <para>@field.Beta</para>
+</text>
+		}
 		/// </summary>
 		[DataMember(Name = "@Raw(field.NamePCased.ToLower())")]
 		public @(field.Fields.Any() ? schema.NamePCased() : "")@field.ClassNameType @field.NamePCased { get; set; }

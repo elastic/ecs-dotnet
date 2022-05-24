@@ -1026,6 +1026,7 @@ The cloud fields may be self-nested under cloud.origin.* and cloud.target.* to d
 
 	/// <summary>
 	/// The data_stream fields take part in defining the new data stream naming scheme.<para/><para/>In the new data stream naming scheme the value of the data stream fields combine to the name of the actual data stream in the following manner: `{data_stream.type}-{data_stream.dataset}-{data_stream.namespace}`. This means the fields can only contain characters that are valid as part of names of data streams. More details about this can be found in this https://www.elastic.co/blog/an-introduction-to-the-elastic-data-stream-naming-scheme[blog post].<para/><para/>An Elasticsearch data stream consists of one or more backing indices, and a data stream name forms part of the backing indices names. Due to this convention, data streams must also follow index naming restrictions. For example, data stream names cannot include `\`, `/`, `*`, `?`, `"`, `<`, `>`, `|`, ` ` (space character), `,`, or `#`. Please see the Elasticsearch reference for additional https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-create-index.html#indices-create-api-path-params[restrictions].
+		/// <para>These fields are in beta and are subject to change.</para>
 	/// <para/>
 	/// ECS field reference: https://www.elastic.co/guide/en/ecs/v8.2.0/ecs-data_stream.html
 	/// <para>These fields are in beta and are subject to change.</para>
@@ -1570,6 +1571,7 @@ The cloud fields may be self-nested under cloud.origin.* and cloud.target.* to d
 	}
 	/// <summary>
 	/// These fields contain Linux Executable Linkable Format (ELF) metadata.
+		/// <para>These fields are in beta and are subject to change.</para>
 	/// <para/>
 	/// ECS field reference: https://www.elastic.co/guide/en/ecs/v8.2.0/ecs-elf.html
 	/// <para>These fields are in beta and are subject to change.</para>
@@ -2413,6 +2415,7 @@ The cloud fields may be self-nested under cloud.origin.* and cloud.target.* to d
 	}
 	/// <summary>
 	/// The user fields describe information about the function as a service (FaaS) that is relevant to the event.
+		/// <para>These fields are in beta and are subject to change.</para>
 	/// <para/>
 	/// ECS field reference: https://www.elastic.co/guide/en/ecs/v8.2.0/ecs-faas.html
 	/// <para>These fields are in beta and are subject to change.</para>
@@ -2488,6 +2491,7 @@ The cloud fields may be self-nested under cloud.origin.* and cloud.target.* to d
 
 		/// <summary>
 		/// These fields contain Linux Executable Linkable Format (ELF) metadata.
+		/// <para>This field reuse is beta and subject to change.</para>
 		/// </summary>
 		[DataMember(Name = "elf")]
 		public Elf Elf { get; set; }
@@ -4092,6 +4096,7 @@ The cloud fields may be self-nested under cloud.origin.* and cloud.target.* to d
 	{
 		/// <summary>
 		/// Information about the parent's process group leader. Only pid, start and entity_id fields are set.
+		/// <para>Reusing the `process` fields in this location is currently considered beta.</para>
 		/// </summary>
 		/// <remarks>(ECS Core)</remarks>
 		[DataMember(Name = "group_leader")]
@@ -4100,11 +4105,13 @@ The cloud fields may be self-nested under cloud.origin.* and cloud.target.* to d
 	}
 	/// <summary>
 	/// EntryLeader, property of <see cref="Process" />
+		/// <para>Reusing the `process` fields in this location is currently considered beta.</para>
 	/// </summary>
 	public class ProcessEntryLeader
 	{
 		/// <summary>
 		/// Information about the entry leader's parent process. Only pid, start and entity_id fields are set.
+		/// <para>Reusing the `process` fields in this location is currently considered beta.</para>
 		/// </summary>
 		/// <remarks>(ECS Core)</remarks>
 		[DataMember(Name = "parent")]
@@ -4112,6 +4119,7 @@ The cloud fields may be self-nested under cloud.origin.* and cloud.target.* to d
 
 		/// <summary>
 		/// Information about the parent session of the entry leader. Only pid, start and entity_id fields are set.
+		/// <para>Reusing the `process` fields in this location is currently considered beta.</para>
 		/// </summary>
 		/// <remarks>(ECS Core)</remarks>
 		[DataMember(Name = "session_leader")]
@@ -4120,11 +4128,13 @@ The cloud fields may be self-nested under cloud.origin.* and cloud.target.* to d
 	}
 	/// <summary>
 	/// SessionLeader, property of <see cref="Process" />
+		/// <para>Reusing the `process` fields in this location is currently considered beta.</para>
 	/// </summary>
 	public class ProcessSessionLeader
 	{
 		/// <summary>
 		/// Information about the session leader's parent process. Only pid, start and entity_id fields are set.
+		/// <para>Reusing the `process` fields in this location is currently considered beta.</para>
 		/// </summary>
 		/// <remarks>(ECS Core)</remarks>
 		[DataMember(Name = "parent")]
@@ -4132,6 +4142,7 @@ The cloud fields may be self-nested under cloud.origin.* and cloud.target.* to d
 
 		/// <summary>
 		/// Information about the parent session of the session leader. Only pid, start and entity_id fields are set.
+		/// <para>Reusing the `process` fields in this location is currently considered beta.</para>
 		/// </summary>
 		/// <remarks>(ECS Core)</remarks>
 		[DataMember(Name = "session_leader")]
@@ -4169,6 +4180,7 @@ The cloud fields may be self-nested under cloud.origin.* and cloud.target.* to d
 	{
 		/// <summary>
 		/// These fields contain Linux Executable Linkable Format (ELF) metadata.
+		/// <para>This field reuse is beta and subject to change.</para>
 		/// </summary>
 		[DataMember(Name = "elf")]
 		public Elf Elf { get; set; }
@@ -4187,24 +4199,28 @@ The cloud fields may be self-nested under cloud.origin.* and cloud.target.* to d
 
 		/// <summary>
 		/// First process from terminal or remote access via SSH, SSM, etc OR a service directly started by the init process.
+		/// <para>Reusing the `process` fields in this location is currently considered beta.</para>
 		/// </summary>
 		[DataMember(Name = "entryleader")]
 		public ProcessEntryLeader EntryLeader { get; set; }
 
 		/// <summary>
 		/// Information about the process group leader. In some cases this may be the same as the top level process.
+		/// <para>Reusing the `process` fields in this location is currently considered beta.</para>
 		/// </summary>
 		[DataMember(Name = "groupleader")]
 		public GroupLeader GroupLeader { get; set; }
 
 		/// <summary>
 		/// An array of previous executions for the process, including the initial fork. Only executable and args are set.
+		/// <para>Reusing the `process` fields in this location is currently considered beta.</para>
 		/// </summary>
 		[DataMember(Name = "previous")]
 		public Previous Previous { get; set; }
 
 		/// <summary>
 		/// Often the same as entry_leader. When it differs, it represents a session started within another session. e.g. using tmux
+		/// <para>Reusing the `process` fields in this location is currently considered beta.</para>
 		/// </summary>
 		[DataMember(Name = "sessionleader")]
 		public ProcessSessionLeader SessionLeader { get; set; }
@@ -4217,36 +4233,42 @@ The cloud fields may be self-nested under cloud.origin.* and cloud.target.* to d
 
 		/// <summary>
 		/// The real group (rgid).
+		/// <para>Reusing the `group` fields in this location is currently considered beta.</para>
 		/// </summary>
 		[DataMember(Name = "realgroup")]
 		public RealGroup RealGroup { get; set; }
 
 		/// <summary>
 		/// The real user (ruid). Identifies the real owner of the process.
+		/// <para>Reusing the `user` fields in this location is currently considered beta.</para>
 		/// </summary>
 		[DataMember(Name = "realuser")]
 		public RealUser RealUser { get; set; }
 
 		/// <summary>
 		/// The saved group (sgid).
+		/// <para>Reusing the `group` fields in this location is currently considered beta.</para>
 		/// </summary>
 		[DataMember(Name = "savedgroup")]
 		public SavedGroup SavedGroup { get; set; }
 
 		/// <summary>
 		/// The saved user (suid).
+		/// <para>Reusing the `user` fields in this location is currently considered beta.</para>
 		/// </summary>
 		[DataMember(Name = "saveduser")]
 		public SavedUser SavedUser { get; set; }
 
 		/// <summary>
 		/// An array of supplemental groups.
+		/// <para>Reusing the `group` fields in this location is currently considered beta.</para>
 		/// </summary>
 		[DataMember(Name = "supplementalgroups")]
 		public SupplementalGroups SupplementalGroups { get; set; }
 
 		/// <summary>
 		/// The effective user (euid).
+		/// <para>Reusing the `user` fields in this location is currently considered beta.</para>
 		/// </summary>
 		[DataMember(Name = "user")]
 		public User User { get; set; }
@@ -4766,12 +4788,14 @@ The cloud fields may be self-nested under cloud.origin.* and cloud.target.* to d
 	{
 		/// <summary>
 		/// Describes the origin service in case of an incoming request or event.
+		/// <para>Reusing the `service` fields in this location is currently considered beta.</para>
 		/// </summary>
 		[DataMember(Name = "origin")]
 		public Origin Origin { get; set; }
 
 		/// <summary>
 		/// Describes the target service in case of an outgoing request or event.
+		/// <para>Reusing the `service` fields in this location is currently considered beta.</para>
 		/// </summary>
 		[DataMember(Name = "target")]
 		public Target Target { get; set; }
@@ -4985,6 +5009,7 @@ The cloud fields may be self-nested under cloud.origin.* and cloud.target.* to d
 	{
 		/// <summary>
 		/// Fields describing files.
+		/// <para>Reusing the `file` fields in this location is currently considered beta.</para>
 		/// </summary>
 		/// <remarks>(ECS Core)</remarks>
 		[DataMember(Name = "file")]
@@ -4992,6 +5017,7 @@ The cloud fields may be self-nested under cloud.origin.* and cloud.target.* to d
 
 		/// <summary>
 		/// These fields contain x509 certificate metadata.
+		/// <para>Reusing the `x509` fields in this location is currently considered beta.</para>
 		/// </summary>
 		/// <remarks>(ECS Core)</remarks>
 		[DataMember(Name = "x509")]
@@ -4999,6 +5025,7 @@ The cloud fields may be self-nested under cloud.origin.* and cloud.target.* to d
 
 		/// <summary>
 		/// Fields describing a location.
+		/// <para>Reusing the `geo` fields in this location is currently considered beta.</para>
 		/// </summary>
 		/// <remarks>(ECS Core)</remarks>
 		[DataMember(Name = "geo")]
@@ -5006,6 +5033,7 @@ The cloud fields may be self-nested under cloud.origin.* and cloud.target.* to d
 
 		/// <summary>
 		/// Fields that let you store URLs in various forms.
+		/// <para>Reusing the `url` fields in this location is currently considered beta.</para>
 		/// </summary>
 		/// <remarks>(ECS Core)</remarks>
 		[DataMember(Name = "url")]
@@ -5021,6 +5049,7 @@ The cloud fields may be self-nested under cloud.origin.* and cloud.target.* to d
 
 		/// <summary>
 		/// Fields related to Windows Registry operations.
+		/// <para>Reusing the `registry` fields in this location is currently considered beta.</para>
 		/// </summary>
 		/// <remarks>(ECS Core)</remarks>
 		[DataMember(Name = "registry")]
@@ -5028,6 +5057,7 @@ The cloud fields may be self-nested under cloud.origin.* and cloud.target.* to d
 
 		/// <summary>
 		/// Fields describing an Autonomous System (Internet routing prefix).
+		/// <para>Reusing the `as` fields in this location is currently considered beta.</para>
 		/// </summary>
 		/// <remarks>(ECS Core)</remarks>
 		[DataMember(Name = "as")]

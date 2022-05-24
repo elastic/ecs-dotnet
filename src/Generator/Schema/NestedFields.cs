@@ -18,6 +18,8 @@ namespace Generator.Schema
 
 		public string Name { get; set; }
 
+		public string Beta { get; set; }
+
 		public string NamePCased => FileGenerator.PascalCase(Name);
 
 		public string ClassNameType =>
