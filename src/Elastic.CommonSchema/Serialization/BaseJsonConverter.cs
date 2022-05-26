@@ -23,10 +23,14 @@ namespace Elastic.CommonSchema.Serialization
 
 			string loglevel = null;
 			DateTimeOffset? timestamp = default;
+			var originalDepth = reader.CurrentDepth;
 			while (reader.Read())
 			{
 				if (reader.TokenType == JsonTokenType.EndObject)
-					break;
+					if (reader.CurrentDepth == originalDepth)
+						break;
+					else
+						continue;
 
 				if (reader.TokenType != JsonTokenType.PropertyName)
 					throw new JsonException();
