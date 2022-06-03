@@ -71,20 +71,32 @@ let private generateApiChanges (arguments:ParseResults<Arguments>) =
     let nugetPackages =
         Paths.Output.GetFiles("*.nupkg") |> Seq.sortByDescending(fun f -> f.CreationTimeUtc)
         |> Seq.map (fun p -> Path.GetFileNameWithoutExtension(Paths.RootRelative p.FullName).Replace("." + currentVersion, ""))
+    
+    let firstPath project tfms =
+        tfms
+        |> Seq.map(fun tfm -> (tfm, sprintf "directory|src/%s/bin/Release/%s" project Paths.MainTFM))
+        |> Seq.where(fun (tfm, path) -> File.Exists path)
+        |> Seq.tryHead
+        
     nugetPackages
     |> Seq.iter(fun p ->
         let outputFile =
             let f = sprintf "breaking-changes-%s.md" p
             Path.Combine(output, f)
-        let args =
-            [
-                "assembly-differ"
-                (sprintf "previous-nuget|%s|%s|%s" p currentVersion Paths.MainTFM);
-                (sprintf "directory|src/%s/bin/Release/%s" p Paths.MainTFM);
-                "-a"; "true"; "--target"; p; "-f"; "github-comment"; "--output"; outputFile
-            ]
         
-        exec "dotnet" args |> ignore
+        let firstKnownTFM = firstPath p [Paths.MainTFM; Paths.Netstandard21TFM]
+        match firstKnownTFM with
+        | None -> printf "Skipping generating API changes for: %s" p
+        | Some (tfm, path) ->
+            let args =
+                [
+                    "assembly-differ"
+                    (sprintf "previous-nuget|%s|%s|%s" p currentVersion tfm);
+                    (sprintf "directory|%s" path);
+                    "-a"; "true"; "--target"; p; "-f"; "github-comment"; "--output"; outputFile
+                ]
+            
+            exec "dotnet" args |> ignore
     )
     
 let private generateReleaseNotes (arguments:ParseResults<Arguments>) =
