@@ -12,9 +12,8 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Elastic.Ingest\Elastic.Ingest.csproj" />
-    <PackageReference Include="Elastic.Transport" Version="0.2.3" />
+    <PackageReference Include="Elastic.Transport" Version="0.3.2" />
     <PackageReference Include="System.Threading.Channels" Version="4.7.1" />
-    <PackageReference Include="System.Text.Encodings.Web" Version="5.0.0" />
   </ItemGroup>
 
 </Project>

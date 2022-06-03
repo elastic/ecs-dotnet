@@ -15,7 +15,7 @@
     </PackageReference>
 
 
-    <PackageReference Include="Elastic.Transport.VirtualizedCluster" Version="0.2.3" />
+    <PackageReference Include="Elastic.Transport.VirtualizedCluster" Version="0.3.2" />
 
 
     <PackageReference Include="XunitContext" Version="3.0.0" />

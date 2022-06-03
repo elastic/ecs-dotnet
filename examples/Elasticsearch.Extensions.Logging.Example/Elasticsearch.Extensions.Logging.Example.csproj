@@ -9,9 +9,8 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.Extensions.Hosting" Version="3.1.6" />
-    <PackageReference Include="Elastic.Elasticsearch.Ephemeral" Version="0.2.4" />
+    <PackageReference Include="Elastic.Elasticsearch.Ephemeral" Version="0.3.1" />
     <PackageReference Include="NEST" Version="7.8.1" />
-    <PackageReference Include="System.Text.Json" Version="5.0.0" />
   </ItemGroup>
 
   <ItemGroup>

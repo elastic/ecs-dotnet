@@ -5,6 +5,7 @@
 using System.Collections.Generic;
 using System.Text.Encodings.Web;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Elastic.Transport;
 
 namespace Elastic.Ingest.Elasticsearch
@@ -20,7 +21,8 @@ namespace Elastic.Ingest.Elasticsearch
 
 		public static readonly JsonSerializerOptions SerializerOptions = new()
 		{
-			IgnoreNullValues = true, Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
+			DefaultIgnoreCondition = JsonIgnoreCondition.Always,
+			Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
 		};
 	}
 }

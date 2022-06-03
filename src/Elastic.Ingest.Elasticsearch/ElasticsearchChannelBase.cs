@@ -29,7 +29,6 @@ namespace Elastic.Ingest.Elasticsearch
 
 		protected override Task<BulkResponse> Send(ITransport<ITransportConfiguration> transport, IReadOnlyCollection<TEvent> page) =>
 			transport.RequestAsync<BulkResponse>(HttpMethod.POST, "/_bulk",
-				default,
 				PostData.StreamHandler(page,
 					(b, stream) =>
 					{

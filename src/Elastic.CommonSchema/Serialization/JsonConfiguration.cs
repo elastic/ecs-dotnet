@@ -13,7 +13,7 @@ namespace Elastic.CommonSchema.Serialization
 	{
 		internal static readonly JsonSerializerOptions SerializerOptions = new JsonSerializerOptions
 		{
-			IgnoreNullValues = true,
+			DefaultIgnoreCondition = JsonIgnoreCondition.Always,
 			Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
 			PropertyNamingPolicy = new SnakeCaseJsonNamingPolicy(),
 			Converters =

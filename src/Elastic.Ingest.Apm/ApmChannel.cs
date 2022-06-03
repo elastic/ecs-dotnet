@@ -8,6 +8,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Text.Encodings.Web;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using System.Threading;
 using System.Threading.Tasks;
 using Elastic.Ingest.Apm.Model;
@@ -27,7 +28,7 @@ namespace Elastic.Ingest.Apm
 
 		public static readonly JsonSerializerOptions SerializerOptions = new()
 		{
-			IgnoreNullValues = true,
+			DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull,
 			MaxDepth = 64,
 			Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
 		};
@@ -48,7 +49,6 @@ namespace Elastic.Ingest.Apm
 
 		protected override Task<EventIntakeResponse> Send(ITransport<ITransportConfiguration> transport, IReadOnlyCollection<IIntakeObject> page) =>
 			transport.RequestAsync<EventIntakeResponse>(HttpMethod.POST, "/intake/v2/events",
-				default,
 				PostData.StreamHandler(page,
 					(b, stream) =>
 					{

@@ -17,7 +17,7 @@ namespace Elastic.Ingest.Tests.Elasticsearch
 		{
 			var cluster = Virtual.Elasticsearch.Bootstrap(numberOfNodes: 1).Ping(c=>c.SucceedAlways());
 			var virtualSettings = setup(cluster)
-				.StaticConnectionPool()
+				.StaticNodePool()
 				.Settings(s=>s.DisablePing());
 
 			//var audit = new Auditor(() => virtualSettings);

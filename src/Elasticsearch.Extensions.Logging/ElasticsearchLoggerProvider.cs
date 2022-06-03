@@ -3,7 +3,6 @@
 // See the LICENSE file in the project root for more information
 
 using System;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
@@ -11,7 +10,6 @@ using Elastic.Ingest;
 using Elastic.Ingest.Elasticsearch;
 using Elastic.Ingest.Elasticsearch.DataStreams;
 using Elastic.Ingest.Elasticsearch.Indices;
-using Elastic.Ingest.Transport;
 using Elastic.Transport;
 using Elasticsearch.Extensions.Logging.Options;
 using Microsoft.Extensions.Logging;
@@ -64,42 +62,42 @@ namespace Elasticsearch.Extensions.Logging
 			foreach (var channelSetup in channelConfigurations)
 				channelSetup.ConfigureChannel(channelOptions);
 		}
-		public static IConnectionPool CreateConnectionPool(ElasticsearchLoggerOptions loggerOptions)
+		public static NodePool CreateConnectionPool(ElasticsearchLoggerOptions loggerOptions)
 		{
 			var shipTo = loggerOptions.ShipTo;
 			var connectionPool = loggerOptions.ShipTo.ConnectionPoolType;
 			var nodeUris = loggerOptions.ShipTo.NodeUris?.ToArray() ?? Array.Empty<Uri>();
 			if (nodeUris.Length == 0 && connectionPool != ConnectionPoolType.Cloud)
-				return new SingleNodeConnectionPool(new Uri("http://localhost:9200"));
+				return new SingleNodePool(new Uri("http://localhost:9200"));
 			if (connectionPool == ConnectionPoolType.SingleNode || connectionPool == ConnectionPoolType.Unknown && nodeUris.Length == 1)
-				return new SingleNodeConnectionPool(nodeUris[0]);
+				return new SingleNodePool(nodeUris[0]);
 
 			switch (connectionPool)
 			{
 				// TODO: Add option to randomize pool
 				case ConnectionPoolType.Unknown:
 				case ConnectionPoolType.Sniffing:
-					return new SniffingConnectionPool(nodeUris);
+					return new SniffingNodePool(nodeUris);
 				case ConnectionPoolType.Static:
-					return new StaticConnectionPool(nodeUris);
+					return new StaticNodePool(nodeUris);
 				case ConnectionPoolType.Sticky:
-					return new StickyConnectionPool(nodeUris);
+					return new StaticNodePool(nodeUris);
 				// case ConnectionPoolType.StickySniffing:
 				case ConnectionPoolType.Cloud:
 					if (!string.IsNullOrEmpty(shipTo.ApiKey))
 					{
 						var apiKeyCredentials = new ApiKey(shipTo.ApiKey);
-						return new CloudConnectionPool(shipTo.CloudId, apiKeyCredentials);
+						return new CloudNodePool(shipTo.CloudId, apiKeyCredentials);
 					}
 
-					var basicAuthCredentials = new BasicAuthentication(shipTo.Username, shipTo.Password);
-					return new CloudConnectionPool(shipTo.CloudId, basicAuthCredentials);
+					var basicAuthCredentials = new Base64ApiKey(shipTo.Username, shipTo.Password);
+					return new CloudNodePool(shipTo.CloudId, basicAuthCredentials);
 				default:
 					throw new ArgumentException($"Unrecognised connection pool type '{connectionPool}' specified in the configuration.", nameof(connectionPool));
 			}
 		}
 
-		private static ITransport<ITransportConfiguration> CreateTransport(ElasticsearchLoggerOptions loggerOptions)
+		private static Elastic.Transport.ITransport<ITransportConfiguration> CreateTransport(ElasticsearchLoggerOptions loggerOptions)
 		{
 			// TODO: Check if Uri has changed before recreating
 			// TODO: Injectable factory? Or some way of testing.
@@ -109,7 +107,7 @@ namespace Elasticsearch.Extensions.Logging
 			// config = config.Proxy(new Uri("http://localhost:8080"), "", "");
 			// config = config.EnableDebugMode();
 
-			var transport = new Transport<TransportConfiguration>(config);
+			var transport = new Elastic.Transport.Transport<TransportConfiguration>(config);
 			return transport;
 		}
 
