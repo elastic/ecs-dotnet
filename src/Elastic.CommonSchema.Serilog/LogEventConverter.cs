@@ -165,11 +165,11 @@ namespace Elastic.CommonSchema.Serilog
 				case DictionaryValue dv:
 					return dv.Elements.ToDictionary(keySelector: kvp => ToSnakeCase(kvp.Key.Value.ToString()), elementSelector: (kvp) => PropertyValueToObject(kvp.Value));
 				case StructureValue ov:
-					{
-						var dict = ov.Properties.ToDictionary(p => p.Name, p => PropertyValueToObject(p.Value));
-						if (ov.TypeTag != null) dict.Add("$type", ov.TypeTag);
-						return dict;
-					}
+				{
+					var dict = ov.Properties.ToDictionary(p => p.Name, p => PropertyValueToObject(p.Value));
+					if (ov.TypeTag != null) dict.Add("$type", ov.TypeTag);
+					return dict;
+				}
 				default:
 					return propertyValue;
 			}
