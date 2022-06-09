@@ -56,18 +56,18 @@ namespace Elastic.CommonSchema.Serilog
 				Log = GetLog(logEvent, exceptions, configuration),
 				Agent = GetAgent(logEvent),
 				Event = GetEvent(logEvent),
-				Metadata = GetMetadata(logEvent,configuration.LogEventPropertiesToFilter),
+				Metadata = GetMetadata(logEvent, configuration.LogEventPropertiesToFilter),
 				Process = GetProcess(logEvent, configuration.MapCurrentThread),
 				Host = GetHost(logEvent),
 				Trace = GetTrace(logEvent),
 				Transaction = GetTransaction(logEvent),
-				Span = GetSpan(logEvent)
+				Span = GetSpan(logEvent),
+				Server = GetServer(logEvent, configuration)
 			};
 
 			if (configuration.MapHttpAdapter != null)
 			{
 				ecsEvent.Http = configuration.MapHttpAdapter.Http;
-				ecsEvent.Server = GetServer(logEvent, configuration);
 				ecsEvent.Url = configuration.MapHttpAdapter.Url;
 				ecsEvent.UserAgent = configuration.MapHttpAdapter.UserAgent;
 				ecsEvent.Client = configuration.MapHttpAdapter.Client;
@@ -165,11 +165,11 @@ namespace Elastic.CommonSchema.Serilog
 				case DictionaryValue dv:
 					return dv.Elements.ToDictionary(keySelector: kvp => ToSnakeCase(kvp.Key.Value.ToString()), elementSelector: (kvp) => PropertyValueToObject(kvp.Value));
 				case StructureValue ov:
-				{
-					var dict = ov.Properties.ToDictionary(p => p.Name, p => PropertyValueToObject(p.Value));
-					if (ov.TypeTag != null) dict.Add("$type", ov.TypeTag);
-					return dict;
-				}
+					{
+						var dict = ov.Properties.ToDictionary(p => p.Name, p => PropertyValueToObject(p.Value));
+						if (ov.TypeTag != null) dict.Add("$type", ov.TypeTag);
+						return dict;
+					}
 				default:
 					return propertyValue;
 			}
@@ -193,13 +193,19 @@ namespace Elastic.CommonSchema.Serilog
 
 		private static Server GetServer(LogEvent e, IEcsTextFormatterConfiguration configuration)
 		{
-			var server = configuration.MapHttpAdapter?.Server?? new Server();
-			server.User = e.TryGetScalarPropertyValue(SpecialKeys.EnvironmentUserName, out var environmentUserName)
+			var server = configuration.MapHttpAdapter?.Server;
+			e.TryGetScalarPropertyValue(SpecialKeys.EnvironmentUserName, out var environmentUserName);
+			e.TryGetScalarPropertyValue(SpecialKeys.Host, out var host);
+
+			if (server == null && environmentUserName == null && host == null)
+				return null;
+
+			server ??= new Server();
+			server.User = environmentUserName != null
 				? new User { Name = environmentUserName.Value.ToString() }
 				: null;
+			server.Address = host?.Value.ToString();
 
-			var hasHost = e.TryGetScalarPropertyValue(SpecialKeys.Host, out var host);
-			server.Address = hasHost ? host.Value.ToString() : null;
 			return server;
 		}
 
@@ -267,9 +273,9 @@ namespace Elastic.CommonSchema.Serilog
 		{
 			var source = e.TryGetScalarPropertyValue(SpecialKeys.SourceContext, out var context)
 				 ? context.Value.ToString()
-				 : SpecialKeys.DefaultLogger ;
+				 : SpecialKeys.DefaultLogger;
 
-			var log = new Log { Level = e.Level.ToString("F"), Logger = source};
+			var log = new Log { Level = e.Level.ToString("F"), Logger = source };
 
 			if (configuration.MapExceptions)
 			{

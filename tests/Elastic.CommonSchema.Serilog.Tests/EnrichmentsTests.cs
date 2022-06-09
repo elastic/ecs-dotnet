@@ -39,10 +39,16 @@ namespace Elastic.CommonSchema.Serilog.Tests
 			info.Log.Level.Should().Be("Information");
 			info.Error.Should().BeNull();
 
+			info.Host.Should().NotBeNull();
 			info.Host.Name.Should().NotBeEmpty();
+
+			info.Process.Should().NotBeNull();
 			info.Process.Name.Should().NotBeEmpty();
 			info.Process.Pid.Should().BeGreaterThan(0);
 			info.Process.Thread.Id.Should().NotBeNull().And.NotBe(info.Process.Pid);
+
+			info.Server.Should().NotBeNull();
+			info.Server.User.Name.Should().NotBeEmpty();
 		});
 
 		[Fact]
