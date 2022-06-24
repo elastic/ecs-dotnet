@@ -69,15 +69,12 @@ namespace Elastic.CommonSchema.BenchmarkDotNetExporter.IntegrationTests
 				throw new Exception($"summary has critical validation errors: {string.Join(Environment.NewLine, errors)}");
 			}
 
-			var pipeline = Client.Ingest.GetPipeline(p => p.Id(options.PipelineName));
-			if (!pipeline.IsValid)
-				throw new Exception(pipeline.DebugInformation);
+			// TODO: Temporarily disabled while we wait for ECS to be updated on different branch
+			// var template = Client.Indices.GetTemplate(options.TemplateName);
+			// if (!template.IsValid)
+			//	throw new Exception(template.DebugInformation);
 
-			var template = Client.Indices.GetTemplate(options.TemplateName);
-			if (!template.IsValid)
-				throw new Exception(template.DebugInformation);
-
-			var indexName = $"{options.IndexName}-{DateTime.UtcNow.Year}-01-01";
+			var indexName = $"benchmarks-dotnet-{options.DataStreamNamespace}";
 			var indexExists = Client.Indices.Exists(indexName);
 			if (!indexExists.IsValid)
 				throw new Exception(indexExists.DebugInformation);

@@ -14,7 +14,28 @@ namespace Elastic.Ingest
 	public interface IIngestChannel<in TEvent> : IDisposable
 	{
 		bool TryWrite(TEvent item);
+
+		Task<bool> WaitToWriteAsync(TEvent item, CancellationToken ctx = default);
+
+		async Task<bool> WaitToWriteManyAsync(IEnumerable<TEvent> events, CancellationToken ctx = default)
+		{
+			var allWritten = true;
+			foreach (var e in events)
+			{
+				var written = await WaitToWriteAsync(e, ctx).ConfigureAwait(false);
+				if (!written) allWritten = written;
+			}
+			return allWritten;
+		}
 	}
+
+	public static class IngestChannelExtensions
+	{
+		public static bool TryWriteMany<TEvent>(this IIngestChannel<TEvent> channel, IEnumerable<TEvent> events) =>
+			events.Select(e => channel.TryWrite(e)).All(b => b);
+
+	}
+
 
 	public abstract class ChannelBase<TChannelOptions, TBuffer, TEvent, TResponse>
 		: IIngestChannel<TEvent>

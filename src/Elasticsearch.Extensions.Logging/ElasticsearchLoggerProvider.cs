@@ -11,6 +11,7 @@ using Elastic.Ingest.Elasticsearch;
 using Elastic.Ingest.Elasticsearch.DataStreams;
 using Elastic.Ingest.Elasticsearch.Indices;
 using Elastic.Transport;
+using Elastic.Transport.Products.Elasticsearch;
 using Elasticsearch.Extensions.Logging.Options;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
@@ -90,7 +91,7 @@ namespace Elasticsearch.Extensions.Logging
 						return new CloudNodePool(shipTo.CloudId, apiKeyCredentials);
 					}
 
-					var basicAuthCredentials = new Base64ApiKey(shipTo.Username, shipTo.Password);
+					var basicAuthCredentials = new BasicAuthentication(shipTo.Username, shipTo.Password);
 					return new CloudNodePool(shipTo.CloudId, basicAuthCredentials);
 				default:
 					throw new ArgumentException($"Unrecognised connection pool type '{connectionPool}' specified in the configuration.", nameof(connectionPool));
@@ -102,7 +103,7 @@ namespace Elasticsearch.Extensions.Logging
 			// TODO: Check if Uri has changed before recreating
 			// TODO: Injectable factory? Or some way of testing.
 			var connectionPool = CreateConnectionPool(loggerOptions);
-			var config = new TransportConfiguration(connectionPool);
+			var config = new TransportConfiguration(connectionPool, productRegistration: new ElasticsearchProductRegistration());
 
 			// config = config.Proxy(new Uri("http://localhost:8080"), "", "");
 			// config = config.EnableDebugMode();
