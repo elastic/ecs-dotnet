@@ -1,6 +1,4 @@
-using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using Elastic.CommonSchema.Generator.Schema;
 using Elastic.CommonSchema.Generator.Schema.DTO;
@@ -9,122 +7,154 @@ namespace Elastic.CommonSchema.Generator.Domain
 {
 	public class CsharpProjectionParser
 	{
-		private class Nesting
-		{
-			public string FullPath { get; set; }
-			public List<Nesting> Nestings { get; set; } = new List<Nesting>();
-		}
-
 		public static CsharpProjection Parse(EcsSchema schema)
 		{
-			var rootEntities = schema.Entities.ToDictionary(k => k.Name, v => (v, new CsharpEntityClass(v.Name)));
-			foreach (var (name, (ecsEntity, entityClass)) in rootEntities)
+			//In order to correctly support ECS nesting we project the fields into the following different
+			//.NET structures. This ensures ECS properties can not be arbitrarily nested.
+
+			// EntityFieldsBaseClass						- ProcessFieldsBase
+			// -- value types								- e.g process.uptime
+			// -- InlineObjectDefinition					- e.g process.tty, process.thread, process.entry_metadata
+
+			// InlineObjectDefinition						- ProcessEntryMetaData
+			// -- value types								- e.g process.entry_metadata.type
+			// -- InlineObjectDefinition					-
+			// -- EntityClass reference						- e.g process.entry_metadata.source
+
+			// EntityClass extends FieldBaseClass			- Process : ProcessFieldsBase
+			// -- EntityClassReference						- e.g process.elf
+			// -- NestedEntityClass							- e.g process.entry_leader
+
+			// NestedEntityClass extends FieldBaseClass		- EntryLeaderProcess : ProcessFieldsBase
+			// -- NestedEntityClass							- e.g process.entry_leader.parent
+
+
+			var entityFieldsBaseClasses = schema.Entities.ToDictionary(k => k.Name, v => (v, new EntityFieldsBaseClass(v.Name)));
+			var allInlineObjects = new Dictionary<string, InlineObjectDefinition>();
+			ExtractValueTypesAndInlineObjectDefinitions(entityFieldsBaseClasses, allInlineObjects);
+
+			CreateEntityTypes(schema, entityFieldsBaseClasses, allInlineObjects);
+
+
+			var projection = new CsharpProjection
 			{
-				var directFields =
-					from kv in ecsEntity.Fields
-					let parsed = (isRoot: CsharpEntityProperty.TryCreate(name, kv.Value, out var prop), prop)
-					where parsed.isRoot
-					select parsed.prop;
-
-				entityClass.Fields = directFields.ToList();
-			}
-			foreach (var (name, (ecsEntity, entityClass)) in rootEntities)
-			{
-				if (ecsEntity.ReusedHere == null) continue;
-
-				//process.x.y
-				//process.x
-				//process.z
-				var nestings = ecsEntity.Nestings ?? Array.Empty<string>();
-				var nested = NestNesting(2, nestings, null);
-				foreach (var nesting in nested)
-				{
-					var reuseReference = ecsEntity.ReusedHere.First(e => e.Full == nesting.FullPath);
-					var entity = rootEntities[reuseReference.SchemaName];
-					RecurseNestedTypes(nesting, entity, rootEntities, 1);
-
-				}
-
-			}
-
-
-
-			var projection = new CsharpProjection { Entities = rootEntities.Values.Select(t => t.Item2).ToList() };
+				EntityFieldsBaseDefinitions = entityFieldsBaseClasses.Values.Select(t => t.Item2).ToList(),
+				InlineObjectDefinitions = allInlineObjects
+			};
 			return projection;
 		}
 
-		private static void RecurseNestedTypes(Nesting nesting, (EntityFieldSet v, CsharpEntityClass) entity,
-			Dictionary<string, (EntityFieldSet v, CsharpEntityClass)> rootEntities, int depth = 1
-		)
+		private static void CreateEntityTypes(EcsSchema schema, Dictionary<string, (EntityFieldSet v, EntityFieldsBaseClass)> entityFieldsBaseClasses, Dictionary<string, InlineObjectDefinition> allInlineObjects)
 		{
-			if (nesting.Nestings.Count == 0)
+			// Create concrete entity instances of base field sets to reference
+			var entityClasses = schema.Entities.ToDictionary(k => k.Name, v => (v, new EntityClass(v.Name, entityFieldsBaseClasses[v.Name].Item2)));
+			foreach (var (name, (ecsEntity, entityFieldsBaseClass)) in entityFieldsBaseClasses)
 			{
-				var fieldRef = CsharpEntityReferenceProperty.Create(nesting.FullPath, entity.Item2);
-				entity.Item2.FieldsReferencingEntities.Add(fieldRef);
-			}
-			else
-			{
-				if (entity.v.ReusedHere == null) return;
+				var entityClass = entityClasses[name].Item2;
+				if (ecsEntity.ReusedHere == null) continue;
+				// some references are easy, they go directly on the current entityClass
+				//process.user.*
 
-				foreach (var nested in nesting.Nestings)
+				// some references go on nested inline objects instead
+				//process.entry_meta.source.*
+
+				// some references refer to the current schema and can be arbitrarily nested.
+				// - process.entry_leader.*
+				// - process.entry_leader.parent.*
+				// - process.entry_leader.parent.session_leader.*
+				//
+				// Here we need to create intermediate NestedEntityClasses
+				// EntryLeaderProcess with a parent property, EntryLeaderParentProcess with a session_leader property
+				// We don't need to generate EntryLeaderParentSessionLeaderProcess since that simply refers to the ProcessFieldSet
+
+				foreach (var reuse in ecsEntity.ReusedHere)
 				{
-					var reuseReference = entity.v.ReusedHere.First(e => e.Full == nesting.FullPath);
-					var referenceRootEntity = rootEntities[reuseReference.SchemaName];
+					var fieldTokens = reuse.Full.Split('.').ToArray();
+					// most common case a reference to a different schema
+					if (fieldTokens.Length <= 2 && reuse.SchemaName != name)
+					{
+						entityClass.EntityReferences[reuse.Full] = new EntityPropertyReference(reuse.Full, entityClasses[reuse.SchemaName].Item2);
+					}
+					else
+					{
+						var basePath = string.Join('.', fieldTokens.SkipLast(1));
+						// check if this deeply nested reference refers to an inline object
+						if (allInlineObjects.ContainsKey(basePath))
+						{
+							allInlineObjects[basePath].EntityReferences[reuse.Full] = new EntityPropertyReference(reuse.Full, entityClasses[reuse.SchemaName].Item2);
+						}
+						else if (reuse.SchemaName != name)
+						{
 
-					var nestedEntity = new CsharpNestedEntityClass(nesting.FullPath, referenceRootEntity.Item2);
+						}
 
-					var fieldRef = CsharpNestedEntityReferenceProperty.Create(nested.FullPath, nestedEntity);
-					entity.Item2.FieldsReferencingNestedEntities.Add(fieldRef);
-					RecurseNestedTypes(nested, entity, rootEntities);
+					}
 				}
 			}
 		}
-
-		private static List<Nesting> NestNesting(int i, string[] nestings, string path)
+		private static void ExtractValueTypesAndInlineObjectDefinitions(Dictionary<string, (EntityFieldSet v, EntityFieldsBaseClass)> entityFieldsBaseClasses, Dictionary<string, InlineObjectDefinition> allInlineObjects)
 		{
-			var nested = from n in nestings
-				let tokens = n.Split('.')
-				where tokens.Length == i && (path == null || n.StartsWith(path + "."))
-				select new Nesting { FullPath = n, Nestings = NestNesting(i+1, nestings, n) };
-			return nested.ToList();
+			foreach (var (name, (ecsEntity, entityClass)) in entityFieldsBaseClasses)
+			{
+				var fieldSet = entityClass.Fields;
+				foreach (var (fullPath, field) in ecsEntity.Fields)
+				{
+					var currentPropertyReferences = fieldSet;
+					//always in the format of `entityname.[field]` where field can have dots too;
+					var fieldTokens = fullPath.Split('.').ToArray();
+					if (fieldTokens.Length <= 2)
+					{
+						currentPropertyReferences[fullPath] = new ValueTypePropertyReference(fullPath, field);
+					}
+					else
+					{
+						var allPaths = fieldTokens.Aggregate(new List<string>(), (list, s) =>
+						{
+							if (list.Count == 0) list.Add(s);
+							else list.Add($"{list.Last()}.{s}");
+							return list;
+						});
+						var inlineObjectPaths = allPaths.Skip(1).SkipLast(1).ToArray();
+						foreach (var path in inlineObjectPaths)
+						{
+							// path is referencing an embedded nested ECS entity
+							if (ecsEntity.Nestings != null && ecsEntity.Nestings.Any(nesting => path.StartsWith($"{nesting}"))) continue;
+
+							allInlineObjects[path] = allInlineObjects.TryGetValue(path, out var o) ? o : new InlineObjectDefinition(path, field);
+
+							currentPropertyReferences[path] =
+								currentPropertyReferences.TryGetValue(path, out var p)
+									? p
+									: new InlineObjectPropertyReference(path, allInlineObjects[path]);
+							currentPropertyReferences = allInlineObjects[path].Fields;
+						}
+						currentPropertyReferences[fullPath] = new ValueTypePropertyReference(fullPath, field);
+					}
+				}
+			}
 		}
 	}
 
 	public class CsharpProjection
 	{
-		public IReadOnlyCollection<CsharpEntityClass> Entities { get; set; }
+		public IReadOnlyCollection<EntityFieldsBaseClass> EntityFieldsBaseDefinitions { get; set; }
+		public Dictionary<string, InlineObjectDefinition> InlineObjectDefinitions { get; set; }
 	}
 
 
-	public class CsharpEntityClass
+	public record EntityFieldsBaseClass(string Name)
 	{
-		public CsharpEntityClass(string name) => Name = name;
-
-		public string Name { get; }
-
-		public IReadOnlyCollection<CsharpEntityProperty> Fields { get; set; } = Array.Empty<CsharpEntityProperty>();
-
-		public List<CsharpEntityReferenceProperty> FieldsReferencingEntities { get; } = new ();
-		public List<CsharpNestedEntityReferenceProperty> FieldsReferencingNestedEntities { get; } = new ();
+		public Dictionary<string, PropertyReference> Fields { get; } = new();
 	}
 
-	/// <summary>
-	/// A more specialized class that extends <see cref="CsharpEntityClass"/> with more reference to itself or other entities
-	/// </summary>
-	public class CsharpNestedEntityClass
+	public record InlineObjectDefinition(string Name, Field Field)
 	{
-		public CsharpNestedEntityClass(string fullPath, CsharpEntityClass entityReference)
-		{
-			Name = fullPath.GetLastProperty();
-			FullPath = fullPath;
-			CsharpEntityTypeName = entityReference.Name;
-		}
+		public Dictionary<string, PropertyReference> Fields { get; } = new();
+		public Dictionary<string, EntityPropertyReference> EntityReferences { get; } = new();
+	}
 
-		public string Name { get; }
-		public string FullPath { get; }
-		/// <summary>The entity we are extending</summary>
-		public string CsharpEntityTypeName { get; internal set; }
-
-		public List<CsharpEntityReferenceProperty> FieldsReferencingEntities { get; } = new ();
+	public record EntityClass(string Name, EntityFieldsBaseClass BaseFieldSet)
+	{
+		public Dictionary<string, EntityPropertyReference> EntityReferences { get; } = new();
 	}
 }

@@ -41,7 +41,7 @@ namespace Elastic.CommonSchema.Generator
 
 			var csharpDomain = CsharpProjectionParser.Parse(ecsSchema);
 
-			var process = csharpDomain.Entities.First(e => e.Name == "process");
+			var process = csharpDomain.EntityFieldsBaseDefinitions.First(e => e.Name == "process");
 
 			//FileGenerator.Generate(csharpDomain);
 		}

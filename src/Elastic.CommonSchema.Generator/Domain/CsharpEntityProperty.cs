@@ -1,8 +1,36 @@
+using System;
 using System.Text.RegularExpressions;
 using Elastic.CommonSchema.Generator.Schema.DTO;
 
 namespace Elastic.CommonSchema.Generator.Domain
 {
+	public abstract record PropertyReference(string FullPath)
+	{
+		public string Name { get; } = FullPath.GetLastProperty();
+	}
+
+	public record ValueTypePropertyReference : PropertyReference
+	{
+		public ValueTypePropertyReference(string fullPath, Field field) : base(fullPath) => ClrType = field.Type.GetClrType();
+
+		public string ClrType { get; }
+	}
+
+	public record InlineObjectPropertyReference(string FullPath, InlineObjectDefinition InlineObject) : PropertyReference(FullPath)
+	{
+		public InlineObjectDefinition InlineObject { get; } = InlineObject;
+	}
+
+	public record EntityPropertyReference(string FullPath, EntityClass Entity) : PropertyReference(FullPath)
+	{
+	}
+
+	public record NestedEntityClassPropertyReference : PropertyReference
+	{
+		public NestedEntityClassPropertyReference(string fullPath) : base(fullPath) { }
+	}
+
+
 	public class CsharpEntityProperty
 	{
 		public CsharpEntityProperty(string name, string fullPath)
@@ -13,62 +41,44 @@ namespace Elastic.CommonSchema.Generator.Domain
 
 		public string Name { get; }
 		public string FullPath { get; }
-
-		public static bool TryCreate(string entityName, Field ecsField, out CsharpEntityProperty prop)
-		{
-			var re = new Regex($"^{entityName}\\.([^\\.]+)$");
-			prop = null;
-			if (!re.IsMatch(ecsField.FlatName))
-				return false;
-
-			prop = new CsharpEntityProperty(ecsField.FlatName.GetLastProperty(), ecsField.FlatName);
-			return true;
-		}
 	}
-	public class CsharpEntityReferenceProperty
+
+	public static class CsharpPropertyExtensions
 	{
-		public CsharpEntityReferenceProperty(string name, string fullPath)
-		{
-			Name = name;
-			FullPath = fullPath;
-		}
-
-		public string Name { get; }
-		public string FullPath { get; }
-		public string CsharpEntityTypeName { get; internal set; }
-
-		public static CsharpEntityReferenceProperty Create(string fullPath, CsharpEntityClass csharpEntityReference)
-		{
-			var re = new Regex($"^.+\\.([^\\.]+)$");
-			return new CsharpEntityReferenceProperty(fullPath.GetLastProperty(), fullPath)
-			{
-				CsharpEntityTypeName = csharpEntityReference.Name,
-			};
-		}
-	}
-
-	public static class CsharpProperty {
 		private static readonly Regex LastPropertyRegex = new($"^.+\\.([^\\.]+)$");
 
 		public static string GetLastProperty(this string s) => LastPropertyRegex.Replace(s, "$1");
-	}
 
-	public class CsharpNestedEntityReferenceProperty
-	{
-		public CsharpNestedEntityReferenceProperty(string name, string fullPath)
+		public static string GetClrType(this FieldType fieldType)
 		{
-			Name = name;
-			FullPath = fullPath;
-		}
-
-		public string Name { get; }
-		public string FullPath { get; }
-		public string CsharpEntityTypeName { get; internal set; }
-
-		public static CsharpNestedEntityReferenceProperty Create(string fullPath, CsharpNestedEntityClass csharpEntityReference) =>
-			new CsharpNestedEntityReferenceProperty(fullPath.GetLastProperty(), fullPath)
+			switch (fieldType)
 			{
-				CsharpEntityTypeName = csharpEntityReference.Name,
-			};
+				case FieldType.Keyword:
+				case FieldType.ConstantKeyword:
+				case FieldType.Flattened:
+				case FieldType.MatchOnlyText:
+				case FieldType.Wildcard:
+				case FieldType.Text:
+				case FieldType.Ip:
+					return "string";
+				case FieldType.Long:
+					return "long";
+				case FieldType.Integer:
+					return "int";
+				case FieldType.Date:
+					return "DateTimeOffset";
+				case FieldType.Nested:
+				case FieldType.Object:
+					return "object";
+				case FieldType.ScaledFloat:
+				case FieldType.Float:
+					return "float";
+				case FieldType.GeoPoint:
+					return "Location";
+				case FieldType.Boolean:
+					return "bool";
+				default: throw new ArgumentOutOfRangeException(fieldType.ToString());
+			}
+		}
 	}
 }
