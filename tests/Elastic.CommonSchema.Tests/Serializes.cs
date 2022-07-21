@@ -3,6 +3,7 @@
 // See the LICENSE file in the project root for more information
 
 using System;
+using System.Collections.Generic;
 using System.Runtime.Serialization;
 using Elastic.CommonSchema.Serialization;
 using FluentAssertions;
@@ -28,6 +29,31 @@ namespace Elastic.CommonSchema.Tests
 			deserialized.Agent.Name.Should().Be("some-agent");
 			deserialized.Log.Should().NotBeNull();
 			deserialized.Log.Level.Should().Be("debug");
+		}
+
+		[Fact]
+		public void SerializesMetadataPropertiesToSnakeCase()
+		{
+			var b = new Base
+			{
+				Metadata = new Dictionary<string, object>
+				{
+					["MessageTemplate"] = "some-template",
+					["WriteIO"] = "some-io",
+					["User_Id"] = 1,
+					["eventId"] = "some-id",
+					["rule"] = "some-rule",
+				}
+			};
+
+			var serialized = b.Serialize();
+			var deserialized = Base.Deserialize(serialized);
+
+			deserialized.Metadata.Should().ContainKey("message_template");
+			deserialized.Metadata.Should().ContainKey("write_io");
+			deserialized.Metadata.Should().ContainKey("user_id");
+			deserialized.Metadata.Should().ContainKey("event_id");
+			deserialized.Metadata.Should().ContainKey("rule");
 		}
 
 		public class SubclassedBase : Base
