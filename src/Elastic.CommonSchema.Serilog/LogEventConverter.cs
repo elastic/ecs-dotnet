@@ -37,6 +37,7 @@ namespace Elastic.CommonSchema.Serilog
 			public const string ProcessId = nameof(ProcessId);
 			public const string ThreadId = nameof(ThreadId);
 			public const string MachineName = nameof(MachineName);
+			public const string RequestPath = nameof(RequestPath);
 		}
 
 		public static Base ConvertToEcs(LogEvent logEvent, IEcsTextFormatterConfiguration configuration)
@@ -141,6 +142,7 @@ namespace Elastic.CommonSchema.Serilog
 					case SpecialKeys.ProcessId:
 					case SpecialKeys.ThreadId:
 					case SpecialKeys.MachineName:
+					case SpecialKeys.RequestPath:
 						continue;
 				}
 				//key present in list of keys to filter
