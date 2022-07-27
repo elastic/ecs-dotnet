@@ -33,21 +33,26 @@ namespace Elastic.CommonSchema.Generator.Domain
 			var allInlineObjects = new Dictionary<string, InlineObjectDefinition>();
 			ExtractValueTypesAndInlineObjectDefinitions(entityFieldsBaseClasses, allInlineObjects);
 
-			CreateEntityTypes(schema, entityFieldsBaseClasses, allInlineObjects);
+			var entityClasses = CreateEntityTypes(schema, entityFieldsBaseClasses, allInlineObjects);
 
 
 			var projection = new CsharpProjection
 			{
 				EntityFieldsBaseDefinitions = entityFieldsBaseClasses.Values.Select(t => t.Item2).ToList(),
-				InlineObjectDefinitions = allInlineObjects
+				InlineObjectDefinitions = allInlineObjects,
+				EntityClasses = entityClasses
 			};
 			return projection;
 		}
 
-		private static void CreateEntityTypes(EcsSchema schema, Dictionary<string, (EntityFieldSet v, EntityFieldsBaseClass)> entityFieldsBaseClasses, Dictionary<string, InlineObjectDefinition> allInlineObjects)
+		private static Dictionary<string, EntityClass> CreateEntityTypes(EcsSchema schema,
+			Dictionary<string, (EntityFieldSet v, EntityFieldsBaseClass)> entityFieldsBaseClasses,
+			Dictionary<string, InlineObjectDefinition> allInlineObjects
+		)
 		{
 			// Create concrete entity instances of base field sets to reference
 			var entityClasses = schema.Entities.ToDictionary(k => k.Name, v => (v, new EntityClass(v.Name, entityFieldsBaseClasses[v.Name].Item2)));
+			var nestedEntityClasses = new Dictionary<string, EntityClass>();
 			foreach (var (name, (ecsEntity, entityFieldsBaseClass)) in entityFieldsBaseClasses)
 			{
 				var entityClass = entityClasses[name].Item2;
@@ -77,22 +82,65 @@ namespace Elastic.CommonSchema.Generator.Domain
 					}
 					else
 					{
-						var basePath = string.Join('.', fieldTokens.SkipLast(1));
+						// We can't assume the direct parent is an ECS field e.g
+						// email.attachments.file.hash -> file.hash is a property on email.attachments
+
+						var basePaths = fieldTokens.Select((token, i) => string.Join('.', fieldTokens.Take(i + 1))).Reverse().ToArray();
+						var inlineObjectPath = basePaths.FirstOrDefault(p => allInlineObjects.ContainsKey(p));
+						var entityObjectPath = basePaths.FirstOrDefault(p => entityClasses.ContainsKey(p));
 						// check if this deeply nested reference refers to an inline object
-						if (allInlineObjects.ContainsKey(basePath))
+						if (!string.IsNullOrEmpty(inlineObjectPath))
 						{
-							allInlineObjects[basePath].EntityReferences[reuse.Full] = new EntityPropertyReference(reuse.Full, entityClasses[reuse.SchemaName].Item2);
+							allInlineObjects[inlineObjectPath].EntityReferences[reuse.Full] =
+								new EntityPropertyReference(reuse.Full, entityClasses[reuse.SchemaName].Item2);
 						}
-						else if (reuse.SchemaName != name)
+						else if (!string.IsNullOrWhiteSpace(entityObjectPath) && reuse.SchemaName != name)
+						{
+							entityClasses[entityObjectPath].Item2.EntityReferences[reuse.Full] =
+								new EntityPropertyReference(reuse.Full, entityClasses[reuse.SchemaName].Item2);
+						}
+						else if (!string.IsNullOrWhiteSpace(entityObjectPath))
+						{
+							var nestedEntityClass = new EntityClass(reuse.Full, entityClasses[reuse.SchemaName].Item2.BaseFieldSet);
+							nestedEntityClasses[reuse.Full] = nestedEntityClass;
+						}
+						else
 						{
 
 						}
-
 					}
 				}
 			}
+
+			foreach (var (fullName, entity) in nestedEntityClasses)
+			{
+				var fieldTokens = fullName.Split('.').ToArray();
+				var parentPaths = fieldTokens.Select((token, i) => string.Join('.', fieldTokens.Take(i + 1))).Reverse().Skip(1).ToArray();
+				var nestedPath = parentPaths.FirstOrDefault(p => nestedEntityClasses.ContainsKey(p));
+				var entityPath = parentPaths.FirstOrDefault(p => entityClasses.ContainsKey(p));
+				if (!string.IsNullOrEmpty(nestedPath))
+				{
+					var nestedEntityClassRef = new EntityPropertyReference(fullName, entity);
+					nestedEntityClasses[nestedPath].EntityReferences[fullName] = nestedEntityClassRef;
+				}
+				else if (!string.IsNullOrEmpty(entityPath))
+				{
+					var nestedEntityClassRef = new EntityPropertyReference(fullName, entity);
+					entityClasses[entityPath].Item2.EntityReferences[fullName] = nestedEntityClassRef;
+				}
+				else
+				{
+
+				}
+			}
+
+			return entityClasses.ToDictionary(k => k.Key, v => v.Value.Item2).Concat(nestedEntityClasses).ToDictionary(k => k.Key, v => v.Value);
 		}
-		private static void ExtractValueTypesAndInlineObjectDefinitions(Dictionary<string, (EntityFieldSet v, EntityFieldsBaseClass)> entityFieldsBaseClasses, Dictionary<string, InlineObjectDefinition> allInlineObjects)
+
+		private static void ExtractValueTypesAndInlineObjectDefinitions(
+			Dictionary<string, (EntityFieldSet v, EntityFieldsBaseClass)> entityFieldsBaseClasses,
+			Dictionary<string, InlineObjectDefinition> allInlineObjects
+		)
 		{
 			foreach (var (name, (ecsEntity, entityClass)) in entityFieldsBaseClasses)
 			{
@@ -104,7 +152,18 @@ namespace Elastic.CommonSchema.Generator.Domain
 					var fieldTokens = fullPath.Split('.').ToArray();
 					if (fieldTokens.Length <= 2)
 					{
-						currentPropertyReferences[fullPath] = new ValueTypePropertyReference(fullPath, field);
+						if (field.Type is FieldType.Object or FieldType.Nested)
+						{
+							allInlineObjects[fullPath] = allInlineObjects.TryGetValue(fullPath, out var o)
+								? o
+								: new InlineObjectDefinition(fullPath, field);
+							currentPropertyReferences[fullPath] =
+								currentPropertyReferences.TryGetValue(fullPath, out var p)
+									? p
+									: new InlineObjectPropertyReference(fullPath, allInlineObjects[fullPath]);
+						}
+						else
+							currentPropertyReferences[fullPath] = new ValueTypePropertyReference(fullPath, field);
 					}
 					else
 					{
@@ -115,10 +174,19 @@ namespace Elastic.CommonSchema.Generator.Domain
 							return list;
 						});
 						var inlineObjectPaths = allPaths.Skip(1).SkipLast(1).ToArray();
+
+						// path is referencing an embedded nested ECS entity
+						if (ecsEntity.Nestings != null && ecsEntity.Nestings.Any(nesting => fullPath.StartsWith($"{nesting}.")))
+						{
+							continue;
+						}
+
 						foreach (var path in inlineObjectPaths)
 						{
-							// path is referencing an embedded nested ECS entity
-							if (ecsEntity.Nestings != null && ecsEntity.Nestings.Any(nesting => path.StartsWith($"{nesting}"))) continue;
+							if (!fieldSet.ContainsKey(path))
+							{
+								continue;
+							}
 
 							allInlineObjects[path] = allInlineObjects.TryGetValue(path, out var o) ? o : new InlineObjectDefinition(path, field);
 
@@ -139,6 +207,7 @@ namespace Elastic.CommonSchema.Generator.Domain
 	{
 		public IReadOnlyCollection<EntityFieldsBaseClass> EntityFieldsBaseDefinitions { get; set; }
 		public Dictionary<string, InlineObjectDefinition> InlineObjectDefinitions { get; set; }
+		public Dictionary<string, EntityClass> EntityClasses { get; set; }
 	}
 
 
