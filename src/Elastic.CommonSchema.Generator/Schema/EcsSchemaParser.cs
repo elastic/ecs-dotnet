@@ -36,7 +36,7 @@ namespace Elastic.CommonSchema.Generator.Schema
 				Converters = { new ExpectedConverter() }
 			});
 
-			var spec = jsonSerializer.Deserialize<Dictionary<string, EntityFieldSet>>(new JsonTextReader(new StringReader(asJson)));
+			var spec = jsonSerializer.Deserialize<Dictionary<string, FieldSet>>(new JsonTextReader(new StringReader(asJson)));
 
 			var warnings = SerializeParsedAndCompareWithOriginal(spec, asJson);
 			var templates = ReadTemplates();
@@ -61,7 +61,7 @@ namespace Elastic.CommonSchema.Generator.Schema
 		}
 
 
-		private List<string> SerializeParsedAndCompareWithOriginal(Dictionary<string, EntityFieldSet> spec, string asJson)
+		private List<string> SerializeParsedAndCompareWithOriginal(Dictionary<string, FieldSet> spec, string asJson)
 		{
 			var serialised = JsonConvert.SerializeObject(spec,
 				new JsonSerializerSettings

@@ -39,9 +39,11 @@ namespace Elastic.CommonSchema.Generator
 			var ecsSchema = new EcsSchemaParser(downloadBranch).Parse();
 			WarnAboutSchemaValidations(ecsSchema);
 
-			var csharpDomain = CsharpProjectionParser.Parse(ecsSchema);
+			var projection = new CsharpProjectionParser(ecsSchema).CreateCanonicalModel();
+			WarnAboutProjectionValidations(projection);
 
-			var process = csharpDomain.EntityFieldsBaseDefinitions.First(e => e.Name == "process");
+
+			var process = projection.FieldSets.First(e => e.Name == "process");
 
 			//FileGenerator.Generate(csharpDomain);
 		}
@@ -59,6 +61,22 @@ namespace Elastic.CommonSchema.Generator
 			}
 			Console.ForegroundColor = ConsoleColor.Green;
 			Console.WriteLine("No validation errors in YAML");
+			Console.ResetColor();
+		}
+
+		private static void WarnAboutProjectionValidations(CsharpProjection projection)
+		{
+			if (projection.Warnings.Count > 0)
+			{
+				Console.ForegroundColor = ConsoleColor.Red;
+				Console.WriteLine("Validation errors in Canonical Model");
+				foreach (var warning in projection.Warnings.Distinct().OrderBy(w => w))
+					Console.WriteLine(warning);
+				Console.ResetColor();
+				return;
+			}
+			Console.ForegroundColor = ConsoleColor.Green;
+			Console.WriteLine("No validation errors in the Canonical Model");
 			Console.ResetColor();
 		}
 	}

@@ -16,9 +16,9 @@ namespace Elastic.CommonSchema.Generator.Domain
 		public string ClrType { get; }
 	}
 
-	public record InlineObjectPropertyReference(string FullPath, InlineObjectDefinition InlineObject) : PropertyReference(FullPath)
+	public record InlineObjectPropertyReference(string FullPath, InlineObject InlineObject) : PropertyReference(FullPath)
 	{
-		public InlineObjectDefinition InlineObject { get; } = InlineObject;
+		public InlineObject InlineObject { get; } = InlineObject;
 	}
 
 	public record EntityPropertyReference(string FullPath, EntityClass Entity) : PropertyReference(FullPath)

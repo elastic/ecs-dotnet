@@ -8,7 +8,7 @@ using Newtonsoft.Json;
 namespace Elastic.CommonSchema.Generator.Schema.DTO
 {
 	[JsonObject(MemberSerialization.OptIn)]
-	public class EntityFieldSet
+	public class FieldSet
 	{
 		/// <summary>
 		/// Description of the field set
