@@ -8,45 +8,31 @@ namespace Elastic.CommonSchema.Generator.Domain
 {
 	public class CsharpProjection
 	{
+		public string VersionTag { get; set; }
 		public IReadOnlyCollection<FieldSetBaseClass> FieldSets { get; set; }
+		public IReadOnlyCollection<EntityClass> EntityClasses { get; set; }
+		public IReadOnlyCollection<EntityClass> NestedEntityClasses { get; set; }
 		public Dictionary<string, InlineObject> InlineObjects { get; set; }
-		public Dictionary<string, EntityClass> EntityClasses { get; set; }
-		public Dictionary<string, EntityClass> NestedEntityClasses { get; set; }
 		public ReadOnlyCollection<string> Warnings { get; set; }
 	}
 
-	public record FieldSetBaseClass(string Name)
-	{
-		public Dictionary<string, PropertyReference> Fields { get; } = new();
-	}
-
-	public record InlineObject(string Name, Field Field)
-	{
-		public Dictionary<string, PropertyReference> Fields { get; } = new();
-		public Dictionary<string, EntityPropertyReference> EntityReferences { get; } = new();
-	}
-
-	public record EntityClass(string Name, FieldSetBaseClass BaseFieldSet)
-	{
-		public Dictionary<string, EntityPropertyReference> EntityReferences { get; } = new();
-	}
 
 	public class CsharpProjectionParser
 	{
 		public CsharpProjectionParser(EcsSchema schema)
 		{
 			Schema = schema;
-			var entityFieldsBaseClasses = schema.Entities.ToDictionary(k => k.Name, v => (v, new FieldSetBaseClass(v.Name)));
-			FieldSetsBaseClasses = new ReadOnlyDictionary<string, (FieldSet v, FieldSetBaseClass)>(entityFieldsBaseClasses);
+			var entityFieldsBaseClasses = schema.Entities.ToDictionary(k => k.Name, v => new FieldSetBaseClass(v));
+			FieldSetsBaseClasses = new ReadOnlyDictionary<string, FieldSetBaseClass>(entityFieldsBaseClasses);
 			ExtractValueTypesAndInlineObjectDefinitions();
 
-			var entityClasses = Schema.Entities.ToDictionary(k => k.Name, v => (v, new EntityClass(v.Name, FieldSetsBaseClasses[v.Name].Item2)));
-			EntityClasses = new ReadOnlyDictionary<string, (FieldSet, EntityClass)>(entityClasses);
+			var entityClasses = Schema.Entities.ToDictionary(k => k.Name, v => new EntityClass(v.Name, FieldSetsBaseClasses[v.Name]));
+			EntityClasses = new ReadOnlyDictionary<string, EntityClass>(entityClasses);
 
 		}
 
-		private ReadOnlyDictionary<string, (FieldSet v, FieldSetBaseClass)> FieldSetsBaseClasses { get; }
-		private ReadOnlyDictionary<string, (FieldSet v, EntityClass)> EntityClasses { get; }
+		private ReadOnlyDictionary<string, FieldSetBaseClass> FieldSetsBaseClasses { get; }
+		private ReadOnlyDictionary<string, EntityClass> EntityClasses { get; }
 		private Dictionary<string, InlineObject> InlineObjects { get; } = new();
 		private CsharpProjection Projection { get; set; }
 		private List<string> Warnings { get; } = new();
@@ -59,12 +45,12 @@ namespace Elastic.CommonSchema.Generator.Domain
 		/// </para>
 		/// <para>
 		/// <see cref="FieldSetBaseClass"/> projects ECS <see cref="FieldSet"/>'s as reusable base classes <br/>
-		/// <see cref="FieldSetBaseClass.Fields"/> exposes: <br/>
+		/// <see cref="FieldSetBaseClass.Properties"/> exposes: <br/>
 		/// -- Fields holding value types e.g <c>process.uptime</c> <br/>
 		/// -- Reference to <see cref="InlineObject"/> for embedded inline objects in the fieldset e.g <c>process.tty, network.inner</c> <br/>
 		/// </para>
 		/// <para>
-		/// <see cref="InlineObject"/> groups all related inner object fields together under <see cref="InlineObject.Fields"/><br/>
+		/// <see cref="InlineObject"/> groups all related inner object fields together under <see cref="InlineObject.Properties"/><br/>
 		/// An example of fields that would be grouped would be <c>dns.answers.class, dns.answers.name, etc</c> under <c>dns.answers</c><br />
 		/// A <see cref="InlineObject"/> never extends from <see cref="FieldSetBaseClass"/> but can hold fields that reference fieldsets<br/>
 		/// These are exposed under <see cref="InlineObject.EntityReferences"/> an example of this is <c>email.attachments.file.hash</c> where
@@ -99,11 +85,12 @@ namespace Elastic.CommonSchema.Generator.Domain
 
 			Projection = new CsharpProjection
 			{
-				FieldSets = FieldSetsBaseClasses.Values.Select(t => t.Item2).ToList(),
+				FieldSets = FieldSetsBaseClasses.Values.ToList(),
+				EntityClasses = EntityClasses.Values.ToList(),
 				InlineObjects = InlineObjects,
-				EntityClasses = EntityClasses.ToDictionary(k=>k.Key, v=>v.Value.Item2),
-				NestedEntityClasses = nestedEntityTypes,
-				Warnings = Warnings.AsReadOnly()
+				NestedEntityClasses = nestedEntityTypes.Values.ToList(),
+				Warnings = Warnings.AsReadOnly(),
+				VersionTag = Schema.VersionTag
 			};
 			return Projection;
 		}
@@ -112,18 +99,19 @@ namespace Elastic.CommonSchema.Generator.Domain
 		{
 			// Create concrete entity instances of base field sets to reference
 			var nestedEntityClasses = new Dictionary<string, EntityClass>();
-			foreach (var (name, (ecsEntity, entityFieldsBaseClass)) in FieldSetsBaseClasses)
+			foreach (var (name, fieldSetBaseClass) in FieldSetsBaseClasses)
 			{
-				var entityClass = EntityClasses[name].Item2;
-				if (ecsEntity.ReusedHere == null) continue;
+				var fieldSet = fieldSetBaseClass.FieldSet;
+				var entityClass = EntityClasses[name];
+				if (fieldSet.ReusedHere == null) continue;
 
-				foreach (var reuse in ecsEntity.ReusedHere)
+				foreach (var reuse in fieldSet.ReusedHere)
 				{
 					var fieldTokens = reuse.Full.Split('.').ToArray();
 					// most common case a reference to a different schema
 					if (fieldTokens.Length <= 2 && reuse.SchemaName != name)
 					{
-						entityClass.EntityReferences[reuse.Full] = new EntityPropertyReference(reuse.Full, EntityClasses[reuse.SchemaName].Item2);
+						entityClass.EntityReferences[reuse.Full] = new EntityPropertyReference(reuse.Full, EntityClasses[reuse.SchemaName]);
 					}
 					else
 					{
@@ -137,16 +125,16 @@ namespace Elastic.CommonSchema.Generator.Domain
 						if (!string.IsNullOrEmpty(inlineObjectPath))
 						{
 							InlineObjects[inlineObjectPath].EntityReferences[reuse.Full] =
-								new EntityPropertyReference(reuse.Full, EntityClasses[reuse.SchemaName].Item2);
+								new EntityPropertyReference(reuse.Full, EntityClasses[reuse.SchemaName]);
 						}
 						else if (!string.IsNullOrWhiteSpace(entityObjectPath) && reuse.SchemaName != name)
 						{
-							EntityClasses[entityObjectPath].Item2.EntityReferences[reuse.Full] =
-								new EntityPropertyReference(reuse.Full, EntityClasses[reuse.SchemaName].Item2);
+							EntityClasses[entityObjectPath].EntityReferences[reuse.Full] =
+								new EntityPropertyReference(reuse.Full, EntityClasses[reuse.SchemaName]);
 						}
 						else if (!string.IsNullOrWhiteSpace(entityObjectPath))
 						{
-							var nestedEntityClass = new EntityClass(reuse.Full, EntityClasses[reuse.SchemaName].Item2.BaseFieldSet);
+							var nestedEntityClass = new EntityClass(reuse.Full, EntityClasses[reuse.SchemaName].BaseFieldSet);
 							nestedEntityClasses[reuse.Full] = nestedEntityClass;
 						}
 						else Warnings.Add($"Unable to project reuse of: ${reuse.Full}");
@@ -168,7 +156,7 @@ namespace Elastic.CommonSchema.Generator.Domain
 				else if (!string.IsNullOrEmpty(entityPath))
 				{
 					var nestedEntityClassRef = new EntityPropertyReference(fullName, entity);
-					EntityClasses[entityPath].Item2.EntityReferences[fullName] = nestedEntityClassRef;
+					EntityClasses[entityPath].EntityReferences[fullName] = nestedEntityClassRef;
 				}
 				else
 				{
@@ -181,12 +169,14 @@ namespace Elastic.CommonSchema.Generator.Domain
 
 		private void ExtractValueTypesAndInlineObjectDefinitions()
 		{
-			foreach (var (name, (ecsEntity, entityClass)) in FieldSetsBaseClasses)
+			foreach (var (name, fieldSetBaseClass) in FieldSetsBaseClasses)
 			{
-				var fieldSet = entityClass.Fields;
-				foreach (var (fullPath, field) in ecsEntity.Fields)
+				var fieldSet = fieldSetBaseClass.FieldSet;
+				var fields = fieldSetBaseClass.Properties;
+				var parentPath = name;
+				foreach (var (fullPath, field) in fieldSet.Fields)
 				{
-					var currentPropertyReferences = fieldSet;
+					var currentPropertyReferences = fields;
 					//always in the format of `entityname.[field]` where field can have dots too;
 					var fieldTokens = fullPath.Split('.').ToArray();
 					if (fieldTokens.Length <= 2)
@@ -202,7 +192,7 @@ namespace Elastic.CommonSchema.Generator.Domain
 									: new InlineObjectPropertyReference(fullPath, InlineObjects[fullPath]);
 						}
 						else
-							currentPropertyReferences[fullPath] = new ValueTypePropertyReference(fullPath, field);
+							currentPropertyReferences[fullPath] = new ValueTypePropertyReference(parentPath, fullPath, field);
 					}
 					else
 					{
@@ -215,14 +205,14 @@ namespace Elastic.CommonSchema.Generator.Domain
 						var inlineObjectPaths = allPaths.Skip(1).SkipLast(1).ToArray();
 
 						// path is referencing an embedded nested ECS entity
-						if (ecsEntity.Nestings != null && ecsEntity.Nestings.Any(nesting => fullPath.StartsWith($"{nesting}.")))
+						if (fieldSet.Nestings != null && fieldSet.Nestings.Any(nesting => fullPath.StartsWith($"{nesting}.")))
 						{
 							continue;
 						}
 
 						foreach (var path in inlineObjectPaths)
 						{
-							if (!fieldSet.ContainsKey(path))
+							if (!fields.ContainsKey(path))
 							{
 								continue;
 							}
@@ -233,9 +223,10 @@ namespace Elastic.CommonSchema.Generator.Domain
 								currentPropertyReferences.TryGetValue(path, out var p)
 									? p
 									: new InlineObjectPropertyReference(path, InlineObjects[path]);
-							currentPropertyReferences = InlineObjects[path].Fields;
+							currentPropertyReferences = InlineObjects[path].Properties;
+							parentPath = path;
 						}
-						currentPropertyReferences[fullPath] = new ValueTypePropertyReference(fullPath, field);
+						currentPropertyReferences[fullPath] = new ValueTypePropertyReference(parentPath, fullPath, field);
 					}
 				}
 			}

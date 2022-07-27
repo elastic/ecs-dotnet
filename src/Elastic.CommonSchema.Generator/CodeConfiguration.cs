@@ -35,6 +35,6 @@ namespace Generator
 		}
 
 		public static string SpecificationFolder { get; } = $@"{Root}Specification/";
-		public static string ViewFolder { get; } = $@"{Root}Generator/Views/";
+		public static string ViewFolder { get; } = $@"{Root}Elastic.CommonSchema.Generator/Views/";
 	}
 }

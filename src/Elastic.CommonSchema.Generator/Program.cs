@@ -42,10 +42,7 @@ namespace Elastic.CommonSchema.Generator
 			var projection = new CsharpProjectionParser(ecsSchema).CreateCanonicalModel();
 			WarnAboutProjectionValidations(projection);
 
-
-			var process = projection.FieldSets.First(e => e.Name == "process");
-
-			//FileGenerator.Generate(csharpDomain);
+			FileGenerator.Generate(projection);
 		}
 
 		private static void WarnAboutSchemaValidations(EcsSchema ecsSchema)

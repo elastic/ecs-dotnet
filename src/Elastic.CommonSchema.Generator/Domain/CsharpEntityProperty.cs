@@ -1,17 +1,72 @@
 using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Globalization;
+using System.Linq;
 using System.Text.RegularExpressions;
 using Elastic.CommonSchema.Generator.Schema.DTO;
+using Microsoft.Extensions.FileSystemGlobbing.Internal.PathSegments;
 
 namespace Elastic.CommonSchema.Generator.Domain
 {
-	public abstract record PropertyReference(string FullPath)
+	public class FieldSetBaseClass
 	{
-		public string Name { get; } = FullPath.GetLastProperty();
+		public FieldSetBaseClass(FieldSet fieldSet) => FieldSet = fieldSet;
+
+		public FieldSet FieldSet { get; }
+		public string Name => $"{FieldSet.Name.PascalCase()}Base";
+
+		public Dictionary<string, PropertyReference> Properties { get; } = new();
+
+		public IEnumerable<ValueTypePropertyReference> ValueProperties =>
+			Properties.Values.OfType<ValueTypePropertyReference>();
+	}
+
+	public class InlineObject
+	{
+		public InlineObject(string Name, Field Field) { }
+
+		public Dictionary<string, PropertyReference> Properties { get; } = new();
+		public Dictionary<string, EntityPropertyReference> EntityReferences { get; } = new();
+	}
+
+	public class EntityClass
+	{
+		public EntityClass(string name, FieldSetBaseClass baseFieldSet)
+		{
+			Name = name.PascalCase();
+			BaseFieldSet = baseFieldSet;
+		}
+		public string Name { get; }
+		public FieldSetBaseClass BaseFieldSet { get; }
+		public bool Partial => Name is "Base" or "Log";
+
+
+		public Dictionary<string, EntityPropertyReference> EntityReferences { get; } = new();
+	}
+
+
+	public abstract record PropertyReference
+	{
+		protected PropertyReference(string fullPath) => FullPath = fullPath;
+
+		public string FullPath { get; set; }
 	}
 
 	public record ValueTypePropertyReference : PropertyReference
 	{
-		public ValueTypePropertyReference(string fullPath, Field field) : base(fullPath) => ClrType = field.Type.GetClrType();
+		private readonly string _parentPath;
+		private readonly Field _field;
+
+		public ValueTypePropertyReference(string parentPath, string fullPath, Field field) : base(fullPath)
+		{
+			_parentPath = parentPath;
+			_field = field;
+			ClrType = field.Type.GetClrType();
+		}
+
+		public string JsonProperty => FullPath.GetLocalProperty(_parentPath);
+		public string Name => JsonProperty.PascalCase();
 
 		public string ClrType { get; }
 	}
@@ -24,12 +79,6 @@ namespace Elastic.CommonSchema.Generator.Domain
 	public record EntityPropertyReference(string FullPath, EntityClass Entity) : PropertyReference(FullPath)
 	{
 	}
-
-	public record NestedEntityClassPropertyReference : PropertyReference
-	{
-		public NestedEntityClassPropertyReference(string fullPath) : base(fullPath) { }
-	}
-
 
 	public class CsharpEntityProperty
 	{
@@ -45,9 +94,17 @@ namespace Elastic.CommonSchema.Generator.Domain
 
 	public static class CsharpPropertyExtensions
 	{
-		private static readonly Regex LastPropertyRegex = new($"^.+\\.([^\\.]+)$");
 
+		public static string PascalCase(this string s) => new CultureInfo("en-US")
+			.TextInfo
+			.ToTitleCase(s.ToLowerInvariant())
+			.Replace("_", string.Empty)
+			.Replace(".", string.Empty);
+
+		private static readonly Regex LastPropertyRegex = new($"^.+\\.([^\\.]+)$");
 		public static string GetLastProperty(this string s) => LastPropertyRegex.Replace(s, "$1");
+
+		public static string GetLocalProperty(this string s, string prefix) => new Regex($"^{prefix.Replace(".", "\\.")}.([^\\.]+)$").Replace(s, "$1");
 
 		public static string GetClrType(this FieldType fieldType)
 		{

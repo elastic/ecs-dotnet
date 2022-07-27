@@ -31,9 +31,8 @@ namespace Generator
 		{
 			var actions = new Dictionary<Action<CsharpProjection>, string>
 			{
-				{ GenerateTypes, "Dotnet types" },
-				{ GenerateTypeMappings, "Dotnet type mapping" },
-				{ GenerateBaseJsonFormatter, "Base Json Formatter" },
+				{ m => Generate(m, "FieldSets"), "Field Sets" },
+				{ m => Generate(m, "Entities"), "Entities" },
 			};
 
 			using (var progressBar = new ProgressBar(actions.Count, "Generating code",
@@ -53,35 +52,16 @@ namespace Generator
 		private static string DoRazor(string name, string template, CsharpProjection model) =>
 			Razor.CompileRenderStringAsync(name, template, model).GetAwaiter().GetResult();
 
-		private static void GenerateTypes(CsharpProjection model)
+		private static void Generate(CsharpProjection model, string what)
 		{
 			var targetDir = Path.GetFullPath(CodeConfiguration.ElasticCommonSchemaGeneratedFolder);
-			var outputFile = Path.Combine(targetDir, @"Types.Generated.cs");
-			var path = Path.Combine(CodeConfiguration.ViewFolder, @"Types.Generated.cshtml");
+			var outputFile = Path.Combine(targetDir, $"{what}.Generated.cs");
+			var path = Path.Combine(CodeConfiguration.ViewFolder, $"{what}.Generated.cshtml");
 			var template = File.ReadAllText(path);
-			var source = DoRazor(nameof(GenerateTypes), template, model);
+			var source = DoRazor(nameof(Generate) + what, template, model);
 			File.WriteAllText(outputFile, source);
 		}
 
-		private static void GenerateTypeMappings(CsharpProjection model)
-		{
-			var targetDir = Path.GetFullPath(CodeConfiguration.ElasticCommonSchemaNESTGeneratedFolder);
-			var outputFile = Path.Combine(targetDir, @"TypeMappings.Generated.cs");
-			var path = Path.Combine(CodeConfiguration.ViewFolder, @"TypeMappings.Generated.cshtml");
-			var template = File.ReadAllText(path);
-			var source = DoRazor(nameof(GenerateTypeMappings), template, model);
-			File.WriteAllText(outputFile, source);
-		}
-
-		private static void GenerateBaseJsonFormatter(CsharpProjection model)
-		{
-			var targetDir = Path.GetFullPath(CodeConfiguration.ElasticCommonSchemaGeneratedFolder);
-			var outputFile = Path.Combine(targetDir, "Serialization", @"BaseJsonFormatter.Generated.cs");
-			var path = Path.Combine(CodeConfiguration.ViewFolder, @"BaseJsonFormatter.Generated.cshtml");
-			var template = File.ReadAllText(path);
-			var source = DoRazor(nameof(GenerateBaseJsonFormatter), template, model);
-			File.WriteAllText(outputFile, source);
-		}
 
 	}
 }

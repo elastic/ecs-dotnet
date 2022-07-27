@@ -14,7 +14,7 @@ using static Elastic.CommonSchema.Serialization.JsonConfiguration;
 
 namespace Elastic.CommonSchema
 {
-	public partial class Base
+	public partial class Base : BaseBase
 	{
 		/// <summary>
 		/// If implemented in a subclass, this allows you to hook into <see cref="BaseJsonConverter"/>

@@ -12,8 +12,11 @@ namespace Elastic.CommonSchema.Generator.Schema
 {
 	public class EcsSchemaParser
 	{
+		private readonly string _versionTag;
+
 		public EcsSchemaParser(string versionTag)
 		{
+			_versionTag = versionTag;
 			SpecificationFolder = Path.Combine(CodeConfiguration.SpecificationFolder, versionTag);
 			EcsYamlFile = Path.Combine(SpecificationFolder, "Core", "ecs_nested.yml");
 			if (!File.Exists(EcsYamlFile)) throw new Exception($"Failed to locate {EcsYamlFile}");
@@ -40,7 +43,7 @@ namespace Elastic.CommonSchema.Generator.Schema
 
 			var warnings = SerializeParsedAndCompareWithOriginal(spec, asJson);
 			var templates = ReadTemplates();
-			return new EcsSchema(spec.Values.ToList(), warnings, templates);
+			return new EcsSchema(spec.Values.ToList(), warnings, templates, _versionTag);
 		}
 
 		private Dictionary<string, string> ReadTemplates()
