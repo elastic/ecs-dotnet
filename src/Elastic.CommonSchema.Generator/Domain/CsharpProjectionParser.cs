@@ -11,8 +11,9 @@ namespace Elastic.CommonSchema.Generator.Domain
 		public string VersionTag { get; set; }
 		public IReadOnlyCollection<FieldSetBaseClass> FieldSets { get; set; }
 		public IReadOnlyCollection<EntityClass> EntityClasses { get; set; }
+		public EntityClass Base { get; set; }
 		public IReadOnlyCollection<EntityClass> NestedEntityClasses { get; set; }
-		public Dictionary<string, InlineObject> InlineObjects { get; set; }
+		public IReadOnlyCollection<InlineObject> InlineObjects { get; set; }
 		public ReadOnlyCollection<string> Warnings { get; set; }
 	}
 
@@ -86,8 +87,9 @@ namespace Elastic.CommonSchema.Generator.Domain
 			Projection = new CsharpProjection
 			{
 				FieldSets = FieldSetsBaseClasses.Values.ToList(),
-				EntityClasses = EntityClasses.Values.ToList(),
-				InlineObjects = InlineObjects,
+				EntityClasses = EntityClasses.Values.Where(e=>e.Name != "Base").ToList(),
+				Base = EntityClasses.Values.First(e=>e.Name == "Base"),
+				InlineObjects = InlineObjects.Values.ToList(),
 				NestedEntityClasses = nestedEntityTypes.Values.ToList(),
 				Warnings = Warnings.AsReadOnly(),
 				VersionTag = Schema.VersionTag
@@ -103,6 +105,7 @@ namespace Elastic.CommonSchema.Generator.Domain
 			{
 				var fieldSet = fieldSetBaseClass.FieldSet;
 				var entityClass = EntityClasses[name];
+				var parentPath = name;
 				if (fieldSet.ReusedHere == null) continue;
 
 				foreach (var reuse in fieldSet.ReusedHere)
@@ -111,7 +114,7 @@ namespace Elastic.CommonSchema.Generator.Domain
 					// most common case a reference to a different schema
 					if (fieldTokens.Length <= 2 && reuse.SchemaName != name)
 					{
-						entityClass.EntityReferences[reuse.Full] = new EntityPropertyReference(reuse.Full, EntityClasses[reuse.SchemaName]);
+						entityClass.EntityReferences[reuse.Full] = new EntityPropertyReference(parentPath, reuse.Full, EntityClasses[reuse.SchemaName]);
 					}
 					else
 					{
@@ -125,12 +128,12 @@ namespace Elastic.CommonSchema.Generator.Domain
 						if (!string.IsNullOrEmpty(inlineObjectPath))
 						{
 							InlineObjects[inlineObjectPath].EntityReferences[reuse.Full] =
-								new EntityPropertyReference(reuse.Full, EntityClasses[reuse.SchemaName]);
+								new EntityPropertyReference(inlineObjectPath, reuse.Full, EntityClasses[reuse.SchemaName]);
 						}
 						else if (!string.IsNullOrWhiteSpace(entityObjectPath) && reuse.SchemaName != name)
 						{
 							EntityClasses[entityObjectPath].EntityReferences[reuse.Full] =
-								new EntityPropertyReference(reuse.Full, EntityClasses[reuse.SchemaName]);
+								new EntityPropertyReference(entityObjectPath, reuse.Full, EntityClasses[reuse.SchemaName]);
 						}
 						else if (!string.IsNullOrWhiteSpace(entityObjectPath))
 						{
@@ -150,12 +153,12 @@ namespace Elastic.CommonSchema.Generator.Domain
 				var entityPath = parentPaths.FirstOrDefault(p => EntityClasses.ContainsKey(p));
 				if (!string.IsNullOrEmpty(nestedPath))
 				{
-					var nestedEntityClassRef = new EntityPropertyReference(fullName, entity);
+					var nestedEntityClassRef = new EntityPropertyReference(nestedPath, fullName, entity);
 					nestedEntityClasses[nestedPath].EntityReferences[fullName] = nestedEntityClassRef;
 				}
 				else if (!string.IsNullOrEmpty(entityPath))
 				{
-					var nestedEntityClassRef = new EntityPropertyReference(fullName, entity);
+					var nestedEntityClassRef = new EntityPropertyReference(entityPath, fullName, entity);
 					EntityClasses[entityPath].EntityReferences[fullName] = nestedEntityClassRef;
 				}
 				else
@@ -176,11 +179,16 @@ namespace Elastic.CommonSchema.Generator.Domain
 				var parentPath = name;
 				foreach (var (fullPath, field) in fieldSet.Fields)
 				{
+					if (fullPath == "trace.id")
+					{
+
+					}
 					var currentPropertyReferences = fields;
 					//always in the format of `entityname.[field]` where field can have dots too;
 					var fieldTokens = fullPath.Split('.').ToArray();
 					if (fieldTokens.Length <= 2)
 					{
+						parentPath = fullPath.StartsWith(name + ".") && fieldTokens.Length > 1 ? fieldTokens[0] : name;
 						if (field.Type is FieldType.Object or FieldType.Nested)
 						{
 							InlineObjects[fullPath] = InlineObjects.TryGetValue(fullPath, out var o)
@@ -189,7 +197,7 @@ namespace Elastic.CommonSchema.Generator.Domain
 							currentPropertyReferences[fullPath] =
 								currentPropertyReferences.TryGetValue(fullPath, out var p)
 									? p
-									: new InlineObjectPropertyReference(fullPath, InlineObjects[fullPath]);
+									: new InlineObjectPropertyReference(parentPath, fullPath, InlineObjects[fullPath]);
 						}
 						else
 							currentPropertyReferences[fullPath] = new ValueTypePropertyReference(parentPath, fullPath, field);
@@ -210,6 +218,7 @@ namespace Elastic.CommonSchema.Generator.Domain
 							continue;
 						}
 
+						var foundInlineObjectPath = false;
 						foreach (var path in inlineObjectPaths)
 						{
 							if (!fields.ContainsKey(path))
@@ -222,9 +231,14 @@ namespace Elastic.CommonSchema.Generator.Domain
 							currentPropertyReferences[path] =
 								currentPropertyReferences.TryGetValue(path, out var p)
 									? p
-									: new InlineObjectPropertyReference(path, InlineObjects[path]);
+									: new InlineObjectPropertyReference(parentPath, path, InlineObjects[path]);
 							currentPropertyReferences = InlineObjects[path].Properties;
 							parentPath = path;
+							foundInlineObjectPath = true;
+						}
+						if (!foundInlineObjectPath)
+						{
+							parentPath = name;
 						}
 						currentPropertyReferences[fullPath] = new ValueTypePropertyReference(parentPath, fullPath, field);
 					}

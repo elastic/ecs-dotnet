@@ -33,6 +33,9 @@ namespace Generator
 			{
 				{ m => Generate(m, "FieldSets"), "Field Sets" },
 				{ m => Generate(m, "Entities"), "Entities" },
+				{ m => Generate(m, "InlineObjects"), "Inline Objects" },
+				{ m => Generate(m, "Base"), "Base ECS Document" },
+				{ m => Generate(m, "BaseJsonConverter"), "Base ECS Document Json Converter" },
 			};
 
 			using (var progressBar = new ProgressBar(actions.Count, "Generating code",

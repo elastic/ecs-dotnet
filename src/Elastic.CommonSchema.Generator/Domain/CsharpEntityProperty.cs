@@ -20,14 +20,35 @@ namespace Elastic.CommonSchema.Generator.Domain
 
 		public IEnumerable<ValueTypePropertyReference> ValueProperties =>
 			Properties.Values.OfType<ValueTypePropertyReference>();
+
+		public IEnumerable<InlineObjectPropertyReference> InlineObjectProperties =>
+			Properties.Values.OfType<InlineObjectPropertyReference>();
 	}
 
 	public class InlineObject
 	{
-		public InlineObject(string Name, Field Field) { }
+		public string Name { get; }
+		public Field Field { get; }
+
+		public InlineObject(string name, Field field)
+		{
+			Name = name.PascalCase();
+			Field = field;
+		}
 
 		public Dictionary<string, PropertyReference> Properties { get; } = new();
+
 		public Dictionary<string, EntityPropertyReference> EntityReferences { get; } = new();
+
+		public IEnumerable<ValueTypePropertyReference> ValueProperties =>
+			Properties.Values.OfType<ValueTypePropertyReference>();
+
+		public IEnumerable<InlineObjectPropertyReference> InlineObjectProperties =>
+			Properties.Values.OfType<InlineObjectPropertyReference>();
+
+		public IEnumerable<EntityPropertyReference> EntityProperties => EntityReferences.Values;
+
+		public bool IsDictionary => ValueProperties.Count() + EntityProperties.Count() == 0;
 	}
 
 	public class EntityClass
@@ -37,47 +58,62 @@ namespace Elastic.CommonSchema.Generator.Domain
 			Name = name.PascalCase();
 			BaseFieldSet = baseFieldSet;
 		}
+
 		public string Name { get; }
 		public FieldSetBaseClass BaseFieldSet { get; }
 		public bool Partial => Name is "Base" or "Log";
 
 
 		public Dictionary<string, EntityPropertyReference> EntityReferences { get; } = new();
+
+		public IEnumerable<EntityPropertyReference> EntityProperties => EntityReferences.Values;
 	}
 
 
 	public abstract record PropertyReference
 	{
-		protected PropertyReference(string fullPath) => FullPath = fullPath;
+		protected PropertyReference(string localPath, string fullPath)
+		{
+			LocalPath = localPath;
+			FullPath = fullPath;
+		}
 
+		public string JsonProperty => FullPath.GetLocalProperty(LocalPath);
+		public string Name => JsonProperty.PascalCase();
+
+
+		public string LocalPath { get; }
 		public string FullPath { get; set; }
 	}
 
 	public record ValueTypePropertyReference : PropertyReference
 	{
-		private readonly string _parentPath;
-		private readonly Field _field;
-
-		public ValueTypePropertyReference(string parentPath, string fullPath, Field field) : base(fullPath)
+		public ValueTypePropertyReference(string parentPath, string fullPath, Field field) : base(parentPath, fullPath)
 		{
-			_parentPath = parentPath;
-			_field = field;
 			ClrType = field.Type.GetClrType();
 		}
-
-		public string JsonProperty => FullPath.GetLocalProperty(_parentPath);
-		public string Name => JsonProperty.PascalCase();
 
 		public string ClrType { get; }
 	}
 
-	public record InlineObjectPropertyReference(string FullPath, InlineObject InlineObject) : PropertyReference(FullPath)
+	public record InlineObjectPropertyReference : PropertyReference
 	{
-		public InlineObject InlineObject { get; } = InlineObject;
+		public InlineObjectPropertyReference(string parentPath, string fullPath, InlineObject inlineObject) : base(parentPath, fullPath)
+		{
+			InlineObject = inlineObject;
+		}
+
+		public InlineObject InlineObject { get; }
 	}
 
-	public record EntityPropertyReference(string FullPath, EntityClass Entity) : PropertyReference(FullPath)
+	public record EntityPropertyReference : PropertyReference
 	{
+		public EntityPropertyReference(string parentPath, string fullPath, EntityClass entity) : base(parentPath, fullPath)
+		{
+			Entity = entity;
+		}
+
+		public EntityClass Entity { get; }
 	}
 
 	public class CsharpEntityProperty
@@ -94,7 +130,6 @@ namespace Elastic.CommonSchema.Generator.Domain
 
 	public static class CsharpPropertyExtensions
 	{
-
 		public static string PascalCase(this string s) => new CultureInfo("en-US")
 			.TextInfo
 			.ToTitleCase(s.ToLowerInvariant())
@@ -102,9 +137,11 @@ namespace Elastic.CommonSchema.Generator.Domain
 			.Replace(".", string.Empty);
 
 		private static readonly Regex LastPropertyRegex = new($"^.+\\.([^\\.]+)$");
+
 		public static string GetLastProperty(this string s) => LastPropertyRegex.Replace(s, "$1");
 
-		public static string GetLocalProperty(this string s, string prefix) => new Regex($"^{prefix.Replace(".", "\\.")}.([^\\.]+)$").Replace(s, "$1");
+		public static string GetLocalProperty(this string s, string prefix) =>
+			new Regex($"^{prefix.Replace(".", "\\.")}\\.(.+)$").Replace(s, "$1");
 
 		public static string GetClrType(this FieldType fieldType)
 		{
@@ -119,21 +156,21 @@ namespace Elastic.CommonSchema.Generator.Domain
 				case FieldType.Ip:
 					return "string";
 				case FieldType.Long:
-					return "long";
+					return "long?";
 				case FieldType.Integer:
-					return "int";
+					return "int?";
 				case FieldType.Date:
-					return "DateTimeOffset";
+					return "DateTimeOffset?";
 				case FieldType.Nested:
 				case FieldType.Object:
 					return "object";
 				case FieldType.ScaledFloat:
 				case FieldType.Float:
-					return "float";
+					return "float?";
 				case FieldType.GeoPoint:
 					return "Location";
 				case FieldType.Boolean:
-					return "bool";
+					return "bool?";
 				default: throw new ArgumentOutOfRangeException(fieldType.ToString());
 			}
 		}

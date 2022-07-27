@@ -11,7 +11,6 @@ using System.Threading;
 using Elastic.CommonSchema;
 using Elastic.Ingest;
 using Microsoft.Extensions.Logging;
-using Trace = Elastic.CommonSchema.Trace;
 
 namespace Elasticsearch.Extensions.Logging
 {
@@ -131,7 +130,7 @@ namespace Elasticsearch.Extensions.Logging
 				{
 					// Unique identifier of the trace.
 					// A trace groups multiple events like transactions that belong together. For example, a user request handled by multiple inter-connected services.
-					logEvent.Trace = new Trace { Id = activity.TraceId.ToString() };
+					logEvent.Tracing.TraceId = activity.TraceId.ToString();
 					logEvent.Span = new Span { Id = activity.SpanId.ToString() };
 				}
 				else

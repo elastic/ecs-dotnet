@@ -1,0 +1,52 @@
+@using System
+@using Generator
+@inherits Elastic.CommonSchema.Generator.Views.CodeTemplatePage<Elastic.CommonSchema.Generator.Domain.CsharpProjection>
+// Licensed to Elasticsearch B.V under one or more agreements.
+// Elasticsearch B.V licenses this file to you under the Apache 2.0 License.
+// See the LICENSE file in the project root for more information
+
+/*
+IMPORTANT NOTE
+==============
+This file has been generated. 
+If you wish to submit a PR please modify the original csharp file and submit the PR with that change. Thanks!
+*/
+
+// ReSharper disable RedundantUsingDirective
+using System;
+using System.Collections.Generic;
+using System.Threading;
+using System.Threading.Tasks;
+using System.Linq;
+using System.Net;
+using System.Runtime.Serialization;
+
+namespace Elastic.CommonSchema
+{
+@foreach (var inlineObject in Model.InlineObjects)
+{
+<text>
+	///<summary>
+	/// @(inlineObject.Field.Description)
+	///</summary>
+	public class @inlineObject.Name@Raw(inlineObject.IsDictionary ? " : Dictionary<string, string>" : "") {
+@foreach (var property in inlineObject.ValueProperties)
+{
+<text>
+		///<summary>@property.FullPath</summary>
+		[DataMember(Name = "@property.JsonProperty")]
+		public @property.ClrType @property.Name { get; set; }
+</text>
+}
+@foreach (var property in inlineObject.EntityProperties)
+{
+<text>
+		///<summary>@property.FullPath</summary>
+		[DataMember(Name = "@property.JsonProperty")]
+		public @property.Entity.Name @property.Name { get; set; }
+</text>
+}
+	}
+</text>
+}
+}
