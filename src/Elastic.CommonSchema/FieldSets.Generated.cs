@@ -82,6 +82,18 @@ namespace Elastic.CommonSchema
 		[DataMember(Name = "tags")]
 		public string Tags { get; set; }
 
+		///<summary>span.id</summary>
+		[DataMember(Name = "span.id")]
+		public string SpanId { get; set; }
+
+		///<summary>trace.id</summary>
+		[DataMember(Name = "trace.id")]
+		public string TraceId { get; set; }
+
+		///<summary>transaction.id</summary>
+		[DataMember(Name = "transaction.id")]
+		public string TransactionId { get; set; }
+
 		///<summary>labels</summary>
 		[DataMember(Name = "labels")]
 		public Labels Labels { get; set; }
@@ -2041,24 +2053,6 @@ namespace Elastic.CommonSchema
 		///<summary>tls.version_protocol</summary>
 		[DataMember(Name = "version_protocol")]
 		public string VersionProtocol { get; set; }
-	}
-
-	///<summary>
-	/// Distributed tracing makes it possible to analyze performance throughout a microservice architecture all in one view. This is accomplished by tracing all of the requests - from the initial web request in the front-end service - to queries made through multiple back-end services.&#xA;Unlike most field sets in ECS, the tracing fields are *not* nested under the field set name. In other words, the correct field name is `trace.id`, not `tracing.trace.id`, and so on.
-	///</summary>
-	public abstract class TracingBase {
-
-		///<summary>span.id</summary>
-		[DataMember(Name = "span.id")]
-		public string SpanId { get; set; }
-
-		///<summary>trace.id</summary>
-		[DataMember(Name = "trace.id")]
-		public string TraceId { get; set; }
-
-		///<summary>transaction.id</summary>
-		[DataMember(Name = "transaction.id")]
-		public string TransactionId { get; set; }
 	}
 
 	///<summary>

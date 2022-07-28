@@ -36,19 +36,15 @@ namespace Elastic.CommonSchema.Benchmarks
 				Log = new Log
 				{
 					Level = "Debug", Logger = "Logger",
-					Origin = new LogOrigin
-					{
-						File = new OriginFile { Line = 12, Name = "file.cs"}, Function = "Complex"
-					},
-					Original = "new log line",
+					OriginFunction = "Complext",
+					OriginFileLine = 12,
+					OriginFileName = "file.cs",
 					Syslog = new LogSyslog {
-						Facility = new SyslogFacility
-						{
-							Code = 12, Name = "syslog"
-						}, Priority = 12, Severity = new SyslogSeverity()
-						{
-							Code = 12, Name =  "asd"
-						},
+						FacilityCode = 12,
+						FacilityName = "syslog",
+						Priority = 12,
+						SeverityCode = 12,
+						SeverityName = "asd",
 					}
 				},
 				Message = "hello world!",

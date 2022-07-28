@@ -485,10 +485,6 @@ namespace Elastic.CommonSchema
 		public X509 ServerX509 { get; set; }
 	}
 
-	///<inheritdoc cref="TracingBase"/>
-	public class Tracing : TracingBase {
-	}
-
 	///<inheritdoc cref="UrlBase"/>
 	public class Url : UrlBase {
 	}

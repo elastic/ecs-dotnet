@@ -86,8 +86,8 @@ namespace Elastic.CommonSchema.Generator.Domain
 
 			Projection = new CsharpProjection
 			{
-				FieldSets = FieldSetsBaseClasses.Values.ToList(),
-				EntityClasses = EntityClasses.Values.Where(e=>e.Name != "Base").ToList(),
+				FieldSets = FieldSetsBaseClasses.Values.Where(e=>e.FieldSet.Root != true || e.FieldSet.Name == "base" ).ToList(),
+				EntityClasses = EntityClasses.Values.Where(e=>e.Name != "Base" && e.BaseFieldSet.FieldSet.Root != true).ToList(),
 				Base = EntityClasses.Values.First(e=>e.Name == "Base"),
 				InlineObjects = InlineObjects.Values.ToList(),
 				NestedEntityClasses = nestedEntityTypes.Values.ToList(),
@@ -184,6 +184,10 @@ namespace Elastic.CommonSchema.Generator.Domain
 
 					}
 					var currentPropertyReferences = fields;
+					//If the fieldset declares itself as rooted the fields should be appended to `Base`
+					if (fieldSet.Root == true)
+						currentPropertyReferences = FieldSetsBaseClasses["base"].Properties;
+
 					//always in the format of `entityname.[field]` where field can have dots too;
 					var fieldTokens = fullPath.Split('.').ToArray();
 					if (fieldTokens.Length <= 2)

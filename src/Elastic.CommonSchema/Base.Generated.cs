@@ -196,10 +196,6 @@ namespace Elastic.CommonSchema
 		[DataMember(Name = "tls")]
 		public Tls Tls { get; set; }
 
-		///<summary>tracing</summary>
-		[DataMember(Name = "tracing")]
-		public Tracing Tracing { get; set; }
-
 		///<summary>url</summary>
 		[DataMember(Name = "url")]
 		public Url Url { get; set; }

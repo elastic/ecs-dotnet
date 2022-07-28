@@ -34,6 +34,9 @@ namespace Elastic.CommonSchema.Serialization
 				"@timestamp" => ReadDateTime(ref reader, ref @timestamp),
 				"message" => ReadProp<string>(ref reader, "message", ecsEvent, (b, v) => b.Message = v),
 				"tags" => ReadProp<string>(ref reader, "tags", ecsEvent, (b, v) => b.Tags = v),
+				"span.id" => ReadProp<string>(ref reader, "span.id", ecsEvent, (b, v) => b.SpanId = v),
+				"trace.id" => ReadProp<string>(ref reader, "trace.id", ecsEvent, (b, v) => b.TraceId = v),
+				"transaction.id" => ReadProp<string>(ref reader, "transaction.id", ecsEvent, (b, v) => b.TransactionId = v),
 				"labels" => ReadProp<Labels>(ref reader, "labels", ecsEvent, (b, v) => b.Labels = v),
 				"agent" => ReadProp<Agent>(ref reader, "agent", ecsEvent, (b, v) => b.Agent = v),
 				"as" => ReadProp<As>(ref reader, "as", ecsEvent, (b, v) => b.As = v),
@@ -75,7 +78,6 @@ namespace Elastic.CommonSchema.Serialization
 				"source" => ReadProp<Source>(ref reader, "source", ecsEvent, (b, v) => b.Source = v),
 				"threat" => ReadProp<Threat>(ref reader, "threat", ecsEvent, (b, v) => b.Threat = v),
 				"tls" => ReadProp<Tls>(ref reader, "tls", ecsEvent, (b, v) => b.Tls = v),
-				"tracing" => ReadProp<Tracing>(ref reader, "tracing", ecsEvent, (b, v) => b.Tracing = v),
 				"url" => ReadProp<Url>(ref reader, "url", ecsEvent, (b, v) => b.Url = v),
 				"user" => ReadProp<User>(ref reader, "user", ecsEvent, (b, v) => b.User = v),
 				"user_agent" => ReadProp<UserAgent>(ref reader, "user_agent", ecsEvent, (b, v) => b.UserAgent = v),
@@ -107,6 +109,9 @@ namespace Elastic.CommonSchema.Serialization
 
 			// Base fields
 			WriteProp(writer, "tags", value.Tags);
+				WriteProp(writer, "span.id", value.SpanId);
+				WriteProp(writer, "trace.id", value.TraceId);
+				WriteProp(writer, "transaction.id", value.TransactionId);
 			WriteProp(writer, "labels", value.Labels);
 			// Complex types
 			WriteProp(writer, "agent", value.Agent);
@@ -149,7 +154,6 @@ namespace Elastic.CommonSchema.Serialization
 			WriteProp(writer, "source", value.Source);
 			WriteProp(writer, "threat", value.Threat);
 			WriteProp(writer, "tls", value.Tls);
-			WriteProp(writer, "tracing", value.Tracing);
 			WriteProp(writer, "url", value.Url);
 			WriteProp(writer, "user", value.User);
 			WriteProp(writer, "user_agent", value.UserAgent);

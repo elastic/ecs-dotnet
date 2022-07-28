@@ -134,9 +134,9 @@ namespace Elastic.CommonSchema.NLog
 				Event = GetEvent(logEvent),
 				Metadata = GetMetadata(logEvent),
 				Process = GetProcess(logEvent),
-				Trace = GetTrace(logEvent),
-				Transaction = GetTransaction(logEvent),
-				Span = GetSpan(logEvent),
+				TraceId = GetTrace(logEvent),
+				TransactionId = GetTransaction(logEvent),
+				SpanId = GetSpan(logEvent),
 				Error = GetError(logEvent.Exception),
 				Tags = GetTags(logEvent),
 				Labels = GetLabels(logEvent),
@@ -275,18 +275,13 @@ namespace Elastic.CommonSchema.NLog
 			var logOriginSourceLine = LogOriginCallSiteLine?.Render(logEventInfo);
 			var logOriginSourceLineNo = ParseLogOriginCallSiteLineNo(logOriginSourceLine);
 
-			var originFile = (!string.IsNullOrEmpty(logOriginSourceFile) || logOriginSourceLineNo.HasValue) ?
-				new OriginFile() { Line = logOriginSourceLineNo, Name = logOriginSourceFile } : null;
-
-			var origin = (originFile != null || !string.IsNullOrEmpty(logOriginMethod)) ?
-				new LogOrigin() { Function = logOriginMethod, File = originFile } : null;
-
 			var log = new Log
 			{
 				Level = logEventInfo.Level.ToString(),
 				Logger = logEventInfo.LoggerName,
-				Original = logEventInfo.Message,
-				Origin = origin,
+				OriginFunction = logOriginMethod,
+				OriginFileName = logOriginSourceFile,
+				OriginFileLine = logOriginSourceLineNo
 			};
 
 			return log;
@@ -328,12 +323,12 @@ namespace Elastic.CommonSchema.NLog
 				? Array.Empty<string>()
 				: tags.Split(new[] { ';', ',', ' ', '\t', '\n' }, StringSplitOptions.RemoveEmptyEntries);
 
-		private IDictionary<string, string> GetLabels(LogEventInfo e)
+		private Labels GetLabels(LogEventInfo e)
 		{
 			if (Labels?.Count == 0)
 				return null;
 
-			var labels = new Dictionary<string, string>();
+			var labels = new Labels();
 			for (var i = 0; i < Labels?.Count; ++i)
 			{
 				var value = Labels[i].Layout?.Render(e);
@@ -411,7 +406,7 @@ namespace Elastic.CommonSchema.NLog
 				Name = processName,
 				Pid = !string.IsNullOrEmpty(processId) ? long.Parse(processId) : 0,
 				Executable = processExecutable,
-				Thread = !string.IsNullOrEmpty(processThreadId) ? new ProcessThread { Id = long.Parse(processThreadId) } : null
+				ThreadId = !string.IsNullOrEmpty(processThreadId) ? long.Parse(processThreadId) : null
 			};
 		}
 
@@ -433,40 +428,22 @@ namespace Elastic.CommonSchema.NLog
 			};
 		}
 
-		private Trace GetTrace(LogEventInfo logEventInfo)
+		private string GetTrace(LogEventInfo logEventInfo)
 		{
 			var traceId = ApmTraceId?.Render(logEventInfo);
-			if (string.IsNullOrEmpty(traceId))
-				return null;
-
-			return new Trace
-			{
-				Id = traceId
-			};
+			return string.IsNullOrEmpty(traceId) ? null : traceId;
 		}
 
-		private Transaction GetTransaction(LogEventInfo logEventInfo)
+		private string GetTransaction(LogEventInfo logEventInfo)
 		{
 			var transactionId = ApmTransactionId?.Render(logEventInfo);
-			if (string.IsNullOrEmpty(transactionId))
-				return null;
-
-			return new Transaction
-			{
-				Id = transactionId
-			};
+			return string.IsNullOrEmpty(transactionId) ? null : transactionId;
 		}
 
-		private Span GetSpan(LogEventInfo logEventInfo)
+		private string GetSpan(LogEventInfo logEventInfo)
 		{
 			var spanId = ApmSpanId?.Render(logEventInfo);
-			if (string.IsNullOrEmpty(spanId))
-				return null;
-
-			return new Span
-			{
-				Id = spanId
-			};
+			return string.IsNullOrEmpty(spanId) ? null : spanId;
 		}
 
 		private Host GetHost(LogEventInfo logEventInfo)

@@ -94,7 +94,8 @@ namespace Elasticsearch.Extensions.Logging
 			{
 				Name = _processName,
 				Pid = _processId,
-				Thread = new ProcessThread { Name = currentThread.Name, Id = currentThread.ManagedThreadId }
+				ThreadName = currentThread.Name,
+				ThreadId = currentThread.ManagedThreadId
 			};
 		}
 
