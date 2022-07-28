@@ -157,5 +157,12 @@ namespace Elastic.CommonSchema.Generator.Schema.DTO
 		/// </summary>
 		[JsonProperty("scaling_factor")]
 		public int? ScalingFactor { get; set; }
+
+		/// <summary>
+		///  Validation (regex) pattern
+		/// </summary>
+		[JsonProperty("pattern")]
+		public string Pattern { get; set; }
+
 	}
 }

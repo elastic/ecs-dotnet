@@ -8,15 +8,15 @@ namespace Elastic.CommonSchema.Generator
 {
 	public static class Program
 	{
-		private const string DefaultDownloadBranch = "v8.5.0";
+		private const string DefaultDownloadBranch = "v8.3.1";
 
 		private static void Main(string[] args)
 		{
-			var redownloadCoreSpecification = false;
+			var redownloadCoreSpecification = true;
 			var downloadBranch = DefaultDownloadBranch;
 
 			//var answer = "invalid";
-			var answer = "n";
+			var answer = "y";
 			while (answer != "y" && answer != "n" && answer != "")
 			{
 				Console.Write("Download online specifications? [Y/N] (default N): ");

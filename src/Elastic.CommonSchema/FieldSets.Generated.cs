@@ -266,6 +266,10 @@ namespace Elastic.CommonSchema
 		[DataMember(Name = "id")]
 		public string Id { get; set; }
 
+		///<summary>container.image.hash.all</summary>
+		[DataMember(Name = "image.hash.all")]
+		public string[] ImageHashAll { get; set; }
+
 		///<summary>container.image.name</summary>
 		[DataMember(Name = "image.name")]
 		public string ImageName { get; set; }
@@ -1260,6 +1264,10 @@ namespace Elastic.CommonSchema
 		[DataMember(Name = "api_version")]
 		public string ApiVersion { get; set; }
 
+		///<summary>orchestrator.cluster.id</summary>
+		[DataMember(Name = "cluster.id")]
+		public string ClusterId { get; set; }
+
 		///<summary>orchestrator.cluster.name</summary>
 		[DataMember(Name = "cluster.name")]
 		public string ClusterName { get; set; }
@@ -1280,9 +1288,21 @@ namespace Elastic.CommonSchema
 		[DataMember(Name = "organization")]
 		public string Organization { get; set; }
 
+		///<summary>orchestrator.resource.id</summary>
+		[DataMember(Name = "resource.id")]
+		public string ResourceId { get; set; }
+
+		///<summary>orchestrator.resource.ip</summary>
+		[DataMember(Name = "resource.ip")]
+		public string[] ResourceIp { get; set; }
+
 		///<summary>orchestrator.resource.name</summary>
 		[DataMember(Name = "resource.name")]
 		public string ResourceName { get; set; }
+
+		///<summary>orchestrator.resource.parent.type</summary>
+		[DataMember(Name = "resource.parent.type")]
+		public string ResourceParentType { get; set; }
 
 		///<summary>orchestrator.resource.type</summary>
 		[DataMember(Name = "resource.type")]
@@ -1703,6 +1723,10 @@ namespace Elastic.CommonSchema
 		///<summary>service.node.name</summary>
 		[DataMember(Name = "node.name")]
 		public string NodeName { get; set; }
+
+		///<summary>service.node.role</summary>
+		[DataMember(Name = "node.role")]
+		public string NodeRole { get; set; }
 
 		///<summary>service.state</summary>
 		[DataMember(Name = "state")]
