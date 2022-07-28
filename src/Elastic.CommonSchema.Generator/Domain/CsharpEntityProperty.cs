@@ -128,6 +128,22 @@ namespace Elastic.CommonSchema.Generator.Domain
 		public string FullPath { get; }
 	}
 
+	public class IndexTemplate
+	{
+		public string Name { get; }
+		public string Template { get; }
+
+		public IndexTemplate(string name, string template)
+		{
+			Name = name.PascalCase();
+			Template =
+				//Regex.Replace(template, @"\r\n?|\n", "")
+				template
+					.Replace("\"", "\"\"")
+					.Replace("try-ecs-*", "\" + indexPattern + @\"");
+		}
+	}
+
 	public static class CsharpPropertyExtensions
 	{
 		public static string PascalCase(this string s) => new CultureInfo("en-US")

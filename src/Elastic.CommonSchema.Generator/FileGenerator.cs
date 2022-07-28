@@ -36,6 +36,7 @@ namespace Generator
 				{ m => Generate(m, "InlineObjects"), "Inline Objects" },
 				{ m => Generate(m, "Base"), "Base ECS Document" },
 				{ m => Generate(m, "BaseJsonConverter"), "Base ECS Document Json Converter" },
+				{ m => Generate(m, "IndexTemplates"), "Elasticsearch index templates" },
 			};
 
 			using (var progressBar = new ProgressBar(actions.Count, "Generating code",

@@ -8,7 +8,7 @@ namespace Elastic.CommonSchema.Generator
 {
 	public static class Program
 	{
-		private const string DefaultDownloadBranch = "v8.2.0";
+		private const string DefaultDownloadBranch = "v8.5.0";
 
 		private static void Main(string[] args)
 		{

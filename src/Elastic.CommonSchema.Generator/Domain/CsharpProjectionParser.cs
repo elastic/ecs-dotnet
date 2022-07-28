@@ -15,6 +15,7 @@ namespace Elastic.CommonSchema.Generator.Domain
 		public IReadOnlyCollection<EntityClass> NestedEntityClasses { get; set; }
 		public IReadOnlyCollection<InlineObject> InlineObjects { get; set; }
 		public ReadOnlyCollection<string> Warnings { get; set; }
+		public IReadOnlyCollection<IndexTemplate> IndexTemplates { get; set; }
 	}
 
 
@@ -92,7 +93,9 @@ namespace Elastic.CommonSchema.Generator.Domain
 				InlineObjects = InlineObjects.Values.ToList(),
 				NestedEntityClasses = nestedEntityTypes.Values.ToList(),
 				Warnings = Warnings.AsReadOnly(),
-				VersionTag = Schema.VersionTag
+				VersionTag = Schema.VersionTag,
+				IndexTemplates = Schema.Templates.Select(kv=>new IndexTemplate(kv.Key, kv.Value)).OrderBy(t=>t.Name).ToList(),
+
 			};
 			return Projection;
 		}
