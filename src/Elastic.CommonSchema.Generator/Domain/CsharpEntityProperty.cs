@@ -90,7 +90,7 @@ namespace Elastic.CommonSchema.Generator.Domain
 	{
 		public ValueTypePropertyReference(string parentPath, string fullPath, Field field) : base(parentPath, fullPath)
 		{
-			ClrType = field.Type.GetClrType();
+			ClrType = field.GetClrType();
 		}
 
 		public string ClrType { get; }
@@ -143,7 +143,15 @@ namespace Elastic.CommonSchema.Generator.Domain
 		public static string GetLocalProperty(this string s, string prefix) =>
 			new Regex($"^{prefix.Replace(".", "\\.")}\\.(.+)$").Replace(s, "$1");
 
-		public static string GetClrType(this FieldType fieldType)
+		public static string GetClrType(this Field field)
+		{
+			var baseType = field.Type.GetClrType();
+			if (field.Normalize.Contains("array"))
+				return $"{baseType}[]";
+
+			return baseType;
+		}
+		private static string GetClrType(this FieldType fieldType)
 		{
 			switch (fieldType)
 			{

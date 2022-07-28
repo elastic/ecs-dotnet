@@ -33,7 +33,7 @@ namespace Elastic.CommonSchema.Serialization
 				"metadata" => ReadProp<IDictionary<string, object>>(ref reader, "metadata", ecsEvent, (b, v) => b.Metadata = v),
 				"@timestamp" => ReadDateTime(ref reader, ref @timestamp),
 				"message" => ReadProp<string>(ref reader, "message", ecsEvent, (b, v) => b.Message = v),
-				"tags" => ReadProp<string>(ref reader, "tags", ecsEvent, (b, v) => b.Tags = v),
+				"tags" => ReadProp<string[]>(ref reader, "tags", ecsEvent, (b, v) => b.Tags = v),
 				"span.id" => ReadProp<string>(ref reader, "span.id", ecsEvent, (b, v) => b.SpanId = v),
 				"trace.id" => ReadProp<string>(ref reader, "trace.id", ecsEvent, (b, v) => b.TraceId = v),
 				"transaction.id" => ReadProp<string>(ref reader, "transaction.id", ecsEvent, (b, v) => b.TransactionId = v),

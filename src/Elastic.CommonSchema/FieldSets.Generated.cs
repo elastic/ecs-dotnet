@@ -80,7 +80,7 @@ namespace Elastic.CommonSchema
 
 		///<summary>tags</summary>
 		[DataMember(Name = "tags")]
-		public string Tags { get; set; }
+		public string[] Tags { get; set; }
 
 		///<summary>span.id</summary>
 		[DataMember(Name = "span.id")]
@@ -272,7 +272,7 @@ namespace Elastic.CommonSchema
 
 		///<summary>container.image.tag</summary>
 		[DataMember(Name = "image.tag")]
-		public string ImageTag { get; set; }
+		public string[] ImageTag { get; set; }
 
 		///<summary>container.memory.usage</summary>
 		[DataMember(Name = "memory.usage")]
@@ -392,7 +392,7 @@ namespace Elastic.CommonSchema
 
 		///<summary>dns.header_flags</summary>
 		[DataMember(Name = "header_flags")]
-		public string HeaderFlags { get; set; }
+		public string[] HeaderFlags { get; set; }
 
 		///<summary>dns.id</summary>
 		[DataMember(Name = "id")]
@@ -428,7 +428,7 @@ namespace Elastic.CommonSchema
 
 		///<summary>dns.resolved_ip</summary>
 		[DataMember(Name = "resolved_ip")]
-		public string ResolvedIp { get; set; }
+		public string[] ResolvedIp { get; set; }
 
 		///<summary>dns.response_code</summary>
 		[DataMember(Name = "response_code")]
@@ -476,7 +476,7 @@ namespace Elastic.CommonSchema
 
 		///<summary>elf.exports</summary>
 		[DataMember(Name = "exports")]
-		public string Exports { get; set; }
+		public string[] Exports { get; set; }
 
 		///<summary>elf.header.abi_version</summary>
 		[DataMember(Name = "header.abi_version")]
@@ -512,11 +512,11 @@ namespace Elastic.CommonSchema
 
 		///<summary>elf.imports</summary>
 		[DataMember(Name = "imports")]
-		public string Imports { get; set; }
+		public string[] Imports { get; set; }
 
 		///<summary>elf.shared_libraries</summary>
 		[DataMember(Name = "shared_libraries")]
-		public string SharedLibraries { get; set; }
+		public string[] SharedLibraries { get; set; }
 
 		///<summary>elf.telfhash</summary>
 		[DataMember(Name = "telfhash")]
@@ -538,11 +538,11 @@ namespace Elastic.CommonSchema
 
 		///<summary>email.bcc.address</summary>
 		[DataMember(Name = "bcc.address")]
-		public string BccAddress { get; set; }
+		public string[] BccAddress { get; set; }
 
 		///<summary>email.cc.address</summary>
 		[DataMember(Name = "cc.address")]
-		public string CcAddress { get; set; }
+		public string[] CcAddress { get; set; }
 
 		///<summary>email.content_type</summary>
 		[DataMember(Name = "content_type")]
@@ -558,7 +558,7 @@ namespace Elastic.CommonSchema
 
 		///<summary>email.from.address</summary>
 		[DataMember(Name = "from.address")]
-		public string FromAddress { get; set; }
+		public string[] FromAddress { get; set; }
 
 		///<summary>email.local_id</summary>
 		[DataMember(Name = "local_id")]
@@ -574,7 +574,7 @@ namespace Elastic.CommonSchema
 
 		///<summary>email.reply_to.address</summary>
 		[DataMember(Name = "reply_to.address")]
-		public string ReplyToAddress { get; set; }
+		public string[] ReplyToAddress { get; set; }
 
 		///<summary>email.sender.address</summary>
 		[DataMember(Name = "sender.address")]
@@ -586,7 +586,7 @@ namespace Elastic.CommonSchema
 
 		///<summary>email.to.address</summary>
 		[DataMember(Name = "to.address")]
-		public string ToAddress { get; set; }
+		public string[] ToAddress { get; set; }
 
 		///<summary>email.x_mailer</summary>
 		[DataMember(Name = "x_mailer")]
@@ -638,7 +638,7 @@ namespace Elastic.CommonSchema
 
 		///<summary>event.category</summary>
 		[DataMember(Name = "category")]
-		public string Category { get; set; }
+		public string[] Category { get; set; }
 
 		///<summary>event.code</summary>
 		[DataMember(Name = "code")]
@@ -726,7 +726,7 @@ namespace Elastic.CommonSchema
 
 		///<summary>event.type</summary>
 		[DataMember(Name = "type")]
-		public string Type { get; set; }
+		public string[] Type { get; set; }
 
 		///<summary>event.url</summary>
 		[DataMember(Name = "url")]
@@ -774,7 +774,7 @@ namespace Elastic.CommonSchema
 
 		///<summary>file.attributes</summary>
 		[DataMember(Name = "attributes")]
-		public string Attributes { get; set; }
+		public string[] Attributes { get; set; }
 
 		///<summary>file.created</summary>
 		[DataMember(Name = "created")]
@@ -998,11 +998,11 @@ namespace Elastic.CommonSchema
 
 		///<summary>host.ip</summary>
 		[DataMember(Name = "ip")]
-		public string Ip { get; set; }
+		public string[] Ip { get; set; }
 
 		///<summary>host.mac</summary>
 		[DataMember(Name = "mac")]
-		public string Mac { get; set; }
+		public string[] Mac { get; set; }
 
 		///<summary>host.name</summary>
 		[DataMember(Name = "name")]
@@ -1212,11 +1212,11 @@ namespace Elastic.CommonSchema
 
 		///<summary>observer.ip</summary>
 		[DataMember(Name = "ip")]
-		public string Ip { get; set; }
+		public string[] Ip { get; set; }
 
 		///<summary>observer.mac</summary>
 		[DataMember(Name = "mac")]
-		public string Mac { get; set; }
+		public string[] Mac { get; set; }
 
 		///<summary>observer.name</summary>
 		[DataMember(Name = "name")]
@@ -1444,7 +1444,7 @@ namespace Elastic.CommonSchema
 
 		///<summary>process.args</summary>
 		[DataMember(Name = "args")]
-		public string Args { get; set; }
+		public string[] Args { get; set; }
 
 		///<summary>process.args_count</summary>
 		[DataMember(Name = "args_count")]
@@ -1530,7 +1530,7 @@ namespace Elastic.CommonSchema
 
 		///<summary>registry.data.strings</summary>
 		[DataMember(Name = "data.strings")]
-		public string DataStrings { get; set; }
+		public string[] DataStrings { get; set; }
 
 		///<summary>registry.data.type</summary>
 		[DataMember(Name = "data.type")]
@@ -1560,19 +1560,19 @@ namespace Elastic.CommonSchema
 
 		///<summary>related.hash</summary>
 		[DataMember(Name = "hash")]
-		public string Hash { get; set; }
+		public string[] Hash { get; set; }
 
 		///<summary>related.hosts</summary>
 		[DataMember(Name = "hosts")]
-		public string Hosts { get; set; }
+		public string[] Hosts { get; set; }
 
 		///<summary>related.ip</summary>
 		[DataMember(Name = "ip")]
-		public string Ip { get; set; }
+		public string[] Ip { get; set; }
 
 		///<summary>related.user</summary>
 		[DataMember(Name = "user")]
-		public string User { get; set; }
+		public string[] User { get; set; }
 	}
 
 	///<summary>
@@ -1582,7 +1582,7 @@ namespace Elastic.CommonSchema
 
 		///<summary>rule.author</summary>
 		[DataMember(Name = "author")]
-		public string Author { get; set; }
+		public string[] Author { get; set; }
 
 		///<summary>rule.category</summary>
 		[DataMember(Name = "category")]
@@ -1798,7 +1798,7 @@ namespace Elastic.CommonSchema
 
 		///<summary>threat.group.alias</summary>
 		[DataMember(Name = "group.alias")]
-		public string GroupAlias { get; set; }
+		public string[] GroupAlias { get; set; }
 
 		///<summary>threat.group.id</summary>
 		[DataMember(Name = "group.id")]
@@ -1870,7 +1870,7 @@ namespace Elastic.CommonSchema
 
 		///<summary>threat.software.alias</summary>
 		[DataMember(Name = "software.alias")]
-		public string SoftwareAlias { get; set; }
+		public string[] SoftwareAlias { get; set; }
 
 		///<summary>threat.software.id</summary>
 		[DataMember(Name = "software.id")]
@@ -1882,7 +1882,7 @@ namespace Elastic.CommonSchema
 
 		///<summary>threat.software.platforms</summary>
 		[DataMember(Name = "software.platforms")]
-		public string SoftwarePlatforms { get; set; }
+		public string[] SoftwarePlatforms { get; set; }
 
 		///<summary>threat.software.reference</summary>
 		[DataMember(Name = "software.reference")]
@@ -1894,39 +1894,39 @@ namespace Elastic.CommonSchema
 
 		///<summary>threat.tactic.id</summary>
 		[DataMember(Name = "tactic.id")]
-		public string TacticId { get; set; }
+		public string[] TacticId { get; set; }
 
 		///<summary>threat.tactic.name</summary>
 		[DataMember(Name = "tactic.name")]
-		public string TacticName { get; set; }
+		public string[] TacticName { get; set; }
 
 		///<summary>threat.tactic.reference</summary>
 		[DataMember(Name = "tactic.reference")]
-		public string TacticReference { get; set; }
+		public string[] TacticReference { get; set; }
 
 		///<summary>threat.technique.id</summary>
 		[DataMember(Name = "technique.id")]
-		public string TechniqueId { get; set; }
+		public string[] TechniqueId { get; set; }
 
 		///<summary>threat.technique.name</summary>
 		[DataMember(Name = "technique.name")]
-		public string TechniqueName { get; set; }
+		public string[] TechniqueName { get; set; }
 
 		///<summary>threat.technique.reference</summary>
 		[DataMember(Name = "technique.reference")]
-		public string TechniqueReference { get; set; }
+		public string[] TechniqueReference { get; set; }
 
 		///<summary>threat.technique.subtechnique.id</summary>
 		[DataMember(Name = "technique.subtechnique.id")]
-		public string TechniqueSubtechniqueId { get; set; }
+		public string[] TechniqueSubtechniqueId { get; set; }
 
 		///<summary>threat.technique.subtechnique.name</summary>
 		[DataMember(Name = "technique.subtechnique.name")]
-		public string TechniqueSubtechniqueName { get; set; }
+		public string[] TechniqueSubtechniqueName { get; set; }
 
 		///<summary>threat.technique.subtechnique.reference</summary>
 		[DataMember(Name = "technique.subtechnique.reference")]
-		public string TechniqueSubtechniqueReference { get; set; }
+		public string[] TechniqueSubtechniqueReference { get; set; }
 
 		///<summary>threat.enrichments</summary>
 		[DataMember(Name = "enrichments")]
@@ -1948,7 +1948,7 @@ namespace Elastic.CommonSchema
 
 		///<summary>tls.client.certificate_chain</summary>
 		[DataMember(Name = "client.certificate_chain")]
-		public string ClientCertificateChain { get; set; }
+		public string[] ClientCertificateChain { get; set; }
 
 		///<summary>tls.client.hash.md5</summary>
 		[DataMember(Name = "client.hash.md5")]
@@ -1988,7 +1988,7 @@ namespace Elastic.CommonSchema
 
 		///<summary>tls.client.supported_ciphers</summary>
 		[DataMember(Name = "client.supported_ciphers")]
-		public string ClientSupportedCiphers { get; set; }
+		public string[] ClientSupportedCiphers { get; set; }
 
 		///<summary>tls.curve</summary>
 		[DataMember(Name = "curve")]
@@ -2012,7 +2012,7 @@ namespace Elastic.CommonSchema
 
 		///<summary>tls.server.certificate_chain</summary>
 		[DataMember(Name = "server.certificate_chain")]
-		public string ServerCertificateChain { get; set; }
+		public string[] ServerCertificateChain { get; set; }
 
 		///<summary>tls.server.hash.md5</summary>
 		[DataMember(Name = "server.hash.md5")]
@@ -2148,7 +2148,7 @@ namespace Elastic.CommonSchema
 
 		///<summary>user.roles</summary>
 		[DataMember(Name = "roles")]
-		public string Roles { get; set; }
+		public string[] Roles { get; set; }
 	}
 
 	///<summary>
@@ -2194,7 +2194,7 @@ namespace Elastic.CommonSchema
 
 		///<summary>vulnerability.category</summary>
 		[DataMember(Name = "category")]
-		public string Category { get; set; }
+		public string[] Category { get; set; }
 
 		///<summary>vulnerability.classification</summary>
 		[DataMember(Name = "classification")]
@@ -2252,15 +2252,15 @@ namespace Elastic.CommonSchema
 
 		///<summary>x509.alternative_names</summary>
 		[DataMember(Name = "alternative_names")]
-		public string AlternativeNames { get; set; }
+		public string[] AlternativeNames { get; set; }
 
 		///<summary>x509.issuer.common_name</summary>
 		[DataMember(Name = "issuer.common_name")]
-		public string IssuerCommonName { get; set; }
+		public string[] IssuerCommonName { get; set; }
 
 		///<summary>x509.issuer.country</summary>
 		[DataMember(Name = "issuer.country")]
-		public string IssuerCountry { get; set; }
+		public string[] IssuerCountry { get; set; }
 
 		///<summary>x509.issuer.distinguished_name</summary>
 		[DataMember(Name = "issuer.distinguished_name")]
@@ -2268,19 +2268,19 @@ namespace Elastic.CommonSchema
 
 		///<summary>x509.issuer.locality</summary>
 		[DataMember(Name = "issuer.locality")]
-		public string IssuerLocality { get; set; }
+		public string[] IssuerLocality { get; set; }
 
 		///<summary>x509.issuer.organization</summary>
 		[DataMember(Name = "issuer.organization")]
-		public string IssuerOrganization { get; set; }
+		public string[] IssuerOrganization { get; set; }
 
 		///<summary>x509.issuer.organizational_unit</summary>
 		[DataMember(Name = "issuer.organizational_unit")]
-		public string IssuerOrganizationalUnit { get; set; }
+		public string[] IssuerOrganizationalUnit { get; set; }
 
 		///<summary>x509.issuer.state_or_province</summary>
 		[DataMember(Name = "issuer.state_or_province")]
-		public string IssuerStateOrProvince { get; set; }
+		public string[] IssuerStateOrProvince { get; set; }
 
 		///<summary>x509.not_after</summary>
 		[DataMember(Name = "not_after")]
@@ -2316,11 +2316,11 @@ namespace Elastic.CommonSchema
 
 		///<summary>x509.subject.common_name</summary>
 		[DataMember(Name = "subject.common_name")]
-		public string SubjectCommonName { get; set; }
+		public string[] SubjectCommonName { get; set; }
 
 		///<summary>x509.subject.country</summary>
 		[DataMember(Name = "subject.country")]
-		public string SubjectCountry { get; set; }
+		public string[] SubjectCountry { get; set; }
 
 		///<summary>x509.subject.distinguished_name</summary>
 		[DataMember(Name = "subject.distinguished_name")]
@@ -2328,19 +2328,19 @@ namespace Elastic.CommonSchema
 
 		///<summary>x509.subject.locality</summary>
 		[DataMember(Name = "subject.locality")]
-		public string SubjectLocality { get; set; }
+		public string[] SubjectLocality { get; set; }
 
 		///<summary>x509.subject.organization</summary>
 		[DataMember(Name = "subject.organization")]
-		public string SubjectOrganization { get; set; }
+		public string[] SubjectOrganization { get; set; }
 
 		///<summary>x509.subject.organizational_unit</summary>
 		[DataMember(Name = "subject.organizational_unit")]
-		public string SubjectOrganizationalUnit { get; set; }
+		public string[] SubjectOrganizationalUnit { get; set; }
 
 		///<summary>x509.subject.state_or_province</summary>
 		[DataMember(Name = "subject.state_or_province")]
-		public string SubjectStateOrProvince { get; set; }
+		public string[] SubjectStateOrProvince { get; set; }
 
 		///<summary>x509.version_number</summary>
 		[DataMember(Name = "version_number")]

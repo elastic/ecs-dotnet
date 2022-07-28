@@ -179,7 +179,7 @@ namespace Elastic.CommonSchema.Generator.Domain
 				var parentPath = name;
 				foreach (var (fullPath, field) in fieldSet.Fields)
 				{
-					if (fullPath == "trace.id")
+					if (fullPath == "host.ip")
 					{
 
 					}
