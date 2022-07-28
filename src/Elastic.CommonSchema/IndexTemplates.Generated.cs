@@ -33,6 +33,92 @@ namespace Elastic.CommonSchema.Elasticsearch
 		public static string GetIndexTemplateForElasticsearchComposable(string indexPattern = "ecs-*") 
 		{ 
 			return @"{
+  ""_meta"": {
+    ""description"": ""Sample composable template that includes all ECS fields"",
+    ""ecs_version"": ""8.3.1""
+  },
+  ""composed_of"": [
+    ""ecs_8.3.1_base"",
+    ""ecs_8.3.1_agent"",
+    ""ecs_8.3.1_client"",
+    ""ecs_8.3.1_cloud"",
+    ""ecs_8.3.1_container"",
+    ""ecs_8.3.1_data_stream"",
+    ""ecs_8.3.1_destination"",
+    ""ecs_8.3.1_dll"",
+    ""ecs_8.3.1_dns"",
+    ""ecs_8.3.1_ecs"",
+    ""ecs_8.3.1_email"",
+    ""ecs_8.3.1_error"",
+    ""ecs_8.3.1_event"",
+    ""ecs_8.3.1_faas"",
+    ""ecs_8.3.1_file"",
+    ""ecs_8.3.1_group"",
+    ""ecs_8.3.1_host"",
+    ""ecs_8.3.1_http"",
+    ""ecs_8.3.1_log"",
+    ""ecs_8.3.1_network"",
+    ""ecs_8.3.1_observer"",
+    ""ecs_8.3.1_orchestrator"",
+    ""ecs_8.3.1_organization"",
+    ""ecs_8.3.1_package"",
+    ""ecs_8.3.1_process"",
+    ""ecs_8.3.1_registry"",
+    ""ecs_8.3.1_related"",
+    ""ecs_8.3.1_rule"",
+    ""ecs_8.3.1_server"",
+    ""ecs_8.3.1_service"",
+    ""ecs_8.3.1_source"",
+    ""ecs_8.3.1_threat"",
+    ""ecs_8.3.1_tls"",
+    ""ecs_8.3.1_tracing"",
+    ""ecs_8.3.1_url"",
+    ""ecs_8.3.1_user_agent"",
+    ""ecs_8.3.1_user"",
+    ""ecs_8.3.1_vulnerability""
+  ],
+  ""index_patterns"": [
+    """ + indexPattern + @"""
+  ],
+  ""priority"": 1,
+  ""template"": {
+    ""mappings"": {
+      ""date_detection"": false,
+      ""dynamic_templates"": [
+        {
+          ""strings_as_keyword"": {
+            ""mapping"": {
+              ""ignore_above"": 1024,
+              ""type"": ""keyword""
+            },
+            ""match_mapping_type"": ""string""
+          }
+        }
+      ]
+    },
+    ""settings"": {
+      ""index"": {
+        ""codec"": ""best_compression"",
+        ""mapping"": {
+          ""total_fields"": {
+            ""limit"": 2000
+          }
+        }
+      }
+    }
+  }
+}
+";
+		}
+
+		/// <summary>
+		/// Elastic Common Schema version v8.3.1 Legacy index template  
+		/// See the Put Index Template API documentation: https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-templates.html
+		/// </summary>
+		/// <returns>Index template string that can be used with the Put Index Template API.</returns>
+		public static string GetIndexTemplateForElasticsearchLegacy(string indexPattern = "ecs-*") 
+		{ 
+			return @"{
   ""index_patterns"": [
     """ + indexPattern + @"""
   ],
@@ -7039,92 +7125,6 @@ namespace Elastic.CommonSchema.Elasticsearch
         }
       },
       ""refresh_interval"": ""5s""
-    }
-  }
-}
-";
-		}
-
-		/// <summary>
-		/// Elastic Common Schema version v8.3.1 Legacy index template  
-		/// See the Put Index Template API documentation: https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-templates.html
-		/// </summary>
-		/// <returns>Index template string that can be used with the Put Index Template API.</returns>
-		public static string GetIndexTemplateForElasticsearchLegacy(string indexPattern = "ecs-*") 
-		{ 
-			return @"{
-  ""_meta"": {
-    ""description"": ""Sample composable template that includes all ECS fields"",
-    ""ecs_version"": ""8.3.1""
-  },
-  ""composed_of"": [
-    ""ecs_8.3.1_base"",
-    ""ecs_8.3.1_agent"",
-    ""ecs_8.3.1_client"",
-    ""ecs_8.3.1_cloud"",
-    ""ecs_8.3.1_container"",
-    ""ecs_8.3.1_data_stream"",
-    ""ecs_8.3.1_destination"",
-    ""ecs_8.3.1_dll"",
-    ""ecs_8.3.1_dns"",
-    ""ecs_8.3.1_ecs"",
-    ""ecs_8.3.1_email"",
-    ""ecs_8.3.1_error"",
-    ""ecs_8.3.1_event"",
-    ""ecs_8.3.1_faas"",
-    ""ecs_8.3.1_file"",
-    ""ecs_8.3.1_group"",
-    ""ecs_8.3.1_host"",
-    ""ecs_8.3.1_http"",
-    ""ecs_8.3.1_log"",
-    ""ecs_8.3.1_network"",
-    ""ecs_8.3.1_observer"",
-    ""ecs_8.3.1_orchestrator"",
-    ""ecs_8.3.1_organization"",
-    ""ecs_8.3.1_package"",
-    ""ecs_8.3.1_process"",
-    ""ecs_8.3.1_registry"",
-    ""ecs_8.3.1_related"",
-    ""ecs_8.3.1_rule"",
-    ""ecs_8.3.1_server"",
-    ""ecs_8.3.1_service"",
-    ""ecs_8.3.1_source"",
-    ""ecs_8.3.1_threat"",
-    ""ecs_8.3.1_tls"",
-    ""ecs_8.3.1_tracing"",
-    ""ecs_8.3.1_url"",
-    ""ecs_8.3.1_user_agent"",
-    ""ecs_8.3.1_user"",
-    ""ecs_8.3.1_vulnerability""
-  ],
-  ""index_patterns"": [
-    """ + indexPattern + @"""
-  ],
-  ""priority"": 1,
-  ""template"": {
-    ""mappings"": {
-      ""date_detection"": false,
-      ""dynamic_templates"": [
-        {
-          ""strings_as_keyword"": {
-            ""mapping"": {
-              ""ignore_above"": 1024,
-              ""type"": ""keyword""
-            },
-            ""match_mapping_type"": ""string""
-          }
-        }
-      ]
-    },
-    ""settings"": {
-      ""index"": {
-        ""codec"": ""best_compression"",
-        ""mapping"": {
-          ""total_fields"": {
-            ""limit"": 2000
-          }
-        }
-      }
     }
   }
 }

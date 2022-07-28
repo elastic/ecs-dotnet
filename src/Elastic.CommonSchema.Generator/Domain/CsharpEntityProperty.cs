@@ -88,44 +88,25 @@ namespace Elastic.CommonSchema.Generator.Domain
 
 	public record ValueTypePropertyReference : PropertyReference
 	{
-		public ValueTypePropertyReference(string parentPath, string fullPath, Field field) : base(parentPath, fullPath)
-		{
+		public ValueTypePropertyReference(string parentPath, string fullPath, Field field) : base(parentPath, fullPath) =>
 			ClrType = field.GetClrType();
-		}
 
 		public string ClrType { get; }
 	}
 
 	public record InlineObjectPropertyReference : PropertyReference
 	{
-		public InlineObjectPropertyReference(string parentPath, string fullPath, InlineObject inlineObject) : base(parentPath, fullPath)
-		{
+		public InlineObjectPropertyReference(string parentPath, string fullPath, InlineObject inlineObject) : base(parentPath, fullPath) =>
 			InlineObject = inlineObject;
-		}
 
 		public InlineObject InlineObject { get; }
 	}
 
 	public record EntityPropertyReference : PropertyReference
 	{
-		public EntityPropertyReference(string parentPath, string fullPath, EntityClass entity) : base(parentPath, fullPath)
-		{
-			Entity = entity;
-		}
+		public EntityPropertyReference(string parentPath, string fullPath, EntityClass entity) : base(parentPath, fullPath) => Entity = entity;
 
 		public EntityClass Entity { get; }
-	}
-
-	public class CsharpEntityProperty
-	{
-		public CsharpEntityProperty(string name, string fullPath)
-		{
-			Name = name;
-			FullPath = fullPath;
-		}
-
-		public string Name { get; }
-		public string FullPath { get; }
 	}
 
 	public class IndexTemplate
@@ -167,6 +148,7 @@ namespace Elastic.CommonSchema.Generator.Domain
 
 			return baseType;
 		}
+
 		private static string GetClrType(this FieldType fieldType)
 		{
 			switch (fieldType)

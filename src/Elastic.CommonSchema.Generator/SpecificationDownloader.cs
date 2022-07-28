@@ -15,16 +15,16 @@ namespace Generator
 	public class SpecificationDownloader
 	{
 		private const string Core = "Core";
-		private const string Template6 = "legacy";
-		private const string Template7 = "composable";
+		private const string Legacy = "legacy";
+		private const string Composable = "composable";
 
 		private static readonly ProgressBarOptions MainProgressBarOptions = new ProgressBarOptions { BackgroundColor = ConsoleColor.DarkGray };
 
 		private static readonly Dictionary<string, string> OnlineSpecifications = new Dictionary<string, string>
 		{
 			{ Core, "https://github.com/elastic/ecs/tree/{version}/generated/ecs" },
-			{ Template6, "https://github.com/elastic/ecs/tree/{version}/generated/elasticsearch/composable" },
-			{ Template7, "https://github.com/elastic/ecs/tree/{version}/generated/elasticsearch/legacy" },
+			{ Legacy, "https://github.com/elastic/ecs/tree/{version}/generated/elasticsearch/legacy" },
+			{ Composable, "https://github.com/elastic/ecs/tree/{version}/generated/elasticsearch/composable" },
 		};
 
 		private static readonly ProgressBarOptions SubProgressBarOptions = new ProgressBarOptions

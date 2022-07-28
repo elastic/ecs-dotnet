@@ -15,8 +15,7 @@ namespace Elastic.CommonSchema.Generator
 			var redownloadCoreSpecification = true;
 			var downloadBranch = DefaultDownloadBranch;
 
-			//var answer = "invalid";
-			var answer = "y";
+			var answer = "invalid";
 			while (answer != "y" && answer != "n" && answer != "")
 			{
 				Console.Write("Download online specifications? [Y/N] (default N): ");
@@ -25,8 +24,7 @@ namespace Elastic.CommonSchema.Generator
 			}
 
 			Console.Write($"Tag to use (default {downloadBranch}): ");
-			//var readBranch = Console.ReadLine()?.Trim();
-			var readBranch = string.Empty;
+			var readBranch = Console.ReadLine()?.Trim();
 			if (!string.IsNullOrEmpty(readBranch)) downloadBranch = readBranch;
 
 			if (string.IsNullOrEmpty(downloadBranch))

@@ -44,6 +44,7 @@ namespace Elastic.CommonSchema.BenchmarkDotNetExporter.IntegrationTests
 			var config = DefaultConfig.Instance
 				.KeepBenchmarkFiles()
 				.AddDiagnoser(MemoryDiagnoser.Default)
+				.WithOption(ConfigOptions.DisableOptimizationsValidator, true)
 				.AddJob(jobs.ToArray());
 			return config;
 		}
