@@ -51,12 +51,13 @@ namespace Elastic.CommonSchema.Generator.Projection
 		public EntityClass(string name, FieldSetBaseClass baseFieldSet)
 		{
 			Name = name.PascalCase();
+			if (Name == "Base") Name = "EcsDocument";
 			BaseFieldSet = baseFieldSet;
 		}
 
 		public string Name { get; }
 		public FieldSetBaseClass BaseFieldSet { get; }
-		public bool Partial => Name is "Base" or "Log";
+		public bool Partial => Name is "EcsDocument" or "Log";
 
 
 		public Dictionary<string, EntityPropertyReference> EntityReferences { get; } = new();

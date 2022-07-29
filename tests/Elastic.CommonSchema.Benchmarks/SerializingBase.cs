@@ -10,13 +10,13 @@ namespace Elastic.CommonSchema.Benchmarks
 		[Benchmark]
 		public string Empty()
 		{
-			var ecs = new Base();
+			var ecs = new EcsDocument();
 			return ecs.Serialize();
 		}
 		[Benchmark]
 		public string Minimal()
 		{
-			var ecs = new Base
+			var ecs = new EcsDocument
 			{
 				Timestamp =  DateTimeOffset.UtcNow,
 				Log = new Log
@@ -30,7 +30,7 @@ namespace Elastic.CommonSchema.Benchmarks
 		[Benchmark]
 		public string Complex()
 		{
-			var ecs = new Base
+			var ecs = new EcsDocument
 			{
 				Timestamp =  DateTimeOffset.UtcNow,
 				Log = new Log
@@ -57,7 +57,7 @@ namespace Elastic.CommonSchema.Benchmarks
 			return ecs.Serialize();
 		}
 
-		public static readonly Base FullInstance = new AutoFaker<Base>().Generate();
+		public static readonly EcsDocument FullInstance = new AutoFaker<EcsDocument>().Generate();
 
 		[Benchmark]
 		public string Full() => FullInstance.Serialize();

@@ -96,8 +96,8 @@ namespace Elastic.CommonSchema.Generator.Projection
 			Projection = new CommonSchemaTypesProjection
 			{
 				FieldSets = FieldSetsBaseClasses.Values.Where(e=>e.FieldSet.Root != true || e.FieldSet.Name == "base" ).ToList(),
-				EntityClasses = EntityClasses.Values.Where(e=>e.Name != "Base" && e.BaseFieldSet.FieldSet.Root != true).ToList(),
-				Base = EntityClasses.Values.First(e=>e.Name == "Base"),
+				EntityClasses = EntityClasses.Values.Where(e=>e.Name != "EcsDocument" && e.BaseFieldSet.FieldSet.Root != true).ToList(),
+				Base = EntityClasses.Values.First(e=>e.Name == "EcsDocument"),
 				InlineObjects = InlineObjects.Values.ToList(),
 				NestedEntityClasses = nestedEntityTypes.Values.ToList(),
 				Warnings = Warnings.AsReadOnly(),

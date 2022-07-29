@@ -21,7 +21,7 @@ using System.Runtime.Serialization;
 namespace Elastic.CommonSchema
 {
 	///<inheritdoc cref="BaseFieldSet"/>
-	public partial class Base : BaseFieldSet 
+	public partial class EcsDocument : BaseFieldSet 
 	{
 
 		/// <summary>

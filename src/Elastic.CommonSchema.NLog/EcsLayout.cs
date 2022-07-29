@@ -113,7 +113,7 @@ namespace Elastic.CommonSchema.NLog
 		/// Optional action to enrich the constructed <see cref="Base">EcsEvent</see> before it is serialized
 		/// </summary>
 		/// <remarks>This is called last in the chain of enrichment functions</remarks>
-		public Action<Base,LogEventInfo> EnrichAction { get; set; }
+		public Action<EcsDocument,LogEventInfo> EnrichAction { get; set; }
 
 		[ArrayParameter(typeof(TargetPropertyWithContext), "tag")]
 		public IList<TargetPropertyWithContext> Tags { get; } = new List<TargetPropertyWithContext>();
@@ -125,11 +125,11 @@ namespace Elastic.CommonSchema.NLog
 
 		protected override void RenderFormattedMessage(LogEventInfo logEvent, StringBuilder target)
 		{
-			var ecsEvent = new Base
+			var ecsEvent = new EcsDocument
 			{
 				Timestamp = logEvent.TimeStamp,
 				Message = logEvent.FormattedMessage,
-				Ecs = new Ecs { Version = Base.Version },
+				Ecs = new Ecs { Version = EcsDocument.Version },
 				Log = GetLog(logEvent),
 				Event = GetEvent(logEvent),
 				Metadata = GetMetadata(logEvent),
@@ -160,7 +160,7 @@ namespace Elastic.CommonSchema.NLog
 		/// <param name="ecsEvent">The EcsEvent to modify</param>
 		/// <returns>Enriched ECS Event</returns>
 		/// <remarks>Destructive for performance</remarks>
-		protected virtual void EnrichEvent(LogEventInfo logEvent, ref Base ecsEvent)
+		protected virtual void EnrichEvent(LogEventInfo logEvent, ref EcsDocument ecsEvent)
 		{
 		}
 

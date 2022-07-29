@@ -39,7 +39,7 @@ namespace Elastic.CommonSchema.Serilog
 			public const string MachineName = nameof(MachineName);
 		}
 
-		public static Base ConvertToEcs(LogEvent logEvent, IEcsTextFormatterConfiguration configuration)
+		public static EcsDocument ConvertToEcs(LogEvent logEvent, IEcsTextFormatterConfiguration configuration)
 		{
 			var exceptions = logEvent.Exception != null
 				? new List<Exception> { logEvent.Exception }
@@ -48,11 +48,11 @@ namespace Elastic.CommonSchema.Serilog
 			if (configuration.MapHttpAdapter != null)
 				exceptions.AddRange(configuration.MapHttpAdapter.Exceptions);
 
-			var ecsEvent = new Base
+			var ecsEvent = new EcsDocument
 			{
 				Timestamp = logEvent.Timestamp,
 				Message = logEvent.RenderMessage(),
-				Ecs = new Ecs { Version = Base.Version },
+				Ecs = new Ecs { Version = EcsDocument.Version },
 				Log = GetLog(logEvent, exceptions, configuration),
 				Agent = GetAgent(logEvent),
 				Event = GetEvent(logEvent),

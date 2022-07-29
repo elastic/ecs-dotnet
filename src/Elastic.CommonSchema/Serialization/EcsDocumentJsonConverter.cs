@@ -7,7 +7,7 @@ using System.Text.Json;
 
 namespace Elastic.CommonSchema.Serialization
 {
-	internal partial class BaseJsonConverter<TBase> where TBase : Base, new()
+	internal partial class EcsDocumentJsonConverter<TBase> where TBase : EcsDocument, new()
 	{
 		public override TBase Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
 		{
@@ -40,11 +40,11 @@ namespace Elastic.CommonSchema.Serialization
 			return ecsEvent;
 		}
 
-		private static void WriteMessage(Utf8JsonWriter writer, Base value) => writer.WriteString("message", value.Message);
+		private static void WriteMessage(Utf8JsonWriter writer, EcsDocument value) => writer.WriteString("message", value.Message);
 
-		private static void WriteLogLevel(Utf8JsonWriter writer, Base value) => writer.WriteString("log.level", value.Log?.Level);
+		private static void WriteLogLevel(Utf8JsonWriter writer, EcsDocument value) => writer.WriteString("log.level", value.Log?.Level);
 
-		private static void WriteTimestamp(Utf8JsonWriter writer, Base value)
+		private static void WriteTimestamp(Utf8JsonWriter writer, EcsDocument value)
 		{
 			writer.WritePropertyName("@timestamp");
 			if (value.Timestamp.HasValue)
@@ -53,7 +53,7 @@ namespace Elastic.CommonSchema.Serialization
 		}
 	}
 
-	internal partial class BaseJsonConverter : BaseJsonConverter<Base>
+	internal partial class EcsDocumentJsonConverter : EcsDocumentJsonConverter<EcsDocument>
 	{
 	}
 }

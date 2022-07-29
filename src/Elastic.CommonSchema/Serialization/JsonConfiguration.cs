@@ -26,8 +26,8 @@ namespace Elastic.CommonSchema.Serialization
 		internal static readonly JsonConverter<DateTimeOffset> DateTimeOffsetConverter =
 			(JsonConverter<DateTimeOffset>)SerializerOptions.GetConverter(typeof(DateTimeOffset));
 
-		internal static readonly MetaDataDictionaryConverter MetaDataDictionaryConverter = new MetaDataDictionaryConverter();
+		internal static readonly MetaDataDictionaryConverter MetaDataDictionaryConverter = new();
 
-		internal static readonly BaseJsonConverter BaseConverter = new BaseJsonConverter();
+		internal static readonly EcsDocumentJsonConverter BaseConverter = new();
 	}
 }

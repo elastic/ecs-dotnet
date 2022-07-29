@@ -43,7 +43,7 @@ namespace Elasticsearch.Extensions.Logging
 				_ => "Unknown"
 			};
 
-		public static Ecs GetEcs() => _ecs ??= new Ecs() { Version = Base.Version };
+		public static Ecs GetEcs() => _ecs ??= new Ecs() { Version = EcsDocument.Version };
 
 		public static Agent GetAgent()
 		{

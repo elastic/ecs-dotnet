@@ -11,13 +11,13 @@ namespace Elastic.CommonSchema.Benchmarks
 		[Benchmark]
 		public StringBuilder Empty()
 		{
-			var ecs = new Base();
+			var ecs = new EcsDocument();
 			return ecs.Serialize(new StringBuilder());
 		}
 		[Benchmark]
 		public StringBuilder Minimal()
 		{
-			var ecs = new Base
+			var ecs = new EcsDocument
 			{
 				Timestamp =  DateTimeOffset.UtcNow,
 				Log = new Log
@@ -31,7 +31,7 @@ namespace Elastic.CommonSchema.Benchmarks
 		[Benchmark]
 		public StringBuilder Complex()
 		{
-			var ecs = new Base
+			var ecs = new EcsDocument
 			{
 				Timestamp =  DateTimeOffset.UtcNow,
 				Log = new Log
@@ -58,7 +58,7 @@ namespace Elastic.CommonSchema.Benchmarks
 			return ecs.Serialize(new StringBuilder());
 		}
 
-		public static readonly Base FullInstance = new AutoFaker<Base>().Generate();
+		public static readonly EcsDocument FullInstance = new AutoFaker<EcsDocument>().Generate();
 
 		[Benchmark]
 		public StringBuilder Full() => FullInstance.Serialize(new StringBuilder());

@@ -31,11 +31,11 @@ namespace Generator
 		{
 			var actions = new Dictionary<Action<CommonSchemaTypesProjection>, string>
 			{
+				{ m => Generate(m, "EcsDocument"), "Base ECS Document" },
+				{ m => Generate(m, "EcsDocumentJsonConverter"), "Base ECS Document Json Converter" },
 				{ m => Generate(m, "FieldSets"), "Field Sets" },
 				{ m => Generate(m, "Entities"), "Entities" },
 				{ m => Generate(m, "InlineObjects"), "Inline Objects" },
-				{ m => Generate(m, "Base"), "Base ECS Document" },
-				{ m => Generate(m, "BaseJsonConverter"), "Base ECS Document Json Converter" },
 				{ m => Generate(m, "IndexTemplates"), "Elasticsearch index templates" },
 			};
 

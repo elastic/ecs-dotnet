@@ -17,8 +17,8 @@ namespace Elastic.CommonSchema.NLog.Tests
 {
 	public abstract class LogTestsBase
 	{
-		protected List<(string Json, Base Base)> ToEcsEvents(List<string> logEvents) =>
-			logEvents.Select(s => (s, Base.Deserialize(s)))
+		protected List<(string Json, EcsDocument Base)> ToEcsEvents(List<string> logEvents) =>
+			logEvents.Select(s => (s, EcsDocument.Deserialize(s)))
 				.ToList();
 
 		protected static void TestLogger(Action<ILogger, Func<List<string>>> act)

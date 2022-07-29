@@ -15,8 +15,8 @@ using System.Text.Json;
 
 namespace Elastic.CommonSchema.Serialization
 {
-	internal partial class BaseJsonConverter<TBase> : EcsJsonConverterBase<TBase>
-		where TBase : Base, new()
+	internal partial class EcsDocumentJsonConverter<TBase> : EcsJsonConverterBase<TBase>
+		where TBase : EcsDocument, new()
 	{
 		private static bool ReadProperties(
 			ref Utf8JsonReader reader, 
@@ -85,7 +85,7 @@ namespace Elastic.CommonSchema.Serialization
 				"vulnerability" => ReadProp<Vulnerability>(ref reader, "vulnerability", ecsEvent, (b, v) => b.Vulnerability = v),
 				"x509" => ReadProp<X509>(ref reader, "x509", ecsEvent, (b, v) => b.X509 = v),
 				_ =>
-					typeof(Base) == ecsEvent.GetType()
+					typeof(EcsDocument) == ecsEvent.GetType()
 						? false
 						: ecsEvent.TryRead(propertyName, out var t)
 							? ecsEvent.ReceiveProperty(propertyName, ReadPropDeserialize(ref reader, t))
@@ -161,7 +161,7 @@ namespace Elastic.CommonSchema.Serialization
 			WriteProp(writer, "vulnerability", value.Vulnerability);
 			WriteProp(writer, "x509", value.X509);
 
-			if (typeof(Base) != value.GetType())
+			if (typeof(EcsDocument) != value.GetType())
 				value.WriteAdditionalProperties((k, v) => WriteProp(writer, k, v));
 			writer.WriteEndObject();
 		}

@@ -14,7 +14,7 @@ using static Elastic.CommonSchema.Serialization.JsonConfiguration;
 
 namespace Elastic.CommonSchema
 {
-	public partial class Base : BaseBase
+	public partial class EcsDocument : BaseFieldSet
 	{
 		/// <summary>
 		/// If implemented in a subclass, this allows you to hook into <see cref="BaseJsonConverter"/>
@@ -44,14 +44,14 @@ namespace Elastic.CommonSchema
 		/// <param name="write">An action taking a <c>property name</c> and <c>boxed value</c> to write to the output</param>
 		protected internal virtual void WriteAdditionalProperties(Action<string, object> write) { }
 
-		public static Base Deserialize(string json) => EcsSerializerFactory<Base>.Deserialize(json);
+		public static EcsDocument Deserialize(string json) => EcsSerializerFactory<EcsDocument>.Deserialize(json);
 
-		public static Base Deserialize(ReadOnlySpan<byte> json) => EcsSerializerFactory<Base>.Deserialize(json);
+		public static EcsDocument Deserialize(ReadOnlySpan<byte> json) => EcsSerializerFactory<EcsDocument>.Deserialize(json);
 
-		public static Base Deserialize(Stream stream) => EcsSerializerFactory<Base>.Deserialize(stream);
+		public static EcsDocument Deserialize(Stream stream) => EcsSerializerFactory<EcsDocument>.Deserialize(stream);
 
-		public static ValueTask<Base> DeserializeAsync(Stream stream, CancellationToken ctx = default) =>
-			EcsSerializerFactory<Base>.DeserializeAsync(stream, ctx);
+		public static ValueTask<EcsDocument> DeserializeAsync(Stream stream, CancellationToken ctx = default) =>
+			EcsSerializerFactory<EcsDocument>.DeserializeAsync(stream, ctx);
 
 		public string Serialize() => JsonSerializer.Serialize(this, GetType(), SerializerOptions);
 
