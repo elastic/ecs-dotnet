@@ -4,18 +4,19 @@
 
 using System.Runtime.Serialization;
 using BenchmarkDotNet.Engines;
+using BenchmarkDotNet.Running;
 
 namespace Elastic.CommonSchema.BenchmarkDotNetExporter.Domain
 {
 	public class BenchmarkGcStats
 	{
-		public BenchmarkGcStats(GcStats statistics)
+		public BenchmarkGcStats(GcStats statistics, BenchmarkCase benchmarkCase)
 		{
 			Gen0Collections = statistics.Gen0Collections;
 			Gen1Collections = statistics.Gen1Collections;
 			Gen2Collections = statistics.Gen2Collections;
 			TotalOperations = statistics.TotalOperations;
-			BytesAllocatedPerOperation = statistics.BytesAllocatedPerOperation;
+			BytesAllocatedPerOperation = statistics.GetBytesAllocatedPerOperation(benchmarkCase);
 		}
 
 		[DataMember(Name = "bytes_allocated_per_operation")]
