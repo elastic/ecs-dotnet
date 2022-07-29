@@ -212,7 +212,7 @@ namespace Elastic.CommonSchema.Generator.Projection
 							currentPropertyReferences[fullPath] =
 								currentPropertyReferences.TryGetValue(fullPath, out var p)
 									? p
-									: new InlineObjectPropertyReference(parentPath, fullPath, InlineObjects[fullPath]);
+									: new InlineObjectPropertyReference(parentPath, fullPath, InlineObjects[fullPath], field);
 						}
 						else
 							currentPropertyReferences[fullPath] = new ValueTypePropertyReference(parentPath, fullPath, field);
@@ -246,7 +246,7 @@ namespace Elastic.CommonSchema.Generator.Projection
 							currentPropertyReferences[path] =
 								currentPropertyReferences.TryGetValue(path, out var p)
 									? p
-									: new InlineObjectPropertyReference(parentPath, path, InlineObjects[path]);
+									: new InlineObjectPropertyReference(parentPath, path, InlineObjects[path], field);
 							currentPropertyReferences = InlineObjects[path].Properties;
 							parentPath = path;
 							foundInlineObjectPath = true;

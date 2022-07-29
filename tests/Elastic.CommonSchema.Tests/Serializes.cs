@@ -3,6 +3,7 @@
 // See the LICENSE file in the project root for more information
 
 using System;
+using System.Collections.Generic;
 using System.Runtime.Serialization;
 using Elastic.CommonSchema.Serialization;
 using FluentAssertions;
@@ -17,7 +18,7 @@ namespace Elastic.CommonSchema.Tests
 		[Fact]
 		public void SerializesSomethingToString()
 		{
-			var b = new EcsDocument { Agent = new Agent { Name = "some-agent" }, Log = _log};
+			var b = new EcsDocument { Agent = new Agent { Name = "some-agent" }, Log = _log };
 
 			var serialized = b.Serialize();
 			serialized.Should().NotBeNullOrWhiteSpace();
@@ -64,7 +65,7 @@ namespace Elastic.CommonSchema.Tests
 		[Fact]
 		public void SerializesSubClass()
 		{
-			var b = new SubclassedDocument { Timestamp = DateTimeOffset.Now, Agent2 = new Agent { Name = "some-agent" }, Log =  _log};
+			var b = new SubclassedDocument { Timestamp = DateTimeOffset.Now, Agent2 = new Agent { Name = "some-agent" }, Log = _log };
 
 			var serialized = b.Serialize();
 
@@ -80,7 +81,7 @@ namespace Elastic.CommonSchema.Tests
 		[Fact]
 		public void SerializesSubClassProperties()
 		{
-			var b = new EcsDocument { Agent = new SubClassedAgent { Name2 = "some-agent" }, Log =  _log};
+			var b = new EcsDocument { Agent = new SubClassedAgent { Name2 = "some-agent" }, Log = _log };
 
 			var serialized = b.Serialize();
 			serialized.Should().NotBeNullOrWhiteSpace();
@@ -98,9 +99,7 @@ namespace Elastic.CommonSchema.Tests
 		{
 			var b = new SubclassedDocument
 			{
-				Agent = new SubClassedAgent { Name2 = "some-agent", Id = "X"},
-				Agent2 = new Agent { Name = "some-agent" },
-				Log =  _log
+				Agent = new SubClassedAgent { Name2 = "some-agent", Id = "X" }, Agent2 = new Agent { Name = "some-agent" }, Log = _log
 			};
 
 			var serialized = b.Serialize();
@@ -116,6 +115,83 @@ namespace Elastic.CommonSchema.Tests
 			deserialized.Agent.Id.Should().Be("X");
 			deserialized.Agent2.Should().NotBeNull();
 			deserialized.Agent2.Name.Should().Be("some-agent");
+		}
+
+		[Fact]
+		public void SerializesDocumentInTheReadMe()
+		{
+			var ecsDocument = new EcsDocument
+			{
+				Timestamp = DateTimeOffset.Parse("2019-10-23T19:44:38.485Z"),
+				Dns = new Dns
+				{
+					Id = "23666",
+					OpCode = "QUERY",
+					Type = "answer",
+					QuestionName = "www.example.com",
+					QuestionType = "A",
+					QuestionClass = "IN",
+					QuestionRegisteredDomain = "example.com",
+					HeaderFlags = new[] { "RD", "RA" },
+					ResponseCode = "NOERROR",
+					ResolvedIp = new[] { "10.0.190.47", "10.0.190.117" },
+					Answers = new[]
+					{
+						new DnsAnswers
+						{
+							Data = "10.0.190.47",
+							Name = "www.example.com",
+							Type = "A",
+							Class = "IN",
+							Ttl = 59
+						},
+						new DnsAnswers
+						{
+							Data = "10.0.190.117",
+							Name = "www.example.com",
+							Type = "A",
+							Class = "IN",
+							Ttl = 59
+						}
+					}
+				},
+				Network = new Network
+				{
+					Type = "ipv4",
+					Transport = "udp",
+					Protocol = "dns",
+					Direction = "outbound",
+					CommunityId = "1:19beef+RWVW9+BEEF/Q45VFU+2Y=",
+					Bytes = 126
+				},
+				Source = new Source { Ip = "192.168.86.26", Port = 5785, Bytes = 31 },
+				Destination = new Destination { Ip = "8.8.4.4", Port = 53, Bytes = 95 },
+				Client = new Client { Ip = "192.168.86.26", Port = 5785, Bytes = 31 },
+				Server = new Server { Ip = "8.8.4.4", Port = 53, Bytes = 95 },
+				Event = new Event
+				{
+					Duration = 122433000,
+					Start = DateTimeOffset.Parse("2019-10-23T19:44:38.485Z"),
+					End = DateTimeOffset.Parse("2019-10-23T19:44:38.607Z"),
+					Kind = "event",
+					Category = new[] { "network_traffic" }
+				},
+				Ecs = new Ecs { Version = "1.2.0" },
+				Metadata = new Dictionary<string, object> { { "client", "ecs-dotnet" } }
+			};
+
+			var serialized = ecsDocument.Serialize();
+
+			serialized.Should().NotBeNullOrWhiteSpace();
+			serialized.Should().Contain("1:19beef+RWVW9+BEEF");
+			serialized.Should().Contain("192.168.86.26");
+
+			var deserialized = EcsSerializerFactory<SubclassedDocument>.Deserialize(serialized);
+			deserialized.Dns.Should().NotBeNull();
+			deserialized.Dns.Answers.Should().NotBeNull().And.HaveCount(2);
+			deserialized.Dns.Answers[0].Name.Should().NotBeNull().And.Be("www.example.com");
+			deserialized.Dns.Answers[1].Data.Should().NotBeNull().And.EndWith(".117");
+			deserialized.Metadata.Should().NotBeNull().And.HaveCount(1);
 		}
 	}
 }

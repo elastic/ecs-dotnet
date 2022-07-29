@@ -444,7 +444,7 @@ namespace Elastic.CommonSchema
 
 		///<summary>dns.answers</summary>
 		[DataMember(Name = "answers")]
-		public DnsAnswers Answers { get; set; }
+		public DnsAnswers[] Answers { get; set; }
 	}
 
 	///<summary>
@@ -528,11 +528,11 @@ namespace Elastic.CommonSchema
 
 		///<summary>elf.sections</summary>
 		[DataMember(Name = "sections")]
-		public ElfSections Sections { get; set; }
+		public ElfSections[] Sections { get; set; }
 
 		///<summary>elf.segments</summary>
 		[DataMember(Name = "segments")]
-		public ElfSegments Segments { get; set; }
+		public ElfSegments[] Segments { get; set; }
 	}
 
 	///<summary>
@@ -598,7 +598,7 @@ namespace Elastic.CommonSchema
 
 		///<summary>email.attachments</summary>
 		[DataMember(Name = "attachments")]
-		public EmailAttachments Attachments { get; set; }
+		public EmailAttachments[] Attachments { get; set; }
 	}
 
 	///<summary>
@@ -1954,7 +1954,7 @@ namespace Elastic.CommonSchema
 
 		///<summary>threat.enrichments</summary>
 		[DataMember(Name = "enrichments")]
-		public ThreatEnrichments Enrichments { get; set; }
+		public ThreatEnrichments[] Enrichments { get; set; }
 	}
 
 	///<summary>

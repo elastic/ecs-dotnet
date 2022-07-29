@@ -1,3 +1,4 @@
+using System.Linq;
 using Elastic.CommonSchema.Generator.Schema.DTO;
 
 namespace Elastic.CommonSchema.Generator.Projection
@@ -28,10 +29,16 @@ namespace Elastic.CommonSchema.Generator.Projection
 
 	public class InlineObjectPropertyReference : PropertyReference
 	{
-		public InlineObjectPropertyReference(string parentPath, string fullPath, InlineObject inlineObject) : base(parentPath, fullPath) =>
+		public InlineObjectPropertyReference(string parentPath, string fullPath, InlineObject inlineObject, Field field) : base(parentPath, fullPath)
+		{
 			InlineObject = inlineObject;
+			Field = field;
+		}
 
 		public InlineObject InlineObject { get; }
+		public Field Field { get; }
+
+		public string ClrType => Field.Normalize.Contains("array") ? $"{InlineObject.Name}[]" : $"{InlineObject.Name}";
 	}
 
 	public class EntityPropertyReference : PropertyReference

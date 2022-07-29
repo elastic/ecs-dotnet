@@ -4,19 +4,11 @@
 
 using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.IO;
-using System.Linq;
-using System.Text.RegularExpressions;
-using CsQuery.ExtensionMethods;
 using Elastic.CommonSchema.Generator.Projection;
-using Elastic.CommonSchema.Generator.Schema;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 using RazorLight;
 using RazorLight.Razor;
 using ShellProgressBar;
-using YamlDotNet.Serialization;
 
 namespace Generator
 {
