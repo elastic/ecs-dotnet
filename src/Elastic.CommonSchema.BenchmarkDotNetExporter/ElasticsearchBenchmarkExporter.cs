@@ -1,4 +1,4 @@
-﻿// Licensed to Elasticsearch B.V under one or more agreements.
+// Licensed to Elasticsearch B.V under one or more agreements.
 // Elasticsearch B.V licenses this file to you under the Apache 2.0 License.
 // See the LICENSE file in the project root for more information
 
@@ -26,6 +26,12 @@ namespace Elastic.CommonSchema.BenchmarkDotNetExporter
 		{
 			Options = options;
 			Client = new ElasticLowLevelClient(Options.CreateConnectionSettings());
+		}
+
+		public ElasticsearchBenchmarkExporter(ElasticsearchBenchmarkExporterOptions options, Func<ElasticsearchBenchmarkExporterOptions, IConnectionConfigurationValues> configure)
+		{
+			Options = options;
+			Client = new ElasticLowLevelClient(configure(Options));
 		}
 
 		private ElasticsearchBenchmarkExporterOptions Options { get; }
@@ -199,7 +205,7 @@ namespace Elastic.CommonSchema.BenchmarkDotNetExporter
 					};
 
 					if (summary.BenchmarksCases.Any(c => c.Config.HasMemoryDiagnoser()))
-						data.Benchmark.Memory = new BenchmarkGcStats(r.GcStats);
+						data.Benchmark.Memory = new BenchmarkGcStats(r.GcStats, r.BenchmarkCase);
 
 					var grouped = r.AllMeasurements
 						.GroupBy(m => $"{m.IterationStage.ToString()}-{m.IterationMode.ToString()}")
