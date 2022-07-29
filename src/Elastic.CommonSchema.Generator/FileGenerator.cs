@@ -9,7 +9,7 @@ using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 using CsQuery.ExtensionMethods;
-using Elastic.CommonSchema.Generator.Domain;
+using Elastic.CommonSchema.Generator.Projection;
 using Elastic.CommonSchema.Generator.Schema;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -27,9 +27,9 @@ namespace Generator
 			.UseMemoryCachingProvider()
 			.Build();
 
-		public static void Generate(CsharpProjection csharpProjection)
+		public static void Generate(CommonSchemaTypesProjection commonSchemaTypesProjection)
 		{
-			var actions = new Dictionary<Action<CsharpProjection>, string>
+			var actions = new Dictionary<Action<CommonSchemaTypesProjection>, string>
 			{
 				{ m => Generate(m, "FieldSets"), "Field Sets" },
 				{ m => Generate(m, "Entities"), "Entities" },
@@ -45,7 +45,7 @@ namespace Generator
 				foreach (var kv in actions)
 				{
 					progressBar.Message = "Generating " + kv.Value;
-					kv.Key(csharpProjection);
+					kv.Key(commonSchemaTypesProjection);
 					progressBar.Tick("Generated " + kv.Value);
 				}
 			}
@@ -53,10 +53,10 @@ namespace Generator
 		}
 
 
-		private static string DoRazor(string name, string template, CsharpProjection model) =>
+		private static string DoRazor(string name, string template, CommonSchemaTypesProjection model) =>
 			Razor.CompileRenderStringAsync(name, template, model).GetAwaiter().GetResult();
 
-		private static void Generate(CsharpProjection model, string what)
+		private static void Generate(CommonSchemaTypesProjection model, string what)
 		{
 			var targetDir = Path.GetFullPath(CodeConfiguration.ElasticCommonSchemaGeneratedFolder);
 			var outputFile = Path.Combine(targetDir, $"{what}.Generated.cs");

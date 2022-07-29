@@ -4,10 +4,15 @@ using System.Linq;
 using Elastic.CommonSchema.Generator.Schema;
 using Elastic.CommonSchema.Generator.Schema.DTO;
 
-namespace Elastic.CommonSchema.Generator.Domain
+namespace Elastic.CommonSchema.Generator.Projection
 {
-	public class CsharpProjection
+	/// <summary>
+	/// Holds a readonly view of the projection of the ECS Schema to ready to consume types.
+	/// </summary>
+	public class CommonSchemaTypesProjection
 	{
+		// These should be init properties really but RazorLight uses an old version roslyn that does not support them
+		// ReSharper disable PropertyCanBeMadeInitOnly.Global
 		public string VersionTag { get; set; }
 		public IReadOnlyCollection<FieldSetBaseClass> FieldSets { get; set; }
 		public IReadOnlyCollection<EntityClass> EntityClasses { get; set; }
@@ -16,12 +21,15 @@ namespace Elastic.CommonSchema.Generator.Domain
 		public IReadOnlyCollection<InlineObject> InlineObjects { get; set; }
 		public ReadOnlyCollection<string> Warnings { get; set; }
 		public IReadOnlyCollection<IndexTemplate> IndexTemplates { get; set; }
+		// ReSharper restore PropertyCanBeMadeInitOnly.Global
 	}
 
 
-	public class CsharpProjectionParser
+	/// <inheritdoc cref="CreateProjection"/>>
+	public class TypeProjector
 	{
-		public CsharpProjectionParser(EcsSchema schema)
+		/// <inheritdoc cref="CreateProjection"/>>
+		public TypeProjector(EcsSchema schema)
 		{
 			Schema = schema;
 			var entityFieldsBaseClasses = schema.Entities.ToDictionary(k => k.Name, v => new FieldSetBaseClass(v));
@@ -36,14 +44,14 @@ namespace Elastic.CommonSchema.Generator.Domain
 		private ReadOnlyDictionary<string, FieldSetBaseClass> FieldSetsBaseClasses { get; }
 		private ReadOnlyDictionary<string, EntityClass> EntityClasses { get; }
 		private Dictionary<string, InlineObject> InlineObjects { get; } = new();
-		private CsharpProjection Projection { get; set; }
+		private CommonSchemaTypesProjection Projection { get; set; }
 		private List<string> Warnings { get; } = new();
 
 		private EcsSchema Schema { get; }
 
 		/// <summary>
 		/// <para>
-		/// Creates an intermediate projection model <see cref="CsharpProjection"/> of the raw <see cref="EcsSchema"/>.
+		/// Creates an intermediate projection model <see cref="CommonSchemaTypesProjection"/> of the raw <see cref="EcsSchema"/>.
 		/// </para>
 		/// <para>
 		/// <see cref="FieldSetBaseClass"/> projects ECS <see cref="FieldSet"/>'s as reusable base classes <br/>
@@ -66,7 +74,7 @@ namespace Elastic.CommonSchema.Generator.Domain
 		/// </para>
 		/// <para>
 		/// To prevent endless recursive nesting such as <c>cloud.origin.origin.origin</c> to canonical model will create a special type for <c>cloud.origin</c>
-		/// which inherits the <c>cloud</c> field set without any of the nested references. These are exposed seperately under <see cref="CsharpProjection.NestedEntityClasses"/><br />
+		/// which inherits the <c>cloud</c> field set without any of the nested references. These are exposed seperately under <see cref="CommonSchemaTypesProjection.NestedEntityClasses"/><br />
 		/// </para>
 		/// <para>
 		/// These nested entities can hold reference to other nested <see cref="EntityClass"/>'s
@@ -79,13 +87,13 @@ namespace Elastic.CommonSchema.Generator.Domain
 		/// </para>
 		/// </summary>
 		/// <returns></returns>
-		public CsharpProjection CreateCanonicalModel()
+		public CommonSchemaTypesProjection CreateProjection()
 		{
 			if (Projection != null) return Projection;
 
 			var nestedEntityTypes = CreateEntityTypes();
 
-			Projection = new CsharpProjection
+			Projection = new CommonSchemaTypesProjection
 			{
 				FieldSets = FieldSetsBaseClasses.Values.Where(e=>e.FieldSet.Root != true || e.FieldSet.Name == "base" ).ToList(),
 				EntityClasses = EntityClasses.Values.Where(e=>e.Name != "Base" && e.BaseFieldSet.FieldSet.Root != true).ToList(),

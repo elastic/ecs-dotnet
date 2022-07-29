@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Linq;
-using Elastic.CommonSchema.Generator.Domain;
+using Elastic.CommonSchema.Generator.Projection;
 using Elastic.CommonSchema.Generator.Schema;
 using Generator;
 
@@ -37,7 +37,7 @@ namespace Elastic.CommonSchema.Generator
 			var ecsSchema = new EcsSchemaParser(downloadBranch).Parse();
 			WarnAboutSchemaValidations(ecsSchema);
 
-			var projection = new CsharpProjectionParser(ecsSchema).CreateCanonicalModel();
+			var projection = new TypeProjector(ecsSchema).CreateProjection();
 			WarnAboutProjectionValidations(projection);
 
 			FileGenerator.Generate(projection);
@@ -59,7 +59,7 @@ namespace Elastic.CommonSchema.Generator
 			Console.ResetColor();
 		}
 
-		private static void WarnAboutProjectionValidations(CsharpProjection projection)
+		private static void WarnAboutProjectionValidations(CommonSchemaTypesProjection projection)
 		{
 			if (projection.Warnings.Count > 0)
 			{
