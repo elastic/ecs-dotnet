@@ -9,7 +9,7 @@ namespace Elastic.CommonSchema.Generator.Projection
 		public FieldSetBaseClass(FieldSet fieldSet) => FieldSet = fieldSet;
 
 		public FieldSet FieldSet { get; }
-		public string Name => $"{FieldSet.Name.PascalCase()}Base";
+		public string Name => $"{FieldSet.Name.PascalCase()}FieldSet";
 
 		public Dictionary<string, PropertyReference> Properties { get; } = new();
 

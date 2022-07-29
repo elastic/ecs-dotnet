@@ -24,7 +24,7 @@ namespace Elastic.CommonSchema
 	///<summary>
 	/// The agent fields contain the data about the software entity, if any, that collects, detects, or observes events on a host, or takes measurements on a host.&#xA;Examples include Beats. Agents may also run on observers. ECS agent.* fields shall be populated with details of the agent running on the host or observer where the event happened or the measurement was taken.
 	///</summary>
-	public abstract class AgentBase {
+	public abstract class AgentFieldSet {
 
 		///<summary>agent.build.original</summary>
 		[DataMember(Name = "build.original")]
@@ -54,7 +54,7 @@ namespace Elastic.CommonSchema
 	///<summary>
 	/// An autonomous system (AS) is a collection of connected Internet Protocol (IP) routing prefixes under the control of one or more network operators on behalf of a single administrative entity or domain that presents a common, clearly defined routing policy to the internet.
 	///</summary>
-	public abstract class AsBase {
+	public abstract class AsFieldSet {
 
 		///<summary>as.number</summary>
 		[DataMember(Name = "number")]
@@ -68,7 +68,7 @@ namespace Elastic.CommonSchema
 	///<summary>
 	/// The `base` field set contains all fields which are at the root of the events. These fields are common across all types of events.
 	///</summary>
-	public abstract class BaseBase {
+	public abstract class BaseFieldSet {
 
 		///<summary>@timestamp</summary>
 		[DataMember(Name = "@timestamp")]
@@ -102,7 +102,7 @@ namespace Elastic.CommonSchema
 	///<summary>
 	/// A client is defined as the initiator of a network connection for events regarding sessions, connections, or bidirectional flow records.&#xA;For TCP events, the client is the initiator of the TCP connection that sends the SYN packet(s). For other protocols, the client is generally the initiator or requestor in the network transaction. Some systems use the term &quot;originator&quot; to refer the client in TCP connections. The client fields describe details about the system acting as the client in the network event. Client fields are usually populated in conjunction with server fields. Client fields are generally not populated for packet-level events.&#xA;Client / server representations can add semantic context to an exchange, which is helpful to visualize the data in certain situations. If your context falls in that category, you should still ensure that source and destination are filled appropriately.
 	///</summary>
-	public abstract class ClientBase {
+	public abstract class ClientFieldSet {
 
 		///<summary>client.address</summary>
 		[DataMember(Name = "address")]
@@ -156,7 +156,7 @@ namespace Elastic.CommonSchema
 	///<summary>
 	/// Fields related to the cloud or infrastructure the events are coming from.
 	///</summary>
-	public abstract class CloudBase {
+	public abstract class CloudFieldSet {
 
 		///<summary>cloud.account.id</summary>
 		[DataMember(Name = "account.id")]
@@ -206,7 +206,7 @@ namespace Elastic.CommonSchema
 	///<summary>
 	/// These fields contain information about binary code signatures.
 	///</summary>
-	public abstract class CodeSignatureBase {
+	public abstract class CodeSignatureFieldSet {
 
 		///<summary>code_signature.digest_algorithm</summary>
 		[DataMember(Name = "digest_algorithm")]
@@ -248,7 +248,7 @@ namespace Elastic.CommonSchema
 	///<summary>
 	/// Container fields are used for meta information about the specific container that is the source of information.&#xA;These fields help correlate data based containers from any runtime.
 	///</summary>
-	public abstract class ContainerBase {
+	public abstract class ContainerFieldSet {
 
 		///<summary>container.cpu.usage</summary>
 		[DataMember(Name = "cpu.usage")]
@@ -306,7 +306,7 @@ namespace Elastic.CommonSchema
 	///<summary>
 	/// The data_stream fields take part in defining the new data stream naming scheme.&#xA;In the new data stream naming scheme the value of the data stream fields combine to the name of the actual data stream in the following manner: `{data_stream.type}-{data_stream.dataset}-{data_stream.namespace}`. This means the fields can only contain characters that are valid as part of names of data streams. More details about this can be found in this https://www.elastic.co/blog/an-introduction-to-the-elastic-data-stream-naming-scheme[blog post].&#xA;An Elasticsearch data stream consists of one or more backing indices, and a data stream name forms part of the backing indices names. Due to this convention, data streams must also follow index naming restrictions. For example, data stream names cannot include `\`, `/`, `*`, `?`, `&quot;`, `&lt;`, `&gt;`, `|`, ` ` (space character), `,`, or `#`. Please see the Elasticsearch reference for additional https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-create-index.html#indices-create-api-path-params[restrictions].
 	///</summary>
-	public abstract class DataStreamBase {
+	public abstract class DataStreamFieldSet {
 
 		///<summary>data_stream.dataset</summary>
 		[DataMember(Name = "dataset")]
@@ -324,7 +324,7 @@ namespace Elastic.CommonSchema
 	///<summary>
 	/// Destination fields capture details about the receiver of a network exchange/packet. These fields are populated from a network event, packet, or other event containing details of a network transaction.&#xA;Destination fields are usually populated in conjunction with source fields. The source and destination fields are considered the baseline and should always be filled if an event contains source and destination details from a network transaction. If the event also contains identification of the client and server roles, then the client and server fields should also be populated.
 	///</summary>
-	public abstract class DestinationBase {
+	public abstract class DestinationFieldSet {
 
 		///<summary>destination.address</summary>
 		[DataMember(Name = "address")]
@@ -378,7 +378,7 @@ namespace Elastic.CommonSchema
 	///<summary>
 	/// These fields contain information about code libraries dynamically loaded into processes.&#xA;&#xA;Many operating systems refer to &quot;shared code libraries&quot; with different names, but this field set refers to all of the following:&#xA;* Dynamic-link library (`.dll`) commonly used on Windows&#xA;* Shared Object (`.so`) commonly used on Unix-like operating systems&#xA;* Dynamic library (`.dylib`) commonly used on macOS
 	///</summary>
-	public abstract class DllBase {
+	public abstract class DllFieldSet {
 
 		///<summary>dll.name</summary>
 		[DataMember(Name = "name")]
@@ -392,7 +392,7 @@ namespace Elastic.CommonSchema
 	///<summary>
 	/// Fields describing DNS queries and answers.&#xA;DNS events should either represent a single DNS query prior to getting answers (`dns.type:query`) or they should represent a full exchange and contain the query details as well as all of the answers that were provided for this query (`dns.type:answer`).
 	///</summary>
-	public abstract class DnsBase {
+	public abstract class DnsFieldSet {
 
 		///<summary>dns.header_flags</summary>
 		[DataMember(Name = "header_flags")]
@@ -450,7 +450,7 @@ namespace Elastic.CommonSchema
 	///<summary>
 	/// Meta-information specific to ECS.
 	///</summary>
-	public abstract class EcsBase {
+	public abstract class EcsFieldSet {
 
 		///<summary>ecs.version</summary>
 		[DataMember(Name = "version")]
@@ -460,7 +460,7 @@ namespace Elastic.CommonSchema
 	///<summary>
 	/// These fields contain Linux Executable Linkable Format (ELF) metadata.
 	///</summary>
-	public abstract class ElfBase {
+	public abstract class ElfFieldSet {
 
 		///<summary>elf.architecture</summary>
 		[DataMember(Name = "architecture")]
@@ -538,7 +538,7 @@ namespace Elastic.CommonSchema
 	///<summary>
 	/// Event details relating to an email transaction.&#xA;This field set focuses on the email message header, body, and attachments. Network protocols that send and receive email messages such as SMTP are outside the scope of the `email.*` fields.
 	///</summary>
-	public abstract class EmailBase {
+	public abstract class EmailFieldSet {
 
 		///<summary>email.bcc.address</summary>
 		[DataMember(Name = "bcc.address")]
@@ -604,7 +604,7 @@ namespace Elastic.CommonSchema
 	///<summary>
 	/// These fields can represent errors of any kind.&#xA;Use them for errors that happen while fetching events or in cases where the event itself contains an error.
 	///</summary>
-	public abstract class ErrorBase {
+	public abstract class ErrorFieldSet {
 
 		///<summary>error.code</summary>
 		[DataMember(Name = "code")]
@@ -630,7 +630,7 @@ namespace Elastic.CommonSchema
 	///<summary>
 	/// The event fields are used for context information about the log or metric event itself.&#xA;A log is defined as an event containing details of something that happened. Log events must include the time at which the thing happened. Examples of log events include a process starting on a host, a network packet being sent from a source to a destination, or a network connection between a client and a server being initiated or closed. A metric is defined as an event containing one or more numerical measurements and the time at which the measurement was taken. Examples of metric events include memory pressure measured on a host and device temperature. See the `event.kind` definition in this section for additional details about metric and state events.
 	///</summary>
-	public abstract class EventBase {
+	public abstract class EventFieldSet {
 
 		///<summary>event.action</summary>
 		[DataMember(Name = "action")]
@@ -740,7 +740,7 @@ namespace Elastic.CommonSchema
 	///<summary>
 	/// The user fields describe information about the function as a service (FaaS) that is relevant to the event.
 	///</summary>
-	public abstract class FaasBase {
+	public abstract class FaasFieldSet {
 
 		///<summary>faas.coldstart</summary>
 		[DataMember(Name = "coldstart")]
@@ -770,7 +770,7 @@ namespace Elastic.CommonSchema
 	///<summary>
 	/// A file is defined as a set of information that has been created on, or has existed on a filesystem.&#xA;File objects can be associated with host events, network events, and/or file events (e.g., those produced by File Integrity Monitoring [FIM] products or services). File fields provide details about the affected file associated with the event or metric.
 	///</summary>
-	public abstract class FileBase {
+	public abstract class FileFieldSet {
 
 		///<summary>file.accessed</summary>
 		[DataMember(Name = "accessed")]
@@ -864,7 +864,7 @@ namespace Elastic.CommonSchema
 	///<summary>
 	/// Geo fields can carry data about a specific location related to an event.&#xA;This geolocation information can be derived from techniques such as Geo IP, or be user-supplied.
 	///</summary>
-	public abstract class GeoBase {
+	public abstract class GeoFieldSet {
 
 		///<summary>geo.city_name</summary>
 		[DataMember(Name = "city_name")]
@@ -914,7 +914,7 @@ namespace Elastic.CommonSchema
 	///<summary>
 	/// The group fields are meant to represent groups that are relevant to the event.
 	///</summary>
-	public abstract class GroupBase {
+	public abstract class GroupFieldSet {
 
 		///<summary>group.domain</summary>
 		[DataMember(Name = "domain")]
@@ -932,7 +932,7 @@ namespace Elastic.CommonSchema
 	///<summary>
 	/// The hash fields represent different bitwise hash algorithms and their values.&#xA;Field names for common hashes (e.g. MD5, SHA1) are predefined. Add fields for other hashes by lowercasing the hash algorithm name and using underscore separators as appropriate (snake case, e.g. sha3_512).&#xA;Note that this fieldset is used for common hashes that may be computed over a range of generic bytes. Entity-specific hashes such as ja3 or imphash are placed in the fieldsets to which they relate (tls and pe, respectively).
 	///</summary>
-	public abstract class HashBase {
+	public abstract class HashFieldSet {
 
 		///<summary>hash.md5</summary>
 		[DataMember(Name = "md5")]
@@ -966,7 +966,7 @@ namespace Elastic.CommonSchema
 	///<summary>
 	/// A host is defined as a general computing instance.&#xA;ECS host.* fields should be populated with details about the host on which the event happened, or from which the measurement was taken. Host types include hardware, virtual machines, Docker containers, and Kubernetes nodes.
 	///</summary>
-	public abstract class HostBase {
+	public abstract class HostFieldSet {
 
 		///<summary>host.architecture</summary>
 		[DataMember(Name = "architecture")]
@@ -1044,7 +1044,7 @@ namespace Elastic.CommonSchema
 	///<summary>
 	/// Fields related to HTTP activity. Use the `url` field set to store the url of the request.
 	///</summary>
-	public abstract class HttpBase {
+	public abstract class HttpFieldSet {
 
 		///<summary>http.request.body.bytes</summary>
 		[DataMember(Name = "request.body.bytes")]
@@ -1102,7 +1102,7 @@ namespace Elastic.CommonSchema
 	///<summary>
 	/// The interface fields are used to record ingress and egress interface information when reported by an observer (e.g. firewall, router, load balancer) in the context of the observer handling a network connection.  In the case of a single observer interface (e.g. network sensor on a span port) only the observer.ingress information should be populated.
 	///</summary>
-	public abstract class InterfaceBase {
+	public abstract class InterfaceFieldSet {
 
 		///<summary>interface.alias</summary>
 		[DataMember(Name = "alias")]
@@ -1120,7 +1120,7 @@ namespace Elastic.CommonSchema
 	///<summary>
 	/// Details about the event&#x27;s logging mechanism or logging transport.&#xA;The log.* fields are typically populated with details about the logging mechanism used to create and/or transport the event. For example, syslog details belong under `log.syslog.*`.&#xA;The details specific to your event source are typically not logged under `log.*`, but rather in `event.*` or in other ECS fields.
 	///</summary>
-	public abstract class LogBase {
+	public abstract class LogFieldSet {
 
 		///<summary>log.file.path</summary>
 		[DataMember(Name = "file.path")]
@@ -1154,7 +1154,7 @@ namespace Elastic.CommonSchema
 	///<summary>
 	/// The network is defined as the communication path over which a host or network event happens.&#xA;The network.* fields should be populated with details about the network activity associated with an event.
 	///</summary>
-	public abstract class NetworkBase {
+	public abstract class NetworkFieldSet {
 
 		///<summary>network.application</summary>
 		[DataMember(Name = "application")]
@@ -1208,7 +1208,7 @@ namespace Elastic.CommonSchema
 	///<summary>
 	/// An observer is defined as a special network, security, or application device used to detect, observe, or create network, security, or application-related events and metrics.&#xA;This could be a custom hardware appliance or a server that has been configured to run special network, security, or application software. Examples include firewalls, web proxies, intrusion detection/prevention systems, network monitoring sensors, web application firewalls, data loss prevention systems, and APM servers. The observer.* fields shall be populated with details of the system, if any, that detects, observes and/or creates a network, security, or application event or metric. Message queues and ETL components used in processing events or metrics are not considered observers in ECS.
 	///</summary>
-	public abstract class ObserverBase {
+	public abstract class ObserverFieldSet {
 
 		///<summary>observer.hostname</summary>
 		[DataMember(Name = "hostname")]
@@ -1258,7 +1258,7 @@ namespace Elastic.CommonSchema
 	///<summary>
 	/// Fields that describe the resources which container orchestrators manage or act upon.
 	///</summary>
-	public abstract class OrchestratorBase {
+	public abstract class OrchestratorFieldSet {
 
 		///<summary>orchestrator.api_version</summary>
 		[DataMember(Name = "api_version")]
@@ -1316,7 +1316,7 @@ namespace Elastic.CommonSchema
 	///<summary>
 	/// The organization fields enrich data with information about the company or entity the data is associated with.&#xA;These fields help you arrange or filter data stored in an index by one or multiple organizations.
 	///</summary>
-	public abstract class OrganizationBase {
+	public abstract class OrganizationFieldSet {
 
 		///<summary>organization.id</summary>
 		[DataMember(Name = "id")]
@@ -1330,7 +1330,7 @@ namespace Elastic.CommonSchema
 	///<summary>
 	/// The OS fields contain information about the operating system.
 	///</summary>
-	public abstract class OsBase {
+	public abstract class OsFieldSet {
 
 		///<summary>os.family</summary>
 		[DataMember(Name = "family")]
@@ -1364,7 +1364,7 @@ namespace Elastic.CommonSchema
 	///<summary>
 	/// These fields contain information about an installed software package. It contains general information about a package, such as name, version or size. It also contains installation details, such as time or location.
 	///</summary>
-	public abstract class PackageBase {
+	public abstract class PackageFieldSet {
 
 		///<summary>package.architecture</summary>
 		[DataMember(Name = "architecture")]
@@ -1422,7 +1422,7 @@ namespace Elastic.CommonSchema
 	///<summary>
 	/// These fields contain Windows Portable Executable (PE) metadata.
 	///</summary>
-	public abstract class PeBase {
+	public abstract class PeFieldSet {
 
 		///<summary>pe.architecture</summary>
 		[DataMember(Name = "architecture")]
@@ -1460,7 +1460,7 @@ namespace Elastic.CommonSchema
 	///<summary>
 	/// These fields contain information about a process.&#xA;These fields can help you correlate metrics information with a process id/name from a log message.  The `process.pid` often stays in the metric itself and is copied to the global field for correlation.
 	///</summary>
-	public abstract class ProcessBase {
+	public abstract class ProcessFieldSet {
 
 		///<summary>process.args</summary>
 		[DataMember(Name = "args")]
@@ -1542,7 +1542,7 @@ namespace Elastic.CommonSchema
 	///<summary>
 	/// Fields related to Windows Registry operations.
 	///</summary>
-	public abstract class RegistryBase {
+	public abstract class RegistryFieldSet {
 
 		///<summary>registry.data.bytes</summary>
 		[DataMember(Name = "data.bytes")]
@@ -1576,7 +1576,7 @@ namespace Elastic.CommonSchema
 	///<summary>
 	/// This field set is meant to facilitate pivoting around a piece of data.&#xA;Some pieces of information can be seen in many places in an ECS event. To facilitate searching for them, store an array of all seen values to their corresponding field in `related.`.&#xA;A concrete example is IP addresses, which can be under host, observer, source, destination, client, server, and network.forwarded_ip. If you append all IPs to `related.ip`, you can then search for a given IP trivially, no matter where it appeared, by querying `related.ip:192.0.2.15`.
 	///</summary>
-	public abstract class RelatedBase {
+	public abstract class RelatedFieldSet {
 
 		///<summary>related.hash</summary>
 		[DataMember(Name = "hash")]
@@ -1598,7 +1598,7 @@ namespace Elastic.CommonSchema
 	///<summary>
 	/// Rule fields are used to capture the specifics of any observer or agent rules that generate alerts or other notable events.&#xA;Examples of data sources that would populate the rule fields include: network admission control platforms, network or host IDS/IPS, network firewalls, web application firewalls, url filters, endpoint detection and response (EDR) systems, etc.
 	///</summary>
-	public abstract class RuleBase {
+	public abstract class RuleFieldSet {
 
 		///<summary>rule.author</summary>
 		[DataMember(Name = "author")]
@@ -1644,7 +1644,7 @@ namespace Elastic.CommonSchema
 	///<summary>
 	/// A Server is defined as the responder in a network connection for events regarding sessions, connections, or bidirectional flow records.&#xA;For TCP events, the server is the receiver of the initial SYN packet(s) of the TCP connection. For other protocols, the server is generally the responder in the network transaction. Some systems actually use the term &quot;responder&quot; to refer the server in TCP connections. The server fields describe details about the system acting as the server in the network event. Server fields are usually populated in conjunction with client fields. Server fields are generally not populated for packet-level events.&#xA;Client / server representations can add semantic context to an exchange, which is helpful to visualize the data in certain situations. If your context falls in that category, you should still ensure that source and destination are filled appropriately.
 	///</summary>
-	public abstract class ServerBase {
+	public abstract class ServerFieldSet {
 
 		///<summary>server.address</summary>
 		[DataMember(Name = "address")]
@@ -1698,7 +1698,7 @@ namespace Elastic.CommonSchema
 	///<summary>
 	/// The service fields describe the service for or from which the data was collected.&#xA;These fields help you find and correlate logs for a specific service and version.
 	///</summary>
-	public abstract class ServiceBase {
+	public abstract class ServiceFieldSet {
 
 		///<summary>service.address</summary>
 		[DataMember(Name = "address")]
@@ -1744,7 +1744,7 @@ namespace Elastic.CommonSchema
 	///<summary>
 	/// Source fields capture details about the sender of a network exchange/packet. These fields are populated from a network event, packet, or other event containing details of a network transaction.&#xA;Source fields are usually populated in conjunction with destination fields. The source and destination fields are considered the baseline and should always be filled if an event contains source and destination details from a network transaction. If the event also contains identification of the client and server roles, then the client and server fields should also be populated.
 	///</summary>
-	public abstract class SourceBase {
+	public abstract class SourceFieldSet {
 
 		///<summary>source.address</summary>
 		[DataMember(Name = "address")]
@@ -1798,7 +1798,7 @@ namespace Elastic.CommonSchema
 	///<summary>
 	/// Fields to classify events and alerts according to a threat taxonomy such as the MITRE ATT&amp;CK&#xAE; framework.&#xA;These fields are for users to classify alerts from all of their sources (e.g. IDS, NGFW, etc.) within a common taxonomy. The threat.tactic.* fields are meant to capture the high level category of the threat (e.g. &quot;impact&quot;). The threat.technique.* fields are meant to capture which kind of approach is used by this detected threat, to accomplish the goal (e.g. &quot;endpoint denial of service&quot;).
 	///</summary>
-	public abstract class ThreatBase {
+	public abstract class ThreatFieldSet {
 
 		///<summary>threat.feed.dashboard_id</summary>
 		[DataMember(Name = "feed.dashboard_id")]
@@ -1960,7 +1960,7 @@ namespace Elastic.CommonSchema
 	///<summary>
 	/// Fields related to a TLS connection. These fields focus on the TLS protocol itself and intentionally avoids in-depth analysis of the related x.509 certificate files.
 	///</summary>
-	public abstract class TlsBase {
+	public abstract class TlsFieldSet {
 
 		///<summary>tls.cipher</summary>
 		[DataMember(Name = "cipher")]
@@ -2082,7 +2082,7 @@ namespace Elastic.CommonSchema
 	///<summary>
 	/// URL fields provide support for complete or partial URLs, and supports the breaking down into scheme, domain, path, and so on.
 	///</summary>
-	public abstract class UrlBase {
+	public abstract class UrlFieldSet {
 
 		///<summary>url.domain</summary>
 		[DataMember(Name = "domain")]
@@ -2144,7 +2144,7 @@ namespace Elastic.CommonSchema
 	///<summary>
 	/// The user fields describe information about the user that is relevant to the event.&#xA;Fields can have one entry or multiple entries. If a user has more than one id, provide an array that includes all of them.
 	///</summary>
-	public abstract class UserBase {
+	public abstract class UserFieldSet {
 
 		///<summary>user.domain</summary>
 		[DataMember(Name = "domain")]
@@ -2178,7 +2178,7 @@ namespace Elastic.CommonSchema
 	///<summary>
 	/// The user_agent fields normally come from a browser request.&#xA;They often show up in web service logs coming from the parsed user agent string.
 	///</summary>
-	public abstract class UserAgentBase {
+	public abstract class UserAgentFieldSet {
 
 		///<summary>user_agent.device.name</summary>
 		[DataMember(Name = "device.name")]
@@ -2200,7 +2200,7 @@ namespace Elastic.CommonSchema
 	///<summary>
 	/// The VLAN fields are used to identify 802.1q tag(s) of a packet, as well as ingress and egress VLAN associations of an observer in relation to a specific packet or connection.&#xA;Network.vlan fields are used to record a single VLAN tag, or the outer tag in the case of q-in-q encapsulations, for a packet or connection as observed, typically provided by a network sensor (e.g. Zeek, Wireshark) passively reporting on traffic.&#xA;Network.inner VLAN fields are used to report inner q-in-q 802.1q tags (multiple 802.1q encapsulations) as observed, typically provided by a network sensor  (e.g. Zeek, Wireshark) passively reporting on traffic. Network.inner VLAN fields should only be used in addition to network.vlan fields to indicate q-in-q tagging.&#xA;Observer.ingress and observer.egress VLAN values are used to record observer specific information when observer events contain discrete ingress and egress VLAN information, typically provided by firewalls, routers, or load balancers.
 	///</summary>
-	public abstract class VlanBase {
+	public abstract class VlanFieldSet {
 
 		///<summary>vlan.id</summary>
 		[DataMember(Name = "id")]
@@ -2214,7 +2214,7 @@ namespace Elastic.CommonSchema
 	///<summary>
 	/// The vulnerability fields describe information about a vulnerability that is relevant to an event.
 	///</summary>
-	public abstract class VulnerabilityBase {
+	public abstract class VulnerabilityFieldSet {
 
 		///<summary>vulnerability.category</summary>
 		[DataMember(Name = "category")]
@@ -2272,7 +2272,7 @@ namespace Elastic.CommonSchema
 	///<summary>
 	/// This implements the common core fields for x509 certificates. This information is likely logged with TLS sessions, digital signatures found in executable binaries, S/MIME information in email bodies, or analysis of files on disk.&#xA;When the certificate relates to a file, use the fields at `file.x509`. When hashes of the DER-encoded certificate are available, the `hash` data set should be populated as well (e.g. `file.hash.sha256`).&#xA;Events that contain certificate information about network connections, should use the x509 fields under the relevant TLS fields: `tls.server.x509` and/or `tls.client.x509`.
 	///</summary>
-	public abstract class X509Base {
+	public abstract class X509FieldSet {
 
 		///<summary>x509.alternative_names</summary>
 		[DataMember(Name = "alternative_names")]

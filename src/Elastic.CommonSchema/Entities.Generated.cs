@@ -21,104 +21,104 @@ using System.Runtime.Serialization;
 namespace Elastic.CommonSchema
 {
 
-	///<inheritdoc cref="CloudBase"/>
-	public class CloudOrigin : CloudBase {
+	///<inheritdoc cref="CloudFieldSet"/>
+	public class CloudOrigin : CloudFieldSet {
 	}
 
-	///<inheritdoc cref="CloudBase"/>
-	public class CloudTarget : CloudBase {
+	///<inheritdoc cref="CloudFieldSet"/>
+	public class CloudTarget : CloudFieldSet {
 	}
 
-	///<inheritdoc cref="ProcessBase"/>
-	public class ProcessParent : ProcessBase {
+	///<inheritdoc cref="ProcessFieldSet"/>
+	public class ProcessParent : ProcessFieldSet {
 
 		///<summary>process.parent.group_leader</summary>
 		[DataMember(Name = "group_leader")]
 		public ProcessParentGroupLeader GroupLeader { get; set; }
 	}
 
-	///<inheritdoc cref="ProcessBase"/>
-	public class ProcessEntryLeader : ProcessBase {
+	///<inheritdoc cref="ProcessFieldSet"/>
+	public class ProcessEntryLeader : ProcessFieldSet {
 
 		///<summary>process.entry_leader.parent</summary>
 		[DataMember(Name = "parent")]
 		public ProcessEntryLeaderParent Parent { get; set; }
 	}
 
-	///<inheritdoc cref="ProcessBase"/>
-	public class ProcessSessionLeader : ProcessBase {
+	///<inheritdoc cref="ProcessFieldSet"/>
+	public class ProcessSessionLeader : ProcessFieldSet {
 
 		///<summary>process.session_leader.parent</summary>
 		[DataMember(Name = "parent")]
 		public ProcessSessionLeaderParent Parent { get; set; }
 	}
 
-	///<inheritdoc cref="ProcessBase"/>
-	public class ProcessGroupLeader : ProcessBase {
+	///<inheritdoc cref="ProcessFieldSet"/>
+	public class ProcessGroupLeader : ProcessFieldSet {
 	}
 
-	///<inheritdoc cref="ProcessBase"/>
-	public class ProcessParentGroupLeader : ProcessBase {
+	///<inheritdoc cref="ProcessFieldSet"/>
+	public class ProcessParentGroupLeader : ProcessFieldSet {
 	}
 
-	///<inheritdoc cref="ProcessBase"/>
-	public class ProcessEntryLeaderParent : ProcessBase {
+	///<inheritdoc cref="ProcessFieldSet"/>
+	public class ProcessEntryLeaderParent : ProcessFieldSet {
 
 		///<summary>process.entry_leader.parent.session_leader</summary>
 		[DataMember(Name = "session_leader")]
 		public ProcessEntryLeaderParentSessionLeader SessionLeader { get; set; }
 	}
 
-	///<inheritdoc cref="ProcessBase"/>
-	public class ProcessSessionLeaderParent : ProcessBase {
+	///<inheritdoc cref="ProcessFieldSet"/>
+	public class ProcessSessionLeaderParent : ProcessFieldSet {
 
 		///<summary>process.session_leader.parent.session_leader</summary>
 		[DataMember(Name = "session_leader")]
 		public ProcessSessionLeaderParentSessionLeader SessionLeader { get; set; }
 	}
 
-	///<inheritdoc cref="ProcessBase"/>
-	public class ProcessEntryLeaderParentSessionLeader : ProcessBase {
+	///<inheritdoc cref="ProcessFieldSet"/>
+	public class ProcessEntryLeaderParentSessionLeader : ProcessFieldSet {
 	}
 
-	///<inheritdoc cref="ProcessBase"/>
-	public class ProcessSessionLeaderParentSessionLeader : ProcessBase {
+	///<inheritdoc cref="ProcessFieldSet"/>
+	public class ProcessSessionLeaderParentSessionLeader : ProcessFieldSet {
 	}
 
-	///<inheritdoc cref="ProcessBase"/>
-	public class ProcessPrevious : ProcessBase {
+	///<inheritdoc cref="ProcessFieldSet"/>
+	public class ProcessPrevious : ProcessFieldSet {
 	}
 
-	///<inheritdoc cref="ServiceBase"/>
-	public class ServiceOrigin : ServiceBase {
+	///<inheritdoc cref="ServiceFieldSet"/>
+	public class ServiceOrigin : ServiceFieldSet {
 	}
 
-	///<inheritdoc cref="ServiceBase"/>
-	public class ServiceTarget : ServiceBase {
+	///<inheritdoc cref="ServiceFieldSet"/>
+	public class ServiceTarget : ServiceFieldSet {
 	}
 
-	///<inheritdoc cref="UserBase"/>
-	public class UserTarget : UserBase {
+	///<inheritdoc cref="UserFieldSet"/>
+	public class UserTarget : UserFieldSet {
 	}
 
-	///<inheritdoc cref="UserBase"/>
-	public class UserEffective : UserBase {
+	///<inheritdoc cref="UserFieldSet"/>
+	public class UserEffective : UserFieldSet {
 	}
 
-	///<inheritdoc cref="UserBase"/>
-	public class UserChanges : UserBase {
+	///<inheritdoc cref="UserFieldSet"/>
+	public class UserChanges : UserFieldSet {
 	}
 
-	///<inheritdoc cref="AgentBase"/>
-	public class Agent : AgentBase {
+	///<inheritdoc cref="AgentFieldSet"/>
+	public class Agent : AgentFieldSet {
 	}
 
-	///<inheritdoc cref="AsBase"/>
-	public class As : AsBase {
+	///<inheritdoc cref="AsFieldSet"/>
+	public class As : AsFieldSet {
 	}
 
-	///<inheritdoc cref="ClientBase"/>
-	public class Client : ClientBase {
+	///<inheritdoc cref="ClientFieldSet"/>
+	public class Client : ClientFieldSet {
 
 		///<summary>client.as</summary>
 		[DataMember(Name = "as")]
@@ -133,8 +133,8 @@ namespace Elastic.CommonSchema
 		public User User { get; set; }
 	}
 
-	///<inheritdoc cref="CloudBase"/>
-	public class Cloud : CloudBase {
+	///<inheritdoc cref="CloudFieldSet"/>
+	public class Cloud : CloudFieldSet {
 
 		///<summary>cloud.origin</summary>
 		[DataMember(Name = "origin")]
@@ -145,20 +145,20 @@ namespace Elastic.CommonSchema
 		public CloudTarget Target { get; set; }
 	}
 
-	///<inheritdoc cref="CodeSignatureBase"/>
-	public class CodeSignature : CodeSignatureBase {
+	///<inheritdoc cref="CodeSignatureFieldSet"/>
+	public class CodeSignature : CodeSignatureFieldSet {
 	}
 
-	///<inheritdoc cref="ContainerBase"/>
-	public class Container : ContainerBase {
+	///<inheritdoc cref="ContainerFieldSet"/>
+	public class Container : ContainerFieldSet {
 	}
 
-	///<inheritdoc cref="DataStreamBase"/>
-	public class DataStream : DataStreamBase {
+	///<inheritdoc cref="DataStreamFieldSet"/>
+	public class DataStream : DataStreamFieldSet {
 	}
 
-	///<inheritdoc cref="DestinationBase"/>
-	public class Destination : DestinationBase {
+	///<inheritdoc cref="DestinationFieldSet"/>
+	public class Destination : DestinationFieldSet {
 
 		///<summary>destination.as</summary>
 		[DataMember(Name = "as")]
@@ -173,8 +173,8 @@ namespace Elastic.CommonSchema
 		public User User { get; set; }
 	}
 
-	///<inheritdoc cref="DllBase"/>
-	public class Dll : DllBase {
+	///<inheritdoc cref="DllFieldSet"/>
+	public class Dll : DllFieldSet {
 
 		///<summary>dll.hash</summary>
 		[DataMember(Name = "hash")]
@@ -189,36 +189,36 @@ namespace Elastic.CommonSchema
 		public CodeSignature CodeSignature { get; set; }
 	}
 
-	///<inheritdoc cref="DnsBase"/>
-	public class Dns : DnsBase {
+	///<inheritdoc cref="DnsFieldSet"/>
+	public class Dns : DnsFieldSet {
 	}
 
-	///<inheritdoc cref="EcsBase"/>
-	public class Ecs : EcsBase {
+	///<inheritdoc cref="EcsFieldSet"/>
+	public class Ecs : EcsFieldSet {
 	}
 
-	///<inheritdoc cref="ElfBase"/>
-	public class Elf : ElfBase {
+	///<inheritdoc cref="ElfFieldSet"/>
+	public class Elf : ElfFieldSet {
 	}
 
-	///<inheritdoc cref="EmailBase"/>
-	public class Email : EmailBase {
+	///<inheritdoc cref="EmailFieldSet"/>
+	public class Email : EmailFieldSet {
 	}
 
-	///<inheritdoc cref="ErrorBase"/>
-	public class Error : ErrorBase {
+	///<inheritdoc cref="ErrorFieldSet"/>
+	public class Error : ErrorFieldSet {
 	}
 
-	///<inheritdoc cref="EventBase"/>
-	public class Event : EventBase {
+	///<inheritdoc cref="EventFieldSet"/>
+	public class Event : EventFieldSet {
 	}
 
-	///<inheritdoc cref="FaasBase"/>
-	public class Faas : FaasBase {
+	///<inheritdoc cref="FaasFieldSet"/>
+	public class Faas : FaasFieldSet {
 	}
 
-	///<inheritdoc cref="FileBase"/>
-	public class File : FileBase {
+	///<inheritdoc cref="FileFieldSet"/>
+	public class File : FileFieldSet {
 
 		///<summary>file.hash</summary>
 		[DataMember(Name = "hash")]
@@ -241,20 +241,20 @@ namespace Elastic.CommonSchema
 		public Elf Elf { get; set; }
 	}
 
-	///<inheritdoc cref="GeoBase"/>
-	public class Geo : GeoBase {
+	///<inheritdoc cref="GeoFieldSet"/>
+	public class Geo : GeoFieldSet {
 	}
 
-	///<inheritdoc cref="GroupBase"/>
-	public class Group : GroupBase {
+	///<inheritdoc cref="GroupFieldSet"/>
+	public class Group : GroupFieldSet {
 	}
 
-	///<inheritdoc cref="HashBase"/>
-	public class Hash : HashBase {
+	///<inheritdoc cref="HashFieldSet"/>
+	public class Hash : HashFieldSet {
 	}
 
-	///<inheritdoc cref="HostBase"/>
-	public class Host : HostBase {
+	///<inheritdoc cref="HostFieldSet"/>
+	public class Host : HostFieldSet {
 
 		///<summary>host.geo</summary>
 		[DataMember(Name = "geo")]
@@ -265,28 +265,28 @@ namespace Elastic.CommonSchema
 		public Os Os { get; set; }
 	}
 
-	///<inheritdoc cref="HttpBase"/>
-	public class Http : HttpBase {
+	///<inheritdoc cref="HttpFieldSet"/>
+	public class Http : HttpFieldSet {
 	}
 
-	///<inheritdoc cref="InterfaceBase"/>
-	public class Interface : InterfaceBase {
+	///<inheritdoc cref="InterfaceFieldSet"/>
+	public class Interface : InterfaceFieldSet {
 	}
 
-	///<inheritdoc cref="LogBase"/>
-	public partial class Log : LogBase {
+	///<inheritdoc cref="LogFieldSet"/>
+	public partial class Log : LogFieldSet {
 	}
 
-	///<inheritdoc cref="NetworkBase"/>
-	public class Network : NetworkBase {
+	///<inheritdoc cref="NetworkFieldSet"/>
+	public class Network : NetworkFieldSet {
 
 		///<summary>network.vlan</summary>
 		[DataMember(Name = "vlan")]
 		public Vlan Vlan { get; set; }
 	}
 
-	///<inheritdoc cref="ObserverBase"/>
-	public class Observer : ObserverBase {
+	///<inheritdoc cref="ObserverFieldSet"/>
+	public class Observer : ObserverFieldSet {
 
 		///<summary>observer.geo</summary>
 		[DataMember(Name = "geo")]
@@ -297,28 +297,28 @@ namespace Elastic.CommonSchema
 		public Os Os { get; set; }
 	}
 
-	///<inheritdoc cref="OrchestratorBase"/>
-	public class Orchestrator : OrchestratorBase {
+	///<inheritdoc cref="OrchestratorFieldSet"/>
+	public class Orchestrator : OrchestratorFieldSet {
 	}
 
-	///<inheritdoc cref="OrganizationBase"/>
-	public class Organization : OrganizationBase {
+	///<inheritdoc cref="OrganizationFieldSet"/>
+	public class Organization : OrganizationFieldSet {
 	}
 
-	///<inheritdoc cref="OsBase"/>
-	public class Os : OsBase {
+	///<inheritdoc cref="OsFieldSet"/>
+	public class Os : OsFieldSet {
 	}
 
-	///<inheritdoc cref="PackageBase"/>
-	public class Package : PackageBase {
+	///<inheritdoc cref="PackageFieldSet"/>
+	public class Package : PackageFieldSet {
 	}
 
-	///<inheritdoc cref="PeBase"/>
-	public class Pe : PeBase {
+	///<inheritdoc cref="PeFieldSet"/>
+	public class Pe : PeFieldSet {
 	}
 
-	///<inheritdoc cref="ProcessBase"/>
-	public class Process : ProcessBase {
+	///<inheritdoc cref="ProcessFieldSet"/>
+	public class Process : ProcessFieldSet {
 
 		///<summary>process.group</summary>
 		[DataMember(Name = "group")]
@@ -389,20 +389,20 @@ namespace Elastic.CommonSchema
 		public ProcessPrevious Previous { get; set; }
 	}
 
-	///<inheritdoc cref="RegistryBase"/>
-	public class Registry : RegistryBase {
+	///<inheritdoc cref="RegistryFieldSet"/>
+	public class Registry : RegistryFieldSet {
 	}
 
-	///<inheritdoc cref="RelatedBase"/>
-	public class Related : RelatedBase {
+	///<inheritdoc cref="RelatedFieldSet"/>
+	public class Related : RelatedFieldSet {
 	}
 
-	///<inheritdoc cref="RuleBase"/>
-	public class Rule : RuleBase {
+	///<inheritdoc cref="RuleFieldSet"/>
+	public class Rule : RuleFieldSet {
 	}
 
-	///<inheritdoc cref="ServerBase"/>
-	public class Server : ServerBase {
+	///<inheritdoc cref="ServerFieldSet"/>
+	public class Server : ServerFieldSet {
 
 		///<summary>server.as</summary>
 		[DataMember(Name = "as")]
@@ -417,8 +417,8 @@ namespace Elastic.CommonSchema
 		public User User { get; set; }
 	}
 
-	///<inheritdoc cref="ServiceBase"/>
-	public class Service : ServiceBase {
+	///<inheritdoc cref="ServiceFieldSet"/>
+	public class Service : ServiceFieldSet {
 
 		///<summary>service.origin</summary>
 		[DataMember(Name = "origin")]
@@ -429,8 +429,8 @@ namespace Elastic.CommonSchema
 		public ServiceTarget Target { get; set; }
 	}
 
-	///<inheritdoc cref="SourceBase"/>
-	public class Source : SourceBase {
+	///<inheritdoc cref="SourceFieldSet"/>
+	public class Source : SourceFieldSet {
 
 		///<summary>source.as</summary>
 		[DataMember(Name = "as")]
@@ -445,8 +445,8 @@ namespace Elastic.CommonSchema
 		public User User { get; set; }
 	}
 
-	///<inheritdoc cref="ThreatBase"/>
-	public class Threat : ThreatBase {
+	///<inheritdoc cref="ThreatFieldSet"/>
+	public class Threat : ThreatFieldSet {
 
 		///<summary>threat.indicator.x509</summary>
 		[DataMember(Name = "indicator.x509")]
@@ -473,8 +473,8 @@ namespace Elastic.CommonSchema
 		public Url IndicatorUrl { get; set; }
 	}
 
-	///<inheritdoc cref="TlsBase"/>
-	public class Tls : TlsBase {
+	///<inheritdoc cref="TlsFieldSet"/>
+	public class Tls : TlsFieldSet {
 
 		///<summary>tls.client.x509</summary>
 		[DataMember(Name = "client.x509")]
@@ -485,12 +485,12 @@ namespace Elastic.CommonSchema
 		public X509 ServerX509 { get; set; }
 	}
 
-	///<inheritdoc cref="UrlBase"/>
-	public class Url : UrlBase {
+	///<inheritdoc cref="UrlFieldSet"/>
+	public class Url : UrlFieldSet {
 	}
 
-	///<inheritdoc cref="UserBase"/>
-	public class User : UserBase {
+	///<inheritdoc cref="UserFieldSet"/>
+	public class User : UserFieldSet {
 
 		///<summary>user.group</summary>
 		[DataMember(Name = "group")]
@@ -509,23 +509,23 @@ namespace Elastic.CommonSchema
 		public UserChanges Changes { get; set; }
 	}
 
-	///<inheritdoc cref="UserAgentBase"/>
-	public class UserAgent : UserAgentBase {
+	///<inheritdoc cref="UserAgentFieldSet"/>
+	public class UserAgent : UserAgentFieldSet {
 
 		///<summary>user_agent.os</summary>
 		[DataMember(Name = "os")]
 		public Os Os { get; set; }
 	}
 
-	///<inheritdoc cref="VlanBase"/>
-	public class Vlan : VlanBase {
+	///<inheritdoc cref="VlanFieldSet"/>
+	public class Vlan : VlanFieldSet {
 	}
 
-	///<inheritdoc cref="VulnerabilityBase"/>
-	public class Vulnerability : VulnerabilityBase {
+	///<inheritdoc cref="VulnerabilityFieldSet"/>
+	public class Vulnerability : VulnerabilityFieldSet {
 	}
 
-	///<inheritdoc cref="X509Base"/>
-	public class X509 : X509Base {
+	///<inheritdoc cref="X509FieldSet"/>
+	public class X509 : X509FieldSet {
 	}
 }

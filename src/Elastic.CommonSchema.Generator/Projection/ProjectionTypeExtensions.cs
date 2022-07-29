@@ -14,20 +14,13 @@ namespace Elastic.CommonSchema.Generator.Projection
 			.Replace("_", string.Empty)
 			.Replace(".", string.Empty);
 
-		private static readonly Regex LastPropertyRegex = new($"^.+\\.([^\\.]+)$");
-
-		public static string GetLastProperty(this string s) => LastPropertyRegex.Replace(s, "$1");
-
 		public static string GetLocalProperty(this string s, string prefix) =>
 			new Regex($"^{prefix.Replace(".", "\\.")}\\.(.+)$").Replace(s, "$1");
 
 		public static string GetClrType(this Field field)
 		{
 			var baseType = field.Type.GetClrType();
-			if (field.Normalize.Contains("array"))
-				return $"{baseType}[]";
-
-			return baseType;
+			return field.Normalize.Contains("array") ? $"{baseType}[]" : baseType;
 		}
 
 		private static string GetClrType(this FieldType fieldType)

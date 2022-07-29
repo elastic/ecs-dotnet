@@ -20,8 +20,8 @@ using System.Runtime.Serialization;
 
 namespace Elastic.CommonSchema
 {
-	///<inheritdoc cref="BaseBase"/>
-	public partial class Base : BaseBase 
+	///<inheritdoc cref="BaseFieldSet"/>
+	public partial class Base : BaseFieldSet 
 	{
 
 		/// <summary>
