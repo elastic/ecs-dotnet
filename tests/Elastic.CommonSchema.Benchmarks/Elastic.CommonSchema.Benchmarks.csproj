@@ -7,7 +7,7 @@
 
   <ItemGroup>
     <PackageReference Include="AutoBogus" Version="2.8.2" />
-    <PackageReference Include="BenchmarkDotNet" Version="0.12.1" />
+    <PackageReference Include="BenchmarkDotNet" Version="0.13.1" />
     <PackageReference Include="Bogus" Version="29.0.2" />
   </ItemGroup>
 
