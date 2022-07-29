@@ -1,5 +1,5 @@
 using System.Text.Json;
-using Elastic.Ingest.Serialization;
+using Elastic.Ingest.Elasticsearch.Serialization;
 using FluentAssertions;
 using Xunit;
 

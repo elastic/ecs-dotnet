@@ -21,7 +21,7 @@ namespace Elastic.Ingest.Elasticsearch
 
 		public static readonly JsonSerializerOptions SerializerOptions = new()
 		{
-			DefaultIgnoreCondition = JsonIgnoreCondition.Always,
+			DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingDefault,
 			Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
 		};
 	}

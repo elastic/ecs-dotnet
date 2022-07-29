@@ -32,7 +32,7 @@ namespace Elastic.CommonSchema.BenchmarkDotNetExporter
 			Transport = new Transport<TransportConfiguration>(config);
 		}
 
-		public ElasticsearchBenchmarkExporter(ElasticsearchBenchmarkExporterOptions options, Func<ElasticsearchBenchmarkExporterOptions, ITransportConfiguration> configure)
+		public ElasticsearchBenchmarkExporter(ElasticsearchBenchmarkExporterOptions options, Func<ElasticsearchBenchmarkExporterOptions, TransportConfiguration> configure)
 		{
 			Options = options;
 			Transport = new Transport<TransportConfiguration>(configure(Options));
