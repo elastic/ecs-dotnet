@@ -30,7 +30,7 @@ namespace Elastic.CommonSchema.NLog.Tests
 
 			var logFactory = new LogFactory();
 			var logConfig = new Config.LoggingConfiguration(logFactory);
-			var ecsLayout = new EcsLayout { IncludeMdlc = true };
+			var ecsLayout = new EcsLayout { IncludeScopeProperties = true };
 			ecsLayout.ExcludeProperties.Add("NotX");
 			var memoryTarget = new MemoryTarget { Layout = ecsLayout, OptimizeBufferReuse = true };
 			logConfig.AddRule(LogLevel.Trace, LogLevel.Fatal, memoryTarget);
