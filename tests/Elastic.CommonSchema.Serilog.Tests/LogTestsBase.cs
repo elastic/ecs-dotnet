@@ -57,9 +57,9 @@ namespace Elastic.CommonSchema.Serilog.Tests
 				})
 				.ToList();
 
-		protected List<(string Json, Base Base)> ToEcsEvents(List<LogEvent> logEvents) =>
+		protected List<(string Json, EcsDocument Base)> ToEcsEvents(List<LogEvent> logEvents) =>
 			ToFormattedStrings(logEvents)
-				.Select(s => (s, Base.Deserialize(s)))
+				.Select(s => (s, EcsDocument.Deserialize(s)))
 				.ToList();
 	}
 }

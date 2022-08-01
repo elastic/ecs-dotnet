@@ -39,7 +39,7 @@ namespace Elastic.CommonSchema.Serilog
 			public const string MachineName = nameof(MachineName);
 		}
 
-		public static Base ConvertToEcs(LogEvent logEvent, IEcsTextFormatterConfiguration configuration)
+		public static EcsDocument ConvertToEcs(LogEvent logEvent, IEcsTextFormatterConfiguration configuration)
 		{
 			var exceptions = logEvent.Exception != null
 				? new List<Exception> { logEvent.Exception }
@@ -48,20 +48,20 @@ namespace Elastic.CommonSchema.Serilog
 			if (configuration.MapHttpAdapter != null)
 				exceptions.AddRange(configuration.MapHttpAdapter.Exceptions);
 
-			var ecsEvent = new Base
+			var ecsEvent = new EcsDocument
 			{
 				Timestamp = logEvent.Timestamp,
 				Message = logEvent.RenderMessage(),
-				Ecs = new Ecs { Version = Base.Version },
+				Ecs = new Ecs { Version = EcsDocument.Version },
 				Log = GetLog(logEvent, exceptions, configuration),
 				Agent = GetAgent(logEvent),
 				Event = GetEvent(logEvent),
 				Metadata = GetMetadata(logEvent,configuration.LogEventPropertiesToFilter),
 				Process = GetProcess(logEvent, configuration.MapCurrentThread),
 				Host = GetHost(logEvent),
-				Trace = GetTrace(logEvent),
-				Transaction = GetTransaction(logEvent),
-				Span = GetSpan(logEvent)
+				TraceId = GetTrace(logEvent),
+				TransactionId = GetTransaction(logEvent),
+				SpanId = GetSpan(logEvent)
 			};
 
 			if (configuration.MapHttpAdapter != null)
@@ -83,19 +83,19 @@ namespace Elastic.CommonSchema.Serilog
 			return ecsEvent;
 		}
 
-		private static Trace GetTrace(LogEvent logEvent) => !logEvent.TryGetScalarPropertyValue("ElasticApmTraceId", out var traceId)
+		private static string GetTrace(LogEvent logEvent) => !logEvent.TryGetScalarPropertyValue("ElasticApmTraceId", out var traceId)
 			? null
-			: new Trace { Id = traceId.Value.ToString() };
+			: traceId.Value.ToString();
 
-		private static Transaction GetTransaction(LogEvent logEvent) =>
+		private static string GetTransaction(LogEvent logEvent) =>
 			!logEvent.TryGetScalarPropertyValue("ElasticApmTransactionId", out var transactionId)
 				? null
-				: new Transaction { Id = transactionId.Value.ToString() };
+				: transactionId.Value.ToString();
 
-		private static Span GetSpan(LogEvent logEvent) =>
+		private static string GetSpan(LogEvent logEvent) =>
 			!logEvent.TryGetScalarPropertyValue("ElasticApmSpanId", out var spanId)
 				? null
-				: new Span { Id = spanId.Value.ToString() };
+				: spanId.Value.ToString();
 
 		private static IDictionary<string, object> GetMetadata(LogEvent logEvent, ISet<string> logEventPropertiesToFilter)
 		{
@@ -228,9 +228,7 @@ namespace Elastic.CommonSchema.Serilog
 					Title = string.IsNullOrEmpty(processName) ? null : processName,
 					Name = processName,
 					Pid = pid,
-					Thread = int.TryParse(threadId ?? processId, out var id)
-						? new ProcessThread { Id = id }
-						: null,
+					ThreadId = int.TryParse(threadId ?? processId, out var id) ? id : null,
 				};
 			}
 
@@ -244,7 +242,7 @@ namespace Elastic.CommonSchema.Serilog
 				Name = process?.ProcessName ?? processName,
 				Pid = process?.Id ?? pid,
 				Executable = process?.ProcessName ?? processName,
-				Thread = new ProcessThread { Id = currentThread.ManagedThreadId }
+				ThreadId = currentThread.ManagedThreadId
 			};
 		}
 

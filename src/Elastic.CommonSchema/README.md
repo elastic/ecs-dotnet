@@ -72,100 +72,72 @@ NOTE: We only need to apply the index template once.
 Creating a new ECS event is as simple as newing up an instance:
 
 ```csharp
-var ecsEvent = new Base
+var ecsDocument = new EcsDocument
 {
-    Timestamp = DateTimeOffset.Parse("2019-10-23T19:44:38.485Z"),
-    Dns = new Dns
-    {
-        Id = "23666",
-        OpCode = "QUERY",
-        Type = "answer",
-        Question = new DnsQuestion
-        {
-             Name   = "www.example.com",
-             Type = "A",
-             Class = "IN",
-             RegisteredDomain = "example.com"
-        },
-        HeaderFlags = new [] { "RD", "RA" },
-        ResponseCode = "NOERROR",
-        ResolvedIp = new [] { "10.0.190.47", "10.0.190.117" },
-        Answers = new []
-        {
-            new DnsAnswers
-            {
-                Data = "10.0.190.47",
-                Name = "www.example.com",
-                Type = "A",
-                Class = "IN",
-                Ttl = 59
-            },
-            new DnsAnswers
-            {
-                Data = "10.0.190.117",
-                Name = "www.example.com",
-                Type = "A",
-                Class = "IN",
-                Ttl = 59
-            }
-        }
-    },
-    Network = new Network
-    {
-        Type = "ipv4",
-        Transport = "udp",
-        Protocol = "dns",
-        Direction = "outbound",
-        CommunityId = "1:19beef+RWVW9+BEEF/Q45VFU+2Y=",
-        Bytes = 126
-    },
-    Source = new Source
-    {
-        Ip = "192.168.86.26",
-        Port = 5785,
-        Bytes = 31
-    },
-    Destination = new Destination
-    {
-        Ip = "8.8.4.4",
-        Port = 53,
-        Bytes = 95
-    },
-    Client = new Client
-    {
-        Ip = "192.168.86.26",
-        Port = 5785,
-        Bytes = 31
-    },
-    Server = new Server
-    {
-        Ip = "8.8.4.4",
-        Port = 53,
-        Bytes = 95
-    },
-    Event = new Event
-    {
-        Duration = 122433000,
-        Start = DateTimeOffset.Parse("2019-10-23T19:44:38.485Z"),
-        End = DateTimeOffset.Parse("2019-10-23T19:44:38.607Z"),
-        Kind = "event",
-        Category = "network_traffic"
-    },
-    Ecs = new Ecs
-    {
-        Version = "1.2.0"
-    },
-    Metadata = new Dictionary<string, object>
-    {
-        { "client", "ecs-dotnet" }
-    }
+	Timestamp = DateTimeOffset.Parse("2019-10-23T19:44:38.485Z"),
+	Dns = new Dns
+	{
+		Id = "23666",
+		OpCode = "QUERY",
+		Type = "answer",
+		QuestionName = "www.example.com",
+		QuestionType = "A",
+		QuestionClass = "IN",
+		QuestionRegisteredDomain = "example.com",
+		HeaderFlags = new[] { "RD", "RA" },
+		ResponseCode = "NOERROR",
+		ResolvedIp = new[] { "10.0.190.47", "10.0.190.117" },
+		Answers = new[]
+		{
+			new DnsAnswers
+			{
+				Data = "10.0.190.47",
+				Name = "www.example.com",
+				Type = "A",
+				Class = "IN",
+				Ttl = 59
+			},
+			new DnsAnswers
+			{
+				Data = "10.0.190.117",
+				Name = "www.example.com",
+				Type = "A",
+				Class = "IN",
+				Ttl = 59
+			}
+		}
+	},
+	Network = new Network
+	{
+		Type = "ipv4",
+		Transport = "udp",
+		Protocol = "dns",
+		Direction = "outbound",
+		CommunityId = "1:19beef+RWVW9+BEEF/Q45VFU+2Y=",
+		Bytes = 126
+	},
+	Source = new Source { Ip = "192.168.86.26", Port = 5785, Bytes = 31 },
+	Destination = new Destination { Ip = "8.8.4.4", Port = 53, Bytes = 95 },
+	Client = new Client { Ip = "192.168.86.26", Port = 5785, Bytes = 31 },
+	Server = new Server { Ip = "8.8.4.4", Port = 53, Bytes = 95 },
+	Event = new Event
+	{
+		Duration = 122433000,
+		Start = DateTimeOffset.Parse("2019-10-23T19:44:38.485Z"),
+		End = DateTimeOffset.Parse("2019-10-23T19:44:38.607Z"),
+		Kind = "event",
+		Category = new[] { "network_traffic" }
+	},
+	Ecs = new Ecs { Version = "1.2.0" },
+	Metadata = new Dictionary<string, object> { { "client", "ecs-dotnet" } }
 };
+
 ```
 
 This can then be indexed into Elasticsearch:
 
 ```csharp
-var indexResponse = lowLevelClient.Index<StringResponse>(index,PostData.Serializable(ecsEvent));
+var indexResponse = lowLevelClient.Index<StringResponse>(index,PostData.Serializable(ecsDocument));
 
 // Check everything was successful
 Debug.Assert(indexResponse.Success);
@@ -175,7 +147,7 @@ Congratulations, you are now using the Elastic Common Schema!
 
 #### A note on the `Metadata` property
 
-The C# `Base` type includes a property called `Metadata` with the signature:
+The C# `EcsDocument` type includes a property called `Metadata` with the signature:
 
 ```csharp
 /// <summary>
@@ -187,11 +159,43 @@ public IDictionary<string, object> Metadata { get; set; }
 
 This property is not part of the ECS specification, but is included as a means to index supplementary information.
 
-#### Advanced metadata storage
+#### Extending EcsDocument
 
-In instances where using the `IDictionary<string, object> Metadata` property is not sufficient, or there is a clearer definition of the structure of the ECS-compatible document you would like to index, it is possible to subclass the `Base` object and provide your own property definitions.
+In instances where using the `IDictionary<string, object> Metadata` property is not sufficient, or there is a clearer definition of the structure of the ECS-compatible document you would like to index, it is possible to subclass the `EcsDocument` object and provide your own property definitions.
 
-The Elastic.CommonSchema.BenchmarkDotNetExporter project takes this approach, in the [Domain source directory](https://github.com/elastic/ecs-dotnet/tree/main/src/Elastic.CommonSchema.BenchmarkDotNetExporter), where the BenchmarkDocument subclasses Base.
+Through `TryRead`/`ReceiveProperty`/`WriteAdditionalProperties` you can hook into the `EcsDocumentJsonConverter` and read/write additional properties.
+
+```csharp
+/// <summary>
+/// An extended ECS document with an additional property
+/// </summary>
+public class MyEcsDocument : EcsDocument
+{
+	[DataMember(Name = "my_root_property")]
+	public MyCustomType MyRootProperty { get; set; }
+
+	protected override bool TryRead(string propertyName, out Type type)
+	{
+		type = propertyName switch
+		{
+			"my_root_property" => typeof(MyCustomType),
+			_ => null
+		};
+		return type != null;
+	}
+
+	protected override bool ReceiveProperty(string propertyName, object value) =>
+		propertyName switch
+		{
+			"my_root_property" => null != (MyRootProperty = value as MyCustomType),
+			_ => false
+		};
+
+	protected override void WriteAdditionalProperties(Action<string, object> write) => write("my_root_property", MyCustomType);
+}
+```
+
+The Elastic.CommonSchema.BenchmarkDotNetExporter project takes this approach, in the [Domain source directory](https://github.com/elastic/ecs-dotnet/tree/main/src/Elastic.CommonSchema.BenchmarkDotNetExporter), where the BenchmarkDocument subclasses EcsDocument.
 
 ## Copyright and License
 

@@ -41,9 +41,9 @@ namespace Elastic.CommonSchema.NLog.Tests
 			var ecsEvents = ToEcsEvents(logEvents);
 			var (_, info) = ecsEvents.First();
 
-			info.Trace.Id.Should().Be(traceId);
-			info.Transaction.Id.Should().Be(transactionId);
-			info.Span.Id.Should().Be(spanId);
+			info.TraceId.Should().Be(traceId);
+			info.TransactionId.Should().Be(transactionId);
+			info.SpanId.Should().Be(spanId);
 		});
 	}
 }
