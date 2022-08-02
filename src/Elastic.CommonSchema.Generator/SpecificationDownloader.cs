@@ -18,6 +18,7 @@ namespace Elastic.CommonSchema.Generator
 		private const string Core = "Core";
 		private const string Legacy = "legacy";
 		private const string Composable = "composable";
+		private const string Components = "components";
 
 		private static readonly ProgressBarOptions MainProgressBarOptions = new ProgressBarOptions { BackgroundColor = ConsoleColor.DarkGray };
 
@@ -26,6 +27,7 @@ namespace Elastic.CommonSchema.Generator
 			{ Core, "https://github.com/elastic/ecs/tree/{version}/generated/ecs" },
 			{ Legacy, "https://github.com/elastic/ecs/tree/{version}/generated/elasticsearch/legacy" },
 			{ Composable, "https://github.com/elastic/ecs/tree/{version}/generated/elasticsearch/composable" },
+			{ Path.Combine(Composable, Components), "https://github.com/elastic/ecs/tree/{version}/generated/elasticsearch/composable/component" },
 		};
 
 		private static readonly ProgressBarOptions SubProgressBarOptions = new ProgressBarOptions

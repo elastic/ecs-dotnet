@@ -8,6 +8,7 @@ using Elastic.Transport.Products.Elasticsearch;
 
 namespace Elastic.Ingest.Elasticsearch.Serialization
 {
+
 	public class BulkResponse : ITransportResponse
 	{
 		[JsonIgnore]

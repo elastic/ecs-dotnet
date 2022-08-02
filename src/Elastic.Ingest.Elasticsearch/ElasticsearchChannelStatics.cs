@@ -3,6 +3,7 @@
 // See the LICENSE file in the project root for more information
 
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Encodings.Web;
 using System.Text.Json;
 using System.Text.Json.Serialization;
@@ -13,6 +14,9 @@ namespace Elastic.Ingest.Elasticsearch
 	internal static class ElasticsearchChannelStatics
 	{
 		public static readonly byte[] LineFeed = { (byte)'\n' };
+
+		public static readonly byte[] DocUpdateHeaderStart = Encoding.UTF8.GetBytes("{\"doc\": ");
+		public static readonly byte[] DocUpdateHeaderEnd = Encoding.UTF8.GetBytes(" }");
 
 		public static readonly RequestParameters RequestParams =
 			new() { QueryString = { { "filter_path", "error, items.*.status,items.*.error" } } };

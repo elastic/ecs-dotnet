@@ -49,6 +49,10 @@ namespace Elastic.Ingest.Elasticsearch
 				await JsonSerializer.SerializeAsync(stream, indexHeader, indexHeader.GetType(), ElasticsearchChannelStatics.SerializerOptions, ctx)
 					.ConfigureAwait(false);
 				await stream.WriteAsync(ElasticsearchChannelStatics.LineFeed, 0, 1, ctx).ConfigureAwait(false);
+
+				if (indexHeader is UpdateOperation)
+					await stream.WriteAsync(ElasticsearchChannelStatics.DocUpdateHeaderStart, ctx).ConfigureAwait(false);
+
 				if (Options.WriteEvent != null)
 					await Options.WriteEvent(stream, ctx, @event).ConfigureAwait(false);
 				else
@@ -56,6 +60,9 @@ namespace Elastic.Ingest.Elasticsearch
 					await JsonSerializer.SerializeAsync(stream, @event, typeof(TEvent), ElasticsearchChannelStatics.SerializerOptions, ctx)
 						.ConfigureAwait(false);
 				}
+
+				if (indexHeader is UpdateOperation)
+					await stream.WriteAsync(ElasticsearchChannelStatics.DocUpdateHeaderEnd, ctx).ConfigureAwait(false);
 
 				await stream.WriteAsync(ElasticsearchChannelStatics.LineFeed, 0, 1, ctx).ConfigureAwait(false);
 			}
