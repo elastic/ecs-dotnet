@@ -11,7 +11,7 @@ namespace Elastic.CommonSchema.Serialization
 {
 	internal static class JsonConfiguration
 	{
-		internal static readonly JsonSerializerOptions SerializerOptions = new JsonSerializerOptions
+		public static JsonSerializerOptions SerializerOptions { get; } = new JsonSerializerOptions
 		{
 			DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingDefault,
 			Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping,

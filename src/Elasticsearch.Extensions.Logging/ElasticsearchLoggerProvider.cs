@@ -98,7 +98,7 @@ namespace Elasticsearch.Extensions.Logging
 			}
 		}
 
-		private static Elastic.Transport.ITransport<ITransportConfiguration> CreateTransport(ElasticsearchLoggerOptions loggerOptions)
+		private static ITransport<ITransportConfiguration> CreateTransport(ElasticsearchLoggerOptions loggerOptions)
 		{
 			// TODO: Check if Uri has changed before recreating
 			// TODO: Injectable factory? Or some way of testing.
@@ -108,7 +108,7 @@ namespace Elasticsearch.Extensions.Logging
 			// config = config.Proxy(new Uri("http://localhost:8080"), "", "");
 			// config = config.EnableDebugMode();
 
-			var transport = new Elastic.Transport.Transport<TransportConfiguration>(config);
+			var transport = new Transport<TransportConfiguration>(config);
 			return transport;
 		}
 

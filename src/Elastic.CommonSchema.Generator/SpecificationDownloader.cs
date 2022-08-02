@@ -8,9 +8,10 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using CsQuery;
+using Generator;
 using ShellProgressBar;
 
-namespace Generator
+namespace Elastic.CommonSchema.Generator
 {
 	public class SpecificationDownloader
 	{

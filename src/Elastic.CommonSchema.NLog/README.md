@@ -48,8 +48,8 @@ filesystem target and [Elastic Filebeat](https://www.elastic.co/downloads/beats/
 ## EcsLayout Parameter Options
 
 * **Metadata Options**
-  - _IncludeAllProperties_ - Include LogEvent properties as metadata. Default: `true`
-  - _IncludeMdlc_ - Include NLog Scope Context Properties as metadata. Default: `false`
+  - _IncludeEventProperties_ - Include LogEvent properties as metadata. Default: `true`
+  - _IncludeScopeProperties_ - Include NLog Scope Context Properties as metadata. Default: `false`
   - _ExcludeProperties_ - Comma separated string with names which properties to exclude.
 
 * **Event Options**

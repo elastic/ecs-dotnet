@@ -1,4 +1,4 @@
-﻿// Licensed to Elasticsearch B.V under one or more agreements.
+// Licensed to Elasticsearch B.V under one or more agreements.
 // Elasticsearch B.V licenses this file to you under the Apache 2.0 License.
 // See the LICENSE file in the project root for more information
 
@@ -34,7 +34,7 @@ namespace Elastic.CommonSchema.NLog
 
 		public EcsLayout()
 		{
-			IncludeAllProperties = true;
+			IncludeEventProperties = true;
 
 			LogOriginCallSiteMethod = "${exception:format=method}";
 			LogOriginCallSiteFile = "${exception:format=source}";
@@ -73,7 +73,7 @@ namespace Elastic.CommonSchema.NLog
 		/// Allow dynamically disabling <see cref="ThreadAgnosticAttribute" /> to
 		/// ensure correct async context capture when necessary
 		/// </summary>
-		public Layout DisableThreadAgnostic => IncludeMdlc ? _disableThreadAgnostic : null;
+		public Layout DisableThreadAgnostic => IncludeScopeProperties ? _disableThreadAgnostic : null;
 
 		public Layout LogOriginCallSiteMethod { get; set; }
 		public Layout LogOriginCallSiteFile { get; set; }
@@ -89,9 +89,15 @@ namespace Elastic.CommonSchema.NLog
 		public Layout HostIp { get; set; }
 		public Layout HostName { get; set; }
 
-		public bool IncludeAllProperties { get; set; }
+		[Obsolete("Replaced by IncludeEventProperties")]
+		public bool IncludeAllProperties { get => IncludeEventProperties; set => IncludeEventProperties = value; }
 
-		public bool IncludeMdlc { get; set; }
+		[Obsolete("Replaced by IncludeScopeProperties")]
+		public bool IncludeMdlc { get => IncludeScopeProperties; set => IncludeScopeProperties = value; }
+
+		public bool IncludeEventProperties { get; set; }
+
+		public bool IncludeScopeProperties { get; set; }
 
 		[ArrayParameter(typeof(TargetPropertyWithContext), "label")]
 		public IList<TargetPropertyWithContext> Labels { get; } = new List<TargetPropertyWithContext>();
@@ -119,7 +125,7 @@ namespace Elastic.CommonSchema.NLog
 		public IList<TargetPropertyWithContext> Tags { get; } = new List<TargetPropertyWithContext>();
 
 		/// <summary>
-		/// List of property names to exclude from MetaData, when <see cref="IncludeAllProperties"/> is true
+		/// List of property names to exclude from MetaData, when <see cref="IncludeEventProperties"/> is true
 		/// </summary>
 		public ISet<string> ExcludeProperties { get; set; } = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
 
@@ -224,12 +230,12 @@ namespace Elastic.CommonSchema.NLog
 
 		private IDictionary<string, object> GetMetadata(LogEventInfo e)
 		{
-			if ((!IncludeAllProperties || !e.HasProperties) && Metadata?.Count == 0 && !IncludeMdlc)
+			if ((!IncludeEventProperties || !e.HasProperties) && Metadata?.Count == 0 && !IncludeScopeProperties)
 				return null;
 
 			var metadata = new Dictionary<string, object>();
 
-			if (IncludeAllProperties && e.HasProperties)
+			if (IncludeEventProperties && e.HasProperties)
 			{
 				foreach (var prop in e.Properties)
 				{
@@ -241,11 +247,11 @@ namespace Elastic.CommonSchema.NLog
 				}
 			}
 
-			if (IncludeMdlc)
+			if (IncludeScopeProperties)
 			{
 				foreach (var key in MappedDiagnosticsLogicalContext.GetNames())
 				{
-					if (string.IsNullOrEmpty(key))
+					if (string.IsNullOrEmpty(key) || ExcludeProperties.Contains(key))
 						continue;
 
 					var propertyValue = MappedDiagnosticsLogicalContext.GetObject(key);
@@ -501,6 +507,7 @@ namespace Elastic.CommonSchema.NLog
 
 			propertyBag.Add(usedKey, value);
 		}
+
 		private static void Populate(IDictionary<string, string> propertyBag, string key, string value)
 		{
 			if (string.IsNullOrEmpty(key))
