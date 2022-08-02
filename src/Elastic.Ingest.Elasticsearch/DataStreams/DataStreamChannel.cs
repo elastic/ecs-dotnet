@@ -1,18 +1,18 @@
 using System.Collections.Generic;
+using Elastic.Ingest.Elasticsearch.Serialization;
 
 namespace Elastic.Ingest.Elasticsearch.DataStreams
 {
 	public class DataStreamChannel<TEvent> : ElasticsearchChannelBase<TEvent, DataStreamChannelOptions<TEvent>>
 	{
-		public DataStreamChannel(DataStreamChannelOptions<TEvent> options) : base(options) { }
+		private readonly CreateOperation _fixedHeader;
 
-		//TODO move away from object
-		//TODO look into caching headers
-		protected override object CreateBulkOperationHeader(TEvent @event)
+		public DataStreamChannel(DataStreamChannelOptions<TEvent> options) : base(options)
 		{
-			var index = Options.DataStream.ToString();
-			var indexHeader = new Dictionary<string, object> { { "create", new { _index = index } } };
-			return indexHeader;
+			var target = Options.DataStream.ToString();
+			_fixedHeader = new CreateOperation { Index = target };
 		}
+
+		protected override BulkOperationHeader CreateBulkOperationHeader(TEvent @event) => _fixedHeader;
 	}
 }

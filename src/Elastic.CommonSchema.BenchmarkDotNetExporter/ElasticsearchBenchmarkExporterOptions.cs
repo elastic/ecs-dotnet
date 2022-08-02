@@ -68,8 +68,8 @@ namespace Elastic.CommonSchema.BenchmarkDotNetExporter
 		/// <summary> (Optional) Report the repository, does not have to be a complete URI</summary>
 		public string GitRepositoryIdentifier { get; set; }
 
-		/// <summary> The datastream namespace to write to, by default writest to benchmarks-dotnet-default</summary>
-		public string DataStreamNamespace { get; set; }
+		/// <summary> The datastream namespace to write to, by default writes to benchmarks-dotnet-default</summary>
+		public string DataStreamNamespace { get; set; } = "default";
 
 		private static Uri[] Parse(string urls)
 		{

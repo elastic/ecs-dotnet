@@ -1,5 +1,5 @@
 using System;
-using System.Collections.Generic;
+using Elastic.Ingest.Elasticsearch.Serialization;
 
 namespace Elastic.Ingest.Elasticsearch.Indices
 {
@@ -7,19 +7,17 @@ namespace Elastic.Ingest.Elasticsearch.Indices
 	{
 		public IndexChannel(IndexChannelOptions<TEvent> options) : base(options) { }
 
-		//TODO move away from object
-		protected override object CreateBulkOperationHeader(TEvent @event)
+		protected override BulkOperationHeader CreateBulkOperationHeader(TEvent @event)
 		{
 			var indexTime = Options.TimestampLookup?.Invoke(@event) ?? DateTimeOffset.Now;
 			if (Options.IndexOffset.HasValue) indexTime = indexTime.ToOffset(Options.IndexOffset.Value);
 
 			var index = string.Format(Options.Index, indexTime);
 			var id = Options.BulkOperationIdLookup?.Invoke(@event);
-			var indexHeader =
+			return
 				!string.IsNullOrWhiteSpace(id)
-					? new Dictionary<string, object> { { "index", new { _index = index, _id = id } } }
-					: new Dictionary<string, object> { { "create", new { _index = index } } };
-			return indexHeader;
+					? new IndexOperation { Index = index, Id = id }
+					: new CreateOperation { Index = index };
 		}
 	}
 }

@@ -37,7 +37,7 @@ namespace Elastic.Ingest.Elasticsearch
 					async (b, stream, ctx) => { await WriteBufferToStreamAsync(b, stream, ctx).ConfigureAwait(false); })
 				, ElasticsearchChannelStatics.RequestParams);
 
-		protected abstract object CreateBulkOperationHeader(TEvent @event);
+		protected abstract BulkOperationHeader CreateBulkOperationHeader(TEvent @event);
 
 		private async Task WriteBufferToStreamAsync(IReadOnlyCollection<TEvent> b, Stream stream, CancellationToken ctx)
 		{
