@@ -43,7 +43,8 @@ namespace Elastic.CommonSchema.Generator.Schema
 
 			var warnings = SerializeParsedAndCompareWithOriginal(spec, asJson);
 			var templates = ReadTemplates();
-			return new EcsSchema(spec.Values.ToList(), warnings, templates, _versionTag);
+			var components = ReadComponents();
+			return new EcsSchema(spec.Values.ToList(), warnings, templates, components, _versionTag);
 		}
 
 		private Dictionary<string, string> ReadTemplates()
@@ -58,7 +59,27 @@ namespace Elastic.CommonSchema.Generator.Schema
 
 			foreach (var (dir, jsonFile) in templateFiles)
 			{
+				if (dir.Name == "component") continue;
+
 				templates.Add(dir.Name, File.ReadAllText(jsonFile.FullName));
+			}
+			return templates;
+		}
+		private Dictionary<string, string> ReadComponents()
+		{
+
+			var templates = new Dictionary<string, string>();
+			var templateFiles =
+				from directoryPath in Directory.GetDirectories(SpecificationFolder, "*", SearchOption.AllDirectories)
+				let dir = new DirectoryInfo(directoryPath)
+				from jsonFile in dir.EnumerateFileSystemInfos("*.json")
+				select (dir, jsonFile);
+
+			foreach (var (dir, jsonFile) in templateFiles)
+			{
+				if (dir.Name != "component") continue;
+
+				templates.Add(jsonFile.Name, File.ReadAllText(jsonFile.FullName));
 			}
 			return templates;
 		}

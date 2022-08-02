@@ -30,6 +30,7 @@ namespace Elastic.CommonSchema.Generator
 				{ m => Generate(m, "Entities"), "Entities" },
 				{ m => Generate(m, "InlineObjects"), "Inline Objects" },
 				{ m => Generate(m, "IndexTemplates"), "Elasticsearch index templates" },
+				{ m => Generate(m, "IndexComponents"), "Elasticsearch index components" },
 			};
 
 			using (var progressBar = new ProgressBar(actions.Count, "Generating code",

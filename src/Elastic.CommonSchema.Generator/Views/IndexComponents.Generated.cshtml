@@ -1,0 +1,42 @@
+@using System
+@using System.Linq
+@using Generator
+@inherits Elastic.CommonSchema.Generator.Views.CodeTemplatePage<Elastic.CommonSchema.Generator.Projection.CommonSchemaTypesProjection>
+// Licensed to Elasticsearch B.V under one or more agreements.
+// Elasticsearch B.V licenses this file to you under the Apache 2.0 License.
+// See the LICENSE file in the project root for more information
+
+/*
+IMPORTANT NOTE
+==============
+This file has been generated. 
+If you wish to submit a PR please modify the original csharp file and submit the PR with that change. Thanks!
+*/
+
+// ReSharper disable RedundantUsingDirective
+using System;
+using System.Collections.Generic;
+using System.Threading;
+using System.Threading.Tasks;
+using System.Linq;
+using System.Net;
+using System.Runtime.Serialization;
+
+namespace Elastic.CommonSchema.Elasticsearch
+{
+	/// <summary>
+	/// Elastic Common Schema version @(Model.VersionTag) index templates to be used with Elasticsearch.
+	/// </summary>
+	public static class IndexComponents
+	{
+@foreach (var component in Model.IndexComponents)
+{<text>		/// <summary>
+		/// Elastic Common Schema version @(Model.VersionTag) @(component.Name) component template  
+		/// </summary>
+		/// <returns>Index template string that can be used with the Put Index Template API.</returns>
+		public static string @(component.Name) => 
+			@Raw("@")"@Raw(component.Component)";
+
+</text>}
+	}
+}

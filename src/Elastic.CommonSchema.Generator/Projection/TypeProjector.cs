@@ -21,6 +21,7 @@ namespace Elastic.CommonSchema.Generator.Projection
 		public IReadOnlyCollection<InlineObject> InlineObjects { get; set; }
 		public ReadOnlyCollection<string> Warnings { get; set; }
 		public IReadOnlyCollection<IndexTemplate> IndexTemplates { get; set; }
+		public IReadOnlyCollection<IndexComponent> IndexComponents { get; set; }
 		// ReSharper restore PropertyCanBeMadeInitOnly.Global
 	}
 
@@ -103,6 +104,7 @@ namespace Elastic.CommonSchema.Generator.Projection
 				Warnings = Warnings.AsReadOnly(),
 				VersionTag = Schema.VersionTag,
 				IndexTemplates = Schema.Templates.Select(kv=>new IndexTemplate(kv.Key, kv.Value)).OrderBy(t=>t.Name).ToList(),
+				IndexComponents = Schema.Components.Select(kv=>new IndexComponent(kv.Key, kv.Value)).OrderBy(t=>t.Name).ToList(),
 
 			};
 			return Projection;

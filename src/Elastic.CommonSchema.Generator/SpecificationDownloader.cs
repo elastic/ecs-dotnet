@@ -18,7 +18,7 @@ namespace Elastic.CommonSchema.Generator
 		private const string Core = "Core";
 		private const string Legacy = "legacy";
 		private const string Composable = "composable";
-		private const string Components = "components";
+		private const string Components = "component";
 
 		private static readonly ProgressBarOptions MainProgressBarOptions = new ProgressBarOptions { BackgroundColor = ConsoleColor.DarkGray };
 
