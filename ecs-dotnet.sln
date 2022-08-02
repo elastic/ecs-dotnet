@@ -93,8 +93,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Elastic.Ingest.Transport", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Elastic.CommonSchema.Generator", "src\Elastic.CommonSchema.Generator\Elastic.CommonSchema.Generator.csproj", "{D6F0D170-39D7-4868-86EE-990B6B05C14D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Elastic.CommonSchema.Generator", "src\Elastic.CommonSchema.Generator\Elastic.CommonSchema.Generator.csproj", "{D6F0D170-39D7-4868-86EE-990B6B05C14D}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -220,13 +218,9 @@ Global
 		{975EFF27-8E04-4CC0-94AE-7114E7E633E0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{975EFF27-8E04-4CC0-94AE-7114E7E633E0}.Release|Any CPU.Build.0 = Release|Any CPU
 		{D6F0D170-39D7-4868-86EE-990B6B05C14D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D6F0D170-39D7-4868-86EE-990B6B05C14D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D6F0D170-39D7-4868-86EE-990B6B05C14D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D6F0D170-39D7-4868-86EE-990B6B05C14D}.Release|Any CPU.Build.0 = Release|Any CPU
-		{D6F0D170-39D7-4868-86EE-990B6B05C14D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{D6F0D170-39D7-4868-86EE-990B6B05C14D}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D6F0D170-39D7-4868-86EE-990B6B05C14D}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D6F0D170-39D7-4868-86EE-990B6B05C14D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -263,7 +257,6 @@ Global
 		{2AC1BCC2-335C-4B1C-B279-B34452969BFF} = {7610B796-BB3E-4CB2-8296-79BBFF6D23FC}
 		{81157D75-5AC5-4CDE-9AE1-15D004D91061} = {05075402-8669-45BD-913A-BD40A29BBEAB}
 		{975EFF27-8E04-4CC0-94AE-7114E7E633E0} = {7610B796-BB3E-4CB2-8296-79BBFF6D23FC}
-		{D6F0D170-39D7-4868-86EE-990B6B05C14D} = {7610B796-BB3E-4CB2-8296-79BBFF6D23FC}
 		{D6F0D170-39D7-4868-86EE-990B6B05C14D} = {7610B796-BB3E-4CB2-8296-79BBFF6D23FC}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
