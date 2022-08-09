@@ -49,7 +49,7 @@ namespace Elastic.Ingest.Apm
 		protected override bool RetryEvent((IIntakeObject, IntakeErrorItem) @event) => false;
 		protected override bool RejectEvent((IIntakeObject, IntakeErrorItem) @event) => false;
 
-		protected override Task<EventIntakeResponse> Send(ITransport<ITransportConfiguration> transport, IReadOnlyCollection<IIntakeObject> page) =>
+		protected override Task<EventIntakeResponse> Send(ITransport transport, IReadOnlyCollection<IIntakeObject> page) =>
 			transport.RequestAsync<EventIntakeResponse>(HttpMethod.POST, "/intake/v2/events",
 				PostData.StreamHandler(page,
 					(b, stream) =>

@@ -17,19 +17,6 @@ using Xunit;
 
 namespace Elastic.Ingest.IntegrationTests
 {
-	public static class TransportConfigurationExtensions
-	{
-		public static ITransport<ITransportConfiguration> GetTransport(this ElasticsearchClient client)
-		{
-			var settings = client.ElasticsearchClientSettings;
-			var configuration = new TransportConfiguration(settings.NodePool, settings.Connection, productRegistration: new ElasticsearchProductRegistration())
-				.DisablePing()
-				.EnableDebugMode();
-			return new Transport<TransportConfiguration>(configuration);
-		}
-	}
-
-
 	public class CommonSchemaIngestionTests : IClusterFixture<IngestionCluster>
 	{
 		private ElasticsearchClient Client { get; }
@@ -50,7 +37,7 @@ namespace Elastic.Ingest.IntegrationTests
 		{
 			var targetDataStream = new Elastic.Ingest.Elasticsearch.DataStreamName("hello", "world");
 			var slim = new CountdownEvent(1);
-			var options = new DataStreamChannelOptions<EcsDocument>(Client.GetTransport())
+			var options = new DataStreamChannelOptions<EcsDocument>(Client.Transport)
 			{
 				DataStream = targetDataStream,
 				BufferOptions = new ElasticsearchBufferOptions<EcsDocument>

@@ -6,8 +6,8 @@ namespace Elastic.Ingest.Transport
 		: ChannelOptionsBase<TEvent, TBuffer, TResponse, TResponseItem>
 		where TBuffer : BufferOptions<TEvent>, new()
 	{
-		protected TransportChannelOptionsBase(ITransport<ITransportConfiguration> transport) => Transport = transport;
+		protected TransportChannelOptionsBase(ITransport transport) => Transport = transport;
 
-		public ITransport<ITransportConfiguration> Transport { get; }
+		public ITransport Transport { get; }
 	}
 }
