@@ -134,9 +134,8 @@ namespace Elasticsearch.Extensions.Logging
 					IndexOffset = loggerOptions.Index.IndexOffset,
 					WriteEvent = async (stream, ctx, logEvent) => await logEvent.SerializeAsync(stream, ctx).ConfigureAwait(false),
 					TimestampLookup = l => l.Timestamp,
+					ExceptionCallback = (e) => LastSeenException = e
 				};
-				if (loggerOptions.TrackExceptions)
-					indexChannelOptions.ExceptionCallback = (e) => LastSeenException = e;
 				SetupChannelOptions(_channelConfigurations, indexChannelOptions);
 				return new IndexChannel<LogEvent>(indexChannelOptions);
 			}
@@ -147,9 +146,8 @@ namespace Elasticsearch.Extensions.Logging
 				{
 					DataStream = new DataStreamName(dataStreamNameOptions.Type, dataStreamNameOptions.DataSet, dataStreamNameOptions.Namespace),
 					WriteEvent = async (stream, ctx, logEvent) => await logEvent.SerializeAsync(stream, ctx).ConfigureAwait(false),
+					ExceptionCallback = (e) => LastSeenException = e
 				};
-				if (loggerOptions.TrackExceptions)
-					indexChannelOptions.ExceptionCallback = (e) => LastSeenException = e;
 				SetupChannelOptions(_channelConfigurations, indexChannelOptions);
 				return new DataStreamChannel<LogEvent>(indexChannelOptions);
 			}

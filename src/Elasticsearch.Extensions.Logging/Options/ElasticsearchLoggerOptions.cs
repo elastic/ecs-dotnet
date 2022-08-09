@@ -60,10 +60,5 @@ namespace Elasticsearch.Extensions.Logging.Options
 		/// 'Production', etc).
 		/// </summary>
 		public string[] Tags { get; set; } = new string[0];
-
-		/// <summary>
-		/// Ensures exceptions are written to console log.
-		/// </summary>
-		public bool TrackExceptions { get; set; }
 	}
 }
