@@ -14,17 +14,6 @@ namespace Elastic.CommonSchema.Serialization
 		public override bool CanConvert(Type typeToConvert) => typeof(IDictionary<string, object>).IsAssignableFrom(typeToConvert);
 
 		public override JsonConverter CreateConverter(Type typeToConvert, JsonSerializerOptions options) =>
-			JsonConfiguration.MetaDataDictionaryConverter;
-	}
-
-	internal class BaseJsonConverterFactory : JsonConverterFactory
-	{
-		public override bool CanConvert(Type typeToConvert) => typeof(EcsDocument).IsAssignableFrom(typeToConvert);
-
-		public override JsonConverter CreateConverter(Type typeToConvert, JsonSerializerOptions options) =>
-			typeToConvert == typeof(EcsDocument)
-				? JsonConfiguration.BaseConverter
-				// TODO validate this is only called once
-				: Activator.CreateInstance(typeof(EcsDocumentJsonConverter<>).MakeGenericType(typeToConvert)) as JsonConverter;
+			EcsJsonConfiguration.MetaDataDictionaryConverter;
 	}
 }

@@ -18,7 +18,7 @@ using System.Text.Json;
 
 namespace Elastic.CommonSchema.Serialization
 {
-	internal partial class @(Model.Base.Name)JsonConverter@(Raw("<TBase>")) : EcsJsonConverterBase@(Raw("<TBase>"))
+	public partial class @(Model.Base.Name)JsonConverter@(Raw("<TBase>")) : EcsJsonConverterBase@(Raw("<TBase>"))
 		where TBase : @Model.Base.Name, new()
 	{
 		private static bool ReadProperties(

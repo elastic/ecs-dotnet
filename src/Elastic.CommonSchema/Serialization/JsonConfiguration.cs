@@ -9,9 +9,9 @@ using System.Text.Json.Serialization;
 
 namespace Elastic.CommonSchema.Serialization
 {
-	internal static class JsonConfiguration
+	public static class EcsJsonConfiguration
 	{
-		public static JsonSerializerOptions SerializerOptions { get; } = new JsonSerializerOptions
+		public static JsonSerializerOptions SerializerOptions { get; } = new ()
 		{
 			DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingDefault,
 			Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
@@ -19,7 +19,7 @@ namespace Elastic.CommonSchema.Serialization
 			Converters =
 			{
 				new DictionaryJsonConverterFactory(),
-				new BaseJsonConverterFactory()
+				new EcsDocumentJsonConverterFactory()
 			}
 		};
 
@@ -28,6 +28,6 @@ namespace Elastic.CommonSchema.Serialization
 
 		internal static readonly MetaDataDictionaryConverter MetaDataDictionaryConverter = new();
 
-		internal static readonly EcsDocumentJsonConverter BaseConverter = new();
+		public static readonly EcsDocumentJsonConverter DefaultEcsDocumentJsonConverter = new();
 	}
 }

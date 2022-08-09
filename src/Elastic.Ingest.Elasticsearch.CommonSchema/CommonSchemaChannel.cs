@@ -1,7 +1,10 @@
-﻿using System;
+﻿#nullable enable
+using System;
+using System.Text.Json;
 using System.Threading.Tasks;
 using Elastic.CommonSchema;
 using Elastic.CommonSchema.Elasticsearch;
+using Elastic.CommonSchema.Serialization;
 using Elastic.Ingest.Elasticsearch.DataStreams;
 using Elastic.Transport;
 
@@ -10,7 +13,10 @@ namespace Elastic.Ingest.Elasticsearch.CommonSchema
 	public class CommonSchemaChannel<TEcsDocument> : DataStreamChannel<TEcsDocument>
 		where TEcsDocument : EcsDocument
 	{
-		public CommonSchemaChannel(DataStreamChannelOptions<TEcsDocument> options) : base(options) { }
+		public CommonSchemaChannel(DataStreamChannelOptions<TEcsDocument> options) : base(options) =>
+			options.WriteEvent = async (stream, ctx, @event) =>
+				await JsonSerializer.SerializeAsync(stream, @event, typeof(TEcsDocument), EcsJsonConfiguration.SerializerOptions, ctx)
+					.ConfigureAwait(false);
 
 
 		public async Task<bool> SetupElasticsearchTemplatesAsync()

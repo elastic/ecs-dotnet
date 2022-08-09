@@ -23,7 +23,7 @@ namespace Elastic.Ingest.Elasticsearch
 
 		public static readonly HashSet<int> RetryStatusCodes = new(new[] { 502, 503, 504, 429 });
 
-		public static readonly JsonSerializerOptions SerializerOptions = new()
+		public static readonly JsonSerializerOptions SerializerOptions = new JsonSerializerOptions()
 		{
 			DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingDefault,
 			Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping,

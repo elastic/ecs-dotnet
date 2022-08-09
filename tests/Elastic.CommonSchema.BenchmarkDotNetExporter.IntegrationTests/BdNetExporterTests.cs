@@ -9,6 +9,7 @@ using BenchmarkDotNet.Configs;
 using BenchmarkDotNet.Diagnosers;
 using BenchmarkDotNet.Environments;
 using BenchmarkDotNet.Jobs;
+using BenchmarkDotNet.Loggers;
 using BenchmarkDotNet.Running;
 using Elastic.CommonSchema.BenchmarkDotNetExporter.Domain;
 using Elastic.Elasticsearch.Xunit;
@@ -43,6 +44,7 @@ namespace Elastic.CommonSchema.BenchmarkDotNetExporter.IntegrationTests
 			};
 			var config = DefaultConfig.Instance
 				.KeepBenchmarkFiles()
+				.AddLogger(new ConsoleLogger())
 				.AddDiagnoser(MemoryDiagnoser.Default)
 				.WithOption(ConfigOptions.DisableOptimizationsValidator, true)
 				.AddJob(jobs.ToArray());
@@ -81,19 +83,21 @@ namespace Elastic.CommonSchema.BenchmarkDotNetExporter.IntegrationTests
 
 			Client.Indices.Refresh(indexName);
 
-			var searchResponse = Client.Search<BenchmarkDocument>(s => s.Index(indexName));
+			var searchResponse = Client.Search<BenchmarkDocument>(s => s.Index(indexName).TrackTotalHits());
 			if (!searchResponse.IsValid || searchResponse.Total == 0)
 				throw new Exception(searchResponse.DebugInformation);
 
 			var doc = searchResponse.Documents.First();
 
-			doc.Timestamp.Should().NotBeNull().And.BeCloseTo(DateTimeOffset.Now, precision: 4000);
+			doc.Timestamp.Should().NotBeNull().And.BeCloseTo(DateTimeOffset.UtcNow, precision: 4000);
 
 			doc.Benchmark.Should().NotBeNull();
 
 			doc.Benchmark.Max.Should().BeGreaterThan(0);
 
 			doc.Event.Duration.Should().BeGreaterThan(0);
+
+			searchResponse.Total.Should().Be(summary.BenchmarksCases.Length);
 		}
 	}
 }

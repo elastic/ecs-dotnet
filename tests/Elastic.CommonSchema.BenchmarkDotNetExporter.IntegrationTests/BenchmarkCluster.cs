@@ -10,8 +10,7 @@ namespace Elastic.CommonSchema.BenchmarkDotNetExporter.IntegrationTests
 	{
 		public BenchmarkCluster() : base(new XunitClusterConfiguration("8.3.0")
 		{
-
-			StartingPortNumber = 9203
+			StartingPortNumber = 9203,
 		}) { }
 	}
 }

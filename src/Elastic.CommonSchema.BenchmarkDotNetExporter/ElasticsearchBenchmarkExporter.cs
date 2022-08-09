@@ -58,14 +58,18 @@ namespace Elastic.CommonSchema.BenchmarkDotNetExporter
 				BufferOptions = new ElasticsearchBufferOptions<BenchmarkDocument>
 				{
 					WaitHandle = waitHandle,
+					MaxConsumerBufferSize = benchmarks.Count
 				},
 				ResponseCallback = ((response, statistics) =>
 				{
+					var errorItems = response.Items.Where(i => i.Status >= 300).ToList();
 					if (response.TryGetElasticsearchServerError(out var error))
 						logger.WriteError(error.ToString());
-					var errorItems = response.Items.Where(i => i.Status >= 300).ToList();
+					else if (errorItems.Count == 0)
+						logger.WriteLine("Successfully indexed benchmark results");
 					foreach (var errorItem in errorItems)
 						logger.WriteError($"Failed to {errorItem.Action} document status: ${errorItem.Status}, error: ${errorItem.Error}");
+
 				})
 			};
 			var channel = new CommonSchemaChannel<BenchmarkDocument>(options);

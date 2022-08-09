@@ -3,6 +3,7 @@
 // See the LICENSE file in the project root for more information
 
 using System;
+using System.ComponentModel.Design.Serialization;
 using System.Linq;
 using Elastic.Transport;
 using Elastic.Transport.Products.Elasticsearch;
@@ -59,6 +60,14 @@ namespace Elastic.CommonSchema.BenchmarkDotNetExporter
 		/// <summary> Instructs the exporter to use a sniffing connection pool, which will discover the rest of the cluster</summary>
 		public bool UseSniffingConnectionPool { get; set; }
 
+		/// <summary> Whether to use debug mode on the Elasticsearch Client</summary>
+		public bool EnableDebugMode { get; set; } =
+#if DEBUG
+		true;
+#else
+			false;
+#endif
+
 		/// <summary> (Optional) Report the sha of the commit we are benchmarking</summary>
 		public string GitCommitSha { get; set; }
 		/// <summary> (Optional) Report the message of the commit we are benchmarking</summary>
@@ -112,6 +121,8 @@ namespace Elastic.CommonSchema.BenchmarkDotNetExporter
 		internal TransportConfiguration CreateTransportConfiguration()
 		{
 			var settings = new TransportConfiguration(CreateNodePool(), productRegistration: new ElasticsearchProductRegistration());
+			if (EnableDebugMode)
+				settings.EnableDebugMode();
 			return settings;
 		}
 	}

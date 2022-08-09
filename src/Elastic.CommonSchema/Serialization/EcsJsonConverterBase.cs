@@ -9,7 +9,7 @@ using System.Text.Json.Serialization;
 
 namespace Elastic.CommonSchema.Serialization
 {
-	internal abstract class EcsJsonConverterBase<T> : JsonConverter<T>
+	public abstract class EcsJsonConverterBase<T> : JsonConverter<T>
 	{
 		protected static bool ReadDateTime(ref Utf8JsonReader reader, ref DateTimeOffset? set)
 		{
@@ -19,7 +19,7 @@ namespace Elastic.CommonSchema.Serialization
 				return true;
 			}
 
-			set = JsonConfiguration.DateTimeOffsetConverter.Read(ref reader, typeof(DateTimeOffset), JsonConfiguration.SerializerOptions);
+			set = EcsJsonConfiguration.DateTimeOffsetConverter.Read(ref reader, typeof(DateTimeOffset), EcsJsonConfiguration.SerializerOptions);
 			return true;
 		}
 
@@ -33,7 +33,7 @@ namespace Elastic.CommonSchema.Serialization
 		{
 			if (value == null) return;
 
-			var options = JsonConfiguration.SerializerOptions;
+			var options = EcsJsonConfiguration.SerializerOptions;
 
 			writer.WritePropertyName(key);
 			// Attempt to use existing converter first before re-entering through JsonSerializer.Serialize().
@@ -49,7 +49,7 @@ namespace Elastic.CommonSchema.Serialization
 		{
 			if (reader.TokenType == JsonTokenType.Null) return null;
 
-			var options = JsonConfiguration.SerializerOptions;
+			var options = EcsJsonConfiguration.SerializerOptions;
 
 			return JsonSerializer.Deserialize(ref reader, type, options);
 		}
@@ -58,7 +58,7 @@ namespace Elastic.CommonSchema.Serialization
 		{
 			if (reader.TokenType == JsonTokenType.Null) return null;
 
-			var options = JsonConfiguration.SerializerOptions;
+			var options = EcsJsonConfiguration.SerializerOptions;
 
 			/*
 			 * System.NullReferenceException : Object reference not set to an instance of an object.
