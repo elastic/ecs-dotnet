@@ -106,10 +106,6 @@ namespace Elasticsearch.Extensions.Logging
 			var connectionPool = CreateConnectionPool(loggerOptions);
 			var config = new TransportConfiguration(connectionPool, productRegistration: new ElasticsearchProductRegistration());
 
-			config = config.DisablePing();
-			config = config.Proxy(new Uri("http://ipv4.fiddler:8080"), null!, (SecureString)null!);
-			config = config.EnableDebugMode();
-
 			var transport = new Transport<TransportConfiguration>(config);
 			return transport;
 		}

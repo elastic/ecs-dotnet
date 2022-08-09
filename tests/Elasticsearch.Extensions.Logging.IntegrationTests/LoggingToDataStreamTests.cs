@@ -16,14 +16,18 @@ using LogLevel = Microsoft.Extensions.Logging.LogLevel;
 
 namespace Elasticsearch.Extensions.Logging.IntegrationTests
 {
-	public class LoggingToIndexTests : IClusterFixture<LoggingCluster>
+	public class LoggingToDataStreamTests : IClusterFixture<LoggingCluster>
 	{
-		public LoggingToIndexTests(LoggingCluster cluster) =>
+		public LoggingToDataStreamTests(LoggingCluster cluster) =>
 			Client = cluster.GetOrAddClient(c =>
 			{
-				var nodes = cluster.NodesUris();
+				var hostName = (System.Diagnostics.Process.GetProcessesByName("mitmproxy").Any()
+					? "ipv4.fiddler"
+					: "localhost");
+				var nodes = cluster.NodesUris(hostName);
 				var connectionPool = new StaticConnectionPool(nodes);
 				var settings = new ConnectionSettings(connectionPool)
+					.Proxy(new Uri("http://ipv4.fiddler:8080"), (string)null, (string)null)
 					.EnableDebugMode();
 				return new ElasticClient(settings);
 			});
@@ -33,7 +37,9 @@ namespace Elasticsearch.Extensions.Logging.IntegrationTests
 		[Fact]
 		public async Task LogsEndUpInCluster()
 		{
-			using var _ = CreateLogger(out var logger, out var provider, out var indexPrefix, out var waitHandle);
+			using var _ = CreateLogger(out var logger, out var provider, out var @namespace, out var waitHandle);
+			var dataStream = $"x-dotnet-{@namespace}";
+
 			logger.LogError("an error occurred");
 
 			if (!waitHandle.WaitOne(TimeSpan.FromSeconds(10)))
@@ -41,9 +47,9 @@ namespace Elasticsearch.Extensions.Logging.IntegrationTests
 
 			provider.LastSeenException.Should().BeNull();
 
-			var refresh = await Client.Indices.RefreshAsync($"{indexPrefix}-*");
+			var refresh = await Client.Indices.RefreshAsync(dataStream);
 
-			var response = Client.Search<LogEvent>(new SearchRequest($"{indexPrefix}-*"));
+			var response = Client.Search<LogEvent>(new SearchRequest(dataStream));
 
 			response.IsValid.Should().BeTrue("{0}", response.DebugInformation);
 			response.Total.Should().BeGreaterThan(0);
@@ -56,7 +62,8 @@ namespace Elasticsearch.Extensions.Logging.IntegrationTests
 		[Fact]
 		public async Task SerializesAndDeserializesMessageTemplateAndScope()
 		{
-			using var _ = CreateLogger(out var logger, out var provider, out var indexPrefix, out var waitHandle);
+			using var _ = CreateLogger(out var logger, out var provider, out var @namespace, out var waitHandle);
+			var dataStream = $"x-dotnet-{@namespace}";
 			using (logger.BeginScope("custom scope"))
 			{
 				var userId = 1;
@@ -67,9 +74,9 @@ namespace Elasticsearch.Extensions.Logging.IntegrationTests
 
 				provider.LastSeenException.Should().BeNull();
 
-				var refresh = await Client.Indices.RefreshAsync($"{indexPrefix}-*");
+				var refresh = await Client.Indices.RefreshAsync(dataStream);
 
-				var response = Client.Search<LogEvent>(new SearchRequest($"{indexPrefix}-*"));
+				var response = Client.Search<LogEvent>(new SearchRequest(dataStream));
 
 				response.IsValid.Should().BeTrue("{0}", response.DebugInformation);
 				response.Total.Should().BeGreaterThan(0);
@@ -81,15 +88,16 @@ namespace Elasticsearch.Extensions.Logging.IntegrationTests
 			}
 		}
 
-		private IDisposable CreateLogger(out ILogger logger, out ElasticsearchLoggerProvider provider, out string indexPrefix, out WaitHandle waitHandle)
+		private IDisposable CreateLogger(out ILogger logger, out ElasticsearchLoggerProvider provider, out string @namespace, out WaitHandle waitHandle)
 		{
-			var pre = $"logs-{Guid.NewGuid().ToString("N").ToLowerInvariant().Substring(0, 6)}";
+			@namespace = Guid.NewGuid().ToString("N").ToLowerInvariant().Substring(0, 6);
 			var slim = new CountdownEvent(1);
 			waitHandle = slim.WaitHandle;
+			var s = @namespace;
 			var options = new ConfigureOptions<ElasticsearchLoggerOptions>(
 				o =>
 				{
-					o.Index = new IndexNameOptions { Format = $"{pre}-{{0:yyyy.MM.dd}}" };
+					o.DataStream = new DataStreamNameOptions { Type = "x", Namespace = s, DataSet = "dotnet" };
 					var nodes = Client.ConnectionSettings.ConnectionPool.Nodes.Select(n => n.Uri).ToArray();
 					o.ShipTo = new ShipToOptions() { NodeUris = nodes, ConnectionPoolType = ConnectionPoolType.Static };
 				});
@@ -113,7 +121,6 @@ namespace Elasticsearch.Extensions.Logging.IntegrationTests
 				new LoggerFilterOptions { MinLevel = LogLevel.Information }
 			);
 			logger = loggerFactory.CreateLogger<ElasticsearchLogger>();
-			indexPrefix = pre;
 			return loggerFactory;
 		}
 	}

@@ -81,6 +81,7 @@ namespace Elastic.CommonSchema.Elasticsearch
     """ + indexPattern + @"""
   ],
   ""priority"": 1,
+  ""data_stream"": {},
   ""template"": {
     ""mappings"": {
       ""date_detection"": false,
