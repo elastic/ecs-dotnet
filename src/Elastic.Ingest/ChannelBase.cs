@@ -225,7 +225,9 @@ namespace Elastic.Ingest
 	{
 		protected ChannelBase(TChannelOptions options) : base(options) { }
 
-		protected abstract bool BackOffRequest(TResponse response);
+		protected abstract bool Retry(TResponse response);
+
+		protected abstract bool RetryAllItems(TResponse response);
 
 		protected abstract List<(TEvent, TBulkResponseItem)> Zip(TResponse response, IReadOnlyCollection<TEvent> page);
 
@@ -237,7 +239,9 @@ namespace Elastic.Ingest
 			IConsumedBufferStatistics consumedBufferStatistics
 		)
 		{
-			var backOffWholeRequest = BackOffRequest(response);
+			if (!Retry(response)) return Enumerable.Empty<TEvent>().ToList();
+
+			var backOffWholeRequest = RetryAllItems(response);
 			// if we are not retrying the whole request find out if individual items need retrying
 			if (!backOffWholeRequest)
 			{

@@ -7,7 +7,6 @@ using Elastic.Transport.Products.Elasticsearch;
 
 namespace Elastic.Ingest.Elasticsearch.Serialization
 {
-	[JsonConverter(typeof(BulkOperationHeaderConverter))]
 	public abstract class BulkOperationHeader
 	{
 		[JsonPropertyName("_index")]
@@ -19,29 +18,34 @@ namespace Elastic.Ingest.Elasticsearch.Serialization
 		[JsonPropertyName("require_alias")]
 		public bool? RequireAlias { get; init; }
 	}
+	[JsonConverter(typeof(BulkOperationHeaderConverter<CreateOperation>))]
 	public class CreateOperation : BulkOperationHeader
 	{
 		[JsonPropertyName("dynamic_templates")]
 		public Dictionary<string, string>? DynamicTemplates { get; init; }
 	}
+	[JsonConverter(typeof(BulkOperationHeaderConverter<IndexOperation>))]
 	public class IndexOperation : BulkOperationHeader
 	{
 		[JsonPropertyName("dynamic_templates")]
 		public Dictionary<string, string>? DynamicTemplates { get; init; }
 	}
+	[JsonConverter(typeof(BulkOperationHeaderConverter<DeleteOperation>))]
 	public class DeleteOperation : BulkOperationHeader
 	{
 	}
+	[JsonConverter(typeof(BulkOperationHeaderConverter<UpdateOperation>))]
 	public class UpdateOperation : BulkOperationHeader
 	{
 	}
 
-	internal class BulkOperationHeaderConverter : JsonConverter<BulkOperationHeader>
+	internal class BulkOperationHeaderConverter<THeader> : JsonConverter<THeader>
+		where THeader : BulkOperationHeader
 	{
-		public override BulkOperationHeader Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options) =>
+		public override THeader Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options) =>
 			throw new NotImplementedException();
 
-		public override void Write(Utf8JsonWriter writer, BulkOperationHeader value, JsonSerializerOptions options)
+		public override void Write(Utf8JsonWriter writer, THeader value, JsonSerializerOptions options)
 		{
 			var op = value switch
 			{

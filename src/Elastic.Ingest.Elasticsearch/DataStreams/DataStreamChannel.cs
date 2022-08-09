@@ -14,5 +14,6 @@ namespace Elastic.Ingest.Elasticsearch.DataStreams
 		}
 
 		protected override BulkOperationHeader CreateBulkOperationHeader(TEvent @event) => _fixedHeader;
+
 	}
 }

@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -16,7 +17,16 @@ namespace Elastic.Ingest.Elasticsearch
 	{
 		public ElasticsearchChannelBase(TChannelOptions options) : base(options) { }
 
-		protected override bool BackOffRequest(BulkResponse response) => response.ApiCall.HttpStatusCode == 429;
+
+		protected override bool Retry(BulkResponse response)
+		{
+			var success = response.ApiCall.Success;
+			if (!success)
+				Options.ExceptionCallback?.Invoke(new Exception(response.ApiCall.ToString(), response.ApiCall.OriginalException));
+			return success;
+		}
+
+		protected override bool RetryAllItems(BulkResponse response) => response.ApiCall.HttpStatusCode == 429;
 
 		protected override List<(TEvent, BulkResponseItem)> Zip(BulkResponse response, IReadOnlyCollection<TEvent> page) =>
 			page.Zip(response.Items, (doc, item) => (doc, item)).ToList();

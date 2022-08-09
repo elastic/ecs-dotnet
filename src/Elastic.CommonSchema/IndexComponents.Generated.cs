@@ -26,11 +26,242 @@ namespace Elastic.CommonSchema.Elasticsearch
 	public static class IndexComponents
 	{
 		/// <summary>
-		/// Elastic Common Schema version v8.3.1 AgentJson component template  
+		/// Elastic Common Schema version v8.3.1 ecs_8.3.1_agent component template  
 		/// </summary>
 		/// <returns>Index template string that can be used with the Put Index Template API.</returns>
-		public static string AgentJson => 
-			@"{
+		public static string Agent => Components["ecs_8.3.1_agent"];
+
+		/// <summary>
+		/// Elastic Common Schema version v8.3.1 ecs_8.3.1_base component template  
+		/// </summary>
+		/// <returns>Index template string that can be used with the Put Index Template API.</returns>
+		public static string Base => Components["ecs_8.3.1_base"];
+
+		/// <summary>
+		/// Elastic Common Schema version v8.3.1 ecs_8.3.1_client component template  
+		/// </summary>
+		/// <returns>Index template string that can be used with the Put Index Template API.</returns>
+		public static string Client => Components["ecs_8.3.1_client"];
+
+		/// <summary>
+		/// Elastic Common Schema version v8.3.1 ecs_8.3.1_cloud component template  
+		/// </summary>
+		/// <returns>Index template string that can be used with the Put Index Template API.</returns>
+		public static string Cloud => Components["ecs_8.3.1_cloud"];
+
+		/// <summary>
+		/// Elastic Common Schema version v8.3.1 ecs_8.3.1_container component template  
+		/// </summary>
+		/// <returns>Index template string that can be used with the Put Index Template API.</returns>
+		public static string Container => Components["ecs_8.3.1_container"];
+
+		/// <summary>
+		/// Elastic Common Schema version v8.3.1 ecs_8.3.1_data_stream component template  
+		/// </summary>
+		/// <returns>Index template string that can be used with the Put Index Template API.</returns>
+		public static string DataStream => Components["ecs_8.3.1_data_stream"];
+
+		/// <summary>
+		/// Elastic Common Schema version v8.3.1 ecs_8.3.1_destination component template  
+		/// </summary>
+		/// <returns>Index template string that can be used with the Put Index Template API.</returns>
+		public static string Destination => Components["ecs_8.3.1_destination"];
+
+		/// <summary>
+		/// Elastic Common Schema version v8.3.1 ecs_8.3.1_dll component template  
+		/// </summary>
+		/// <returns>Index template string that can be used with the Put Index Template API.</returns>
+		public static string Dll => Components["ecs_8.3.1_dll"];
+
+		/// <summary>
+		/// Elastic Common Schema version v8.3.1 ecs_8.3.1_dns component template  
+		/// </summary>
+		/// <returns>Index template string that can be used with the Put Index Template API.</returns>
+		public static string Dns => Components["ecs_8.3.1_dns"];
+
+		/// <summary>
+		/// Elastic Common Schema version v8.3.1 ecs_8.3.1_ecs component template  
+		/// </summary>
+		/// <returns>Index template string that can be used with the Put Index Template API.</returns>
+		public static string Ecs => Components["ecs_8.3.1_ecs"];
+
+		/// <summary>
+		/// Elastic Common Schema version v8.3.1 ecs_8.3.1_email component template  
+		/// </summary>
+		/// <returns>Index template string that can be used with the Put Index Template API.</returns>
+		public static string Email => Components["ecs_8.3.1_email"];
+
+		/// <summary>
+		/// Elastic Common Schema version v8.3.1 ecs_8.3.1_error component template  
+		/// </summary>
+		/// <returns>Index template string that can be used with the Put Index Template API.</returns>
+		public static string Error => Components["ecs_8.3.1_error"];
+
+		/// <summary>
+		/// Elastic Common Schema version v8.3.1 ecs_8.3.1_event component template  
+		/// </summary>
+		/// <returns>Index template string that can be used with the Put Index Template API.</returns>
+		public static string Event => Components["ecs_8.3.1_event"];
+
+		/// <summary>
+		/// Elastic Common Schema version v8.3.1 ecs_8.3.1_faas component template  
+		/// </summary>
+		/// <returns>Index template string that can be used with the Put Index Template API.</returns>
+		public static string Faas => Components["ecs_8.3.1_faas"];
+
+		/// <summary>
+		/// Elastic Common Schema version v8.3.1 ecs_8.3.1_file component template  
+		/// </summary>
+		/// <returns>Index template string that can be used with the Put Index Template API.</returns>
+		public static string File => Components["ecs_8.3.1_file"];
+
+		/// <summary>
+		/// Elastic Common Schema version v8.3.1 ecs_8.3.1_group component template  
+		/// </summary>
+		/// <returns>Index template string that can be used with the Put Index Template API.</returns>
+		public static string Group => Components["ecs_8.3.1_group"];
+
+		/// <summary>
+		/// Elastic Common Schema version v8.3.1 ecs_8.3.1_host component template  
+		/// </summary>
+		/// <returns>Index template string that can be used with the Put Index Template API.</returns>
+		public static string Host => Components["ecs_8.3.1_host"];
+
+		/// <summary>
+		/// Elastic Common Schema version v8.3.1 ecs_8.3.1_http component template  
+		/// </summary>
+		/// <returns>Index template string that can be used with the Put Index Template API.</returns>
+		public static string Http => Components["ecs_8.3.1_http"];
+
+		/// <summary>
+		/// Elastic Common Schema version v8.3.1 ecs_8.3.1_log component template  
+		/// </summary>
+		/// <returns>Index template string that can be used with the Put Index Template API.</returns>
+		public static string Log => Components["ecs_8.3.1_log"];
+
+		/// <summary>
+		/// Elastic Common Schema version v8.3.1 ecs_8.3.1_network component template  
+		/// </summary>
+		/// <returns>Index template string that can be used with the Put Index Template API.</returns>
+		public static string Network => Components["ecs_8.3.1_network"];
+
+		/// <summary>
+		/// Elastic Common Schema version v8.3.1 ecs_8.3.1_observer component template  
+		/// </summary>
+		/// <returns>Index template string that can be used with the Put Index Template API.</returns>
+		public static string Observer => Components["ecs_8.3.1_observer"];
+
+		/// <summary>
+		/// Elastic Common Schema version v8.3.1 ecs_8.3.1_orchestrator component template  
+		/// </summary>
+		/// <returns>Index template string that can be used with the Put Index Template API.</returns>
+		public static string Orchestrator => Components["ecs_8.3.1_orchestrator"];
+
+		/// <summary>
+		/// Elastic Common Schema version v8.3.1 ecs_8.3.1_organization component template  
+		/// </summary>
+		/// <returns>Index template string that can be used with the Put Index Template API.</returns>
+		public static string Organization => Components["ecs_8.3.1_organization"];
+
+		/// <summary>
+		/// Elastic Common Schema version v8.3.1 ecs_8.3.1_package component template  
+		/// </summary>
+		/// <returns>Index template string that can be used with the Put Index Template API.</returns>
+		public static string Package => Components["ecs_8.3.1_package"];
+
+		/// <summary>
+		/// Elastic Common Schema version v8.3.1 ecs_8.3.1_process component template  
+		/// </summary>
+		/// <returns>Index template string that can be used with the Put Index Template API.</returns>
+		public static string Process => Components["ecs_8.3.1_process"];
+
+		/// <summary>
+		/// Elastic Common Schema version v8.3.1 ecs_8.3.1_registry component template  
+		/// </summary>
+		/// <returns>Index template string that can be used with the Put Index Template API.</returns>
+		public static string Registry => Components["ecs_8.3.1_registry"];
+
+		/// <summary>
+		/// Elastic Common Schema version v8.3.1 ecs_8.3.1_related component template  
+		/// </summary>
+		/// <returns>Index template string that can be used with the Put Index Template API.</returns>
+		public static string Related => Components["ecs_8.3.1_related"];
+
+		/// <summary>
+		/// Elastic Common Schema version v8.3.1 ecs_8.3.1_rule component template  
+		/// </summary>
+		/// <returns>Index template string that can be used with the Put Index Template API.</returns>
+		public static string Rule => Components["ecs_8.3.1_rule"];
+
+		/// <summary>
+		/// Elastic Common Schema version v8.3.1 ecs_8.3.1_server component template  
+		/// </summary>
+		/// <returns>Index template string that can be used with the Put Index Template API.</returns>
+		public static string Server => Components["ecs_8.3.1_server"];
+
+		/// <summary>
+		/// Elastic Common Schema version v8.3.1 ecs_8.3.1_service component template  
+		/// </summary>
+		/// <returns>Index template string that can be used with the Put Index Template API.</returns>
+		public static string Service => Components["ecs_8.3.1_service"];
+
+		/// <summary>
+		/// Elastic Common Schema version v8.3.1 ecs_8.3.1_source component template  
+		/// </summary>
+		/// <returns>Index template string that can be used with the Put Index Template API.</returns>
+		public static string Source => Components["ecs_8.3.1_source"];
+
+		/// <summary>
+		/// Elastic Common Schema version v8.3.1 ecs_8.3.1_threat component template  
+		/// </summary>
+		/// <returns>Index template string that can be used with the Put Index Template API.</returns>
+		public static string Threat => Components["ecs_8.3.1_threat"];
+
+		/// <summary>
+		/// Elastic Common Schema version v8.3.1 ecs_8.3.1_tls component template  
+		/// </summary>
+		/// <returns>Index template string that can be used with the Put Index Template API.</returns>
+		public static string Tls => Components["ecs_8.3.1_tls"];
+
+		/// <summary>
+		/// Elastic Common Schema version v8.3.1 ecs_8.3.1_tracing component template  
+		/// </summary>
+		/// <returns>Index template string that can be used with the Put Index Template API.</returns>
+		public static string Tracing => Components["ecs_8.3.1_tracing"];
+
+		/// <summary>
+		/// Elastic Common Schema version v8.3.1 ecs_8.3.1_url component template  
+		/// </summary>
+		/// <returns>Index template string that can be used with the Put Index Template API.</returns>
+		public static string Url => Components["ecs_8.3.1_url"];
+
+		/// <summary>
+		/// Elastic Common Schema version v8.3.1 ecs_8.3.1_user component template  
+		/// </summary>
+		/// <returns>Index template string that can be used with the Put Index Template API.</returns>
+		public static string User => Components["ecs_8.3.1_user"];
+
+		/// <summary>
+		/// Elastic Common Schema version v8.3.1 ecs_8.3.1_user_agent component template  
+		/// </summary>
+		/// <returns>Index template string that can be used with the Put Index Template API.</returns>
+		public static string UserAgent => Components["ecs_8.3.1_user_agent"];
+
+		/// <summary>
+		/// Elastic Common Schema version v8.3.1 ecs_8.3.1_vulnerability component template  
+		/// </summary>
+		/// <returns>Index template string that can be used with the Put Index Template API.</returns>
+		public static string Vulnerability => Components["ecs_8.3.1_vulnerability"];
+
+
+		/// <summary>
+		/// All component templates to bootstrap each ECS field set
+		/// </summary>
+     	public static IReadOnlyDictionary<string, string> Components { get; } = new Dictionary<string, string>
+     	{
+		{	
+				"ecs_8.3.1_agent", 
+				@"{
   ""_meta"": {
     ""documentation"": ""https://www.elastic.co/guide/en/ecs/current/ecs-agent.html"",
     ""ecs_version"": ""8.3.1""
@@ -74,14 +305,11 @@ namespace Elastic.CommonSchema.Elasticsearch
     }
   }
 }
-";
-
-		/// <summary>
-		/// Elastic Common Schema version v8.3.1 BaseJson component template  
-		/// </summary>
-		/// <returns>Index template string that can be used with the Put Index Template API.</returns>
-		public static string BaseJson => 
-			@"{
+"
+			},
+		{	
+				"ecs_8.3.1_base", 
+				@"{
   ""_meta"": {
     ""documentation"": ""https://www.elastic.co/guide/en/ecs/current/ecs-base.html"",
     ""ecs_version"": ""8.3.1""
@@ -106,14 +334,11 @@ namespace Elastic.CommonSchema.Elasticsearch
     }
   }
 }
-";
-
-		/// <summary>
-		/// Elastic Common Schema version v8.3.1 ClientJson component template  
-		/// </summary>
-		/// <returns>Index template string that can be used with the Put Index Template API.</returns>
-		public static string ClientJson => 
-			@"{
+"
+			},
+		{	
+				"ecs_8.3.1_client", 
+				@"{
   ""_meta"": {
     ""documentation"": ""https://www.elastic.co/guide/en/ecs/current/ecs-client.html"",
     ""ecs_version"": ""8.3.1""
@@ -300,14 +525,11 @@ namespace Elastic.CommonSchema.Elasticsearch
     }
   }
 }
-";
-
-		/// <summary>
-		/// Elastic Common Schema version v8.3.1 CloudJson component template  
-		/// </summary>
-		/// <returns>Index template string that can be used with the Put Index Template API.</returns>
-		public static string CloudJson => 
-			@"{
+"
+			},
+		{	
+				"ecs_8.3.1_cloud", 
+				@"{
   ""_meta"": {
     ""documentation"": ""https://www.elastic.co/guide/en/ecs/current/ecs-cloud.html"",
     ""ecs_version"": ""8.3.1""
@@ -523,14 +745,11 @@ namespace Elastic.CommonSchema.Elasticsearch
     }
   }
 }
-";
-
-		/// <summary>
-		/// Elastic Common Schema version v8.3.1 ContainerJson component template  
-		/// </summary>
-		/// <returns>Index template string that can be used with the Put Index Template API.</returns>
-		public static string ContainerJson => 
-			@"{
+"
+			},
+		{	
+				"ecs_8.3.1_container", 
+				@"{
   ""_meta"": {
     ""documentation"": ""https://www.elastic.co/guide/en/ecs/current/ecs-container.html"",
     ""ecs_version"": ""8.3.1""
@@ -633,14 +852,11 @@ namespace Elastic.CommonSchema.Elasticsearch
     }
   }
 }
-";
-
-		/// <summary>
-		/// Elastic Common Schema version v8.3.1 DataStreamJson component template  
-		/// </summary>
-		/// <returns>Index template string that can be used with the Put Index Template API.</returns>
-		public static string DataStreamJson => 
-			@"{
+"
+			},
+		{	
+				"ecs_8.3.1_data_stream", 
+				@"{
   ""_meta"": {
     ""documentation"": ""https://www.elastic.co/guide/en/ecs/current/ecs-data_stream.html"",
     ""ecs_version"": ""8.3.1""
@@ -665,14 +881,11 @@ namespace Elastic.CommonSchema.Elasticsearch
     }
   }
 }
-";
-
-		/// <summary>
-		/// Elastic Common Schema version v8.3.1 DestinationJson component template  
-		/// </summary>
-		/// <returns>Index template string that can be used with the Put Index Template API.</returns>
-		public static string DestinationJson => 
-			@"{
+"
+			},
+		{	
+				"ecs_8.3.1_destination", 
+				@"{
   ""_meta"": {
     ""documentation"": ""https://www.elastic.co/guide/en/ecs/current/ecs-destination.html"",
     ""ecs_version"": ""8.3.1""
@@ -859,14 +1072,11 @@ namespace Elastic.CommonSchema.Elasticsearch
     }
   }
 }
-";
-
-		/// <summary>
-		/// Elastic Common Schema version v8.3.1 DllJson component template  
-		/// </summary>
-		/// <returns>Index template string that can be used with the Put Index Template API.</returns>
-		public static string DllJson => 
-			@"{
+"
+			},
+		{	
+				"ecs_8.3.1_dll", 
+				@"{
   ""_meta"": {
     ""documentation"": ""https://www.elastic.co/guide/en/ecs/current/ecs-dll.html"",
     ""ecs_version"": ""8.3.1""
@@ -994,14 +1204,11 @@ namespace Elastic.CommonSchema.Elasticsearch
     }
   }
 }
-";
-
-		/// <summary>
-		/// Elastic Common Schema version v8.3.1 DnsJson component template  
-		/// </summary>
-		/// <returns>Index template string that can be used with the Put Index Template API.</returns>
-		public static string DnsJson => 
-			@"{
+"
+			},
+		{	
+				"ecs_8.3.1_dns", 
+				@"{
   ""_meta"": {
     ""documentation"": ""https://www.elastic.co/guide/en/ecs/current/ecs-dns.html"",
     ""ecs_version"": ""8.3.1""
@@ -1092,14 +1299,11 @@ namespace Elastic.CommonSchema.Elasticsearch
     }
   }
 }
-";
-
-		/// <summary>
-		/// Elastic Common Schema version v8.3.1 EcsJson component template  
-		/// </summary>
-		/// <returns>Index template string that can be used with the Put Index Template API.</returns>
-		public static string EcsJson => 
-			@"{
+"
+			},
+		{	
+				"ecs_8.3.1_ecs", 
+				@"{
   ""_meta"": {
     ""documentation"": ""https://www.elastic.co/guide/en/ecs/current/ecs-ecs.html"",
     ""ecs_version"": ""8.3.1""
@@ -1119,14 +1323,11 @@ namespace Elastic.CommonSchema.Elasticsearch
     }
   }
 }
-";
-
-		/// <summary>
-		/// Elastic Common Schema version v8.3.1 EmailJson component template  
-		/// </summary>
-		/// <returns>Index template string that can be used with the Put Index Template API.</returns>
-		public static string EmailJson => 
-			@"{
+"
+			},
+		{	
+				"ecs_8.3.1_email", 
+				@"{
   ""_meta"": {
     ""documentation"": ""https://www.elastic.co/guide/en/ecs/current/ecs-email.html"",
     ""ecs_version"": ""8.3.1""
@@ -1280,14 +1481,11 @@ namespace Elastic.CommonSchema.Elasticsearch
     }
   }
 }
-";
-
-		/// <summary>
-		/// Elastic Common Schema version v8.3.1 ErrorJson component template  
-		/// </summary>
-		/// <returns>Index template string that can be used with the Put Index Template API.</returns>
-		public static string ErrorJson => 
-			@"{
+"
+			},
+		{	
+				"ecs_8.3.1_error", 
+				@"{
   ""_meta"": {
     ""documentation"": ""https://www.elastic.co/guide/en/ecs/current/ecs-error.html"",
     ""ecs_version"": ""8.3.1""
@@ -1326,14 +1524,11 @@ namespace Elastic.CommonSchema.Elasticsearch
     }
   }
 }
-";
-
-		/// <summary>
-		/// Elastic Common Schema version v8.3.1 EventJson component template  
-		/// </summary>
-		/// <returns>Index template string that can be used with the Put Index Template API.</returns>
-		public static string EventJson => 
-			@"{
+"
+			},
+		{	
+				"ecs_8.3.1_event", 
+				@"{
   ""_meta"": {
     ""documentation"": ""https://www.elastic.co/guide/en/ecs/current/ecs-event.html"",
     ""ecs_version"": ""8.3.1""
@@ -1445,14 +1640,11 @@ namespace Elastic.CommonSchema.Elasticsearch
     }
   }
 }
-";
-
-		/// <summary>
-		/// Elastic Common Schema version v8.3.1 FaasJson component template  
-		/// </summary>
-		/// <returns>Index template string that can be used with the Put Index Template API.</returns>
-		public static string FaasJson => 
-			@"{
+"
+			},
+		{	
+				"ecs_8.3.1_faas", 
+				@"{
   ""_meta"": {
     ""documentation"": ""https://www.elastic.co/guide/en/ecs/current/ecs-faas.html"",
     ""ecs_version"": ""8.3.1""
@@ -1500,14 +1692,11 @@ namespace Elastic.CommonSchema.Elasticsearch
     }
   }
 }
-";
-
-		/// <summary>
-		/// Elastic Common Schema version v8.3.1 FileJson component template  
-		/// </summary>
-		/// <returns>Index template string that can be used with the Put Index Template API.</returns>
-		public static string FileJson => 
-			@"{
+"
+			},
+		{	
+				"ecs_8.3.1_file", 
+				@"{
   ""_meta"": {
     ""documentation"": ""https://www.elastic.co/guide/en/ecs/current/ecs-file.html"",
     ""ecs_version"": ""8.3.1""
@@ -1943,14 +2132,11 @@ namespace Elastic.CommonSchema.Elasticsearch
     }
   }
 }
-";
-
-		/// <summary>
-		/// Elastic Common Schema version v8.3.1 GroupJson component template  
-		/// </summary>
-		/// <returns>Index template string that can be used with the Put Index Template API.</returns>
-		public static string GroupJson => 
-			@"{
+"
+			},
+		{	
+				"ecs_8.3.1_group", 
+				@"{
   ""_meta"": {
     ""documentation"": ""https://www.elastic.co/guide/en/ecs/current/ecs-group.html"",
     ""ecs_version"": ""8.3.1""
@@ -1978,14 +2164,11 @@ namespace Elastic.CommonSchema.Elasticsearch
     }
   }
 }
-";
-
-		/// <summary>
-		/// Elastic Common Schema version v8.3.1 HostJson component template  
-		/// </summary>
-		/// <returns>Index template string that can be used with the Put Index Template API.</returns>
-		public static string HostJson => 
-			@"{
+"
+			},
+		{	
+				"ecs_8.3.1_host", 
+				@"{
   ""_meta"": {
     ""documentation"": ""https://www.elastic.co/guide/en/ecs/current/ecs-host.html"",
     ""ecs_version"": ""8.3.1""
@@ -2186,14 +2369,11 @@ namespace Elastic.CommonSchema.Elasticsearch
     }
   }
 }
-";
-
-		/// <summary>
-		/// Elastic Common Schema version v8.3.1 HttpJson component template  
-		/// </summary>
-		/// <returns>Index template string that can be used with the Put Index Template API.</returns>
-		public static string HttpJson => 
-			@"{
+"
+			},
+		{	
+				"ecs_8.3.1_http", 
+				@"{
   ""_meta"": {
     ""documentation"": ""https://www.elastic.co/guide/en/ecs/current/ecs-http.html"",
     ""ecs_version"": ""8.3.1""
@@ -2280,14 +2460,11 @@ namespace Elastic.CommonSchema.Elasticsearch
     }
   }
 }
-";
-
-		/// <summary>
-		/// Elastic Common Schema version v8.3.1 LogJson component template  
-		/// </summary>
-		/// <returns>Index template string that can be used with the Put Index Template API.</returns>
-		public static string LogJson => 
-			@"{
+"
+			},
+		{	
+				"ecs_8.3.1_log", 
+				@"{
   ""_meta"": {
     ""documentation"": ""https://www.elastic.co/guide/en/ecs/current/ecs-log.html"",
     ""ecs_version"": ""8.3.1""
@@ -2391,14 +2568,11 @@ namespace Elastic.CommonSchema.Elasticsearch
     }
   }
 }
-";
-
-		/// <summary>
-		/// Elastic Common Schema version v8.3.1 NetworkJson component template  
-		/// </summary>
-		/// <returns>Index template string that can be used with the Put Index Template API.</returns>
-		public static string NetworkJson => 
-			@"{
+"
+			},
+		{	
+				"ecs_8.3.1_network", 
+				@"{
   ""_meta"": {
     ""documentation"": ""https://www.elastic.co/guide/en/ecs/current/ecs-network.html"",
     ""ecs_version"": ""8.3.1""
@@ -2484,14 +2658,11 @@ namespace Elastic.CommonSchema.Elasticsearch
     }
   }
 }
-";
-
-		/// <summary>
-		/// Elastic Common Schema version v8.3.1 ObserverJson component template  
-		/// </summary>
-		/// <returns>Index template string that can be used with the Put Index Template API.</returns>
-		public static string ObserverJson => 
-			@"{
+"
+			},
+		{	
+				"ecs_8.3.1_observer", 
+				@"{
   ""_meta"": {
     ""documentation"": ""https://www.elastic.co/guide/en/ecs/current/ecs-observer.html"",
     ""ecs_version"": ""8.3.1""
@@ -2705,14 +2876,11 @@ namespace Elastic.CommonSchema.Elasticsearch
     }
   }
 }
-";
-
-		/// <summary>
-		/// Elastic Common Schema version v8.3.1 OrchestratorJson component template  
-		/// </summary>
-		/// <returns>Index template string that can be used with the Put Index Template API.</returns>
-		public static string OrchestratorJson => 
-			@"{
+"
+			},
+		{	
+				"ecs_8.3.1_orchestrator", 
+				@"{
   ""_meta"": {
     ""documentation"": ""https://www.elastic.co/guide/en/ecs/current/ecs-orchestrator.html"",
     ""ecs_version"": ""8.3.1""
@@ -2791,14 +2959,11 @@ namespace Elastic.CommonSchema.Elasticsearch
     }
   }
 }
-";
-
-		/// <summary>
-		/// Elastic Common Schema version v8.3.1 OrganizationJson component template  
-		/// </summary>
-		/// <returns>Index template string that can be used with the Put Index Template API.</returns>
-		public static string OrganizationJson => 
-			@"{
+"
+			},
+		{	
+				"ecs_8.3.1_organization", 
+				@"{
   ""_meta"": {
     ""documentation"": ""https://www.elastic.co/guide/en/ecs/current/ecs-organization.html"",
     ""ecs_version"": ""8.3.1""
@@ -2827,14 +2992,11 @@ namespace Elastic.CommonSchema.Elasticsearch
     }
   }
 }
-";
-
-		/// <summary>
-		/// Elastic Common Schema version v8.3.1 PackageJson component template  
-		/// </summary>
-		/// <returns>Index template string that can be used with the Put Index Template API.</returns>
-		public static string PackageJson => 
-			@"{
+"
+			},
+		{	
+				"ecs_8.3.1_package", 
+				@"{
   ""_meta"": {
     ""documentation"": ""https://www.elastic.co/guide/en/ecs/current/ecs-package.html"",
     ""ecs_version"": ""8.3.1""
@@ -2900,14 +3062,11 @@ namespace Elastic.CommonSchema.Elasticsearch
     }
   }
 }
-";
-
-		/// <summary>
-		/// Elastic Common Schema version v8.3.1 ProcessJson component template  
-		/// </summary>
-		/// <returns>Index template string that can be used with the Put Index Template API.</returns>
-		public static string ProcessJson => 
-			@"{
+"
+			},
+		{	
+				"ecs_8.3.1_process", 
+				@"{
   ""_meta"": {
     ""documentation"": ""https://www.elastic.co/guide/en/ecs/current/ecs-process.html"",
     ""ecs_version"": ""8.3.1""
@@ -4395,14 +4554,11 @@ namespace Elastic.CommonSchema.Elasticsearch
     }
   }
 }
-";
-
-		/// <summary>
-		/// Elastic Common Schema version v8.3.1 RegistryJson component template  
-		/// </summary>
-		/// <returns>Index template string that can be used with the Put Index Template API.</returns>
-		public static string RegistryJson => 
-			@"{
+"
+			},
+		{	
+				"ecs_8.3.1_registry", 
+				@"{
   ""_meta"": {
     ""documentation"": ""https://www.elastic.co/guide/en/ecs/current/ecs-registry.html"",
     ""ecs_version"": ""8.3.1""
@@ -4449,14 +4605,11 @@ namespace Elastic.CommonSchema.Elasticsearch
     }
   }
 }
-";
-
-		/// <summary>
-		/// Elastic Common Schema version v8.3.1 RelatedJson component template  
-		/// </summary>
-		/// <returns>Index template string that can be used with the Put Index Template API.</returns>
-		public static string RelatedJson => 
-			@"{
+"
+			},
+		{	
+				"ecs_8.3.1_related", 
+				@"{
   ""_meta"": {
     ""documentation"": ""https://www.elastic.co/guide/en/ecs/current/ecs-related.html"",
     ""ecs_version"": ""8.3.1""
@@ -4487,14 +4640,11 @@ namespace Elastic.CommonSchema.Elasticsearch
     }
   }
 }
-";
-
-		/// <summary>
-		/// Elastic Common Schema version v8.3.1 RuleJson component template  
-		/// </summary>
-		/// <returns>Index template string that can be used with the Put Index Template API.</returns>
-		public static string RuleJson => 
-			@"{
+"
+			},
+		{	
+				"ecs_8.3.1_rule", 
+				@"{
   ""_meta"": {
     ""documentation"": ""https://www.elastic.co/guide/en/ecs/current/ecs-rule.html"",
     ""ecs_version"": ""8.3.1""
@@ -4550,14 +4700,11 @@ namespace Elastic.CommonSchema.Elasticsearch
     }
   }
 }
-";
-
-		/// <summary>
-		/// Elastic Common Schema version v8.3.1 ServerJson component template  
-		/// </summary>
-		/// <returns>Index template string that can be used with the Put Index Template API.</returns>
-		public static string ServerJson => 
-			@"{
+"
+			},
+		{	
+				"ecs_8.3.1_server", 
+				@"{
   ""_meta"": {
     ""documentation"": ""https://www.elastic.co/guide/en/ecs/current/ecs-server.html"",
     ""ecs_version"": ""8.3.1""
@@ -4744,14 +4891,11 @@ namespace Elastic.CommonSchema.Elasticsearch
     }
   }
 }
-";
-
-		/// <summary>
-		/// Elastic Common Schema version v8.3.1 ServiceJson component template  
-		/// </summary>
-		/// <returns>Index template string that can be used with the Put Index Template API.</returns>
-		public static string ServiceJson => 
-			@"{
+"
+			},
+		{	
+				"ecs_8.3.1_service", 
+				@"{
   ""_meta"": {
     ""documentation"": ""https://www.elastic.co/guide/en/ecs/current/ecs-service.html"",
     ""ecs_version"": ""8.3.1""
@@ -4907,14 +5051,11 @@ namespace Elastic.CommonSchema.Elasticsearch
     }
   }
 }
-";
-
-		/// <summary>
-		/// Elastic Common Schema version v8.3.1 SourceJson component template  
-		/// </summary>
-		/// <returns>Index template string that can be used with the Put Index Template API.</returns>
-		public static string SourceJson => 
-			@"{
+"
+			},
+		{	
+				"ecs_8.3.1_source", 
+				@"{
   ""_meta"": {
     ""documentation"": ""https://www.elastic.co/guide/en/ecs/current/ecs-source.html"",
     ""ecs_version"": ""8.3.1""
@@ -5101,14 +5242,11 @@ namespace Elastic.CommonSchema.Elasticsearch
     }
   }
 }
-";
-
-		/// <summary>
-		/// Elastic Common Schema version v8.3.1 ThreatJson component template  
-		/// </summary>
-		/// <returns>Index template string that can be used with the Put Index Template API.</returns>
-		public static string ThreatJson => 
-			@"{
+"
+			},
+		{	
+				"ecs_8.3.1_threat", 
+				@"{
   ""_meta"": {
     ""documentation"": ""https://www.elastic.co/guide/en/ecs/current/ecs-threat.html"",
     ""ecs_version"": ""8.3.1""
@@ -6805,14 +6943,11 @@ namespace Elastic.CommonSchema.Elasticsearch
     }
   }
 }
-";
-
-		/// <summary>
-		/// Elastic Common Schema version v8.3.1 TlsJson component template  
-		/// </summary>
-		/// <returns>Index template string that can be used with the Put Index Template API.</returns>
-		public static string TlsJson => 
-			@"{
+"
+			},
+		{	
+				"ecs_8.3.1_tls", 
+				@"{
   ""_meta"": {
     ""documentation"": ""https://www.elastic.co/guide/en/ecs/current/ecs-tls.html"",
     ""ecs_version"": ""8.3.1""
@@ -7166,14 +7301,11 @@ namespace Elastic.CommonSchema.Elasticsearch
     }
   }
 }
-";
-
-		/// <summary>
-		/// Elastic Common Schema version v8.3.1 TracingJson component template  
-		/// </summary>
-		/// <returns>Index template string that can be used with the Put Index Template API.</returns>
-		public static string TracingJson => 
-			@"{
+"
+			},
+		{	
+				"ecs_8.3.1_tracing", 
+				@"{
   ""_meta"": {
     ""documentation"": ""https://www.elastic.co/guide/en/ecs/current/ecs-tracing.html"",
     ""ecs_version"": ""8.3.1""
@@ -7209,14 +7341,11 @@ namespace Elastic.CommonSchema.Elasticsearch
     }
   }
 }
-";
-
-		/// <summary>
-		/// Elastic Common Schema version v8.3.1 UrlJson component template  
-		/// </summary>
-		/// <returns>Index template string that can be used with the Put Index Template API.</returns>
-		public static string UrlJson => 
-			@"{
+"
+			},
+		{	
+				"ecs_8.3.1_url", 
+				@"{
   ""_meta"": {
     ""documentation"": ""https://www.elastic.co/guide/en/ecs/current/ecs-url.html"",
     ""ecs_version"": ""8.3.1""
@@ -7294,104 +7423,11 @@ namespace Elastic.CommonSchema.Elasticsearch
     }
   }
 }
-";
-
-		/// <summary>
-		/// Elastic Common Schema version v8.3.1 UserAgentJson component template  
-		/// </summary>
-		/// <returns>Index template string that can be used with the Put Index Template API.</returns>
-		public static string UserAgentJson => 
-			@"{
-  ""_meta"": {
-    ""documentation"": ""https://www.elastic.co/guide/en/ecs/current/ecs-user_agent.html"",
-    ""ecs_version"": ""8.3.1""
-  },
-  ""template"": {
-    ""mappings"": {
-      ""properties"": {
-        ""user_agent"": {
-          ""properties"": {
-            ""device"": {
-              ""properties"": {
-                ""name"": {
-                  ""ignore_above"": 1024,
-                  ""type"": ""keyword""
-                }
-              }
-            },
-            ""name"": {
-              ""ignore_above"": 1024,
-              ""type"": ""keyword""
-            },
-            ""original"": {
-              ""fields"": {
-                ""text"": {
-                  ""type"": ""match_only_text""
-                }
-              },
-              ""ignore_above"": 1024,
-              ""type"": ""keyword""
-            },
-            ""os"": {
-              ""properties"": {
-                ""family"": {
-                  ""ignore_above"": 1024,
-                  ""type"": ""keyword""
-                },
-                ""full"": {
-                  ""fields"": {
-                    ""text"": {
-                      ""type"": ""match_only_text""
-                    }
-                  },
-                  ""ignore_above"": 1024,
-                  ""type"": ""keyword""
-                },
-                ""kernel"": {
-                  ""ignore_above"": 1024,
-                  ""type"": ""keyword""
-                },
-                ""name"": {
-                  ""fields"": {
-                    ""text"": {
-                      ""type"": ""match_only_text""
-                    }
-                  },
-                  ""ignore_above"": 1024,
-                  ""type"": ""keyword""
-                },
-                ""platform"": {
-                  ""ignore_above"": 1024,
-                  ""type"": ""keyword""
-                },
-                ""type"": {
-                  ""ignore_above"": 1024,
-                  ""type"": ""keyword""
-                },
-                ""version"": {
-                  ""ignore_above"": 1024,
-                  ""type"": ""keyword""
-                }
-              }
-            },
-            ""version"": {
-              ""ignore_above"": 1024,
-              ""type"": ""keyword""
-            }
-          }
-        }
-      }
-    }
-  }
-}
-";
-
-		/// <summary>
-		/// Elastic Common Schema version v8.3.1 UserJson component template  
-		/// </summary>
-		/// <returns>Index template string that can be used with the Put Index Template API.</returns>
-		public static string UserJson => 
-			@"{
+"
+			},
+		{	
+				"ecs_8.3.1_user", 
+				@"{
   ""_meta"": {
     ""documentation"": ""https://www.elastic.co/guide/en/ecs/current/ecs-user.html"",
     ""ecs_version"": ""8.3.1""
@@ -7635,14 +7671,98 @@ namespace Elastic.CommonSchema.Elasticsearch
     }
   }
 }
-";
-
-		/// <summary>
-		/// Elastic Common Schema version v8.3.1 VulnerabilityJson component template  
-		/// </summary>
-		/// <returns>Index template string that can be used with the Put Index Template API.</returns>
-		public static string VulnerabilityJson => 
-			@"{
+"
+			},
+		{	
+				"ecs_8.3.1_user_agent", 
+				@"{
+  ""_meta"": {
+    ""documentation"": ""https://www.elastic.co/guide/en/ecs/current/ecs-user_agent.html"",
+    ""ecs_version"": ""8.3.1""
+  },
+  ""template"": {
+    ""mappings"": {
+      ""properties"": {
+        ""user_agent"": {
+          ""properties"": {
+            ""device"": {
+              ""properties"": {
+                ""name"": {
+                  ""ignore_above"": 1024,
+                  ""type"": ""keyword""
+                }
+              }
+            },
+            ""name"": {
+              ""ignore_above"": 1024,
+              ""type"": ""keyword""
+            },
+            ""original"": {
+              ""fields"": {
+                ""text"": {
+                  ""type"": ""match_only_text""
+                }
+              },
+              ""ignore_above"": 1024,
+              ""type"": ""keyword""
+            },
+            ""os"": {
+              ""properties"": {
+                ""family"": {
+                  ""ignore_above"": 1024,
+                  ""type"": ""keyword""
+                },
+                ""full"": {
+                  ""fields"": {
+                    ""text"": {
+                      ""type"": ""match_only_text""
+                    }
+                  },
+                  ""ignore_above"": 1024,
+                  ""type"": ""keyword""
+                },
+                ""kernel"": {
+                  ""ignore_above"": 1024,
+                  ""type"": ""keyword""
+                },
+                ""name"": {
+                  ""fields"": {
+                    ""text"": {
+                      ""type"": ""match_only_text""
+                    }
+                  },
+                  ""ignore_above"": 1024,
+                  ""type"": ""keyword""
+                },
+                ""platform"": {
+                  ""ignore_above"": 1024,
+                  ""type"": ""keyword""
+                },
+                ""type"": {
+                  ""ignore_above"": 1024,
+                  ""type"": ""keyword""
+                },
+                ""version"": {
+                  ""ignore_above"": 1024,
+                  ""type"": ""keyword""
+                }
+              }
+            },
+            ""version"": {
+              ""ignore_above"": 1024,
+              ""type"": ""keyword""
+            }
+          }
+        }
+      }
+    }
+  }
+}
+"
+			},
+		{	
+				"ecs_8.3.1_vulnerability", 
+				@"{
   ""_meta"": {
     ""documentation"": ""https://www.elastic.co/guide/en/ecs/current/ecs-vulnerability.html"",
     ""ecs_version"": ""8.3.1""
@@ -7720,7 +7840,8 @@ namespace Elastic.CommonSchema.Elasticsearch
     }
   }
 }
-";
-
+"
+			},
+		};
 	}
 }

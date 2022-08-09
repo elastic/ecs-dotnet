@@ -8,8 +8,7 @@
     <IsPackable>False</IsPackable>
   </PropertyGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Elastic.CommonSchema\Elastic.CommonSchema.csproj" />
-    <ProjectReference Include="..\Elastic.Ingest.Elasticsearch\Elastic.Ingest.Elasticsearch.csproj" />
+    <ProjectReference Include="..\Elastic.Ingest.Elasticsearch.CommonSchema\Elastic.Ingest.Elasticsearch.CommonSchema.csproj" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="BenchmarkDotNet" Version="0.13.1" />

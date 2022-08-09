@@ -29,6 +29,7 @@ namespace Elastic.Ingest.Elasticsearch.Serialization
 			return !string.IsNullOrWhiteSpace(reason);
 		}
 
+		public override string ToString() => ApiCall.DebugInformation;
 	}
 	internal class ResponseItemsConverter : JsonConverter<IReadOnlyCollection<BulkResponseItem>>
 	{

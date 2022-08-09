@@ -39,7 +39,9 @@ namespace Elastic.Ingest.Apm
 		public ApmChannel(ApmChannelOptions options) : base(options) { }
 
 		//retry if APM server returns 429
-		protected override bool BackOffRequest(EventIntakeResponse response) => response.ApiCall.HttpStatusCode == 429;
+		protected override bool Retry(EventIntakeResponse response) => response.ApiCall.HttpStatusCode == 429;
+
+		protected override bool RetryAllItems(EventIntakeResponse response) => response.ApiCall.HttpStatusCode == 429;
 
 		//APM does not return the status for all events sent. Therefor we always return an empty set for individual items to retry
 		private List<(IIntakeObject, IntakeErrorItem)> _emptyZip = new();

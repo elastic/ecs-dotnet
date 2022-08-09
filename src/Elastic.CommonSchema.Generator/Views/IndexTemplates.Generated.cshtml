@@ -25,13 +25,13 @@ using System.Runtime.Serialization;
 namespace Elastic.CommonSchema.Elasticsearch
 {
 	/// <summary>
-	/// Elastic Common Schema version @(Model.VersionTag) index templates to be used with Elasticsearch.
+	/// Elastic Common Schema version @(Model.GitRef) index templates to be used with Elasticsearch.
 	/// </summary>
 	public static class IndexTemplates
 	{
 @foreach (var template in Model.IndexTemplates)
 {<text>		/// <summary>
-		/// Elastic Common Schema version @(Model.VersionTag) @(template.Name) index template  
+		/// Elastic Common Schema version @(Model.GitRef) @(template.Name) index template  
 		/// See the Put Index Template API documentation: https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-templates.html
 		/// </summary>
 		/// <returns>Index template string that can be used with the Put Index Template API.</returns>

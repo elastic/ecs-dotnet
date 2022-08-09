@@ -5,6 +5,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security;
 using System.Threading;
 using Elastic.Ingest;
 using Elastic.Ingest.Elasticsearch;
@@ -105,8 +106,9 @@ namespace Elasticsearch.Extensions.Logging
 			var connectionPool = CreateConnectionPool(loggerOptions);
 			var config = new TransportConfiguration(connectionPool, productRegistration: new ElasticsearchProductRegistration());
 
-			// config = config.Proxy(new Uri("http://localhost:8080"), "", "");
-			// config = config.EnableDebugMode();
+			config = config.DisablePing();
+			config = config.Proxy(new Uri("http://ipv4.fiddler:8080"), null!, (SecureString)null!);
+			config = config.EnableDebugMode();
 
 			var transport = new Transport<TransportConfiguration>(config);
 			return transport;
@@ -119,6 +121,8 @@ namespace Elasticsearch.Extensions.Logging
 			oldShipper?.Dispose();
 		}
 
+		public Exception? LastSeenException { get; private set; }
+
 		private IIngestChannel<LogEvent> CreatIngestChannel(ElasticsearchLoggerOptions loggerOptions)
 		{
 			var transport = CreateTransport(loggerOptions);
@@ -129,8 +133,10 @@ namespace Elasticsearch.Extensions.Logging
 					Index = loggerOptions.Index.Format,
 					IndexOffset = loggerOptions.Index.IndexOffset,
 					WriteEvent = async (stream, ctx, logEvent) => await logEvent.SerializeAsync(stream, ctx).ConfigureAwait(false),
-					TimestampLookup = l => l.Timestamp
+					TimestampLookup = l => l.Timestamp,
 				};
+				if (loggerOptions.TrackExceptions)
+					indexChannelOptions.ExceptionCallback = (e) => LastSeenException = e;
 				SetupChannelOptions(_channelConfigurations, indexChannelOptions);
 				return new IndexChannel<LogEvent>(indexChannelOptions);
 			}
@@ -142,6 +148,8 @@ namespace Elasticsearch.Extensions.Logging
 					DataStream = new DataStreamName(dataStreamNameOptions.Type, dataStreamNameOptions.DataSet, dataStreamNameOptions.Namespace),
 					WriteEvent = async (stream, ctx, logEvent) => await logEvent.SerializeAsync(stream, ctx).ConfigureAwait(false),
 				};
+				if (loggerOptions.TrackExceptions)
+					indexChannelOptions.ExceptionCallback = (e) => LastSeenException = e;
 				SetupChannelOptions(_channelConfigurations, indexChannelOptions);
 				return new DataStreamChannel<LogEvent>(indexChannelOptions);
 			}

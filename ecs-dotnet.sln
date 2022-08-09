@@ -95,6 +95,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Elastic.CommonSchema.Genera
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Elastic.Ingest.Elasticsearch.CommonSchema", "src\Elastic.Ingest.Elasticsearch.CommonSchema\Elastic.Ingest.Elasticsearch.CommonSchema.csproj", "{68128AE4-350C-4FB2-A971-C9272A1F3829}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Elastic.Ingest.IntegrationTests", "tests\Elastic.Ingest.IntegrationTests\Elastic.Ingest.IntegrationTests.csproj", "{6A62695B-C2D2-47EA-8F74-232B87E835E7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -227,6 +229,10 @@ Global
 		{68128AE4-350C-4FB2-A971-C9272A1F3829}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{68128AE4-350C-4FB2-A971-C9272A1F3829}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{68128AE4-350C-4FB2-A971-C9272A1F3829}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6A62695B-C2D2-47EA-8F74-232B87E835E7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6A62695B-C2D2-47EA-8F74-232B87E835E7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6A62695B-C2D2-47EA-8F74-232B87E835E7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6A62695B-C2D2-47EA-8F74-232B87E835E7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -265,6 +271,7 @@ Global
 		{975EFF27-8E04-4CC0-94AE-7114E7E633E0} = {7610B796-BB3E-4CB2-8296-79BBFF6D23FC}
 		{D6F0D170-39D7-4868-86EE-990B6B05C14D} = {7610B796-BB3E-4CB2-8296-79BBFF6D23FC}
 		{68128AE4-350C-4FB2-A971-C9272A1F3829} = {7610B796-BB3E-4CB2-8296-79BBFF6D23FC}
+		{6A62695B-C2D2-47EA-8F74-232B87E835E7} = {3582B07D-C2B0-49CC-B676-EAF806EB010E}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {7F60C4BB-6216-4E50-B1E4-9C38EB484843}

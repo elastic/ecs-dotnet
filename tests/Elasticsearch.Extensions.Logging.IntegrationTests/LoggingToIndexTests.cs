@@ -16,9 +16,9 @@ using LogLevel = Microsoft.Extensions.Logging.LogLevel;
 
 namespace Elasticsearch.Extensions.Logging.IntegrationTests
 {
-	public class LoggingTests : IClusterFixture<LoggingCluster>
+	public class LoggingToIndexTests : IClusterFixture<LoggingCluster>
 	{
-		public LoggingTests(LoggingCluster cluster) =>
+		public LoggingToIndexTests(LoggingCluster cluster) =>
 			Client = cluster.GetOrAddClient(c =>
 			{
 				var nodes = cluster.NodesUris();
@@ -33,12 +33,13 @@ namespace Elasticsearch.Extensions.Logging.IntegrationTests
 		[Fact]
 		public async Task LogsEndUpInCluster()
 		{
-			using var _ = CreateLogger(out var logger, out var indexPrefix, out var waitHandle);
-
+			using var _ = CreateLogger(out var logger, out var provider, out var indexPrefix, out var waitHandle);
 			logger.LogError("an error occurred");
 
 			if (!waitHandle.WaitOne(TimeSpan.FromSeconds(10)))
 				throw new Exception("Logs were not written to Elasticsearch within margin of 10 seconds");
+
+			provider.LastSeenException.Should().BeNull();
 
 			var refresh = await Client.Indices.RefreshAsync($"{indexPrefix}-*");
 
@@ -55,7 +56,7 @@ namespace Elasticsearch.Extensions.Logging.IntegrationTests
 		[Fact]
 		public async Task SerializesAndDeserializesMessageTemplateAndScope()
 		{
-			using var _ = CreateLogger(out var logger, out var indexPrefix, out var waitHandle);
+			using var _ = CreateLogger(out var logger, out var provider, out var indexPrefix, out var waitHandle);
 			using (logger.BeginScope("custom scope"))
 			{
 				var userId = 1;
@@ -63,6 +64,8 @@ namespace Elasticsearch.Extensions.Logging.IntegrationTests
 
 				if (!waitHandle.WaitOne(TimeSpan.FromSeconds(10)))
 					throw new Exception("Logs were not written to Elasticsearch within margin of 10 seconds");
+
+				provider.LastSeenException.Should().BeNull();
 
 				var refresh = await Client.Indices.RefreshAsync($"{indexPrefix}-*");
 
@@ -78,7 +81,7 @@ namespace Elasticsearch.Extensions.Logging.IntegrationTests
 			}
 		}
 
-		private IDisposable CreateLogger(out ILogger logger, out string indexPrefix,  out WaitHandle waitHandle)
+		private IDisposable CreateLogger(out ILogger logger, out ElasticsearchLoggerProvider provider, out string indexPrefix, out WaitHandle waitHandle)
 		{
 			var pre = $"logs-{Guid.NewGuid().ToString("N").ToLowerInvariant().Substring(0, 6)}";
 			var slim = new CountdownEvent(1);
@@ -86,6 +89,7 @@ namespace Elasticsearch.Extensions.Logging.IntegrationTests
 			var options = new ConfigureOptions<ElasticsearchLoggerOptions>(
 				o =>
 				{
+					o.TrackExceptions = true;
 					o.Index = new IndexNameOptions { Format = $"{pre}-{{0:yyyy.MM.dd}}" };
 					var nodes = Client.ConnectionSettings.ConnectionPool.Nodes.Select(n => n.Uri).ToArray();
 					o.ShipTo = new ShipToOptions() { NodeUris = nodes, ConnectionPoolType = ConnectionPoolType.Static };
@@ -93,6 +97,8 @@ namespace Elasticsearch.Extensions.Logging.IntegrationTests
 
 			var channelSetup = new IChannelSetup[] { new ChannelSetup(c =>
 			{
+				c.BufferOptions.MaxRetries = 0;
+				c.BufferOptions.MaxConsumerBufferSize = 1;
 				c.BufferOptions.WaitHandle = slim;
 				c.BufferOptions.ConcurrentConsumers = 1;
 			}) };
@@ -102,8 +108,11 @@ namespace Elasticsearch.Extensions.Logging.IntegrationTests
 			var optionsMonitor = new OptionsMonitor<ElasticsearchLoggerOptions>(
 				optionsFactory, Enumerable.Empty<IOptionsChangeTokenSource<ElasticsearchLoggerOptions>>(),
 				new OptionsCache<ElasticsearchLoggerOptions>());
+			provider = new ElasticsearchLoggerProvider(optionsMonitor, channelSetup);
 			var loggerFactory = new LoggerFactory(
-				new[] { new ElasticsearchLoggerProvider(optionsMonitor, channelSetup) }, new LoggerFilterOptions { MinLevel = LogLevel.Information });
+				new[] { provider},
+				new LoggerFilterOptions { MinLevel = LogLevel.Information }
+			);
 			logger = loggerFactory.CreateLogger<ElasticsearchLogger>();
 			indexPrefix = pre;
 			return loggerFactory;

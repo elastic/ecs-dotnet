@@ -14,6 +14,7 @@ using BenchmarkDotNet.Reports;
 using Elastic.CommonSchema.BenchmarkDotNetExporter.Domain;
 using Elastic.Ingest;
 using Elastic.Ingest.Elasticsearch;
+using Elastic.Ingest.Elasticsearch.CommonSchema;
 using Elastic.Ingest.Elasticsearch.DataStreams;
 using Elastic.Transport;
 using Elastic.Transport.Products.Elasticsearch;
@@ -67,8 +68,8 @@ namespace Elastic.CommonSchema.BenchmarkDotNetExporter
 						logger.WriteError($"Failed to {errorItem.Action} document status: ${errorItem.Status}, error: ${errorItem.Error}");
 				})
 			};
-			var channel = new DataStreamChannel<BenchmarkDocument>(options);
-			if (!TryPutIndexTemplate(logger)) return;
+			var channel = new CommonSchemaChannel<BenchmarkDocument>(options);
+			if (!channel.SetupElasticsearchTemplates()) return;
 
 			channel.TryWriteMany(benchmarks);
 
@@ -76,13 +77,6 @@ namespace Elastic.CommonSchema.BenchmarkDotNetExporter
 			if (!waited)
 				logger.WriteError($"failed to flush benchmarks within 10second timeout");
 		}
-
-		private bool TryPutIndexTemplate(ILogger logger) =>
-			// TODO there is no equivalent of this yet on DataStreamChannel();
-			// This is currently blocked on bringing ecs up to date with 8.x
-			// which is happening in a different branch. For this reason we temporarily are no
-			// longer publishing this project.
-			false;
 
 		private List<BenchmarkDocument> CreateBenchmarkDocuments(Summary summary)
 		{
