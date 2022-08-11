@@ -60,7 +60,12 @@ namespace Elastic.CommonSchema.Generator
 
 		private static void DownloadDefinitions(Specification spec, IProgressBar progress, string filenameMatch)
 		{
+			//TODO move to HttpClient
+#pragma warning disable SYSLIB0014
+#pragma warning disable CS0618
 			var client = new WebClient();
+#pragma warning restore CS0618
+#pragma warning restore SYSLIB0014
 			var html = client.DownloadString(spec.GithubListingUrl);
 			if (!Directory.Exists(CodeConfiguration.SpecificationFolder))
 				Directory.CreateDirectory(CodeConfiguration.SpecificationFolder);

@@ -101,7 +101,7 @@ pipeline {
                 withGithubNotify(context: 'Windows') {
                   unstash 'source'
                   dir("${BASE_DIR}"){
-                    bat script: 'choco install  dotnet-5.0-sdk -m -y --no-progress -r --version 5.0.100', label: 'Tools'
+                    bat script: 'choco install  dotnet-6.0-sdk -m -y --no-progress -r --version 6.0.302', label: 'Tools'
                     bat script: 'build.bat release -c false', label: 'build'
                   }
                 }
