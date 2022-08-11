@@ -102,6 +102,7 @@ pipeline {
                   unstash 'source'
                   dir("${BASE_DIR}"){
                     bat script: 'choco install  dotnet-6.0-sdk -m -y --no-progress -r --version 6.0.302', label: 'Tools'
+                    bat script: 'build.bat clean -c false', label: 'build'
                     bat script: 'build.bat release -c false', label: 'build'
                   }
                 }
