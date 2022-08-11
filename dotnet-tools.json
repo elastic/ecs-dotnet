@@ -9,19 +9,19 @@
       ]
     },
     "assembly-differ": {
-      "version": "0.13.0",
+      "version": "0.14.0",
       "commands": [
         "assembly-differ"
       ]
     },
     "release-notes": {
-      "version": "0.3.0",
+      "version": "0.5.0",
       "commands": [
         "release-notes"
       ]
     },
     "nupkg-validator": {
-      "version": "0.4.0",
+      "version": "0.5.0",
       "commands": [
         "nupkg-validator"
       ]
