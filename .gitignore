@@ -55,7 +55,6 @@ build/tools/*
 !build/*.png
 !build/*.targets
 !build/scripts
-!build/ci.runsettings
 
 !docs/build
 docs/node_modules
