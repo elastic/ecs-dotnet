@@ -18,7 +18,7 @@ let private restoreTools = lazy(exec "dotnet" ["tool"; "restore"])
 let private currentVersion =
     lazy(
         restoreTools.Value |> ignore
-        let r = Proc.Start("dotnet", "minver", "-d", "canary", "-m", "0.1")
+        let r = Proc.Start("dotnet", "minver", "-d=canary", "-m=0.1")
         let o = r.ConsoleOut |> Seq.find (fun l -> not(l.Line.StartsWith("MinVer:")))
         o.Line
     )
