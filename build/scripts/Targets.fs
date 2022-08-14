@@ -10,9 +10,12 @@ open Fake.Tools.Git
 open ProcNet
 
     
-let exec binary args =
-    let r = Proc.Exec (binary, args |> List.map (sprintf "\"%s\"") |> List.toArray)
+let execWithTimeout binary args timeout =
+    let opts = ExecArguments(binary, args |> List.map (sprintf "\"%s\"") |> List.toArray)
+    let r = Proc.Exec (opts, timeout)
     match r.HasValue with | true -> r.Value | false -> failwithf "invocation of `%s` timed out" binary
+let exec binary args =
+    execWithTimeout binary args (TimeSpan.FromMinutes 4)
     
 let private restoreTools = lazy(exec "dotnet" ["tool"; "restore"])
 let private currentVersion =
@@ -46,7 +49,7 @@ let private test (arguments:ParseResults<Arguments>) =
     let junitOutput = Path.Combine(Paths.Output.FullName, "junit-{assembly}-{framework}-test-results.xml")
     let loggerPathArgs = sprintf "LogFilePath=%s" junitOutput
     let loggerArg = sprintf "--logger:\"junit;%s\"" loggerPathArgs
-    exec "dotnet" ["test"; "-c"; "RELEASE"; "-m:1"; loggerArg;] |> ignore
+    execWithTimeout "dotnet" ["test"; "-c"; "RELEASE"; "-m:1"; loggerArg;] (TimeSpan.FromMinutes 10) |> ignore
 
 let private generatePackages (arguments:ParseResults<Arguments>) =
     let output = Paths.RootRelative Paths.Output.FullName
