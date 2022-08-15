@@ -51,13 +51,14 @@ namespace Elastic.CommonSchema.BenchmarkDotNetExporter
 		{
 			var waitHandle = new CountdownEvent(1);
 
+			var benchmarksCount = summary.Reports.Length;
 			var options = new DataStreamChannelOptions<BenchmarkDocument>(Transport)
 			{
 				DataStream = new DataStreamName("benchmarks", "dotnet", Options.DataStreamNamespace),
 				BufferOptions = new ElasticsearchBufferOptions<BenchmarkDocument>
 				{
 					WaitHandle = waitHandle,
-					MaxConsumerBufferSize = benchmarks.Count
+					MaxConsumerBufferSize = benchmarksCount
 				},
 				ResponseCallback = ((response, statistics) =>
 				{
