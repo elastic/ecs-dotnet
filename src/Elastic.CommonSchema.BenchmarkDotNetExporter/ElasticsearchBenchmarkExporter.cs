@@ -49,7 +49,6 @@ namespace Elastic.CommonSchema.BenchmarkDotNetExporter
 
 		public override void ExportToLog(Summary summary, ILogger logger)
 		{
-			var benchmarks = CreateBenchmarkDocuments(summary);
 			var waitHandle = new CountdownEvent(1);
 
 			var options = new DataStreamChannelOptions<BenchmarkDocument>(Transport)
@@ -75,6 +74,7 @@ namespace Elastic.CommonSchema.BenchmarkDotNetExporter
 			var channel = new CommonSchemaChannel<BenchmarkDocument>(options);
 			if (!channel.SetupElasticsearchTemplates()) return;
 
+			var benchmarks = CreateBenchmarkDocuments(summary);
 			channel.TryWriteMany(benchmarks);
 
 			var waited = waitHandle.Wait(TimeSpan.FromSeconds(10));
