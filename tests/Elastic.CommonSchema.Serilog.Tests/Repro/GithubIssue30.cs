@@ -37,7 +37,7 @@ namespace Elastic.CommonSchema.Serilog.Tests
 			info.Host.Name.Should().NotBeEmpty().And.NotContain("\"");
 			info.Process.Name.Should().NotBeEmpty().And.NotContain("\"");
 			info.Process.Pid.Should().BeGreaterThan(0);
-			info.Process.Thread.Id.Should().NotBeNull().And.NotBe(info.Process.Pid);
+			info.Process.ThreadId.Should().NotBeNull().And.NotBe(info.Process.Pid);
 		});
 	}
 }

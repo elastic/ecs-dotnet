@@ -17,8 +17,8 @@ namespace Elastic.CommonSchema.NLog.Tests
 {
 	public abstract class LogTestsBase
 	{
-		protected List<(string Json, Base Base)> ToEcsEvents(List<string> logEvents) =>
-			logEvents.Select(s => (s, Base.Deserialize(s)))
+		protected List<(string Json, EcsDocument Base)> ToEcsEvents(List<string> logEvents) =>
+			logEvents.Select(s => (s, EcsDocument.Deserialize(s)))
 				.ToList();
 
 		protected static void TestLogger(Action<ILogger, Func<List<string>>> act)
@@ -30,7 +30,7 @@ namespace Elastic.CommonSchema.NLog.Tests
 
 			var logFactory = new LogFactory();
 			var logConfig = new Config.LoggingConfiguration(logFactory);
-			var ecsLayout = new EcsLayout { IncludeMdlc = true };
+			var ecsLayout = new EcsLayout { IncludeScopeProperties = true };
 			ecsLayout.ExcludeProperties.Add("NotX");
 			var memoryTarget = new MemoryTarget { Layout = ecsLayout, OptimizeBufferReuse = true };
 			logConfig.AddRule(LogLevel.Trace, LogLevel.Fatal, memoryTarget);

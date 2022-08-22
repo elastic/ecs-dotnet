@@ -93,7 +93,7 @@ namespace Elastic.Ingest.Serialization
 						break;
 				}
 			}
-			BulkResponseItem r = status == 200
+			var r = status == 200
 				? OkayBulkResponseItem
 				: new BulkResponseItem { Action = action!, Status = status, Error = error };
 

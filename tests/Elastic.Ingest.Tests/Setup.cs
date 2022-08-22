@@ -42,7 +42,7 @@ namespace Elastic.Ingest.Tests
 			public TestSession(ITransport<ITransportConfiguration> transport)
 			{
 				Transport = transport;
-				BufferOptions = new BufferOptions<Base>()
+				BufferOptions = new BufferOptions<EcsDocument>()
 				{
 					ConcurrentConsumers = 1,
 					MaxConsumerBufferSize = 2,
@@ -57,17 +57,17 @@ namespace Elastic.Ingest.Tests
 					RetryCallBack = (list) => Interlocked.Increment(ref _retries),
 					ExceptionCallback= (e) => LastException = e
 				};
-				ChannelOptions = new ElasticsearchChannelOptions<Base>(transport) { BufferOptions = BufferOptions };
-				Channel = new ElasticsearchChannel<Base>(ChannelOptions);
+				ChannelOptions = new ElasticsearchChannelOptions<EcsDocument>(transport) { BufferOptions = BufferOptions };
+				Channel = new ElasticsearchChannel<EcsDocument>(ChannelOptions);
 			}
 
-			public ElasticsearchChannel<Base> Channel { get; }
+			public ElasticsearchChannel<EcsDocument> Channel { get; }
 
 			public ITransport<ITransportConfiguration> Transport { get; }
 
-			public ElasticsearchChannelOptions<Base> ChannelOptions { get; }
+			public ElasticsearchChannelOptions<EcsDocument> ChannelOptions { get; }
 
-			public BufferOptions<Base> BufferOptions { get; }
+			public BufferOptions<EcsDocument> BufferOptions { get; }
 
 			public ManualResetEventSlim WaitHandle { get; } = new ManualResetEventSlim();
 
@@ -97,7 +97,7 @@ namespace Elastic.Ingest.Tests
 		public static void WriteAndWait(this TestSession session, int events = 1)
 		{
 			foreach (var b in Enumerable.Range(0, events))
-				session.Channel.TryWrite(new Base { Timestamp = DateTimeOffset.UtcNow });
+				session.Channel.TryWrite(new EcsDocument { Timestamp = DateTimeOffset.UtcNow });
 			session.Wait();
 		}
 	}

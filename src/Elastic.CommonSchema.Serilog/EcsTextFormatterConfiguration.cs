@@ -17,7 +17,7 @@ namespace Elastic.CommonSchema.Serilog
 	public interface IEcsTextFormatterConfiguration
 	{
 		bool MapCurrentThread { get; set; }
-		Func<Base, LogEvent, Base> MapCustom { get; set; }
+		Func<EcsDocument, LogEvent, EcsDocument> MapCustom { get; set; }
 		bool MapExceptions { get; set; }
 		IHttpAdapter MapHttpAdapter { get; set; }
 		ISet<string> LogEventPropertiesToFilter { get;set; }
@@ -31,7 +31,7 @@ namespace Elastic.CommonSchema.Serilog
 		IHttpAdapter IEcsTextFormatterConfiguration.MapHttpAdapter { get; set; }
 		ISet<string> IEcsTextFormatterConfiguration.LogEventPropertiesToFilter { get; set; }
 
-		Func<Base, LogEvent, Base> IEcsTextFormatterConfiguration.MapCustom { get; set; } = (b, e) => b;
+		Func<EcsDocument, LogEvent, EcsDocument> IEcsTextFormatterConfiguration.MapCustom { get; set; } = (b, e) => b;
 
 #if NETSTANDARD
         public EcsTextFormatterConfiguration MapHttpContext(IHttpContextAccessor contextAccessor) => Assign(this, contextAccessor, (o, v) => o.MapHttpAdapter
@@ -44,7 +44,7 @@ namespace Elastic.CommonSchema.Serilog
 
 		public EcsTextFormatterConfiguration MapCurrentThread(bool value) => Assign(this, value, (o, v) => o.MapCurrentThread = v);
 
-		public EcsTextFormatterConfiguration MapCustom(Func<Base, LogEvent, Base> value) => Assign(this, value, (o, v) => o.MapCustom = v);
+		public EcsTextFormatterConfiguration MapCustom(Func<EcsDocument, LogEvent, EcsDocument> value) => Assign(this, value, (o, v) => o.MapCustom = v);
 
 		public EcsTextFormatterConfiguration LogEventPropertiesToFilter(ISet<string> value) => Assign(this, value, (o, v) => o.LogEventPropertiesToFilter = v);
 

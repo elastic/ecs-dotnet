@@ -19,12 +19,12 @@ namespace Elastic.CommonSchema.Serialization
 
 	internal class BaseJsonConverterFactory : JsonConverterFactory
 	{
-		public override bool CanConvert(Type typeToConvert) => typeof(Base).IsAssignableFrom(typeToConvert);
+		public override bool CanConvert(Type typeToConvert) => typeof(EcsDocument).IsAssignableFrom(typeToConvert);
 
 		public override JsonConverter CreateConverter(Type typeToConvert, JsonSerializerOptions options) =>
-			typeToConvert == typeof(Base)
+			typeToConvert == typeof(EcsDocument)
 				? JsonConfiguration.BaseConverter
 				// TODO validate this is only called once
-				: Activator.CreateInstance(typeof(BaseJsonConverter<>).MakeGenericType(typeToConvert)) as JsonConverter;
+				: Activator.CreateInstance(typeof(EcsDocumentJsonConverter<>).MakeGenericType(typeToConvert)) as JsonConverter;
 	}
 }

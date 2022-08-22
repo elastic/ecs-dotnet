@@ -10,7 +10,7 @@ namespace Elastic.CommonSchema.BenchmarkDotNetExporter.Domain
 	/// <summary>
 	/// Represents a benchmark case with information of the overall benchmark run.
 	/// </summary>
-	public class BenchmarkDocument : Base
+	public class BenchmarkDocument : EcsDocument
 	{
 		[DataMember(Name = "benchmark")]
 		public BenchmarkData Benchmark { get; set; }
