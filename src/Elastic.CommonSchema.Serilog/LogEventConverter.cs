@@ -201,10 +201,10 @@ namespace Elastic.CommonSchema.Serilog
 				return null;
 
 			server ??= new Server();
-			server.User = environmentUserName != null
+			server.User = environmentUserName?.Value != null
 				? new User { Name = environmentUserName.Value.ToString() }
 				: null;
-			server.Address = host?.Value.ToString();
+			server.Address = host?.Value?.ToString();
 
 			return server;
 		}
