@@ -27,6 +27,8 @@ namespace Elastic.CommonSchema.Serialization
 					sb.Append(char.ToLowerInvariant(c));
 				else if (char.IsUpper(s[i - 1])) // WriteIO => write_io
 					sb.Append(char.ToLowerInvariant(c));
+				else if (s[i - 1] == '_') // User_Id => user_id
+					sb.Append(char.ToLowerInvariant(c));
 				else
 				{
 					sb.Append("_");
