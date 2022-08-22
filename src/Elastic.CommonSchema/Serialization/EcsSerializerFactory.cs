@@ -16,7 +16,7 @@ namespace Elastic.CommonSchema.Serialization
 	/// This class should only be used for advanced use cases, for simpler use cases you can utilise the <see cref="Base.Metadata"/> property.
 	/// </remarks>
 	/// <typeparam name="TBase">Type of the <see cref="Base"/> subclass</typeparam>
-	public static class EcsSerializerFactory<TBase> where TBase : Base, new()
+	public static class EcsSerializerFactory<TBase> where TBase : EcsDocument, new()
 	{
 		public static ValueTask<TBase> DeserializeAsync(Stream stream, CancellationToken ctx = default) =>
 			JsonSerializer.DeserializeAsync<TBase>(stream, JsonConfiguration.SerializerOptions, ctx);

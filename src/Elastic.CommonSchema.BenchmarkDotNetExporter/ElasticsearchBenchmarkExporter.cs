@@ -66,7 +66,7 @@ namespace Elastic.CommonSchema.BenchmarkDotNetExporter
 
 		private bool TryPutIndexTemplate(ILogger logger)
 		{
-			var template = IndexTemplates.GetIndexTemplateForElasticsearch7($"{Options.IndexName}-*");
+			var template = IndexTemplates.GetIndexTemplateForElasticsearchLegacy($"{Options.IndexName}-*");
 			var templateExist = Client.Indices.TemplateExistsForAll<VoidResponse>(Options.TemplateName);
 			if (templateExist.HttpStatusCode == 200) return true;
 

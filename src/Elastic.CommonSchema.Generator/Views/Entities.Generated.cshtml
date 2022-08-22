@@ -1,0 +1,58 @@
+@using System
+@using Generator
+@inherits Elastic.CommonSchema.Generator.Views.CodeTemplatePage<Elastic.CommonSchema.Generator.Projection.CommonSchemaTypesProjection>
+// Licensed to Elasticsearch B.V under one or more agreements.
+// Elasticsearch B.V licenses this file to you under the Apache 2.0 License.
+// See the LICENSE file in the project root for more information
+
+/*
+IMPORTANT NOTE
+==============
+This file has been generated. 
+If you wish to submit a PR please modify the original csharp file and submit the PR with that change. Thanks!
+*/
+
+// ReSharper disable RedundantUsingDirective
+using System;
+using System.Collections.Generic;
+using System.Threading;
+using System.Threading.Tasks;
+using System.Linq;
+using System.Net;
+using System.Runtime.Serialization;
+
+namespace Elastic.CommonSchema
+{
+@foreach (var entity in Model.NestedEntityClasses)
+{
+<text>
+	///<inheritdoc cref="@entity.BaseFieldSet.Name"/>
+	public class @entity.Name : @entity.BaseFieldSet.Name {
+@foreach (var property in entity.EntityProperties)
+{
+<text>
+		///<summary>@property.FullPath</summary>
+		[DataMember(Name = "@property.JsonProperty")]
+		public @property.Entity.Name @property.Name { get; set; }
+</text>
+}
+	}
+</text>
+}
+@foreach (var entity in Model.EntityClasses)
+{
+<text>
+	///<inheritdoc cref="@entity.BaseFieldSet.Name"/>
+	public@(entity.Partial ? " partial" : "") class @entity.Name : @entity.BaseFieldSet.Name {
+@foreach (var property in entity.EntityProperties)
+{
+<text>
+		///<summary>@property.FullPath</summary>
+		[DataMember(Name = "@property.JsonProperty")]
+		public @property.Entity.Name @property.Name { get; set; }
+</text>
+}
+	}
+</text>
+}
+}

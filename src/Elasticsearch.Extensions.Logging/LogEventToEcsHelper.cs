@@ -43,7 +43,7 @@ namespace Elasticsearch.Extensions.Logging
 				_ => "Unknown"
 			};
 
-		public static Ecs GetEcs() => _ecs ??= new Ecs() { Version = Base.Version };
+		public static Ecs GetEcs() => _ecs ??= new Ecs() { Version = EcsDocument.Version };
 
 		public static Agent GetAgent()
 		{
@@ -94,7 +94,8 @@ namespace Elasticsearch.Extensions.Logging
 			{
 				Name = _processName,
 				Pid = _processId,
-				Thread = new ProcessThread { Name = currentThread.Name, Id = currentThread.ManagedThreadId }
+				ThreadName = currentThread.Name,
+				ThreadId = currentThread.ManagedThreadId
 			};
 		}
 

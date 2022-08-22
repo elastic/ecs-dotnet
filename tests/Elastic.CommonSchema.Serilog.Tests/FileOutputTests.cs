@@ -38,7 +38,7 @@ namespace Elastic.CommonSchema.Serilog.Tests
 
 				using var fsSource = new FileStream(_path, FileMode.Open, FileAccess.Read);
 				//this only works because the filestream contains one event
-				var b = Base.Deserialize(fsSource);
+				var b = EcsDocument.Deserialize(fsSource);
 				b.Should().NotBeNull();
 				b.Log.Level.Should().Be("Information");
 			}

@@ -1,0 +1,114 @@
+@using System.Collections.Generic
+@using Generator
+@inherits Elastic.CommonSchema.Generator.Views.CodeTemplatePage<Elastic.CommonSchema.Generator.Projection.CommonSchemaTypesProjection>
+// Licensed to Elasticsearch B.V under one or more agreements.
+// Elasticsearch B.V licenses this file to you under the Apache 2.0 License.
+// See the LICENSE file in the project root for more information
+
+/*
+IMPORTANT NOTE
+==============
+This file has been generated. 
+If you wish to submit a PR please modify the original csharp file and submit the PR with that change. Thanks!
+*/
+
+using System;
+using System.Collections.Generic;
+using System.Text.Json;
+
+namespace Elastic.CommonSchema.Serialization
+{
+	internal partial class @(Model.Base.Name)JsonConverter@(Raw("<TBase>")) : EcsJsonConverterBase@(Raw("<TBase>"))
+		where TBase : @Model.Base.Name, new()
+	{
+		private static bool ReadProperties(
+			ref Utf8JsonReader reader, 
+			TBase ecsEvent, 
+			ref DateTimeOffset? timestamp, 
+			ref string loglevel
+		)
+		{
+			var propertyName = reader.GetString();
+			reader.Read();
+			return propertyName switch
+			{
+				"log.level" => ReadString(ref reader, ref loglevel),
+				"metadata" => ReadProp@(Raw("<IDictionary<string, object>>"))(ref reader, "metadata", ecsEvent, (b, v) => b.Metadata = v),
+@foreach (var property in Model.Base.BaseFieldSet.ValueProperties)
+{
+	var name = property.JsonProperty;
+	if (name == "@timestamp")
+{<text>				"@(name)" => ReadDateTime(ref reader, ref @(name)),
+</text>}
+	else
+{<text>				"@(name)" => ReadProp<@(Raw(property.ClrType))>(ref reader, "@name", ecsEvent, (b, v) => b.@(property.Name) = v),
+</text>}
+}
+@foreach (var property in Model.Base.BaseFieldSet.InlineObjectProperties)
+{
+	var name = property.JsonProperty;
+<text>				"@(name)" => ReadProp<@(Raw(property.InlineObject.Name))>(ref reader, "@name", ecsEvent, (b, v) => b.@(property.Name) = v),
+</text>
+}
+@foreach (var entity in Model.EntityClasses)
+{
+	var entityName = entity.BaseFieldSet.FieldSet.Name;
+	<text>				"@entityName" => ReadProp<@(entity.Name)>(ref reader, "@entityName", ecsEvent, (b, v) => b.@(entity.Name) = v),
+</text>}
+				_ =>
+					typeof(@(Model.Base.Name)) == ecsEvent.GetType()
+						? false
+						: ecsEvent.TryRead(propertyName, out var t)
+							? ecsEvent.ReceiveProperty(propertyName, ReadPropDeserialize(ref reader, t))
+							: false
+			};
+		}
+
+		public override void Write(Utf8JsonWriter writer, TBase value, JsonSerializerOptions options)
+		{
+			if (value == null)
+			{
+				writer.WriteNullValue();
+				return;
+			}
+			writer.WriteStartObject();
+
+			WriteTimestamp(writer, value);
+			WriteLogLevel(writer, value);
+			WriteMessage(writer, value);
+			WriteProp(writer, "metadata", value.Metadata);
+
+			// Base fields
+@{
+	var manualFields = new List<string>() { "@timestamp", "message" };
+}
+@foreach (var field in Model.Base.BaseFieldSet.ValueProperties)
+{
+	if (manualFields.Contains(field.JsonProperty))
+	{
+		continue;
+		
+	}
+	<text>			WriteProp(writer, "@field.JsonProperty", value.@field.Name);
+	</text>
+}
+@foreach (var property in Model.Base.BaseFieldSet.InlineObjectProperties)
+{
+	var name = property.JsonProperty;
+<text>		WriteProp(writer, "@(name)", value.@(property.InlineObject.Name));
+</text>
+}
+			// Complex types
+@foreach (var entity in Model.EntityClasses)
+{
+	var entityName = entity.BaseFieldSet.FieldSet.Name;
+<text>			WriteProp(writer, "@(entityName)", value.@(entity.Name));
+</text>
+}
+
+			if (typeof(@Model.Base.Name) != value.GetType())
+				value.WriteAdditionalProperties((k, v) => WriteProp(writer, k, v));
+			writer.WriteEndObject();
+		}
+	}
+}

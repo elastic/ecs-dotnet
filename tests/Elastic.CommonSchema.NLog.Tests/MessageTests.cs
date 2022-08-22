@@ -68,7 +68,7 @@ namespace Elastic.CommonSchema.NLog.Tests
 			var ecsEvents = ToEcsEvents(logEvents);
 
 			var (_, info) = ecsEvents.First();
-			info.Log.Origin.Function.Should().Contain(nameof(SeesMessageWithException));
+			info.Log.OriginFunction.Should().Contain(nameof(SeesMessageWithException));
 			info.Error.Message.Should().Be("Logger Exception");
 			info.Error.Type.Should().Be(typeof(ArgumentException).ToString());
 		});

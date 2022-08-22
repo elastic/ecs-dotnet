@@ -42,7 +42,7 @@ namespace Elastic.CommonSchema.Serilog.Tests
 			info.Host.Name.Should().NotBeEmpty();
 			info.Process.Name.Should().NotBeEmpty();
 			info.Process.Pid.Should().BeGreaterThan(0);
-			info.Process.Thread.Id.Should().NotBeNull().And.NotBe(info.Process.Pid);
+			info.Process.ThreadId.Should().NotBeNull().And.NotBe(info.Process.Pid);
 		});
 
 		[Fact]
@@ -75,9 +75,9 @@ namespace Elastic.CommonSchema.Serilog.Tests
 			var ecsEvents = ToEcsEvents(logEvents);
 			var (_, info) = ecsEvents.First();
 
-			info.Trace.Id.Should().Be(traceId);
-			info.Transaction.Id.Should().Be(transactionId);
-			info.Span.Id.Should().Be(spanId);
+			info.TraceId.Should().Be(traceId);
+			info.TransactionId.Should().Be(transactionId);
+			info.SpanId.Should().Be(spanId);
 		});
 	}
 }
