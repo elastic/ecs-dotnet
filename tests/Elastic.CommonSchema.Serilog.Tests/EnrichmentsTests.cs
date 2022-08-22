@@ -48,7 +48,8 @@ namespace Elastic.CommonSchema.Serilog.Tests
 			info.Process.ThreadId.Should().NotBeNull().And.NotBe(info.Process.Pid);
 
 			info.Server.Should().NotBeNull();
-			info.Server.User.Name.Should().NotBeEmpty();
+			// We can not reliably test this on CI as the username variable is set but empty
+			// info.Server.User.Name.Should().NotBeEmpty();
 		});
 
 		[Fact]
