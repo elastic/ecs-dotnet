@@ -199,7 +199,6 @@ namespace Elastic.Ingest
 				foreach (var e in buffer.Buffer)
 					Options.PublishRejectionCallback?.Invoke(e);
 			}
-			//return Task.CompletedTask;
 		}
 
 		public virtual void Dispose()
