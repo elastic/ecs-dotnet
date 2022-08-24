@@ -68,7 +68,7 @@ namespace Elastic.Ingest.Apm
 			// "agent":{"version":"1.10.0","name":"java","ephemeral_id":"e71be9ac-93b0-44b9-a997-5638f6ccfc36"},"framework":{"name":"spring","version":"5.0.0"},"runtime":{"name":"Java","version":"10.0.2"}},"labels":{"group":"experimental","ab_testing":true,"segment":5}}}
 			// TODO cache
 			var p = Process.GetCurrentProcess();
-			var metadata = new { metadata = new { process = new { pid = p.Id, title = p.ProcessName }, service = new { name = p.ProcessName, version = "1.0.0", agent = new { name = "dotnet", version = "0.0.1"} } } };
+			var metadata = new { metadata = new { process = new { pid = p.Id, title = p.ProcessName }, service = new { name  = System.Text.RegularExpressions.Regex.Replace(p.ProcessName, "[^a-zA-Z0-9 _-]", "_"), version = "1.0.0", agent = new { name = "dotnet", version = "0.0.1"} } } };
 			await JsonSerializer.SerializeAsync(stream, metadata, metadata.GetType(), ApmChannelStatics.SerializerOptions, ctx)
 					.ConfigureAwait(false);
 			await stream.WriteAsync(ApmChannelStatics.LineFeed, 0, 1, ctx).ConfigureAwait(false);
