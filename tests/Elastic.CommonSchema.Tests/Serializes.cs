@@ -31,6 +31,31 @@ namespace Elastic.CommonSchema.Tests
 			deserialized.Log.Level.Should().Be("debug");
 		}
 
+		[Fact]
+		public void SerializesMetadataPropertiesToSnakeCase()
+		{
+			var b = new EcsDocument
+			{
+				Metadata = new Dictionary<string, object>
+				{
+					["MessageTemplate"] = "some-template",
+					["WriteIO"] = "some-io",
+					["User_Id"] = 1,
+					["eventId"] = "some-id",
+					["rule"] = "some-rule",
+				}
+			};
+
+			var serialized = b.Serialize();
+			var deserialized = EcsSerializerFactory<EcsDocument>.Deserialize(serialized);
+
+			deserialized.Metadata.Should().ContainKey("message_template");
+			deserialized.Metadata.Should().ContainKey("write_io");
+			deserialized.Metadata.Should().ContainKey("user_id");
+			deserialized.Metadata.Should().ContainKey("event_id");
+			deserialized.Metadata.Should().ContainKey("rule");
+		}
+
 		public class SubclassedDocument : EcsDocument
 		{
 			[DataMember(Name = "agent2")]
