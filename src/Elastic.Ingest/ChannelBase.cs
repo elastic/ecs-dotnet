@@ -82,7 +82,7 @@ namespace Elastic.Ingest
 			);
 
 			_outThread = Task.Factory.StartNew(async () =>
-					await ConsumeOutboundEvents(BufferOptions.MaxConsumerBufferSize, BufferOptions.MaxConsumerBufferLifetime, waitHandle)
+					await ConsumeOutboundEvents(waitHandle)
 						.ConfigureAwait(false)
 				, TaskCreationOptions.LongRunning
 			);
@@ -117,7 +117,7 @@ namespace Elastic.Ingest
 			IConsumedBufferStatistics statistics
 		) => _defaultRetryBuffer;
 
-		private async Task ConsumeOutboundEvents(int maxQueuedMessages, TimeSpan maxInterval, CountdownEvent? countdown)
+		private async Task ConsumeOutboundEvents(CountdownEvent? countdown)
 		{
 			var maxConsumers = Options.BufferOptions.ConcurrentConsumers;
 			var taskList = new List<Task>(maxConsumers);
