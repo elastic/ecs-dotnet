@@ -177,7 +177,7 @@ namespace Elastic.Ingest
 			countdown?.Signal();
 		}
 
-		private async Task ConsumeInboundEvents(int maxQueuedMessages, TimeSpan maxInterval, CountdownEvent? countdown)
+		private async Task ConsumeInboundEvents(int maxQueuedMessages, TimeSpan maxInterval)
 		{
 			using var buffer = new ChannelBuffer<TEvent>(maxQueuedMessages, maxInterval);
 
