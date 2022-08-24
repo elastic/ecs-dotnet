@@ -76,7 +76,7 @@ namespace Elastic.Ingest
 
 			var waitHandle = BufferOptions.WaitHandle;
 			_inThread = Task.Factory.StartNew(async () =>
-					await ConsumeInboundEvents(BufferOptions.MaxConsumerBufferSize, BufferOptions.MaxConsumerBufferLifetime, waitHandle)
+					await ConsumeInboundEvents(BufferOptions.MaxConsumerBufferSize, BufferOptions.MaxConsumerBufferLifetime)
 						.ConfigureAwait(false)
 				, TaskCreationOptions.LongRunning
 			);
