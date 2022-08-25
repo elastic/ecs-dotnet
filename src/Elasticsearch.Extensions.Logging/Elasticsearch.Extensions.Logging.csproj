@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
+    <TargetFramework>netstandard2.1</TargetFramework>
     <Title>Elasticsearch Logger Provider</Title>
     <Description>Elasticsearch logger provider for Microsoft.Extensions.Logging. Writes direct to Elasticsearch using the Elastic Common Schema (ECS), with semantic logging of structured data from message and scope values, for use with the Elasticsearch-Logstash-Kibana (ELK) stack. The results can be viewed and queried in the Kibana console.</Description>
     <PackageTags>Logging;LoggerProvider;Elasticsearch;ELK;Kibana;Logstash;Tracing;Diagnostics;Log;Trace;ECS</PackageTags>
@@ -11,14 +11,12 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Elasticsearch.Net" Version="7.6.1" />
     <PackageReference Include="Microsoft.Extensions.Logging.Configuration" Version="2.1.0" />
-    <PackageReference Include="System.Threading.Channels" Version="4.7.1" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Elastic.CommonSchema\Elastic.CommonSchema.csproj" />
-    <ProjectReference Include="..\Elastic.Ingest\Elastic.Ingest.csproj" />
+    <ProjectReference Include="..\Elastic.Ingest.Elasticsearch\Elastic.Ingest.Elasticsearch.csproj" />
   </ItemGroup>
   
 </Project>

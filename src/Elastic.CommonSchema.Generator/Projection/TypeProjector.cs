@@ -13,7 +13,8 @@ namespace Elastic.CommonSchema.Generator.Projection
 	{
 		// These should be init properties really but RazorLight uses an old version roslyn that does not support them
 		// ReSharper disable PropertyCanBeMadeInitOnly.Global
-		public string VersionTag { get; set; }
+		public string GitRef { get; set; }
+		public string Version { get; set; }
 		public IReadOnlyCollection<FieldSetBaseClass> FieldSets { get; set; }
 		public IReadOnlyCollection<EntityClass> EntityClasses { get; set; }
 		public EntityClass Base { get; set; }
@@ -21,6 +22,7 @@ namespace Elastic.CommonSchema.Generator.Projection
 		public IReadOnlyCollection<InlineObject> InlineObjects { get; set; }
 		public ReadOnlyCollection<string> Warnings { get; set; }
 		public IReadOnlyCollection<IndexTemplate> IndexTemplates { get; set; }
+		public IReadOnlyCollection<IndexComponent> IndexComponents { get; set; }
 		// ReSharper restore PropertyCanBeMadeInitOnly.Global
 	}
 
@@ -95,14 +97,16 @@ namespace Elastic.CommonSchema.Generator.Projection
 
 			Projection = new CommonSchemaTypesProjection
 			{
+				Version = Schema.GitRef,
 				FieldSets = FieldSetsBaseClasses.Values.Where(e=>e.FieldSet.Root != true || e.FieldSet.Name == "base" ).ToList(),
 				EntityClasses = EntityClasses.Values.Where(e=>e.Name != "EcsDocument" && e.BaseFieldSet.FieldSet.Root != true).ToList(),
 				Base = EntityClasses.Values.First(e=>e.Name == "EcsDocument"),
 				InlineObjects = InlineObjects.Values.ToList(),
 				NestedEntityClasses = nestedEntityTypes.Values.ToList(),
 				Warnings = Warnings.AsReadOnly(),
-				VersionTag = Schema.VersionTag,
+				GitRef = Schema.GitRef,
 				IndexTemplates = Schema.Templates.Select(kv=>new IndexTemplate(kv.Key, kv.Value)).OrderBy(t=>t.Name).ToList(),
+				IndexComponents = Schema.Components.Select(kv=>new IndexComponent(kv.Key, kv.Value, Schema.Version)).OrderBy(t=>t.Name).ToList(),
 
 			};
 			return Projection;

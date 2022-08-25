@@ -1,12 +1,11 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net5.0</TargetFramework>
+    <TargetFramework>net6.0</TargetFramework>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="FluentAssertions" Version="5.10.3" />
-    <PackageReference Include="JunitXml.TestLogger" Version="2.1.15" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.8.0" />
     <PackageReference Include="xunit" Version="2.4.1" />
     <PackageReference Include="xunit.runner.visualstudio" Version="2.4.3">
@@ -15,12 +14,15 @@
     </PackageReference>
 
 
-    <PackageReference Include="Elastic.Transport.VirtualizedCluster" Version="0.2.3" />
+    <PackageReference Include="Elastic.Transport.VirtualizedCluster" Version="0.3.2" />
+
+
+    <PackageReference Include="XunitContext" Version="3.0.0" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\Elastic.Ingest\Elastic.Ingest.csproj" />
     <ProjectReference Include="..\..\src\Elastic.CommonSchema\Elastic.CommonSchema.csproj" />
+    <ProjectReference Include="..\..\src\Elastic.Ingest.Elasticsearch\Elastic.Ingest.Elasticsearch.csproj" />
   </ItemGroup>
 
 </Project>

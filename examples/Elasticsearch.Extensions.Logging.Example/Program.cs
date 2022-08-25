@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Elastic.Elasticsearch.Ephemeral;
-using Elastic.Ingest;
+using Elastic.Ingest.Elasticsearch;
 using Elasticsearch.Net;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -18,7 +18,7 @@ namespace Elasticsearch.Extensions.Logging.Example
 
 		public static IHostBuilder CreateHostBuilder(string[] args)
 		{
-			var highLoadUseCase = args.Length > 0 && args[0] == "high";
+			var highLoadUseCase = args.Length == 0 || args[0] != "low";
 			return Host.CreateDefaultBuilder(args)
 				.UseConsoleLifetime()
 				.ConfigureAppConfiguration((hostContext, configurationBuilder) =>
@@ -31,20 +31,22 @@ namespace Elasticsearch.Extensions.Logging.Example
 					if (highLoadUseCase)
 						loggingBuilder.ClearProviders();
 
-					loggingBuilder.AddElasticsearch(options => {}, configureChannel =>
+					loggingBuilder.AddElasticsearch(options => {}, channel =>
 					{
 						if (highLoadUseCase)
-							configureChannel.BufferOptions = new BufferOptions<LogEvent> { ConcurrentConsumers = 4, PublishRejectionCallback = e => Console.Write("!") };
-
-						configureChannel.BufferOptions.ElasticsearchResponseCallback = (r, b) =>
+						{
+							channel.BufferOptions = new ElasticsearchBufferOptions<LogEvent> { ConcurrentConsumers = 4 };
+							channel.PublishRejectionCallback = e => Console.Write("!");
+						}
+						channel.ResponseCallback = (r, b) =>
 							Console.WriteLine($"Indexed: {r.ApiCall.Success} items: {b.Count} time since first read: {b.DurationSinceFirstRead}");
 					});
 				})
 				.ConfigureServices((hostContext, services) =>
 				{
-					if (args.Length > 0 && args[0] == "high")
-						services.AddHostedService<HighVolumeWorkSimulation>();
-					else services.AddHostedService<LowVolumeWorkSimulation>();
+					if (args.Length > 0 && args[0] == "low")
+						services.AddHostedService<LowVolumeWorkSimulation>();
+					else services.AddHostedService<HighVolumeWorkSimulation>();
 				});
 		}
 

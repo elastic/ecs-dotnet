@@ -3,16 +3,18 @@
 // See the LICENSE file in the project root for more information
 
 using System;
-using Elastic.Ingest;
+using Elastic.Ingest.Elasticsearch;
+using Elasticsearch.Extensions.Logging.Options;
 
 namespace Elasticsearch.Extensions.Logging
 {
 	public class ChannelSetup : IChannelSetup
 	{
-		private readonly Action<ElasticsearchChannelOptions<LogEvent>> _configureChannel;
+		private readonly Action<ElasticsearchChannelOptionsBase<LogEvent>> _configureChannel;
 
-		public ChannelSetup(Action<ElasticsearchChannelOptions<LogEvent>> configureChannel) => _configureChannel = configureChannel;
+		public ChannelSetup(Action<ElasticsearchChannelOptionsBase<LogEvent>> configureChannel) => _configureChannel = configureChannel;
 
-		public void ConfigureChannel(ElasticsearchChannelOptions<LogEvent> channelConfiguration) => _configureChannel(channelConfiguration);
+		public void ConfigureChannel(ElasticsearchChannelOptionsBase<LogEvent> channelOptions) =>
+			_configureChannel(channelOptions);
 	}
 }

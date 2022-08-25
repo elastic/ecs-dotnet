@@ -5,7 +5,7 @@
 /*
 IMPORTANT NOTE
 ==============
-This file has been generated. 
+This file has been generated.
 If you wish to submit a PR please modify the original csharp file and submit the PR with that change. Thanks!
 */
 
@@ -15,13 +15,13 @@ using System.Text.Json;
 
 namespace Elastic.CommonSchema.Serialization
 {
-	internal partial class EcsDocumentJsonConverter<TBase> : EcsJsonConverterBase<TBase>
+	public partial class EcsDocumentJsonConverter<TBase> : EcsJsonConverterBase<TBase>
 		where TBase : EcsDocument, new()
 	{
 		private static bool ReadProperties(
-			ref Utf8JsonReader reader, 
-			TBase ecsEvent, 
-			ref DateTimeOffset? timestamp, 
+			ref Utf8JsonReader reader,
+			TBase ecsEvent,
+			ref DateTimeOffset? timestamp,
 			ref string loglevel
 		)
 		{

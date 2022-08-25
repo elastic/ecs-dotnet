@@ -3,8 +3,10 @@
 // See the LICENSE file in the project root for more information
 
 using System;
+using System.ComponentModel.Design.Serialization;
 using System.Linq;
-using Elasticsearch.Net;
+using Elastic.Transport;
+using Elastic.Transport.Products.Elasticsearch;
 
 namespace Elastic.CommonSchema.BenchmarkDotNetExporter
 {
@@ -58,6 +60,14 @@ namespace Elastic.CommonSchema.BenchmarkDotNetExporter
 		/// <summary> Instructs the exporter to use a sniffing connection pool, which will discover the rest of the cluster</summary>
 		public bool UseSniffingConnectionPool { get; set; }
 
+		/// <summary> Whether to use debug mode on the Elasticsearch Client</summary>
+		public bool EnableDebugMode { get; set; } =
+#if DEBUG
+		true;
+#else
+			false;
+#endif
+
 		/// <summary> (Optional) Report the sha of the commit we are benchmarking</summary>
 		public string GitCommitSha { get; set; }
 		/// <summary> (Optional) Report the message of the commit we are benchmarking</summary>
@@ -67,15 +77,8 @@ namespace Elastic.CommonSchema.BenchmarkDotNetExporter
 		/// <summary> (Optional) Report the repository, does not have to be a complete URI</summary>
 		public string GitRepositoryIdentifier { get; set; }
 
-		internal static readonly string DefaultMoniker = "benchmarks-dotnet";
-		/// <summary>
-		/// The prefix for the indices being created, indices will be suffixed with <code>-DATE</code>
-		/// see <see cref="IndexStrategy"/> how to control the DATE rounding.
-		/// </summary>
-		public string IndexName { get; set; } = DefaultMoniker;
-		public string TemplateName { get; set; } = DefaultMoniker;
-		public string PipelineName { get; set; } = DefaultMoniker;
-		public TimeSeriesStrategy IndexStrategy { get; set; } = TimeSeriesStrategy.Default;
+		/// <summary> The datastream namespace to write to, by default writes to benchmarks-dotnet-default</summary>
+		public string DataStreamNamespace { get; set; } = "default";
 
 		private static Uri[] Parse(string urls)
 		{
@@ -89,58 +92,38 @@ namespace Elastic.CommonSchema.BenchmarkDotNetExporter
 			return uris.ToArray();
 		}
 
-		private IConnectionPool CreateConnectionPool()
+		private NodePool CreateNodePool()
 		{
 			if (!string.IsNullOrWhiteSpace(CloudId))
 			{
 				if (!string.IsNullOrWhiteSpace(ApiKey))
-					return new CloudConnectionPool(CloudId, new ApiKeyAuthenticationCredentials(ApiKey));
+					return new CloudNodePool(CloudId, new ApiKey(ApiKey));
 				else if (!string.IsNullOrWhiteSpace(Username) && !string.IsNullOrWhiteSpace(Password))
-					return new CloudConnectionPool(CloudId, new BasicAuthenticationCredentials(Username, Password));
+					return new CloudNodePool(CloudId, new BasicAuthentication(Username, Password));
 				else throw new Exception("A cloud id was provided but neither apikey nor username/pass combination was set");
 			}
 
 			var uris = Nodes;
 			if ((uris?.Length ?? 0) == 0)
-				return new SingleNodeConnectionPool(new Uri("http://localhost:9200"));
+				return new SingleNodePool(new Uri("http://localhost:9200"));
 
 			if (uris.Length == 1)
 				return UseSniffingConnectionPool
-					? new SniffingConnectionPool(uris)
-					: (IConnectionPool)new SingleNodeConnectionPool(uris[0]);
+					? new SniffingNodePool(uris)
+					: (NodePool)new SingleNodePool(uris[0]);
 
 			return UseSniffingConnectionPool
-				? new SniffingConnectionPool(uris)
-				: new StaticConnectionPool(uris);
+				? new SniffingNodePool(uris)
+				: new StaticNodePool(uris);
 		}
 
 
-		internal ConnectionConfiguration CreateConnectionSettings()
+		internal TransportConfiguration CreateTransportConfiguration()
 		{
-			var settings = new ConnectionConfiguration(CreateConnectionPool());
-			// TODO can not pass base64 encoded version on connectionsettings
-			// if (!string.IsNullOrWhiteSpace(ApiKey))
-			// 	settings = settings.ApiKeyAuthentication(new ApiKeyAuthenticationCredentials(ApiKey));
-
-			if (!string.IsNullOrWhiteSpace(Username) && !string.IsNullOrWhiteSpace(Password))
-				settings = settings.BasicAuthentication(Username, Password);
-
+			var settings = new TransportConfiguration(CreateNodePool(), productRegistration: new ElasticsearchProductRegistration());
+			if (EnableDebugMode)
+				settings.EnableDebugMode();
 			return settings;
-		}
-
-		/// <summary>
-		/// If <see cref="ElasticsearchBenchmarkExporterOptions.PipelineName"/> is set, which it by default. This controls
-		/// how the pipeline rewrites the <see cref="ElasticsearchBenchmarkExporterOptions.IndexName"/> to a time series index.
-		/// <para>NOTE: this only controls what happens when the pipeline gets created initially</para>
-		/// </summary>
-		public enum TimeSeriesStrategy
-		{
-			/// <summary> The default rounding is to create <see cref="Yearly"/> benchmark indices </summary>
-			Default,
-			Daily,
-			Weekly,
-			Monthly,
-			Yearly,
 		}
 	}
 }

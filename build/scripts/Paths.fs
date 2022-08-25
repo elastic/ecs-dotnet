@@ -6,6 +6,7 @@ open System.IO
 let ToolName = "ecs-dotnet"
 let Repository = sprintf "elastic/%s" ToolName
 let MainTFM = "netstandard2.0"
+let Netstandard21TFM = "netstandard2.1"
 let SignKey = "069ca2728db333c1"
 
 let ValidateAssemblyName = false

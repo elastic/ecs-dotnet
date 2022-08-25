@@ -18,6 +18,7 @@ namespace Elastic.CommonSchema.Generator
 		private const string Core = "Core";
 		private const string Legacy = "legacy";
 		private const string Composable = "composable";
+		private const string Components = "component";
 
 		private static readonly ProgressBarOptions MainProgressBarOptions = new ProgressBarOptions { BackgroundColor = ConsoleColor.DarkGray };
 
@@ -26,6 +27,7 @@ namespace Elastic.CommonSchema.Generator
 			{ Core, "https://github.com/elastic/ecs/tree/{version}/generated/ecs" },
 			{ Legacy, "https://github.com/elastic/ecs/tree/{version}/generated/elasticsearch/legacy" },
 			{ Composable, "https://github.com/elastic/ecs/tree/{version}/generated/elasticsearch/composable" },
+			{ Path.Combine(Composable, Components), "https://github.com/elastic/ecs/tree/{version}/generated/elasticsearch/composable/component" },
 		};
 
 		private static readonly ProgressBarOptions SubProgressBarOptions = new ProgressBarOptions
@@ -58,7 +60,12 @@ namespace Elastic.CommonSchema.Generator
 
 		private static void DownloadDefinitions(Specification spec, IProgressBar progress, string filenameMatch)
 		{
+			//TODO move to HttpClient
+#pragma warning disable SYSLIB0014
+#pragma warning disable CS0618
 			var client = new WebClient();
+#pragma warning restore CS0618
+#pragma warning restore SYSLIB0014
 			var html = client.DownloadString(spec.GithubListingUrl);
 			if (!Directory.Exists(CodeConfiguration.SpecificationFolder))
 				Directory.CreateDirectory(CodeConfiguration.SpecificationFolder);

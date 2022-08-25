@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net5.0</TargetFramework>
+    <TargetFramework>net6.0</TargetFramework>
 
     <IsPackable>false</IsPackable>
     <NoWarn>NU1701</NoWarn>
@@ -9,7 +9,6 @@
 
     <ItemGroup>
         <PackageReference Include="FluentAssertions" Version="5.9.0" />
-        <PackageReference Include="JunitXml.TestLogger" Version="2.1.15" />
         <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.8.0" />
         <PackageReference Include="NLog" Version="4.5.11" />
         <PackageReference Include="NLog.Config" Version="4.5.4" />

@@ -10,7 +10,7 @@ using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Elastic.CommonSchema.Serialization;
-using static Elastic.CommonSchema.Serialization.JsonConfiguration;
+using static Elastic.CommonSchema.Serialization.EcsJsonConfiguration;
 
 namespace Elastic.CommonSchema
 {

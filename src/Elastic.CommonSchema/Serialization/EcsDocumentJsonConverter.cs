@@ -7,7 +7,7 @@ using System.Text.Json;
 
 namespace Elastic.CommonSchema.Serialization
 {
-	internal partial class EcsDocumentJsonConverter<TBase> where TBase : EcsDocument, new()
+	public partial class EcsDocumentJsonConverter<TBase> where TBase : EcsDocument, new()
 	{
 		public override TBase Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
 		{
@@ -48,12 +48,12 @@ namespace Elastic.CommonSchema.Serialization
 		{
 			writer.WritePropertyName("@timestamp");
 			if (value.Timestamp.HasValue)
-				JsonConfiguration.DateTimeOffsetConverter.Write(writer, value.Timestamp.Value, JsonConfiguration.SerializerOptions);
+				EcsJsonConfiguration.DateTimeOffsetConverter.Write(writer, value.Timestamp.Value, EcsJsonConfiguration.SerializerOptions);
 			else writer.WriteNullValue();
 		}
 	}
 
-	internal partial class EcsDocumentJsonConverter : EcsDocumentJsonConverter<EcsDocument>
+	public partial class EcsDocumentJsonConverter : EcsDocumentJsonConverter<EcsDocument>
 	{
 	}
 }
