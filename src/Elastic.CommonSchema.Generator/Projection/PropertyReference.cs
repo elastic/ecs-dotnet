@@ -1,4 +1,5 @@
 using System.Linq;
+using System.Text.RegularExpressions;
 using Elastic.CommonSchema.Generator.Schema.DTO;
 
 namespace Elastic.CommonSchema.Generator.Projection
@@ -16,15 +17,60 @@ namespace Elastic.CommonSchema.Generator.Projection
 
 
 		public string LocalPath { get; }
-		public string FullPath { get; set; }
+		public string FullPath { get; }
+
+		public abstract string Description { get; }
+		public abstract string Example { get; }
+
+		protected static string NormalizeDescription(string description)
+		{
+			var multiLineDescription = Regex.Replace(description, @"\n", "\r\n		/// ");
+			multiLineDescription = multiLineDescription.Replace("<", "&lt;").Replace(">", "&gt;");
+			return multiLineDescription;
+		}
+
+		protected static string GetFieldDescription(Field field)
+		{
+			var multiLineDescription = NormalizeDescription(field.Description);
+
+			var description = $@"{multiLineDescription}";
+			if (!field.Indexed.GetValueOrDefault(true))
+				description += "\r\n		/// <para><br/>Stored but not available for search in Elasticsearch by default</para>";
+			if (!string.IsNullOrEmpty(field.Beta))
+				description += $"\r\n		/// <para><br/>{field.Beta}</para>";
+			if (!string.IsNullOrEmpty(field.IsRequired))
+				description += $"\r\n		/// <para><br/>This is a required field</para>";
+			if (!string.IsNullOrEmpty(field.Pattern))
+				description += $"\r\n		/// <para>pattern: {field.Indexed}</para>";
+			if (field.AllowedValues?.Count > 0)
+			{
+				description += "\r\n		/// <list type=\"table\">";
+				description += $"\r\n		/// <listheader><term>Value</term><description>Description</description></listheader>";
+				foreach (var v in field.AllowedValues)
+				{
+					var ml = NormalizeDescription(v.Description);
+
+					description += $"\r\n		/// <item><term>{v.Name}</term><description>{ml}</description></item>";
+				}
+				description += "\r\n		/// </list>";
+			}
+			return description;
+		}
 	}
 
 	public class ValueTypePropertyReference : PropertyReference
 	{
-		public ValueTypePropertyReference(string parentPath, string fullPath, Field field) : base(parentPath, fullPath) =>
+		public ValueTypePropertyReference(string parentPath, string fullPath, Field field) : base(parentPath, fullPath)
+		{
 			ClrType = field.GetClrType();
+			Description = GetFieldDescription(field);
+			Example = field.Example?.ToString() ?? string.Empty;
+
+		}
 
 		public string ClrType { get; }
+		public override string Description { get; }
+		public override string Example { get; }
 	}
 
 	public class InlineObjectPropertyReference : PropertyReference
@@ -33,18 +79,35 @@ namespace Elastic.CommonSchema.Generator.Projection
 		{
 			InlineObject = inlineObject;
 			Field = field;
+			Description = GetFieldDescription(field);
+			Example = field.Example?.ToString() ?? string.Empty;
 		}
 
 		public InlineObject InlineObject { get; }
 		public Field Field { get; }
 
 		public string ClrType => Field.Normalize.Contains("array") ? $"{InlineObject.Name}[]" : $"{InlineObject.Name}";
+		public override string Description { get; }
+		public override string Example { get; }
 	}
 
 	public class EntityPropertyReference : PropertyReference
 	{
-		public EntityPropertyReference(string parentPath, string fullPath, EntityClass entity) : base(parentPath, fullPath) => Entity = entity;
+		public EntityPropertyReference(string parentPath, string fullPath, EntityClass entity, string description, bool isArray) : base(parentPath, fullPath)
+		{
+			var multiLineDescription = NormalizeDescription(description);
+			Entity = entity;
+			Description = multiLineDescription;
+			Example = "";
+			ClrType = Entity.Name;
+			if (isArray) ClrType += "[]";
+
+		}
 
 		public EntityClass Entity { get; }
+
+		public string ClrType { get; }
+		public override string Description { get; }
+		public override string Example { get; }
 	}
 }
