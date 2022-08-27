@@ -25,9 +25,9 @@ namespace Elastic.CommonSchema
 	{
 
 		/// <summary>
-		/// Elastic Common Schema version v8.3.1
+		/// Elastic Common Schema version v8.4.0
 		/// </summary>
-		public static string Version => "v8.3.1";
+		public static string Version => "v8.4.0";
 
 		/// <summary>
 		/// Container for additional metadata against this event.

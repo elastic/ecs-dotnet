@@ -761,7 +761,16 @@ namespace Elastic.CommonSchema
 		///<summary>
 		/// <para><c>dns.header_flags</c></para>
 		/// <para>Array of 2 letter DNS header flags.
-		/// Expected values are: AA, TC, RD, RA, AD, CD, DO.</para>
+		/// <para><br/>Expected Values:</para>
+		/// <list type="bullet">
+		/// <item>AA</item>
+		/// <item>TC</item>
+		/// <item>RD</item>
+		/// <item>RA</item>
+		/// <item>AD</item>
+		/// <item>CD</item>
+		/// <item>DO</item>
+		/// </list></para>
 		/// <example>["RD", "RA"]</example>
 		///</summary>
 		[DataMember(Name = "header_flags")]
@@ -1250,6 +1259,7 @@ namespace Elastic.CommonSchema
 		/// <para>This is one of four ECS Categorization Fields, and indicates the second level in the ECS category hierarchy.
 		/// `event.category` represents the "big buckets" of ECS categories. For example, filtering on `event.category:process` yields all events relating to process activity. This field is closely related to `event.type`, which is used as a subcategory.
 		/// This field is an array. This will allow proper categorization of some events that fall in multiple categories.
+		/// <para><br/>Allowed Values:</para>
 		/// <list type="table">
 		/// <listheader><term>Value</term><description>Description</description></listheader>
 		/// <item><term>authentication</term><description>Events in this category are related to the challenge and response process in which credentials are supplied and verified to allow the creation of a session. Common sources for these logs are Windows event logs and ssh logs. Visualize and analyze events in this category to look for failed logins, and other authentication-related activity.</description></item>
@@ -1358,6 +1368,7 @@ namespace Elastic.CommonSchema
 		/// <para>This is one of four ECS Categorization Fields, and indicates the highest level in the ECS category hierarchy.
 		/// `event.kind` gives high-level information about what type of information the event contains, without being specific to the contents of the event. For example, values of this field distinguish alert events from metric events.
 		/// The value of this field can be used to inform how these kinds of events should be handled. They may warrant different retention, different access control, it may also help understand whether the data coming in at a regular interval or not.
+		/// <para><br/>Allowed Values:</para>
 		/// <list type="table">
 		/// <listheader><term>Value</term><description>Description</description></listheader>
 		/// <item><term>alert</term><description>This value indicates an event such as an alert or notable event, triggered by a detection rule executing externally to the Elastic Stack.
@@ -1408,6 +1419,7 @@ namespace Elastic.CommonSchema
 		/// Note that when a single transaction is described in multiple events, each event may populate different values of `event.outcome`, according to their perspective.
 		/// Also note that in the case of a compound event (a single event that contains multiple logical events), this field should be populated with the value that best captures the overall success or failure from the perspective of the event producer.
 		/// Further note that not all events will have an associated outcome. For example, this field is generally not populated for metric events, events with `event.type:info`, or any events for which an outcome does not make logical sense.
+		/// <para><br/>Allowed Values:</para>
 		/// <list type="table">
 		/// <listheader><term>Value</term><description>Description</description></listheader>
 		/// <item><term>failure</term><description>Indicates that this event describes a failed result. A common example is `event.category:file AND event.type:access AND event.outcome:failure` to indicate that a file access was attempted, but was not successful.</description></item>
@@ -1504,6 +1516,7 @@ namespace Elastic.CommonSchema
 		/// <para>This is one of four ECS Categorization Fields, and indicates the third level in the ECS category hierarchy.
 		/// `event.type` represents a categorization "sub-bucket" that, when used along with the `event.category` field values, enables filtering events down to a level appropriate for single visualization.
 		/// This field is an array. This will allow proper categorization of some events that fall in multiple event types.
+		/// <para><br/>Allowed Values:</para>
 		/// <list type="table">
 		/// <listheader><term>Value</term><description>Description</description></listheader>
 		/// <item><term>access</term><description>The access event type is used for the subset of events within a category that indicate that something was accessed. Common examples include `event.category:database AND event.type:access`, or `event.category:file AND event.type:access`. Note for file access, both directory listings and file opens should be included in this subcategory. You can further distinguish access operations using the ECS `event.action` field.</description></item>
@@ -2384,18 +2397,19 @@ namespace Elastic.CommonSchema
 		///<summary>
 		/// <para><c>network.direction</c></para>
 		/// <para>Direction of the network traffic.
-		/// Recommended values are:
-		///   * ingress
-		///   * egress
-		///   * inbound
-		///   * outbound
-		///   * internal
-		///   * external
-		///   * unknown
-		/// 
 		/// When mapping events from a host-based monitoring context, populate this field from the host's point of view, using the values "ingress" or "egress".
 		/// When mapping events from a network or perimeter-based monitoring context, populate this field from the point of view of the network perimeter, using the values "inbound", "outbound", "internal" or "external".
-		/// Note that "internal" is not crossing perimeter boundaries, and is meant to describe communication between two hosts within the perimeter. Note also that "external" is meant to describe traffic between two hosts that are external to the perimeter. This could for example be useful for ISPs or VPN service providers.</para>
+		/// Note that "internal" is not crossing perimeter boundaries, and is meant to describe communication between two hosts within the perimeter. Note also that "external" is meant to describe traffic between two hosts that are external to the perimeter. This could for example be useful for ISPs or VPN service providers.
+		/// <para><br/>Expected Values:</para>
+		/// <list type="bullet">
+		/// <item>ingress</item>
+		/// <item>egress</item>
+		/// <item>inbound</item>
+		/// <item>outbound</item>
+		/// <item>internal</item>
+		/// <item>external</item>
+		/// <item>unknown</item>
+		/// </list></para>
 		/// <example>inbound</example>
 		///</summary>
 		[DataMember(Name = "direction")]
@@ -2749,8 +2763,14 @@ namespace Elastic.CommonSchema
 		///<summary>
 		/// <para><c>os.type</c></para>
 		/// <para>Use the `os.type` field to categorize the operating system into one of the broad commercial families.
-		/// One of these following values should be used (lowercase): linux, macos, unix, windows.
-		/// If the OS you're dealing with is not in the list, the field should not be populated. Please let us know by opening an issue with ECS, to propose its addition.</para>
+		/// If the OS you're dealing with is not listed as an expected value, the field should not be populated. Please let us know by opening an issue with ECS, to propose its addition.
+		/// <para><br/>Expected Values:</para>
+		/// <list type="bullet">
+		/// <item>linux</item>
+		/// <item>macos</item>
+		/// <item>unix</item>
+		/// <item>windows</item>
+		/// </list></para>
 		/// <example>macos</example>
 		///</summary>
 		[DataMember(Name = "type")]
@@ -3492,13 +3512,25 @@ namespace Elastic.CommonSchema
 		/// <para>Deprecated for removal in next major version release. This field will be superseded by `node.roles`.
 		/// Role of a service node.
 		/// This allows for distinction between different running roles of the same service.
-		/// In the case of Kibana, the `service.node.role` could be `ui` or `background-tasks`.
+		/// In the case of Kibana, the `service.node.role` could be `ui` or `background_tasks`.
 		/// In the case of Elasticsearch, the `service.node.role` could be `master` or `data`.
 		/// Other services could use this to distinguish between a `web` and `worker` role running as part of the service.</para>
-		/// <example>background-tasks</example>
+		/// <example>background_tasks</example>
 		///</summary>
 		[DataMember(Name = "node.role")]
 		public string NodeRole { get; set; }
+
+		///<summary>
+		/// <para><c>service.node.roles</c></para>
+		/// <para>Roles of a service node.
+		/// This allows for distinction between different running roles of the same service.
+		/// In the case of Kibana, the `service.node.role` could be `ui` or `background_tasks` or both.
+		/// In the case of Elasticsearch, the `service.node.role` could be `master` or `data` or both.
+		/// Other services could use this to distinguish between a `web` and `worker` role running as part of the service.</para>
+		/// <example>["ui", "background_tasks"]</example>
+		///</summary>
+		[DataMember(Name = "node.roles")]
+		public string[] NodeRoles { get; set; }
 
 		///<summary>
 		/// <para><c>service.state</c></para>
@@ -3723,13 +3755,15 @@ namespace Elastic.CommonSchema
 
 		///<summary>
 		/// <para><c>threat.indicator.confidence</c></para>
-		/// <para>Identifies the vendor-neutral confidence rating using the None/Low/Medium/High scale defined in Appendix A of the STIX 2.1 framework. Vendor-specific confidence scales may be added as custom fields.
-		/// Expected values are:
-		///   * Not Specified
-		///   * None
-		///   * Low
-		///   * Medium
-		///   * High</para>
+		/// <para>Identifies the vendor-neutral confidence rating using the None/Low/Medium/High scale defined in Appendix A of the STIX 2.1 framework. Vendor-specific confidence scales may be added as custom fields.
+		/// <para><br/>Expected Values:</para>
+		/// <list type="bullet">
+		/// <item>Not Specified</item>
+		/// <item>None</item>
+		/// <item>Low</item>
+		/// <item>Medium</item>
+		/// <item>High</item>
+		/// </list></para>
 		/// <example>Medium</example>
 		///</summary>
 		[DataMember(Name = "indicator.confidence")]
@@ -3778,11 +3812,13 @@ namespace Elastic.CommonSchema
 		///<summary>
 		/// <para><c>threat.indicator.marking.tlp</c></para>
 		/// <para>Traffic Light Protocol sharing markings.
-		/// Recommended values are:
-		///   * WHITE
-		///   * GREEN
-		///   * AMBER
-		///   * RED</para>
+		/// <para><br/>Expected Values:</para>
+		/// <list type="bullet">
+		/// <item>WHITE</item>
+		/// <item>GREEN</item>
+		/// <item>AMBER</item>
+		/// <item>RED</item>
+		/// </list></para>
 		/// <example>WHITE</example>
 		///</summary>
 		[DataMember(Name = "indicator.marking.tlp")]
@@ -3839,24 +3875,26 @@ namespace Elastic.CommonSchema
 		///<summary>
 		/// <para><c>threat.indicator.type</c></para>
 		/// <para>Type of indicator as represented by Cyber Observable in STIX 2.0.
-		/// Recommended values:
-		///   * autonomous-system
-		///   * artifact
-		///   * directory
-		///   * domain-name
-		///   * email-addr
-		///   * file
-		///   * ipv4-addr
-		///   * ipv6-addr
-		///   * mac-addr
-		///   * mutex
-		///   * port
-		///   * process
-		///   * software
-		///   * url
-		///   * user-account
-		///   * windows-registry-key
-		///   * x509-certificate</para>
+		/// <para><br/>Expected Values:</para>
+		/// <list type="bullet">
+		/// <item>autonomous-system</item>
+		/// <item>artifact</item>
+		/// <item>directory</item>
+		/// <item>domain-name</item>
+		/// <item>email-addr</item>
+		/// <item>file</item>
+		/// <item>ipv4-addr</item>
+		/// <item>ipv6-addr</item>
+		/// <item>mac-addr</item>
+		/// <item>mutex</item>
+		/// <item>port</item>
+		/// <item>process</item>
+		/// <item>software</item>
+		/// <item>url</item>
+		/// <item>user-account</item>
+		/// <item>windows-registry-key</item>
+		/// <item>x509-certificate</item>
+		/// </list></para>
 		/// <example>ipv4-addr</example>
 		///</summary>
 		[DataMember(Name = "indicator.type")]
@@ -3892,19 +3930,20 @@ namespace Elastic.CommonSchema
 		///<summary>
 		/// <para><c>threat.software.platforms</c></para>
 		/// <para>The platforms of the software used by this threat to conduct behavior commonly modeled using MITRE ATT&CK®.
-		/// Recommended Values:
-		///   * AWS
-		///   * Azure
-		///   * Azure AD
-		///   * GCP
-		///   * Linux
-		///   * macOS
-		///   * Network
-		///   * Office 365
-		///   * SaaS
-		///   * Windows
-		/// 
-		/// While not required, you can use a MITRE ATT&CK® software platforms.</para>
+		/// While not required, you can use MITRE ATT&CK® software platform values.
+		/// <para><br/>Expected Values:</para>
+		/// <list type="bullet">
+		/// <item>AWS</item>
+		/// <item>Azure</item>
+		/// <item>Azure AD</item>
+		/// <item>GCP</item>
+		/// <item>Linux</item>
+		/// <item>macOS</item>
+		/// <item>Network</item>
+		/// <item>Office 365</item>
+		/// <item>SaaS</item>
+		/// <item>Windows</item>
+		/// </list></para>
 		/// <example>[ "Windows" ]</example>
 		///</summary>
 		[DataMember(Name = "software.platforms")]
@@ -3922,11 +3961,12 @@ namespace Elastic.CommonSchema
 		///<summary>
 		/// <para><c>threat.software.type</c></para>
 		/// <para>The type of software used by this threat to conduct behavior commonly modeled using MITRE ATT&CK®.
-		/// Recommended values
-		///   * Malware
-		///   * Tool
-		/// 
-		///  While not required, you can use a MITRE ATT&CK® software type.</para>
+		/// While not required, you can use a MITRE ATT&CK® software type.
+		/// <para><br/>Expected Values:</para>
+		/// <list type="bullet">
+		/// <item>Malware</item>
+		/// <item>Tool</item>
+		/// </list></para>
 		/// <example>Tool</example>
 		///</summary>
 		[DataMember(Name = "software.type")]
@@ -4646,7 +4686,7 @@ namespace Elastic.CommonSchema
 
 		///<summary>
 		/// <para><c>x509.issuer.country</c></para>
-		/// <para>List of country (C) codes</para>
+		/// <para>List of country \(C) codes</para>
 		/// <example>US</example>
 		///</summary>
 		[DataMember(Name = "issuer.country")]
@@ -4767,7 +4807,7 @@ namespace Elastic.CommonSchema
 
 		///<summary>
 		/// <para><c>x509.subject.country</c></para>
-		/// <para>List of country (C) code</para>
+		/// <para>List of country \(C) code</para>
 		/// <example>US</example>
 		///</summary>
 		[DataMember(Name = "subject.country")]

@@ -29,6 +29,13 @@ namespace Elastic.CommonSchema.Generator.Projection
 			return multiLineDescription;
 		}
 
+		/// <summary>
+		/// <list type="bullet">
+		///	<item>a</item>
+		/// </list>
+		/// </summary>
+		/// <param name="field"></param>
+		/// <returns></returns>
 		protected static string GetFieldDescription(Field field)
 		{
 			var multiLineDescription = NormalizeDescription(field.Description);
@@ -44,6 +51,7 @@ namespace Elastic.CommonSchema.Generator.Projection
 				description += $"\r\n		/// <para>pattern: {field.Indexed}</para>";
 			if (field.AllowedValues?.Count > 0)
 			{
+				description += $"\r\n		/// <para><br/>Allowed Values:</para>";
 				description += "\r\n		/// <list type=\"table\">";
 				description += $"\r\n		/// <listheader><term>Value</term><description>Description</description></listheader>";
 				foreach (var v in field.AllowedValues)
@@ -52,6 +60,14 @@ namespace Elastic.CommonSchema.Generator.Projection
 
 					description += $"\r\n		/// <item><term>{v.Name}</term><description>{ml}</description></item>";
 				}
+				description += "\r\n		/// </list>";
+			}
+			if (field.ExpectedValues?.Count > 0)
+			{
+				description += $"\r\n		/// <para><br/>Expected Values:</para>";
+				description += "\r\n		/// <list type=\"bullet\">";
+				foreach (var value in field.ExpectedValues)
+					description += $"\r\n		/// <item>{value}</item>";
 				description += "\r\n		/// </list>";
 			}
 			return description;
