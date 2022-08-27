@@ -5,13 +5,9 @@
 using System;
 using System.Collections.Generic;
 using System.Threading;
-using Elastic.Ingest.Serialization;
 
 namespace Elastic.Ingest
 {
-	/// <summary>
-	/// Controls how instances of <see cref="TEvent"/>'s are batched and send to Elasticsearch. These can not be dynamically updated.
-	/// </summary>
 	public class BufferOptions<TEvent>
 	{
 		/// <summary>
@@ -41,29 +37,6 @@ namespace Elastic.Ingest
 		/// </summary>
 		public int ConcurrentConsumers { get; set; } = 1;
 
-		//TODO these should be events since it's unknown if there will be typically one listener or multiple
-
-		/// <summary>
-		/// If <see cref="MaxInFlightMessages"/> is reached, <see cref="TEvent"/>'s will fail to be published to the channel. You can be notified of dropped
-		/// events with this callback
-		/// </summary>
-		public Action<TEvent>? PublishRejectionCallback { get; set; }
-
-		/// <summary> Subscribe to be notified of events that can not be stored in Elasticsearch</summary>
-		public Action<List<(TEvent, BulkResponseItem)>>? ServerRejectionCallback { get; set; }
-
-		/// <summary> Subscribe to be notified of events that are retryable but did not store correctly withing the boundaries of <see cref="MaxRetries"/></summary>
-		public Action<List<TEvent>>? MaxRetriesExceededCallback { get; set; }
-
-		/// <summary> Subscribe to be notified of events that are retryable but did not store correctly within the number of configured <see cref="MaxRetries"/></summary>
-		public Action<List<TEvent>>? RetryCallBack { get; set; }
-
-		/// <summary> A generic hook to be notified of any bulk request being initiated by <see cref="ElasticsearchChannel{TEvent}"/> </summary>
-		public Action<BulkResponse, IChannelBuffer> ElasticsearchResponseCallback { get; set; } = (r, b) => { };
-
-		public Action<Exception>? ExceptionCallback { get; set; }
-
-		public Action<int, int>? BulkAttemptCallback { get; set; }
 
 		/// <summary>
 		/// A function to calculate the backoff period, gets passed the number of retries attempted starting at 0.
@@ -71,13 +44,15 @@ namespace Elastic.Ingest
 		/// </summary>
 		public Func<int, TimeSpan> BackoffPeriod { get; set; } = (i) => TimeSpan.FromSeconds(2 * (i + 1));
 
+		/// <summary>
+		/// Called once after a buffer has been flushed, if the buffer is retried this callback is only called once
+		/// all retries have been exhausted
+		/// </summary>
+		public Action? BufferFlushCallback { get; set; }
 
 		/// <summary>
-		/// Allows you to inject a wait handle that will be signalled everytime a consumer sends data.
-		/// NOTE: this option is ignored if <see cref="ConcurrentConsumers"/> is greater then 1.
-		/// NOTE: This is solely meant to be able to test <see cref="ElasticsearchChannel{TEvent}"/> without complicating its thread safety.
+		/// Allows you to inject a <see cref="CountdownEvent"/> to wait for N number of buffers to flush.
 		/// </summary>
-		public ManualResetEventSlim? WaitHandle { get; set; }
+		public CountdownEvent? WaitHandle { get; set; }
 	}
-
 }

@@ -10,15 +10,18 @@ open Fake.Tools.Git
 open ProcNet
 
     
-let exec binary args =
-    let r = Proc.Exec (binary, args |> List.map (sprintf "\"%s\"") |> List.toArray)
+let execWithTimeout binary args timeout =
+    let opts = ExecArguments(binary, args |> List.map (sprintf "\"%s\"") |> List.toArray)
+    let r = Proc.Exec (opts, timeout)
     match r.HasValue with | true -> r.Value | false -> failwithf "invocation of `%s` timed out" binary
+let exec binary args =
+    execWithTimeout binary args (TimeSpan.FromMinutes 4)
     
 let private restoreTools = lazy(exec "dotnet" ["tool"; "restore"])
 let private currentVersion =
     lazy(
         restoreTools.Value |> ignore
-        let r = Proc.Start("dotnet", "minver", "-d", "canary", "-m", "0.1")
+        let r = Proc.Start("dotnet", "minver", "-d=canary", "-m=0.1")
         let o = r.ConsoleOut |> Seq.find (fun l -> not(l.Line.StartsWith("MinVer:")))
         o.Line
     )
@@ -46,7 +49,7 @@ let private test (arguments:ParseResults<Arguments>) =
     let junitOutput = Path.Combine(Paths.Output.FullName, "junit-{assembly}-{framework}-test-results.xml")
     let loggerPathArgs = sprintf "LogFilePath=%s" junitOutput
     let loggerArg = sprintf "--logger:\"junit;%s\"" loggerPathArgs
-    exec "dotnet" ["test"; "-c"; "RELEASE"; loggerArg] |> ignore
+    execWithTimeout "dotnet" ["test"; "-c"; "RELEASE"; "-m:1"; loggerArg;] (TimeSpan.FromMinutes 10) |> ignore
 
 let private generatePackages (arguments:ParseResults<Arguments>) =
     let output = Paths.RootRelative Paths.Output.FullName
@@ -71,20 +74,32 @@ let private generateApiChanges (arguments:ParseResults<Arguments>) =
     let nugetPackages =
         Paths.Output.GetFiles("*.nupkg") |> Seq.sortByDescending(fun f -> f.CreationTimeUtc)
         |> Seq.map (fun p -> Path.GetFileNameWithoutExtension(Paths.RootRelative p.FullName).Replace("." + currentVersion, ""))
+    
+    let firstPath project tfms =
+        tfms
+        |> Seq.map(fun tfm -> (tfm, sprintf "directory|src/%s/bin/Release/%s" project Paths.MainTFM))
+        |> Seq.where(fun (tfm, path) -> File.Exists path)
+        |> Seq.tryHead
+        
     nugetPackages
     |> Seq.iter(fun p ->
         let outputFile =
             let f = sprintf "breaking-changes-%s.md" p
             Path.Combine(output, f)
-        let args =
-            [
-                "assembly-differ"
-                (sprintf "previous-nuget|%s|%s|%s" p currentVersion Paths.MainTFM);
-                (sprintf "directory|src/%s/bin/Release/%s" p Paths.MainTFM);
-                "-a"; "true"; "--target"; p; "-f"; "github-comment"; "--output"; outputFile
-            ]
         
-        exec "dotnet" args |> ignore
+        let firstKnownTFM = firstPath p [Paths.MainTFM; Paths.Netstandard21TFM]
+        match firstKnownTFM with
+        | None -> printf "Skipping generating API changes for: %s" p
+        | Some (tfm, path) ->
+            let args =
+                [
+                    "assembly-differ"
+                    (sprintf "previous-nuget|%s|%s|%s" p currentVersion tfm);
+                    (sprintf "directory|%s" path);
+                    "-a"; "true"; "--target"; p; "-f"; "github-comment"; "--output"; outputFile
+                ]
+            
+            exec "dotnet" args |> ignore
     )
     
 let private generateReleaseNotes (arguments:ParseResults<Arguments>) =

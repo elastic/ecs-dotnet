@@ -5,15 +5,19 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using BenchmarkDotNet.Engines;
 using BenchmarkDotNet.Environments;
 using BenchmarkDotNet.Exporters;
 using BenchmarkDotNet.Loggers;
 using BenchmarkDotNet.Reports;
 using Elastic.CommonSchema.BenchmarkDotNetExporter.Domain;
-using Elastic.CommonSchema.Elasticsearch;
-using Elasticsearch.Net;
-using static Elastic.CommonSchema.BenchmarkDotNetExporter.ElasticsearchBenchmarkExporterOptions.TimeSeriesStrategy;
+using Elastic.Ingest;
+using Elastic.Ingest.Elasticsearch;
+using Elastic.Ingest.Elasticsearch.CommonSchema;
+using Elastic.Ingest.Elasticsearch.DataStreams;
+using Elastic.Transport;
+using Elastic.Transport.Products.Elasticsearch;
 
 namespace Elastic.CommonSchema.BenchmarkDotNetExporter
 {
@@ -25,17 +29,19 @@ namespace Elastic.CommonSchema.BenchmarkDotNetExporter
 		public ElasticsearchBenchmarkExporter(ElasticsearchBenchmarkExporterOptions options)
 		{
 			Options = options;
-			Client = new ElasticLowLevelClient(Options.CreateConnectionSettings());
+			var config = Options.CreateTransportConfiguration();
+			Transport = new Transport<TransportConfiguration>(config);
 		}
 
-		public ElasticsearchBenchmarkExporter(ElasticsearchBenchmarkExporterOptions options, Func<ElasticsearchBenchmarkExporterOptions, IConnectionConfigurationValues> configure)
+		public ElasticsearchBenchmarkExporter(ElasticsearchBenchmarkExporterOptions options, Func<ElasticsearchBenchmarkExporterOptions, TransportConfiguration> configure)
 		{
 			Options = options;
-			Client = new ElasticLowLevelClient(configure(Options));
+			Transport = new Transport<TransportConfiguration>(configure(Options));
 		}
 
+
+		private Transport<TransportConfiguration> Transport { get; }
 		private ElasticsearchBenchmarkExporterOptions Options { get; }
-		private IElasticLowLevelClient Client { get; set; }
 
 		// We only log when we cannot write to Elasticsearch
 		protected override string FileExtension => "log";
@@ -43,83 +49,39 @@ namespace Elastic.CommonSchema.BenchmarkDotNetExporter
 
 		public override void ExportToLog(Summary summary, ILogger logger)
 		{
-			if (!TryPutIndexTemplate(logger)) return;
-			if (!TryPutPipeline(logger)) return;
+			var waitHandle = new CountdownEvent(1);
+
+			var benchmarksCount = summary.Reports.Length;
+			var options = new DataStreamChannelOptions<BenchmarkDocument>(Transport)
+			{
+				DataStream = new DataStreamName("benchmarks", "dotnet", Options.DataStreamNamespace),
+				BufferOptions = new ElasticsearchBufferOptions<BenchmarkDocument>
+				{
+					WaitHandle = waitHandle,
+					MaxConsumerBufferSize = benchmarksCount
+				},
+				ResponseCallback = ((response, statistics) =>
+				{
+					var errorItems = response.Items.Where(i => i.Status >= 300).ToList();
+					if (response.TryGetElasticsearchServerError(out var error))
+						logger.WriteError(error.ToString());
+					else if (errorItems.Count == 0)
+						logger.WriteLine("Successfully indexed benchmark results");
+					foreach (var errorItem in errorItems)
+						logger.WriteError($"Failed to {errorItem.Action} document status: ${errorItem.Status}, error: ${errorItem.Error}");
+
+				})
+			};
+			var channel = new CommonSchemaChannel<BenchmarkDocument>(options);
+			if (!channel.SetupElasticsearchTemplates()) return;
 
 			var benchmarks = CreateBenchmarkDocuments(summary);
+			channel.TryWriteMany(benchmarks);
 
-			IndexBenchmarksIntoElasticsearch(logger, benchmarks);
+			var waited = waitHandle.Wait(TimeSpan.FromSeconds(10));
+			if (!waited)
+				logger.WriteError($"failed to flush benchmarks within 10second timeout");
 		}
-
-		private void IndexBenchmarksIntoElasticsearch(ILogger logger, List<BenchmarkDocument> benchmarks)
-		{
-			var action =
-				!string.IsNullOrWhiteSpace(Options.PipelineName)
-				? @"{""index"":{""pipeline"":""" + Options.PipelineName + @"""}}"
-				: @"{""index"":{}}";
-			var operations = benchmarks.SelectMany(b => new[] { action, b.Serialize() });
-
-			var result = Client.Bulk<VoidResponse>(Options.IndexName, PostData.MultiJson(operations));
-
-			if (!result.Success) logger.WriteLine(result.DebugInformation);
-		}
-
-		private bool TryPutIndexTemplate(ILogger logger)
-		{
-			var template = IndexTemplates.GetIndexTemplateForElasticsearch7($"{Options.IndexName}-*");
-			var templateExist = Client.Indices.TemplateExistsForAll<VoidResponse>(Options.TemplateName);
-			if (templateExist.HttpStatusCode == 200) return true;
-
-			var putIndexTemplate = Client.Indices.PutTemplateForAll<VoidResponse>(Options.TemplateName, template);
-			if (putIndexTemplate.Success) return true;
-
-			logger.WriteLine(putIndexTemplate.DebugInformation);
-			return false;
-		}
-
-		private bool TryPutPipeline(ILogger logger)
-		{
-			if (string.IsNullOrWhiteSpace(Options.PipelineName)) return true;
-
-			var getPipelineResponse = Client.Ingest.GetPipeline<VoidResponse>(Options.PipelineName);
-			if (getPipelineResponse.Success) return true;
-
-			var rounding = GetIndexRounding();
-
-			var pipeline = new
-			{
-				description = "Enriches the benchmark exports from BenchmarkDotNet",
-				processors = new[]
-				{
-					new
-					{
-						date_index_name = new
-						{
-							field = "@timestamp",
-							index_name_prefix = $"{Options.IndexName}-",
-							// 2020-01-08T20:48:18.1548182+00:00
-							date_formats = new[] { "ISO8601", "yyyy-MM-dd'T'HH:mm:ss.SSSSSSSZ" },
-							date_rounding = rounding
-						}
-					}
-				}
-			};
-
-			var putPipeline = Client.Ingest.PutPipeline<VoidResponse>(Options.PipelineName, PostData.Serializable(pipeline));
-			if (putPipeline.Success) return true;
-
-			logger.WriteLine(putPipeline.DebugInformation);
-			return false;
-		}
-
-		private string GetIndexRounding() =>
-			Options.IndexStrategy switch
-			{
-				Monthly => "M",
-				Daily => "d",
-				Weekly => "w",
-				_ => "y"
-			};
 
 		private List<BenchmarkDocument> CreateBenchmarkDocuments(Summary summary)
 		{

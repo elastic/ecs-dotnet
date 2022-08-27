@@ -9,7 +9,7 @@ using System.Text.Json.Serialization;
 
 namespace Elastic.CommonSchema.Serialization
 {
-	internal abstract class EcsJsonConverterBase<T> : JsonConverter<T>
+	public abstract class EcsJsonConverterBase<T> : JsonConverter<T>
 	{
 		protected static bool ReadDateTime(ref Utf8JsonReader reader, ref DateTimeOffset? set)
 		{
@@ -19,7 +19,7 @@ namespace Elastic.CommonSchema.Serialization
 				return true;
 			}
 
-			set = JsonConfiguration.DateTimeOffsetConverter.Read(ref reader, typeof(DateTimeOffset), JsonConfiguration.SerializerOptions);
+			set = EcsJsonConfiguration.DateTimeOffsetConverter.Read(ref reader, typeof(DateTimeOffset), EcsJsonConfiguration.SerializerOptions);
 			return true;
 		}
 
@@ -33,7 +33,7 @@ namespace Elastic.CommonSchema.Serialization
 		{
 			if (value == null) return;
 
-			var options = JsonConfiguration.SerializerOptions;
+			var options = EcsJsonConfiguration.SerializerOptions;
 
 			writer.WritePropertyName(key);
 			// Attempt to use existing converter first before re-entering through JsonSerializer.Serialize().
@@ -49,7 +49,7 @@ namespace Elastic.CommonSchema.Serialization
 		{
 			if (reader.TokenType == JsonTokenType.Null) return null;
 
-			var options = JsonConfiguration.SerializerOptions;
+			var options = EcsJsonConfiguration.SerializerOptions;
 
 			return JsonSerializer.Deserialize(ref reader, type, options);
 		}
@@ -58,8 +58,20 @@ namespace Elastic.CommonSchema.Serialization
 		{
 			if (reader.TokenType == JsonTokenType.Null) return null;
 
-			var options = JsonConfiguration.SerializerOptions;
+			var options = EcsJsonConfiguration.SerializerOptions;
 
+			/*
+			 * System.NullReferenceException : Object reference not set to an instance of an object.
+  Stack Trace:
+     at System.Text.Json.JsonSerializer.LookupProperty(Object obj, ReadOnlySpan`1 unescapedPropertyName, ReadStack& state, Boolean& useExtensionProperty, Boolean createExtensionProperty)
+   at System.Text.Json.Serialization.Converters.ObjectDefaultConverter`1.OnTryRead(Utf8JsonReader& reader, Type typeToConvert, JsonSerializerOptions options, ReadStack& state, T& value)
+   at System.Text.Json.Serialization.JsonConverter`1.TryRead(Utf8JsonReader& reader, Type typeToConvert, JsonSerializerOptions options, ReadStack& state, T& value)
+			 *
+			 * This used to be a documented fast path that appears to be broken with STJ 5.0. Leaving this commented out to revisit the true performance impact
+			 */
+
+			//if (typeof(T) != typeof(object) && (options?.GetConverter(typeof(TValue)) is JsonConverter<TValue> keyConverter))
+			//	return keyConverter.Read(ref reader, t, options);
 			return JsonSerializer.Deserialize<TValue>(ref reader, options);
 		}
 

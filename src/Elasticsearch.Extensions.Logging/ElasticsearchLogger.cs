@@ -10,21 +10,21 @@ using System.Text;
 using System.Threading;
 using Elastic.CommonSchema;
 using Elastic.Ingest;
+using Elasticsearch.Extensions.Logging.Options;
 using Microsoft.Extensions.Logging;
-using Trace = Elastic.CommonSchema.Trace;
 
 namespace Elasticsearch.Extensions.Logging
 {
 	public class ElasticsearchLogger : ILogger
 	{
 		private readonly string _categoryName;
-		private readonly ElasticsearchChannel<LogEvent> _channel;
+		private readonly IIngestChannel<LogEvent> _channel;
 		private readonly ElasticsearchLoggerOptions _options;
 		private readonly IExternalScopeProvider? _scopeProvider;
 
 		internal ElasticsearchLogger(
 			string categoryName,
-			ElasticsearchChannel<LogEvent> channel,
+			IIngestChannel<LogEvent> channel,
 			ElasticsearchLoggerOptions options,
 			IExternalScopeProvider? scopeProvider
 		)
@@ -46,6 +46,7 @@ namespace Elasticsearch.Extensions.Logging
 			try
 			{
 				if (!IsEnabled(logLevel)) return;
+
 				if (formatter is null) throw new ArgumentNullException(nameof(formatter));
 
 				// TODO: Want to render state values (separate from message) to pass to log event, for semantic logging
@@ -75,7 +76,7 @@ namespace Elasticsearch.Extensions.Logging
 			{
 				_scopeProvider?.ForEachScope((scope, le) =>
 				{
-					le.Labels ??= new Dictionary<string, string>();
+					le.Labels ??= new Labels();
 					le.Scopes ??= new List<string>();
 
 					var isFormattedLogValues = false;
@@ -115,7 +116,7 @@ namespace Elasticsearch.Extensions.Logging
 
 					if (CheckTracingValues(logEvent, kvp)) continue;
 
-					logEvent.Labels ??= new Dictionary<string, string>();
+					logEvent.Labels ??= new Labels();
 					logEvent.Labels[kvp.Key] = FormatValue(kvp.Value);
 				}
 			}
@@ -131,21 +132,20 @@ namespace Elasticsearch.Extensions.Logging
 				{
 					// Unique identifier of the trace.
 					// A trace groups multiple events like transactions that belong together. For example, a user request handled by multiple inter-connected services.
-					logEvent.Trace = new Trace { Id = activity.TraceId.ToString() };
-					logEvent.Span = new Span { Id = activity.SpanId.ToString() };
+					logEvent.TraceId = activity.TraceId.ToString();
+					logEvent.SpanId = activity.SpanId.ToString();
 				}
 				else
 				{
-					if (activity.RootId != null) logEvent.Trace = new Trace { Id = activity.RootId };
-					if (activity.Id != null) logEvent.Span = new Span { Id = activity.Id };
+					if (activity.RootId != null) logEvent.TraceId = activity.RootId;
+					if (activity.Id != null) logEvent.SpanId = activity.Id;
 				}
 			}
 			else
 			{
-				if (!System.Diagnostics.Trace.CorrelationManager.ActivityId.Equals(Guid.Empty))
+				if (!Trace.CorrelationManager.ActivityId.Equals(Guid.Empty))
 				{
-					logEvent.Trace =
-						new Trace { Id = System.Diagnostics.Trace.CorrelationManager.ActivityId.ToString() };
+					logEvent.TraceId = Trace.CorrelationManager.ActivityId.ToString();
 				}
 			}
 		}
@@ -200,8 +200,7 @@ namespace Elasticsearch.Extensions.Logging
 				var value = FormatValue(kvp.Value);
 				if (!string.IsNullOrWhiteSpace(value))
 				{
-					logEvent.Span ??= new Span();
-					logEvent.Span.Id = value;
+					logEvent.SpanId = value;
 				}
 
 				return true;
@@ -212,8 +211,7 @@ namespace Elasticsearch.Extensions.Logging
 				var value = FormatValue(kvp.Value);
 				if (!string.IsNullOrWhiteSpace(value))
 				{
-					logEvent.Trace ??= new Trace();
-					logEvent.Trace.Id = value;
+					logEvent.TraceId = value;
 				}
 
 				return true;
@@ -224,8 +222,7 @@ namespace Elasticsearch.Extensions.Logging
 				var value = FormatValue(kvp.Value);
 				if (!string.IsNullOrWhiteSpace(value))
 				{
-					logEvent.Transaction ??= new Transaction();
-					logEvent.Transaction.Id = value;
+					logEvent.TransactionId = value;
 				}
 
 				return true;
