@@ -33,6 +33,7 @@ Official NuGet packages can be referenced from [NuGet.org](https://www.nuget.org
 | `Elastic.CommonSchema`  |  Foundational project that contains a full C# representation of ECS, used by the other integrations listed. | [![NuGet Release][ElasticCommonSchema-image]][ElasticCommonSchema-nuget-url]  |
 | `Elastic.CommonSchema.Serilog`  |  Formats a Serilog log message into a JSON representation that can be indexed into Elasticsearch. | [![NuGet Release][ElasticCommonSchemaSerilog-image]][ElasticCommonSchemaSerilog-nuget-url]  |
 | `Elastic.CommonSchema.NLog`  |  Formats an NLog message into a JSON representation that can be indexed into Elasticsearch. | [![NuGet Release][ElasticCommonSchemaNLog-image]][ElasticCommonSchemaNLog-nuget-url]  |
+| `Elastic.CommonSchema.Log4net`  |  Formats a log4net message into a JSON representation that can be indexed into Elasticsearch. | [![NuGet Release][ElasticCommonSchemaLog4net-image]][ElasticCommonSchemaLog4net-nuget-url]  |
 | `Elastic.Apm.SerilogEnricher`   |  Adds transaction id and trace id to every Serilog log message that is created during a transaction. This works in conjunction with the Elastic.CommonSchema.Serilog package and forms a solution to distributed tracing with Serilog. | [![NuGet Release][ElasticApmSerilogEnricher-image]][ElasticApmSerilogEnricher-nuget-url]  |
 | `Elastic.Apm.NLog`              |  Introduces two special placeholder variables (ElasticApmTraceId and ElasticApmTransactionId) for use within your NLog templates. | [![NuGet Release][ElasticApmNLog-image]][ElasticApmNLog-nuget-url]  |
 | `Elastic.CommonSchema.BenchmarkDotNetExporter`  |  An exporter for BenchmarkDotnet that can index benchmarking results directly into Elasticsearch, which can be helpful for detecting code-related performance problems over time. | [![NuGet Release][ElasticBenchmarkDotNetExporter-image]][ElasticBenchmarkDotNetExporter-nuget-url]  |
@@ -45,6 +46,9 @@ Official NuGet packages can be referenced from [NuGet.org](https://www.nuget.org
 
 [ElasticCommonSchemaNLog-nuget-url]:https://www.nuget.org/packages/Elastic.CommonSchema.NLog/
 [ElasticCommonSchemaNLog-image]:https://img.shields.io/nuget/v/Elastic.CommonSchema.NLog.svg
+
+[ElasticCommonSchemaLog4net-nuget-url]:https://www.nuget.org/packages/Elastic.CommonSchema.Log4net/
+[ElasticCommonSchemaLog4net-image]:https://img.shields.io/nuget/v/Elastic.CommonSchema.Log4net.svg
 
 [ElasticApmSerilogEnricher-nuget-url]:https://www.nuget.org/packages/Elastic.Apm.SerilogEnricher/
 [ElasticApmSerilogEnricher-image]:https://img.shields.io/nuget/v/Elastic.Apm.SerilogEnricher.svg
@@ -103,6 +107,18 @@ var consoleTarget = new ConsoleTarget("console") { Layout = new EcsLayout() };  
 config.AddRule(LogLevel.Debug, LogLevel.Fatal, consoleTarget);
 LogManager.Configuration = config;
 var logger = LogManager.GetCurrentClassLogger();
+```
+
+### [Elastic.CommonSchema.Log4net](https://github.com/elastic/ecs-dotnet/tree/main/src/Elastic.CommonSchema.Log4net)
+
+Formats a log4net event into a JSON representation that adheres to the Elastic Common Schema. [Learn more...](https://github.com/elastic/ecs-dotnet/tree/main/src/Elastic.CommonSchema.Log4net)
+
+```csharp
+var hierarchy = (Hierarchy)LogManager.CreateRepository(Guid.NewGuid().ToString());
+var appender = new ConsoleAppender { Layout = new EcsLayout() }; // Use the ECS layout.
+hierarchy.Root.AddAppender(appender);
+hierarchy.Root.Level = Level.All;
+hierarchy.Configured = true;
 ```
 
 ## APM

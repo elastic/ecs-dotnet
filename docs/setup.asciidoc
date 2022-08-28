@@ -11,6 +11,7 @@ The following logging frameworks are supported:
 
 * Serilog
 * NLog
+* log4net
 
 [float]
 ==== Add the dependency

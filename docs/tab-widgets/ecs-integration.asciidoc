@@ -248,3 +248,58 @@ information for an event
 |====
 
 // end::nlog[]
+
+// tag::log4net[]
+**log4net Layout**
+
+`EcsLayout` is a `ILayout` implementation in Elastic.CommonSchema.Log4net that
+formats a log4net event into a JSON representation that adheres to the
+Elastic Common Schema specification.
+
+It can be configured as the layout of a log4net appender. To configure
+with the file appender for example, using code configuration:
+
+[source, csharp]
+----
+var repositoryId = Guid.NewGuid().ToString();
+var hierarchy = (Hierarchy)LogManager.CreateRepository(repositoryId);
+var appender = new FileAppender
+{
+    Layout = new EcsLayout(), <1>
+    File = "/path/to/log.txt"
+};
+hierarchy.Root.AddAppender(appender);
+hierarchy.Root.Level = Level.All;
+hierarchy.Configured = true;
+var logger = LogManager.GetLogger(repositoryId, GetType().Name);
+----
+<1> Create a new instance of ECS layout
+
+In addition to code configuration, `EcsLayout` can be configured using
+https://logging.apache.org/log4net/release/manual/configuration.html[`XML configuration`]:
+
+[source,xml]
+----
+<log4net>
+  <root>
+    <level value="INFO" />
+    <appender-ref ref="ConsoleAppender" />
+  </root>
+  <appender name="ConsoleAppender" type="log4net.Appender.ConsoleAppender">
+    <layout type="Elastic.CommonSchema.Log4net.EcsLayout, Elastic.CommonSchema.Log4net" />
+  </appender>
+</log4net>
+----
+
+Now, when logging events:
+
+[source,csharp]
+----
+logger.InfoFormat("Checkout contains {0} items", 12); <1>
+----
+<1> log a message with the information level
+
+Each log4net log event will be formatted as single line JSON in the file
+`/path/to/log.txt`.
+
+// end::log4net[]

@@ -88,3 +88,48 @@ or nuget CLI
 Install-Package Elastic.CommonSchema.NLog -Version ${ecs-logging-dotnet.version}
 ----
 // end::nlog[]
+
+// tag::log4net[]
+The following target frameworks are supported
+
+|===
+| Name | Target Framework Moniker (TFM)
+
+| .NET Framework 4.6.1
+| `net461`
+
+| .NET Standard 2.0
+| `netstandard2.0`
+
+| .NET Standard 2.1
+| `netstandard2.1`
+|===
+
+The minimum required log4net version is 2.0.15.
+
+Add a dependency to your application project file:
+[source,xml]
+[subs="attributes"]
+----
+<Project Sdk="Microsoft.NET.Sdk">
+    <!-- other details excluded for brevity... -->
+    <ItemGroup>
+        <PackageReference Include="Elastic.CommonSchema.Log4net" Version="${ecs-logging-dotnet.version}" />
+    </ItemGroup>
+</Project>
+----
+
+or install with the .NET CLI
+[source,sh]
+[subs="attributes"]
+----
+dotnet add package Elastic.CommonSchema.Log4net --version ${ecs-logging-dotnet.version}
+----
+
+or nuget CLI
+[source,sh]
+[subs="attributes"]
+----
+Install-Package Elastic.CommonSchema.Log4net -Version ${ecs-logging-dotnet.version}
+----
+// end::log4net[]
