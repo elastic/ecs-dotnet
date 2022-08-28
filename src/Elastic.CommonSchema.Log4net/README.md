@@ -68,7 +68,7 @@ Sample log event output (formatted for readability):
         "0": "Hi"
     },
     "ecs": {
-        "version": "8.4.0"
+        "version": "8.3.1"
     },
     "event": {
         "timezone": "Central European Time",
@@ -78,7 +78,7 @@ Sample log event output (formatted for readability):
         "hostname": "HGU780D3"
     },
     "log": {
-        "logger": "Elastic.CommonSchema.log4net.Example.Program",
+        "logger": "Elastic.CommonSchema.Log4net.Example.Program",
         "original": null,
         "origin": {
             "file": {
