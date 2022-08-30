@@ -100,15 +100,16 @@ namespace Elastic.CommonSchema.Serilog
 				if (_httpContextAccessor.HttpContext == null)
 					return null;
 
-				var uri = ConvertToUri(_httpContextAccessor.HttpContext.Request);
+				var request = _httpContextAccessor.HttpContext.Request;
+				var uri = ConvertToUri(request);
 
 				return new Url
 				{
-					Path = _httpContextAccessor.HttpContext.Request.Path,
-					Original = _httpContextAccessor.HttpContext.Request.Path,
+					Path = request.Path,
+					Original = request.Path,
 					Full = uri.ToString(),
 					Scheme = uri.Scheme,
-					Query = string.IsNullOrEmpty(uri.Query) ? null : uri.Query,
+					Query = request.QueryString.HasValue ? request.QueryString.Value.TrimStart('?') : null,
 					Domain = uri.Authority,
 					Port = uri.Port
 				};
