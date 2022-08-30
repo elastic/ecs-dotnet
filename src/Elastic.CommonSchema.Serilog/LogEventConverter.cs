@@ -37,6 +37,16 @@ namespace Elastic.CommonSchema.Serilog
 			public const string ProcessId = nameof(ProcessId);
 			public const string ThreadId = nameof(ThreadId);
 			public const string MachineName = nameof(MachineName);
+			public const string Elapsed = nameof(Elapsed);
+			public const string ElapsedMilliseconds = nameof(ElapsedMilliseconds);
+			public const string Method = nameof(Method);
+			public const string RequestMethod = nameof(RequestMethod);
+			public const string Path = nameof(Path);
+			public const string RequestPath = nameof(RequestPath);
+			public const string StatusCode = nameof(StatusCode);
+			public const string Scheme = nameof(Scheme);
+			public const string QueryString = nameof(QueryString);
+			public const string RequestId = nameof(RequestId);
 		}
 
 		public static EcsDocument ConvertToEcs(LogEvent logEvent, IEcsTextFormatterConfiguration configuration)
@@ -63,8 +73,8 @@ namespace Elastic.CommonSchema.Serilog
 				TransactionId = GetTransaction(logEvent),
 				SpanId = GetSpan(logEvent),
 				Server = GetServer(logEvent, configuration),
-				Http = GetHttp(configuration),
-				Url = GetUrl(configuration),
+				Http = GetHttp(logEvent, configuration),
+				Url = GetUrl(logEvent, configuration),
 				UserAgent = GetUserAgent(configuration),
 				Client = GetClient(configuration),
 				User = GetUser(configuration)
@@ -119,29 +129,13 @@ namespace Elastic.CommonSchema.Serilog
 
 			foreach (var logEventPropertyValue in logEvent.Properties)
 			{
-				switch (logEventPropertyValue.Key) {
-					// already mapped as structured ECS event
-					case SpecialKeys.SourceContext:
-					case SpecialKeys.EnvironmentUserName:
-					case SpecialKeys.Host:
-					case SpecialKeys.ActionCategory:
-					case SpecialKeys.ActionName:
-					case SpecialKeys.ActionId:
-					case SpecialKeys.ActionKind:
-					case SpecialKeys.ActionSeverity:
-					case SpecialKeys.ApplicationId:
-					case SpecialKeys.ApplicationName:
-					case SpecialKeys.ApplicationType:
-					case SpecialKeys.ApplicationVersion:
-					case SpecialKeys.ProcessName:
-					case SpecialKeys.ProcessId:
-					case SpecialKeys.ThreadId:
-					case SpecialKeys.MachineName:
-						continue;
-				}
+				if (PropertyAlreadyMapped(logEventPropertyValue.Key))
+					continue;
+
 				//key present in list of keys to filter
 				if (logEventPropertiesToFilter?.Contains(logEventPropertyValue.Key) ?? false)
 					continue;
+
 				dict.Add(logEventPropertyValue.Key, PropertyValueToObject(logEventPropertyValue.Value));
 			}
 
@@ -149,6 +143,43 @@ namespace Elastic.CommonSchema.Serilog
 				return null;
 
 			return dict;
+		}
+
+		private static bool PropertyAlreadyMapped(string property)
+		{
+			switch (property)
+			{
+				// already mapped as structured ECS event
+				case SpecialKeys.SourceContext:
+				case SpecialKeys.EnvironmentUserName:
+				case SpecialKeys.Host:
+				case SpecialKeys.ActionCategory:
+				case SpecialKeys.ActionName:
+				case SpecialKeys.ActionId:
+				case SpecialKeys.ActionKind:
+				case SpecialKeys.ActionSeverity:
+				case SpecialKeys.ApplicationId:
+				case SpecialKeys.ApplicationName:
+				case SpecialKeys.ApplicationType:
+				case SpecialKeys.ApplicationVersion:
+				case SpecialKeys.ProcessName:
+				case SpecialKeys.ProcessId:
+				case SpecialKeys.ThreadId:
+				case SpecialKeys.MachineName:
+				case SpecialKeys.Elapsed:
+				case SpecialKeys.ElapsedMilliseconds:
+				case SpecialKeys.Method:
+				case SpecialKeys.RequestMethod:
+				case SpecialKeys.Path:
+				case SpecialKeys.RequestPath:
+				case SpecialKeys.StatusCode:
+				case SpecialKeys.Scheme:
+				case SpecialKeys.QueryString:
+				case SpecialKeys.RequestId:
+					return true;
+				default:
+					return false;
+			}
 		}
 
 		private static object PropertyValueToObject(LogEventPropertyValue propertyValue)
@@ -284,6 +315,10 @@ namespace Elastic.CommonSchema.Serilog
 
 		private static Event GetEvent(LogEvent e)
 		{
+			var elapsedMs = e.TryGetScalarPropertyValue(SpecialKeys.Elapsed, out var elapsed)
+				? elapsed.Value
+				: e.TryGetScalarPropertyValue(SpecialKeys.ElapsedMilliseconds, out elapsed) ? elapsed.Value : null;
+
 			var evnt = new Event
 			{
 				Created = e.Timestamp,
@@ -300,7 +335,8 @@ namespace Elastic.CommonSchema.Serilog
 				Severity = e.TryGetScalarPropertyValue(SpecialKeys.ActionSeverity, out var actionSev)
 					? long.Parse(actionSev.Value.ToString())
 					: (int)e.Level,
-				Timezone = TimeZoneInfo.Local.StandardName
+				Timezone = TimeZoneInfo.Local.StandardName,
+				Duration = elapsedMs != null ? (long)((double)elapsedMs * 1000000) : null
 			};
 
 			return evnt;
@@ -369,9 +405,56 @@ namespace Elastic.CommonSchema.Serilog
 			return fullText.ToString();
 		}
 
-		private static Http GetHttp(IEcsTextFormatterConfiguration configuration) => configuration.MapHttpAdapter?.Http;
+		private static Http GetHttp(LogEvent e, IEcsTextFormatterConfiguration configuration)
+		{
+			var http = configuration.MapHttpAdapter?.Http;
 
-		private static Url GetUrl(IEcsTextFormatterConfiguration configuration) => configuration.MapHttpAdapter?.Url;
+			if (e.TryGetScalarPropertyValue(SpecialKeys.Method, out var method) || e.TryGetScalarPropertyValue(SpecialKeys.RequestMethod, out method))
+			{
+				http ??= new Http();
+				http.RequestMethod = method.Value.ToString();
+			}
+
+			if (e.TryGetScalarPropertyValue(SpecialKeys.RequestId, out var requestId))
+			{
+				http ??= new Http();
+				http.RequestId = requestId.Value.ToString();
+			}
+
+			if (e.TryGetScalarPropertyValue(SpecialKeys.StatusCode, out var statusCode))
+			{
+				http ??= new Http();
+				http.ResponseStatusCode = (int)statusCode.Value;
+			}
+
+			return http;
+		}
+
+		private static Url GetUrl(LogEvent e, IEcsTextFormatterConfiguration configuration)
+		{
+			var url = configuration.MapHttpAdapter?.Url;
+
+			if (e.TryGetScalarPropertyValue(SpecialKeys.Path, out var path) || e.TryGetScalarPropertyValue(SpecialKeys.RequestPath, out path))
+			{
+				url ??= new Url();
+				url.Path = path.Value.ToString();
+			}
+
+			if (e.TryGetScalarPropertyValue(SpecialKeys.Scheme, out var scheme))
+			{
+				url ??= new Url();
+				url.Scheme = scheme.Value.ToString();
+			}
+
+			if (e.TryGetScalarPropertyValue(SpecialKeys.QueryString, out var queryString))
+			{
+				url ??= new Url();
+				var str = queryString.Value?.ToString();
+				url.Query = string.IsNullOrEmpty(str) ? null : str.TrimStart('?');
+			}
+
+			return url;
+		}
 
 		private static UserAgent GetUserAgent(IEcsTextFormatterConfiguration configuration) => configuration.MapHttpAdapter?.UserAgent;
 

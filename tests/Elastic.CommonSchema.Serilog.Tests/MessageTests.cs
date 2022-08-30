@@ -108,5 +108,119 @@ namespace Elastic.CommonSchema.Serilog.Tests
 			json.Value.GetProperty("test_prop").GetString().Should().Be("testing");
 			json.Value.GetProperty("child").GetProperty("child_prop").GetDouble().Should().Be(3.3);
 		});
+
+		[Theory]
+		[InlineData("Elapsed")]
+		[InlineData("ElapsedMilliseconds")]
+		public void SeesMessageWithElapsedProp(string property) => TestLogger((logger, getLogEvents) =>
+		{
+			logger.Information($"Info {{{property}}}", 2.2);
+
+			var logEvents = getLogEvents();
+			logEvents.Should().HaveCount(1);
+
+			var ecsEvents = ToEcsEvents(logEvents);
+
+			var (_, info) = ecsEvents.First();
+			info.Event.Duration.Should().Be(2200000);
+			info.Metadata.Should().NotContainKey(property);
+		});
+
+		[Theory]
+		[InlineData("Method")]
+		[InlineData("RequestMethod")]
+		public void SeesMessageWithMethodProp(string property) => TestLogger((logger, getLogEvents) =>
+		{
+			logger.Information($"Request {{{property}}}", "GET");
+
+			var logEvents = getLogEvents();
+			logEvents.Should().HaveCount(1);
+
+			var ecsEvents = ToEcsEvents(logEvents);
+
+			var (_, info) = ecsEvents.First();
+			info.Http.RequestMethod.Should().Be("GET");
+			info.Metadata.Should().NotContainKey(property);
+		});
+
+		[Theory]
+		[InlineData("Path")]
+		[InlineData("RequestPath")]
+		public void SeesMessageWithPathProp(string property) => TestLogger((logger, getLogEvents) =>
+		{
+			logger.Information($"Request {{{property}}}", "/");
+
+			var logEvents = getLogEvents();
+			logEvents.Should().HaveCount(1);
+
+			var ecsEvents = ToEcsEvents(logEvents);
+
+			var (_, info) = ecsEvents.First();
+			info.Url.Path.Should().Be("/");
+			info.Metadata.Should().NotContainKey(property);
+		});
+
+		[Fact]
+		public void SeesMessageWithStatusCodeProp() => TestLogger((logger, getLogEvents) =>
+		{
+			logger.Information("Request {StatusCode}", 200);
+
+			var logEvents = getLogEvents();
+			logEvents.Should().HaveCount(1);
+
+			var ecsEvents = ToEcsEvents(logEvents);
+
+			var (_, info) = ecsEvents.First();
+			info.Http.ResponseStatusCode.Should().Be(200);
+			info.Metadata.Should().NotContainKey("StatusCode");
+		});
+
+		[Fact]
+		public void SeesMessageWithSchemeProp() => TestLogger((logger, getLogEvents) =>
+		{
+			logger.Information("Request {Scheme}", "https");
+
+			var logEvents = getLogEvents();
+			logEvents.Should().HaveCount(1);
+
+			var ecsEvents = ToEcsEvents(logEvents);
+
+			var (_, info) = ecsEvents.First();
+			info.Url.Scheme.Should().Be("https");
+			info.Metadata.Should().NotContainKey("Scheme");
+		});
+
+		[Theory]
+		[InlineData("QueryString", "", null)]
+		[InlineData("QueryString", "?", "")]
+		[InlineData("QueryString", "?p=1&q=2", "p=1&q=2")]
+		public void SeesMessageWithQueryStringProp(string property, string value, object expectedValue) => TestLogger((logger, getLogEvents) =>
+		{
+			logger.Information($"Request {{{property}}}", value);
+
+			var logEvents = getLogEvents();
+			logEvents.Should().HaveCount(1);
+
+			var ecsEvents = ToEcsEvents(logEvents);
+
+			var (_, info) = ecsEvents.First();
+			info.Url.Query.Should().Equals(expectedValue);
+			info.Metadata.Should().NotContainKey(property);
+		});
+
+		[Fact]
+		public void SeesMessageWithRequestIdProp() => TestLogger((logger, getLogEvents) =>
+		{
+			logger.Information("Request {RequestId}", "34985y39y6tg95");
+
+			var logEvents = getLogEvents();
+			logEvents.Should().HaveCount(1);
+
+			var ecsEvents = ToEcsEvents(logEvents);
+
+			var (_, info) = ecsEvents.First();
+			info.Http.RequestId.Should().Be("34985y39y6tg95");
+			info.Metadata.Should().NotContainKey("RequestId");
+		});
 	}
 }
