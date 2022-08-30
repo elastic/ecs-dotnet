@@ -83,7 +83,7 @@ On run, the console will show various events written in ECS format, an example g
     "ip": "::1"
   },
   "ecs": {
-    "version": "1.5.0"
+    "version": "8.3.1"
   },
   "event": {
     "severity": 2,
@@ -112,16 +112,17 @@ On run, the console will show various events written in ECS format, an example g
     "title": ""
   },
   "server": {
-    "domain": "localhost:5001"
+    "address": "localhost:59987",
+    "domain": "localhost",
+    "ip": "::1"
   },
   "url": {
-    "original": "/weatherforecast",
+    "original": "https://localhost:5001/weatherforecast",
     "full": "https://localhost:5001/weatherforecast",
     "scheme": "https",
-    "domain": "localhost:5001",
+    "domain": "localhost",
     "port": 5001,
-    "path": "/weatherforecast",
-    "query": ""
+    "path": "/weatherforecast"
   },
   "user_agent": {
     "os": {
