@@ -1,4 +1,4 @@
-﻿// Licensed to Elasticsearch B.V under one or more agreements.
+// Licensed to Elasticsearch B.V under one or more agreements.
 // Elasticsearch B.V licenses this file to you under the Apache 2.0 License.
 // See the LICENSE file in the project root for more information
 
@@ -62,17 +62,13 @@ namespace Elastic.CommonSchema.Serilog
 				TraceId = GetTrace(logEvent),
 				TransactionId = GetTransaction(logEvent),
 				SpanId = GetSpan(logEvent),
-				Server = GetServer(logEvent, configuration)
+				Server = GetServer(logEvent, configuration),
+				Http = GetHttp(configuration),
+				Url = GetUrl(configuration),
+				UserAgent = GetUserAgent(configuration),
+				Client = GetClient(configuration),
+				User = GetUser(configuration)
 			};
-
-			if (configuration.MapHttpAdapter != null)
-			{
-				ecsEvent.Http = configuration.MapHttpAdapter.Http;
-				ecsEvent.Url = configuration.MapHttpAdapter.Url;
-				ecsEvent.UserAgent = configuration.MapHttpAdapter.UserAgent;
-				ecsEvent.Client = configuration.MapHttpAdapter.Client;
-				ecsEvent.User = configuration.MapHttpAdapter.User;
-			}
 
 			if (configuration.MapExceptions)
 				ecsEvent.Error = GetError(exceptions);
@@ -374,5 +370,15 @@ namespace Elastic.CommonSchema.Serilog
 
 			return fullText.ToString();
 		}
+
+		private static Http GetHttp(IEcsTextFormatterConfiguration configuration) => configuration.MapHttpAdapter?.Http;
+
+		private static Url GetUrl(IEcsTextFormatterConfiguration configuration) => configuration.MapHttpAdapter?.Url;
+
+		private static UserAgent GetUserAgent(IEcsTextFormatterConfiguration configuration) => configuration.MapHttpAdapter?.UserAgent;
+
+		private static User GetUser(IEcsTextFormatterConfiguration configuration) => configuration.MapHttpAdapter?.User;
+
+		private static Client GetClient(IEcsTextFormatterConfiguration configuration) => configuration.MapHttpAdapter?.Client;
 	}
 }
