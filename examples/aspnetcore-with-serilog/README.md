@@ -112,7 +112,7 @@ On run, the console will show various events written in ECS format, an example g
     "title": ""
   },
   "server": {
-    "address": "localhost:59987",
+    "address": "localhost:5001",
     "domain": "localhost",
     "ip": "::1"
   },
