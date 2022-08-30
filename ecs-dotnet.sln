@@ -96,11 +96,14 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Elastic.Ingest.Elasticsearc
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Elastic.Ingest.IntegrationTests", "tests\Elastic.Ingest.IntegrationTests\Elastic.Ingest.IntegrationTests.csproj", "{6A62695B-C2D2-47EA-8F74-232B87E835E7}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Elastic.CommonSchema.Serilog.Sink", "src\Elastic.CommonSchema.Serilog.Sink\Elastic.CommonSchema.Serilog.Sink.csproj", "{30080079-D3EE-4BDC-9BE9-9D1B3B2BEF8D}"
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Elastic.CommonSchema.Log4net", "src\Elastic.CommonSchema.Log4net\Elastic.CommonSchema.Log4net.csproj", "{DD7D6E56-58DB-4E13-9DFC-AE031F1C31B3}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Elastic.CommonSchema.Log4net.Tests", "tests\Elastic.CommonSchema.Log4net.Tests\Elastic.CommonSchema.Log4net.Tests.csproj", "{14BFAF67-8DB6-48D0-B57E-84767BA2A239}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Elastic.CommonSchema.Serilog.Sink", "src\Elastic.CommonSchema.Serilog.Sink\Elastic.CommonSchema.Serilog.Sink.csproj", "{30080079-D3EE-4BDC-9BE9-9D1B3B2BEF8D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Elastic.Ingest.IntegrationTests", "tests\Elastic.Ingest.IntegrationTests\Elastic.Ingest.IntegrationTests.csproj", "{E05EA054-879E-449A-BE23-86C890F740B9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Elastic.CommonSchema.Serilog.Sinks.IntegrationTests", "tests\Elastic.CommonSchema.Serilog.Sink.IntegrationTests\Elastic.CommonSchema.Serilog.Sinks.IntegrationTests.csproj", "{622CC10E-B475-4649-8411-CABC31E7C252}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -242,6 +245,14 @@ Global
 		{30080079-D3EE-4BDC-9BE9-9D1B3B2BEF8D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{30080079-D3EE-4BDC-9BE9-9D1B3B2BEF8D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{30080079-D3EE-4BDC-9BE9-9D1B3B2BEF8D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E05EA054-879E-449A-BE23-86C890F740B9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E05EA054-879E-449A-BE23-86C890F740B9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E05EA054-879E-449A-BE23-86C890F740B9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E05EA054-879E-449A-BE23-86C890F740B9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{622CC10E-B475-4649-8411-CABC31E7C252}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{622CC10E-B475-4649-8411-CABC31E7C252}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{622CC10E-B475-4649-8411-CABC31E7C252}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{622CC10E-B475-4649-8411-CABC31E7C252}.Release|Any CPU.Build.0 = Release|Any CPU
 		{DD7D6E56-58DB-4E13-9DFC-AE031F1C31B3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{DD7D6E56-58DB-4E13-9DFC-AE031F1C31B3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DD7D6E56-58DB-4E13-9DFC-AE031F1C31B3}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -290,6 +301,8 @@ Global
 		{68128AE4-350C-4FB2-A971-C9272A1F3829} = {7610B796-BB3E-4CB2-8296-79BBFF6D23FC}
 		{6A62695B-C2D2-47EA-8F74-232B87E835E7} = {3582B07D-C2B0-49CC-B676-EAF806EB010E}
 		{30080079-D3EE-4BDC-9BE9-9D1B3B2BEF8D} = {7610B796-BB3E-4CB2-8296-79BBFF6D23FC}
+		{E05EA054-879E-449A-BE23-86C890F740B9} = {3582B07D-C2B0-49CC-B676-EAF806EB010E}
+		{622CC10E-B475-4649-8411-CABC31E7C252} = {3582B07D-C2B0-49CC-B676-EAF806EB010E}
 		{DD7D6E56-58DB-4E13-9DFC-AE031F1C31B3} = {7610B796-BB3E-4CB2-8296-79BBFF6D23FC}
 		{14BFAF67-8DB6-48D0-B57E-84767BA2A239} = {3582B07D-C2B0-49CC-B676-EAF806EB010E}
 	EndGlobalSection

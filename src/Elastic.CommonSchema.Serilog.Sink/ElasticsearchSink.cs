@@ -1,5 +1,6 @@
 using System;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using Elastic.Ingest.Elasticsearch;
 using Elastic.Ingest.Elasticsearch.CommonSchema;
 using Elastic.Ingest.Elasticsearch.DataStreams;
@@ -13,22 +14,24 @@ namespace Elastic.CommonSchema.Serilog.Sink
 {
 	public class ElasticsearchSchemaSinkOptions
 	{
-		public ITransport Transport { get; set; } = TransportHelper.Default();
+		public ElasticsearchSchemaSinkOptions() : this(TransportHelper.Default()) {}
+		public ElasticsearchSchemaSinkOptions(ITransport transport) => Transport = transport;
+
+		public ITransport Transport { get; }
 		public EcsTextFormatterConfiguration EcsTextFormatterConfiguration { get; set; } = new ();
 		public DataStreamName DataStream { get; set; } = new("logs", "dotnet");
 		public Action<DataStreamChannelOptions<EcsDocument>>? ConfigureChannel { get; set; }
+		public bool DisableElasticsearchTemplateSetup { get; set; }
 
 	}
 	public class ElasticsearchSink : ILogEventSink
 	{
 		private readonly EcsTextFormatterConfiguration _formatterConfiguration;
-		private readonly EcsTextFormatter _formatter;
 		private readonly CommonSchemaChannel<EcsDocument> _channel;
 
 		public ElasticsearchSink(ElasticsearchSchemaSinkOptions options)
 		{
 			_formatterConfiguration = options.EcsTextFormatterConfiguration;
-			_formatter = new EcsTextFormatter(_formatterConfiguration);
 			var channelOptions = new DataStreamChannelOptions<EcsDocument>(options.Transport)
 			{
 				DataStream = options.DataStream,
@@ -44,6 +47,8 @@ namespace Elastic.CommonSchema.Serilog.Sink
 			};
 			options.ConfigureChannel?.Invoke(channelOptions);
 			_channel = new CommonSchemaChannel<EcsDocument>(channelOptions);
+			if (!options.DisableElasticsearchTemplateSetup)
+				_channel.SetupElasticsearchTemplates();
 		}
 
 
