@@ -5,7 +5,7 @@
 /*
 IMPORTANT NOTE
 ==============
-This file has been generated. 
+This file has been generated.
 If you wish to submit a PR please modify the original csharp file and submit the PR with that change. Thanks!
 */
 
@@ -17,11 +17,12 @@ using System.Threading.Tasks;
 using System.Linq;
 using System.Net;
 using System.Runtime.Serialization;
+using System.Text.Json.Serialization;
 
 namespace Elastic.CommonSchema
 {
 	///<inheritdoc cref="BaseFieldSet"/>
-	public partial class EcsDocument : BaseFieldSet 
+	public partial class EcsDocument : BaseFieldSet
 	{
 
 		/// <summary>
@@ -32,7 +33,7 @@ namespace Elastic.CommonSchema
 		/// <summary>
 		/// Container for additional metadata against this event.
 		/// </summary>
-		[DataMember(Name = "metadata")]
+		[JsonPropertyName("metadata")]
 		public IDictionary<string, object> Metadata { get; set; }
 
 
