@@ -101,7 +101,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Elastic.CommonSchema.Log4ne
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Elastic.CommonSchema.Log4net.Tests", "tests\Elastic.CommonSchema.Log4net.Tests\Elastic.CommonSchema.Log4net.Tests.csproj", "{14BFAF67-8DB6-48D0-B57E-84767BA2A239}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Elastic.Ingest.IntegrationTests", "tests\Elastic.Ingest.IntegrationTests\Elastic.Ingest.IntegrationTests.csproj", "{E05EA054-879E-449A-BE23-86C890F740B9}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Elastic.Ingest.IntegrationTests", "tests\Elastic.Ingest.IntegrationTests\Elastic.Ingest.IntegrationTests.csproj", "{6A62695B-C2D2-47EA-8F74-232B87E835E7}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Elastic.CommonSchema.Serilog.Sinks.IntegrationTests", "tests\Elastic.CommonSchema.Serilog.Sink.IntegrationTests\Elastic.CommonSchema.Serilog.Sinks.IntegrationTests.csproj", "{622CC10E-B475-4649-8411-CABC31E7C252}"
 EndProject
