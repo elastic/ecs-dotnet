@@ -17,6 +17,7 @@ using System.Threading.Tasks;
 using System.Linq;
 using System.Net;
 using System.Runtime.Serialization;
+using System.Text.Json.Serialization;
 
 namespace Elastic.CommonSchema
 {
@@ -39,23 +40,23 @@ namespace Elastic.CommonSchema
 	public class DnsAnswers {
 
 		///<summary>dns.answers.class</summary>
-		[DataMember(Name = "class")]
+		[JsonPropertyName("class")]
 		public string Class { get; set; }
 
 		///<summary>dns.answers.data</summary>
-		[DataMember(Name = "data")]
+		[JsonPropertyName("data")]
 		public string Data { get; set; }
 
 		///<summary>dns.answers.name</summary>
-		[DataMember(Name = "name")]
+		[JsonPropertyName("name")]
 		public string Name { get; set; }
 
 		///<summary>dns.answers.ttl</summary>
-		[DataMember(Name = "ttl")]
+		[JsonPropertyName("ttl")]
 		public long? Ttl { get; set; }
 
 		///<summary>dns.answers.type</summary>
-		[DataMember(Name = "type")]
+		[JsonPropertyName("type")]
 		public string Type { get; set; }
 	}
 
@@ -65,39 +66,39 @@ namespace Elastic.CommonSchema
 	public class ElfSections {
 
 		///<summary>elf.sections.chi2</summary>
-		[DataMember(Name = "chi2")]
+		[JsonPropertyName("chi2")]
 		public long? Chi2 { get; set; }
 
 		///<summary>elf.sections.entropy</summary>
-		[DataMember(Name = "entropy")]
+		[JsonPropertyName("entropy")]
 		public long? Entropy { get; set; }
 
 		///<summary>elf.sections.flags</summary>
-		[DataMember(Name = "flags")]
+		[JsonPropertyName("flags")]
 		public string Flags { get; set; }
 
 		///<summary>elf.sections.name</summary>
-		[DataMember(Name = "name")]
+		[JsonPropertyName("name")]
 		public string Name { get; set; }
 
 		///<summary>elf.sections.physical_offset</summary>
-		[DataMember(Name = "physical_offset")]
+		[JsonPropertyName("physical_offset")]
 		public string PhysicalOffset { get; set; }
 
 		///<summary>elf.sections.physical_size</summary>
-		[DataMember(Name = "physical_size")]
+		[JsonPropertyName("physical_size")]
 		public long? PhysicalSize { get; set; }
 
 		///<summary>elf.sections.type</summary>
-		[DataMember(Name = "type")]
+		[JsonPropertyName("type")]
 		public string Type { get; set; }
 
 		///<summary>elf.sections.virtual_address</summary>
-		[DataMember(Name = "virtual_address")]
+		[JsonPropertyName("virtual_address")]
 		public long? VirtualAddress { get; set; }
 
 		///<summary>elf.sections.virtual_size</summary>
-		[DataMember(Name = "virtual_size")]
+		[JsonPropertyName("virtual_size")]
 		public long? VirtualSize { get; set; }
 	}
 
@@ -107,11 +108,11 @@ namespace Elastic.CommonSchema
 	public class ElfSegments {
 
 		///<summary>elf.segments.sections</summary>
-		[DataMember(Name = "sections")]
+		[JsonPropertyName("sections")]
 		public string Sections { get; set; }
 
 		///<summary>elf.segments.type</summary>
-		[DataMember(Name = "type")]
+		[JsonPropertyName("type")]
 		public string Type { get; set; }
 	}
 
@@ -121,23 +122,23 @@ namespace Elastic.CommonSchema
 	public class EmailAttachments {
 
 		///<summary>email.attachments.file.extension</summary>
-		[DataMember(Name = "file.extension")]
+		[JsonPropertyName("file.extension")]
 		public string FileExtension { get; set; }
 
 		///<summary>email.attachments.file.mime_type</summary>
-		[DataMember(Name = "file.mime_type")]
+		[JsonPropertyName("file.mime_type")]
 		public string FileMimeType { get; set; }
 
 		///<summary>email.attachments.file.name</summary>
-		[DataMember(Name = "file.name")]
+		[JsonPropertyName("file.name")]
 		public string FileName { get; set; }
 
 		///<summary>email.attachments.file.size</summary>
-		[DataMember(Name = "file.size")]
+		[JsonPropertyName("file.size")]
 		public long? FileSize { get; set; }
 
 		///<summary>email.attachments.file.hash</summary>
-		[DataMember(Name = "file.hash")]
+		[JsonPropertyName("file.hash")]
 		public Hash FileHash { get; set; }
 	}
 
@@ -147,11 +148,11 @@ namespace Elastic.CommonSchema
 	public class FaasTrigger {
 
 		///<summary>faas.trigger.request_id</summary>
-		[DataMember(Name = "request_id")]
+		[JsonPropertyName("request_id")]
 		public string RequestId { get; set; }
 
 		///<summary>faas.trigger.type</summary>
-		[DataMember(Name = "type")]
+		[JsonPropertyName("type")]
 		public string Type { get; set; }
 	}
 
@@ -161,47 +162,47 @@ namespace Elastic.CommonSchema
 	public class LogSyslog {
 
 		///<summary>log.syslog.appname</summary>
-		[DataMember(Name = "appname")]
+		[JsonPropertyName("appname")]
 		public string Appname { get; set; }
 
 		///<summary>log.syslog.facility.code</summary>
-		[DataMember(Name = "facility.code")]
+		[JsonPropertyName("facility.code")]
 		public long? FacilityCode { get; set; }
 
 		///<summary>log.syslog.facility.name</summary>
-		[DataMember(Name = "facility.name")]
+		[JsonPropertyName("facility.name")]
 		public string FacilityName { get; set; }
 
 		///<summary>log.syslog.hostname</summary>
-		[DataMember(Name = "hostname")]
+		[JsonPropertyName("hostname")]
 		public string Hostname { get; set; }
 
 		///<summary>log.syslog.msgid</summary>
-		[DataMember(Name = "msgid")]
+		[JsonPropertyName("msgid")]
 		public string Msgid { get; set; }
 
 		///<summary>log.syslog.priority</summary>
-		[DataMember(Name = "priority")]
+		[JsonPropertyName("priority")]
 		public long? Priority { get; set; }
 
 		///<summary>log.syslog.procid</summary>
-		[DataMember(Name = "procid")]
+		[JsonPropertyName("procid")]
 		public string Procid { get; set; }
 
 		///<summary>log.syslog.severity.code</summary>
-		[DataMember(Name = "severity.code")]
+		[JsonPropertyName("severity.code")]
 		public long? SeverityCode { get; set; }
 
 		///<summary>log.syslog.severity.name</summary>
-		[DataMember(Name = "severity.name")]
+		[JsonPropertyName("severity.name")]
 		public string SeverityName { get; set; }
 
 		///<summary>log.syslog.structured_data</summary>
-		[DataMember(Name = "structured_data")]
+		[JsonPropertyName("structured_data")]
 		public string StructuredData { get; set; }
 
 		///<summary>log.syslog.version</summary>
-		[DataMember(Name = "version")]
+		[JsonPropertyName("version")]
 		public string Version { get; set; }
 	}
 
@@ -211,7 +212,7 @@ namespace Elastic.CommonSchema
 	public class NetworkInner {
 
 		///<summary>network.inner.vlan</summary>
-		[DataMember(Name = "vlan")]
+		[JsonPropertyName("vlan")]
 		public Vlan Vlan { get; set; }
 	}
 
@@ -221,15 +222,15 @@ namespace Elastic.CommonSchema
 	public class ObserverEgress {
 
 		///<summary>observer.egress.zone</summary>
-		[DataMember(Name = "zone")]
+		[JsonPropertyName("zone")]
 		public string Zone { get; set; }
 
 		///<summary>observer.egress.interface</summary>
-		[DataMember(Name = "interface")]
+		[JsonPropertyName("interface")]
 		public Interface Interface { get; set; }
 
 		///<summary>observer.egress.vlan</summary>
-		[DataMember(Name = "vlan")]
+		[JsonPropertyName("vlan")]
 		public Vlan Vlan { get; set; }
 	}
 
@@ -239,15 +240,15 @@ namespace Elastic.CommonSchema
 	public class ObserverIngress {
 
 		///<summary>observer.ingress.zone</summary>
-		[DataMember(Name = "zone")]
+		[JsonPropertyName("zone")]
 		public string Zone { get; set; }
 
 		///<summary>observer.ingress.interface</summary>
-		[DataMember(Name = "interface")]
+		[JsonPropertyName("interface")]
 		public Interface Interface { get; set; }
 
 		///<summary>observer.ingress.vlan</summary>
-		[DataMember(Name = "vlan")]
+		[JsonPropertyName("vlan")]
 		public Vlan Vlan { get; set; }
 	}
 
@@ -263,11 +264,11 @@ namespace Elastic.CommonSchema
 	public class ProcessTty {
 
 		///<summary>process.tty.char_device.major</summary>
-		[DataMember(Name = "char_device.major")]
+		[JsonPropertyName("char_device.major")]
 		public long? CharDeviceMajor { get; set; }
 
 		///<summary>process.tty.char_device.minor</summary>
-		[DataMember(Name = "char_device.minor")]
+		[JsonPropertyName("char_device.minor")]
 		public long? CharDeviceMinor { get; set; }
 	}
 
@@ -277,111 +278,111 @@ namespace Elastic.CommonSchema
 	public class ThreatEnrichments {
 
 		///<summary>threat.enrichments.indicator</summary>
-		[DataMember(Name = "indicator")]
+		[JsonPropertyName("indicator")]
 		public object Indicator { get; set; }
 
 		///<summary>threat.enrichments.indicator.confidence</summary>
-		[DataMember(Name = "indicator.confidence")]
+		[JsonPropertyName("indicator.confidence")]
 		public string IndicatorConfidence { get; set; }
 
 		///<summary>threat.enrichments.indicator.description</summary>
-		[DataMember(Name = "indicator.description")]
+		[JsonPropertyName("indicator.description")]
 		public string IndicatorDescription { get; set; }
 
 		///<summary>threat.enrichments.indicator.email.address</summary>
-		[DataMember(Name = "indicator.email.address")]
+		[JsonPropertyName("indicator.email.address")]
 		public string IndicatorEmailAddress { get; set; }
 
 		///<summary>threat.enrichments.indicator.first_seen</summary>
-		[DataMember(Name = "indicator.first_seen")]
+		[JsonPropertyName("indicator.first_seen")]
 		public DateTimeOffset? IndicatorFirstSeen { get; set; }
 
 		///<summary>threat.enrichments.indicator.ip</summary>
-		[DataMember(Name = "indicator.ip")]
+		[JsonPropertyName("indicator.ip")]
 		public string IndicatorIp { get; set; }
 
 		///<summary>threat.enrichments.indicator.last_seen</summary>
-		[DataMember(Name = "indicator.last_seen")]
+		[JsonPropertyName("indicator.last_seen")]
 		public DateTimeOffset? IndicatorLastSeen { get; set; }
 
 		///<summary>threat.enrichments.indicator.marking.tlp</summary>
-		[DataMember(Name = "indicator.marking.tlp")]
+		[JsonPropertyName("indicator.marking.tlp")]
 		public string IndicatorMarkingTlp { get; set; }
 
 		///<summary>threat.enrichments.indicator.modified_at</summary>
-		[DataMember(Name = "indicator.modified_at")]
+		[JsonPropertyName("indicator.modified_at")]
 		public DateTimeOffset? IndicatorModifiedAt { get; set; }
 
 		///<summary>threat.enrichments.indicator.port</summary>
-		[DataMember(Name = "indicator.port")]
+		[JsonPropertyName("indicator.port")]
 		public long? IndicatorPort { get; set; }
 
 		///<summary>threat.enrichments.indicator.provider</summary>
-		[DataMember(Name = "indicator.provider")]
+		[JsonPropertyName("indicator.provider")]
 		public string IndicatorProvider { get; set; }
 
 		///<summary>threat.enrichments.indicator.reference</summary>
-		[DataMember(Name = "indicator.reference")]
+		[JsonPropertyName("indicator.reference")]
 		public string IndicatorReference { get; set; }
 
 		///<summary>threat.enrichments.indicator.scanner_stats</summary>
-		[DataMember(Name = "indicator.scanner_stats")]
+		[JsonPropertyName("indicator.scanner_stats")]
 		public long? IndicatorScannerStats { get; set; }
 
 		///<summary>threat.enrichments.indicator.sightings</summary>
-		[DataMember(Name = "indicator.sightings")]
+		[JsonPropertyName("indicator.sightings")]
 		public long? IndicatorSightings { get; set; }
 
 		///<summary>threat.enrichments.indicator.type</summary>
-		[DataMember(Name = "indicator.type")]
+		[JsonPropertyName("indicator.type")]
 		public string IndicatorType { get; set; }
 
 		///<summary>threat.enrichments.matched.atomic</summary>
-		[DataMember(Name = "matched.atomic")]
+		[JsonPropertyName("matched.atomic")]
 		public string MatchedAtomic { get; set; }
 
 		///<summary>threat.enrichments.matched.field</summary>
-		[DataMember(Name = "matched.field")]
+		[JsonPropertyName("matched.field")]
 		public string MatchedField { get; set; }
 
 		///<summary>threat.enrichments.matched.id</summary>
-		[DataMember(Name = "matched.id")]
+		[JsonPropertyName("matched.id")]
 		public string MatchedId { get; set; }
 
 		///<summary>threat.enrichments.matched.index</summary>
-		[DataMember(Name = "matched.index")]
+		[JsonPropertyName("matched.index")]
 		public string MatchedIndex { get; set; }
 
 		///<summary>threat.enrichments.matched.occurred</summary>
-		[DataMember(Name = "matched.occurred")]
+		[JsonPropertyName("matched.occurred")]
 		public DateTimeOffset? MatchedOccurred { get; set; }
 
 		///<summary>threat.enrichments.matched.type</summary>
-		[DataMember(Name = "matched.type")]
+		[JsonPropertyName("matched.type")]
 		public string MatchedType { get; set; }
 
 		///<summary>threat.enrichments.indicator.x509</summary>
-		[DataMember(Name = "indicator.x509")]
+		[JsonPropertyName("indicator.x509")]
 		public X509 IndicatorX509 { get; set; }
 
 		///<summary>threat.enrichments.indicator.as</summary>
-		[DataMember(Name = "indicator.as")]
+		[JsonPropertyName("indicator.as")]
 		public As IndicatorAs { get; set; }
 
 		///<summary>threat.enrichments.indicator.file</summary>
-		[DataMember(Name = "indicator.file")]
+		[JsonPropertyName("indicator.file")]
 		public File IndicatorFile { get; set; }
 
 		///<summary>threat.enrichments.indicator.geo</summary>
-		[DataMember(Name = "indicator.geo")]
+		[JsonPropertyName("indicator.geo")]
 		public Geo IndicatorGeo { get; set; }
 
 		///<summary>threat.enrichments.indicator.registry</summary>
-		[DataMember(Name = "indicator.registry")]
+		[JsonPropertyName("indicator.registry")]
 		public Registry IndicatorRegistry { get; set; }
 
 		///<summary>threat.enrichments.indicator.url</summary>
-		[DataMember(Name = "indicator.url")]
+		[JsonPropertyName("indicator.url")]
 		public Url IndicatorUrl { get; set; }
 	}
 }

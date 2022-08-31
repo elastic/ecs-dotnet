@@ -17,6 +17,7 @@ using System.Threading.Tasks;
 using System.Linq;
 using System.Net;
 using System.Runtime.Serialization;
+using System.Text.Json.Serialization;
 
 namespace Elastic.CommonSchema
 {
@@ -36,7 +37,7 @@ namespace Elastic.CommonSchema
 		/// <para><c>process.parent.group_leader</c></para>
 		/// <example></example>
 		///</summary>
-		[DataMember(Name = "group_leader")]
+		[JsonPropertyName("group_leader")]
 		public ProcessParentGroupLeader GroupLeader { get; set; }
 	}
 
@@ -47,7 +48,7 @@ namespace Elastic.CommonSchema
 		/// <para><c>process.entry_leader.parent</c></para>
 		/// <example></example>
 		///</summary>
-		[DataMember(Name = "parent")]
+		[JsonPropertyName("parent")]
 		public ProcessEntryLeaderParent Parent { get; set; }
 	}
 
@@ -58,7 +59,7 @@ namespace Elastic.CommonSchema
 		/// <para><c>process.session_leader.parent</c></para>
 		/// <example></example>
 		///</summary>
-		[DataMember(Name = "parent")]
+		[JsonPropertyName("parent")]
 		public ProcessSessionLeaderParent Parent { get; set; }
 	}
 
@@ -77,7 +78,7 @@ namespace Elastic.CommonSchema
 		/// <para><c>process.entry_leader.parent.session_leader</c></para>
 		/// <example></example>
 		///</summary>
-		[DataMember(Name = "session_leader")]
+		[JsonPropertyName("session_leader")]
 		public ProcessEntryLeaderParentSessionLeader SessionLeader { get; set; }
 	}
 
@@ -88,7 +89,7 @@ namespace Elastic.CommonSchema
 		/// <para><c>process.session_leader.parent.session_leader</c></para>
 		/// <example></example>
 		///</summary>
-		[DataMember(Name = "session_leader")]
+		[JsonPropertyName("session_leader")]
 		public ProcessSessionLeaderParentSessionLeader SessionLeader { get; set; }
 	}
 
@@ -139,21 +140,21 @@ namespace Elastic.CommonSchema
 		/// <para><c>client.as</c></para>
 		/// <example></example>
 		///</summary>
-		[DataMember(Name = "as")]
+		[JsonPropertyName("as")]
 		public As As { get; set; }
 
 		///<summary>
 		/// <para><c>client.geo</c></para>
 		/// <example></example>
 		///</summary>
-		[DataMember(Name = "geo")]
+		[JsonPropertyName("geo")]
 		public Geo Geo { get; set; }
 
 		///<summary>
 		/// <para><c>client.user</c></para>
 		/// <example></example>
 		///</summary>
-		[DataMember(Name = "user")]
+		[JsonPropertyName("user")]
 		public User User { get; set; }
 	}
 
@@ -164,14 +165,14 @@ namespace Elastic.CommonSchema
 		/// <para><c>cloud.origin</c></para>
 		/// <example></example>
 		///</summary>
-		[DataMember(Name = "origin")]
+		[JsonPropertyName("origin")]
 		public CloudOrigin Origin { get; set; }
 
 		///<summary>
 		/// <para><c>cloud.target</c></para>
 		/// <example></example>
 		///</summary>
-		[DataMember(Name = "target")]
+		[JsonPropertyName("target")]
 		public CloudTarget Target { get; set; }
 	}
 
@@ -194,21 +195,21 @@ namespace Elastic.CommonSchema
 		/// <para><c>destination.as</c></para>
 		/// <example></example>
 		///</summary>
-		[DataMember(Name = "as")]
+		[JsonPropertyName("as")]
 		public As As { get; set; }
 
 		///<summary>
 		/// <para><c>destination.geo</c></para>
 		/// <example></example>
 		///</summary>
-		[DataMember(Name = "geo")]
+		[JsonPropertyName("geo")]
 		public Geo Geo { get; set; }
 
 		///<summary>
 		/// <para><c>destination.user</c></para>
 		/// <example></example>
 		///</summary>
-		[DataMember(Name = "user")]
+		[JsonPropertyName("user")]
 		public User User { get; set; }
 	}
 
@@ -219,21 +220,21 @@ namespace Elastic.CommonSchema
 		/// <para><c>dll.hash</c></para>
 		/// <example></example>
 		///</summary>
-		[DataMember(Name = "hash")]
+		[JsonPropertyName("hash")]
 		public Hash Hash { get; set; }
 
 		///<summary>
 		/// <para><c>dll.pe</c></para>
 		/// <example></example>
 		///</summary>
-		[DataMember(Name = "pe")]
+		[JsonPropertyName("pe")]
 		public Pe Pe { get; set; }
 
 		///<summary>
 		/// <para><c>dll.code_signature</c></para>
 		/// <example></example>
 		///</summary>
-		[DataMember(Name = "code_signature")]
+		[JsonPropertyName("code_signature")]
 		public CodeSignature CodeSignature { get; set; }
 	}
 
@@ -272,35 +273,35 @@ namespace Elastic.CommonSchema
 		/// <para><c>file.hash</c></para>
 		/// <example></example>
 		///</summary>
-		[DataMember(Name = "hash")]
+		[JsonPropertyName("hash")]
 		public Hash Hash { get; set; }
 
 		///<summary>
 		/// <para><c>file.pe</c></para>
 		/// <example></example>
 		///</summary>
-		[DataMember(Name = "pe")]
+		[JsonPropertyName("pe")]
 		public Pe Pe { get; set; }
 
 		///<summary>
 		/// <para><c>file.x509</c></para>
 		/// <example></example>
 		///</summary>
-		[DataMember(Name = "x509")]
+		[JsonPropertyName("x509")]
 		public X509 X509 { get; set; }
 
 		///<summary>
 		/// <para><c>file.code_signature</c></para>
 		/// <example></example>
 		///</summary>
-		[DataMember(Name = "code_signature")]
+		[JsonPropertyName("code_signature")]
 		public CodeSignature CodeSignature { get; set; }
 
 		///<summary>
 		/// <para><c>file.elf</c></para>
 		/// <example></example>
 		///</summary>
-		[DataMember(Name = "elf")]
+		[JsonPropertyName("elf")]
 		public Elf Elf { get; set; }
 	}
 
@@ -323,14 +324,14 @@ namespace Elastic.CommonSchema
 		/// <para><c>host.geo</c></para>
 		/// <example></example>
 		///</summary>
-		[DataMember(Name = "geo")]
+		[JsonPropertyName("geo")]
 		public Geo Geo { get; set; }
 
 		///<summary>
 		/// <para><c>host.os</c></para>
 		/// <example></example>
 		///</summary>
-		[DataMember(Name = "os")]
+		[JsonPropertyName("os")]
 		public Os Os { get; set; }
 	}
 
@@ -353,7 +354,7 @@ namespace Elastic.CommonSchema
 		/// <para><c>network.vlan</c></para>
 		/// <example></example>
 		///</summary>
-		[DataMember(Name = "vlan")]
+		[JsonPropertyName("vlan")]
 		public Vlan Vlan { get; set; }
 	}
 
@@ -364,14 +365,14 @@ namespace Elastic.CommonSchema
 		/// <para><c>observer.geo</c></para>
 		/// <example></example>
 		///</summary>
-		[DataMember(Name = "geo")]
+		[JsonPropertyName("geo")]
 		public Geo Geo { get; set; }
 
 		///<summary>
 		/// <para><c>observer.os</c></para>
 		/// <example></example>
 		///</summary>
-		[DataMember(Name = "os")]
+		[JsonPropertyName("os")]
 		public Os Os { get; set; }
 	}
 
@@ -402,119 +403,119 @@ namespace Elastic.CommonSchema
 		/// <para><c>process.group</c></para>
 		/// <example></example>
 		///</summary>
-		[DataMember(Name = "group")]
+		[JsonPropertyName("group")]
 		public Group Group { get; set; }
 
 		///<summary>
 		/// <para><c>process.real_group</c></para>
 		/// <example></example>
 		///</summary>
-		[DataMember(Name = "real_group")]
+		[JsonPropertyName("real_group")]
 		public Group RealGroup { get; set; }
 
 		///<summary>
 		/// <para><c>process.saved_group</c></para>
 		/// <example></example>
 		///</summary>
-		[DataMember(Name = "saved_group")]
+		[JsonPropertyName("saved_group")]
 		public Group SavedGroup { get; set; }
 
 		///<summary>
 		/// <para><c>process.supplemental_groups</c></para>
 		/// <example></example>
 		///</summary>
-		[DataMember(Name = "supplemental_groups")]
+		[JsonPropertyName("supplemental_groups")]
 		public Group[] SupplementalGroups { get; set; }
 
 		///<summary>
 		/// <para><c>process.hash</c></para>
 		/// <example></example>
 		///</summary>
-		[DataMember(Name = "hash")]
+		[JsonPropertyName("hash")]
 		public Hash Hash { get; set; }
 
 		///<summary>
 		/// <para><c>process.pe</c></para>
 		/// <example></example>
 		///</summary>
-		[DataMember(Name = "pe")]
+		[JsonPropertyName("pe")]
 		public Pe Pe { get; set; }
 
 		///<summary>
 		/// <para><c>process.code_signature</c></para>
 		/// <example></example>
 		///</summary>
-		[DataMember(Name = "code_signature")]
+		[JsonPropertyName("code_signature")]
 		public CodeSignature CodeSignature { get; set; }
 
 		///<summary>
 		/// <para><c>process.elf</c></para>
 		/// <example></example>
 		///</summary>
-		[DataMember(Name = "elf")]
+		[JsonPropertyName("elf")]
 		public Elf Elf { get; set; }
 
 		///<summary>
 		/// <para><c>process.entry_meta.source</c></para>
 		/// <example></example>
 		///</summary>
-		[DataMember(Name = "entry_meta.source")]
+		[JsonPropertyName("entry_meta.source")]
 		public Source EntryMetaSource { get; set; }
 
 		///<summary>
 		/// <para><c>process.user</c></para>
 		/// <example></example>
 		///</summary>
-		[DataMember(Name = "user")]
+		[JsonPropertyName("user")]
 		public User User { get; set; }
 
 		///<summary>
 		/// <para><c>process.saved_user</c></para>
 		/// <example></example>
 		///</summary>
-		[DataMember(Name = "saved_user")]
+		[JsonPropertyName("saved_user")]
 		public User SavedUser { get; set; }
 
 		///<summary>
 		/// <para><c>process.real_user</c></para>
 		/// <example></example>
 		///</summary>
-		[DataMember(Name = "real_user")]
+		[JsonPropertyName("real_user")]
 		public User RealUser { get; set; }
 
 		///<summary>
 		/// <para><c>process.parent</c></para>
 		/// <example></example>
 		///</summary>
-		[DataMember(Name = "parent")]
+		[JsonPropertyName("parent")]
 		public ProcessParent Parent { get; set; }
 
 		///<summary>
 		/// <para><c>process.entry_leader</c></para>
 		/// <example></example>
 		///</summary>
-		[DataMember(Name = "entry_leader")]
+		[JsonPropertyName("entry_leader")]
 		public ProcessEntryLeader EntryLeader { get; set; }
 
 		///<summary>
 		/// <para><c>process.session_leader</c></para>
 		/// <example></example>
 		///</summary>
-		[DataMember(Name = "session_leader")]
+		[JsonPropertyName("session_leader")]
 		public ProcessSessionLeader SessionLeader { get; set; }
 
 		///<summary>
 		/// <para><c>process.group_leader</c></para>
 		/// <example></example>
 		///</summary>
-		[DataMember(Name = "group_leader")]
+		[JsonPropertyName("group_leader")]
 		public ProcessGroupLeader GroupLeader { get; set; }
 
 		///<summary>
 		/// <para><c>process.previous</c></para>
 		/// <example></example>
 		///</summary>
-		[DataMember(Name = "previous")]
+		[JsonPropertyName("previous")]
 		public ProcessPrevious[] Previous { get; set; }
 	}
 
@@ -537,21 +538,21 @@ namespace Elastic.CommonSchema
 		/// <para><c>server.as</c></para>
 		/// <example></example>
 		///</summary>
-		[DataMember(Name = "as")]
+		[JsonPropertyName("as")]
 		public As As { get; set; }
 
 		///<summary>
 		/// <para><c>server.geo</c></para>
 		/// <example></example>
 		///</summary>
-		[DataMember(Name = "geo")]
+		[JsonPropertyName("geo")]
 		public Geo Geo { get; set; }
 
 		///<summary>
 		/// <para><c>server.user</c></para>
 		/// <example></example>
 		///</summary>
-		[DataMember(Name = "user")]
+		[JsonPropertyName("user")]
 		public User User { get; set; }
 	}
 
@@ -562,14 +563,14 @@ namespace Elastic.CommonSchema
 		/// <para><c>service.origin</c></para>
 		/// <example></example>
 		///</summary>
-		[DataMember(Name = "origin")]
+		[JsonPropertyName("origin")]
 		public ServiceOrigin Origin { get; set; }
 
 		///<summary>
 		/// <para><c>service.target</c></para>
 		/// <example></example>
 		///</summary>
-		[DataMember(Name = "target")]
+		[JsonPropertyName("target")]
 		public ServiceTarget Target { get; set; }
 	}
 
@@ -580,21 +581,21 @@ namespace Elastic.CommonSchema
 		/// <para><c>source.as</c></para>
 		/// <example></example>
 		///</summary>
-		[DataMember(Name = "as")]
+		[JsonPropertyName("as")]
 		public As As { get; set; }
 
 		///<summary>
 		/// <para><c>source.geo</c></para>
 		/// <example></example>
 		///</summary>
-		[DataMember(Name = "geo")]
+		[JsonPropertyName("geo")]
 		public Geo Geo { get; set; }
 
 		///<summary>
 		/// <para><c>source.user</c></para>
 		/// <example></example>
 		///</summary>
-		[DataMember(Name = "user")]
+		[JsonPropertyName("user")]
 		public User User { get; set; }
 	}
 
@@ -605,42 +606,42 @@ namespace Elastic.CommonSchema
 		/// <para><c>threat.indicator.x509</c></para>
 		/// <example></example>
 		///</summary>
-		[DataMember(Name = "indicator.x509")]
+		[JsonPropertyName("indicator.x509")]
 		public X509 IndicatorX509 { get; set; }
 
 		///<summary>
 		/// <para><c>threat.indicator.as</c></para>
 		/// <example></example>
 		///</summary>
-		[DataMember(Name = "indicator.as")]
+		[JsonPropertyName("indicator.as")]
 		public As IndicatorAs { get; set; }
 
 		///<summary>
 		/// <para><c>threat.indicator.file</c></para>
 		/// <example></example>
 		///</summary>
-		[DataMember(Name = "indicator.file")]
+		[JsonPropertyName("indicator.file")]
 		public File IndicatorFile { get; set; }
 
 		///<summary>
 		/// <para><c>threat.indicator.geo</c></para>
 		/// <example></example>
 		///</summary>
-		[DataMember(Name = "indicator.geo")]
+		[JsonPropertyName("indicator.geo")]
 		public Geo IndicatorGeo { get; set; }
 
 		///<summary>
 		/// <para><c>threat.indicator.registry</c></para>
 		/// <example></example>
 		///</summary>
-		[DataMember(Name = "indicator.registry")]
+		[JsonPropertyName("indicator.registry")]
 		public Registry IndicatorRegistry { get; set; }
 
 		///<summary>
 		/// <para><c>threat.indicator.url</c></para>
 		/// <example></example>
 		///</summary>
-		[DataMember(Name = "indicator.url")]
+		[JsonPropertyName("indicator.url")]
 		public Url IndicatorUrl { get; set; }
 	}
 
@@ -651,14 +652,14 @@ namespace Elastic.CommonSchema
 		/// <para><c>tls.client.x509</c></para>
 		/// <example></example>
 		///</summary>
-		[DataMember(Name = "client.x509")]
+		[JsonPropertyName("client.x509")]
 		public X509 ClientX509 { get; set; }
 
 		///<summary>
 		/// <para><c>tls.server.x509</c></para>
 		/// <example></example>
 		///</summary>
-		[DataMember(Name = "server.x509")]
+		[JsonPropertyName("server.x509")]
 		public X509 ServerX509 { get; set; }
 	}
 
@@ -673,28 +674,28 @@ namespace Elastic.CommonSchema
 		/// <para><c>user.group</c></para>
 		/// <example></example>
 		///</summary>
-		[DataMember(Name = "group")]
+		[JsonPropertyName("group")]
 		public Group Group { get; set; }
 
 		///<summary>
 		/// <para><c>user.target</c></para>
 		/// <example></example>
 		///</summary>
-		[DataMember(Name = "target")]
+		[JsonPropertyName("target")]
 		public UserTarget Target { get; set; }
 
 		///<summary>
 		/// <para><c>user.effective</c></para>
 		/// <example></example>
 		///</summary>
-		[DataMember(Name = "effective")]
+		[JsonPropertyName("effective")]
 		public UserEffective Effective { get; set; }
 
 		///<summary>
 		/// <para><c>user.changes</c></para>
 		/// <example></example>
 		///</summary>
-		[DataMember(Name = "changes")]
+		[JsonPropertyName("changes")]
 		public UserChanges Changes { get; set; }
 	}
 
@@ -705,7 +706,7 @@ namespace Elastic.CommonSchema
 		/// <para><c>user_agent.os</c></para>
 		/// <example></example>
 		///</summary>
-		[DataMember(Name = "os")]
+		[JsonPropertyName("os")]
 		public Os Os { get; set; }
 	}
 
