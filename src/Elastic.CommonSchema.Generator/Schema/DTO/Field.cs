@@ -99,6 +99,12 @@ namespace Elastic.CommonSchema.Generator.Schema.DTO
 		public List<FieldAllowedValue> AllowedValues { get; set; }
 
 		/// <summary>
+		///  Allowed values for this field.
+		/// </summary>
+		[JsonProperty("expected_values")]
+		public List<string> ExpectedValues { get; set; }
+
+		/// <summary>
 		/// Describes the normalisation of this field (e.g. array)
 		/// </summary>
 		[JsonProperty("normalize")]

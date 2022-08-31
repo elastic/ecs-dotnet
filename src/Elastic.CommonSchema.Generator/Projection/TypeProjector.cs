@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -126,10 +127,12 @@ namespace Elastic.CommonSchema.Generator.Projection
 				foreach (var reuse in fieldSet.ReusedHere)
 				{
 					var fieldTokens = reuse.Full.Split('.').ToArray();
+					var isArray = (reuse.Normalize != null && reuse.Normalize.Contains("array"));
 					// most common case a reference to a different schema
 					if (fieldTokens.Length <= 2 && reuse.SchemaName != name)
 					{
-						entityClass.EntityReferences[reuse.Full] = new EntityPropertyReference(parentPath, reuse.Full, EntityClasses[reuse.SchemaName]);
+						entityClass.EntityReferences[reuse.Full] =
+							new EntityPropertyReference(parentPath, reuse.Full, EntityClasses[reuse.SchemaName], reuse.Short, isArray);
 					}
 					else
 					{
@@ -143,16 +146,17 @@ namespace Elastic.CommonSchema.Generator.Projection
 						if (!string.IsNullOrEmpty(inlineObjectPath))
 						{
 							InlineObjects[inlineObjectPath].EntityReferences[reuse.Full] =
-								new EntityPropertyReference(inlineObjectPath, reuse.Full, EntityClasses[reuse.SchemaName]);
+								new EntityPropertyReference(inlineObjectPath, reuse.Full, EntityClasses[reuse.SchemaName], reuse.Short, isArray);
 						}
 						else if (!string.IsNullOrWhiteSpace(entityObjectPath) && reuse.SchemaName != name)
 						{
 							EntityClasses[entityObjectPath].EntityReferences[reuse.Full] =
-								new EntityPropertyReference(entityObjectPath, reuse.Full, EntityClasses[reuse.SchemaName]);
+								new EntityPropertyReference(entityObjectPath, reuse.Full, EntityClasses[reuse.SchemaName], reuse.Short, isArray);
 						}
+						// created new nested usage of this entity
 						else if (!string.IsNullOrWhiteSpace(entityObjectPath))
 						{
-							var nestedEntityClass = new EntityClass(reuse.Full, EntityClasses[reuse.SchemaName].BaseFieldSet);
+							var nestedEntityClass = new SelfReferentialReusedEntityClass(reuse.Full, EntityClasses[reuse.SchemaName].BaseFieldSet, reuse.Short, isArray);
 							nestedEntityClasses[reuse.Full] = nestedEntityClass;
 						}
 						else Warnings.Add($"Unable to project reuse of: ${reuse.Full}");
@@ -166,14 +170,16 @@ namespace Elastic.CommonSchema.Generator.Projection
 				var parentPaths = fieldTokens.Select((token, i) => string.Join('.', fieldTokens.Take(i + 1))).Reverse().Skip(1).ToArray();
 				var nestedPath = parentPaths.FirstOrDefault(p => nestedEntityClasses.ContainsKey(p));
 				var entityPath = parentPaths.FirstOrDefault(p => EntityClasses.ContainsKey(p));
+				var description = entity is SelfReferentialReusedEntityClass s ? s.ReuseDescription : entity.BaseFieldSet.FieldSet.Description;
+				var isArray = entity is SelfReferentialReusedEntityClass ss && ss.IsArray;
 				if (!string.IsNullOrEmpty(nestedPath))
 				{
-					var nestedEntityClassRef = new EntityPropertyReference(nestedPath, fullName, entity);
+					var nestedEntityClassRef = new EntityPropertyReference(nestedPath, fullName, entity, description, isArray);
 					nestedEntityClasses[nestedPath].EntityReferences[fullName] = nestedEntityClassRef;
 				}
 				else if (!string.IsNullOrEmpty(entityPath))
 				{
-					var nestedEntityClassRef = new EntityPropertyReference(entityPath, fullName, entity);
+					var nestedEntityClassRef = new EntityPropertyReference(entityPath, fullName, entity, description, isArray);
 					EntityClasses[entityPath].EntityReferences[fullName] = nestedEntityClassRef;
 				}
 				else

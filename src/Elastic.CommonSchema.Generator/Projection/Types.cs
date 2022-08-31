@@ -46,6 +46,20 @@ namespace Elastic.CommonSchema.Generator.Projection
 		public bool IsDictionary => ValueProperties.Count() + EntityProperties.Count() == 0;
 	}
 
+	public class SelfReferentialReusedEntityClass : EntityClass
+	{
+		public SelfReferentialReusedEntityClass(string name, FieldSetBaseClass baseFieldSet, string reuseDescription, bool isArray)
+			: base(name, baseFieldSet)
+		{
+			ReuseDescription = reuseDescription;
+			IsArray = isArray;
+		}
+
+		public string ReuseDescription { get; }
+		public bool IsArray { get; }
+	}
+
+
 	public class EntityClass
 	{
 		public EntityClass(string name, FieldSetBaseClass baseFieldSet)
@@ -58,7 +72,6 @@ namespace Elastic.CommonSchema.Generator.Projection
 		public string Name { get; }
 		public FieldSetBaseClass BaseFieldSet { get; }
 		public bool Partial => Name is "EcsDocument" or "Log";
-
 
 		public Dictionary<string, EntityPropertyReference> EntityReferences { get; } = new();
 
