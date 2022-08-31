@@ -39,7 +39,7 @@ namespace Elastic.CommonSchema
 		/// <para>@Raw(property.Description)</para>
 		/// <example>@Raw(property.Example)</example>
 		///</summary>
-		[JsonPropertyName("@property.JsonProperty")]
+		[JsonPropertyName("@property.JsonProperty"), DataMember(Name = "@property.JsonProperty")]
 		public @property.ClrType @property.Name { get; set; }
 </text>
 }
@@ -51,7 +51,7 @@ namespace Elastic.CommonSchema
 		/// <para>@Raw(property.Description)</para>
 		/// <example>@Raw(property.Example)</example>
 		///</summary>
-		[JsonPropertyName("@property.JsonProperty")]
+		[JsonPropertyName("@property.JsonProperty"), DataMember(Name = "@property.JsonProperty")]
 		public @property.ClrType @property.Name { get; set; }
 </text>
 }

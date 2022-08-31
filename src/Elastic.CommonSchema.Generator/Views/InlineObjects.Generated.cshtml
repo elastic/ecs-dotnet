@@ -35,7 +35,7 @@ namespace Elastic.CommonSchema
 {
 <text>
 		///<summary>@property.FullPath</summary>
-		[JsonPropertyName("@property.JsonProperty")]
+		[JsonPropertyName("@property.JsonProperty"), DataMember(Name = "@property.JsonProperty")]
 		public @property.ClrType @property.Name { get; set; }
 </text>
 }
@@ -43,7 +43,7 @@ namespace Elastic.CommonSchema
 {
 <text>
 		///<summary>@property.FullPath</summary>
-		[JsonPropertyName("@property.JsonProperty")]
+		[JsonPropertyName("@property.JsonProperty"), DataMember(Name = "@property.JsonProperty")]
 		public @property.Entity.Name @property.Name { get; set; }
 </text>
 }

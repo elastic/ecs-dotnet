@@ -5,6 +5,7 @@
 using System;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
+using System.Text.Json.Serialization;
 using Elastic.CommonSchema;
 using Elastic.CommonSchema.Serialization;
 
@@ -20,13 +21,13 @@ namespace Elasticsearch.Extensions.Logging
 		/// Custom field with the original template used to generate the message, with token placeholders
 		/// for inserted label values, e.g. "Unexpected error processing customer {CustomerId}."
 		/// </summary>
-		[DataMember(Name = MessageTemplatePropertyName)]
+		[JsonPropertyName(MessageTemplatePropertyName), DataMember(Name=MessageTemplatePropertyName)]
 		public string? MessageTemplate { get; set; }
 
 		/// <summary>
 		/// Custom field with an array of string formatted scope values, in the order added.
 		/// </summary>
-		[DataMember(Name = ScopesPropertyName)]
+		[JsonPropertyName(ScopesPropertyName), DataMember(Name=ScopesPropertyName)]
 		public IList<string>? Scopes { get; set; }
 
 		/// <summary>

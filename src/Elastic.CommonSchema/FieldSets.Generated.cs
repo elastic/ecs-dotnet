@@ -33,7 +33,7 @@ namespace Elastic.CommonSchema
 		/// This field is intended to contain any build information that a data source may provide, no specific formatting is required.</para>
 		/// <example>metricbeat version 7.6.0 (amd64), libbeat 7.6.0 [6a23e8f8f30f5001ba344e4e54d8d9cb82cb107c built 2020-02-05 23:10:10 +0000 UTC]</example>
 		///</summary>
-		[JsonPropertyName("build.original")]
+		[JsonPropertyName("build.original"), DataMember(Name = "build.original")]
 		public string BuildOriginal { get; set; }
 
 		///<summary>
@@ -42,7 +42,7 @@ namespace Elastic.CommonSchema
 		/// This id normally changes across restarts, but `agent.id` does not.</para>
 		/// <example>8a4f500f</example>
 		///</summary>
-		[JsonPropertyName("ephemeral_id")]
+		[JsonPropertyName("ephemeral_id"), DataMember(Name = "ephemeral_id")]
 		public string EphemeralId { get; set; }
 
 		///<summary>
@@ -51,7 +51,7 @@ namespace Elastic.CommonSchema
 		/// Example: For Beats this would be beat.id.</para>
 		/// <example>8a4f500d</example>
 		///</summary>
-		[JsonPropertyName("id")]
+		[JsonPropertyName("id"), DataMember(Name = "id")]
 		public string Id { get; set; }
 
 		///<summary>
@@ -60,7 +60,7 @@ namespace Elastic.CommonSchema
 		/// This is a name that can be given to an agent. This can be helpful if for example two Filebeat instances are running on the same host but a human readable separation is needed on which Filebeat instance data is coming from.</para>
 		/// <example>foo</example>
 		///</summary>
-		[JsonPropertyName("name")]
+		[JsonPropertyName("name"), DataMember(Name = "name")]
 		public string Name { get; set; }
 
 		///<summary>
@@ -69,7 +69,7 @@ namespace Elastic.CommonSchema
 		/// The agent type always stays the same and should be given by the agent used. In case of Filebeat the agent would always be Filebeat also if two Filebeat instances are run on the same machine.</para>
 		/// <example>filebeat</example>
 		///</summary>
-		[JsonPropertyName("type")]
+		[JsonPropertyName("type"), DataMember(Name = "type")]
 		public string Type { get; set; }
 
 		///<summary>
@@ -77,7 +77,7 @@ namespace Elastic.CommonSchema
 		/// <para>Version of the agent.</para>
 		/// <example>6.0.0-rc2</example>
 		///</summary>
-		[JsonPropertyName("version")]
+		[JsonPropertyName("version"), DataMember(Name = "version")]
 		public string Version { get; set; }
 	}
 
@@ -91,7 +91,7 @@ namespace Elastic.CommonSchema
 		/// <para>Unique number allocated to the autonomous system. The autonomous system number (ASN) uniquely identifies each network on the Internet.</para>
 		/// <example>15169</example>
 		///</summary>
-		[JsonPropertyName("number")]
+		[JsonPropertyName("number"), DataMember(Name = "number")]
 		public long? Number { get; set; }
 
 		///<summary>
@@ -99,7 +99,7 @@ namespace Elastic.CommonSchema
 		/// <para>Organization name.</para>
 		/// <example>Google LLC</example>
 		///</summary>
-		[JsonPropertyName("organization.name")]
+		[JsonPropertyName("organization.name"), DataMember(Name = "organization.name")]
 		public string OrganizationName { get; set; }
 	}
 
@@ -117,7 +117,7 @@ namespace Elastic.CommonSchema
 		/// <para><br/>This is a required field</para></para>
 		/// <example>5/23/2016 8:05:34 AM</example>
 		///</summary>
-		[JsonPropertyName("@timestamp")]
+		[JsonPropertyName("@timestamp"), DataMember(Name = "@timestamp")]
 		public DateTimeOffset? @Timestamp { get; set; }
 
 		///<summary>
@@ -127,7 +127,7 @@ namespace Elastic.CommonSchema
 		/// If multiple messages exist, they can be combined into one message.</para>
 		/// <example>Hello World</example>
 		///</summary>
-		[JsonPropertyName("message")]
+		[JsonPropertyName("message"), DataMember(Name = "message")]
 		public string Message { get; set; }
 
 		///<summary>
@@ -135,7 +135,7 @@ namespace Elastic.CommonSchema
 		/// <para>List of keywords used to tag each event.</para>
 		/// <example>["production", "env2"]</example>
 		///</summary>
-		[JsonPropertyName("tags")]
+		[JsonPropertyName("tags"), DataMember(Name = "tags")]
 		public string[] Tags { get; set; }
 
 		///<summary>
@@ -144,7 +144,7 @@ namespace Elastic.CommonSchema
 		/// A span represents an operation within a transaction, such as a request to another service, or a database query.</para>
 		/// <example>3ff9a8981b7ccd5a</example>
 		///</summary>
-		[JsonPropertyName("span.id")]
+		[JsonPropertyName("span.id"), DataMember(Name = "span.id")]
 		public string SpanId { get; set; }
 
 		///<summary>
@@ -153,7 +153,7 @@ namespace Elastic.CommonSchema
 		/// A trace groups multiple events like transactions that belong together. For example, a user request handled by multiple inter-connected services.</para>
 		/// <example>4bf92f3577b34da6a3ce929d0e0e4736</example>
 		///</summary>
-		[JsonPropertyName("trace.id")]
+		[JsonPropertyName("trace.id"), DataMember(Name = "trace.id")]
 		public string TraceId { get; set; }
 
 		///<summary>
@@ -162,7 +162,7 @@ namespace Elastic.CommonSchema
 		/// A transaction is the highest level of work measured within a service, such as a request to a server.</para>
 		/// <example>00f067aa0ba902b7</example>
 		///</summary>
-		[JsonPropertyName("transaction.id")]
+		[JsonPropertyName("transaction.id"), DataMember(Name = "transaction.id")]
 		public string TransactionId { get; set; }
 
 		///<summary>
@@ -172,7 +172,7 @@ namespace Elastic.CommonSchema
 		/// Example: `docker` and `k8s` labels.</para>
 		/// <example>{"application": "foo-bar", "env": "production"}</example>
 		///</summary>
-		[JsonPropertyName("labels")]
+		[JsonPropertyName("labels"), DataMember(Name = "labels")]
 		public Labels Labels { get; set; }
 	}
 
@@ -187,7 +187,7 @@ namespace Elastic.CommonSchema
 		/// Then it should be duplicated to `.ip` or `.domain`, depending on which one it is.</para>
 		/// <example></example>
 		///</summary>
-		[JsonPropertyName("address")]
+		[JsonPropertyName("address"), DataMember(Name = "address")]
 		public string Address { get; set; }
 
 		///<summary>
@@ -195,7 +195,7 @@ namespace Elastic.CommonSchema
 		/// <para>Bytes sent from the client to the server.</para>
 		/// <example>184</example>
 		///</summary>
-		[JsonPropertyName("bytes")]
+		[JsonPropertyName("bytes"), DataMember(Name = "bytes")]
 		public long? Bytes { get; set; }
 
 		///<summary>
@@ -204,7 +204,7 @@ namespace Elastic.CommonSchema
 		/// This value may be a host name, a fully qualified domain name, or another host naming format. The value may derive from the original event or be added from enrichment.</para>
 		/// <example>foo.example.com</example>
 		///</summary>
-		[JsonPropertyName("domain")]
+		[JsonPropertyName("domain"), DataMember(Name = "domain")]
 		public string Domain { get; set; }
 
 		///<summary>
@@ -212,7 +212,7 @@ namespace Elastic.CommonSchema
 		/// <para>IP address of the client (IPv4 or IPv6).</para>
 		/// <example></example>
 		///</summary>
-		[JsonPropertyName("ip")]
+		[JsonPropertyName("ip"), DataMember(Name = "ip")]
 		public string Ip { get; set; }
 
 		///<summary>
@@ -221,7 +221,7 @@ namespace Elastic.CommonSchema
 		/// The notation format from RFC 7042 is suggested: Each octet (that is, 8-bit byte) is represented by two [uppercase] hexadecimal digits giving the value of the octet as an unsigned integer. Successive octets are separated by a hyphen.</para>
 		/// <example>00-00-5E-00-53-23</example>
 		///</summary>
-		[JsonPropertyName("mac")]
+		[JsonPropertyName("mac"), DataMember(Name = "mac")]
 		public string Mac { get; set; }
 
 		///<summary>
@@ -230,7 +230,7 @@ namespace Elastic.CommonSchema
 		/// Typically connections traversing load balancers, firewalls, or routers.</para>
 		/// <example></example>
 		///</summary>
-		[JsonPropertyName("nat.ip")]
+		[JsonPropertyName("nat.ip"), DataMember(Name = "nat.ip")]
 		public string NatIp { get; set; }
 
 		///<summary>
@@ -239,7 +239,7 @@ namespace Elastic.CommonSchema
 		/// Typically connections traversing load balancers, firewalls, or routers.</para>
 		/// <example></example>
 		///</summary>
-		[JsonPropertyName("nat.port")]
+		[JsonPropertyName("nat.port"), DataMember(Name = "nat.port")]
 		public long? NatPort { get; set; }
 
 		///<summary>
@@ -247,7 +247,7 @@ namespace Elastic.CommonSchema
 		/// <para>Packets sent from the client to the server.</para>
 		/// <example>12</example>
 		///</summary>
-		[JsonPropertyName("packets")]
+		[JsonPropertyName("packets"), DataMember(Name = "packets")]
 		public long? Packets { get; set; }
 
 		///<summary>
@@ -255,7 +255,7 @@ namespace Elastic.CommonSchema
 		/// <para>Port of the client.</para>
 		/// <example></example>
 		///</summary>
-		[JsonPropertyName("port")]
+		[JsonPropertyName("port"), DataMember(Name = "port")]
 		public long? Port { get; set; }
 
 		///<summary>
@@ -265,7 +265,7 @@ namespace Elastic.CommonSchema
 		/// This value can be determined precisely with a list like the public suffix list (http://publicsuffix.org). Trying to approximate this by simply taking the last two labels will not work well for TLDs such as "co.uk".</para>
 		/// <example>example.com</example>
 		///</summary>
-		[JsonPropertyName("registered_domain")]
+		[JsonPropertyName("registered_domain"), DataMember(Name = "registered_domain")]
 		public string RegisteredDomain { get; set; }
 
 		///<summary>
@@ -274,7 +274,7 @@ namespace Elastic.CommonSchema
 		/// For example the subdomain portion of "www.east.mydomain.co.uk" is "east". If the domain has multiple levels of subdomain, such as "sub2.sub1.example.com", the subdomain field should contain "sub2.sub1", with no trailing period.</para>
 		/// <example>east</example>
 		///</summary>
-		[JsonPropertyName("subdomain")]
+		[JsonPropertyName("subdomain"), DataMember(Name = "subdomain")]
 		public string Subdomain { get; set; }
 
 		///<summary>
@@ -283,7 +283,7 @@ namespace Elastic.CommonSchema
 		/// This value can be determined precisely with a list like the public suffix list (http://publicsuffix.org). Trying to approximate this by simply taking the last label will not work well for effective TLDs such as "co.uk".</para>
 		/// <example>co.uk</example>
 		///</summary>
-		[JsonPropertyName("top_level_domain")]
+		[JsonPropertyName("top_level_domain"), DataMember(Name = "top_level_domain")]
 		public string TopLevelDomain { get; set; }
 	}
 
@@ -298,7 +298,7 @@ namespace Elastic.CommonSchema
 		/// Examples: AWS account id, Google Cloud ORG Id, or other unique identifier.</para>
 		/// <example>666777888999</example>
 		///</summary>
-		[JsonPropertyName("account.id")]
+		[JsonPropertyName("account.id"), DataMember(Name = "account.id")]
 		public string AccountId { get; set; }
 
 		///<summary>
@@ -307,7 +307,7 @@ namespace Elastic.CommonSchema
 		/// Examples: AWS account name, Google Cloud ORG display name.</para>
 		/// <example>elastic-dev</example>
 		///</summary>
-		[JsonPropertyName("account.name")]
+		[JsonPropertyName("account.name"), DataMember(Name = "account.name")]
 		public string AccountName { get; set; }
 
 		///<summary>
@@ -315,7 +315,7 @@ namespace Elastic.CommonSchema
 		/// <para>Availability zone in which this host, resource, or service is located.</para>
 		/// <example>us-east-1c</example>
 		///</summary>
-		[JsonPropertyName("availability_zone")]
+		[JsonPropertyName("availability_zone"), DataMember(Name = "availability_zone")]
 		public string AvailabilityZone { get; set; }
 
 		///<summary>
@@ -323,7 +323,7 @@ namespace Elastic.CommonSchema
 		/// <para>Instance ID of the host machine.</para>
 		/// <example>i-1234567890abcdef0</example>
 		///</summary>
-		[JsonPropertyName("instance.id")]
+		[JsonPropertyName("instance.id"), DataMember(Name = "instance.id")]
 		public string InstanceId { get; set; }
 
 		///<summary>
@@ -331,7 +331,7 @@ namespace Elastic.CommonSchema
 		/// <para>Instance name of the host machine.</para>
 		/// <example></example>
 		///</summary>
-		[JsonPropertyName("instance.name")]
+		[JsonPropertyName("instance.name"), DataMember(Name = "instance.name")]
 		public string InstanceName { get; set; }
 
 		///<summary>
@@ -339,7 +339,7 @@ namespace Elastic.CommonSchema
 		/// <para>Machine type of the host machine.</para>
 		/// <example>t2.medium</example>
 		///</summary>
-		[JsonPropertyName("machine.type")]
+		[JsonPropertyName("machine.type"), DataMember(Name = "machine.type")]
 		public string MachineType { get; set; }
 
 		///<summary>
@@ -348,7 +348,7 @@ namespace Elastic.CommonSchema
 		/// Examples: Google Cloud Project id, Azure Project id.</para>
 		/// <example>my-project</example>
 		///</summary>
-		[JsonPropertyName("project.id")]
+		[JsonPropertyName("project.id"), DataMember(Name = "project.id")]
 		public string ProjectId { get; set; }
 
 		///<summary>
@@ -357,7 +357,7 @@ namespace Elastic.CommonSchema
 		/// Examples: Google Cloud Project name, Azure Project name.</para>
 		/// <example>my project</example>
 		///</summary>
-		[JsonPropertyName("project.name")]
+		[JsonPropertyName("project.name"), DataMember(Name = "project.name")]
 		public string ProjectName { get; set; }
 
 		///<summary>
@@ -365,7 +365,7 @@ namespace Elastic.CommonSchema
 		/// <para>Name of the cloud provider. Example values are aws, azure, gcp, or digitalocean.</para>
 		/// <example>aws</example>
 		///</summary>
-		[JsonPropertyName("provider")]
+		[JsonPropertyName("provider"), DataMember(Name = "provider")]
 		public string Provider { get; set; }
 
 		///<summary>
@@ -373,7 +373,7 @@ namespace Elastic.CommonSchema
 		/// <para>Region in which this host, resource, or service is located.</para>
 		/// <example>us-east-1</example>
 		///</summary>
-		[JsonPropertyName("region")]
+		[JsonPropertyName("region"), DataMember(Name = "region")]
 		public string Region { get; set; }
 
 		///<summary>
@@ -382,7 +382,7 @@ namespace Elastic.CommonSchema
 		/// Examples: app engine, app service, cloud run, fargate, lambda.</para>
 		/// <example>lambda</example>
 		///</summary>
-		[JsonPropertyName("service.name")]
+		[JsonPropertyName("service.name"), DataMember(Name = "service.name")]
 		public string ServiceName { get; set; }
 	}
 
@@ -397,7 +397,7 @@ namespace Elastic.CommonSchema
 		/// This value can distinguish signatures when a file is signed multiple times by the same signer but with a different digest algorithm.</para>
 		/// <example>sha256</example>
 		///</summary>
-		[JsonPropertyName("digest_algorithm")]
+		[JsonPropertyName("digest_algorithm"), DataMember(Name = "digest_algorithm")]
 		public string DigestAlgorithm { get; set; }
 
 		///<summary>
@@ -405,7 +405,7 @@ namespace Elastic.CommonSchema
 		/// <para>Boolean to capture if a signature is present.</para>
 		/// <example>true</example>
 		///</summary>
-		[JsonPropertyName("exists")]
+		[JsonPropertyName("exists"), DataMember(Name = "exists")]
 		public bool? Exists { get; set; }
 
 		///<summary>
@@ -414,7 +414,7 @@ namespace Elastic.CommonSchema
 		/// This is used to identify the application manufactured by a software vendor. The field is relevant to Apple *OS only.</para>
 		/// <example>com.apple.xpc.proxy</example>
 		///</summary>
-		[JsonPropertyName("signing_id")]
+		[JsonPropertyName("signing_id"), DataMember(Name = "signing_id")]
 		public string SigningId { get; set; }
 
 		///<summary>
@@ -423,7 +423,7 @@ namespace Elastic.CommonSchema
 		/// This is useful for logging cryptographic errors with the certificate validity or trust status. Leave unpopulated if the validity or trust of the certificate was unchecked.</para>
 		/// <example>ERROR_UNTRUSTED_ROOT</example>
 		///</summary>
-		[JsonPropertyName("status")]
+		[JsonPropertyName("status"), DataMember(Name = "status")]
 		public string Status { get; set; }
 
 		///<summary>
@@ -431,7 +431,7 @@ namespace Elastic.CommonSchema
 		/// <para>Subject name of the code signer</para>
 		/// <example>Microsoft Corporation</example>
 		///</summary>
-		[JsonPropertyName("subject_name")]
+		[JsonPropertyName("subject_name"), DataMember(Name = "subject_name")]
 		public string SubjectName { get; set; }
 
 		///<summary>
@@ -440,7 +440,7 @@ namespace Elastic.CommonSchema
 		/// This is used to identify the team or vendor of a software product. The field is relevant to Apple *OS only.</para>
 		/// <example>EQHXZ8M8AV</example>
 		///</summary>
-		[JsonPropertyName("team_id")]
+		[JsonPropertyName("team_id"), DataMember(Name = "team_id")]
 		public string TeamId { get; set; }
 
 		///<summary>
@@ -448,7 +448,7 @@ namespace Elastic.CommonSchema
 		/// <para>Date and time when the code signature was generated and signed.</para>
 		/// <example>1/1/2021 12:10:30 PM</example>
 		///</summary>
-		[JsonPropertyName("timestamp")]
+		[JsonPropertyName("timestamp"), DataMember(Name = "timestamp")]
 		public DateTimeOffset? Timestamp { get; set; }
 
 		///<summary>
@@ -457,7 +457,7 @@ namespace Elastic.CommonSchema
 		/// Validating the trust of the certificate chain may be complicated, and this field should only be populated by tools that actively check the status.</para>
 		/// <example>true</example>
 		///</summary>
-		[JsonPropertyName("trusted")]
+		[JsonPropertyName("trusted"), DataMember(Name = "trusted")]
 		public bool? Trusted { get; set; }
 
 		///<summary>
@@ -466,7 +466,7 @@ namespace Elastic.CommonSchema
 		/// Leave unpopulated if a certificate was unchecked.</para>
 		/// <example>true</example>
 		///</summary>
-		[JsonPropertyName("valid")]
+		[JsonPropertyName("valid"), DataMember(Name = "valid")]
 		public bool? Valid { get; set; }
 	}
 
@@ -480,7 +480,7 @@ namespace Elastic.CommonSchema
 		/// <para>Percent CPU used which is normalized by the number of CPU cores and it ranges from 0 to 1. Scaling factor: 1000.</para>
 		/// <example></example>
 		///</summary>
-		[JsonPropertyName("cpu.usage")]
+		[JsonPropertyName("cpu.usage"), DataMember(Name = "cpu.usage")]
 		public float? CpuUsage { get; set; }
 
 		///<summary>
@@ -488,7 +488,7 @@ namespace Elastic.CommonSchema
 		/// <para>The total number of bytes (gauge) read successfully (aggregated from all disks) since the last metric collection.</para>
 		/// <example></example>
 		///</summary>
-		[JsonPropertyName("disk.read.bytes")]
+		[JsonPropertyName("disk.read.bytes"), DataMember(Name = "disk.read.bytes")]
 		public long? DiskReadBytes { get; set; }
 
 		///<summary>
@@ -496,7 +496,7 @@ namespace Elastic.CommonSchema
 		/// <para>The total number of bytes (gauge) written successfully (aggregated from all disks) since the last metric collection.</para>
 		/// <example></example>
 		///</summary>
-		[JsonPropertyName("disk.write.bytes")]
+		[JsonPropertyName("disk.write.bytes"), DataMember(Name = "disk.write.bytes")]
 		public long? DiskWriteBytes { get; set; }
 
 		///<summary>
@@ -504,7 +504,7 @@ namespace Elastic.CommonSchema
 		/// <para>Unique container id.</para>
 		/// <example></example>
 		///</summary>
-		[JsonPropertyName("id")]
+		[JsonPropertyName("id"), DataMember(Name = "id")]
 		public string Id { get; set; }
 
 		///<summary>
@@ -512,7 +512,7 @@ namespace Elastic.CommonSchema
 		/// <para>An array of digests of the image the container was built on. Each digest consists of the hash algorithm and value in this format: `algorithm:value`. Algorithm names should align with the field names in the ECS hash field set.</para>
 		/// <example>[sha256:f8fefc80e3273dc756f288a63945820d6476ad64883892c771b5e2ece6bf1b26]</example>
 		///</summary>
-		[JsonPropertyName("image.hash.all")]
+		[JsonPropertyName("image.hash.all"), DataMember(Name = "image.hash.all")]
 		public string[] ImageHashAll { get; set; }
 
 		///<summary>
@@ -520,7 +520,7 @@ namespace Elastic.CommonSchema
 		/// <para>Name of the image the container was built on.</para>
 		/// <example></example>
 		///</summary>
-		[JsonPropertyName("image.name")]
+		[JsonPropertyName("image.name"), DataMember(Name = "image.name")]
 		public string ImageName { get; set; }
 
 		///<summary>
@@ -528,7 +528,7 @@ namespace Elastic.CommonSchema
 		/// <para>Container image tags.</para>
 		/// <example></example>
 		///</summary>
-		[JsonPropertyName("image.tag")]
+		[JsonPropertyName("image.tag"), DataMember(Name = "image.tag")]
 		public string[] ImageTag { get; set; }
 
 		///<summary>
@@ -536,7 +536,7 @@ namespace Elastic.CommonSchema
 		/// <para>Memory usage percentage and it ranges from 0 to 1. Scaling factor: 1000.</para>
 		/// <example></example>
 		///</summary>
-		[JsonPropertyName("memory.usage")]
+		[JsonPropertyName("memory.usage"), DataMember(Name = "memory.usage")]
 		public float? MemoryUsage { get; set; }
 
 		///<summary>
@@ -544,7 +544,7 @@ namespace Elastic.CommonSchema
 		/// <para>Container name.</para>
 		/// <example></example>
 		///</summary>
-		[JsonPropertyName("name")]
+		[JsonPropertyName("name"), DataMember(Name = "name")]
 		public string Name { get; set; }
 
 		///<summary>
@@ -552,7 +552,7 @@ namespace Elastic.CommonSchema
 		/// <para>The number of bytes (gauge) sent out on all network interfaces by the container since the last metric collection.</para>
 		/// <example></example>
 		///</summary>
-		[JsonPropertyName("network.egress.bytes")]
+		[JsonPropertyName("network.egress.bytes"), DataMember(Name = "network.egress.bytes")]
 		public long? NetworkEgressBytes { get; set; }
 
 		///<summary>
@@ -560,7 +560,7 @@ namespace Elastic.CommonSchema
 		/// <para>The number of bytes received (gauge) on all network interfaces by the container since the last metric collection.</para>
 		/// <example></example>
 		///</summary>
-		[JsonPropertyName("network.ingress.bytes")]
+		[JsonPropertyName("network.ingress.bytes"), DataMember(Name = "network.ingress.bytes")]
 		public long? NetworkIngressBytes { get; set; }
 
 		///<summary>
@@ -568,7 +568,7 @@ namespace Elastic.CommonSchema
 		/// <para>Runtime managing this container.</para>
 		/// <example>docker</example>
 		///</summary>
-		[JsonPropertyName("runtime")]
+		[JsonPropertyName("runtime"), DataMember(Name = "runtime")]
 		public string Runtime { get; set; }
 
 		///<summary>
@@ -576,7 +576,7 @@ namespace Elastic.CommonSchema
 		/// <para>Image labels.</para>
 		/// <example></example>
 		///</summary>
-		[JsonPropertyName("labels")]
+		[JsonPropertyName("labels"), DataMember(Name = "labels")]
 		public ContainerLabels Labels { get; set; }
 	}
 
@@ -594,7 +594,7 @@ namespace Elastic.CommonSchema
 		///   * No longer than 100 characters</para>
 		/// <example>nginx.access</example>
 		///</summary>
-		[JsonPropertyName("dataset")]
+		[JsonPropertyName("dataset"), DataMember(Name = "dataset")]
 		public string Dataset { get; set; }
 
 		///<summary>
@@ -606,7 +606,7 @@ namespace Elastic.CommonSchema
 		///   * No longer than 100 characters</para>
 		/// <example>production</example>
 		///</summary>
-		[JsonPropertyName("namespace")]
+		[JsonPropertyName("namespace"), DataMember(Name = "namespace")]
 		public string Namespace { get; set; }
 
 		///<summary>
@@ -615,7 +615,7 @@ namespace Elastic.CommonSchema
 		/// Currently allowed values are "logs" and "metrics". We expect to also add "traces" and "synthetics" in the near future.</para>
 		/// <example>logs</example>
 		///</summary>
-		[JsonPropertyName("type")]
+		[JsonPropertyName("type"), DataMember(Name = "type")]
 		public string Type { get; set; }
 	}
 
@@ -630,7 +630,7 @@ namespace Elastic.CommonSchema
 		/// Then it should be duplicated to `.ip` or `.domain`, depending on which one it is.</para>
 		/// <example></example>
 		///</summary>
-		[JsonPropertyName("address")]
+		[JsonPropertyName("address"), DataMember(Name = "address")]
 		public string Address { get; set; }
 
 		///<summary>
@@ -638,7 +638,7 @@ namespace Elastic.CommonSchema
 		/// <para>Bytes sent from the destination to the source.</para>
 		/// <example>184</example>
 		///</summary>
-		[JsonPropertyName("bytes")]
+		[JsonPropertyName("bytes"), DataMember(Name = "bytes")]
 		public long? Bytes { get; set; }
 
 		///<summary>
@@ -647,7 +647,7 @@ namespace Elastic.CommonSchema
 		/// This value may be a host name, a fully qualified domain name, or another host naming format. The value may derive from the original event or be added from enrichment.</para>
 		/// <example>foo.example.com</example>
 		///</summary>
-		[JsonPropertyName("domain")]
+		[JsonPropertyName("domain"), DataMember(Name = "domain")]
 		public string Domain { get; set; }
 
 		///<summary>
@@ -655,7 +655,7 @@ namespace Elastic.CommonSchema
 		/// <para>IP address of the destination (IPv4 or IPv6).</para>
 		/// <example></example>
 		///</summary>
-		[JsonPropertyName("ip")]
+		[JsonPropertyName("ip"), DataMember(Name = "ip")]
 		public string Ip { get; set; }
 
 		///<summary>
@@ -665,7 +665,7 @@ namespace Elastic.CommonSchema
 		/// <para>pattern: </para></para>
 		/// <example>00-00-5E-00-53-23</example>
 		///</summary>
-		[JsonPropertyName("mac")]
+		[JsonPropertyName("mac"), DataMember(Name = "mac")]
 		public string Mac { get; set; }
 
 		///<summary>
@@ -674,7 +674,7 @@ namespace Elastic.CommonSchema
 		/// Typically used with load balancers, firewalls, or routers.</para>
 		/// <example></example>
 		///</summary>
-		[JsonPropertyName("nat.ip")]
+		[JsonPropertyName("nat.ip"), DataMember(Name = "nat.ip")]
 		public string NatIp { get; set; }
 
 		///<summary>
@@ -683,7 +683,7 @@ namespace Elastic.CommonSchema
 		/// Typically used with load balancers, firewalls, or routers.</para>
 		/// <example></example>
 		///</summary>
-		[JsonPropertyName("nat.port")]
+		[JsonPropertyName("nat.port"), DataMember(Name = "nat.port")]
 		public long? NatPort { get; set; }
 
 		///<summary>
@@ -691,7 +691,7 @@ namespace Elastic.CommonSchema
 		/// <para>Packets sent from the destination to the source.</para>
 		/// <example>12</example>
 		///</summary>
-		[JsonPropertyName("packets")]
+		[JsonPropertyName("packets"), DataMember(Name = "packets")]
 		public long? Packets { get; set; }
 
 		///<summary>
@@ -699,7 +699,7 @@ namespace Elastic.CommonSchema
 		/// <para>Port of the destination.</para>
 		/// <example></example>
 		///</summary>
-		[JsonPropertyName("port")]
+		[JsonPropertyName("port"), DataMember(Name = "port")]
 		public long? Port { get; set; }
 
 		///<summary>
@@ -709,7 +709,7 @@ namespace Elastic.CommonSchema
 		/// This value can be determined precisely with a list like the public suffix list (http://publicsuffix.org). Trying to approximate this by simply taking the last two labels will not work well for TLDs such as "co.uk".</para>
 		/// <example>example.com</example>
 		///</summary>
-		[JsonPropertyName("registered_domain")]
+		[JsonPropertyName("registered_domain"), DataMember(Name = "registered_domain")]
 		public string RegisteredDomain { get; set; }
 
 		///<summary>
@@ -718,7 +718,7 @@ namespace Elastic.CommonSchema
 		/// For example the subdomain portion of "www.east.mydomain.co.uk" is "east". If the domain has multiple levels of subdomain, such as "sub2.sub1.example.com", the subdomain field should contain "sub2.sub1", with no trailing period.</para>
 		/// <example>east</example>
 		///</summary>
-		[JsonPropertyName("subdomain")]
+		[JsonPropertyName("subdomain"), DataMember(Name = "subdomain")]
 		public string Subdomain { get; set; }
 
 		///<summary>
@@ -727,7 +727,7 @@ namespace Elastic.CommonSchema
 		/// This value can be determined precisely with a list like the public suffix list (http://publicsuffix.org). Trying to approximate this by simply taking the last label will not work well for effective TLDs such as "co.uk".</para>
 		/// <example>co.uk</example>
 		///</summary>
-		[JsonPropertyName("top_level_domain")]
+		[JsonPropertyName("top_level_domain"), DataMember(Name = "top_level_domain")]
 		public string TopLevelDomain { get; set; }
 	}
 
@@ -742,7 +742,7 @@ namespace Elastic.CommonSchema
 		/// This generally maps to the name of the file on disk.</para>
 		/// <example>kernel32.dll</example>
 		///</summary>
-		[JsonPropertyName("name")]
+		[JsonPropertyName("name"), DataMember(Name = "name")]
 		public string Name { get; set; }
 
 		///<summary>
@@ -750,7 +750,7 @@ namespace Elastic.CommonSchema
 		/// <para>Full file path of the library.</para>
 		/// <example>C:\Windows\System32\kernel32.dll</example>
 		///</summary>
-		[JsonPropertyName("path")]
+		[JsonPropertyName("path"), DataMember(Name = "path")]
 		public string Path { get; set; }
 	}
 
@@ -774,7 +774,7 @@ namespace Elastic.CommonSchema
 		/// </list></para>
 		/// <example>["RD", "RA"]</example>
 		///</summary>
-		[JsonPropertyName("header_flags")]
+		[JsonPropertyName("header_flags"), DataMember(Name = "header_flags")]
 		public string[] HeaderFlags { get; set; }
 
 		///<summary>
@@ -782,7 +782,7 @@ namespace Elastic.CommonSchema
 		/// <para>The DNS packet identifier assigned by the program that generated the query. The identifier is copied to the response.</para>
 		/// <example>62111</example>
 		///</summary>
-		[JsonPropertyName("id")]
+		[JsonPropertyName("id"), DataMember(Name = "id")]
 		public string Id { get; set; }
 
 		///<summary>
@@ -790,7 +790,7 @@ namespace Elastic.CommonSchema
 		/// <para>The DNS operation code that specifies the kind of query in the message. This value is set by the originator of a query and copied into the response.</para>
 		/// <example>QUERY</example>
 		///</summary>
-		[JsonPropertyName("op_code")]
+		[JsonPropertyName("op_code"), DataMember(Name = "op_code")]
 		public string OpCode { get; set; }
 
 		///<summary>
@@ -798,7 +798,7 @@ namespace Elastic.CommonSchema
 		/// <para>The class of records being queried.</para>
 		/// <example>IN</example>
 		///</summary>
-		[JsonPropertyName("question.class")]
+		[JsonPropertyName("question.class"), DataMember(Name = "question.class")]
 		public string QuestionClass { get; set; }
 
 		///<summary>
@@ -807,7 +807,7 @@ namespace Elastic.CommonSchema
 		/// If the name field contains non-printable characters (below 32 or above 126), those characters should be represented as escaped base 10 integers (\DDD). Back slashes and quotes should be escaped. Tabs, carriage returns, and line feeds should be converted to \t, \r, and \n respectively.</para>
 		/// <example>www.example.com</example>
 		///</summary>
-		[JsonPropertyName("question.name")]
+		[JsonPropertyName("question.name"), DataMember(Name = "question.name")]
 		public string QuestionName { get; set; }
 
 		///<summary>
@@ -817,7 +817,7 @@ namespace Elastic.CommonSchema
 		/// This value can be determined precisely with a list like the public suffix list (http://publicsuffix.org). Trying to approximate this by simply taking the last two labels will not work well for TLDs such as "co.uk".</para>
 		/// <example>example.com</example>
 		///</summary>
-		[JsonPropertyName("question.registered_domain")]
+		[JsonPropertyName("question.registered_domain"), DataMember(Name = "question.registered_domain")]
 		public string QuestionRegisteredDomain { get; set; }
 
 		///<summary>
@@ -826,7 +826,7 @@ namespace Elastic.CommonSchema
 		/// If the domain has multiple levels of subdomain, such as "sub2.sub1.example.com", the subdomain field should contain "sub2.sub1", with no trailing period.</para>
 		/// <example>www</example>
 		///</summary>
-		[JsonPropertyName("question.subdomain")]
+		[JsonPropertyName("question.subdomain"), DataMember(Name = "question.subdomain")]
 		public string QuestionSubdomain { get; set; }
 
 		///<summary>
@@ -835,7 +835,7 @@ namespace Elastic.CommonSchema
 		/// This value can be determined precisely with a list like the public suffix list (http://publicsuffix.org). Trying to approximate this by simply taking the last label will not work well for effective TLDs such as "co.uk".</para>
 		/// <example>co.uk</example>
 		///</summary>
-		[JsonPropertyName("question.top_level_domain")]
+		[JsonPropertyName("question.top_level_domain"), DataMember(Name = "question.top_level_domain")]
 		public string QuestionTopLevelDomain { get; set; }
 
 		///<summary>
@@ -843,7 +843,7 @@ namespace Elastic.CommonSchema
 		/// <para>The type of record being queried.</para>
 		/// <example>AAAA</example>
 		///</summary>
-		[JsonPropertyName("question.type")]
+		[JsonPropertyName("question.type"), DataMember(Name = "question.type")]
 		public string QuestionType { get; set; }
 
 		///<summary>
@@ -852,7 +852,7 @@ namespace Elastic.CommonSchema
 		/// The `answers` array can be difficult to use, because of the variety of data formats it can contain. Extracting all IP addresses seen in there to `dns.resolved_ip` makes it possible to index them as IP addresses, and makes them easier to visualize and query for.</para>
 		/// <example>["10.10.10.10", "10.10.10.11"]</example>
 		///</summary>
-		[JsonPropertyName("resolved_ip")]
+		[JsonPropertyName("resolved_ip"), DataMember(Name = "resolved_ip")]
 		public string[] ResolvedIp { get; set; }
 
 		///<summary>
@@ -860,7 +860,7 @@ namespace Elastic.CommonSchema
 		/// <para>The DNS response code.</para>
 		/// <example>NOERROR</example>
 		///</summary>
-		[JsonPropertyName("response_code")]
+		[JsonPropertyName("response_code"), DataMember(Name = "response_code")]
 		public string ResponseCode { get; set; }
 
 		///<summary>
@@ -870,7 +870,7 @@ namespace Elastic.CommonSchema
 		/// If your source of DNS events gives you answers as well, you should create one event per query (optionally as soon as the query is seen). And a second event containing all query details as well as an array of answers.</para>
 		/// <example>answer</example>
 		///</summary>
-		[JsonPropertyName("type")]
+		[JsonPropertyName("type"), DataMember(Name = "type")]
 		public string Type { get; set; }
 
 		///<summary>
@@ -880,7 +880,7 @@ namespace Elastic.CommonSchema
 		/// Not all DNS data sources give all details about DNS answers. At minimum, answer objects must contain the `data` key. If more information is available, map as much of it to ECS as possible, and add any additional fields to the answer objects as custom fields.</para>
 		/// <example></example>
 		///</summary>
-		[JsonPropertyName("answers")]
+		[JsonPropertyName("answers"), DataMember(Name = "answers")]
 		public DnsAnswers[] Answers { get; set; }
 	}
 
@@ -896,7 +896,7 @@ namespace Elastic.CommonSchema
 		/// <para><br/>This is a required field</para></para>
 		/// <example>1.0.0</example>
 		///</summary>
-		[JsonPropertyName("version")]
+		[JsonPropertyName("version"), DataMember(Name = "version")]
 		public string Version { get; set; }
 	}
 
@@ -910,7 +910,7 @@ namespace Elastic.CommonSchema
 		/// <para>Machine architecture of the ELF file.</para>
 		/// <example>x86-64</example>
 		///</summary>
-		[JsonPropertyName("architecture")]
+		[JsonPropertyName("architecture"), DataMember(Name = "architecture")]
 		public string Architecture { get; set; }
 
 		///<summary>
@@ -918,7 +918,7 @@ namespace Elastic.CommonSchema
 		/// <para>Byte sequence of ELF file.</para>
 		/// <example>Little Endian</example>
 		///</summary>
-		[JsonPropertyName("byte_order")]
+		[JsonPropertyName("byte_order"), DataMember(Name = "byte_order")]
 		public string ByteOrder { get; set; }
 
 		///<summary>
@@ -926,7 +926,7 @@ namespace Elastic.CommonSchema
 		/// <para>CPU type of the ELF file.</para>
 		/// <example>Intel</example>
 		///</summary>
-		[JsonPropertyName("cpu_type")]
+		[JsonPropertyName("cpu_type"), DataMember(Name = "cpu_type")]
 		public string CpuType { get; set; }
 
 		///<summary>
@@ -934,7 +934,7 @@ namespace Elastic.CommonSchema
 		/// <para>Extracted when possible from the file's metadata. Indicates when it was built or compiled. It can also be faked by malware creators.</para>
 		/// <example></example>
 		///</summary>
-		[JsonPropertyName("creation_date")]
+		[JsonPropertyName("creation_date"), DataMember(Name = "creation_date")]
 		public DateTimeOffset? CreationDate { get; set; }
 
 		///<summary>
@@ -942,7 +942,7 @@ namespace Elastic.CommonSchema
 		/// <para>List of exported element names and types.</para>
 		/// <example></example>
 		///</summary>
-		[JsonPropertyName("exports")]
+		[JsonPropertyName("exports"), DataMember(Name = "exports")]
 		public string[] Exports { get; set; }
 
 		///<summary>
@@ -950,7 +950,7 @@ namespace Elastic.CommonSchema
 		/// <para>Version of the ELF Application Binary Interface (ABI).</para>
 		/// <example></example>
 		///</summary>
-		[JsonPropertyName("header.abi_version")]
+		[JsonPropertyName("header.abi_version"), DataMember(Name = "header.abi_version")]
 		public string HeaderAbiVersion { get; set; }
 
 		///<summary>
@@ -958,7 +958,7 @@ namespace Elastic.CommonSchema
 		/// <para>Header class of the ELF file.</para>
 		/// <example></example>
 		///</summary>
-		[JsonPropertyName("header.class")]
+		[JsonPropertyName("header.class"), DataMember(Name = "header.class")]
 		public string HeaderClass { get; set; }
 
 		///<summary>
@@ -966,7 +966,7 @@ namespace Elastic.CommonSchema
 		/// <para>Data table of the ELF header.</para>
 		/// <example></example>
 		///</summary>
-		[JsonPropertyName("header.data")]
+		[JsonPropertyName("header.data"), DataMember(Name = "header.data")]
 		public string HeaderData { get; set; }
 
 		///<summary>
@@ -974,7 +974,7 @@ namespace Elastic.CommonSchema
 		/// <para>Header entrypoint of the ELF file.</para>
 		/// <example></example>
 		///</summary>
-		[JsonPropertyName("header.entrypoint")]
+		[JsonPropertyName("header.entrypoint"), DataMember(Name = "header.entrypoint")]
 		public long? HeaderEntrypoint { get; set; }
 
 		///<summary>
@@ -982,7 +982,7 @@ namespace Elastic.CommonSchema
 		/// <para>"0x1" for original ELF files.</para>
 		/// <example></example>
 		///</summary>
-		[JsonPropertyName("header.object_version")]
+		[JsonPropertyName("header.object_version"), DataMember(Name = "header.object_version")]
 		public string HeaderObjectVersion { get; set; }
 
 		///<summary>
@@ -990,7 +990,7 @@ namespace Elastic.CommonSchema
 		/// <para>Application Binary Interface (ABI) of the Linux OS.</para>
 		/// <example></example>
 		///</summary>
-		[JsonPropertyName("header.os_abi")]
+		[JsonPropertyName("header.os_abi"), DataMember(Name = "header.os_abi")]
 		public string HeaderOsAbi { get; set; }
 
 		///<summary>
@@ -998,7 +998,7 @@ namespace Elastic.CommonSchema
 		/// <para>Header type of the ELF file.</para>
 		/// <example></example>
 		///</summary>
-		[JsonPropertyName("header.type")]
+		[JsonPropertyName("header.type"), DataMember(Name = "header.type")]
 		public string HeaderType { get; set; }
 
 		///<summary>
@@ -1006,7 +1006,7 @@ namespace Elastic.CommonSchema
 		/// <para>Version of the ELF header.</para>
 		/// <example></example>
 		///</summary>
-		[JsonPropertyName("header.version")]
+		[JsonPropertyName("header.version"), DataMember(Name = "header.version")]
 		public string HeaderVersion { get; set; }
 
 		///<summary>
@@ -1014,7 +1014,7 @@ namespace Elastic.CommonSchema
 		/// <para>List of imported element names and types.</para>
 		/// <example></example>
 		///</summary>
-		[JsonPropertyName("imports")]
+		[JsonPropertyName("imports"), DataMember(Name = "imports")]
 		public string[] Imports { get; set; }
 
 		///<summary>
@@ -1022,7 +1022,7 @@ namespace Elastic.CommonSchema
 		/// <para>List of shared libraries used by this ELF object.</para>
 		/// <example></example>
 		///</summary>
-		[JsonPropertyName("shared_libraries")]
+		[JsonPropertyName("shared_libraries"), DataMember(Name = "shared_libraries")]
 		public string[] SharedLibraries { get; set; }
 
 		///<summary>
@@ -1030,7 +1030,7 @@ namespace Elastic.CommonSchema
 		/// <para>telfhash symbol hash for ELF file.</para>
 		/// <example></example>
 		///</summary>
-		[JsonPropertyName("telfhash")]
+		[JsonPropertyName("telfhash"), DataMember(Name = "telfhash")]
 		public string Telfhash { get; set; }
 
 		///<summary>
@@ -1039,7 +1039,7 @@ namespace Elastic.CommonSchema
 		/// The keys that should be present in these objects are defined by sub-fields underneath `elf.sections.*`.</para>
 		/// <example></example>
 		///</summary>
-		[JsonPropertyName("sections")]
+		[JsonPropertyName("sections"), DataMember(Name = "sections")]
 		public ElfSections[] Sections { get; set; }
 
 		///<summary>
@@ -1048,7 +1048,7 @@ namespace Elastic.CommonSchema
 		/// The keys that should be present in these objects are defined by sub-fields underneath `elf.segments.*`.</para>
 		/// <example></example>
 		///</summary>
-		[JsonPropertyName("segments")]
+		[JsonPropertyName("segments"), DataMember(Name = "segments")]
 		public ElfSegments[] Segments { get; set; }
 	}
 
@@ -1062,7 +1062,7 @@ namespace Elastic.CommonSchema
 		/// <para>The email address of BCC recipient</para>
 		/// <example>bcc.user1@example.com</example>
 		///</summary>
-		[JsonPropertyName("bcc.address")]
+		[JsonPropertyName("bcc.address"), DataMember(Name = "bcc.address")]
 		public string[] BccAddress { get; set; }
 
 		///<summary>
@@ -1070,7 +1070,7 @@ namespace Elastic.CommonSchema
 		/// <para>The email address of CC recipient</para>
 		/// <example>cc.user1@example.com</example>
 		///</summary>
-		[JsonPropertyName("cc.address")]
+		[JsonPropertyName("cc.address"), DataMember(Name = "cc.address")]
 		public string[] CcAddress { get; set; }
 
 		///<summary>
@@ -1079,7 +1079,7 @@ namespace Elastic.CommonSchema
 		/// Typically a MIME type.</para>
 		/// <example>text/plain</example>
 		///</summary>
-		[JsonPropertyName("content_type")]
+		[JsonPropertyName("content_type"), DataMember(Name = "content_type")]
 		public string ContentType { get; set; }
 
 		///<summary>
@@ -1087,7 +1087,7 @@ namespace Elastic.CommonSchema
 		/// <para>The date and time when the email message was received by the service or client.</para>
 		/// <example>11/10/2020 10:12:34 PM</example>
 		///</summary>
-		[JsonPropertyName("delivery_timestamp")]
+		[JsonPropertyName("delivery_timestamp"), DataMember(Name = "delivery_timestamp")]
 		public DateTimeOffset? DeliveryTimestamp { get; set; }
 
 		///<summary>
@@ -1095,7 +1095,7 @@ namespace Elastic.CommonSchema
 		/// <para>The direction of the message based on the sending and receiving domains.</para>
 		/// <example>inbound</example>
 		///</summary>
-		[JsonPropertyName("direction")]
+		[JsonPropertyName("direction"), DataMember(Name = "direction")]
 		public string Direction { get; set; }
 
 		///<summary>
@@ -1103,7 +1103,7 @@ namespace Elastic.CommonSchema
 		/// <para>The email address of the sender, typically from the RFC 5322 `From:` header field.</para>
 		/// <example>sender@example.com</example>
 		///</summary>
-		[JsonPropertyName("from.address")]
+		[JsonPropertyName("from.address"), DataMember(Name = "from.address")]
 		public string[] FromAddress { get; set; }
 
 		///<summary>
@@ -1112,7 +1112,7 @@ namespace Elastic.CommonSchema
 		/// Identifier is not persistent across hops.</para>
 		/// <example>c26dbea0-80d5-463b-b93c-4e8b708219ce</example>
 		///</summary>
-		[JsonPropertyName("local_id")]
+		[JsonPropertyName("local_id"), DataMember(Name = "local_id")]
 		public string LocalId { get; set; }
 
 		///<summary>
@@ -1120,7 +1120,7 @@ namespace Elastic.CommonSchema
 		/// <para>Identifier from the RFC 5322 `Message-ID:` email header that refers to a particular email message.</para>
 		/// <example>81ce15$8r2j59@mail01.example.com</example>
 		///</summary>
-		[JsonPropertyName("message_id")]
+		[JsonPropertyName("message_id"), DataMember(Name = "message_id")]
 		public string MessageId { get; set; }
 
 		///<summary>
@@ -1128,7 +1128,7 @@ namespace Elastic.CommonSchema
 		/// <para>The date and time the email message was composed. Many email clients will fill in this value automatically when the message is sent by a user.</para>
 		/// <example>11/10/2020 10:12:34 PM</example>
 		///</summary>
-		[JsonPropertyName("origination_timestamp")]
+		[JsonPropertyName("origination_timestamp"), DataMember(Name = "origination_timestamp")]
 		public DateTimeOffset? OriginationTimestamp { get; set; }
 
 		///<summary>
@@ -1136,7 +1136,7 @@ namespace Elastic.CommonSchema
 		/// <para>The address that replies should be delivered to based on the value in the RFC 5322 `Reply-To:` header.</para>
 		/// <example>reply.here@example.com</example>
 		///</summary>
-		[JsonPropertyName("reply_to.address")]
+		[JsonPropertyName("reply_to.address"), DataMember(Name = "reply_to.address")]
 		public string[] ReplyToAddress { get; set; }
 
 		///<summary>
@@ -1144,7 +1144,7 @@ namespace Elastic.CommonSchema
 		/// <para>Per RFC 5322, specifies the address responsible for the actual transmission of the message.</para>
 		/// <example></example>
 		///</summary>
-		[JsonPropertyName("sender.address")]
+		[JsonPropertyName("sender.address"), DataMember(Name = "sender.address")]
 		public string SenderAddress { get; set; }
 
 		///<summary>
@@ -1152,7 +1152,7 @@ namespace Elastic.CommonSchema
 		/// <para>A brief summary of the topic of the message.</para>
 		/// <example>Please see this important message.</example>
 		///</summary>
-		[JsonPropertyName("subject")]
+		[JsonPropertyName("subject"), DataMember(Name = "subject")]
 		public string Subject { get; set; }
 
 		///<summary>
@@ -1160,7 +1160,7 @@ namespace Elastic.CommonSchema
 		/// <para>The email address of recipient</para>
 		/// <example>user1@example.com</example>
 		///</summary>
-		[JsonPropertyName("to.address")]
+		[JsonPropertyName("to.address"), DataMember(Name = "to.address")]
 		public string[] ToAddress { get; set; }
 
 		///<summary>
@@ -1168,7 +1168,7 @@ namespace Elastic.CommonSchema
 		/// <para>The name of the application that was used to draft and send the original email message.</para>
 		/// <example>Spambot v2.5</example>
 		///</summary>
-		[JsonPropertyName("x_mailer")]
+		[JsonPropertyName("x_mailer"), DataMember(Name = "x_mailer")]
 		public string XMailer { get; set; }
 
 		///<summary>
@@ -1176,7 +1176,7 @@ namespace Elastic.CommonSchema
 		/// <para>A list of objects describing the attachment files sent along with an email message.</para>
 		/// <example></example>
 		///</summary>
-		[JsonPropertyName("attachments")]
+		[JsonPropertyName("attachments"), DataMember(Name = "attachments")]
 		public EmailAttachments[] Attachments { get; set; }
 	}
 
@@ -1190,7 +1190,7 @@ namespace Elastic.CommonSchema
 		/// <para>Error code describing the error.</para>
 		/// <example></example>
 		///</summary>
-		[JsonPropertyName("code")]
+		[JsonPropertyName("code"), DataMember(Name = "code")]
 		public string Code { get; set; }
 
 		///<summary>
@@ -1198,7 +1198,7 @@ namespace Elastic.CommonSchema
 		/// <para>Unique identifier for the error.</para>
 		/// <example></example>
 		///</summary>
-		[JsonPropertyName("id")]
+		[JsonPropertyName("id"), DataMember(Name = "id")]
 		public string Id { get; set; }
 
 		///<summary>
@@ -1206,7 +1206,7 @@ namespace Elastic.CommonSchema
 		/// <para>Error message.</para>
 		/// <example></example>
 		///</summary>
-		[JsonPropertyName("message")]
+		[JsonPropertyName("message"), DataMember(Name = "message")]
 		public string Message { get; set; }
 
 		///<summary>
@@ -1214,7 +1214,7 @@ namespace Elastic.CommonSchema
 		/// <para>The stack trace of this error in plain text.</para>
 		/// <example></example>
 		///</summary>
-		[JsonPropertyName("stack_trace")]
+		[JsonPropertyName("stack_trace"), DataMember(Name = "stack_trace")]
 		public string StackTrace { get; set; }
 
 		///<summary>
@@ -1222,7 +1222,7 @@ namespace Elastic.CommonSchema
 		/// <para>The type of the error, for example the class name of the exception.</para>
 		/// <example>java.lang.NullPointerException</example>
 		///</summary>
-		[JsonPropertyName("type")]
+		[JsonPropertyName("type"), DataMember(Name = "type")]
 		public string Type { get; set; }
 	}
 
@@ -1237,7 +1237,7 @@ namespace Elastic.CommonSchema
 		/// This describes the information in the event. It is more specific than `event.category`. Examples are `group-add`, `process-started`, `file-created`. The value is normally defined by the implementer.</para>
 		/// <example>user-password-change</example>
 		///</summary>
-		[JsonPropertyName("action")]
+		[JsonPropertyName("action"), DataMember(Name = "action")]
 		public string Action { get; set; }
 
 		///<summary>
@@ -1252,7 +1252,7 @@ namespace Elastic.CommonSchema
 		/// `auth_metadata_missing` - There was no auth metadata or it was missing information about the agent ID.</para>
 		/// <example>verified</example>
 		///</summary>
-		[JsonPropertyName("agent_id_status")]
+		[JsonPropertyName("agent_id_status"), DataMember(Name = "agent_id_status")]
 		public string AgentIdStatus { get; set; }
 
 		///<summary>
@@ -1288,7 +1288,7 @@ namespace Elastic.CommonSchema
 		/// </list></para>
 		/// <example>authentication</example>
 		///</summary>
-		[JsonPropertyName("category")]
+		[JsonPropertyName("category"), DataMember(Name = "category")]
 		public string[] Category { get; set; }
 
 		///<summary>
@@ -1297,7 +1297,7 @@ namespace Elastic.CommonSchema
 		/// Some event sources use event codes to identify messages unambiguously, regardless of message language or wording adjustments over time. An example of this is the Windows Event ID.</para>
 		/// <example>4648</example>
 		///</summary>
-		[JsonPropertyName("code")]
+		[JsonPropertyName("code"), DataMember(Name = "code")]
 		public string Code { get; set; }
 
 		///<summary>
@@ -1308,7 +1308,7 @@ namespace Elastic.CommonSchema
 		/// In case the two timestamps are identical, @timestamp should be used.</para>
 		/// <example>5/23/2016 8:05:34 AM</example>
 		///</summary>
-		[JsonPropertyName("created")]
+		[JsonPropertyName("created"), DataMember(Name = "created")]
 		public DateTimeOffset? Created { get; set; }
 
 		///<summary>
@@ -1318,7 +1318,7 @@ namespace Elastic.CommonSchema
 		/// It's recommended but not required to start the dataset name with the module name, followed by a dot, then the dataset name.</para>
 		/// <example>apache.access</example>
 		///</summary>
-		[JsonPropertyName("dataset")]
+		[JsonPropertyName("dataset"), DataMember(Name = "dataset")]
 		public string Dataset { get; set; }
 
 		///<summary>
@@ -1327,7 +1327,7 @@ namespace Elastic.CommonSchema
 		/// If event.start and event.end are known this value should be the difference between the end and start time.</para>
 		/// <example></example>
 		///</summary>
-		[JsonPropertyName("duration")]
+		[JsonPropertyName("duration"), DataMember(Name = "duration")]
 		public long? Duration { get; set; }
 
 		///<summary>
@@ -1335,7 +1335,7 @@ namespace Elastic.CommonSchema
 		/// <para>event.end contains the date when the event ended or when the activity was last observed.</para>
 		/// <example></example>
 		///</summary>
-		[JsonPropertyName("end")]
+		[JsonPropertyName("end"), DataMember(Name = "end")]
 		public DateTimeOffset? End { get; set; }
 
 		///<summary>
@@ -1343,7 +1343,7 @@ namespace Elastic.CommonSchema
 		/// <para>Hash (perhaps logstash fingerprint) of raw field to be able to demonstrate log integrity.</para>
 		/// <example>123456789012345678901234567890ABCD</example>
 		///</summary>
-		[JsonPropertyName("hash")]
+		[JsonPropertyName("hash"), DataMember(Name = "hash")]
 		public string Hash { get; set; }
 
 		///<summary>
@@ -1351,7 +1351,7 @@ namespace Elastic.CommonSchema
 		/// <para>Unique ID to describe the event.</para>
 		/// <example>8a4f500d</example>
 		///</summary>
-		[JsonPropertyName("id")]
+		[JsonPropertyName("id"), DataMember(Name = "id")]
 		public string Id { get; set; }
 
 		///<summary>
@@ -1361,7 +1361,7 @@ namespace Elastic.CommonSchema
 		/// In normal conditions, assuming no tampering, the timestamps should chronologically look like this: `@timestamp` &lt; `event.created` &lt; `event.ingested`.</para>
 		/// <example>5/23/2016 8:05:35 AM</example>
 		///</summary>
-		[JsonPropertyName("ingested")]
+		[JsonPropertyName("ingested"), DataMember(Name = "ingested")]
 		public DateTimeOffset? Ingested { get; set; }
 
 		///<summary>
@@ -1391,7 +1391,7 @@ namespace Elastic.CommonSchema
 		/// </list></para>
 		/// <example>alert</example>
 		///</summary>
-		[JsonPropertyName("kind")]
+		[JsonPropertyName("kind"), DataMember(Name = "kind")]
 		public string Kind { get; set; }
 
 		///<summary>
@@ -1400,7 +1400,7 @@ namespace Elastic.CommonSchema
 		/// If your monitoring agent supports the concept of modules or plugins to process events of a given source (e.g. Apache logs), `event.module` should contain the name of this module.</para>
 		/// <example>apache</example>
 		///</summary>
-		[JsonPropertyName("module")]
+		[JsonPropertyName("module"), DataMember(Name = "module")]
 		public string Module { get; set; }
 
 		///<summary>
@@ -1410,7 +1410,7 @@ namespace Elastic.CommonSchema
 		/// <para><br/>Stored but not available for search in Elasticsearch by default</para></para>
 		/// <example>Sep 19 08:26:10 host CEF:0&#124;Security&#124; threatmanager&#124;1.0&#124;100&#124; worm successfully stopped&#124;10&#124;src=10.0.0.1 dst=2.1.2.2spt=1232</example>
 		///</summary>
-		[JsonPropertyName("original")]
+		[JsonPropertyName("original"), DataMember(Name = "original")]
 		public string Original { get; set; }
 
 		///<summary>
@@ -1429,7 +1429,7 @@ namespace Elastic.CommonSchema
 		/// </list></para>
 		/// <example>success</example>
 		///</summary>
-		[JsonPropertyName("outcome")]
+		[JsonPropertyName("outcome"), DataMember(Name = "outcome")]
 		public string Outcome { get; set; }
 
 		///<summary>
@@ -1438,7 +1438,7 @@ namespace Elastic.CommonSchema
 		/// Event transports such as Syslog or the Windows Event Log typically mention the source of an event. It can be the name of the software that generated the event (e.g. Sysmon, httpd), or of a subsystem of the operating system (kernel, Microsoft-Windows-Security-Auditing).</para>
 		/// <example>kernel</example>
 		///</summary>
-		[JsonPropertyName("provider")]
+		[JsonPropertyName("provider"), DataMember(Name = "provider")]
 		public string Provider { get; set; }
 
 		///<summary>
@@ -1447,7 +1447,7 @@ namespace Elastic.CommonSchema
 		/// This describes the why of a particular action or outcome captured in the event. Where `event.action` captures the action from the event, `event.reason` describes why that action was taken. For example, a web proxy with an `event.action` which denied the request may also populate `event.reason` with the reason why (e.g. `blocked site`).</para>
 		/// <example>Terminated an unexpected process</example>
 		///</summary>
-		[JsonPropertyName("reason")]
+		[JsonPropertyName("reason"), DataMember(Name = "reason")]
 		public string Reason { get; set; }
 
 		///<summary>
@@ -1456,7 +1456,7 @@ namespace Elastic.CommonSchema
 		/// This URL links to a static definition of this event. Alert events, indicated by `event.kind:alert`, are a common use case for this field.</para>
 		/// <example>https://system.example.com/event/#0001234</example>
 		///</summary>
-		[JsonPropertyName("reference")]
+		[JsonPropertyName("reference"), DataMember(Name = "reference")]
 		public string Reference { get; set; }
 
 		///<summary>
@@ -1464,7 +1464,7 @@ namespace Elastic.CommonSchema
 		/// <para>Risk score or priority of the event (e.g. security solutions). Use your system's original value here.</para>
 		/// <example></example>
 		///</summary>
-		[JsonPropertyName("risk_score")]
+		[JsonPropertyName("risk_score"), DataMember(Name = "risk_score")]
 		public float? RiskScore { get; set; }
 
 		///<summary>
@@ -1473,7 +1473,7 @@ namespace Elastic.CommonSchema
 		/// This is mainly useful if you use more than one system that assigns risk scores, and you want to see a normalized value across all systems.</para>
 		/// <example></example>
 		///</summary>
-		[JsonPropertyName("risk_score_norm")]
+		[JsonPropertyName("risk_score_norm"), DataMember(Name = "risk_score_norm")]
 		public float? RiskScoreNorm { get; set; }
 
 		///<summary>
@@ -1482,7 +1482,7 @@ namespace Elastic.CommonSchema
 		/// The sequence number is a value published by some event sources, to make the exact ordering of events unambiguous, regardless of the timestamp precision.</para>
 		/// <example></example>
 		///</summary>
-		[JsonPropertyName("sequence")]
+		[JsonPropertyName("sequence"), DataMember(Name = "sequence")]
 		public long? Sequence { get; set; }
 
 		///<summary>
@@ -1492,7 +1492,7 @@ namespace Elastic.CommonSchema
 		/// The Syslog severity belongs in `log.syslog.severity.code`. `event.severity` is meant to represent the severity according to the event source (e.g. firewall, IDS). If the event source does not publish its own severity, you may optionally copy the `log.syslog.severity.code` to `event.severity`.</para>
 		/// <example>7</example>
 		///</summary>
-		[JsonPropertyName("severity")]
+		[JsonPropertyName("severity"), DataMember(Name = "severity")]
 		public long? Severity { get; set; }
 
 		///<summary>
@@ -1500,7 +1500,7 @@ namespace Elastic.CommonSchema
 		/// <para>event.start contains the date when the event started or when the activity was first observed.</para>
 		/// <example></example>
 		///</summary>
-		[JsonPropertyName("start")]
+		[JsonPropertyName("start"), DataMember(Name = "start")]
 		public DateTimeOffset? Start { get; set; }
 
 		///<summary>
@@ -1509,7 +1509,7 @@ namespace Elastic.CommonSchema
 		/// Acceptable timezone formats are: a canonical ID (e.g. "Europe/Amsterdam"), abbreviated (e.g. "EST") or an HH:mm differential (e.g. "-05:00").</para>
 		/// <example></example>
 		///</summary>
-		[JsonPropertyName("timezone")]
+		[JsonPropertyName("timezone"), DataMember(Name = "timezone")]
 		public string Timezone { get; set; }
 
 		///<summary>
@@ -1541,7 +1541,7 @@ namespace Elastic.CommonSchema
 		/// </list></para>
 		/// <example></example>
 		///</summary>
-		[JsonPropertyName("type")]
+		[JsonPropertyName("type"), DataMember(Name = "type")]
 		public string[] Type { get; set; }
 
 		///<summary>
@@ -1550,7 +1550,7 @@ namespace Elastic.CommonSchema
 		/// This URL links to another system where in-depth investigation of the specific occurrence of this event can take place. Alert events, indicated by `event.kind:alert`, are a common use case for this field.</para>
 		/// <example>https://mysystem.example.com/alert/5271dedb-f5b0-4218-87f0-4ac4870a38fe</example>
 		///</summary>
-		[JsonPropertyName("url")]
+		[JsonPropertyName("url"), DataMember(Name = "url")]
 		public string Url { get; set; }
 	}
 
@@ -1564,7 +1564,7 @@ namespace Elastic.CommonSchema
 		/// <para>Boolean value indicating a cold start of a function.</para>
 		/// <example></example>
 		///</summary>
-		[JsonPropertyName("coldstart")]
+		[JsonPropertyName("coldstart"), DataMember(Name = "coldstart")]
 		public bool? Coldstart { get; set; }
 
 		///<summary>
@@ -1572,7 +1572,7 @@ namespace Elastic.CommonSchema
 		/// <para>The execution ID of the current function execution.</para>
 		/// <example>af9d5aa4-a685-4c5f-a22b-444f80b3cc28</example>
 		///</summary>
-		[JsonPropertyName("execution")]
+		[JsonPropertyName("execution"), DataMember(Name = "execution")]
 		public string Execution { get; set; }
 
 		///<summary>
@@ -1581,7 +1581,7 @@ namespace Elastic.CommonSchema
 		/// For AWS Lambda it's the function ARN (Amazon Resource Name) without a version or alias suffix.</para>
 		/// <example>arn:aws:lambda:us-west-2:123456789012:function:my-function</example>
 		///</summary>
-		[JsonPropertyName("id")]
+		[JsonPropertyName("id"), DataMember(Name = "id")]
 		public string Id { get; set; }
 
 		///<summary>
@@ -1589,7 +1589,7 @@ namespace Elastic.CommonSchema
 		/// <para>The name of a serverless function.</para>
 		/// <example>my-function</example>
 		///</summary>
-		[JsonPropertyName("name")]
+		[JsonPropertyName("name"), DataMember(Name = "name")]
 		public string Name { get; set; }
 
 		///<summary>
@@ -1597,7 +1597,7 @@ namespace Elastic.CommonSchema
 		/// <para>The version of a serverless function.</para>
 		/// <example>123</example>
 		///</summary>
-		[JsonPropertyName("version")]
+		[JsonPropertyName("version"), DataMember(Name = "version")]
 		public string Version { get; set; }
 
 		///<summary>
@@ -1605,7 +1605,7 @@ namespace Elastic.CommonSchema
 		/// <para>Details about the function trigger.</para>
 		/// <example></example>
 		///</summary>
-		[JsonPropertyName("trigger")]
+		[JsonPropertyName("trigger"), DataMember(Name = "trigger")]
 		public FaasTrigger Trigger { get; set; }
 	}
 
@@ -1620,7 +1620,7 @@ namespace Elastic.CommonSchema
 		/// Note that not all filesystems keep track of access time.</para>
 		/// <example></example>
 		///</summary>
-		[JsonPropertyName("accessed")]
+		[JsonPropertyName("accessed"), DataMember(Name = "accessed")]
 		public DateTimeOffset? Accessed { get; set; }
 
 		///<summary>
@@ -1629,7 +1629,7 @@ namespace Elastic.CommonSchema
 		/// Attributes names will vary by platform. Here's a non-exhaustive list of values that are expected in this field: archive, compressed, directory, encrypted, execute, hidden, read, readonly, system, write.</para>
 		/// <example>["readonly", "system"]</example>
 		///</summary>
-		[JsonPropertyName("attributes")]
+		[JsonPropertyName("attributes"), DataMember(Name = "attributes")]
 		public string[] Attributes { get; set; }
 
 		///<summary>
@@ -1638,7 +1638,7 @@ namespace Elastic.CommonSchema
 		/// Note that not all filesystems store the creation time.</para>
 		/// <example></example>
 		///</summary>
-		[JsonPropertyName("created")]
+		[JsonPropertyName("created"), DataMember(Name = "created")]
 		public DateTimeOffset? Created { get; set; }
 
 		///<summary>
@@ -1647,7 +1647,7 @@ namespace Elastic.CommonSchema
 		/// Note that changes to the file content will update `mtime`. This implies `ctime` will be adjusted at the same time, since `mtime` is an attribute of the file.</para>
 		/// <example></example>
 		///</summary>
-		[JsonPropertyName("ctime")]
+		[JsonPropertyName("ctime"), DataMember(Name = "ctime")]
 		public DateTimeOffset? Ctime { get; set; }
 
 		///<summary>
@@ -1655,7 +1655,7 @@ namespace Elastic.CommonSchema
 		/// <para>Device that is the source of the file.</para>
 		/// <example>sda</example>
 		///</summary>
-		[JsonPropertyName("device")]
+		[JsonPropertyName("device"), DataMember(Name = "device")]
 		public string Device { get; set; }
 
 		///<summary>
@@ -1663,7 +1663,7 @@ namespace Elastic.CommonSchema
 		/// <para>Directory where the file is located. It should include the drive letter, when appropriate.</para>
 		/// <example>/home/alice</example>
 		///</summary>
-		[JsonPropertyName("directory")]
+		[JsonPropertyName("directory"), DataMember(Name = "directory")]
 		public string Directory { get; set; }
 
 		///<summary>
@@ -1672,7 +1672,7 @@ namespace Elastic.CommonSchema
 		/// The value should be uppercase, and not include the colon.</para>
 		/// <example>C</example>
 		///</summary>
-		[JsonPropertyName("drive_letter")]
+		[JsonPropertyName("drive_letter"), DataMember(Name = "drive_letter")]
 		public string DriveLetter { get; set; }
 
 		///<summary>
@@ -1681,7 +1681,7 @@ namespace Elastic.CommonSchema
 		/// Note that when the file name has multiple extensions (example.tar.gz), only the last one should be captured ("gz", not "tar.gz").</para>
 		/// <example>png</example>
 		///</summary>
-		[JsonPropertyName("extension")]
+		[JsonPropertyName("extension"), DataMember(Name = "extension")]
 		public string Extension { get; set; }
 
 		///<summary>
@@ -1691,7 +1691,7 @@ namespace Elastic.CommonSchema
 		/// On NTFS, this is analogous to an Alternate Data Stream (ADS), and the default data stream for a file is just called $DATA. Zone.Identifier is commonly used by Windows to track contents downloaded from the Internet. An ADS is typically of the form: `C:\path\to\filename.extension:some_fork_name`, and `some_fork_name` is the value that should populate `fork_name`. `filename.extension` should populate `file.name`, and `extension` should populate `file.extension`. The full path, `file.path`, will include the fork name.</para>
 		/// <example>Zone.Identifer</example>
 		///</summary>
-		[JsonPropertyName("fork_name")]
+		[JsonPropertyName("fork_name"), DataMember(Name = "fork_name")]
 		public string ForkName { get; set; }
 
 		///<summary>
@@ -1699,7 +1699,7 @@ namespace Elastic.CommonSchema
 		/// <para>Primary group ID (GID) of the file.</para>
 		/// <example>1001</example>
 		///</summary>
-		[JsonPropertyName("gid")]
+		[JsonPropertyName("gid"), DataMember(Name = "gid")]
 		public string Gid { get; set; }
 
 		///<summary>
@@ -1707,7 +1707,7 @@ namespace Elastic.CommonSchema
 		/// <para>Primary group name of the file.</para>
 		/// <example>alice</example>
 		///</summary>
-		[JsonPropertyName("group")]
+		[JsonPropertyName("group"), DataMember(Name = "group")]
 		public string Group { get; set; }
 
 		///<summary>
@@ -1715,7 +1715,7 @@ namespace Elastic.CommonSchema
 		/// <para>Inode representing the file in the filesystem.</para>
 		/// <example>256383</example>
 		///</summary>
-		[JsonPropertyName("inode")]
+		[JsonPropertyName("inode"), DataMember(Name = "inode")]
 		public string Inode { get; set; }
 
 		///<summary>
@@ -1723,7 +1723,7 @@ namespace Elastic.CommonSchema
 		/// <para>MIME type should identify the format of the file or stream of bytes using https://www.iana.org/assignments/media-types/media-types.xhtml[IANA official types], where possible. When more than one type is applicable, the most specific type should be used.</para>
 		/// <example></example>
 		///</summary>
-		[JsonPropertyName("mime_type")]
+		[JsonPropertyName("mime_type"), DataMember(Name = "mime_type")]
 		public string MimeType { get; set; }
 
 		///<summary>
@@ -1731,7 +1731,7 @@ namespace Elastic.CommonSchema
 		/// <para>Mode of the file in octal representation.</para>
 		/// <example>0640</example>
 		///</summary>
-		[JsonPropertyName("mode")]
+		[JsonPropertyName("mode"), DataMember(Name = "mode")]
 		public string Mode { get; set; }
 
 		///<summary>
@@ -1739,7 +1739,7 @@ namespace Elastic.CommonSchema
 		/// <para>Last time the file content was modified.</para>
 		/// <example></example>
 		///</summary>
-		[JsonPropertyName("mtime")]
+		[JsonPropertyName("mtime"), DataMember(Name = "mtime")]
 		public DateTimeOffset? Mtime { get; set; }
 
 		///<summary>
@@ -1747,7 +1747,7 @@ namespace Elastic.CommonSchema
 		/// <para>Name of the file including the extension, without the directory.</para>
 		/// <example>example.png</example>
 		///</summary>
-		[JsonPropertyName("name")]
+		[JsonPropertyName("name"), DataMember(Name = "name")]
 		public string Name { get; set; }
 
 		///<summary>
@@ -1755,7 +1755,7 @@ namespace Elastic.CommonSchema
 		/// <para>File owner's username.</para>
 		/// <example>alice</example>
 		///</summary>
-		[JsonPropertyName("owner")]
+		[JsonPropertyName("owner"), DataMember(Name = "owner")]
 		public string Owner { get; set; }
 
 		///<summary>
@@ -1763,7 +1763,7 @@ namespace Elastic.CommonSchema
 		/// <para>Full path to the file, including the file name. It should include the drive letter, when appropriate.</para>
 		/// <example>/home/alice/example.png</example>
 		///</summary>
-		[JsonPropertyName("path")]
+		[JsonPropertyName("path"), DataMember(Name = "path")]
 		public string Path { get; set; }
 
 		///<summary>
@@ -1772,7 +1772,7 @@ namespace Elastic.CommonSchema
 		/// Only relevant when `file.type` is "file".</para>
 		/// <example>16384</example>
 		///</summary>
-		[JsonPropertyName("size")]
+		[JsonPropertyName("size"), DataMember(Name = "size")]
 		public long? Size { get; set; }
 
 		///<summary>
@@ -1780,7 +1780,7 @@ namespace Elastic.CommonSchema
 		/// <para>Target path for symlinks.</para>
 		/// <example></example>
 		///</summary>
-		[JsonPropertyName("target_path")]
+		[JsonPropertyName("target_path"), DataMember(Name = "target_path")]
 		public string TargetPath { get; set; }
 
 		///<summary>
@@ -1788,7 +1788,7 @@ namespace Elastic.CommonSchema
 		/// <para>File type (file, dir, or symlink).</para>
 		/// <example>file</example>
 		///</summary>
-		[JsonPropertyName("type")]
+		[JsonPropertyName("type"), DataMember(Name = "type")]
 		public string Type { get; set; }
 
 		///<summary>
@@ -1796,7 +1796,7 @@ namespace Elastic.CommonSchema
 		/// <para>The user ID (UID) or security identifier (SID) of the file owner.</para>
 		/// <example>1001</example>
 		///</summary>
-		[JsonPropertyName("uid")]
+		[JsonPropertyName("uid"), DataMember(Name = "uid")]
 		public string Uid { get; set; }
 	}
 
@@ -1810,7 +1810,7 @@ namespace Elastic.CommonSchema
 		/// <para>City name.</para>
 		/// <example>Montreal</example>
 		///</summary>
-		[JsonPropertyName("city_name")]
+		[JsonPropertyName("city_name"), DataMember(Name = "city_name")]
 		public string CityName { get; set; }
 
 		///<summary>
@@ -1818,7 +1818,7 @@ namespace Elastic.CommonSchema
 		/// <para>Two-letter code representing continent's name.</para>
 		/// <example>NA</example>
 		///</summary>
-		[JsonPropertyName("continent_code")]
+		[JsonPropertyName("continent_code"), DataMember(Name = "continent_code")]
 		public string ContinentCode { get; set; }
 
 		///<summary>
@@ -1826,7 +1826,7 @@ namespace Elastic.CommonSchema
 		/// <para>Name of the continent.</para>
 		/// <example>North America</example>
 		///</summary>
-		[JsonPropertyName("continent_name")]
+		[JsonPropertyName("continent_name"), DataMember(Name = "continent_name")]
 		public string ContinentName { get; set; }
 
 		///<summary>
@@ -1834,7 +1834,7 @@ namespace Elastic.CommonSchema
 		/// <para>Country ISO code.</para>
 		/// <example>CA</example>
 		///</summary>
-		[JsonPropertyName("country_iso_code")]
+		[JsonPropertyName("country_iso_code"), DataMember(Name = "country_iso_code")]
 		public string CountryIsoCode { get; set; }
 
 		///<summary>
@@ -1842,7 +1842,7 @@ namespace Elastic.CommonSchema
 		/// <para>Country name.</para>
 		/// <example>Canada</example>
 		///</summary>
-		[JsonPropertyName("country_name")]
+		[JsonPropertyName("country_name"), DataMember(Name = "country_name")]
 		public string CountryName { get; set; }
 
 		///<summary>
@@ -1850,7 +1850,7 @@ namespace Elastic.CommonSchema
 		/// <para>Longitude and latitude.</para>
 		/// <example>{ "lon": -73.614830, "lat": 45.505918 }</example>
 		///</summary>
-		[JsonPropertyName("location")]
+		[JsonPropertyName("location"), DataMember(Name = "location")]
 		public Location Location { get; set; }
 
 		///<summary>
@@ -1860,7 +1860,7 @@ namespace Elastic.CommonSchema
 		/// Not typically used in automated geolocation.</para>
 		/// <example>boston-dc</example>
 		///</summary>
-		[JsonPropertyName("name")]
+		[JsonPropertyName("name"), DataMember(Name = "name")]
 		public string Name { get; set; }
 
 		///<summary>
@@ -1869,7 +1869,7 @@ namespace Elastic.CommonSchema
 		/// Values appropriate for this field may also be known as a postcode or ZIP code and will vary widely from country to country.</para>
 		/// <example>94040</example>
 		///</summary>
-		[JsonPropertyName("postal_code")]
+		[JsonPropertyName("postal_code"), DataMember(Name = "postal_code")]
 		public string PostalCode { get; set; }
 
 		///<summary>
@@ -1877,7 +1877,7 @@ namespace Elastic.CommonSchema
 		/// <para>Region ISO code.</para>
 		/// <example>CA-QC</example>
 		///</summary>
-		[JsonPropertyName("region_iso_code")]
+		[JsonPropertyName("region_iso_code"), DataMember(Name = "region_iso_code")]
 		public string RegionIsoCode { get; set; }
 
 		///<summary>
@@ -1885,7 +1885,7 @@ namespace Elastic.CommonSchema
 		/// <para>Region name.</para>
 		/// <example>Quebec</example>
 		///</summary>
-		[JsonPropertyName("region_name")]
+		[JsonPropertyName("region_name"), DataMember(Name = "region_name")]
 		public string RegionName { get; set; }
 
 		///<summary>
@@ -1893,7 +1893,7 @@ namespace Elastic.CommonSchema
 		/// <para>The time zone of the location, such as IANA time zone name.</para>
 		/// <example>America/Argentina/Buenos_Aires</example>
 		///</summary>
-		[JsonPropertyName("timezone")]
+		[JsonPropertyName("timezone"), DataMember(Name = "timezone")]
 		public string Timezone { get; set; }
 	}
 
@@ -1908,7 +1908,7 @@ namespace Elastic.CommonSchema
 		/// For example, an LDAP or Active Directory domain name.</para>
 		/// <example></example>
 		///</summary>
-		[JsonPropertyName("domain")]
+		[JsonPropertyName("domain"), DataMember(Name = "domain")]
 		public string Domain { get; set; }
 
 		///<summary>
@@ -1916,7 +1916,7 @@ namespace Elastic.CommonSchema
 		/// <para>Unique identifier for the group on the system/platform.</para>
 		/// <example></example>
 		///</summary>
-		[JsonPropertyName("id")]
+		[JsonPropertyName("id"), DataMember(Name = "id")]
 		public string Id { get; set; }
 
 		///<summary>
@@ -1924,7 +1924,7 @@ namespace Elastic.CommonSchema
 		/// <para>Name of the group.</para>
 		/// <example></example>
 		///</summary>
-		[JsonPropertyName("name")]
+		[JsonPropertyName("name"), DataMember(Name = "name")]
 		public string Name { get; set; }
 	}
 
@@ -1938,7 +1938,7 @@ namespace Elastic.CommonSchema
 		/// <para>MD5 hash.</para>
 		/// <example></example>
 		///</summary>
-		[JsonPropertyName("md5")]
+		[JsonPropertyName("md5"), DataMember(Name = "md5")]
 		public string Md5 { get; set; }
 
 		///<summary>
@@ -1946,7 +1946,7 @@ namespace Elastic.CommonSchema
 		/// <para>SHA1 hash.</para>
 		/// <example></example>
 		///</summary>
-		[JsonPropertyName("sha1")]
+		[JsonPropertyName("sha1"), DataMember(Name = "sha1")]
 		public string Sha1 { get; set; }
 
 		///<summary>
@@ -1954,7 +1954,7 @@ namespace Elastic.CommonSchema
 		/// <para>SHA256 hash.</para>
 		/// <example></example>
 		///</summary>
-		[JsonPropertyName("sha256")]
+		[JsonPropertyName("sha256"), DataMember(Name = "sha256")]
 		public string Sha256 { get; set; }
 
 		///<summary>
@@ -1962,7 +1962,7 @@ namespace Elastic.CommonSchema
 		/// <para>SHA384 hash.</para>
 		/// <example></example>
 		///</summary>
-		[JsonPropertyName("sha384")]
+		[JsonPropertyName("sha384"), DataMember(Name = "sha384")]
 		public string Sha384 { get; set; }
 
 		///<summary>
@@ -1970,7 +1970,7 @@ namespace Elastic.CommonSchema
 		/// <para>SHA512 hash.</para>
 		/// <example></example>
 		///</summary>
-		[JsonPropertyName("sha512")]
+		[JsonPropertyName("sha512"), DataMember(Name = "sha512")]
 		public string Sha512 { get; set; }
 
 		///<summary>
@@ -1978,7 +1978,7 @@ namespace Elastic.CommonSchema
 		/// <para>SSDEEP hash.</para>
 		/// <example></example>
 		///</summary>
-		[JsonPropertyName("ssdeep")]
+		[JsonPropertyName("ssdeep"), DataMember(Name = "ssdeep")]
 		public string Ssdeep { get; set; }
 
 		///<summary>
@@ -1986,7 +1986,7 @@ namespace Elastic.CommonSchema
 		/// <para>TLSH hash.</para>
 		/// <example></example>
 		///</summary>
-		[JsonPropertyName("tlsh")]
+		[JsonPropertyName("tlsh"), DataMember(Name = "tlsh")]
 		public string Tlsh { get; set; }
 	}
 
@@ -2000,7 +2000,7 @@ namespace Elastic.CommonSchema
 		/// <para>Operating system architecture.</para>
 		/// <example>x86_64</example>
 		///</summary>
-		[JsonPropertyName("architecture")]
+		[JsonPropertyName("architecture"), DataMember(Name = "architecture")]
 		public string Architecture { get; set; }
 
 		///<summary>
@@ -2009,7 +2009,7 @@ namespace Elastic.CommonSchema
 		/// <para><br/>This field is beta and subject to change.</para></para>
 		/// <example>88a1f0ed-5ae5-41ee-af6b-41921c311872</example>
 		///</summary>
-		[JsonPropertyName("boot.id")]
+		[JsonPropertyName("boot.id"), DataMember(Name = "boot.id")]
 		public string BootId { get; set; }
 
 		///<summary>
@@ -2019,7 +2019,7 @@ namespace Elastic.CommonSchema
 		/// For example: For a two core host, this value should be the average of the two cores, between 0 and 1.</para>
 		/// <example></example>
 		///</summary>
-		[JsonPropertyName("cpu.usage")]
+		[JsonPropertyName("cpu.usage"), DataMember(Name = "cpu.usage")]
 		public float? CpuUsage { get; set; }
 
 		///<summary>
@@ -2027,7 +2027,7 @@ namespace Elastic.CommonSchema
 		/// <para>The total number of bytes (gauge) read successfully (aggregated from all disks) since the last metric collection.</para>
 		/// <example></example>
 		///</summary>
-		[JsonPropertyName("disk.read.bytes")]
+		[JsonPropertyName("disk.read.bytes"), DataMember(Name = "disk.read.bytes")]
 		public long? DiskReadBytes { get; set; }
 
 		///<summary>
@@ -2035,7 +2035,7 @@ namespace Elastic.CommonSchema
 		/// <para>The total number of bytes (gauge) written successfully (aggregated from all disks) since the last metric collection.</para>
 		/// <example></example>
 		///</summary>
-		[JsonPropertyName("disk.write.bytes")]
+		[JsonPropertyName("disk.write.bytes"), DataMember(Name = "disk.write.bytes")]
 		public long? DiskWriteBytes { get; set; }
 
 		///<summary>
@@ -2044,7 +2044,7 @@ namespace Elastic.CommonSchema
 		/// For example, on Windows this could be the host's Active Directory domain or NetBIOS domain name. For Linux this could be the domain of the host's LDAP provider.</para>
 		/// <example>CONTOSO</example>
 		///</summary>
-		[JsonPropertyName("domain")]
+		[JsonPropertyName("domain"), DataMember(Name = "domain")]
 		public string Domain { get; set; }
 
 		///<summary>
@@ -2053,7 +2053,7 @@ namespace Elastic.CommonSchema
 		/// It normally contains what the `hostname` command returns on the host machine.</para>
 		/// <example></example>
 		///</summary>
-		[JsonPropertyName("hostname")]
+		[JsonPropertyName("hostname"), DataMember(Name = "hostname")]
 		public string Hostname { get; set; }
 
 		///<summary>
@@ -2063,7 +2063,7 @@ namespace Elastic.CommonSchema
 		/// Example: The current usage of `beat.name`.</para>
 		/// <example></example>
 		///</summary>
-		[JsonPropertyName("id")]
+		[JsonPropertyName("id"), DataMember(Name = "id")]
 		public string Id { get; set; }
 
 		///<summary>
@@ -2071,7 +2071,7 @@ namespace Elastic.CommonSchema
 		/// <para>Host ip addresses.</para>
 		/// <example></example>
 		///</summary>
-		[JsonPropertyName("ip")]
+		[JsonPropertyName("ip"), DataMember(Name = "ip")]
 		public string[] Ip { get; set; }
 
 		///<summary>
@@ -2081,7 +2081,7 @@ namespace Elastic.CommonSchema
 		/// <para>pattern: </para></para>
 		/// <example>["00-00-5E-00-53-23", "00-00-5E-00-53-24"]</example>
 		///</summary>
-		[JsonPropertyName("mac")]
+		[JsonPropertyName("mac"), DataMember(Name = "mac")]
 		public string[] Mac { get; set; }
 
 		///<summary>
@@ -2090,7 +2090,7 @@ namespace Elastic.CommonSchema
 		/// It can contain what `hostname` returns on Unix systems, the fully qualified domain name, or a name specified by the user. The sender decides which value to use.</para>
 		/// <example></example>
 		///</summary>
-		[JsonPropertyName("name")]
+		[JsonPropertyName("name"), DataMember(Name = "name")]
 		public string Name { get; set; }
 
 		///<summary>
@@ -2098,7 +2098,7 @@ namespace Elastic.CommonSchema
 		/// <para>The number of bytes (gauge) sent out on all network interfaces by the host since the last metric collection.</para>
 		/// <example></example>
 		///</summary>
-		[JsonPropertyName("network.egress.bytes")]
+		[JsonPropertyName("network.egress.bytes"), DataMember(Name = "network.egress.bytes")]
 		public long? NetworkEgressBytes { get; set; }
 
 		///<summary>
@@ -2106,7 +2106,7 @@ namespace Elastic.CommonSchema
 		/// <para>The number of packets (gauge) sent out on all network interfaces by the host since the last metric collection.</para>
 		/// <example></example>
 		///</summary>
-		[JsonPropertyName("network.egress.packets")]
+		[JsonPropertyName("network.egress.packets"), DataMember(Name = "network.egress.packets")]
 		public long? NetworkEgressPackets { get; set; }
 
 		///<summary>
@@ -2114,7 +2114,7 @@ namespace Elastic.CommonSchema
 		/// <para>The number of bytes received (gauge) on all network interfaces by the host since the last metric collection.</para>
 		/// <example></example>
 		///</summary>
-		[JsonPropertyName("network.ingress.bytes")]
+		[JsonPropertyName("network.ingress.bytes"), DataMember(Name = "network.ingress.bytes")]
 		public long? NetworkIngressBytes { get; set; }
 
 		///<summary>
@@ -2122,7 +2122,7 @@ namespace Elastic.CommonSchema
 		/// <para>The number of packets (gauge) received on all network interfaces by the host since the last metric collection.</para>
 		/// <example></example>
 		///</summary>
-		[JsonPropertyName("network.ingress.packets")]
+		[JsonPropertyName("network.ingress.packets"), DataMember(Name = "network.ingress.packets")]
 		public long? NetworkIngressPackets { get; set; }
 
 		///<summary>
@@ -2131,7 +2131,7 @@ namespace Elastic.CommonSchema
 		/// <para><br/>This field is beta and subject to change.</para></para>
 		/// <example>256383</example>
 		///</summary>
-		[JsonPropertyName("pid_ns_ino")]
+		[JsonPropertyName("pid_ns_ino"), DataMember(Name = "pid_ns_ino")]
 		public string PidNsIno { get; set; }
 
 		///<summary>
@@ -2140,7 +2140,7 @@ namespace Elastic.CommonSchema
 		/// For Cloud providers this can be the machine type like `t2.medium`. If vm, this could be the container, for example, or other information meaningful in your environment.</para>
 		/// <example></example>
 		///</summary>
-		[JsonPropertyName("type")]
+		[JsonPropertyName("type"), DataMember(Name = "type")]
 		public string Type { get; set; }
 
 		///<summary>
@@ -2148,7 +2148,7 @@ namespace Elastic.CommonSchema
 		/// <para>Seconds the host has been up.</para>
 		/// <example>1325</example>
 		///</summary>
-		[JsonPropertyName("uptime")]
+		[JsonPropertyName("uptime"), DataMember(Name = "uptime")]
 		public long? Uptime { get; set; }
 	}
 
@@ -2162,7 +2162,7 @@ namespace Elastic.CommonSchema
 		/// <para>Size in bytes of the request body.</para>
 		/// <example>887</example>
 		///</summary>
-		[JsonPropertyName("request.body.bytes")]
+		[JsonPropertyName("request.body.bytes"), DataMember(Name = "request.body.bytes")]
 		public long? RequestBodyBytes { get; set; }
 
 		///<summary>
@@ -2170,7 +2170,7 @@ namespace Elastic.CommonSchema
 		/// <para>The full HTTP request body.</para>
 		/// <example>Hello world</example>
 		///</summary>
-		[JsonPropertyName("request.body.content")]
+		[JsonPropertyName("request.body.content"), DataMember(Name = "request.body.content")]
 		public string RequestBodyContent { get; set; }
 
 		///<summary>
@@ -2178,7 +2178,7 @@ namespace Elastic.CommonSchema
 		/// <para>Total size in bytes of the request (body and headers).</para>
 		/// <example>1437</example>
 		///</summary>
-		[JsonPropertyName("request.bytes")]
+		[JsonPropertyName("request.bytes"), DataMember(Name = "request.bytes")]
 		public long? RequestBytes { get; set; }
 
 		///<summary>
@@ -2187,7 +2187,7 @@ namespace Elastic.CommonSchema
 		/// The id may be contained in a non-standard HTTP header, such as `X-Request-ID` or `X-Correlation-ID`.</para>
 		/// <example>123e4567-e89b-12d3-a456-426614174000</example>
 		///</summary>
-		[JsonPropertyName("request.id")]
+		[JsonPropertyName("request.id"), DataMember(Name = "request.id")]
 		public string RequestId { get; set; }
 
 		///<summary>
@@ -2196,7 +2196,7 @@ namespace Elastic.CommonSchema
 		/// The value should retain its casing from the original event. For example, `GET`, `get`, and `GeT` are all considered valid values for this field.</para>
 		/// <example>POST</example>
 		///</summary>
-		[JsonPropertyName("request.method")]
+		[JsonPropertyName("request.method"), DataMember(Name = "request.method")]
 		public string RequestMethod { get; set; }
 
 		///<summary>
@@ -2205,7 +2205,7 @@ namespace Elastic.CommonSchema
 		/// This value must only be populated based on the content of the request body, not on the `Content-Type` header. Comparing the mime type of a request with the request's Content-Type header can be helpful in detecting threats or misconfigured clients.</para>
 		/// <example>image/gif</example>
 		///</summary>
-		[JsonPropertyName("request.mime_type")]
+		[JsonPropertyName("request.mime_type"), DataMember(Name = "request.mime_type")]
 		public string RequestMimeType { get; set; }
 
 		///<summary>
@@ -2213,7 +2213,7 @@ namespace Elastic.CommonSchema
 		/// <para>Referrer for this HTTP request.</para>
 		/// <example>https://blog.example.com/</example>
 		///</summary>
-		[JsonPropertyName("request.referrer")]
+		[JsonPropertyName("request.referrer"), DataMember(Name = "request.referrer")]
 		public string RequestReferrer { get; set; }
 
 		///<summary>
@@ -2221,7 +2221,7 @@ namespace Elastic.CommonSchema
 		/// <para>Size in bytes of the response body.</para>
 		/// <example>887</example>
 		///</summary>
-		[JsonPropertyName("response.body.bytes")]
+		[JsonPropertyName("response.body.bytes"), DataMember(Name = "response.body.bytes")]
 		public long? ResponseBodyBytes { get; set; }
 
 		///<summary>
@@ -2229,7 +2229,7 @@ namespace Elastic.CommonSchema
 		/// <para>The full HTTP response body.</para>
 		/// <example>Hello world</example>
 		///</summary>
-		[JsonPropertyName("response.body.content")]
+		[JsonPropertyName("response.body.content"), DataMember(Name = "response.body.content")]
 		public string ResponseBodyContent { get; set; }
 
 		///<summary>
@@ -2237,7 +2237,7 @@ namespace Elastic.CommonSchema
 		/// <para>Total size in bytes of the response (body and headers).</para>
 		/// <example>1437</example>
 		///</summary>
-		[JsonPropertyName("response.bytes")]
+		[JsonPropertyName("response.bytes"), DataMember(Name = "response.bytes")]
 		public long? ResponseBytes { get; set; }
 
 		///<summary>
@@ -2246,7 +2246,7 @@ namespace Elastic.CommonSchema
 		/// This value must only be populated based on the content of the response body, not on the `Content-Type` header. Comparing the mime type of a response with the response's Content-Type header can be helpful in detecting misconfigured servers.</para>
 		/// <example>image/gif</example>
 		///</summary>
-		[JsonPropertyName("response.mime_type")]
+		[JsonPropertyName("response.mime_type"), DataMember(Name = "response.mime_type")]
 		public string ResponseMimeType { get; set; }
 
 		///<summary>
@@ -2254,7 +2254,7 @@ namespace Elastic.CommonSchema
 		/// <para>HTTP response status code.</para>
 		/// <example>404</example>
 		///</summary>
-		[JsonPropertyName("response.status_code")]
+		[JsonPropertyName("response.status_code"), DataMember(Name = "response.status_code")]
 		public long? ResponseStatusCode { get; set; }
 
 		///<summary>
@@ -2262,7 +2262,7 @@ namespace Elastic.CommonSchema
 		/// <para>HTTP version.</para>
 		/// <example>1.1</example>
 		///</summary>
-		[JsonPropertyName("version")]
+		[JsonPropertyName("version"), DataMember(Name = "version")]
 		public string Version { get; set; }
 	}
 
@@ -2276,7 +2276,7 @@ namespace Elastic.CommonSchema
 		/// <para>Interface alias as reported by the system, typically used in firewall implementations for e.g. inside, outside, or dmz logical interface naming.</para>
 		/// <example>outside</example>
 		///</summary>
-		[JsonPropertyName("alias")]
+		[JsonPropertyName("alias"), DataMember(Name = "alias")]
 		public string Alias { get; set; }
 
 		///<summary>
@@ -2284,7 +2284,7 @@ namespace Elastic.CommonSchema
 		/// <para>Interface ID as reported by an observer (typically SNMP interface ID).</para>
 		/// <example>10</example>
 		///</summary>
-		[JsonPropertyName("id")]
+		[JsonPropertyName("id"), DataMember(Name = "id")]
 		public string Id { get; set; }
 
 		///<summary>
@@ -2292,7 +2292,7 @@ namespace Elastic.CommonSchema
 		/// <para>Interface name as reported by the system.</para>
 		/// <example>eth0</example>
 		///</summary>
-		[JsonPropertyName("name")]
+		[JsonPropertyName("name"), DataMember(Name = "name")]
 		public string Name { get; set; }
 	}
 
@@ -2307,7 +2307,7 @@ namespace Elastic.CommonSchema
 		/// If the event wasn't read from a log file, do not populate this field.</para>
 		/// <example>/var/log/fun-times.log</example>
 		///</summary>
-		[JsonPropertyName("file.path")]
+		[JsonPropertyName("file.path"), DataMember(Name = "file.path")]
 		public string FilePath { get; set; }
 
 		///<summary>
@@ -2317,7 +2317,7 @@ namespace Elastic.CommonSchema
 		/// Some examples are `warn`, `err`, `i`, `informational`.</para>
 		/// <example>error</example>
 		///</summary>
-		[JsonPropertyName("level")]
+		[JsonPropertyName("level"), DataMember(Name = "level")]
 		public string Level { get; set; }
 
 		///<summary>
@@ -2325,7 +2325,7 @@ namespace Elastic.CommonSchema
 		/// <para>The name of the logger inside an application. This is usually the name of the class which initialized the logger, or can be a custom name.</para>
 		/// <example>org.elasticsearch.bootstrap.Bootstrap</example>
 		///</summary>
-		[JsonPropertyName("logger")]
+		[JsonPropertyName("logger"), DataMember(Name = "logger")]
 		public string Logger { get; set; }
 
 		///<summary>
@@ -2333,7 +2333,7 @@ namespace Elastic.CommonSchema
 		/// <para>The line number of the file containing the source code which originated the log event.</para>
 		/// <example>42</example>
 		///</summary>
-		[JsonPropertyName("origin.file.line")]
+		[JsonPropertyName("origin.file.line"), DataMember(Name = "origin.file.line")]
 		public long? OriginFileLine { get; set; }
 
 		///<summary>
@@ -2342,7 +2342,7 @@ namespace Elastic.CommonSchema
 		/// Note that this field is not meant to capture the log file. The correct field to capture the log file is `log.file.path`.</para>
 		/// <example>Bootstrap.java</example>
 		///</summary>
-		[JsonPropertyName("origin.file.name")]
+		[JsonPropertyName("origin.file.name"), DataMember(Name = "origin.file.name")]
 		public string OriginFileName { get; set; }
 
 		///<summary>
@@ -2350,7 +2350,7 @@ namespace Elastic.CommonSchema
 		/// <para>The name of the function or method which originated the log event.</para>
 		/// <example>init</example>
 		///</summary>
-		[JsonPropertyName("origin.function")]
+		[JsonPropertyName("origin.function"), DataMember(Name = "origin.function")]
 		public string OriginFunction { get; set; }
 
 		///<summary>
@@ -2358,7 +2358,7 @@ namespace Elastic.CommonSchema
 		/// <para>The Syslog metadata of the event, if the event was transmitted via Syslog. Please see RFCs 5424 or 3164.</para>
 		/// <example></example>
 		///</summary>
-		[JsonPropertyName("syslog")]
+		[JsonPropertyName("syslog"), DataMember(Name = "syslog")]
 		public LogSyslog Syslog { get; set; }
 	}
 
@@ -2374,7 +2374,7 @@ namespace Elastic.CommonSchema
 		/// The field value must be normalized to lowercase for querying.</para>
 		/// <example>aim</example>
 		///</summary>
-		[JsonPropertyName("application")]
+		[JsonPropertyName("application"), DataMember(Name = "application")]
 		public string Application { get; set; }
 
 		///<summary>
@@ -2383,7 +2383,7 @@ namespace Elastic.CommonSchema
 		/// If `source.bytes` and `destination.bytes` are known, `network.bytes` is their sum.</para>
 		/// <example>368</example>
 		///</summary>
-		[JsonPropertyName("bytes")]
+		[JsonPropertyName("bytes"), DataMember(Name = "bytes")]
 		public long? Bytes { get; set; }
 
 		///<summary>
@@ -2392,7 +2392,7 @@ namespace Elastic.CommonSchema
 		/// Learn more at https://github.com/corelight/community-id-spec.</para>
 		/// <example>1:hO+sN4H+MG5MY/8hIrXPqc4ZQz0=</example>
 		///</summary>
-		[JsonPropertyName("community_id")]
+		[JsonPropertyName("community_id"), DataMember(Name = "community_id")]
 		public string CommunityId { get; set; }
 
 		///<summary>
@@ -2413,7 +2413,7 @@ namespace Elastic.CommonSchema
 		/// </list></para>
 		/// <example>inbound</example>
 		///</summary>
-		[JsonPropertyName("direction")]
+		[JsonPropertyName("direction"), DataMember(Name = "direction")]
 		public string Direction { get; set; }
 
 		///<summary>
@@ -2421,7 +2421,7 @@ namespace Elastic.CommonSchema
 		/// <para>Host IP address when the source IP address is the proxy.</para>
 		/// <example>192.1.1.2</example>
 		///</summary>
-		[JsonPropertyName("forwarded_ip")]
+		[JsonPropertyName("forwarded_ip"), DataMember(Name = "forwarded_ip")]
 		public string ForwardedIp { get; set; }
 
 		///<summary>
@@ -2429,7 +2429,7 @@ namespace Elastic.CommonSchema
 		/// <para>IANA Protocol Number (https://www.iana.org/assignments/protocol-numbers/protocol-numbers.xhtml). Standardized list of protocols. This aligns well with NetFlow and sFlow related logs which use the IANA Protocol Number.</para>
 		/// <example>6</example>
 		///</summary>
-		[JsonPropertyName("iana_number")]
+		[JsonPropertyName("iana_number"), DataMember(Name = "iana_number")]
 		public string IanaNumber { get; set; }
 
 		///<summary>
@@ -2437,7 +2437,7 @@ namespace Elastic.CommonSchema
 		/// <para>Name given by operators to sections of their network.</para>
 		/// <example>Guest Wifi</example>
 		///</summary>
-		[JsonPropertyName("name")]
+		[JsonPropertyName("name"), DataMember(Name = "name")]
 		public string Name { get; set; }
 
 		///<summary>
@@ -2446,7 +2446,7 @@ namespace Elastic.CommonSchema
 		/// If `source.packets` and `destination.packets` are known, `network.packets` is their sum.</para>
 		/// <example>24</example>
 		///</summary>
-		[JsonPropertyName("packets")]
+		[JsonPropertyName("packets"), DataMember(Name = "packets")]
 		public long? Packets { get; set; }
 
 		///<summary>
@@ -2455,7 +2455,7 @@ namespace Elastic.CommonSchema
 		/// The field value must be normalized to lowercase for querying.</para>
 		/// <example>http</example>
 		///</summary>
-		[JsonPropertyName("protocol")]
+		[JsonPropertyName("protocol"), DataMember(Name = "protocol")]
 		public string Protocol { get; set; }
 
 		///<summary>
@@ -2464,7 +2464,7 @@ namespace Elastic.CommonSchema
 		/// The field value must be normalized to lowercase for querying.</para>
 		/// <example>tcp</example>
 		///</summary>
-		[JsonPropertyName("transport")]
+		[JsonPropertyName("transport"), DataMember(Name = "transport")]
 		public string Transport { get; set; }
 
 		///<summary>
@@ -2473,7 +2473,7 @@ namespace Elastic.CommonSchema
 		/// The field value must be normalized to lowercase for querying.</para>
 		/// <example>ipv4</example>
 		///</summary>
-		[JsonPropertyName("type")]
+		[JsonPropertyName("type"), DataMember(Name = "type")]
 		public string Type { get; set; }
 
 		///<summary>
@@ -2481,7 +2481,7 @@ namespace Elastic.CommonSchema
 		/// <para>Network.inner fields are added in addition to network.vlan fields to describe the innermost VLAN when q-in-q VLAN tagging is present. Allowed fields include vlan.id and vlan.name. Inner vlan fields are typically used when sending traffic with multiple 802.1q encapsulations to a network sensor (e.g. Zeek, Wireshark.)</para>
 		/// <example></example>
 		///</summary>
-		[JsonPropertyName("inner")]
+		[JsonPropertyName("inner"), DataMember(Name = "inner")]
 		public NetworkInner Inner { get; set; }
 	}
 
@@ -2495,7 +2495,7 @@ namespace Elastic.CommonSchema
 		/// <para>Hostname of the observer.</para>
 		/// <example></example>
 		///</summary>
-		[JsonPropertyName("hostname")]
+		[JsonPropertyName("hostname"), DataMember(Name = "hostname")]
 		public string Hostname { get; set; }
 
 		///<summary>
@@ -2503,7 +2503,7 @@ namespace Elastic.CommonSchema
 		/// <para>IP addresses of the observer.</para>
 		/// <example></example>
 		///</summary>
-		[JsonPropertyName("ip")]
+		[JsonPropertyName("ip"), DataMember(Name = "ip")]
 		public string[] Ip { get; set; }
 
 		///<summary>
@@ -2513,7 +2513,7 @@ namespace Elastic.CommonSchema
 		/// <para>pattern: </para></para>
 		/// <example>["00-00-5E-00-53-23", "00-00-5E-00-53-24"]</example>
 		///</summary>
-		[JsonPropertyName("mac")]
+		[JsonPropertyName("mac"), DataMember(Name = "mac")]
 		public string[] Mac { get; set; }
 
 		///<summary>
@@ -2523,7 +2523,7 @@ namespace Elastic.CommonSchema
 		/// If no custom name is needed, the field can be left empty.</para>
 		/// <example>1_proxySG</example>
 		///</summary>
-		[JsonPropertyName("name")]
+		[JsonPropertyName("name"), DataMember(Name = "name")]
 		public string Name { get; set; }
 
 		///<summary>
@@ -2531,7 +2531,7 @@ namespace Elastic.CommonSchema
 		/// <para>The product name of the observer.</para>
 		/// <example>s200</example>
 		///</summary>
-		[JsonPropertyName("product")]
+		[JsonPropertyName("product"), DataMember(Name = "product")]
 		public string Product { get; set; }
 
 		///<summary>
@@ -2539,7 +2539,7 @@ namespace Elastic.CommonSchema
 		/// <para>Observer serial number.</para>
 		/// <example></example>
 		///</summary>
-		[JsonPropertyName("serial_number")]
+		[JsonPropertyName("serial_number"), DataMember(Name = "serial_number")]
 		public string SerialNumber { get; set; }
 
 		///<summary>
@@ -2548,7 +2548,7 @@ namespace Elastic.CommonSchema
 		/// There is no predefined list of observer types. Some examples are `forwarder`, `firewall`, `ids`, `ips`, `proxy`, `poller`, `sensor`, `APM server`.</para>
 		/// <example>firewall</example>
 		///</summary>
-		[JsonPropertyName("type")]
+		[JsonPropertyName("type"), DataMember(Name = "type")]
 		public string Type { get; set; }
 
 		///<summary>
@@ -2556,7 +2556,7 @@ namespace Elastic.CommonSchema
 		/// <para>Vendor name of the observer.</para>
 		/// <example>Symantec</example>
 		///</summary>
-		[JsonPropertyName("vendor")]
+		[JsonPropertyName("vendor"), DataMember(Name = "vendor")]
 		public string Vendor { get; set; }
 
 		///<summary>
@@ -2564,7 +2564,7 @@ namespace Elastic.CommonSchema
 		/// <para>Observer version.</para>
 		/// <example></example>
 		///</summary>
-		[JsonPropertyName("version")]
+		[JsonPropertyName("version"), DataMember(Name = "version")]
 		public string Version { get; set; }
 
 		///<summary>
@@ -2572,7 +2572,7 @@ namespace Elastic.CommonSchema
 		/// <para>Observer.egress holds information like interface number and name, vlan, and zone information to classify egress traffic.  Single armed monitoring such as a network sensor on a span port should only use observer.ingress to categorize traffic.</para>
 		/// <example></example>
 		///</summary>
-		[JsonPropertyName("egress")]
+		[JsonPropertyName("egress"), DataMember(Name = "egress")]
 		public ObserverEgress Egress { get; set; }
 
 		///<summary>
@@ -2580,7 +2580,7 @@ namespace Elastic.CommonSchema
 		/// <para>Observer.ingress holds information like interface number and name, vlan, and zone information to classify ingress traffic.  Single armed monitoring such as a network sensor on a span port should only use observer.ingress to categorize traffic.</para>
 		/// <example></example>
 		///</summary>
-		[JsonPropertyName("ingress")]
+		[JsonPropertyName("ingress"), DataMember(Name = "ingress")]
 		public ObserverIngress Ingress { get; set; }
 	}
 
@@ -2594,7 +2594,7 @@ namespace Elastic.CommonSchema
 		/// <para>API version being used to carry out the action</para>
 		/// <example>v1beta1</example>
 		///</summary>
-		[JsonPropertyName("api_version")]
+		[JsonPropertyName("api_version"), DataMember(Name = "api_version")]
 		public string ApiVersion { get; set; }
 
 		///<summary>
@@ -2602,7 +2602,7 @@ namespace Elastic.CommonSchema
 		/// <para>Unique ID of the cluster.</para>
 		/// <example></example>
 		///</summary>
-		[JsonPropertyName("cluster.id")]
+		[JsonPropertyName("cluster.id"), DataMember(Name = "cluster.id")]
 		public string ClusterId { get; set; }
 
 		///<summary>
@@ -2610,7 +2610,7 @@ namespace Elastic.CommonSchema
 		/// <para>Name of the cluster.</para>
 		/// <example></example>
 		///</summary>
-		[JsonPropertyName("cluster.name")]
+		[JsonPropertyName("cluster.name"), DataMember(Name = "cluster.name")]
 		public string ClusterName { get; set; }
 
 		///<summary>
@@ -2618,7 +2618,7 @@ namespace Elastic.CommonSchema
 		/// <para>URL of the API used to manage the cluster.</para>
 		/// <example></example>
 		///</summary>
-		[JsonPropertyName("cluster.url")]
+		[JsonPropertyName("cluster.url"), DataMember(Name = "cluster.url")]
 		public string ClusterUrl { get; set; }
 
 		///<summary>
@@ -2626,7 +2626,7 @@ namespace Elastic.CommonSchema
 		/// <para>The version of the cluster.</para>
 		/// <example></example>
 		///</summary>
-		[JsonPropertyName("cluster.version")]
+		[JsonPropertyName("cluster.version"), DataMember(Name = "cluster.version")]
 		public string ClusterVersion { get; set; }
 
 		///<summary>
@@ -2634,7 +2634,7 @@ namespace Elastic.CommonSchema
 		/// <para>Namespace in which the action is taking place.</para>
 		/// <example>kube-system</example>
 		///</summary>
-		[JsonPropertyName("namespace")]
+		[JsonPropertyName("namespace"), DataMember(Name = "namespace")]
 		public string Namespace { get; set; }
 
 		///<summary>
@@ -2642,7 +2642,7 @@ namespace Elastic.CommonSchema
 		/// <para>Organization affected by the event (for multi-tenant orchestrator setups).</para>
 		/// <example>elastic</example>
 		///</summary>
-		[JsonPropertyName("organization")]
+		[JsonPropertyName("organization"), DataMember(Name = "organization")]
 		public string Organization { get; set; }
 
 		///<summary>
@@ -2650,7 +2650,7 @@ namespace Elastic.CommonSchema
 		/// <para>Unique ID of the resource being acted upon.</para>
 		/// <example></example>
 		///</summary>
-		[JsonPropertyName("resource.id")]
+		[JsonPropertyName("resource.id"), DataMember(Name = "resource.id")]
 		public string ResourceId { get; set; }
 
 		///<summary>
@@ -2658,7 +2658,7 @@ namespace Elastic.CommonSchema
 		/// <para>IP address assigned to the resource associated with the event being observed. In the case of a Kubernetes Pod, this array would contain only one element: the IP of the Pod (as opposed to the Node on which the Pod is running).</para>
 		/// <example></example>
 		///</summary>
-		[JsonPropertyName("resource.ip")]
+		[JsonPropertyName("resource.ip"), DataMember(Name = "resource.ip")]
 		public string[] ResourceIp { get; set; }
 
 		///<summary>
@@ -2666,7 +2666,7 @@ namespace Elastic.CommonSchema
 		/// <para>Name of the resource being acted upon.</para>
 		/// <example>test-pod-cdcws</example>
 		///</summary>
-		[JsonPropertyName("resource.name")]
+		[JsonPropertyName("resource.name"), DataMember(Name = "resource.name")]
 		public string ResourceName { get; set; }
 
 		///<summary>
@@ -2674,7 +2674,7 @@ namespace Elastic.CommonSchema
 		/// <para>Type or kind of the parent resource associated with the event being observed. In Kubernetes, this will be the name of a built-in workload resource (e.g., Deployment, StatefulSet, DaemonSet).</para>
 		/// <example>DaemonSet</example>
 		///</summary>
-		[JsonPropertyName("resource.parent.type")]
+		[JsonPropertyName("resource.parent.type"), DataMember(Name = "resource.parent.type")]
 		public string ResourceParentType { get; set; }
 
 		///<summary>
@@ -2682,7 +2682,7 @@ namespace Elastic.CommonSchema
 		/// <para>Type of resource being acted upon.</para>
 		/// <example>service</example>
 		///</summary>
-		[JsonPropertyName("resource.type")]
+		[JsonPropertyName("resource.type"), DataMember(Name = "resource.type")]
 		public string ResourceType { get; set; }
 
 		///<summary>
@@ -2690,7 +2690,7 @@ namespace Elastic.CommonSchema
 		/// <para>Orchestrator cluster type (e.g. kubernetes, nomad or cloudfoundry).</para>
 		/// <example>kubernetes</example>
 		///</summary>
-		[JsonPropertyName("type")]
+		[JsonPropertyName("type"), DataMember(Name = "type")]
 		public string Type { get; set; }
 	}
 
@@ -2704,7 +2704,7 @@ namespace Elastic.CommonSchema
 		/// <para>Unique identifier for the organization.</para>
 		/// <example></example>
 		///</summary>
-		[JsonPropertyName("id")]
+		[JsonPropertyName("id"), DataMember(Name = "id")]
 		public string Id { get; set; }
 
 		///<summary>
@@ -2712,7 +2712,7 @@ namespace Elastic.CommonSchema
 		/// <para>Organization name.</para>
 		/// <example></example>
 		///</summary>
-		[JsonPropertyName("name")]
+		[JsonPropertyName("name"), DataMember(Name = "name")]
 		public string Name { get; set; }
 	}
 
@@ -2726,7 +2726,7 @@ namespace Elastic.CommonSchema
 		/// <para>OS family (such as redhat, debian, freebsd, windows).</para>
 		/// <example>debian</example>
 		///</summary>
-		[JsonPropertyName("family")]
+		[JsonPropertyName("family"), DataMember(Name = "family")]
 		public string Family { get; set; }
 
 		///<summary>
@@ -2734,7 +2734,7 @@ namespace Elastic.CommonSchema
 		/// <para>Operating system name, including the version or code name.</para>
 		/// <example>Mac OS Mojave</example>
 		///</summary>
-		[JsonPropertyName("full")]
+		[JsonPropertyName("full"), DataMember(Name = "full")]
 		public string Full { get; set; }
 
 		///<summary>
@@ -2742,7 +2742,7 @@ namespace Elastic.CommonSchema
 		/// <para>Operating system kernel version as a raw string.</para>
 		/// <example>4.4.0-112-generic</example>
 		///</summary>
-		[JsonPropertyName("kernel")]
+		[JsonPropertyName("kernel"), DataMember(Name = "kernel")]
 		public string Kernel { get; set; }
 
 		///<summary>
@@ -2750,7 +2750,7 @@ namespace Elastic.CommonSchema
 		/// <para>Operating system name, without the version.</para>
 		/// <example>Mac OS X</example>
 		///</summary>
-		[JsonPropertyName("name")]
+		[JsonPropertyName("name"), DataMember(Name = "name")]
 		public string Name { get; set; }
 
 		///<summary>
@@ -2758,7 +2758,7 @@ namespace Elastic.CommonSchema
 		/// <para>Operating system platform (such centos, ubuntu, windows).</para>
 		/// <example>darwin</example>
 		///</summary>
-		[JsonPropertyName("platform")]
+		[JsonPropertyName("platform"), DataMember(Name = "platform")]
 		public string Platform { get; set; }
 
 		///<summary>
@@ -2774,7 +2774,7 @@ namespace Elastic.CommonSchema
 		/// </list></para>
 		/// <example>macos</example>
 		///</summary>
-		[JsonPropertyName("type")]
+		[JsonPropertyName("type"), DataMember(Name = "type")]
 		public string Type { get; set; }
 
 		///<summary>
@@ -2782,7 +2782,7 @@ namespace Elastic.CommonSchema
 		/// <para>Operating system version as a raw string.</para>
 		/// <example>10.14.1</example>
 		///</summary>
-		[JsonPropertyName("version")]
+		[JsonPropertyName("version"), DataMember(Name = "version")]
 		public string Version { get; set; }
 	}
 
@@ -2796,7 +2796,7 @@ namespace Elastic.CommonSchema
 		/// <para>Package architecture.</para>
 		/// <example>x86_64</example>
 		///</summary>
-		[JsonPropertyName("architecture")]
+		[JsonPropertyName("architecture"), DataMember(Name = "architecture")]
 		public string Architecture { get; set; }
 
 		///<summary>
@@ -2805,7 +2805,7 @@ namespace Elastic.CommonSchema
 		/// For example use the commit SHA of a non-released package.</para>
 		/// <example>36f4f7e89dd61b0988b12ee000b98966867710cd</example>
 		///</summary>
-		[JsonPropertyName("build_version")]
+		[JsonPropertyName("build_version"), DataMember(Name = "build_version")]
 		public string BuildVersion { get; set; }
 
 		///<summary>
@@ -2813,7 +2813,7 @@ namespace Elastic.CommonSchema
 		/// <para>Checksum of the installed package for verification.</para>
 		/// <example>68b329da9893e34099c7d8ad5cb9c940</example>
 		///</summary>
-		[JsonPropertyName("checksum")]
+		[JsonPropertyName("checksum"), DataMember(Name = "checksum")]
 		public string Checksum { get; set; }
 
 		///<summary>
@@ -2821,7 +2821,7 @@ namespace Elastic.CommonSchema
 		/// <para>Description of the package.</para>
 		/// <example>Open source programming language to build simple/reliable/efficient software.</example>
 		///</summary>
-		[JsonPropertyName("description")]
+		[JsonPropertyName("description"), DataMember(Name = "description")]
 		public string Description { get; set; }
 
 		///<summary>
@@ -2829,7 +2829,7 @@ namespace Elastic.CommonSchema
 		/// <para>Indicating how the package was installed, e.g. user-local, global.</para>
 		/// <example>global</example>
 		///</summary>
-		[JsonPropertyName("install_scope")]
+		[JsonPropertyName("install_scope"), DataMember(Name = "install_scope")]
 		public string InstallScope { get; set; }
 
 		///<summary>
@@ -2837,7 +2837,7 @@ namespace Elastic.CommonSchema
 		/// <para>Time when package was installed.</para>
 		/// <example></example>
 		///</summary>
-		[JsonPropertyName("installed")]
+		[JsonPropertyName("installed"), DataMember(Name = "installed")]
 		public DateTimeOffset? Installed { get; set; }
 
 		///<summary>
@@ -2846,7 +2846,7 @@ namespace Elastic.CommonSchema
 		/// Use a short name, e.g. the license identifier from SPDX License List where possible (https://spdx.org/licenses/).</para>
 		/// <example>Apache License 2.0</example>
 		///</summary>
-		[JsonPropertyName("license")]
+		[JsonPropertyName("license"), DataMember(Name = "license")]
 		public string License { get; set; }
 
 		///<summary>
@@ -2854,7 +2854,7 @@ namespace Elastic.CommonSchema
 		/// <para>Package name</para>
 		/// <example>go</example>
 		///</summary>
-		[JsonPropertyName("name")]
+		[JsonPropertyName("name"), DataMember(Name = "name")]
 		public string Name { get; set; }
 
 		///<summary>
@@ -2862,7 +2862,7 @@ namespace Elastic.CommonSchema
 		/// <para>Path where the package is installed.</para>
 		/// <example>/usr/local/Cellar/go/1.12.9/</example>
 		///</summary>
-		[JsonPropertyName("path")]
+		[JsonPropertyName("path"), DataMember(Name = "path")]
 		public string Path { get; set; }
 
 		///<summary>
@@ -2870,7 +2870,7 @@ namespace Elastic.CommonSchema
 		/// <para>Home page or reference URL of the software in this package, if available.</para>
 		/// <example>https://golang.org</example>
 		///</summary>
-		[JsonPropertyName("reference")]
+		[JsonPropertyName("reference"), DataMember(Name = "reference")]
 		public string Reference { get; set; }
 
 		///<summary>
@@ -2878,7 +2878,7 @@ namespace Elastic.CommonSchema
 		/// <para>Package size in bytes.</para>
 		/// <example>62231</example>
 		///</summary>
-		[JsonPropertyName("size")]
+		[JsonPropertyName("size"), DataMember(Name = "size")]
 		public long? Size { get; set; }
 
 		///<summary>
@@ -2887,7 +2887,7 @@ namespace Elastic.CommonSchema
 		/// This should contain the package file type, rather than the package manager name. Examples: rpm, dpkg, brew, npm, gem, nupkg, jar.</para>
 		/// <example>rpm</example>
 		///</summary>
-		[JsonPropertyName("type")]
+		[JsonPropertyName("type"), DataMember(Name = "type")]
 		public string Type { get; set; }
 
 		///<summary>
@@ -2895,7 +2895,7 @@ namespace Elastic.CommonSchema
 		/// <para>Package version</para>
 		/// <example>1.12.9</example>
 		///</summary>
-		[JsonPropertyName("version")]
+		[JsonPropertyName("version"), DataMember(Name = "version")]
 		public string Version { get; set; }
 	}
 
@@ -2909,7 +2909,7 @@ namespace Elastic.CommonSchema
 		/// <para>CPU architecture target for the file.</para>
 		/// <example>x64</example>
 		///</summary>
-		[JsonPropertyName("architecture")]
+		[JsonPropertyName("architecture"), DataMember(Name = "architecture")]
 		public string Architecture { get; set; }
 
 		///<summary>
@@ -2917,7 +2917,7 @@ namespace Elastic.CommonSchema
 		/// <para>Internal company name of the file, provided at compile-time.</para>
 		/// <example>Microsoft Corporation</example>
 		///</summary>
-		[JsonPropertyName("company")]
+		[JsonPropertyName("company"), DataMember(Name = "company")]
 		public string Company { get; set; }
 
 		///<summary>
@@ -2925,7 +2925,7 @@ namespace Elastic.CommonSchema
 		/// <para>Internal description of the file, provided at compile-time.</para>
 		/// <example>Paint</example>
 		///</summary>
-		[JsonPropertyName("description")]
+		[JsonPropertyName("description"), DataMember(Name = "description")]
 		public string Description { get; set; }
 
 		///<summary>
@@ -2933,7 +2933,7 @@ namespace Elastic.CommonSchema
 		/// <para>Internal version of the file, provided at compile-time.</para>
 		/// <example>6.3.9600.17415</example>
 		///</summary>
-		[JsonPropertyName("file_version")]
+		[JsonPropertyName("file_version"), DataMember(Name = "file_version")]
 		public string FileVersion { get; set; }
 
 		///<summary>
@@ -2942,7 +2942,7 @@ namespace Elastic.CommonSchema
 		/// Learn more at https://www.fireeye.com/blog/threat-research/2014/01/tracking-malware-import-hashing.html.</para>
 		/// <example>0c6803c4e922103c4dca5963aad36ddf</example>
 		///</summary>
-		[JsonPropertyName("imphash")]
+		[JsonPropertyName("imphash"), DataMember(Name = "imphash")]
 		public string Imphash { get; set; }
 
 		///<summary>
@@ -2950,7 +2950,7 @@ namespace Elastic.CommonSchema
 		/// <para>Internal name of the file, provided at compile-time.</para>
 		/// <example>MSPAINT.EXE</example>
 		///</summary>
-		[JsonPropertyName("original_file_name")]
+		[JsonPropertyName("original_file_name"), DataMember(Name = "original_file_name")]
 		public string OriginalFileName { get; set; }
 
 		///<summary>
@@ -2959,7 +2959,7 @@ namespace Elastic.CommonSchema
 		/// Learn more at https://www.usenix.org/legacy/events/leet09/tech/full_papers/wicherski/wicherski_html/index.html.</para>
 		/// <example>73ff189b63cd6be375a7ff25179a38d347651975</example>
 		///</summary>
-		[JsonPropertyName("pehash")]
+		[JsonPropertyName("pehash"), DataMember(Name = "pehash")]
 		public string Pehash { get; set; }
 
 		///<summary>
@@ -2967,7 +2967,7 @@ namespace Elastic.CommonSchema
 		/// <para>Internal product name of the file, provided at compile-time.</para>
 		/// <example>Microsoft® Windows® Operating System</example>
 		///</summary>
-		[JsonPropertyName("product")]
+		[JsonPropertyName("product"), DataMember(Name = "product")]
 		public string Product { get; set; }
 	}
 
@@ -2982,7 +2982,7 @@ namespace Elastic.CommonSchema
 		/// May be filtered to protect sensitive information.</para>
 		/// <example>["/usr/bin/ssh", "-l", "user", "10.0.0.16"]</example>
 		///</summary>
-		[JsonPropertyName("args")]
+		[JsonPropertyName("args"), DataMember(Name = "args")]
 		public string[] Args { get; set; }
 
 		///<summary>
@@ -2991,7 +2991,7 @@ namespace Elastic.CommonSchema
 		/// This field can be useful for querying or performing bucket analysis on how many arguments were provided to start a process. More arguments may be an indication of suspicious activity.</para>
 		/// <example>4</example>
 		///</summary>
-		[JsonPropertyName("args_count")]
+		[JsonPropertyName("args_count"), DataMember(Name = "args_count")]
 		public long? ArgsCount { get; set; }
 
 		///<summary>
@@ -3000,7 +3000,7 @@ namespace Elastic.CommonSchema
 		/// Some arguments may be filtered to protect sensitive information.</para>
 		/// <example>/usr/bin/ssh -l user 10.0.0.16</example>
 		///</summary>
-		[JsonPropertyName("command_line")]
+		[JsonPropertyName("command_line"), DataMember(Name = "command_line")]
 		public string CommandLine { get; set; }
 
 		///<summary>
@@ -3008,7 +3008,7 @@ namespace Elastic.CommonSchema
 		/// <para>The time the process ended.</para>
 		/// <example>5/23/2016 8:05:34 AM</example>
 		///</summary>
-		[JsonPropertyName("end")]
+		[JsonPropertyName("end"), DataMember(Name = "end")]
 		public DateTimeOffset? End { get; set; }
 
 		///<summary>
@@ -3018,7 +3018,7 @@ namespace Elastic.CommonSchema
 		/// Constructing a globally unique identifier is a common practice to mitigate PID reuse as well as to identify a specific process over time, across multiple monitored hosts.</para>
 		/// <example>c2c455d9f99375d</example>
 		///</summary>
-		[JsonPropertyName("entity_id")]
+		[JsonPropertyName("entity_id"), DataMember(Name = "entity_id")]
 		public string EntityId { get; set; }
 
 		///<summary>
@@ -3026,7 +3026,7 @@ namespace Elastic.CommonSchema
 		/// <para>Absolute path to the process executable.</para>
 		/// <example>/usr/bin/ssh</example>
 		///</summary>
-		[JsonPropertyName("executable")]
+		[JsonPropertyName("executable"), DataMember(Name = "executable")]
 		public string Executable { get; set; }
 
 		///<summary>
@@ -3035,7 +3035,7 @@ namespace Elastic.CommonSchema
 		/// The field should be absent if there is no exit code for the event (e.g. process start).</para>
 		/// <example>137</example>
 		///</summary>
-		[JsonPropertyName("exit_code")]
+		[JsonPropertyName("exit_code"), DataMember(Name = "exit_code")]
 		public long? ExitCode { get; set; }
 
 		///<summary>
@@ -3046,7 +3046,7 @@ namespace Elastic.CommonSchema
 		/// <para><br/>This field is beta and subject to change.</para></para>
 		/// <example>true</example>
 		///</summary>
-		[JsonPropertyName("interactive")]
+		[JsonPropertyName("interactive"), DataMember(Name = "interactive")]
 		public bool? Interactive { get; set; }
 
 		///<summary>
@@ -3055,7 +3055,7 @@ namespace Elastic.CommonSchema
 		/// Sometimes called program name or similar.</para>
 		/// <example>ssh</example>
 		///</summary>
-		[JsonPropertyName("name")]
+		[JsonPropertyName("name"), DataMember(Name = "name")]
 		public string Name { get; set; }
 
 		///<summary>
@@ -3064,7 +3064,7 @@ namespace Elastic.CommonSchema
 		/// Identifier of the group of processes the process belongs to.</para>
 		/// <example></example>
 		///</summary>
-		[JsonPropertyName("pgid")]
+		[JsonPropertyName("pgid"), DataMember(Name = "pgid")]
 		public long? Pgid { get; set; }
 
 		///<summary>
@@ -3072,7 +3072,7 @@ namespace Elastic.CommonSchema
 		/// <para>Process id.</para>
 		/// <example>4242</example>
 		///</summary>
-		[JsonPropertyName("pid")]
+		[JsonPropertyName("pid"), DataMember(Name = "pid")]
 		public long? Pid { get; set; }
 
 		///<summary>
@@ -3080,7 +3080,7 @@ namespace Elastic.CommonSchema
 		/// <para>The time the process started.</para>
 		/// <example>5/23/2016 8:05:34 AM</example>
 		///</summary>
-		[JsonPropertyName("start")]
+		[JsonPropertyName("start"), DataMember(Name = "start")]
 		public DateTimeOffset? Start { get; set; }
 
 		///<summary>
@@ -3088,7 +3088,7 @@ namespace Elastic.CommonSchema
 		/// <para>Thread ID.</para>
 		/// <example>4242</example>
 		///</summary>
-		[JsonPropertyName("thread.id")]
+		[JsonPropertyName("thread.id"), DataMember(Name = "thread.id")]
 		public long? ThreadId { get; set; }
 
 		///<summary>
@@ -3096,7 +3096,7 @@ namespace Elastic.CommonSchema
 		/// <para>Thread name.</para>
 		/// <example>thread-0</example>
 		///</summary>
-		[JsonPropertyName("thread.name")]
+		[JsonPropertyName("thread.name"), DataMember(Name = "thread.name")]
 		public string ThreadName { get; set; }
 
 		///<summary>
@@ -3105,7 +3105,7 @@ namespace Elastic.CommonSchema
 		/// The proctitle, some times the same as process name. Can also be different: for example a browser setting its title to the web page currently opened.</para>
 		/// <example></example>
 		///</summary>
-		[JsonPropertyName("title")]
+		[JsonPropertyName("title"), DataMember(Name = "title")]
 		public string Title { get; set; }
 
 		///<summary>
@@ -3113,7 +3113,7 @@ namespace Elastic.CommonSchema
 		/// <para>Seconds the process has been up.</para>
 		/// <example>1325</example>
 		///</summary>
-		[JsonPropertyName("uptime")]
+		[JsonPropertyName("uptime"), DataMember(Name = "uptime")]
 		public long? Uptime { get; set; }
 
 		///<summary>
@@ -3121,7 +3121,7 @@ namespace Elastic.CommonSchema
 		/// <para>The working directory of the process.</para>
 		/// <example>/home/alice</example>
 		///</summary>
-		[JsonPropertyName("working_directory")]
+		[JsonPropertyName("working_directory"), DataMember(Name = "working_directory")]
 		public string WorkingDirectory { get; set; }
 
 		///<summary>
@@ -3131,7 +3131,7 @@ namespace Elastic.CommonSchema
 		/// <para><br/>This field is beta and subject to change.</para></para>
 		/// <example>{"USER": "elastic","LANG": "en_US.UTF-8","HOME": "/home/elastic"}</example>
 		///</summary>
-		[JsonPropertyName("env_vars")]
+		[JsonPropertyName("env_vars"), DataMember(Name = "env_vars")]
 		public ProcessEnvVars EnvVars { get; set; }
 
 		///<summary>
@@ -3140,7 +3140,7 @@ namespace Elastic.CommonSchema
 		/// <para><br/>This field is beta and subject to change.</para></para>
 		/// <example></example>
 		///</summary>
-		[JsonPropertyName("tty")]
+		[JsonPropertyName("tty"), DataMember(Name = "tty")]
 		public ProcessTty Tty { get; set; }
 	}
 
@@ -3155,7 +3155,7 @@ namespace Elastic.CommonSchema
 		/// For Windows registry operations, such as SetValueEx and RegQueryValueEx, this corresponds to the data pointed by `lp_data`. This is optional but provides better recoverability and should be populated for REG_BINARY encoded values.</para>
 		/// <example>ZQBuAC0AVQBTAAAAZQBuAAAAAAA=</example>
 		///</summary>
-		[JsonPropertyName("data.bytes")]
+		[JsonPropertyName("data.bytes"), DataMember(Name = "data.bytes")]
 		public string DataBytes { get; set; }
 
 		///<summary>
@@ -3164,7 +3164,7 @@ namespace Elastic.CommonSchema
 		/// Populated as an array when writing string data to the registry. For single string registry types (REG_SZ, REG_EXPAND_SZ), this should be an array with one string. For sequences of string with REG_MULTI_SZ, this array will be variable length. For numeric data, such as REG_DWORD and REG_QWORD, this should be populated with the decimal representation (e.g `"1"`).</para>
 		/// <example>["C:\rta\red_ttp\bin\myapp.exe"]</example>
 		///</summary>
-		[JsonPropertyName("data.strings")]
+		[JsonPropertyName("data.strings"), DataMember(Name = "data.strings")]
 		public string[] DataStrings { get; set; }
 
 		///<summary>
@@ -3172,7 +3172,7 @@ namespace Elastic.CommonSchema
 		/// <para>Standard registry type for encoding contents</para>
 		/// <example>REG_SZ</example>
 		///</summary>
-		[JsonPropertyName("data.type")]
+		[JsonPropertyName("data.type"), DataMember(Name = "data.type")]
 		public string DataType { get; set; }
 
 		///<summary>
@@ -3180,7 +3180,7 @@ namespace Elastic.CommonSchema
 		/// <para>Abbreviated name for the hive.</para>
 		/// <example>HKLM</example>
 		///</summary>
-		[JsonPropertyName("hive")]
+		[JsonPropertyName("hive"), DataMember(Name = "hive")]
 		public string Hive { get; set; }
 
 		///<summary>
@@ -3188,7 +3188,7 @@ namespace Elastic.CommonSchema
 		/// <para>Hive-relative path of keys.</para>
 		/// <example>SOFTWARE\Microsoft\Windows NT\CurrentVersion\Image File Execution Options\winword.exe</example>
 		///</summary>
-		[JsonPropertyName("key")]
+		[JsonPropertyName("key"), DataMember(Name = "key")]
 		public string Key { get; set; }
 
 		///<summary>
@@ -3196,7 +3196,7 @@ namespace Elastic.CommonSchema
 		/// <para>Full path, including hive, key and value</para>
 		/// <example>HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Image File Execution Options\winword.exe\Debugger</example>
 		///</summary>
-		[JsonPropertyName("path")]
+		[JsonPropertyName("path"), DataMember(Name = "path")]
 		public string Path { get; set; }
 
 		///<summary>
@@ -3204,7 +3204,7 @@ namespace Elastic.CommonSchema
 		/// <para>Name of the value written.</para>
 		/// <example>Debugger</example>
 		///</summary>
-		[JsonPropertyName("value")]
+		[JsonPropertyName("value"), DataMember(Name = "value")]
 		public string Value { get; set; }
 	}
 
@@ -3218,7 +3218,7 @@ namespace Elastic.CommonSchema
 		/// <para>All the hashes seen on your event. Populating this field, then using it to search for hashes can help in situations where you're unsure what the hash algorithm is (and therefore which key name to search).</para>
 		/// <example></example>
 		///</summary>
-		[JsonPropertyName("hash")]
+		[JsonPropertyName("hash"), DataMember(Name = "hash")]
 		public string[] Hash { get; set; }
 
 		///<summary>
@@ -3226,7 +3226,7 @@ namespace Elastic.CommonSchema
 		/// <para>All hostnames or other host identifiers seen on your event. Example identifiers include FQDNs, domain names, workstation names, or aliases.</para>
 		/// <example></example>
 		///</summary>
-		[JsonPropertyName("hosts")]
+		[JsonPropertyName("hosts"), DataMember(Name = "hosts")]
 		public string[] Hosts { get; set; }
 
 		///<summary>
@@ -3234,7 +3234,7 @@ namespace Elastic.CommonSchema
 		/// <para>All of the IPs seen on your event.</para>
 		/// <example></example>
 		///</summary>
-		[JsonPropertyName("ip")]
+		[JsonPropertyName("ip"), DataMember(Name = "ip")]
 		public string[] Ip { get; set; }
 
 		///<summary>
@@ -3242,7 +3242,7 @@ namespace Elastic.CommonSchema
 		/// <para>All the user names or other user identifiers seen on the event.</para>
 		/// <example></example>
 		///</summary>
-		[JsonPropertyName("user")]
+		[JsonPropertyName("user"), DataMember(Name = "user")]
 		public string[] User { get; set; }
 	}
 
@@ -3256,7 +3256,7 @@ namespace Elastic.CommonSchema
 		/// <para>Name, organization, or pseudonym of the author or authors who created the rule used to generate this event.</para>
 		/// <example>["Star-Lord"]</example>
 		///</summary>
-		[JsonPropertyName("author")]
+		[JsonPropertyName("author"), DataMember(Name = "author")]
 		public string[] Author { get; set; }
 
 		///<summary>
@@ -3264,7 +3264,7 @@ namespace Elastic.CommonSchema
 		/// <para>A categorization value keyword used by the entity using the rule for detection of this event.</para>
 		/// <example>Attempted Information Leak</example>
 		///</summary>
-		[JsonPropertyName("category")]
+		[JsonPropertyName("category"), DataMember(Name = "category")]
 		public string Category { get; set; }
 
 		///<summary>
@@ -3272,7 +3272,7 @@ namespace Elastic.CommonSchema
 		/// <para>The description of the rule generating the event.</para>
 		/// <example>Block requests to public DNS over HTTPS / TLS protocols</example>
 		///</summary>
-		[JsonPropertyName("description")]
+		[JsonPropertyName("description"), DataMember(Name = "description")]
 		public string Description { get; set; }
 
 		///<summary>
@@ -3280,7 +3280,7 @@ namespace Elastic.CommonSchema
 		/// <para>A rule ID that is unique within the scope of an agent, observer, or other entity using the rule for detection of this event.</para>
 		/// <example>101</example>
 		///</summary>
-		[JsonPropertyName("id")]
+		[JsonPropertyName("id"), DataMember(Name = "id")]
 		public string Id { get; set; }
 
 		///<summary>
@@ -3288,7 +3288,7 @@ namespace Elastic.CommonSchema
 		/// <para>Name of the license under which the rule used to generate this event is made available.</para>
 		/// <example>Apache 2.0</example>
 		///</summary>
-		[JsonPropertyName("license")]
+		[JsonPropertyName("license"), DataMember(Name = "license")]
 		public string License { get; set; }
 
 		///<summary>
@@ -3296,7 +3296,7 @@ namespace Elastic.CommonSchema
 		/// <para>The name of the rule or signature generating the event.</para>
 		/// <example>BLOCK_DNS_over_TLS</example>
 		///</summary>
-		[JsonPropertyName("name")]
+		[JsonPropertyName("name"), DataMember(Name = "name")]
 		public string Name { get; set; }
 
 		///<summary>
@@ -3305,7 +3305,7 @@ namespace Elastic.CommonSchema
 		/// The URL can point to the vendor's documentation about the rule. If that's not available, it can also be a link to a more general page describing this type of alert.</para>
 		/// <example>https://en.wikipedia.org/wiki/DNS_over_TLS</example>
 		///</summary>
-		[JsonPropertyName("reference")]
+		[JsonPropertyName("reference"), DataMember(Name = "reference")]
 		public string Reference { get; set; }
 
 		///<summary>
@@ -3313,7 +3313,7 @@ namespace Elastic.CommonSchema
 		/// <para>Name of the ruleset, policy, group, or parent category in which the rule used to generate this event is a member.</para>
 		/// <example>Standard_Protocol_Filters</example>
 		///</summary>
-		[JsonPropertyName("ruleset")]
+		[JsonPropertyName("ruleset"), DataMember(Name = "ruleset")]
 		public string Ruleset { get; set; }
 
 		///<summary>
@@ -3321,7 +3321,7 @@ namespace Elastic.CommonSchema
 		/// <para>A rule ID that is unique within the scope of a set or group of agents, observers, or other entities using the rule for detection of this event.</para>
 		/// <example>1100110011</example>
 		///</summary>
-		[JsonPropertyName("uuid")]
+		[JsonPropertyName("uuid"), DataMember(Name = "uuid")]
 		public string Uuid { get; set; }
 
 		///<summary>
@@ -3329,7 +3329,7 @@ namespace Elastic.CommonSchema
 		/// <para>The version / revision of the rule being used for analysis.</para>
 		/// <example>1.1</example>
 		///</summary>
-		[JsonPropertyName("version")]
+		[JsonPropertyName("version"), DataMember(Name = "version")]
 		public string Version { get; set; }
 	}
 
@@ -3344,7 +3344,7 @@ namespace Elastic.CommonSchema
 		/// Then it should be duplicated to `.ip` or `.domain`, depending on which one it is.</para>
 		/// <example></example>
 		///</summary>
-		[JsonPropertyName("address")]
+		[JsonPropertyName("address"), DataMember(Name = "address")]
 		public string Address { get; set; }
 
 		///<summary>
@@ -3352,7 +3352,7 @@ namespace Elastic.CommonSchema
 		/// <para>Bytes sent from the server to the client.</para>
 		/// <example>184</example>
 		///</summary>
-		[JsonPropertyName("bytes")]
+		[JsonPropertyName("bytes"), DataMember(Name = "bytes")]
 		public long? Bytes { get; set; }
 
 		///<summary>
@@ -3361,7 +3361,7 @@ namespace Elastic.CommonSchema
 		/// This value may be a host name, a fully qualified domain name, or another host naming format. The value may derive from the original event or be added from enrichment.</para>
 		/// <example>foo.example.com</example>
 		///</summary>
-		[JsonPropertyName("domain")]
+		[JsonPropertyName("domain"), DataMember(Name = "domain")]
 		public string Domain { get; set; }
 
 		///<summary>
@@ -3369,7 +3369,7 @@ namespace Elastic.CommonSchema
 		/// <para>IP address of the server (IPv4 or IPv6).</para>
 		/// <example></example>
 		///</summary>
-		[JsonPropertyName("ip")]
+		[JsonPropertyName("ip"), DataMember(Name = "ip")]
 		public string Ip { get; set; }
 
 		///<summary>
@@ -3379,7 +3379,7 @@ namespace Elastic.CommonSchema
 		/// <para>pattern: </para></para>
 		/// <example>00-00-5E-00-53-23</example>
 		///</summary>
-		[JsonPropertyName("mac")]
+		[JsonPropertyName("mac"), DataMember(Name = "mac")]
 		public string Mac { get; set; }
 
 		///<summary>
@@ -3388,7 +3388,7 @@ namespace Elastic.CommonSchema
 		/// Typically used with load balancers, firewalls, or routers.</para>
 		/// <example></example>
 		///</summary>
-		[JsonPropertyName("nat.ip")]
+		[JsonPropertyName("nat.ip"), DataMember(Name = "nat.ip")]
 		public string NatIp { get; set; }
 
 		///<summary>
@@ -3397,7 +3397,7 @@ namespace Elastic.CommonSchema
 		/// Typically used with load balancers, firewalls, or routers.</para>
 		/// <example></example>
 		///</summary>
-		[JsonPropertyName("nat.port")]
+		[JsonPropertyName("nat.port"), DataMember(Name = "nat.port")]
 		public long? NatPort { get; set; }
 
 		///<summary>
@@ -3405,7 +3405,7 @@ namespace Elastic.CommonSchema
 		/// <para>Packets sent from the server to the client.</para>
 		/// <example>12</example>
 		///</summary>
-		[JsonPropertyName("packets")]
+		[JsonPropertyName("packets"), DataMember(Name = "packets")]
 		public long? Packets { get; set; }
 
 		///<summary>
@@ -3413,7 +3413,7 @@ namespace Elastic.CommonSchema
 		/// <para>Port of the server.</para>
 		/// <example></example>
 		///</summary>
-		[JsonPropertyName("port")]
+		[JsonPropertyName("port"), DataMember(Name = "port")]
 		public long? Port { get; set; }
 
 		///<summary>
@@ -3423,7 +3423,7 @@ namespace Elastic.CommonSchema
 		/// This value can be determined precisely with a list like the public suffix list (http://publicsuffix.org). Trying to approximate this by simply taking the last two labels will not work well for TLDs such as "co.uk".</para>
 		/// <example>example.com</example>
 		///</summary>
-		[JsonPropertyName("registered_domain")]
+		[JsonPropertyName("registered_domain"), DataMember(Name = "registered_domain")]
 		public string RegisteredDomain { get; set; }
 
 		///<summary>
@@ -3432,7 +3432,7 @@ namespace Elastic.CommonSchema
 		/// For example the subdomain portion of "www.east.mydomain.co.uk" is "east". If the domain has multiple levels of subdomain, such as "sub2.sub1.example.com", the subdomain field should contain "sub2.sub1", with no trailing period.</para>
 		/// <example>east</example>
 		///</summary>
-		[JsonPropertyName("subdomain")]
+		[JsonPropertyName("subdomain"), DataMember(Name = "subdomain")]
 		public string Subdomain { get; set; }
 
 		///<summary>
@@ -3441,7 +3441,7 @@ namespace Elastic.CommonSchema
 		/// This value can be determined precisely with a list like the public suffix list (http://publicsuffix.org). Trying to approximate this by simply taking the last label will not work well for effective TLDs such as "co.uk".</para>
 		/// <example>co.uk</example>
 		///</summary>
-		[JsonPropertyName("top_level_domain")]
+		[JsonPropertyName("top_level_domain"), DataMember(Name = "top_level_domain")]
 		public string TopLevelDomain { get; set; }
 	}
 
@@ -3456,7 +3456,7 @@ namespace Elastic.CommonSchema
 		/// This should be a URI, network address (ipv4:port or [ipv6]:port) or a resource path (sockets).</para>
 		/// <example>172.26.0.2:5432</example>
 		///</summary>
-		[JsonPropertyName("address")]
+		[JsonPropertyName("address"), DataMember(Name = "address")]
 		public string Address { get; set; }
 
 		///<summary>
@@ -3466,7 +3466,7 @@ namespace Elastic.CommonSchema
 		/// <para><br/>This field is beta and subject to change.</para></para>
 		/// <example>production</example>
 		///</summary>
-		[JsonPropertyName("environment")]
+		[JsonPropertyName("environment"), DataMember(Name = "environment")]
 		public string Environment { get; set; }
 
 		///<summary>
@@ -3475,7 +3475,7 @@ namespace Elastic.CommonSchema
 		/// This id normally changes across restarts, but `service.id` does not.</para>
 		/// <example>8a4f500f</example>
 		///</summary>
-		[JsonPropertyName("ephemeral_id")]
+		[JsonPropertyName("ephemeral_id"), DataMember(Name = "ephemeral_id")]
 		public string EphemeralId { get; set; }
 
 		///<summary>
@@ -3485,7 +3485,7 @@ namespace Elastic.CommonSchema
 		/// Note that if you need to see the events from one specific host of the service, you should filter on that `host.name` or `host.id` instead.</para>
 		/// <example>d37e5ebfe0ae6c4972dbe9f0174a1637bb8247f6</example>
 		///</summary>
-		[JsonPropertyName("id")]
+		[JsonPropertyName("id"), DataMember(Name = "id")]
 		public string Id { get; set; }
 
 		///<summary>
@@ -3495,7 +3495,7 @@ namespace Elastic.CommonSchema
 		/// In the case of Elasticsearch the `service.name` could contain the cluster name. For Beats the `service.name` is by default a copy of the `service.type` field if no name is specified.</para>
 		/// <example>elasticsearch-metrics</example>
 		///</summary>
-		[JsonPropertyName("name")]
+		[JsonPropertyName("name"), DataMember(Name = "name")]
 		public string Name { get; set; }
 
 		///<summary>
@@ -3505,7 +3505,7 @@ namespace Elastic.CommonSchema
 		/// In the case of Elasticsearch, the `service.node.name` could contain the unique node name within the Elasticsearch cluster. In cases where the service doesn't have the concept of a node name, the host name or container name can be used to distinguish running instances that make up this service. If those do not provide uniqueness (e.g. multiple instances of the service running on the same host) - the node name can be manually set.</para>
 		/// <example>instance-0000000016</example>
 		///</summary>
-		[JsonPropertyName("node.name")]
+		[JsonPropertyName("node.name"), DataMember(Name = "node.name")]
 		public string NodeName { get; set; }
 
 		///<summary>
@@ -3518,7 +3518,7 @@ namespace Elastic.CommonSchema
 		/// Other services could use this to distinguish between a `web` and `worker` role running as part of the service.</para>
 		/// <example>background_tasks</example>
 		///</summary>
-		[JsonPropertyName("node.role")]
+		[JsonPropertyName("node.role"), DataMember(Name = "node.role")]
 		public string NodeRole { get; set; }
 
 		///<summary>
@@ -3530,7 +3530,7 @@ namespace Elastic.CommonSchema
 		/// Other services could use this to distinguish between a `web` and `worker` role running as part of the service.</para>
 		/// <example>["ui", "background_tasks"]</example>
 		///</summary>
-		[JsonPropertyName("node.roles")]
+		[JsonPropertyName("node.roles"), DataMember(Name = "node.roles")]
 		public string[] NodeRoles { get; set; }
 
 		///<summary>
@@ -3538,7 +3538,7 @@ namespace Elastic.CommonSchema
 		/// <para>Current state of the service.</para>
 		/// <example></example>
 		///</summary>
-		[JsonPropertyName("state")]
+		[JsonPropertyName("state"), DataMember(Name = "state")]
 		public string State { get; set; }
 
 		///<summary>
@@ -3548,7 +3548,7 @@ namespace Elastic.CommonSchema
 		/// Example: If logs or metrics are collected from Elasticsearch, `service.type` would be `elasticsearch`.</para>
 		/// <example>elasticsearch</example>
 		///</summary>
-		[JsonPropertyName("type")]
+		[JsonPropertyName("type"), DataMember(Name = "type")]
 		public string Type { get; set; }
 
 		///<summary>
@@ -3557,7 +3557,7 @@ namespace Elastic.CommonSchema
 		/// This allows to look at a data set only for a specific version of a service.</para>
 		/// <example>3.2.4</example>
 		///</summary>
-		[JsonPropertyName("version")]
+		[JsonPropertyName("version"), DataMember(Name = "version")]
 		public string Version { get; set; }
 	}
 
@@ -3572,7 +3572,7 @@ namespace Elastic.CommonSchema
 		/// Then it should be duplicated to `.ip` or `.domain`, depending on which one it is.</para>
 		/// <example></example>
 		///</summary>
-		[JsonPropertyName("address")]
+		[JsonPropertyName("address"), DataMember(Name = "address")]
 		public string Address { get; set; }
 
 		///<summary>
@@ -3580,7 +3580,7 @@ namespace Elastic.CommonSchema
 		/// <para>Bytes sent from the source to the destination.</para>
 		/// <example>184</example>
 		///</summary>
-		[JsonPropertyName("bytes")]
+		[JsonPropertyName("bytes"), DataMember(Name = "bytes")]
 		public long? Bytes { get; set; }
 
 		///<summary>
@@ -3589,7 +3589,7 @@ namespace Elastic.CommonSchema
 		/// This value may be a host name, a fully qualified domain name, or another host naming format. The value may derive from the original event or be added from enrichment.</para>
 		/// <example>foo.example.com</example>
 		///</summary>
-		[JsonPropertyName("domain")]
+		[JsonPropertyName("domain"), DataMember(Name = "domain")]
 		public string Domain { get; set; }
 
 		///<summary>
@@ -3597,7 +3597,7 @@ namespace Elastic.CommonSchema
 		/// <para>IP address of the source (IPv4 or IPv6).</para>
 		/// <example></example>
 		///</summary>
-		[JsonPropertyName("ip")]
+		[JsonPropertyName("ip"), DataMember(Name = "ip")]
 		public string Ip { get; set; }
 
 		///<summary>
@@ -3607,7 +3607,7 @@ namespace Elastic.CommonSchema
 		/// <para>pattern: </para></para>
 		/// <example>00-00-5E-00-53-23</example>
 		///</summary>
-		[JsonPropertyName("mac")]
+		[JsonPropertyName("mac"), DataMember(Name = "mac")]
 		public string Mac { get; set; }
 
 		///<summary>
@@ -3616,7 +3616,7 @@ namespace Elastic.CommonSchema
 		/// Typically connections traversing load balancers, firewalls, or routers.</para>
 		/// <example></example>
 		///</summary>
-		[JsonPropertyName("nat.ip")]
+		[JsonPropertyName("nat.ip"), DataMember(Name = "nat.ip")]
 		public string NatIp { get; set; }
 
 		///<summary>
@@ -3625,7 +3625,7 @@ namespace Elastic.CommonSchema
 		/// Typically used with load balancers, firewalls, or routers.</para>
 		/// <example></example>
 		///</summary>
-		[JsonPropertyName("nat.port")]
+		[JsonPropertyName("nat.port"), DataMember(Name = "nat.port")]
 		public long? NatPort { get; set; }
 
 		///<summary>
@@ -3633,7 +3633,7 @@ namespace Elastic.CommonSchema
 		/// <para>Packets sent from the source to the destination.</para>
 		/// <example>12</example>
 		///</summary>
-		[JsonPropertyName("packets")]
+		[JsonPropertyName("packets"), DataMember(Name = "packets")]
 		public long? Packets { get; set; }
 
 		///<summary>
@@ -3641,7 +3641,7 @@ namespace Elastic.CommonSchema
 		/// <para>Port of the source.</para>
 		/// <example></example>
 		///</summary>
-		[JsonPropertyName("port")]
+		[JsonPropertyName("port"), DataMember(Name = "port")]
 		public long? Port { get; set; }
 
 		///<summary>
@@ -3651,7 +3651,7 @@ namespace Elastic.CommonSchema
 		/// This value can be determined precisely with a list like the public suffix list (http://publicsuffix.org). Trying to approximate this by simply taking the last two labels will not work well for TLDs such as "co.uk".</para>
 		/// <example>example.com</example>
 		///</summary>
-		[JsonPropertyName("registered_domain")]
+		[JsonPropertyName("registered_domain"), DataMember(Name = "registered_domain")]
 		public string RegisteredDomain { get; set; }
 
 		///<summary>
@@ -3660,7 +3660,7 @@ namespace Elastic.CommonSchema
 		/// For example the subdomain portion of "www.east.mydomain.co.uk" is "east". If the domain has multiple levels of subdomain, such as "sub2.sub1.example.com", the subdomain field should contain "sub2.sub1", with no trailing period.</para>
 		/// <example>east</example>
 		///</summary>
-		[JsonPropertyName("subdomain")]
+		[JsonPropertyName("subdomain"), DataMember(Name = "subdomain")]
 		public string Subdomain { get; set; }
 
 		///<summary>
@@ -3669,7 +3669,7 @@ namespace Elastic.CommonSchema
 		/// This value can be determined precisely with a list like the public suffix list (http://publicsuffix.org). Trying to approximate this by simply taking the last label will not work well for effective TLDs such as "co.uk".</para>
 		/// <example>co.uk</example>
 		///</summary>
-		[JsonPropertyName("top_level_domain")]
+		[JsonPropertyName("top_level_domain"), DataMember(Name = "top_level_domain")]
 		public string TopLevelDomain { get; set; }
 	}
 
@@ -3683,7 +3683,7 @@ namespace Elastic.CommonSchema
 		/// <para>The saved object ID of the dashboard belonging to the threat feed for displaying dashboard links to threat feeds in Kibana.</para>
 		/// <example>5ba16340-72e6-11eb-a3e3-b3cc7c78a70f</example>
 		///</summary>
-		[JsonPropertyName("feed.dashboard_id")]
+		[JsonPropertyName("feed.dashboard_id"), DataMember(Name = "feed.dashboard_id")]
 		public string FeedDashboardId { get; set; }
 
 		///<summary>
@@ -3691,7 +3691,7 @@ namespace Elastic.CommonSchema
 		/// <para>Description of the threat feed in a UI friendly format.</para>
 		/// <example>Threat feed from the AlienVault Open Threat eXchange network.</example>
 		///</summary>
-		[JsonPropertyName("feed.description")]
+		[JsonPropertyName("feed.description"), DataMember(Name = "feed.description")]
 		public string FeedDescription { get; set; }
 
 		///<summary>
@@ -3699,7 +3699,7 @@ namespace Elastic.CommonSchema
 		/// <para>The name of the threat feed in UI friendly format.</para>
 		/// <example>AlienVault OTX</example>
 		///</summary>
-		[JsonPropertyName("feed.name")]
+		[JsonPropertyName("feed.name"), DataMember(Name = "feed.name")]
 		public string FeedName { get; set; }
 
 		///<summary>
@@ -3707,7 +3707,7 @@ namespace Elastic.CommonSchema
 		/// <para>Reference information for the threat feed in a UI friendly format.</para>
 		/// <example>https://otx.alienvault.com</example>
 		///</summary>
-		[JsonPropertyName("feed.reference")]
+		[JsonPropertyName("feed.reference"), DataMember(Name = "feed.reference")]
 		public string FeedReference { get; set; }
 
 		///<summary>
@@ -3715,7 +3715,7 @@ namespace Elastic.CommonSchema
 		/// <para>Name of the threat framework used to further categorize and classify the tactic and technique of the reported threat. Framework classification can be provided by detecting systems, evaluated at ingest time, or retrospectively tagged to events.</para>
 		/// <example>MITRE ATT&CK</example>
 		///</summary>
-		[JsonPropertyName("framework")]
+		[JsonPropertyName("framework"), DataMember(Name = "framework")]
 		public string Framework { get; set; }
 
 		///<summary>
@@ -3724,7 +3724,7 @@ namespace Elastic.CommonSchema
 		/// While not required, you can use a MITRE ATT&CK® group alias(es).</para>
 		/// <example>[ "Magecart Group 6" ]</example>
 		///</summary>
-		[JsonPropertyName("group.alias")]
+		[JsonPropertyName("group.alias"), DataMember(Name = "group.alias")]
 		public string[] GroupAlias { get; set; }
 
 		///<summary>
@@ -3733,7 +3733,7 @@ namespace Elastic.CommonSchema
 		/// While not required, you can use a MITRE ATT&CK® group id.</para>
 		/// <example>G0037</example>
 		///</summary>
-		[JsonPropertyName("group.id")]
+		[JsonPropertyName("group.id"), DataMember(Name = "group.id")]
 		public string GroupId { get; set; }
 
 		///<summary>
@@ -3742,7 +3742,7 @@ namespace Elastic.CommonSchema
 		/// While not required, you can use a MITRE ATT&CK® group name.</para>
 		/// <example>FIN6</example>
 		///</summary>
-		[JsonPropertyName("group.name")]
+		[JsonPropertyName("group.name"), DataMember(Name = "group.name")]
 		public string GroupName { get; set; }
 
 		///<summary>
@@ -3751,7 +3751,7 @@ namespace Elastic.CommonSchema
 		/// While not required, you can use a MITRE ATT&CK® group reference URL.</para>
 		/// <example>https://attack.mitre.org/groups/G0037/</example>
 		///</summary>
-		[JsonPropertyName("group.reference")]
+		[JsonPropertyName("group.reference"), DataMember(Name = "group.reference")]
 		public string GroupReference { get; set; }
 
 		///<summary>
@@ -3767,7 +3767,7 @@ namespace Elastic.CommonSchema
 		/// </list></para>
 		/// <example>Medium</example>
 		///</summary>
-		[JsonPropertyName("indicator.confidence")]
+		[JsonPropertyName("indicator.confidence"), DataMember(Name = "indicator.confidence")]
 		public string IndicatorConfidence { get; set; }
 
 		///<summary>
@@ -3775,7 +3775,7 @@ namespace Elastic.CommonSchema
 		/// <para>Describes the type of action conducted by the threat.</para>
 		/// <example>IP x.x.x.x was observed delivering the Angler EK.</example>
 		///</summary>
-		[JsonPropertyName("indicator.description")]
+		[JsonPropertyName("indicator.description"), DataMember(Name = "indicator.description")]
 		public string IndicatorDescription { get; set; }
 
 		///<summary>
@@ -3783,7 +3783,7 @@ namespace Elastic.CommonSchema
 		/// <para>Identifies a threat indicator as an email address (irrespective of direction).</para>
 		/// <example>phish@example.com</example>
 		///</summary>
-		[JsonPropertyName("indicator.email.address")]
+		[JsonPropertyName("indicator.email.address"), DataMember(Name = "indicator.email.address")]
 		public string IndicatorEmailAddress { get; set; }
 
 		///<summary>
@@ -3791,7 +3791,7 @@ namespace Elastic.CommonSchema
 		/// <para>The date and time when intelligence source first reported sighting this indicator.</para>
 		/// <example>11/5/2020 5:25:47 PM</example>
 		///</summary>
-		[JsonPropertyName("indicator.first_seen")]
+		[JsonPropertyName("indicator.first_seen"), DataMember(Name = "indicator.first_seen")]
 		public DateTimeOffset? IndicatorFirstSeen { get; set; }
 
 		///<summary>
@@ -3799,7 +3799,7 @@ namespace Elastic.CommonSchema
 		/// <para>Identifies a threat indicator as an IP address (irrespective of direction).</para>
 		/// <example>1.2.3.4</example>
 		///</summary>
-		[JsonPropertyName("indicator.ip")]
+		[JsonPropertyName("indicator.ip"), DataMember(Name = "indicator.ip")]
 		public string IndicatorIp { get; set; }
 
 		///<summary>
@@ -3807,7 +3807,7 @@ namespace Elastic.CommonSchema
 		/// <para>The date and time when intelligence source last reported sighting this indicator.</para>
 		/// <example>11/5/2020 5:25:47 PM</example>
 		///</summary>
-		[JsonPropertyName("indicator.last_seen")]
+		[JsonPropertyName("indicator.last_seen"), DataMember(Name = "indicator.last_seen")]
 		public DateTimeOffset? IndicatorLastSeen { get; set; }
 
 		///<summary>
@@ -3822,7 +3822,7 @@ namespace Elastic.CommonSchema
 		/// </list></para>
 		/// <example>WHITE</example>
 		///</summary>
-		[JsonPropertyName("indicator.marking.tlp")]
+		[JsonPropertyName("indicator.marking.tlp"), DataMember(Name = "indicator.marking.tlp")]
 		public string IndicatorMarkingTlp { get; set; }
 
 		///<summary>
@@ -3830,7 +3830,7 @@ namespace Elastic.CommonSchema
 		/// <para>The date and time when intelligence source last modified information for this indicator.</para>
 		/// <example>11/5/2020 5:25:47 PM</example>
 		///</summary>
-		[JsonPropertyName("indicator.modified_at")]
+		[JsonPropertyName("indicator.modified_at"), DataMember(Name = "indicator.modified_at")]
 		public DateTimeOffset? IndicatorModifiedAt { get; set; }
 
 		///<summary>
@@ -3838,7 +3838,7 @@ namespace Elastic.CommonSchema
 		/// <para>Identifies a threat indicator as a port number (irrespective of direction).</para>
 		/// <example>443</example>
 		///</summary>
-		[JsonPropertyName("indicator.port")]
+		[JsonPropertyName("indicator.port"), DataMember(Name = "indicator.port")]
 		public long? IndicatorPort { get; set; }
 
 		///<summary>
@@ -3846,7 +3846,7 @@ namespace Elastic.CommonSchema
 		/// <para>The name of the indicator's provider.</para>
 		/// <example>lrz_urlhaus</example>
 		///</summary>
-		[JsonPropertyName("indicator.provider")]
+		[JsonPropertyName("indicator.provider"), DataMember(Name = "indicator.provider")]
 		public string IndicatorProvider { get; set; }
 
 		///<summary>
@@ -3854,7 +3854,7 @@ namespace Elastic.CommonSchema
 		/// <para>Reference URL linking to additional information about this indicator.</para>
 		/// <example>https://system.example.com/indicator/0001234</example>
 		///</summary>
-		[JsonPropertyName("indicator.reference")]
+		[JsonPropertyName("indicator.reference"), DataMember(Name = "indicator.reference")]
 		public string IndicatorReference { get; set; }
 
 		///<summary>
@@ -3862,7 +3862,7 @@ namespace Elastic.CommonSchema
 		/// <para>Count of AV/EDR vendors that successfully detected malicious file or URL.</para>
 		/// <example>4</example>
 		///</summary>
-		[JsonPropertyName("indicator.scanner_stats")]
+		[JsonPropertyName("indicator.scanner_stats"), DataMember(Name = "indicator.scanner_stats")]
 		public long? IndicatorScannerStats { get; set; }
 
 		///<summary>
@@ -3870,7 +3870,7 @@ namespace Elastic.CommonSchema
 		/// <para>Number of times this indicator was observed conducting threat activity.</para>
 		/// <example>20</example>
 		///</summary>
-		[JsonPropertyName("indicator.sightings")]
+		[JsonPropertyName("indicator.sightings"), DataMember(Name = "indicator.sightings")]
 		public long? IndicatorSightings { get; set; }
 
 		///<summary>
@@ -3898,7 +3898,7 @@ namespace Elastic.CommonSchema
 		/// </list></para>
 		/// <example>ipv4-addr</example>
 		///</summary>
-		[JsonPropertyName("indicator.type")]
+		[JsonPropertyName("indicator.type"), DataMember(Name = "indicator.type")]
 		public string IndicatorType { get; set; }
 
 		///<summary>
@@ -3907,7 +3907,7 @@ namespace Elastic.CommonSchema
 		/// While not required, you can use a MITRE ATT&CK® associated software description.</para>
 		/// <example>[ "X-Agent" ]</example>
 		///</summary>
-		[JsonPropertyName("software.alias")]
+		[JsonPropertyName("software.alias"), DataMember(Name = "software.alias")]
 		public string[] SoftwareAlias { get; set; }
 
 		///<summary>
@@ -3916,7 +3916,7 @@ namespace Elastic.CommonSchema
 		/// While not required, you can use a MITRE ATT&CK® software id.</para>
 		/// <example>S0552</example>
 		///</summary>
-		[JsonPropertyName("software.id")]
+		[JsonPropertyName("software.id"), DataMember(Name = "software.id")]
 		public string SoftwareId { get; set; }
 
 		///<summary>
@@ -3925,7 +3925,7 @@ namespace Elastic.CommonSchema
 		/// While not required, you can use a MITRE ATT&CK® software name.</para>
 		/// <example>AdFind</example>
 		///</summary>
-		[JsonPropertyName("software.name")]
+		[JsonPropertyName("software.name"), DataMember(Name = "software.name")]
 		public string SoftwareName { get; set; }
 
 		///<summary>
@@ -3947,7 +3947,7 @@ namespace Elastic.CommonSchema
 		/// </list></para>
 		/// <example>[ "Windows" ]</example>
 		///</summary>
-		[JsonPropertyName("software.platforms")]
+		[JsonPropertyName("software.platforms"), DataMember(Name = "software.platforms")]
 		public string[] SoftwarePlatforms { get; set; }
 
 		///<summary>
@@ -3956,7 +3956,7 @@ namespace Elastic.CommonSchema
 		/// While not required, you can use a MITRE ATT&CK® software reference URL.</para>
 		/// <example>https://attack.mitre.org/software/S0552/</example>
 		///</summary>
-		[JsonPropertyName("software.reference")]
+		[JsonPropertyName("software.reference"), DataMember(Name = "software.reference")]
 		public string SoftwareReference { get; set; }
 
 		///<summary>
@@ -3970,7 +3970,7 @@ namespace Elastic.CommonSchema
 		/// </list></para>
 		/// <example>Tool</example>
 		///</summary>
-		[JsonPropertyName("software.type")]
+		[JsonPropertyName("software.type"), DataMember(Name = "software.type")]
 		public string SoftwareType { get; set; }
 
 		///<summary>
@@ -3978,7 +3978,7 @@ namespace Elastic.CommonSchema
 		/// <para>The id of tactic used by this threat. You can use a MITRE ATT&CK® tactic, for example. (ex. https://attack.mitre.org/tactics/TA0002/ )</para>
 		/// <example>TA0002</example>
 		///</summary>
-		[JsonPropertyName("tactic.id")]
+		[JsonPropertyName("tactic.id"), DataMember(Name = "tactic.id")]
 		public string[] TacticId { get; set; }
 
 		///<summary>
@@ -3986,7 +3986,7 @@ namespace Elastic.CommonSchema
 		/// <para>Name of the type of tactic used by this threat. You can use a MITRE ATT&CK® tactic, for example. (ex. https://attack.mitre.org/tactics/TA0002/)</para>
 		/// <example>Execution</example>
 		///</summary>
-		[JsonPropertyName("tactic.name")]
+		[JsonPropertyName("tactic.name"), DataMember(Name = "tactic.name")]
 		public string[] TacticName { get; set; }
 
 		///<summary>
@@ -3994,7 +3994,7 @@ namespace Elastic.CommonSchema
 		/// <para>The reference url of tactic used by this threat. You can use a MITRE ATT&CK® tactic, for example. (ex. https://attack.mitre.org/tactics/TA0002/ )</para>
 		/// <example>https://attack.mitre.org/tactics/TA0002/</example>
 		///</summary>
-		[JsonPropertyName("tactic.reference")]
+		[JsonPropertyName("tactic.reference"), DataMember(Name = "tactic.reference")]
 		public string[] TacticReference { get; set; }
 
 		///<summary>
@@ -4002,7 +4002,7 @@ namespace Elastic.CommonSchema
 		/// <para>The id of technique used by this threat. You can use a MITRE ATT&CK® technique, for example. (ex. https://attack.mitre.org/techniques/T1059/)</para>
 		/// <example>T1059</example>
 		///</summary>
-		[JsonPropertyName("technique.id")]
+		[JsonPropertyName("technique.id"), DataMember(Name = "technique.id")]
 		public string[] TechniqueId { get; set; }
 
 		///<summary>
@@ -4010,7 +4010,7 @@ namespace Elastic.CommonSchema
 		/// <para>The name of technique used by this threat. You can use a MITRE ATT&CK® technique, for example. (ex. https://attack.mitre.org/techniques/T1059/)</para>
 		/// <example>Command and Scripting Interpreter</example>
 		///</summary>
-		[JsonPropertyName("technique.name")]
+		[JsonPropertyName("technique.name"), DataMember(Name = "technique.name")]
 		public string[] TechniqueName { get; set; }
 
 		///<summary>
@@ -4018,7 +4018,7 @@ namespace Elastic.CommonSchema
 		/// <para>The reference url of technique used by this threat. You can use a MITRE ATT&CK® technique, for example. (ex. https://attack.mitre.org/techniques/T1059/)</para>
 		/// <example>https://attack.mitre.org/techniques/T1059/</example>
 		///</summary>
-		[JsonPropertyName("technique.reference")]
+		[JsonPropertyName("technique.reference"), DataMember(Name = "technique.reference")]
 		public string[] TechniqueReference { get; set; }
 
 		///<summary>
@@ -4026,7 +4026,7 @@ namespace Elastic.CommonSchema
 		/// <para>The full id of subtechnique used by this threat. You can use a MITRE ATT&CK® subtechnique, for example. (ex. https://attack.mitre.org/techniques/T1059/001/)</para>
 		/// <example>T1059.001</example>
 		///</summary>
-		[JsonPropertyName("technique.subtechnique.id")]
+		[JsonPropertyName("technique.subtechnique.id"), DataMember(Name = "technique.subtechnique.id")]
 		public string[] TechniqueSubtechniqueId { get; set; }
 
 		///<summary>
@@ -4034,7 +4034,7 @@ namespace Elastic.CommonSchema
 		/// <para>The name of subtechnique used by this threat. You can use a MITRE ATT&CK® subtechnique, for example. (ex. https://attack.mitre.org/techniques/T1059/001/)</para>
 		/// <example>PowerShell</example>
 		///</summary>
-		[JsonPropertyName("technique.subtechnique.name")]
+		[JsonPropertyName("technique.subtechnique.name"), DataMember(Name = "technique.subtechnique.name")]
 		public string[] TechniqueSubtechniqueName { get; set; }
 
 		///<summary>
@@ -4042,7 +4042,7 @@ namespace Elastic.CommonSchema
 		/// <para>The reference url of subtechnique used by this threat. You can use a MITRE ATT&CK® subtechnique, for example. (ex. https://attack.mitre.org/techniques/T1059/001/)</para>
 		/// <example>https://attack.mitre.org/techniques/T1059/001/</example>
 		///</summary>
-		[JsonPropertyName("technique.subtechnique.reference")]
+		[JsonPropertyName("technique.subtechnique.reference"), DataMember(Name = "technique.subtechnique.reference")]
 		public string[] TechniqueSubtechniqueReference { get; set; }
 
 		///<summary>
@@ -4051,7 +4051,7 @@ namespace Elastic.CommonSchema
 		/// <para><br/>This field is beta and subject to change.</para></para>
 		/// <example></example>
 		///</summary>
-		[JsonPropertyName("enrichments")]
+		[JsonPropertyName("enrichments"), DataMember(Name = "enrichments")]
 		public ThreatEnrichments[] Enrichments { get; set; }
 	}
 
@@ -4065,7 +4065,7 @@ namespace Elastic.CommonSchema
 		/// <para>String indicating the cipher used during the current connection.</para>
 		/// <example>TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256</example>
 		///</summary>
-		[JsonPropertyName("cipher")]
+		[JsonPropertyName("cipher"), DataMember(Name = "cipher")]
 		public string Cipher { get; set; }
 
 		///<summary>
@@ -4073,7 +4073,7 @@ namespace Elastic.CommonSchema
 		/// <para>PEM-encoded stand-alone certificate offered by the client. This is usually mutually-exclusive of `client.certificate_chain` since this value also exists in that list.</para>
 		/// <example>MII...</example>
 		///</summary>
-		[JsonPropertyName("client.certificate")]
+		[JsonPropertyName("client.certificate"), DataMember(Name = "client.certificate")]
 		public string ClientCertificate { get; set; }
 
 		///<summary>
@@ -4081,7 +4081,7 @@ namespace Elastic.CommonSchema
 		/// <para>Array of PEM-encoded certificates that make up the certificate chain offered by the client. This is usually mutually-exclusive of `client.certificate` since that value should be the first certificate in the chain.</para>
 		/// <example>["MII...", "MII..."]</example>
 		///</summary>
-		[JsonPropertyName("client.certificate_chain")]
+		[JsonPropertyName("client.certificate_chain"), DataMember(Name = "client.certificate_chain")]
 		public string[] ClientCertificateChain { get; set; }
 
 		///<summary>
@@ -4089,7 +4089,7 @@ namespace Elastic.CommonSchema
 		/// <para>Certificate fingerprint using the MD5 digest of DER-encoded version of certificate offered by the client. For consistency with other hash values, this value should be formatted as an uppercase hash.</para>
 		/// <example>0F76C7F2C55BFD7D8E8B8F4BFBF0C9EC</example>
 		///</summary>
-		[JsonPropertyName("client.hash.md5")]
+		[JsonPropertyName("client.hash.md5"), DataMember(Name = "client.hash.md5")]
 		public string ClientHashMd5 { get; set; }
 
 		///<summary>
@@ -4097,7 +4097,7 @@ namespace Elastic.CommonSchema
 		/// <para>Certificate fingerprint using the SHA1 digest of DER-encoded version of certificate offered by the client. For consistency with other hash values, this value should be formatted as an uppercase hash.</para>
 		/// <example>9E393D93138888D288266C2D915214D1D1CCEB2A</example>
 		///</summary>
-		[JsonPropertyName("client.hash.sha1")]
+		[JsonPropertyName("client.hash.sha1"), DataMember(Name = "client.hash.sha1")]
 		public string ClientHashSha1 { get; set; }
 
 		///<summary>
@@ -4105,7 +4105,7 @@ namespace Elastic.CommonSchema
 		/// <para>Certificate fingerprint using the SHA256 digest of DER-encoded version of certificate offered by the client. For consistency with other hash values, this value should be formatted as an uppercase hash.</para>
 		/// <example>0687F666A054EF17A08E2F2162EAB4CBC0D265E1D7875BE74BF3C712CA92DAF0</example>
 		///</summary>
-		[JsonPropertyName("client.hash.sha256")]
+		[JsonPropertyName("client.hash.sha256"), DataMember(Name = "client.hash.sha256")]
 		public string ClientHashSha256 { get; set; }
 
 		///<summary>
@@ -4113,7 +4113,7 @@ namespace Elastic.CommonSchema
 		/// <para>Distinguished name of subject of the issuer of the x.509 certificate presented by the client.</para>
 		/// <example>CN=Example Root CA, OU=Infrastructure Team, DC=example, DC=com</example>
 		///</summary>
-		[JsonPropertyName("client.issuer")]
+		[JsonPropertyName("client.issuer"), DataMember(Name = "client.issuer")]
 		public string ClientIssuer { get; set; }
 
 		///<summary>
@@ -4121,7 +4121,7 @@ namespace Elastic.CommonSchema
 		/// <para>A hash that identifies clients based on how they perform an SSL/TLS handshake.</para>
 		/// <example>d4e5b18d6b55c71272893221c96ba240</example>
 		///</summary>
-		[JsonPropertyName("client.ja3")]
+		[JsonPropertyName("client.ja3"), DataMember(Name = "client.ja3")]
 		public string ClientJa3 { get; set; }
 
 		///<summary>
@@ -4129,7 +4129,7 @@ namespace Elastic.CommonSchema
 		/// <para>Date/Time indicating when client certificate is no longer considered valid.</para>
 		/// <example>1/1/2021 12:00:00 AM</example>
 		///</summary>
-		[JsonPropertyName("client.not_after")]
+		[JsonPropertyName("client.not_after"), DataMember(Name = "client.not_after")]
 		public DateTimeOffset? ClientNotAfter { get; set; }
 
 		///<summary>
@@ -4137,7 +4137,7 @@ namespace Elastic.CommonSchema
 		/// <para>Date/Time indicating when client certificate is first considered valid.</para>
 		/// <example>1/1/1970 12:00:00 AM</example>
 		///</summary>
-		[JsonPropertyName("client.not_before")]
+		[JsonPropertyName("client.not_before"), DataMember(Name = "client.not_before")]
 		public DateTimeOffset? ClientNotBefore { get; set; }
 
 		///<summary>
@@ -4145,7 +4145,7 @@ namespace Elastic.CommonSchema
 		/// <para>Also called an SNI, this tells the server which hostname to which the client is attempting to connect to. When this value is available, it should get copied to `destination.domain`.</para>
 		/// <example>www.elastic.co</example>
 		///</summary>
-		[JsonPropertyName("client.server_name")]
+		[JsonPropertyName("client.server_name"), DataMember(Name = "client.server_name")]
 		public string ClientServerName { get; set; }
 
 		///<summary>
@@ -4153,7 +4153,7 @@ namespace Elastic.CommonSchema
 		/// <para>Distinguished name of subject of the x.509 certificate presented by the client.</para>
 		/// <example>CN=myclient, OU=Documentation Team, DC=example, DC=com</example>
 		///</summary>
-		[JsonPropertyName("client.subject")]
+		[JsonPropertyName("client.subject"), DataMember(Name = "client.subject")]
 		public string ClientSubject { get; set; }
 
 		///<summary>
@@ -4161,7 +4161,7 @@ namespace Elastic.CommonSchema
 		/// <para>Array of ciphers offered by the client during the client hello.</para>
 		/// <example>["TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384", "TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384", "..."]</example>
 		///</summary>
-		[JsonPropertyName("client.supported_ciphers")]
+		[JsonPropertyName("client.supported_ciphers"), DataMember(Name = "client.supported_ciphers")]
 		public string[] ClientSupportedCiphers { get; set; }
 
 		///<summary>
@@ -4169,7 +4169,7 @@ namespace Elastic.CommonSchema
 		/// <para>String indicating the curve used for the given cipher, when applicable.</para>
 		/// <example>secp256r1</example>
 		///</summary>
-		[JsonPropertyName("curve")]
+		[JsonPropertyName("curve"), DataMember(Name = "curve")]
 		public string Curve { get; set; }
 
 		///<summary>
@@ -4177,7 +4177,7 @@ namespace Elastic.CommonSchema
 		/// <para>Boolean flag indicating if the TLS negotiation was successful and transitioned to an encrypted tunnel.</para>
 		/// <example></example>
 		///</summary>
-		[JsonPropertyName("established")]
+		[JsonPropertyName("established"), DataMember(Name = "established")]
 		public bool? Established { get; set; }
 
 		///<summary>
@@ -4185,7 +4185,7 @@ namespace Elastic.CommonSchema
 		/// <para>String indicating the protocol being tunneled. Per the values in the IANA registry (https://www.iana.org/assignments/tls-extensiontype-values/tls-extensiontype-values.xhtml#alpn-protocol-ids), this string should be lower case.</para>
 		/// <example>http/1.1</example>
 		///</summary>
-		[JsonPropertyName("next_protocol")]
+		[JsonPropertyName("next_protocol"), DataMember(Name = "next_protocol")]
 		public string NextProtocol { get; set; }
 
 		///<summary>
@@ -4193,7 +4193,7 @@ namespace Elastic.CommonSchema
 		/// <para>Boolean flag indicating if this TLS connection was resumed from an existing TLS negotiation.</para>
 		/// <example></example>
 		///</summary>
-		[JsonPropertyName("resumed")]
+		[JsonPropertyName("resumed"), DataMember(Name = "resumed")]
 		public bool? Resumed { get; set; }
 
 		///<summary>
@@ -4201,7 +4201,7 @@ namespace Elastic.CommonSchema
 		/// <para>PEM-encoded stand-alone certificate offered by the server. This is usually mutually-exclusive of `server.certificate_chain` since this value also exists in that list.</para>
 		/// <example>MII...</example>
 		///</summary>
-		[JsonPropertyName("server.certificate")]
+		[JsonPropertyName("server.certificate"), DataMember(Name = "server.certificate")]
 		public string ServerCertificate { get; set; }
 
 		///<summary>
@@ -4209,7 +4209,7 @@ namespace Elastic.CommonSchema
 		/// <para>Array of PEM-encoded certificates that make up the certificate chain offered by the server. This is usually mutually-exclusive of `server.certificate` since that value should be the first certificate in the chain.</para>
 		/// <example>["MII...", "MII..."]</example>
 		///</summary>
-		[JsonPropertyName("server.certificate_chain")]
+		[JsonPropertyName("server.certificate_chain"), DataMember(Name = "server.certificate_chain")]
 		public string[] ServerCertificateChain { get; set; }
 
 		///<summary>
@@ -4217,7 +4217,7 @@ namespace Elastic.CommonSchema
 		/// <para>Certificate fingerprint using the MD5 digest of DER-encoded version of certificate offered by the server. For consistency with other hash values, this value should be formatted as an uppercase hash.</para>
 		/// <example>0F76C7F2C55BFD7D8E8B8F4BFBF0C9EC</example>
 		///</summary>
-		[JsonPropertyName("server.hash.md5")]
+		[JsonPropertyName("server.hash.md5"), DataMember(Name = "server.hash.md5")]
 		public string ServerHashMd5 { get; set; }
 
 		///<summary>
@@ -4225,7 +4225,7 @@ namespace Elastic.CommonSchema
 		/// <para>Certificate fingerprint using the SHA1 digest of DER-encoded version of certificate offered by the server. For consistency with other hash values, this value should be formatted as an uppercase hash.</para>
 		/// <example>9E393D93138888D288266C2D915214D1D1CCEB2A</example>
 		///</summary>
-		[JsonPropertyName("server.hash.sha1")]
+		[JsonPropertyName("server.hash.sha1"), DataMember(Name = "server.hash.sha1")]
 		public string ServerHashSha1 { get; set; }
 
 		///<summary>
@@ -4233,7 +4233,7 @@ namespace Elastic.CommonSchema
 		/// <para>Certificate fingerprint using the SHA256 digest of DER-encoded version of certificate offered by the server. For consistency with other hash values, this value should be formatted as an uppercase hash.</para>
 		/// <example>0687F666A054EF17A08E2F2162EAB4CBC0D265E1D7875BE74BF3C712CA92DAF0</example>
 		///</summary>
-		[JsonPropertyName("server.hash.sha256")]
+		[JsonPropertyName("server.hash.sha256"), DataMember(Name = "server.hash.sha256")]
 		public string ServerHashSha256 { get; set; }
 
 		///<summary>
@@ -4241,7 +4241,7 @@ namespace Elastic.CommonSchema
 		/// <para>Subject of the issuer of the x.509 certificate presented by the server.</para>
 		/// <example>CN=Example Root CA, OU=Infrastructure Team, DC=example, DC=com</example>
 		///</summary>
-		[JsonPropertyName("server.issuer")]
+		[JsonPropertyName("server.issuer"), DataMember(Name = "server.issuer")]
 		public string ServerIssuer { get; set; }
 
 		///<summary>
@@ -4249,7 +4249,7 @@ namespace Elastic.CommonSchema
 		/// <para>A hash that identifies servers based on how they perform an SSL/TLS handshake.</para>
 		/// <example>394441ab65754e2207b1e1b457b3641d</example>
 		///</summary>
-		[JsonPropertyName("server.ja3s")]
+		[JsonPropertyName("server.ja3s"), DataMember(Name = "server.ja3s")]
 		public string ServerJa3s { get; set; }
 
 		///<summary>
@@ -4257,7 +4257,7 @@ namespace Elastic.CommonSchema
 		/// <para>Timestamp indicating when server certificate is no longer considered valid.</para>
 		/// <example>1/1/2021 12:00:00 AM</example>
 		///</summary>
-		[JsonPropertyName("server.not_after")]
+		[JsonPropertyName("server.not_after"), DataMember(Name = "server.not_after")]
 		public DateTimeOffset? ServerNotAfter { get; set; }
 
 		///<summary>
@@ -4265,7 +4265,7 @@ namespace Elastic.CommonSchema
 		/// <para>Timestamp indicating when server certificate is first considered valid.</para>
 		/// <example>1/1/1970 12:00:00 AM</example>
 		///</summary>
-		[JsonPropertyName("server.not_before")]
+		[JsonPropertyName("server.not_before"), DataMember(Name = "server.not_before")]
 		public DateTimeOffset? ServerNotBefore { get; set; }
 
 		///<summary>
@@ -4273,7 +4273,7 @@ namespace Elastic.CommonSchema
 		/// <para>Subject of the x.509 certificate presented by the server.</para>
 		/// <example>CN=www.example.com, OU=Infrastructure Team, DC=example, DC=com</example>
 		///</summary>
-		[JsonPropertyName("server.subject")]
+		[JsonPropertyName("server.subject"), DataMember(Name = "server.subject")]
 		public string ServerSubject { get; set; }
 
 		///<summary>
@@ -4281,7 +4281,7 @@ namespace Elastic.CommonSchema
 		/// <para>Numeric part of the version parsed from the original string.</para>
 		/// <example>1.2</example>
 		///</summary>
-		[JsonPropertyName("version")]
+		[JsonPropertyName("version"), DataMember(Name = "version")]
 		public string Version { get; set; }
 
 		///<summary>
@@ -4289,7 +4289,7 @@ namespace Elastic.CommonSchema
 		/// <para>Normalized lowercase protocol name parsed from original string.</para>
 		/// <example>tls</example>
 		///</summary>
-		[JsonPropertyName("version_protocol")]
+		[JsonPropertyName("version_protocol"), DataMember(Name = "version_protocol")]
 		public string VersionProtocol { get; set; }
 	}
 
@@ -4305,7 +4305,7 @@ namespace Elastic.CommonSchema
 		/// If the URL contains a literal IPv6 address enclosed by `[` and `]` (IETF RFC 2732), the `[` and `]` characters should also be captured in the `domain` field.</para>
 		/// <example>www.elastic.co</example>
 		///</summary>
-		[JsonPropertyName("domain")]
+		[JsonPropertyName("domain"), DataMember(Name = "domain")]
 		public string Domain { get; set; }
 
 		///<summary>
@@ -4316,7 +4316,7 @@ namespace Elastic.CommonSchema
 		/// Note that when the file name has multiple extensions (example.tar.gz), only the last one should be captured ("gz", not "tar.gz").</para>
 		/// <example>png</example>
 		///</summary>
-		[JsonPropertyName("extension")]
+		[JsonPropertyName("extension"), DataMember(Name = "extension")]
 		public string Extension { get; set; }
 
 		///<summary>
@@ -4325,7 +4325,7 @@ namespace Elastic.CommonSchema
 		/// The `#` is not part of the fragment.</para>
 		/// <example></example>
 		///</summary>
-		[JsonPropertyName("fragment")]
+		[JsonPropertyName("fragment"), DataMember(Name = "fragment")]
 		public string Fragment { get; set; }
 
 		///<summary>
@@ -4333,7 +4333,7 @@ namespace Elastic.CommonSchema
 		/// <para>If full URLs are important to your use case, they should be stored in `url.full`, whether this field is reconstructed or present in the event source.</para>
 		/// <example>https://www.elastic.co:443/search?q=elasticsearch#top</example>
 		///</summary>
-		[JsonPropertyName("full")]
+		[JsonPropertyName("full"), DataMember(Name = "full")]
 		public string Full { get; set; }
 
 		///<summary>
@@ -4343,7 +4343,7 @@ namespace Elastic.CommonSchema
 		/// This field is meant to represent the URL as it was observed, complete or not.</para>
 		/// <example>https://www.elastic.co:443/search?q=elasticsearch#top or /search?q=elasticsearch</example>
 		///</summary>
-		[JsonPropertyName("original")]
+		[JsonPropertyName("original"), DataMember(Name = "original")]
 		public string Original { get; set; }
 
 		///<summary>
@@ -4351,7 +4351,7 @@ namespace Elastic.CommonSchema
 		/// <para>Password of the request.</para>
 		/// <example></example>
 		///</summary>
-		[JsonPropertyName("password")]
+		[JsonPropertyName("password"), DataMember(Name = "password")]
 		public string Password { get; set; }
 
 		///<summary>
@@ -4359,7 +4359,7 @@ namespace Elastic.CommonSchema
 		/// <para>Path of the request, such as "/search".</para>
 		/// <example></example>
 		///</summary>
-		[JsonPropertyName("path")]
+		[JsonPropertyName("path"), DataMember(Name = "path")]
 		public string Path { get; set; }
 
 		///<summary>
@@ -4367,7 +4367,7 @@ namespace Elastic.CommonSchema
 		/// <para>Port of the request, such as 443.</para>
 		/// <example>443</example>
 		///</summary>
-		[JsonPropertyName("port")]
+		[JsonPropertyName("port"), DataMember(Name = "port")]
 		public long? Port { get; set; }
 
 		///<summary>
@@ -4376,7 +4376,7 @@ namespace Elastic.CommonSchema
 		/// The `?` is excluded from the query string. If a URL contains no `?`, there is no query field. If there is a `?` but no query, the query field exists with an empty string. The `exists` query can be used to differentiate between the two cases.</para>
 		/// <example></example>
 		///</summary>
-		[JsonPropertyName("query")]
+		[JsonPropertyName("query"), DataMember(Name = "query")]
 		public string Query { get; set; }
 
 		///<summary>
@@ -4386,7 +4386,7 @@ namespace Elastic.CommonSchema
 		/// This value can be determined precisely with a list like the public suffix list (http://publicsuffix.org). Trying to approximate this by simply taking the last two labels will not work well for TLDs such as "co.uk".</para>
 		/// <example>example.com</example>
 		///</summary>
-		[JsonPropertyName("registered_domain")]
+		[JsonPropertyName("registered_domain"), DataMember(Name = "registered_domain")]
 		public string RegisteredDomain { get; set; }
 
 		///<summary>
@@ -4395,7 +4395,7 @@ namespace Elastic.CommonSchema
 		/// Note: The `:` is not part of the scheme.</para>
 		/// <example>https</example>
 		///</summary>
-		[JsonPropertyName("scheme")]
+		[JsonPropertyName("scheme"), DataMember(Name = "scheme")]
 		public string Scheme { get; set; }
 
 		///<summary>
@@ -4404,7 +4404,7 @@ namespace Elastic.CommonSchema
 		/// For example the subdomain portion of "www.east.mydomain.co.uk" is "east". If the domain has multiple levels of subdomain, such as "sub2.sub1.example.com", the subdomain field should contain "sub2.sub1", with no trailing period.</para>
 		/// <example>east</example>
 		///</summary>
-		[JsonPropertyName("subdomain")]
+		[JsonPropertyName("subdomain"), DataMember(Name = "subdomain")]
 		public string Subdomain { get; set; }
 
 		///<summary>
@@ -4413,7 +4413,7 @@ namespace Elastic.CommonSchema
 		/// This value can be determined precisely with a list like the public suffix list (http://publicsuffix.org). Trying to approximate this by simply taking the last label will not work well for effective TLDs such as "co.uk".</para>
 		/// <example>co.uk</example>
 		///</summary>
-		[JsonPropertyName("top_level_domain")]
+		[JsonPropertyName("top_level_domain"), DataMember(Name = "top_level_domain")]
 		public string TopLevelDomain { get; set; }
 
 		///<summary>
@@ -4421,7 +4421,7 @@ namespace Elastic.CommonSchema
 		/// <para>Username of the request.</para>
 		/// <example></example>
 		///</summary>
-		[JsonPropertyName("username")]
+		[JsonPropertyName("username"), DataMember(Name = "username")]
 		public string Username { get; set; }
 	}
 
@@ -4436,7 +4436,7 @@ namespace Elastic.CommonSchema
 		/// For example, an LDAP or Active Directory domain name.</para>
 		/// <example></example>
 		///</summary>
-		[JsonPropertyName("domain")]
+		[JsonPropertyName("domain"), DataMember(Name = "domain")]
 		public string Domain { get; set; }
 
 		///<summary>
@@ -4444,7 +4444,7 @@ namespace Elastic.CommonSchema
 		/// <para>User email address.</para>
 		/// <example></example>
 		///</summary>
-		[JsonPropertyName("email")]
+		[JsonPropertyName("email"), DataMember(Name = "email")]
 		public string Email { get; set; }
 
 		///<summary>
@@ -4452,7 +4452,7 @@ namespace Elastic.CommonSchema
 		/// <para>User's full name, if available.</para>
 		/// <example>Albert Einstein</example>
 		///</summary>
-		[JsonPropertyName("full_name")]
+		[JsonPropertyName("full_name"), DataMember(Name = "full_name")]
 		public string FullName { get; set; }
 
 		///<summary>
@@ -4461,7 +4461,7 @@ namespace Elastic.CommonSchema
 		/// Useful if `user.id` or `user.name` contain confidential information and cannot be used.</para>
 		/// <example></example>
 		///</summary>
-		[JsonPropertyName("hash")]
+		[JsonPropertyName("hash"), DataMember(Name = "hash")]
 		public string Hash { get; set; }
 
 		///<summary>
@@ -4469,7 +4469,7 @@ namespace Elastic.CommonSchema
 		/// <para>Unique identifier of the user.</para>
 		/// <example>S-1-5-21-202424912787-2692429404-2351956786-1000</example>
 		///</summary>
-		[JsonPropertyName("id")]
+		[JsonPropertyName("id"), DataMember(Name = "id")]
 		public string Id { get; set; }
 
 		///<summary>
@@ -4477,7 +4477,7 @@ namespace Elastic.CommonSchema
 		/// <para>Short name or login of the user.</para>
 		/// <example>a.einstein</example>
 		///</summary>
-		[JsonPropertyName("name")]
+		[JsonPropertyName("name"), DataMember(Name = "name")]
 		public string Name { get; set; }
 
 		///<summary>
@@ -4485,7 +4485,7 @@ namespace Elastic.CommonSchema
 		/// <para>Array of user roles at the time of the event.</para>
 		/// <example>["kibana_admin", "reporting_user"]</example>
 		///</summary>
-		[JsonPropertyName("roles")]
+		[JsonPropertyName("roles"), DataMember(Name = "roles")]
 		public string[] Roles { get; set; }
 	}
 
@@ -4499,7 +4499,7 @@ namespace Elastic.CommonSchema
 		/// <para>Name of the device.</para>
 		/// <example>iPhone</example>
 		///</summary>
-		[JsonPropertyName("device.name")]
+		[JsonPropertyName("device.name"), DataMember(Name = "device.name")]
 		public string DeviceName { get; set; }
 
 		///<summary>
@@ -4507,7 +4507,7 @@ namespace Elastic.CommonSchema
 		/// <para>Name of the user agent.</para>
 		/// <example>Safari</example>
 		///</summary>
-		[JsonPropertyName("name")]
+		[JsonPropertyName("name"), DataMember(Name = "name")]
 		public string Name { get; set; }
 
 		///<summary>
@@ -4515,7 +4515,7 @@ namespace Elastic.CommonSchema
 		/// <para>Unparsed user_agent string.</para>
 		/// <example>Mozilla/5.0 (iPhone; CPU iPhone OS 12_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/12.0 Mobile/15E148 Safari/604.1</example>
 		///</summary>
-		[JsonPropertyName("original")]
+		[JsonPropertyName("original"), DataMember(Name = "original")]
 		public string Original { get; set; }
 
 		///<summary>
@@ -4523,7 +4523,7 @@ namespace Elastic.CommonSchema
 		/// <para>Version of the user agent.</para>
 		/// <example>12.0</example>
 		///</summary>
-		[JsonPropertyName("version")]
+		[JsonPropertyName("version"), DataMember(Name = "version")]
 		public string Version { get; set; }
 	}
 
@@ -4537,7 +4537,7 @@ namespace Elastic.CommonSchema
 		/// <para>VLAN ID as reported by the observer.</para>
 		/// <example>10</example>
 		///</summary>
-		[JsonPropertyName("id")]
+		[JsonPropertyName("id"), DataMember(Name = "id")]
 		public string Id { get; set; }
 
 		///<summary>
@@ -4545,7 +4545,7 @@ namespace Elastic.CommonSchema
 		/// <para>Optional VLAN name as reported by the observer.</para>
 		/// <example>outside</example>
 		///</summary>
-		[JsonPropertyName("name")]
+		[JsonPropertyName("name"), DataMember(Name = "name")]
 		public string Name { get; set; }
 	}
 
@@ -4560,7 +4560,7 @@ namespace Elastic.CommonSchema
 		/// This field must be an array.</para>
 		/// <example>["Firewall"]</example>
 		///</summary>
-		[JsonPropertyName("category")]
+		[JsonPropertyName("category"), DataMember(Name = "category")]
 		public string[] Category { get; set; }
 
 		///<summary>
@@ -4568,7 +4568,7 @@ namespace Elastic.CommonSchema
 		/// <para>The classification of the vulnerability scoring system. For example (https://www.first.org/cvss/)</para>
 		/// <example>CVSS</example>
 		///</summary>
-		[JsonPropertyName("classification")]
+		[JsonPropertyName("classification"), DataMember(Name = "classification")]
 		public string Classification { get; set; }
 
 		///<summary>
@@ -4576,7 +4576,7 @@ namespace Elastic.CommonSchema
 		/// <para>The description of the vulnerability that provides additional context of the vulnerability. For example (https://cve.mitre.org/about/faqs.html#cve_entry_descriptions_created[Common Vulnerabilities and Exposure CVE description])</para>
 		/// <example>In macOS before 2.12.6, there is a vulnerability in the RPC...</example>
 		///</summary>
-		[JsonPropertyName("description")]
+		[JsonPropertyName("description"), DataMember(Name = "description")]
 		public string Description { get; set; }
 
 		///<summary>
@@ -4584,7 +4584,7 @@ namespace Elastic.CommonSchema
 		/// <para>The type of identifier used for this vulnerability. For example (https://cve.mitre.org/about/)</para>
 		/// <example>CVE</example>
 		///</summary>
-		[JsonPropertyName("enumeration")]
+		[JsonPropertyName("enumeration"), DataMember(Name = "enumeration")]
 		public string Enumeration { get; set; }
 
 		///<summary>
@@ -4592,7 +4592,7 @@ namespace Elastic.CommonSchema
 		/// <para>The identification (ID) is the number portion of a vulnerability entry. It includes a unique identification number for the vulnerability. For example (https://cve.mitre.org/about/faqs.html#what_is_cve_id)[Common Vulnerabilities and Exposure CVE ID]</para>
 		/// <example>CVE-2019-00001</example>
 		///</summary>
-		[JsonPropertyName("id")]
+		[JsonPropertyName("id"), DataMember(Name = "id")]
 		public string Id { get; set; }
 
 		///<summary>
@@ -4600,7 +4600,7 @@ namespace Elastic.CommonSchema
 		/// <para>A resource that provides additional information, context, and mitigations for the identified vulnerability.</para>
 		/// <example>https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2019-6111</example>
 		///</summary>
-		[JsonPropertyName("reference")]
+		[JsonPropertyName("reference"), DataMember(Name = "reference")]
 		public string Reference { get; set; }
 
 		///<summary>
@@ -4608,7 +4608,7 @@ namespace Elastic.CommonSchema
 		/// <para>The report or scan identification number.</para>
 		/// <example>20191018.0001</example>
 		///</summary>
-		[JsonPropertyName("report_id")]
+		[JsonPropertyName("report_id"), DataMember(Name = "report_id")]
 		public string ReportId { get; set; }
 
 		///<summary>
@@ -4616,7 +4616,7 @@ namespace Elastic.CommonSchema
 		/// <para>The name of the vulnerability scanner vendor.</para>
 		/// <example>Tenable</example>
 		///</summary>
-		[JsonPropertyName("scanner.vendor")]
+		[JsonPropertyName("scanner.vendor"), DataMember(Name = "scanner.vendor")]
 		public string ScannerVendor { get; set; }
 
 		///<summary>
@@ -4625,7 +4625,7 @@ namespace Elastic.CommonSchema
 		/// Base scores cover an assessment for exploitability metrics (attack vector, complexity, privileges, and user interaction), impact metrics (confidentiality, integrity, and availability), and scope. For example (https://www.first.org/cvss/specification-document)</para>
 		/// <example>5.5</example>
 		///</summary>
-		[JsonPropertyName("score.base")]
+		[JsonPropertyName("score.base"), DataMember(Name = "score.base")]
 		public float? ScoreBase { get; set; }
 
 		///<summary>
@@ -4634,7 +4634,7 @@ namespace Elastic.CommonSchema
 		/// Environmental scores cover an assessment for any modified Base metrics, confidentiality, integrity, and availability requirements. For example (https://www.first.org/cvss/specification-document)</para>
 		/// <example>5.5</example>
 		///</summary>
-		[JsonPropertyName("score.environmental")]
+		[JsonPropertyName("score.environmental"), DataMember(Name = "score.environmental")]
 		public float? ScoreEnvironmental { get; set; }
 
 		///<summary>
@@ -4643,7 +4643,7 @@ namespace Elastic.CommonSchema
 		/// Temporal scores cover an assessment for code maturity, remediation level, and confidence. For example (https://www.first.org/cvss/specification-document)</para>
 		/// <example></example>
 		///</summary>
-		[JsonPropertyName("score.temporal")]
+		[JsonPropertyName("score.temporal"), DataMember(Name = "score.temporal")]
 		public float? ScoreTemporal { get; set; }
 
 		///<summary>
@@ -4652,7 +4652,7 @@ namespace Elastic.CommonSchema
 		/// CVSS is owned and managed by FIRST.Org, Inc. (FIRST), a US-based non-profit organization, whose mission is to help computer security incident response teams across the world. For example (https://nvd.nist.gov/vuln-metrics/cvss)</para>
 		/// <example>2.0</example>
 		///</summary>
-		[JsonPropertyName("score.version")]
+		[JsonPropertyName("score.version"), DataMember(Name = "score.version")]
 		public string ScoreVersion { get; set; }
 
 		///<summary>
@@ -4660,7 +4660,7 @@ namespace Elastic.CommonSchema
 		/// <para>The severity of the vulnerability can help with metrics and internal prioritization regarding remediation. For example (https://nvd.nist.gov/vuln-metrics/cvss)</para>
 		/// <example>Critical</example>
 		///</summary>
-		[JsonPropertyName("severity")]
+		[JsonPropertyName("severity"), DataMember(Name = "severity")]
 		public string Severity { get; set; }
 	}
 
@@ -4674,7 +4674,7 @@ namespace Elastic.CommonSchema
 		/// <para>List of subject alternative names (SAN). Name types vary by certificate authority and certificate type but commonly contain IP addresses, DNS names (and wildcards), and email addresses.</para>
 		/// <example>*.elastic.co</example>
 		///</summary>
-		[JsonPropertyName("alternative_names")]
+		[JsonPropertyName("alternative_names"), DataMember(Name = "alternative_names")]
 		public string[] AlternativeNames { get; set; }
 
 		///<summary>
@@ -4682,7 +4682,7 @@ namespace Elastic.CommonSchema
 		/// <para>List of common name (CN) of issuing certificate authority.</para>
 		/// <example>Example SHA2 High Assurance Server CA</example>
 		///</summary>
-		[JsonPropertyName("issuer.common_name")]
+		[JsonPropertyName("issuer.common_name"), DataMember(Name = "issuer.common_name")]
 		public string[] IssuerCommonName { get; set; }
 
 		///<summary>
@@ -4690,7 +4690,7 @@ namespace Elastic.CommonSchema
 		/// <para>List of country \(C) codes</para>
 		/// <example>US</example>
 		///</summary>
-		[JsonPropertyName("issuer.country")]
+		[JsonPropertyName("issuer.country"), DataMember(Name = "issuer.country")]
 		public string[] IssuerCountry { get; set; }
 
 		///<summary>
@@ -4698,7 +4698,7 @@ namespace Elastic.CommonSchema
 		/// <para>Distinguished name (DN) of issuing certificate authority.</para>
 		/// <example>C=US, O=Example Inc, OU=www.example.com, CN=Example SHA2 High Assurance Server CA</example>
 		///</summary>
-		[JsonPropertyName("issuer.distinguished_name")]
+		[JsonPropertyName("issuer.distinguished_name"), DataMember(Name = "issuer.distinguished_name")]
 		public string IssuerDistinguishedName { get; set; }
 
 		///<summary>
@@ -4706,7 +4706,7 @@ namespace Elastic.CommonSchema
 		/// <para>List of locality names (L)</para>
 		/// <example>Mountain View</example>
 		///</summary>
-		[JsonPropertyName("issuer.locality")]
+		[JsonPropertyName("issuer.locality"), DataMember(Name = "issuer.locality")]
 		public string[] IssuerLocality { get; set; }
 
 		///<summary>
@@ -4714,7 +4714,7 @@ namespace Elastic.CommonSchema
 		/// <para>List of organizations (O) of issuing certificate authority.</para>
 		/// <example>Example Inc</example>
 		///</summary>
-		[JsonPropertyName("issuer.organization")]
+		[JsonPropertyName("issuer.organization"), DataMember(Name = "issuer.organization")]
 		public string[] IssuerOrganization { get; set; }
 
 		///<summary>
@@ -4722,7 +4722,7 @@ namespace Elastic.CommonSchema
 		/// <para>List of organizational units (OU) of issuing certificate authority.</para>
 		/// <example>www.example.com</example>
 		///</summary>
-		[JsonPropertyName("issuer.organizational_unit")]
+		[JsonPropertyName("issuer.organizational_unit"), DataMember(Name = "issuer.organizational_unit")]
 		public string[] IssuerOrganizationalUnit { get; set; }
 
 		///<summary>
@@ -4730,7 +4730,7 @@ namespace Elastic.CommonSchema
 		/// <para>List of state or province names (ST, S, or P)</para>
 		/// <example>California</example>
 		///</summary>
-		[JsonPropertyName("issuer.state_or_province")]
+		[JsonPropertyName("issuer.state_or_province"), DataMember(Name = "issuer.state_or_province")]
 		public string[] IssuerStateOrProvince { get; set; }
 
 		///<summary>
@@ -4738,7 +4738,7 @@ namespace Elastic.CommonSchema
 		/// <para>Time at which the certificate is no longer considered valid.</para>
 		/// <example>7/16/2020 3:15:39 AM</example>
 		///</summary>
-		[JsonPropertyName("not_after")]
+		[JsonPropertyName("not_after"), DataMember(Name = "not_after")]
 		public DateTimeOffset? NotAfter { get; set; }
 
 		///<summary>
@@ -4746,7 +4746,7 @@ namespace Elastic.CommonSchema
 		/// <para>Time at which the certificate is first considered valid.</para>
 		/// <example>8/16/2019 1:40:25 AM</example>
 		///</summary>
-		[JsonPropertyName("not_before")]
+		[JsonPropertyName("not_before"), DataMember(Name = "not_before")]
 		public DateTimeOffset? NotBefore { get; set; }
 
 		///<summary>
@@ -4754,7 +4754,7 @@ namespace Elastic.CommonSchema
 		/// <para>Algorithm used to generate the public key.</para>
 		/// <example>RSA</example>
 		///</summary>
-		[JsonPropertyName("public_key_algorithm")]
+		[JsonPropertyName("public_key_algorithm"), DataMember(Name = "public_key_algorithm")]
 		public string PublicKeyAlgorithm { get; set; }
 
 		///<summary>
@@ -4762,7 +4762,7 @@ namespace Elastic.CommonSchema
 		/// <para>The curve used by the elliptic curve public key algorithm. This is algorithm specific.</para>
 		/// <example>nistp521</example>
 		///</summary>
-		[JsonPropertyName("public_key_curve")]
+		[JsonPropertyName("public_key_curve"), DataMember(Name = "public_key_curve")]
 		public string PublicKeyCurve { get; set; }
 
 		///<summary>
@@ -4771,7 +4771,7 @@ namespace Elastic.CommonSchema
 		/// <para><br/>Stored but not available for search in Elasticsearch by default</para></para>
 		/// <example>65537</example>
 		///</summary>
-		[JsonPropertyName("public_key_exponent")]
+		[JsonPropertyName("public_key_exponent"), DataMember(Name = "public_key_exponent")]
 		public long? PublicKeyExponent { get; set; }
 
 		///<summary>
@@ -4779,7 +4779,7 @@ namespace Elastic.CommonSchema
 		/// <para>The size of the public key space in bits.</para>
 		/// <example>2048</example>
 		///</summary>
-		[JsonPropertyName("public_key_size")]
+		[JsonPropertyName("public_key_size"), DataMember(Name = "public_key_size")]
 		public long? PublicKeySize { get; set; }
 
 		///<summary>
@@ -4787,7 +4787,7 @@ namespace Elastic.CommonSchema
 		/// <para>Unique serial number issued by the certificate authority. For consistency, if this value is alphanumeric, it should be formatted without colons and uppercase characters.</para>
 		/// <example>55FBB9C7DEBF09809D12CCAA</example>
 		///</summary>
-		[JsonPropertyName("serial_number")]
+		[JsonPropertyName("serial_number"), DataMember(Name = "serial_number")]
 		public string SerialNumber { get; set; }
 
 		///<summary>
@@ -4795,7 +4795,7 @@ namespace Elastic.CommonSchema
 		/// <para>Identifier for certificate signature algorithm. We recommend using names found in Go Lang Crypto library. See https://github.com/golang/go/blob/go1.14/src/crypto/x509/x509.go#L337-L353.</para>
 		/// <example>SHA256-RSA</example>
 		///</summary>
-		[JsonPropertyName("signature_algorithm")]
+		[JsonPropertyName("signature_algorithm"), DataMember(Name = "signature_algorithm")]
 		public string SignatureAlgorithm { get; set; }
 
 		///<summary>
@@ -4803,7 +4803,7 @@ namespace Elastic.CommonSchema
 		/// <para>List of common names (CN) of subject.</para>
 		/// <example>shared.global.example.net</example>
 		///</summary>
-		[JsonPropertyName("subject.common_name")]
+		[JsonPropertyName("subject.common_name"), DataMember(Name = "subject.common_name")]
 		public string[] SubjectCommonName { get; set; }
 
 		///<summary>
@@ -4811,7 +4811,7 @@ namespace Elastic.CommonSchema
 		/// <para>List of country \(C) code</para>
 		/// <example>US</example>
 		///</summary>
-		[JsonPropertyName("subject.country")]
+		[JsonPropertyName("subject.country"), DataMember(Name = "subject.country")]
 		public string[] SubjectCountry { get; set; }
 
 		///<summary>
@@ -4819,7 +4819,7 @@ namespace Elastic.CommonSchema
 		/// <para>Distinguished name (DN) of the certificate subject entity.</para>
 		/// <example>C=US, ST=California, L=San Francisco, O=Example, Inc., CN=shared.global.example.net</example>
 		///</summary>
-		[JsonPropertyName("subject.distinguished_name")]
+		[JsonPropertyName("subject.distinguished_name"), DataMember(Name = "subject.distinguished_name")]
 		public string SubjectDistinguishedName { get; set; }
 
 		///<summary>
@@ -4827,7 +4827,7 @@ namespace Elastic.CommonSchema
 		/// <para>List of locality names (L)</para>
 		/// <example>San Francisco</example>
 		///</summary>
-		[JsonPropertyName("subject.locality")]
+		[JsonPropertyName("subject.locality"), DataMember(Name = "subject.locality")]
 		public string[] SubjectLocality { get; set; }
 
 		///<summary>
@@ -4835,7 +4835,7 @@ namespace Elastic.CommonSchema
 		/// <para>List of organizations (O) of subject.</para>
 		/// <example>Example, Inc.</example>
 		///</summary>
-		[JsonPropertyName("subject.organization")]
+		[JsonPropertyName("subject.organization"), DataMember(Name = "subject.organization")]
 		public string[] SubjectOrganization { get; set; }
 
 		///<summary>
@@ -4843,7 +4843,7 @@ namespace Elastic.CommonSchema
 		/// <para>List of organizational units (OU) of subject.</para>
 		/// <example></example>
 		///</summary>
-		[JsonPropertyName("subject.organizational_unit")]
+		[JsonPropertyName("subject.organizational_unit"), DataMember(Name = "subject.organizational_unit")]
 		public string[] SubjectOrganizationalUnit { get; set; }
 
 		///<summary>
@@ -4851,7 +4851,7 @@ namespace Elastic.CommonSchema
 		/// <para>List of state or province names (ST, S, or P)</para>
 		/// <example>California</example>
 		///</summary>
-		[JsonPropertyName("subject.state_or_province")]
+		[JsonPropertyName("subject.state_or_province"), DataMember(Name = "subject.state_or_province")]
 		public string[] SubjectStateOrProvince { get; set; }
 
 		///<summary>
@@ -4859,7 +4859,7 @@ namespace Elastic.CommonSchema
 		/// <para>Version of x509 format.</para>
 		/// <example>3</example>
 		///</summary>
-		[JsonPropertyName("version_number")]
+		[JsonPropertyName("version_number"), DataMember(Name = "version_number")]
 		public string VersionNumber { get; set; }
 	}
 }

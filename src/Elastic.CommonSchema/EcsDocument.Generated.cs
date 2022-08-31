@@ -33,192 +33,192 @@ namespace Elastic.CommonSchema
 		/// <summary>
 		/// Container for additional metadata against this event.
 		/// </summary>
-		[JsonPropertyName("metadata")]
+		[JsonPropertyName("metadata"), DataMember(Name = "metadata")]
 		public IDictionary<string, object> Metadata { get; set; }
 
 
 		///<summary>agent</summary>
-		[JsonPropertyName("agent")]
+		[JsonPropertyName("agent"), DataMember(Name = "agent")]
 		public Agent Agent { get; set; }
 
 		///<summary>as</summary>
-		[JsonPropertyName("as")]
+		[JsonPropertyName("as"), DataMember(Name = "as")]
 		public As As { get; set; }
 
 		///<summary>client</summary>
-		[JsonPropertyName("client")]
+		[JsonPropertyName("client"), DataMember(Name = "client")]
 		public Client Client { get; set; }
 
 		///<summary>cloud</summary>
-		[JsonPropertyName("cloud")]
+		[JsonPropertyName("cloud"), DataMember(Name = "cloud")]
 		public Cloud Cloud { get; set; }
 
 		///<summary>code_signature</summary>
-		[JsonPropertyName("code_signature")]
+		[JsonPropertyName("code_signature"), DataMember(Name = "code_signature")]
 		public CodeSignature CodeSignature { get; set; }
 
 		///<summary>container</summary>
-		[JsonPropertyName("container")]
+		[JsonPropertyName("container"), DataMember(Name = "container")]
 		public Container Container { get; set; }
 
 		///<summary>data_stream</summary>
-		[JsonPropertyName("data_stream")]
+		[JsonPropertyName("data_stream"), DataMember(Name = "data_stream")]
 		public DataStream DataStream { get; set; }
 
 		///<summary>destination</summary>
-		[JsonPropertyName("destination")]
+		[JsonPropertyName("destination"), DataMember(Name = "destination")]
 		public Destination Destination { get; set; }
 
 		///<summary>dll</summary>
-		[JsonPropertyName("dll")]
+		[JsonPropertyName("dll"), DataMember(Name = "dll")]
 		public Dll Dll { get; set; }
 
 		///<summary>dns</summary>
-		[JsonPropertyName("dns")]
+		[JsonPropertyName("dns"), DataMember(Name = "dns")]
 		public Dns Dns { get; set; }
 
 		///<summary>ecs</summary>
-		[JsonPropertyName("ecs")]
+		[JsonPropertyName("ecs"), DataMember(Name = "ecs")]
 		public Ecs Ecs { get; set; }
 
 		///<summary>elf</summary>
-		[JsonPropertyName("elf")]
+		[JsonPropertyName("elf"), DataMember(Name = "elf")]
 		public Elf Elf { get; set; }
 
 		///<summary>email</summary>
-		[JsonPropertyName("email")]
+		[JsonPropertyName("email"), DataMember(Name = "email")]
 		public Email Email { get; set; }
 
 		///<summary>error</summary>
-		[JsonPropertyName("error")]
+		[JsonPropertyName("error"), DataMember(Name = "error")]
 		public Error Error { get; set; }
 
 		///<summary>event</summary>
-		[JsonPropertyName("event")]
+		[JsonPropertyName("event"), DataMember(Name = "event")]
 		public Event Event { get; set; }
 
 		///<summary>faas</summary>
-		[JsonPropertyName("faas")]
+		[JsonPropertyName("faas"), DataMember(Name = "faas")]
 		public Faas Faas { get; set; }
 
 		///<summary>file</summary>
-		[JsonPropertyName("file")]
+		[JsonPropertyName("file"), DataMember(Name = "file")]
 		public File File { get; set; }
 
 		///<summary>geo</summary>
-		[JsonPropertyName("geo")]
+		[JsonPropertyName("geo"), DataMember(Name = "geo")]
 		public Geo Geo { get; set; }
 
 		///<summary>group</summary>
-		[JsonPropertyName("group")]
+		[JsonPropertyName("group"), DataMember(Name = "group")]
 		public Group Group { get; set; }
 
 		///<summary>hash</summary>
-		[JsonPropertyName("hash")]
+		[JsonPropertyName("hash"), DataMember(Name = "hash")]
 		public Hash Hash { get; set; }
 
 		///<summary>host</summary>
-		[JsonPropertyName("host")]
+		[JsonPropertyName("host"), DataMember(Name = "host")]
 		public Host Host { get; set; }
 
 		///<summary>http</summary>
-		[JsonPropertyName("http")]
+		[JsonPropertyName("http"), DataMember(Name = "http")]
 		public Http Http { get; set; }
 
 		///<summary>interface</summary>
-		[JsonPropertyName("interface")]
+		[JsonPropertyName("interface"), DataMember(Name = "interface")]
 		public Interface Interface { get; set; }
 
 		///<summary>log</summary>
-		[JsonPropertyName("log")]
+		[JsonPropertyName("log"), DataMember(Name = "log")]
 		public Log Log { get; set; }
 
 		///<summary>network</summary>
-		[JsonPropertyName("network")]
+		[JsonPropertyName("network"), DataMember(Name = "network")]
 		public Network Network { get; set; }
 
 		///<summary>observer</summary>
-		[JsonPropertyName("observer")]
+		[JsonPropertyName("observer"), DataMember(Name = "observer")]
 		public Observer Observer { get; set; }
 
 		///<summary>orchestrator</summary>
-		[JsonPropertyName("orchestrator")]
+		[JsonPropertyName("orchestrator"), DataMember(Name = "orchestrator")]
 		public Orchestrator Orchestrator { get; set; }
 
 		///<summary>organization</summary>
-		[JsonPropertyName("organization")]
+		[JsonPropertyName("organization"), DataMember(Name = "organization")]
 		public Organization Organization { get; set; }
 
 		///<summary>os</summary>
-		[JsonPropertyName("os")]
+		[JsonPropertyName("os"), DataMember(Name = "os")]
 		public Os Os { get; set; }
 
 		///<summary>package</summary>
-		[JsonPropertyName("package")]
+		[JsonPropertyName("package"), DataMember(Name = "package")]
 		public Package Package { get; set; }
 
 		///<summary>pe</summary>
-		[JsonPropertyName("pe")]
+		[JsonPropertyName("pe"), DataMember(Name = "pe")]
 		public Pe Pe { get; set; }
 
 		///<summary>process</summary>
-		[JsonPropertyName("process")]
+		[JsonPropertyName("process"), DataMember(Name = "process")]
 		public Process Process { get; set; }
 
 		///<summary>registry</summary>
-		[JsonPropertyName("registry")]
+		[JsonPropertyName("registry"), DataMember(Name = "registry")]
 		public Registry Registry { get; set; }
 
 		///<summary>related</summary>
-		[JsonPropertyName("related")]
+		[JsonPropertyName("related"), DataMember(Name = "related")]
 		public Related Related { get; set; }
 
 		///<summary>rule</summary>
-		[JsonPropertyName("rule")]
+		[JsonPropertyName("rule"), DataMember(Name = "rule")]
 		public Rule Rule { get; set; }
 
 		///<summary>server</summary>
-		[JsonPropertyName("server")]
+		[JsonPropertyName("server"), DataMember(Name = "server")]
 		public Server Server { get; set; }
 
 		///<summary>service</summary>
-		[JsonPropertyName("service")]
+		[JsonPropertyName("service"), DataMember(Name = "service")]
 		public Service Service { get; set; }
 
 		///<summary>source</summary>
-		[JsonPropertyName("source")]
+		[JsonPropertyName("source"), DataMember(Name = "source")]
 		public Source Source { get; set; }
 
 		///<summary>threat</summary>
-		[JsonPropertyName("threat")]
+		[JsonPropertyName("threat"), DataMember(Name = "threat")]
 		public Threat Threat { get; set; }
 
 		///<summary>tls</summary>
-		[JsonPropertyName("tls")]
+		[JsonPropertyName("tls"), DataMember(Name = "tls")]
 		public Tls Tls { get; set; }
 
 		///<summary>url</summary>
-		[JsonPropertyName("url")]
+		[JsonPropertyName("url"), DataMember(Name = "url")]
 		public Url Url { get; set; }
 
 		///<summary>user</summary>
-		[JsonPropertyName("user")]
+		[JsonPropertyName("user"), DataMember(Name = "user")]
 		public User User { get; set; }
 
 		///<summary>user_agent</summary>
-		[JsonPropertyName("user_agent")]
+		[JsonPropertyName("user_agent"), DataMember(Name = "user_agent")]
 		public UserAgent UserAgent { get; set; }
 
 		///<summary>vlan</summary>
-		[JsonPropertyName("vlan")]
+		[JsonPropertyName("vlan"), DataMember(Name = "vlan")]
 		public Vlan Vlan { get; set; }
 
 		///<summary>vulnerability</summary>
-		[JsonPropertyName("vulnerability")]
+		[JsonPropertyName("vulnerability"), DataMember(Name = "vulnerability")]
 		public Vulnerability Vulnerability { get; set; }
 
 		///<summary>x509</summary>
-		[JsonPropertyName("x509")]
+		[JsonPropertyName("x509"), DataMember(Name = "x509")]
 		public X509 X509 { get; set; }
 	}
 }

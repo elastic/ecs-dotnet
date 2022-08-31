@@ -3,21 +3,22 @@
 // See the LICENSE file in the project root for more information
 
 using System.Runtime.Serialization;
+using System.Text.Json.Serialization;
 
 namespace Elastic.CommonSchema.BenchmarkDotNetExporter.Domain
 {
 	public class BenchmarkGit
 	{
-		[DataMember(Name = "branch")]
+		[JsonPropertyName("branch"), DataMember(Name = "branch")]
 		public string BranchName { get; set; }
 
-		[DataMember(Name = "sha")]
+		[JsonPropertyName("sha"), DataMember(Name = "sha")]
 		public string Sha { get; set; }
 
-		[DataMember(Name = "commit_message")]
+		[JsonPropertyName("commit_message"), DataMember(Name = "commit_message")]
 		public string CommitMessage { get; set; }
 
-		[DataMember(Name = "repository")]
+		[JsonPropertyName("repository"), DataMember(Name = "repository")]
 		public string Repository { get; set; }
 	}
 }
