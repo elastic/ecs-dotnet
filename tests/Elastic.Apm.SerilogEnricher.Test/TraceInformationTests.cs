@@ -14,9 +14,11 @@ using Xunit;
 
 namespace Elastic.Apm.SerilogEnricher.Test
 {
-	public class SerilogTests : IDisposable
+	public class TraceInformationTests : IDisposable
 	{
-		public SerilogTests()
+		private readonly string[] _tracingKeys = { "ElasticApmSpanId", "ElasticApmTransactionId", "ElasticApmTraceId" };
+
+		public TraceInformationTests()
 		{
 			if (!Agent.IsConfigured)
 				Agent.Setup(new AgentComponents(payloadSender: new NoopPayloadSender()));
@@ -61,8 +63,8 @@ namespace Elastic.Apm.SerilogEnricher.Test
 
 			InMemorySink.Instance
 				.LogEvents.ElementAt(0)
-				.Properties.Should()
-				.BeEmpty();
+				.Properties.Keys.Should()
+				.NotContain(_tracingKeys);
 
 			var logEvent1 = InMemorySink.Instance.LogEvents.ElementAt(1);
 
@@ -104,8 +106,8 @@ namespace Elastic.Apm.SerilogEnricher.Test
 
 			InMemorySink.Instance
 				.LogEvents.ElementAt(3)
-				.Properties.Should()
-				.BeEmpty();
+				.Properties.Keys.Should()
+				.NotContain(_tracingKeys);
 		}
 
 		/// <summary>
@@ -149,8 +151,8 @@ namespace Elastic.Apm.SerilogEnricher.Test
 
 			InMemorySink.Instance
 				.LogEvents.ElementAt(0)
-				.Properties.Should()
-				.BeEmpty();
+				.Properties.Keys.Should()
+				.NotContain(_tracingKeys);
 
 			InMemorySink.Instance
 				.LogEvents.ElementAt(1)
@@ -182,8 +184,8 @@ namespace Elastic.Apm.SerilogEnricher.Test
 
 			InMemorySink.Instance
 				.LogEvents.ElementAt(3)
-				.Properties.Should()
-				.BeEmpty();
+				.Properties.Keys.Should()
+				.NotContain(_tracingKeys);
 		}
 
 		public void Dispose() => InMemorySink.Instance.Dispose();
