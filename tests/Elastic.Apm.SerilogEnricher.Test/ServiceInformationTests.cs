@@ -16,12 +16,7 @@ namespace Elastic.Apm.SerilogEnricher.Test
 {
 	public class ServiceInformationTests : IDisposable
 	{
-		public ServiceInformationTests()
-		{
-			var configuration = new MockConfiguration("my-service", "my-service-node-name", "0.2.1");
-			if (!Agent.IsConfigured)
-				Agent.Setup(new AgentComponents(payloadSender: new NoopPayloadSender(), configurationReader: configuration));
-		}
+		public ServiceInformationTests() => TestApmAgent.Configure();
 
 		[Fact]
 		public void ServiceIsExposedToSerilog()

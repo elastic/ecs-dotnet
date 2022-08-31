@@ -18,11 +18,7 @@ namespace Elastic.Apm.SerilogEnricher.Test
 	{
 		private readonly string[] _tracingKeys = { "ElasticApmSpanId", "ElasticApmTransactionId", "ElasticApmTraceId" };
 
-		public TraceInformationTests()
-		{
-			if (!Agent.IsConfigured)
-				Agent.Setup(new AgentComponents(payloadSender: new NoopPayloadSender()));
-		}
+		public TraceInformationTests() => TestApmAgent.Configure();
 
 		/// <summary>
 		/// Creates 1 simple transaction and span and makes sure that the log line created within the transaction has
