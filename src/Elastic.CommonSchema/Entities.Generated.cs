@@ -32,7 +32,10 @@ namespace Elastic.CommonSchema
 	///<inheritdoc cref="ProcessFieldSet"/>
 	public class ProcessParent : ProcessFieldSet {
 
-		///<summary>process.parent.group_leader</summary>
+		///<summary>
+		/// <para><c>process.parent.group_leader</c></para>
+		/// <example></example>
+		///</summary>
 		[DataMember(Name = "group_leader")]
 		public ProcessParentGroupLeader GroupLeader { get; set; }
 	}
@@ -40,7 +43,10 @@ namespace Elastic.CommonSchema
 	///<inheritdoc cref="ProcessFieldSet"/>
 	public class ProcessEntryLeader : ProcessFieldSet {
 
-		///<summary>process.entry_leader.parent</summary>
+		///<summary>
+		/// <para><c>process.entry_leader.parent</c></para>
+		/// <example></example>
+		///</summary>
 		[DataMember(Name = "parent")]
 		public ProcessEntryLeaderParent Parent { get; set; }
 	}
@@ -48,7 +54,10 @@ namespace Elastic.CommonSchema
 	///<inheritdoc cref="ProcessFieldSet"/>
 	public class ProcessSessionLeader : ProcessFieldSet {
 
-		///<summary>process.session_leader.parent</summary>
+		///<summary>
+		/// <para><c>process.session_leader.parent</c></para>
+		/// <example></example>
+		///</summary>
 		[DataMember(Name = "parent")]
 		public ProcessSessionLeaderParent Parent { get; set; }
 	}
@@ -64,7 +73,10 @@ namespace Elastic.CommonSchema
 	///<inheritdoc cref="ProcessFieldSet"/>
 	public class ProcessEntryLeaderParent : ProcessFieldSet {
 
-		///<summary>process.entry_leader.parent.session_leader</summary>
+		///<summary>
+		/// <para><c>process.entry_leader.parent.session_leader</c></para>
+		/// <example></example>
+		///</summary>
 		[DataMember(Name = "session_leader")]
 		public ProcessEntryLeaderParentSessionLeader SessionLeader { get; set; }
 	}
@@ -72,7 +84,10 @@ namespace Elastic.CommonSchema
 	///<inheritdoc cref="ProcessFieldSet"/>
 	public class ProcessSessionLeaderParent : ProcessFieldSet {
 
-		///<summary>process.session_leader.parent.session_leader</summary>
+		///<summary>
+		/// <para><c>process.session_leader.parent.session_leader</c></para>
+		/// <example></example>
+		///</summary>
 		[DataMember(Name = "session_leader")]
 		public ProcessSessionLeaderParentSessionLeader SessionLeader { get; set; }
 	}
@@ -120,15 +135,24 @@ namespace Elastic.CommonSchema
 	///<inheritdoc cref="ClientFieldSet"/>
 	public class Client : ClientFieldSet {
 
-		///<summary>client.as</summary>
+		///<summary>
+		/// <para><c>client.as</c></para>
+		/// <example></example>
+		///</summary>
 		[DataMember(Name = "as")]
 		public As As { get; set; }
 
-		///<summary>client.geo</summary>
+		///<summary>
+		/// <para><c>client.geo</c></para>
+		/// <example></example>
+		///</summary>
 		[DataMember(Name = "geo")]
 		public Geo Geo { get; set; }
 
-		///<summary>client.user</summary>
+		///<summary>
+		/// <para><c>client.user</c></para>
+		/// <example></example>
+		///</summary>
 		[DataMember(Name = "user")]
 		public User User { get; set; }
 	}
@@ -136,11 +160,17 @@ namespace Elastic.CommonSchema
 	///<inheritdoc cref="CloudFieldSet"/>
 	public class Cloud : CloudFieldSet {
 
-		///<summary>cloud.origin</summary>
+		///<summary>
+		/// <para><c>cloud.origin</c></para>
+		/// <example></example>
+		///</summary>
 		[DataMember(Name = "origin")]
 		public CloudOrigin Origin { get; set; }
 
-		///<summary>cloud.target</summary>
+		///<summary>
+		/// <para><c>cloud.target</c></para>
+		/// <example></example>
+		///</summary>
 		[DataMember(Name = "target")]
 		public CloudTarget Target { get; set; }
 	}
@@ -160,15 +190,24 @@ namespace Elastic.CommonSchema
 	///<inheritdoc cref="DestinationFieldSet"/>
 	public class Destination : DestinationFieldSet {
 
-		///<summary>destination.as</summary>
+		///<summary>
+		/// <para><c>destination.as</c></para>
+		/// <example></example>
+		///</summary>
 		[DataMember(Name = "as")]
 		public As As { get; set; }
 
-		///<summary>destination.geo</summary>
+		///<summary>
+		/// <para><c>destination.geo</c></para>
+		/// <example></example>
+		///</summary>
 		[DataMember(Name = "geo")]
 		public Geo Geo { get; set; }
 
-		///<summary>destination.user</summary>
+		///<summary>
+		/// <para><c>destination.user</c></para>
+		/// <example></example>
+		///</summary>
 		[DataMember(Name = "user")]
 		public User User { get; set; }
 	}
@@ -176,15 +215,24 @@ namespace Elastic.CommonSchema
 	///<inheritdoc cref="DllFieldSet"/>
 	public class Dll : DllFieldSet {
 
-		///<summary>dll.hash</summary>
+		///<summary>
+		/// <para><c>dll.hash</c></para>
+		/// <example></example>
+		///</summary>
 		[DataMember(Name = "hash")]
 		public Hash Hash { get; set; }
 
-		///<summary>dll.pe</summary>
+		///<summary>
+		/// <para><c>dll.pe</c></para>
+		/// <example></example>
+		///</summary>
 		[DataMember(Name = "pe")]
 		public Pe Pe { get; set; }
 
-		///<summary>dll.code_signature</summary>
+		///<summary>
+		/// <para><c>dll.code_signature</c></para>
+		/// <example></example>
+		///</summary>
 		[DataMember(Name = "code_signature")]
 		public CodeSignature CodeSignature { get; set; }
 	}
@@ -220,23 +268,38 @@ namespace Elastic.CommonSchema
 	///<inheritdoc cref="FileFieldSet"/>
 	public class File : FileFieldSet {
 
-		///<summary>file.hash</summary>
+		///<summary>
+		/// <para><c>file.hash</c></para>
+		/// <example></example>
+		///</summary>
 		[DataMember(Name = "hash")]
 		public Hash Hash { get; set; }
 
-		///<summary>file.pe</summary>
+		///<summary>
+		/// <para><c>file.pe</c></para>
+		/// <example></example>
+		///</summary>
 		[DataMember(Name = "pe")]
 		public Pe Pe { get; set; }
 
-		///<summary>file.x509</summary>
+		///<summary>
+		/// <para><c>file.x509</c></para>
+		/// <example></example>
+		///</summary>
 		[DataMember(Name = "x509")]
 		public X509 X509 { get; set; }
 
-		///<summary>file.code_signature</summary>
+		///<summary>
+		/// <para><c>file.code_signature</c></para>
+		/// <example></example>
+		///</summary>
 		[DataMember(Name = "code_signature")]
 		public CodeSignature CodeSignature { get; set; }
 
-		///<summary>file.elf</summary>
+		///<summary>
+		/// <para><c>file.elf</c></para>
+		/// <example></example>
+		///</summary>
 		[DataMember(Name = "elf")]
 		public Elf Elf { get; set; }
 	}
@@ -256,11 +319,17 @@ namespace Elastic.CommonSchema
 	///<inheritdoc cref="HostFieldSet"/>
 	public class Host : HostFieldSet {
 
-		///<summary>host.geo</summary>
+		///<summary>
+		/// <para><c>host.geo</c></para>
+		/// <example></example>
+		///</summary>
 		[DataMember(Name = "geo")]
 		public Geo Geo { get; set; }
 
-		///<summary>host.os</summary>
+		///<summary>
+		/// <para><c>host.os</c></para>
+		/// <example></example>
+		///</summary>
 		[DataMember(Name = "os")]
 		public Os Os { get; set; }
 	}
@@ -280,7 +349,10 @@ namespace Elastic.CommonSchema
 	///<inheritdoc cref="NetworkFieldSet"/>
 	public class Network : NetworkFieldSet {
 
-		///<summary>network.vlan</summary>
+		///<summary>
+		/// <para><c>network.vlan</c></para>
+		/// <example></example>
+		///</summary>
 		[DataMember(Name = "vlan")]
 		public Vlan Vlan { get; set; }
 	}
@@ -288,11 +360,17 @@ namespace Elastic.CommonSchema
 	///<inheritdoc cref="ObserverFieldSet"/>
 	public class Observer : ObserverFieldSet {
 
-		///<summary>observer.geo</summary>
+		///<summary>
+		/// <para><c>observer.geo</c></para>
+		/// <example></example>
+		///</summary>
 		[DataMember(Name = "geo")]
 		public Geo Geo { get; set; }
 
-		///<summary>observer.os</summary>
+		///<summary>
+		/// <para><c>observer.os</c></para>
+		/// <example></example>
+		///</summary>
 		[DataMember(Name = "os")]
 		public Os Os { get; set; }
 	}
@@ -320,73 +398,124 @@ namespace Elastic.CommonSchema
 	///<inheritdoc cref="ProcessFieldSet"/>
 	public class Process : ProcessFieldSet {
 
-		///<summary>process.group</summary>
+		///<summary>
+		/// <para><c>process.group</c></para>
+		/// <example></example>
+		///</summary>
 		[DataMember(Name = "group")]
 		public Group Group { get; set; }
 
-		///<summary>process.real_group</summary>
+		///<summary>
+		/// <para><c>process.real_group</c></para>
+		/// <example></example>
+		///</summary>
 		[DataMember(Name = "real_group")]
 		public Group RealGroup { get; set; }
 
-		///<summary>process.saved_group</summary>
+		///<summary>
+		/// <para><c>process.saved_group</c></para>
+		/// <example></example>
+		///</summary>
 		[DataMember(Name = "saved_group")]
 		public Group SavedGroup { get; set; }
 
-		///<summary>process.supplemental_groups</summary>
+		///<summary>
+		/// <para><c>process.supplemental_groups</c></para>
+		/// <example></example>
+		///</summary>
 		[DataMember(Name = "supplemental_groups")]
-		public Group SupplementalGroups { get; set; }
+		public Group[] SupplementalGroups { get; set; }
 
-		///<summary>process.hash</summary>
+		///<summary>
+		/// <para><c>process.hash</c></para>
+		/// <example></example>
+		///</summary>
 		[DataMember(Name = "hash")]
 		public Hash Hash { get; set; }
 
-		///<summary>process.pe</summary>
+		///<summary>
+		/// <para><c>process.pe</c></para>
+		/// <example></example>
+		///</summary>
 		[DataMember(Name = "pe")]
 		public Pe Pe { get; set; }
 
-		///<summary>process.code_signature</summary>
+		///<summary>
+		/// <para><c>process.code_signature</c></para>
+		/// <example></example>
+		///</summary>
 		[DataMember(Name = "code_signature")]
 		public CodeSignature CodeSignature { get; set; }
 
-		///<summary>process.elf</summary>
+		///<summary>
+		/// <para><c>process.elf</c></para>
+		/// <example></example>
+		///</summary>
 		[DataMember(Name = "elf")]
 		public Elf Elf { get; set; }
 
-		///<summary>process.entry_meta.source</summary>
+		///<summary>
+		/// <para><c>process.entry_meta.source</c></para>
+		/// <example></example>
+		///</summary>
 		[DataMember(Name = "entry_meta.source")]
 		public Source EntryMetaSource { get; set; }
 
-		///<summary>process.user</summary>
+		///<summary>
+		/// <para><c>process.user</c></para>
+		/// <example></example>
+		///</summary>
 		[DataMember(Name = "user")]
 		public User User { get; set; }
 
-		///<summary>process.saved_user</summary>
+		///<summary>
+		/// <para><c>process.saved_user</c></para>
+		/// <example></example>
+		///</summary>
 		[DataMember(Name = "saved_user")]
 		public User SavedUser { get; set; }
 
-		///<summary>process.real_user</summary>
+		///<summary>
+		/// <para><c>process.real_user</c></para>
+		/// <example></example>
+		///</summary>
 		[DataMember(Name = "real_user")]
 		public User RealUser { get; set; }
 
-		///<summary>process.parent</summary>
+		///<summary>
+		/// <para><c>process.parent</c></para>
+		/// <example></example>
+		///</summary>
 		[DataMember(Name = "parent")]
 		public ProcessParent Parent { get; set; }
 
-		///<summary>process.entry_leader</summary>
+		///<summary>
+		/// <para><c>process.entry_leader</c></para>
+		/// <example></example>
+		///</summary>
 		[DataMember(Name = "entry_leader")]
 		public ProcessEntryLeader EntryLeader { get; set; }
 
-		///<summary>process.session_leader</summary>
+		///<summary>
+		/// <para><c>process.session_leader</c></para>
+		/// <example></example>
+		///</summary>
 		[DataMember(Name = "session_leader")]
 		public ProcessSessionLeader SessionLeader { get; set; }
 
-		///<summary>process.group_leader</summary>
+		///<summary>
+		/// <para><c>process.group_leader</c></para>
+		/// <example></example>
+		///</summary>
 		[DataMember(Name = "group_leader")]
 		public ProcessGroupLeader GroupLeader { get; set; }
 
-		///<summary>process.previous</summary>
+		///<summary>
+		/// <para><c>process.previous</c></para>
+		/// <example></example>
+		///</summary>
 		[DataMember(Name = "previous")]
-		public ProcessPrevious Previous { get; set; }
+		public ProcessPrevious[] Previous { get; set; }
 	}
 
 	///<inheritdoc cref="RegistryFieldSet"/>
@@ -404,15 +533,24 @@ namespace Elastic.CommonSchema
 	///<inheritdoc cref="ServerFieldSet"/>
 	public class Server : ServerFieldSet {
 
-		///<summary>server.as</summary>
+		///<summary>
+		/// <para><c>server.as</c></para>
+		/// <example></example>
+		///</summary>
 		[DataMember(Name = "as")]
 		public As As { get; set; }
 
-		///<summary>server.geo</summary>
+		///<summary>
+		/// <para><c>server.geo</c></para>
+		/// <example></example>
+		///</summary>
 		[DataMember(Name = "geo")]
 		public Geo Geo { get; set; }
 
-		///<summary>server.user</summary>
+		///<summary>
+		/// <para><c>server.user</c></para>
+		/// <example></example>
+		///</summary>
 		[DataMember(Name = "user")]
 		public User User { get; set; }
 	}
@@ -420,11 +558,17 @@ namespace Elastic.CommonSchema
 	///<inheritdoc cref="ServiceFieldSet"/>
 	public class Service : ServiceFieldSet {
 
-		///<summary>service.origin</summary>
+		///<summary>
+		/// <para><c>service.origin</c></para>
+		/// <example></example>
+		///</summary>
 		[DataMember(Name = "origin")]
 		public ServiceOrigin Origin { get; set; }
 
-		///<summary>service.target</summary>
+		///<summary>
+		/// <para><c>service.target</c></para>
+		/// <example></example>
+		///</summary>
 		[DataMember(Name = "target")]
 		public ServiceTarget Target { get; set; }
 	}
@@ -432,15 +576,24 @@ namespace Elastic.CommonSchema
 	///<inheritdoc cref="SourceFieldSet"/>
 	public class Source : SourceFieldSet {
 
-		///<summary>source.as</summary>
+		///<summary>
+		/// <para><c>source.as</c></para>
+		/// <example></example>
+		///</summary>
 		[DataMember(Name = "as")]
 		public As As { get; set; }
 
-		///<summary>source.geo</summary>
+		///<summary>
+		/// <para><c>source.geo</c></para>
+		/// <example></example>
+		///</summary>
 		[DataMember(Name = "geo")]
 		public Geo Geo { get; set; }
 
-		///<summary>source.user</summary>
+		///<summary>
+		/// <para><c>source.user</c></para>
+		/// <example></example>
+		///</summary>
 		[DataMember(Name = "user")]
 		public User User { get; set; }
 	}
@@ -448,27 +601,45 @@ namespace Elastic.CommonSchema
 	///<inheritdoc cref="ThreatFieldSet"/>
 	public class Threat : ThreatFieldSet {
 
-		///<summary>threat.indicator.x509</summary>
+		///<summary>
+		/// <para><c>threat.indicator.x509</c></para>
+		/// <example></example>
+		///</summary>
 		[DataMember(Name = "indicator.x509")]
 		public X509 IndicatorX509 { get; set; }
 
-		///<summary>threat.indicator.as</summary>
+		///<summary>
+		/// <para><c>threat.indicator.as</c></para>
+		/// <example></example>
+		///</summary>
 		[DataMember(Name = "indicator.as")]
 		public As IndicatorAs { get; set; }
 
-		///<summary>threat.indicator.file</summary>
+		///<summary>
+		/// <para><c>threat.indicator.file</c></para>
+		/// <example></example>
+		///</summary>
 		[DataMember(Name = "indicator.file")]
 		public File IndicatorFile { get; set; }
 
-		///<summary>threat.indicator.geo</summary>
+		///<summary>
+		/// <para><c>threat.indicator.geo</c></para>
+		/// <example></example>
+		///</summary>
 		[DataMember(Name = "indicator.geo")]
 		public Geo IndicatorGeo { get; set; }
 
-		///<summary>threat.indicator.registry</summary>
+		///<summary>
+		/// <para><c>threat.indicator.registry</c></para>
+		/// <example></example>
+		///</summary>
 		[DataMember(Name = "indicator.registry")]
 		public Registry IndicatorRegistry { get; set; }
 
-		///<summary>threat.indicator.url</summary>
+		///<summary>
+		/// <para><c>threat.indicator.url</c></para>
+		/// <example></example>
+		///</summary>
 		[DataMember(Name = "indicator.url")]
 		public Url IndicatorUrl { get; set; }
 	}
@@ -476,11 +647,17 @@ namespace Elastic.CommonSchema
 	///<inheritdoc cref="TlsFieldSet"/>
 	public class Tls : TlsFieldSet {
 
-		///<summary>tls.client.x509</summary>
+		///<summary>
+		/// <para><c>tls.client.x509</c></para>
+		/// <example></example>
+		///</summary>
 		[DataMember(Name = "client.x509")]
 		public X509 ClientX509 { get; set; }
 
-		///<summary>tls.server.x509</summary>
+		///<summary>
+		/// <para><c>tls.server.x509</c></para>
+		/// <example></example>
+		///</summary>
 		[DataMember(Name = "server.x509")]
 		public X509 ServerX509 { get; set; }
 	}
@@ -492,19 +669,31 @@ namespace Elastic.CommonSchema
 	///<inheritdoc cref="UserFieldSet"/>
 	public class User : UserFieldSet {
 
-		///<summary>user.group</summary>
+		///<summary>
+		/// <para><c>user.group</c></para>
+		/// <example></example>
+		///</summary>
 		[DataMember(Name = "group")]
 		public Group Group { get; set; }
 
-		///<summary>user.target</summary>
+		///<summary>
+		/// <para><c>user.target</c></para>
+		/// <example></example>
+		///</summary>
 		[DataMember(Name = "target")]
 		public UserTarget Target { get; set; }
 
-		///<summary>user.effective</summary>
+		///<summary>
+		/// <para><c>user.effective</c></para>
+		/// <example></example>
+		///</summary>
 		[DataMember(Name = "effective")]
 		public UserEffective Effective { get; set; }
 
-		///<summary>user.changes</summary>
+		///<summary>
+		/// <para><c>user.changes</c></para>
+		/// <example></example>
+		///</summary>
 		[DataMember(Name = "changes")]
 		public UserChanges Changes { get; set; }
 	}
@@ -512,7 +701,10 @@ namespace Elastic.CommonSchema
 	///<inheritdoc cref="UserAgentFieldSet"/>
 	public class UserAgent : UserAgentFieldSet {
 
-		///<summary>user_agent.os</summary>
+		///<summary>
+		/// <para><c>user_agent.os</c></para>
+		/// <example></example>
+		///</summary>
 		[DataMember(Name = "os")]
 		public Os Os { get; set; }
 	}

@@ -31,9 +31,12 @@ namespace Elastic.CommonSchema
 @foreach (var property in entity.EntityProperties)
 {
 <text>
-		///<summary>@property.FullPath</summary>
+		///<summary>
+		/// <para><c>@property.FullPath</c></para>
+		/// <example>@Raw(property.Example)</example>
+		///</summary>
 		[DataMember(Name = "@property.JsonProperty")]
-		public @property.Entity.Name @property.Name { get; set; }
+		public @property.ClrType @property.Name { get; set; }
 </text>
 }
 	}
@@ -47,9 +50,12 @@ namespace Elastic.CommonSchema
 @foreach (var property in entity.EntityProperties)
 {
 <text>
-		///<summary>@property.FullPath</summary>
+		///<summary>
+		/// <para><c>@property.FullPath</c></para>
+		/// <example>@Raw(property.Example)</example>
+		///</summary>
 		[DataMember(Name = "@property.JsonProperty")]
-		public @property.Entity.Name @property.Name { get; set; }
+		public @property.ClrType @property.Name { get; set; }
 </text>
 }
 	}
