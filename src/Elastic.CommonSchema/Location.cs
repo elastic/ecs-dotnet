@@ -5,6 +5,7 @@
 using System;
 using System.Globalization;
 using System.Runtime.Serialization;
+using System.Text.Json.Serialization;
 
 namespace Elastic.CommonSchema
 {
@@ -22,13 +23,13 @@ namespace Elastic.CommonSchema
 		/// <summary>
 		///  Latitude
 		/// </summary>
-		[DataMember(Name = "lat")]
+		[JsonPropertyName("lat"), DataMember(Name = "lat")]
 		public double Latitude { get; }
 
 		/// <summary>
 		///  Longitude
 		/// </summary>
-		[DataMember(Name = "lon")]
+		[JsonPropertyName("lon"), DataMember(Name = "lon")]
 		public double Longitude { get; }
 
 		public bool Equals(Location other)

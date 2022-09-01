@@ -5,6 +5,7 @@
 using System;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
+using System.Text.Json.Serialization;
 using Elastic.CommonSchema.Serialization;
 using FluentAssertions;
 using Xunit;
@@ -29,6 +30,19 @@ namespace Elastic.CommonSchema.Tests
 			deserialized.Agent.Name.Should().Be("some-agent");
 			deserialized.Log.Should().NotBeNull();
 			deserialized.Log.Level.Should().Be("debug");
+		}
+		[Fact]
+		public void SerializesNestedProperties()
+		{
+			var b = new EcsDocument { Http = new Http { RequestMethod = "GET" } };
+
+			var serialized = b.Serialize();
+			serialized.Should().NotBeNullOrWhiteSpace();
+			serialized.Should().Contain("\"request.method\":\"GET\"");
+
+			var deserialized = EcsDocument.Deserialize(serialized);
+			deserialized.Http.Should().NotBeNull();
+			deserialized.Http.RequestMethod.Should().Be("GET");
 		}
 
 		[Fact]
@@ -58,7 +72,7 @@ namespace Elastic.CommonSchema.Tests
 
 		public class SubclassedDocument : EcsDocument
 		{
-			[DataMember(Name = "agent2")]
+			[JsonPropertyName("agent2")]
 			public Agent Agent2 { get; set; }
 
 			protected override bool TryRead(string propertyName, out Type type)
@@ -83,7 +97,7 @@ namespace Elastic.CommonSchema.Tests
 
 		public class SubClassedAgent : Agent
 		{
-			[DataMember(Name = "another_name")]
+			[JsonPropertyName("another_name")]
 			public string Name2 { get; set; }
 		}
 
@@ -112,6 +126,7 @@ namespace Elastic.CommonSchema.Tests
 			serialized.Should().NotBeNullOrWhiteSpace();
 			serialized.Should().Contain("some-agent");
 			serialized.Should().Contain("log.level\":\"debug\"");
+			serialized.Should().Contain("another_name\":\"some-agent\"");
 
 			var deserialized = EcsSerializerFactory<SubclassedDocument>.Deserialize(serialized);
 			deserialized.Log.Should().NotBeNull();

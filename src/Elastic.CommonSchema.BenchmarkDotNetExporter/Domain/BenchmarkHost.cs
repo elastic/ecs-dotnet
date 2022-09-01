@@ -3,36 +3,37 @@
 // See the LICENSE file in the project root for more information
 
 using System.Runtime.Serialization;
+using System.Text.Json.Serialization;
 
 namespace Elastic.CommonSchema.BenchmarkDotNetExporter.Domain
 {
 	public class BenchmarkHost : Host
 	{
-		[DataMember(Name = "processor_name")]
+		[JsonPropertyName("processor_name"), DataMember(Name = "processor_name")]
 		public string ProcessorName { get; set; }
 
-		[DataMember(Name = "physical_processor_count")]
+		[JsonPropertyName("physical_processor_count"), DataMember(Name = "physical_processor_count")]
 		public int? PhysicalProcessorCount { get; set; }
 
-		[DataMember(Name = "physical_core_count")]
+		[JsonPropertyName("physical_core_count"), DataMember(Name = "physical_core_count")]
 		public int? PhysicalCoreCount { get; set; }
 
-		[DataMember(Name = "logical_core_count")]
+		[JsonPropertyName("logical_core_count"), DataMember(Name = "logical_core_count")]
 		public int? LogicalCoreCount { get; set; }
 
-		[DataMember(Name = "has_attached_debugger")]
+		[JsonPropertyName("has_attached_debugger"), DataMember(Name = "has_attached_debugger")]
 		public bool HasAttachedDebugger { get; set; }
 
-		[DataMember(Name = "hardware_timer_kind")]
+		[JsonPropertyName("hardware_timer_kind"), DataMember(Name = "hardware_timer_kind")]
 		public string HardwareTimerKind { get; set; }
 
-		[DataMember(Name = "chronometer_frequency_hertz")]
+		[JsonPropertyName("chronometer_frequency_hertz"), DataMember(Name = "chronometer_frequency_hertz")]
 		public double ChronometerFrequencyHertz { get; set; }
 
-		[DataMember(Name = "vm_hypervisor")]
+		[JsonPropertyName("vm_hypervisor"), DataMember(Name = "vm_hypervisor")]
 		public string VirtualMachineHypervisor { get; set; }
 
-		[DataMember(Name = "in_docker")]
+		[JsonPropertyName("in_docker"), DataMember(Name = "in_docker")]
 		public bool InDocker { get; set; }
 	}
 }
