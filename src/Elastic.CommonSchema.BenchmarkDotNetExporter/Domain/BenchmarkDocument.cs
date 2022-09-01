@@ -4,6 +4,7 @@
 
 using System;
 using System.Runtime.Serialization;
+using System.Text.Json.Serialization;
 
 namespace Elastic.CommonSchema.BenchmarkDotNetExporter.Domain
 {
@@ -12,7 +13,7 @@ namespace Elastic.CommonSchema.BenchmarkDotNetExporter.Domain
 	/// </summary>
 	public class BenchmarkDocument : EcsDocument
 	{
-		[DataMember(Name = "benchmark")]
+		[JsonPropertyName("benchmark"), DataMember(Name = "benchmark")]
 		public BenchmarkData Benchmark { get; set; }
 
 		protected override bool TryRead(string propertyName, out Type type)

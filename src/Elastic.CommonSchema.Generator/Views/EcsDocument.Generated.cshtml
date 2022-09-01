@@ -20,6 +20,7 @@ using System.Threading.Tasks;
 using System.Linq;
 using System.Net;
 using System.Runtime.Serialization;
+using System.Text.Json.Serialization;
 
 namespace Elastic.CommonSchema
 {
@@ -35,14 +36,14 @@ namespace Elastic.CommonSchema
 		/// <summary>
 		/// Container for additional metadata against this event.
 		/// </summary>
-		[DataMember(Name = "metadata")]
+		[JsonPropertyName("metadata"), DataMember(Name = "metadata")]
 		public @Raw("IDictionary<string, object>") Metadata { get; set; }
 
 @foreach (var property in Model.Base.EntityProperties)
 {
 <text>
 		///<summary>@property.FullPath</summary>
-		[DataMember(Name = "@property.JsonProperty")]
+		[JsonPropertyName("@property.JsonProperty"), DataMember(Name = "@property.JsonProperty")]
 		public @property.Entity.Name @property.Name { get; set; }
 </text>
 }
@@ -50,7 +51,7 @@ namespace Elastic.CommonSchema
 {
 <text>
 		///<summary>@entity.BaseFieldSet.FieldSet.Name</summary>
-		[DataMember(Name = "@entity.BaseFieldSet.FieldSet.Name")]
+		[JsonPropertyName("@entity.BaseFieldSet.FieldSet.Name"), DataMember(Name = "@entity.BaseFieldSet.FieldSet.Name")]
 		public @entity.Name @entity.Name { get; set; }
 </text>
 }

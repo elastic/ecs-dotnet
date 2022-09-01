@@ -3,6 +3,7 @@
 // See the LICENSE file in the project root for more information
 
 using System.Runtime.Serialization;
+using System.Text.Json.Serialization;
 using BenchmarkDotNet.Mathematics;
 using Perfolizer.Mathematics.Common;
 
@@ -20,22 +21,22 @@ namespace Elastic.CommonSchema.BenchmarkDotNetExporter.Domain
 			StandardError = interval.StandardError;
 		}
 
-		[DataMember(Name = "level")]
+		[JsonPropertyName("level"), DataMember(Name = "level")]
 		public ConfidenceLevel Level { get; set; }
 
-		[DataMember(Name = "lower")]
+		[JsonPropertyName("lower"), DataMember(Name = "lower")]
 		public double Lower { get; set; }
 
-		[DataMember(Name = "margin")]
+		[JsonPropertyName("margin"), DataMember(Name = "margin")]
 		public double Margin { get; set; }
 
-		[DataMember(Name = "mean")]
+		[JsonPropertyName("mean"), DataMember(Name = "mean")]
 		public double Mean { get; set; }
 
-		[DataMember(Name = "n")]
+		[JsonPropertyName("n"), DataMember(Name = "n")]
 		public int N { get; set; }
 
-		[DataMember(Name = "standard_error")]
+		[JsonPropertyName("standard_error"), DataMember(Name = "standard_error")]
 		public double StandardError { get; set; }
 	}
 }
