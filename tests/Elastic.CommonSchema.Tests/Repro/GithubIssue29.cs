@@ -14,7 +14,7 @@ namespace Elastic.CommonSchema.Tests.Repro
 			var uniqueName = Guid.NewGuid().ToString();
 			var root = new EcsDocument
 			{
-				Metadata = new Dictionary<string, object>
+				Metadata = new MetadataDictionary
 				{
 					{ uniqueName, null }
 				}
