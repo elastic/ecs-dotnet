@@ -10,7 +10,7 @@ using NLog.LayoutRenderers;
 namespace Elastic.Apm.NLog
 {
 	[LayoutRenderer(Name)]
-	[ThreadSafe]
+	[ThreadSafe, ThreadAgnostic]
 	public class ApmServiceNameLayoutRenderer : LayoutRenderer
 	{
 		public const string Name = "ElasticApmServiceName";
