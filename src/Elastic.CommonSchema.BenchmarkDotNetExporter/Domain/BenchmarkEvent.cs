@@ -4,27 +4,28 @@
 
 using System.Collections.Generic;
 using System.Runtime.Serialization;
+using System.Text.Json.Serialization;
 
 namespace Elastic.CommonSchema.BenchmarkDotNetExporter.Domain
 {
 	public class BenchmarkEvent : Event
 	{
-		[DataMember(Name = "description")]
+		[JsonPropertyName("description"), DataMember(Name = "description")]
 		public string Description { get; set; }
 
-		[DataMember(Name = "parameters")]
+		[JsonPropertyName("parameters"), DataMember(Name = "parameters")]
 		public string Parameters { get; set; }
 
-		[DataMember(Name = "method")]
+		[JsonPropertyName("method"), DataMember(Name = "method")]
 		public string Method { get; set; }
 
-		[DataMember(Name = "measurement_stages")]
+		[JsonPropertyName("measurement_stages"), DataMember(Name = "measurement_stages")]
 		public IEnumerable<BenchmarkMeasurementStage> MeasurementStages { get; set; }
 
-		[DataMember(Name = "repetitions")]
+		[JsonPropertyName("repetitions"), DataMember(Name = "repetitions")]
 		public BenchmarkSimplifiedWorkloadCounts Repetitions { get; set; }
 
-		[DataMember(Name = "job_config")]
+		[JsonPropertyName("job_config"), DataMember(Name = "job_config")]
 		public BenchmarkJobConfig JobConfig { get; set; }
 	}
 }

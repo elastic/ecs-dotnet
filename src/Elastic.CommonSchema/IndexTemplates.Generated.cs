@@ -17,16 +17,17 @@ using System.Threading.Tasks;
 using System.Linq;
 using System.Net;
 using System.Runtime.Serialization;
+using System.Text.Json.Serialization;
 
 namespace Elastic.CommonSchema.Elasticsearch
 {
 	/// <summary>
-	/// Elastic Common Schema version v8.3.1 index templates to be used with Elasticsearch.
+	/// Elastic Common Schema version v8.4.0 index templates to be used with Elasticsearch.
 	/// </summary>
 	public static class IndexTemplates
 	{
 		/// <summary>
-		/// Elastic Common Schema version v8.3.1 Composable index template  
+		/// Elastic Common Schema version v8.4.0 Composable index template  
 		/// See the Put Index Template API documentation: https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-templates.html
 		/// </summary>
 		/// <returns>Index template string that can be used with the Put Index Template API.</returns>
@@ -35,47 +36,47 @@ namespace Elastic.CommonSchema.Elasticsearch
 			return @"{
   ""_meta"": {
     ""description"": ""Sample composable template that includes all ECS fields"",
-    ""ecs_version"": ""8.3.1""
+    ""ecs_version"": ""8.4.0""
   },
   ""composed_of"": [
-    ""ecs_8.3.1_base"",
-    ""ecs_8.3.1_agent"",
-    ""ecs_8.3.1_client"",
-    ""ecs_8.3.1_cloud"",
-    ""ecs_8.3.1_container"",
-    ""ecs_8.3.1_data_stream"",
-    ""ecs_8.3.1_destination"",
-    ""ecs_8.3.1_dll"",
-    ""ecs_8.3.1_dns"",
-    ""ecs_8.3.1_ecs"",
-    ""ecs_8.3.1_email"",
-    ""ecs_8.3.1_error"",
-    ""ecs_8.3.1_event"",
-    ""ecs_8.3.1_faas"",
-    ""ecs_8.3.1_file"",
-    ""ecs_8.3.1_group"",
-    ""ecs_8.3.1_host"",
-    ""ecs_8.3.1_http"",
-    ""ecs_8.3.1_log"",
-    ""ecs_8.3.1_network"",
-    ""ecs_8.3.1_observer"",
-    ""ecs_8.3.1_orchestrator"",
-    ""ecs_8.3.1_organization"",
-    ""ecs_8.3.1_package"",
-    ""ecs_8.3.1_process"",
-    ""ecs_8.3.1_registry"",
-    ""ecs_8.3.1_related"",
-    ""ecs_8.3.1_rule"",
-    ""ecs_8.3.1_server"",
-    ""ecs_8.3.1_service"",
-    ""ecs_8.3.1_source"",
-    ""ecs_8.3.1_threat"",
-    ""ecs_8.3.1_tls"",
-    ""ecs_8.3.1_tracing"",
-    ""ecs_8.3.1_url"",
-    ""ecs_8.3.1_user_agent"",
-    ""ecs_8.3.1_user"",
-    ""ecs_8.3.1_vulnerability""
+    ""ecs_8.4.0_base"",
+    ""ecs_8.4.0_agent"",
+    ""ecs_8.4.0_client"",
+    ""ecs_8.4.0_cloud"",
+    ""ecs_8.4.0_container"",
+    ""ecs_8.4.0_data_stream"",
+    ""ecs_8.4.0_destination"",
+    ""ecs_8.4.0_dll"",
+    ""ecs_8.4.0_dns"",
+    ""ecs_8.4.0_ecs"",
+    ""ecs_8.4.0_email"",
+    ""ecs_8.4.0_error"",
+    ""ecs_8.4.0_event"",
+    ""ecs_8.4.0_faas"",
+    ""ecs_8.4.0_file"",
+    ""ecs_8.4.0_group"",
+    ""ecs_8.4.0_host"",
+    ""ecs_8.4.0_http"",
+    ""ecs_8.4.0_log"",
+    ""ecs_8.4.0_network"",
+    ""ecs_8.4.0_observer"",
+    ""ecs_8.4.0_orchestrator"",
+    ""ecs_8.4.0_organization"",
+    ""ecs_8.4.0_package"",
+    ""ecs_8.4.0_process"",
+    ""ecs_8.4.0_registry"",
+    ""ecs_8.4.0_related"",
+    ""ecs_8.4.0_rule"",
+    ""ecs_8.4.0_server"",
+    ""ecs_8.4.0_service"",
+    ""ecs_8.4.0_source"",
+    ""ecs_8.4.0_threat"",
+    ""ecs_8.4.0_tls"",
+    ""ecs_8.4.0_tracing"",
+    ""ecs_8.4.0_url"",
+    ""ecs_8.4.0_user_agent"",
+    ""ecs_8.4.0_user"",
+    ""ecs_8.4.0_vulnerability""
   ],
   ""index_patterns"": [
     """ + indexPattern + @"""
@@ -113,7 +114,7 @@ namespace Elastic.CommonSchema.Elasticsearch
 		}
 
 		/// <summary>
-		/// Elastic Common Schema version v8.3.1 Legacy index template  
+		/// Elastic Common Schema version v8.4.0 Legacy index template  
 		/// See the Put Index Template API documentation: https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-templates.html
 		/// </summary>
 		/// <returns>Index template string that can be used with the Put Index Template API.</returns>
@@ -125,7 +126,7 @@ namespace Elastic.CommonSchema.Elasticsearch
   ],
   ""mappings"": {
     ""_meta"": {
-      ""version"": ""8.3.1""
+      ""version"": ""8.4.0""
     },
     ""date_detection"": false,
     ""dynamic_templates"": [
@@ -4337,6 +4338,10 @@ namespace Elastic.CommonSchema.Elasticsearch
               ""role"": {
                 ""ignore_above"": 1024,
                 ""type"": ""keyword""
+              },
+              ""roles"": {
+                ""ignore_above"": 1024,
+                ""type"": ""keyword""
               }
             }
           },
@@ -4369,6 +4374,10 @@ namespace Elastic.CommonSchema.Elasticsearch
                     ""type"": ""keyword""
                   },
                   ""role"": {
+                    ""ignore_above"": 1024,
+                    ""type"": ""keyword""
+                  },
+                  ""roles"": {
                     ""ignore_above"": 1024,
                     ""type"": ""keyword""
                   }
@@ -4421,6 +4430,10 @@ namespace Elastic.CommonSchema.Elasticsearch
                     ""type"": ""keyword""
                   },
                   ""role"": {
+                    ""ignore_above"": 1024,
+                    ""type"": ""keyword""
+                  },
+                  ""roles"": {
                     ""ignore_above"": 1024,
                     ""type"": ""keyword""
                   }

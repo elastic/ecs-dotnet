@@ -3,6 +3,7 @@
 // See the LICENSE file in the project root for more information
 
 using System.Runtime.Serialization;
+using System.Text.Json.Serialization;
 using BenchmarkDotNet.Mathematics;
 
 namespace Elastic.CommonSchema.BenchmarkDotNetExporter.Domain
@@ -33,67 +34,67 @@ namespace Elastic.CommonSchema.BenchmarkDotNetExporter.Domain
 			Percentiles = statistics.Percentiles;
 		}
 
-		[DataMember(Name = "all_outliers")]
+		[JsonPropertyName("all_outliers"), DataMember(Name = "all_outliers")]
 		public double[] AllOutliers { get; internal set; }
 
-		[DataMember(Name = "confidence_interval")]
+		[JsonPropertyName("confidence_interval"), DataMember(Name = "confidence_interval")]
 		public BenchmarkConfidence ConfidenceInterval { get; internal set; }
 
-		[DataMember(Name = "interquartile_range")]
+		[JsonPropertyName("interquartile_range"), DataMember(Name = "interquartile_range")]
 		public double InterquartileRange { get; internal set; }
 
-		[DataMember(Name = "kurtosis")]
+		[JsonPropertyName("kurtosis"), DataMember(Name = "kurtosis")]
 		public double Kurtosis { get; internal set; }
 
-		[DataMember(Name = "lower_fence")]
+		[JsonPropertyName("lower_fence"), DataMember(Name = "lower_fence")]
 		public double LowerFence { get; internal set; }
 
-		[DataMember(Name = "lower_outliers")]
+		[JsonPropertyName("lower_outliers"), DataMember(Name = "lower_outliers")]
 		public double[] LowerOutliers { get; internal set; }
 
-		[DataMember(Name = "max")]
+		[JsonPropertyName("max"), DataMember(Name = "max")]
 		public double Max { get; internal set; }
 
-		[DataMember(Name = "mean")]
+		[JsonPropertyName("mean"), DataMember(Name = "mean")]
 		public double Mean { get; internal set; }
 
-		[DataMember(Name = "median")]
+		[JsonPropertyName("median"), DataMember(Name = "median")]
 		public double Median { get; internal set; }
 
-		[DataMember(Name = "memory")]
+		[JsonPropertyName("memory"), DataMember(Name = "memory")]
 		public BenchmarkGcStats Memory { get; internal set; }
 
-		[DataMember(Name = "min")]
+		[JsonPropertyName("min"), DataMember(Name = "min")]
 		public double Min { get; internal set; }
 
-		[DataMember(Name = "n")]
+		[JsonPropertyName("n"), DataMember(Name = "n")]
 		public int N { get; internal set; }
 
-		[DataMember(Name = "percentiles")]
+		[JsonPropertyName("percentiles"), DataMember(Name = "percentiles")]
 		public PercentileValues Percentiles { get; internal set; }
 
-		[DataMember(Name = "q1")]
+		[JsonPropertyName("q1"), DataMember(Name = "q1")]
 		public double Q1 { get; internal set; }
 
-		[DataMember(Name = "q3")]
+		[JsonPropertyName("q3"), DataMember(Name = "q3")]
 		public double Q3 { get; internal set; }
 
-		[DataMember(Name = "skewness")]
+		[JsonPropertyName("skewness"), DataMember(Name = "skewness")]
 		public double Skewness { get; internal set; }
 
-		[DataMember(Name = "standard_deviation")]
+		[JsonPropertyName("standard_deviation"), DataMember(Name = "standard_deviation")]
 		public double StandardDeviation { get; internal set; }
 
-		[DataMember(Name = "standard_error")]
+		[JsonPropertyName("standard_error"), DataMember(Name = "standard_error")]
 		public double StandardError { get; internal set; }
 
-		[DataMember(Name = "upper_fence")]
+		[JsonPropertyName("upper_fence"), DataMember(Name = "upper_fence")]
 		public double UpperFence { get; internal set; }
 
-		[DataMember(Name = "upper_outliers")]
+		[JsonPropertyName("upper_outliers"), DataMember(Name = "upper_outliers")]
 		public double[] UpperOutliers { get; internal set; }
 
-		[DataMember(Name = "variance")]
+		[JsonPropertyName("variance"), DataMember(Name = "variance")]
 		public double Variance { get; internal set; }
 	}
 }

@@ -3,36 +3,37 @@
 // See the LICENSE file in the project root for more information
 
 using System.Runtime.Serialization;
+using System.Text.Json.Serialization;
 
 namespace Elastic.CommonSchema.BenchmarkDotNetExporter.Domain
 {
 	public class BenchmarkGcInfo
 	{
-		[DataMember(Name = "force")]
+		[JsonPropertyName("force"), DataMember(Name = "force")]
 		public bool Force { get; set; }
 
-		[DataMember(Name = "server")]
+		[JsonPropertyName("server"), DataMember(Name = "server")]
 		public bool Server { get; set; }
 
-		[DataMember(Name = "concurrent")]
+		[JsonPropertyName("concurrent"), DataMember(Name = "concurrent")]
 		public bool Concurrent { get; set; }
 
-		[DataMember(Name = "retain_vm")]
+		[JsonPropertyName("retain_vm"), DataMember(Name = "retain_vm")]
 		public bool RetainVm { get; set; }
 
-		[DataMember(Name = "cpu_groups")]
+		[JsonPropertyName("cpu_groups"), DataMember(Name = "cpu_groups")]
 		public bool CpuGroups { get; set; }
 
-		[DataMember(Name = "heap_count")]
+		[JsonPropertyName("heap_count"), DataMember(Name = "heap_count")]
 		public int HeapCount { get; set; }
 
-		[DataMember(Name = "no_affinitize")]
+		[JsonPropertyName("no_affinitize"), DataMember(Name = "no_affinitize")]
 		public bool NoAffinitize { get; set; }
 
-		[DataMember(Name = "heap_affinitize")]
+		[JsonPropertyName("heap_affinitize"), DataMember(Name = "heap_affinitize")]
 		public int HeapAffinitizeMask { get; set; }
 
-		[DataMember(Name = "allow_very_large_objects")]
+		[JsonPropertyName("allow_very_large_objects"), DataMember(Name = "allow_very_large_objects")]
 		public bool AllowVeryLargeObjects { get; set; }
 	}
 }

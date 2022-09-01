@@ -20,6 +20,7 @@ using System.Threading.Tasks;
 using System.Linq;
 using System.Net;
 using System.Runtime.Serialization;
+using System.Text.Json.Serialization;
 
 namespace Elastic.CommonSchema
 {
@@ -33,16 +34,24 @@ namespace Elastic.CommonSchema
 @foreach (var property in fieldSet.ValueProperties)
 {
 <text>
-		///<summary>@property.FullPath</summary>
-		[DataMember(Name = "@property.JsonProperty")]
+		///<summary>
+		/// <para><c>@property.FullPath</c></para>
+		/// <para>@Raw(property.Description)</para>
+		/// <example>@Raw(property.Example)</example>
+		///</summary>
+		[JsonPropertyName("@property.JsonProperty"), DataMember(Name = "@property.JsonProperty")]
 		public @property.ClrType @property.Name { get; set; }
 </text>
 }
 @foreach (var property in fieldSet.InlineObjectProperties)
 {
 <text>
-		///<summary>@property.FullPath</summary>
-		[DataMember(Name = "@property.JsonProperty")]
+		///<summary>
+		/// <para><c>@property.FullPath</c></para>
+		/// <para>@Raw(property.Description)</para>
+		/// <example>@Raw(property.Example)</example>
+		///</summary>
+		[JsonPropertyName("@property.JsonProperty"), DataMember(Name = "@property.JsonProperty")]
 		public @property.ClrType @property.Name { get; set; }
 </text>
 }
