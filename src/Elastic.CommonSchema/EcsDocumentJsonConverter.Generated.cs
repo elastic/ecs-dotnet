@@ -15,7 +15,7 @@ using System.Text.Json;
 
 namespace Elastic.CommonSchema.Serialization
 {
-	internal partial class EcsDocumentJsonConverter<TBase> : EcsJsonConverterBase<TBase>
+	public partial class EcsDocumentJsonConverter<TBase> : EcsJsonConverterBase<TBase>
 		where TBase : EcsDocument, new()
 	{
 		private static bool ReadProperties(

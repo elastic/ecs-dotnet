@@ -9,6 +9,7 @@ using BenchmarkDotNet.Configs;
 using BenchmarkDotNet.Diagnosers;
 using BenchmarkDotNet.Environments;
 using BenchmarkDotNet.Jobs;
+using BenchmarkDotNet.Loggers;
 using BenchmarkDotNet.Running;
 using Elastic.CommonSchema.BenchmarkDotNetExporter.Domain;
 using Elastic.Elasticsearch.Xunit;
@@ -39,10 +40,11 @@ namespace Elastic.CommonSchema.BenchmarkDotNetExporter.IntegrationTests
 		{
 			var jobs = new List<Job>
 			{
-				Job.ShortRun.WithRuntime(CoreRuntime.Core50).WithInvocationCount(4).WithUnrollFactor(2),
+				Job.ShortRun.WithRuntime(CoreRuntime.Core60).WithInvocationCount(4).WithUnrollFactor(2),
 			};
 			var config = DefaultConfig.Instance
 				.KeepBenchmarkFiles()
+				.AddLogger(new ConsoleLogger())
 				.AddDiagnoser(MemoryDiagnoser.Default)
 				.WithOption(ConfigOptions.DisableOptimizationsValidator, true)
 				.AddJob(jobs.ToArray());
@@ -69,34 +71,33 @@ namespace Elastic.CommonSchema.BenchmarkDotNetExporter.IntegrationTests
 				throw new Exception($"summary has critical validation errors: {string.Join(Environment.NewLine, errors)}");
 			}
 
-			var pipeline = Client.Ingest.GetPipeline(p => p.Id(options.PipelineName));
-			if (!pipeline.IsValid)
-				throw new Exception(pipeline.DebugInformation);
+			// TODO: Temporarily disabled while we wait for ECS to be updated on different branch
+			// var template = Client.Indices.GetTemplate(options.TemplateName);
+			// if (!template.IsValid)
+			//	throw new Exception(template.DebugInformation);
 
-			var template = Client.Indices.GetTemplate(options.TemplateName);
-			if (!template.IsValid)
-				throw new Exception(template.DebugInformation);
-
-			var indexName = $"{options.IndexName}-{DateTime.UtcNow.Year}-01-01";
+			var indexName = $"benchmarks-dotnet-{options.DataStreamNamespace}";
 			var indexExists = Client.Indices.Exists(indexName);
 			if (!indexExists.IsValid)
 				throw new Exception(indexExists.DebugInformation);
 
 			Client.Indices.Refresh(indexName);
 
-			var searchResponse = Client.Search<BenchmarkDocument>(s => s.Index(indexName));
+			var searchResponse = Client.Search<BenchmarkDocument>(s => s.Index(indexName).TrackTotalHits());
 			if (!searchResponse.IsValid || searchResponse.Total == 0)
 				throw new Exception(searchResponse.DebugInformation);
 
 			var doc = searchResponse.Documents.First();
 
-			doc.Timestamp.Should().NotBeNull().And.BeCloseTo(DateTimeOffset.Now, precision: 4000);
+			doc.Timestamp.Should().NotBeNull().And.BeCloseTo(DateTimeOffset.UtcNow, precision: 10000);
 
 			doc.Benchmark.Should().NotBeNull();
 
 			doc.Benchmark.Max.Should().BeGreaterThan(0);
 
 			doc.Event.Duration.Should().BeGreaterThan(0);
+
+			searchResponse.Total.Should().Be(summary.BenchmarksCases.Length);
 		}
 	}
 }

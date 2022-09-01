@@ -19,11 +19,11 @@ namespace Elastic.CommonSchema.Serialization
 	public static class EcsSerializerFactory<TBase> where TBase : EcsDocument, new()
 	{
 		public static ValueTask<TBase> DeserializeAsync(Stream stream, CancellationToken ctx = default) =>
-			JsonSerializer.DeserializeAsync<TBase>(stream, JsonConfiguration.SerializerOptions, ctx);
+			JsonSerializer.DeserializeAsync<TBase>(stream, EcsJsonConfiguration.SerializerOptions, ctx);
 
-		public static TBase Deserialize(string json) => JsonSerializer.Deserialize<TBase>(json, JsonConfiguration.SerializerOptions);
+		public static TBase Deserialize(string json) => JsonSerializer.Deserialize<TBase>(json, EcsJsonConfiguration.SerializerOptions);
 
-		public static TBase Deserialize(ReadOnlySpan<byte> json) => JsonSerializer.Deserialize<TBase>(json, JsonConfiguration.SerializerOptions);
+		public static TBase Deserialize(ReadOnlySpan<byte> json) => JsonSerializer.Deserialize<TBase>(json, EcsJsonConfiguration.SerializerOptions);
 
 		public static TBase Deserialize(Stream stream)
 		{

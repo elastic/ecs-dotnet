@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Threading;
 using System.Threading.Channels;
 using System.Threading.Tasks;
@@ -7,12 +8,31 @@ using System.Threading.Tasks;
 namespace Elastic.Ingest
 {
 	/// <summary>
-	/// Information about the consumers local buffer, available to users in <see cref="BufferOptions{TEvent}.ElasticsearchResponseCallback" />
+	/// Information about the consumers local buffer, available to users in <see cref="BufferOptions{TEvent,TResponse,TBulkResponseItem}.ResponseCallback" />
 	/// </summary>
-	public interface IChannelBuffer
+	public interface IConsumedBufferStatistics
 	{
 		int Count { get; }
 		TimeSpan? DurationSinceFirstRead { get; }
+	}
+
+	public class ConsumedBuffer<TEVent> : IConsumedBufferStatistics
+	{
+		private readonly TEVent[] _buffer;
+		public IReadOnlyCollection<TEVent> Items { get; }
+
+		public ConsumedBuffer(ChannelBuffer<TEVent> buffer)
+		{
+			_buffer = new TEVent[buffer.Count];
+			buffer.Buffer.CopyTo(_buffer);
+			Count = buffer.Count;
+			DurationSinceFirstRead = buffer.DurationSinceFirstRead;
+			Items = new ReadOnlyCollection<TEVent>(_buffer);
+			buffer.Reset();
+		}
+
+		public int Count { get; }
+		public TimeSpan? DurationSinceFirstRead { get; }
 	}
 
 	/// <summary>
@@ -20,7 +40,7 @@ namespace Elastic.Ingest
 	/// every N messages OR in the case messages do no flow fast enough or stop before N messages were received every
 	/// M timespan.
 	/// </summary>
-	internal class ChannelBuffer<TEvent> : IChannelBuffer, IDisposable
+	public class ChannelBuffer<TEvent> : IConsumedBufferStatistics, IDisposable
 	{
 		private readonly int _maxBufferSize;
 		private CancellationTokenSource _breaker = new CancellationTokenSource();

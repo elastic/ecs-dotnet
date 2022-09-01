@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>netstandard2.1</TargetFramework>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Elastic.CommonSchema\Elastic.CommonSchema.csproj" />
+      <ProjectReference Include="..\Elastic.Ingest.Elasticsearch\Elastic.Ingest.Elasticsearch.csproj" />
+    </ItemGroup>
+
+</Project>

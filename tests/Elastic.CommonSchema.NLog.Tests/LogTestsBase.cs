@@ -27,6 +27,9 @@ namespace Elastic.CommonSchema.NLog.Tests
 			LayoutRenderer.Register<ApmTraceIdLayoutRenderer>(ApmTraceIdLayoutRenderer.Name); //generic
 			LayoutRenderer.Register<ApmTransactionIdLayoutRenderer>(ApmTransactionIdLayoutRenderer.Name); //generic
 			LayoutRenderer.Register<ApmSpanIdLayoutRenderer>(ApmSpanIdLayoutRenderer.Name); //generic
+			LayoutRenderer.Register<ApmServiceNameLayoutRenderer>(ApmServiceNameLayoutRenderer.Name); //generic
+			LayoutRenderer.Register<ApmServiceVersionLayoutRenderer>(ApmServiceVersionLayoutRenderer.Name); //generic
+			LayoutRenderer.Register<ApmServiceNodeNameLayoutRenderer>(ApmServiceNodeNameLayoutRenderer.Name); //generic
 
 			var logFactory = new LogFactory();
 			var logConfig = new Config.LoggingConfiguration(logFactory);

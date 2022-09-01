@@ -1,14 +1,13 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFramework>net5.0</TargetFramework>
+        <TargetFramework>net6.0</TargetFramework>
 
         <IsPackable>false</IsPackable>
     </PropertyGroup>
 
     <ItemGroup>
         <PackageReference Include="FluentAssertions" Version="5.9.0" />
-        <PackageReference Include="JunitXml.TestLogger" Version="2.1.15" />
         <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.8.0" />
         <PackageReference Include="Serilog.Enrichers.Environment" Version="2.1.3" />
         <PackageReference Include="Serilog.Enrichers.Process" Version="2.0.1" />
@@ -29,6 +28,7 @@
     <ItemGroup>
       <ProjectReference Include="..\..\src\Elastic.Apm.SerilogEnricher\Elastic.Apm.SerilogEnricher.csproj" />
       <ProjectReference Include="..\..\src\Elastic.CommonSchema.Serilog\Elastic.CommonSchema.Serilog.csproj" />
+      <ProjectReference Include="..\Elastic.Apm.Test.Common\Elastic.Apm.Test.Common.csproj" />
       <ProjectReference Include="..\Elastic.CommonSchema.Tests\Elastic.CommonSchema.Tests.csproj" />
     </ItemGroup>
 

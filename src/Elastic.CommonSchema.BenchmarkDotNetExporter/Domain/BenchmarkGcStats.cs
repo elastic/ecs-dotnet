@@ -3,6 +3,7 @@
 // See the LICENSE file in the project root for more information
 
 using System.Runtime.Serialization;
+using System.Text.Json.Serialization;
 using BenchmarkDotNet.Engines;
 using BenchmarkDotNet.Running;
 
@@ -19,19 +20,19 @@ namespace Elastic.CommonSchema.BenchmarkDotNetExporter.Domain
 			BytesAllocatedPerOperation = statistics.GetBytesAllocatedPerOperation(benchmarkCase);
 		}
 
-		[DataMember(Name = "bytes_allocated_per_operation")]
+		[JsonPropertyName("bytes_allocated_per_operation"), DataMember(Name = "bytes_allocated_per_operation")]
 		public long BytesAllocatedPerOperation { get; set; }
 
-		[DataMember(Name = "total_operations")]
+		[JsonPropertyName("total_operations"), DataMember(Name = "total_operations")]
 		public long TotalOperations { get; set; }
 
-		[DataMember(Name = "gen2_collections")]
+		[JsonPropertyName("gen2_collections"), DataMember(Name = "gen2_collections")]
 		public int Gen2Collections { get; set; }
 
-		[DataMember(Name = "gen1_collections")]
+		[JsonPropertyName("gen1_collections"), DataMember(Name = "gen1_collections")]
 		public int Gen1Collections { get; set; }
 
-		[DataMember(Name = "gen0_collections")]
+		[JsonPropertyName("gen0_collections"), DataMember(Name = "gen0_collections")]
 		public int Gen0Collections { get; set; }
 	}
 }

@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text.RegularExpressions;
 using CsQuery.ExtensionMethods;
 using Elastic.CommonSchema.Generator.Schema.DTO;
 using Generator;
@@ -12,12 +13,12 @@ namespace Elastic.CommonSchema.Generator.Schema
 {
 	public class EcsSchemaParser
 	{
-		private readonly string _versionTag;
+		private readonly string _gitRef;
 
-		public EcsSchemaParser(string versionTag)
+		public EcsSchemaParser(string gitRef)
 		{
-			_versionTag = versionTag;
-			SpecificationFolder = Path.Combine(CodeConfiguration.SpecificationFolder, versionTag);
+			_gitRef = gitRef;
+			SpecificationFolder = Path.Combine(CodeConfiguration.SpecificationFolder, gitRef);
 			EcsYamlFile = Path.Combine(SpecificationFolder, "Core", "ecs_nested.yml");
 			if (!File.Exists(EcsYamlFile)) throw new Exception($"Failed to locate {EcsYamlFile}");
 		}
@@ -43,7 +44,10 @@ namespace Elastic.CommonSchema.Generator.Schema
 
 			var warnings = SerializeParsedAndCompareWithOriginal(spec, asJson);
 			var templates = ReadTemplates();
-			return new EcsSchema(spec.Values.ToList(), warnings, templates, _versionTag);
+			var components = ReadComponents();
+			var ecsVersion = new Regex("^.*\"ecs_version\":\\s?\"(.*?)\".*$", RegexOptions.Singleline)
+				.Replace(templates["composable"], "$1");
+			return new EcsSchema(spec.Values.ToList(), warnings, templates, components, _gitRef, ecsVersion);
 		}
 
 		private Dictionary<string, string> ReadTemplates()
@@ -58,7 +62,27 @@ namespace Elastic.CommonSchema.Generator.Schema
 
 			foreach (var (dir, jsonFile) in templateFiles)
 			{
+				if (dir.Name == "component") continue;
+
 				templates.Add(dir.Name, File.ReadAllText(jsonFile.FullName));
+			}
+			return templates;
+		}
+		private Dictionary<string, string> ReadComponents()
+		{
+
+			var templates = new Dictionary<string, string>();
+			var templateFiles =
+				from directoryPath in Directory.GetDirectories(SpecificationFolder, "*", SearchOption.AllDirectories)
+				let dir = new DirectoryInfo(directoryPath)
+				from jsonFile in dir.EnumerateFileSystemInfos("*.json")
+				select (dir, jsonFile);
+
+			foreach (var (dir, jsonFile) in templateFiles)
+			{
+				if (dir.Name != "component") continue;
+
+				templates.Add(jsonFile.Name.Replace(".json", ""), File.ReadAllText(jsonFile.FullName));
 			}
 			return templates;
 		}
