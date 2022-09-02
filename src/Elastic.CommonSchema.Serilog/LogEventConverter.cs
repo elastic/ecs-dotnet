@@ -55,6 +55,7 @@ namespace Elastic.CommonSchema.Serilog
 				Message = logEvent.RenderMessage(),
 				Ecs = new Ecs { Version = EcsDocument.Version },
 				Log = GetLog(logEvent, exceptions, configuration),
+				Service = GetService(logEvent),
 				Agent = GetAgent(logEvent),
 				Event = GetEvent(logEvent),
 				Metadata = GetMetadata(logEvent, configuration.LogEventPropertiesToFilter),
@@ -82,6 +83,19 @@ namespace Elastic.CommonSchema.Serilog
 				ecsEvent = configuration.MapCustom(ecsEvent, logEvent);
 
 			return ecsEvent;
+		}
+
+		private static Service GetService(LogEvent logEvent)
+		{
+			if (!logEvent.TryGetScalarPropertyValue("ElasticApmServiceName", out var serviceName))
+				return null;
+
+			return new Service
+			{
+				Name = serviceName.Value.ToString(),
+				Version = logEvent.TryGetScalarPropertyValue("ElasticApmServiceVersion", out var version) ? version.Value.ToString() : null,
+				NodeName = logEvent.TryGetScalarPropertyValue("ElasticApmServiceNodeName", out var name) ? name.Value.ToString() : null,
+			};
 		}
 
 		private static string GetTrace(LogEvent logEvent) => !logEvent.TryGetScalarPropertyValue("ElasticApmTraceId", out var traceId)
