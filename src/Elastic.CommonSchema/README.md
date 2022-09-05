@@ -153,7 +153,7 @@ The C# `EcsDocument` type includes a property called `Metadata` with the signatu
 /// <summary>
 /// Container for additional metadata against this event.
 /// </summary>
-[DataMember(Name = "metadata")]
+[JsonPropertyName("metadata"), DataMember(Name = "metadata")]
 public IDictionary<string, object> Metadata { get; set; }
 ```
 
@@ -171,7 +171,7 @@ Through `TryRead`/`ReceiveProperty`/`WriteAdditionalProperties` you can hook int
 /// </summary>
 public class MyEcsDocument : EcsDocument
 {
-	[DataMember(Name = "my_root_property")]
+	[JsonPropertyName("my_root_property"), DataMember(Name = "my_root_property")]
 	public MyCustomType MyRootProperty { get; set; }
 
 	protected override bool TryRead(string propertyName, out Type type)

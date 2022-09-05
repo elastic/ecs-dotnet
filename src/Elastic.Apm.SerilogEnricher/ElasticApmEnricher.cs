@@ -17,6 +17,14 @@ namespace Elastic.Apm.SerilogEnricher
 		public void Enrich(LogEvent logEvent, ILogEventPropertyFactory propertyFactory)
 		{
 			if (!Agent.IsConfigured) return;
+
+			logEvent.AddPropertyIfAbsent(propertyFactory.CreateProperty("ElasticApmServiceName", Agent.Config.ServiceName));
+			logEvent.AddPropertyIfAbsent(propertyFactory.CreateProperty("ElasticApmServiceVersion", Agent.Config.ServiceVersion));
+			logEvent.AddPropertyIfAbsent(propertyFactory.CreateProperty("ElasticApmServiceNodeName", Agent.Config.ServiceNodeName));
+
+			if (Agent.Config.GlobalLabels != null)
+				logEvent.AddPropertyIfAbsent(propertyFactory.CreateProperty("ElasticApmGlobalLabels", Agent.Config.GlobalLabels));
+
 			if (Agent.Tracer is null) return;
 			if (Agent.Tracer.CurrentTransaction is null) return;
 
