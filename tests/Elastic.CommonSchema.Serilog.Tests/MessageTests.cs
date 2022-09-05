@@ -49,13 +49,13 @@ namespace Elastic.CommonSchema.Serilog.Tests
 
 			var (_, info) = ecsEvents.First();
 			info.Message.Should().Be("Info \"X\" 2.2");
-			info.Metadata.Should().ContainKey("value_x");
-			info.Metadata.Should().ContainKey("some_y");
+			info.Metadata.Should().ContainKey("ValueX");
+			info.Metadata.Should().ContainKey("SomeY");
 
-			var x = info.Metadata["value_x"] as string;
+			var x = info.Metadata["ValueX"] as string;
 			x.Should().NotBeNull().And.Be("X");
 
-			var y = info.Metadata["some_y"] as double?;
+			var y = info.Metadata["SomeY"] as double?;
 			y.Should().HaveValue().And.Be(2.2);
 
 		});
@@ -72,20 +72,20 @@ namespace Elastic.CommonSchema.Serilog.Tests
 
 			var (_, info) = ecsEvents.First();
 			info.Message.Should().Be("Info \"X\" 2.2 [(\"fieldOne\": \"value1\"), (\"fieldTwo\": \"value2\")]");
-			info.Metadata.Should().ContainKey("value_x");
-			info.Metadata.Should().ContainKey("some_y");
-			info.Metadata.Should().ContainKey("dict_value");
+			info.Metadata.Should().ContainKey("ValueX");
+			info.Metadata.Should().ContainKey("SomeY");
+			info.Metadata.Should().ContainKey("DictValue");
 
-			var x = info.Metadata["value_x"] as string;
+			var x = info.Metadata["ValueX"] as string;
 			x.Should().NotBeNull().And.Be("X");
 
-			var y = info.Metadata["some_y"] as double?;
+			var y = info.Metadata["SomeY"] as double?;
 			y.Should().HaveValue().And.Be(2.2);
 
-			var dict = info.Metadata["dict_value"] as JsonElement?;
+			var dict = info.Metadata["DictValue"] as MetadataDictionary;
 			dict.Should().NotBeNull();
-			dict.Value.GetProperty("field_one").GetString().Should().Be("value1");
-			dict.Value.GetProperty("field_two").GetString().Should().Be("value2");
+			dict["fieldOne"].Should().Be("value1");
+			dict["fieldTwo"].Should().Be("value2");
 		});
 
 		[Fact]
@@ -100,13 +100,15 @@ namespace Elastic.CommonSchema.Serilog.Tests
 
 			var (_, info) = ecsEvents.First();
 			info.Message.Should().Be("Info { TestProp: \"testing\", Child: { ChildProp: 3.3 } }");
-			info.Metadata.Should().ContainKey("my_obj");
+			info.Metadata.Should().ContainKey("MyObj");
 
-			
-			var json = info.Metadata["my_obj"] as JsonElement?;
+
+			var json = info.Metadata["MyObj"] as MetadataDictionary;
 			json.Should().NotBeNull();
-			json.Value.GetProperty("test_prop").GetString().Should().Be("testing");
-			json.Value.GetProperty("child").GetProperty("child_prop").GetDouble().Should().Be(3.3);
+			json["TestProp"].Should().Be("testing");
+			var child = json["Child"] as MetadataDictionary;
+			child.Should().NotBeNull();
+			child["ChildProp"].Should().Be(3.3);
 		});
 	}
 }

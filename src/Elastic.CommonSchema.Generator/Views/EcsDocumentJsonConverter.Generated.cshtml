@@ -33,7 +33,7 @@ namespace Elastic.CommonSchema.Serialization
 			return propertyName switch
 			{
 				"log.level" => ReadString(ref reader, ref loglevel),
-				"metadata" => ReadProp@(Raw("<IDictionary<string, object>>"))(ref reader, "metadata", ecsEvent, (b, v) => b.Metadata = v),
+				"metadata" => ReadProp@(Raw("<MetadataDictionary>"))(ref reader, "metadata", ecsEvent, (b, v) => b.Metadata = v),
 @foreach (var property in Model.Base.BaseFieldSet.ValueProperties)
 {
 	var name = property.JsonProperty;

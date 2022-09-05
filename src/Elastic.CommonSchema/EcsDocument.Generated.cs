@@ -18,6 +18,7 @@ using System.Linq;
 using System.Net;
 using System.Runtime.Serialization;
 using System.Text.Json.Serialization;
+using Elastic.CommonSchema.Serialization;
 
 namespace Elastic.CommonSchema
 {
@@ -34,7 +35,8 @@ namespace Elastic.CommonSchema
 		/// Container for additional metadata against this event.
 		/// </summary>
 		[JsonPropertyName("metadata"), DataMember(Name = "metadata")]
-		public IDictionary<string, object> Metadata { get; set; }
+		[JsonConverter(typeof(MetadataDictionaryConverter))]
+		public MetadataDictionary Metadata { get; set; }
 
 
 		///<summary>agent</summary>
