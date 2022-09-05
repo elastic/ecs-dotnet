@@ -53,7 +53,6 @@ namespace Elastic.CommonSchema.Serialization
 				else
 				{
 					var inputType = kvp.Value.GetType();
-					//TODO prevent reentry and cache get converters
 					JsonSerializer.Serialize(writer, kvp.Value, inputType, options);
 				}
 			}
