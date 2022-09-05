@@ -18,15 +18,13 @@ namespace Elastic.CommonSchema.Serialization
 			PropertyNamingPolicy = new SnakeCaseJsonNamingPolicy(),
 			Converters =
 			{
-				new DictionaryJsonConverterFactory(),
 				new EcsDocumentJsonConverterFactory()
-			}
+			},
+
 		};
 
 		internal static readonly JsonConverter<DateTimeOffset> DateTimeOffsetConverter =
 			(JsonConverter<DateTimeOffset>)SerializerOptions.GetConverter(typeof(DateTimeOffset));
-
-		internal static readonly MetaDataDictionaryConverter MetaDataDictionaryConverter = new();
 
 		public static readonly EcsDocumentJsonConverter DefaultEcsDocumentJsonConverter = new();
 	}

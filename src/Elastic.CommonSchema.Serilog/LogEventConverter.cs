@@ -111,11 +111,11 @@ namespace Elastic.CommonSchema.Serilog
 				? null
 				: spanId.Value.ToString();
 
-		private static IDictionary<string, object> GetMetadata(LogEvent logEvent, ISet<string> logEventPropertiesToFilter)
+		private static MetadataDictionary GetMetadata(LogEvent logEvent, ISet<string> logEventPropertiesToFilter)
 		{
-			var dict = new Dictionary<string, object>
+			var dict = new MetadataDictionary
 			{
-				{ ToSnakeCase("MessageTemplate"), logEvent.MessageTemplate.Text }
+				{ "MessageTemplate", logEvent.MessageTemplate.Text }
 			};
 
 			//TODO what does this do and where does it come from?
@@ -131,7 +131,7 @@ namespace Elastic.CommonSchema.Serilog
 							.Replace("]", string.Empty)
 							.Split(','))
 						.Select(value => new { Key = value[0].Trim(), Value = value[1].Trim() }))
-						dict.Add(ToSnakeCase(item.Key), item.Value);
+						dict.Add(item.Key, item.Value);
 				}
 			}
 
@@ -160,7 +160,7 @@ namespace Elastic.CommonSchema.Serilog
 				//key present in list of keys to filter
 				if (logEventPropertiesToFilter?.Contains(logEventPropertyValue.Key) ?? false)
 					continue;
-				dict.Add(ToSnakeCase(logEventPropertyValue.Key), PropertyValueToObject(logEventPropertyValue.Value));
+				dict.Add(logEventPropertyValue.Key, PropertyValueToObject(logEventPropertyValue.Value));
 			}
 
 			if (dict.Count == 0)
@@ -177,7 +177,7 @@ namespace Elastic.CommonSchema.Serilog
 				case ScalarValue sv:
 					return sv.Value;
 				case DictionaryValue dv:
-					return dv.Elements.ToDictionary(keySelector: kvp => ToSnakeCase(kvp.Key.Value.ToString()), elementSelector: (kvp) => PropertyValueToObject(kvp.Value));
+					return dv.Elements.ToDictionary(keySelector: kvp => kvp.Key.Value.ToString(), elementSelector: (kvp) => PropertyValueToObject(kvp.Value));
 				case StructureValue ov:
 				{
 					var dict = ov.Properties.ToDictionary(p => p.Name, p => PropertyValueToObject(p.Value));
@@ -188,8 +188,6 @@ namespace Elastic.CommonSchema.Serilog
 					return propertyValue;
 			}
 		}
-
-		private static string ToSnakeCase(string key) => key;
 
 		private static Host GetHost(LogEvent e)
 		{
