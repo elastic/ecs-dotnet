@@ -5,6 +5,9 @@ Allows you to add the following place holders in your NLog templates:
 * `ElasticApmTraceId`
 * `ElasticApmTransactionId`
 * `ElasticApmSpanId`
+* `ElasticApmServiceName`
+* `ElasticApmServiceNodeName`
+* `ElasticApmServiceVersion`
 
 Which will be replaced with the appropriate Elastic APM variables if available
 
@@ -19,7 +22,7 @@ The .NET assemblies are published to NuGet under the package name [Elastic.Apm.N
 // or `|||InTransaction` if the place holders are not available
 var consoleTarget = new ConsoleTarget("console");
 consoleTarget.Layout = 
-    "${ElasticApmTraceId}|${ElasticApmTransactionId}|${ElasticApmSpanId}|${message}";
+    "${ElasticApmServiceName}|${ElasticApmTraceId}|${ElasticApmTransactionId}|${ElasticApmSpanId}|${message}";
 config.AddRule(LogLevel.Debug, LogLevel.Fatal, consoleTarget);
 LogManager.Configuration = config;
 var logger = LogManager.GetCurrentClassLogger();

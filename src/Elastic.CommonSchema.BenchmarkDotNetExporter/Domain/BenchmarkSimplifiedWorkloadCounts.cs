@@ -3,15 +3,16 @@
 // See the LICENSE file in the project root for more information
 
 using System.Runtime.Serialization;
+using System.Text.Json.Serialization;
 
 namespace Elastic.CommonSchema.BenchmarkDotNetExporter.Domain
 {
 	public class BenchmarkSimplifiedWorkloadCounts
 	{
-		[DataMember(Name = "warmup")]
+		[JsonPropertyName("warmup"), DataMember(Name = "warmup")]
 		public long Warmup { get; set; }
 
-		[DataMember(Name = "measured")]
+		[JsonPropertyName("measured"), DataMember(Name = "measured")]
 		public long Measured { get; set; }
 	}
 }
