@@ -14,21 +14,21 @@ namespace Elastic.CommonSchema.Log4net;
 
 internal static class LoggingEventConverter
 {
-	public static EcsDocument ToEcs(this LoggingEvent loggingEvent)
-		=> new()
-		{
-			Timestamp = loggingEvent.TimeStamp,
-			Ecs = new Ecs { Version = EcsDocument.Version },
-			Message = loggingEvent.RenderedMessage,
-			Log = GetLog(loggingEvent),
-			Event = GetEvent(loggingEvent),
-			Error = GetError(loggingEvent),
-			Process = GetProcess(loggingEvent),
-			Host = GetHost(loggingEvent),
-			Metadata = GetMetadata(loggingEvent)
-		};
+    public static EcsDocument ToEcs(this LoggingEvent loggingEvent)
+        => new()
+        {
+            Timestamp = loggingEvent.TimeStamp,
+            Ecs = new Ecs { Version = EcsDocument.Version },
+            Message = loggingEvent.RenderedMessage,
+            Log = GetLog(loggingEvent),
+            Event = GetEvent(loggingEvent),
+            Error = GetError(loggingEvent),
+            Process = GetProcess(loggingEvent),
+            Host = GetHost(loggingEvent),
+            Metadata = GetMetadata(loggingEvent)
+        };
 
-	private static Log GetLog(LoggingEvent loggingEvent)
+    private static Log GetLog(LoggingEvent loggingEvent)
     {
         var log = new Log
         {

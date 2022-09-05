@@ -15,9 +15,9 @@ public class EcsLayout : LayoutSkeleton
 {
     public override string ContentType => "application/json";
 
-	public override void ActivateOptions() => IgnoresException = false;
+    public override void ActivateOptions() => IgnoresException = false;
 
-	public override void Format(TextWriter writer, LoggingEvent loggingEvent)
+    public override void Format(TextWriter writer, LoggingEvent loggingEvent)
     {
         var ecsEvent = loggingEvent.ToEcs();
         writer.WriteLine(ecsEvent.Serialize());
