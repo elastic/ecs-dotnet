@@ -56,6 +56,10 @@ namespace Elastic.CommonSchema.NLog
 				ApmTraceId = "${ElasticApmTraceId}";
 				ApmTransactionId = "${ElasticApmTransactionId}";
 				ApmSpanId = "${ElasticApmSpanId}";
+
+				ApmServiceName = "${ElasticApmServiceName}";
+				ApmServiceNodeName = "${ElasticApmServiceNodeName}";
+				ApmServiceVersion = "${ElasticApmServiceVersion}";
 			}
 		}
 
@@ -66,8 +70,11 @@ namespace Elastic.CommonSchema.NLog
 
 		public Layout ApmTraceId { get; set; }
 		public Layout ApmTransactionId { get; set; }
-
 		public Layout ApmSpanId { get; set; }
+
+		public Layout ApmServiceName { get; set; }
+		public Layout ApmServiceNodeName { get; set; }
+		public Layout ApmServiceVersion { get; set; }
 
 		/// <summary>
 		/// Allow dynamically disabling <see cref="ThreadAgnosticAttribute" /> to
@@ -137,6 +144,7 @@ namespace Elastic.CommonSchema.NLog
 				Message = logEvent.FormattedMessage,
 				Ecs = new Ecs { Version = EcsDocument.Version },
 				Log = GetLog(logEvent),
+				Service = GetService(logEvent),
 				Event = GetEvent(logEvent),
 				Metadata = GetMetadata(logEvent),
 				Process = GetProcess(logEvent),
@@ -157,6 +165,16 @@ namespace Elastic.CommonSchema.NLog
 			EnrichAction?.Invoke(ecsEvent, logEvent);
 
 			ecsEvent.Serialize(target);
+		}
+
+		private Service GetService(LogEventInfo logEventInfo)
+		{
+			var serviceName = ApmServiceName?.Render(logEventInfo);
+			if (string.IsNullOrEmpty(serviceName)) return null;
+
+			var serviceNodeName = ApmServiceNodeName?.Render(logEventInfo);
+			var serviceVersion = ApmServiceVersion?.Render(logEventInfo);
+			return new Service { Name = serviceName, Version = serviceVersion, NodeName = serviceNodeName };
 		}
 
 		/// <summary>

@@ -20,6 +20,7 @@ using System.Threading.Tasks;
 using System.Linq;
 using System.Net;
 using System.Runtime.Serialization;
+using System.Text.Json.Serialization;
 
 namespace Elastic.CommonSchema
 {
@@ -34,7 +35,7 @@ namespace Elastic.CommonSchema
 {
 <text>
 		///<summary>@property.FullPath</summary>
-		[DataMember(Name = "@property.JsonProperty")]
+		[JsonPropertyName("@property.JsonProperty"), DataMember(Name = "@property.JsonProperty")]
 		public @property.ClrType @property.Name { get; set; }
 </text>
 }
@@ -42,7 +43,7 @@ namespace Elastic.CommonSchema
 {
 <text>
 		///<summary>@property.FullPath</summary>
-		[DataMember(Name = "@property.JsonProperty")]
+		[JsonPropertyName("@property.JsonProperty"), DataMember(Name = "@property.JsonProperty")]
 		public @property.Entity.Name @property.Name { get; set; }
 </text>
 }
