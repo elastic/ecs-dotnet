@@ -87,7 +87,8 @@ namespace Elastic.CommonSchema.Log4net.Tests
 		[Fact]
 		public void ToEcs_AnyEvent_PopulatesHostField() => TestLogger((log, getLogEvents) =>
 		{
-			log.Info("DummyText");
+			var loggingEvent = new LoggingEvent(GetType(), log.Logger.Repository, log.Logger.Name, Level.Info, "DummyText", null);
+			log.Logger.Log(loggingEvent);
 
 			var logEvents = getLogEvents();
 			logEvents.Should().HaveCount(1);
@@ -95,7 +96,7 @@ namespace Elastic.CommonSchema.Log4net.Tests
 			var (_, info) = ToEcsEvents(logEvents).First();
 
 			info.Host.Should().NotBeNull();
-			info.Host.Hostname.Should().Be(Environment.MachineName);
+			info.Host.Hostname.Should().Be(loggingEvent.LookupProperty(LoggingEvent.HostNameProperty).ToString());
 		});
 
 		[Fact]
