@@ -17,7 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\Elastic.CommonSchema.log4net\Elastic.CommonSchema.log4net.csproj" />
+    <ProjectReference Include="..\..\src\Elastic.CommonSchema.Log4net\Elastic.CommonSchema.Log4net.csproj" />
     <ProjectReference Include="..\Elastic.CommonSchema.Tests\Elastic.CommonSchema.Tests.csproj" />
   </ItemGroup>
 
