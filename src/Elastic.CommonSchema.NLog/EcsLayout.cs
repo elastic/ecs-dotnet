@@ -246,12 +246,12 @@ namespace Elastic.CommonSchema.NLog
 			return fullText.ToString();
 		}
 
-		private IDictionary<string, object> GetMetadata(LogEventInfo e)
+		private MetadataDictionary GetMetadata(LogEventInfo e)
 		{
 			if ((!IncludeEventProperties || !e.HasProperties) && Metadata?.Count == 0 && !IncludeScopeProperties)
 				return null;
 
-			var metadata = new Dictionary<string, object>();
+			var metadata = new MetadataDictionary();
 
 			if (IncludeEventProperties && e.HasProperties)
 			{
