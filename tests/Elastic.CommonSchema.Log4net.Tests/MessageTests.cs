@@ -63,21 +63,6 @@ namespace Elastic.CommonSchema.Log4net.Tests
 		});
 
 		[Fact]
-		public void ToEcs_AnyEvent_PopulatesServiceField() => TestLogger((log, getLogEvents) =>
-		{
-			log.Info("DummyText");
-
-			var logEvents = getLogEvents();
-			logEvents.Should().HaveCount(1);
-
-			var (_, info) = ToEcsEvents(logEvents).First();
-
-			info.Service.Should().NotBeNull();
-			info.Service.Name.Should().NotBeNullOrEmpty();
-			info.Service.Version.Should().NotBeNullOrEmpty();
-		});
-
-		[Fact]
 		public void ToEcs_AnyEvent_PopulatesProcessField() => TestLogger((log, getLogEvents) =>
 		{
 			var loggingEvent = new LoggingEvent(GetType(), log.Logger.Repository, log.Logger.Name, Level.Info, "DummyText", null);

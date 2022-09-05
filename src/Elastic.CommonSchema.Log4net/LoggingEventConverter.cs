@@ -14,8 +14,6 @@ namespace Elastic.CommonSchema.Log4net;
 
 internal static class LoggingEventConverter
 {
-    private static readonly Lazy<AssemblyName> AssemblyName = new(() => (Assembly.GetEntryAssembly() ?? Assembly.GetCallingAssembly()).GetName(), true);
-
 	public static EcsDocument ToEcs(this LoggingEvent loggingEvent)
 		=> new()
 		{
@@ -25,7 +23,6 @@ internal static class LoggingEventConverter
 			Log = GetLog(loggingEvent),
 			Event = GetEvent(loggingEvent),
 			Error = GetError(loggingEvent),
-			Service = GetService(),
 			Process = GetProcess(loggingEvent),
 			Host = GetHost(loggingEvent),
 			Metadata = GetMetadata(loggingEvent)
@@ -112,13 +109,6 @@ internal static class LoggingEventConverter
 
         return fullText.ToString();
     }
-
-    private static Service GetService() =>
-        new()
-        {
-            Name = AssemblyName.Value.Name,
-            Version = AssemblyName.Value.Version?.ToString()
-        };
 
     private static Process GetProcess(LoggingEvent loggingEvent)
     {
