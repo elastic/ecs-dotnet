@@ -46,11 +46,11 @@ namespace Elastic.CommonSchema.Tests
 		}
 
 		[Fact]
-		public void SerializesMetadataPropertiesToSnakeCase()
+		public void MetaDataKeysAreSerializedVerbatim()
 		{
 			var b = new EcsDocument
 			{
-				Metadata = new Dictionary<string, object>
+				Metadata = new MetadataDictionary
 				{
 					["MessageTemplate"] = "some-template",
 					["WriteIO"] = "some-io",
@@ -63,10 +63,10 @@ namespace Elastic.CommonSchema.Tests
 			var serialized = b.Serialize();
 			var deserialized = EcsSerializerFactory<EcsDocument>.Deserialize(serialized);
 
-			deserialized.Metadata.Should().ContainKey("message_template");
-			deserialized.Metadata.Should().ContainKey("write_io");
-			deserialized.Metadata.Should().ContainKey("user_id");
-			deserialized.Metadata.Should().ContainKey("event_id");
+			deserialized.Metadata.Should().ContainKey("MessageTemplate");
+			deserialized.Metadata.Should().ContainKey("WriteIO");
+			deserialized.Metadata.Should().ContainKey("User_Id");
+			deserialized.Metadata.Should().ContainKey("eventId");
 			deserialized.Metadata.Should().ContainKey("rule");
 		}
 
@@ -217,7 +217,7 @@ namespace Elastic.CommonSchema.Tests
 					Category = new[] { "network_traffic" }
 				},
 				Ecs = new Ecs { Version = "1.2.0" },
-				Metadata = new Dictionary<string, object> { { "client", "ecs-dotnet" } }
+				Metadata = new MetadataDictionary { { "client", "ecs-dotnet" } }
 			};
 
 			var serialized = ecsDocument.Serialize();

@@ -38,14 +38,14 @@ namespace Elastic.CommonSchema.NLog.Tests
 
 			var (_, info) = ecsEvents.First();
 			info.Message.Should().Be("Info \"X\" 2.2 42");
-			info.Metadata.Should().ContainKey("value_x");
-			info.Metadata.Should().ContainKey("some_y");
-			info.Metadata.Should().NotContainKey("not_x");
+			info.Metadata.Should().ContainKey("ValueX");
+			info.Metadata.Should().ContainKey("SomeY");
+			info.Metadata.Should().NotContainKey("NotX");
 
-			var x = info.Metadata["value_x"] as string;
+			var x = info.Metadata["ValueX"] as string;
 			x.Should().NotBeNull().And.Be("X");
 
-			var y = info.Metadata["some_y"] as double?;
+			var y = info.Metadata["SomeY"] as double?;
 			y.Should().HaveValue().And.Be(2.2);
 		});
 
@@ -87,15 +87,15 @@ namespace Elastic.CommonSchema.NLog.Tests
 
 				var (json, info) = ecsEvents.First();
 
-				json.Should().Contain("\"metadata\":{\"dup_key\":\"LoggerArg\",\"dup_key_1\":\"Mdlc\"}");
+				json.Should().Contain("\"metadata\":{\"DupKey\":\"LoggerArg\",\"DupKey_1\":\"Mdlc\"}");
 				info.Message.Should().Be("Info \"LoggerArg\"");
-				info.Metadata.Should().ContainKey("dup_key");
-				info.Metadata.Should().ContainKey("dup_key_1");
+				info.Metadata.Should().ContainKey("DupKey");
+				info.Metadata.Should().ContainKey("DupKey_1");
 
-				var x = info.Metadata["dup_key"] as string;
+				var x = info.Metadata["DupKey"] as string;
 				x.Should().NotBeNull().And.Be("LoggerArg");
 
-				var y = info.Metadata["dup_key_1"] as string;
+				var y = info.Metadata["DupKey_1"] as string;
 				y.Should().NotBeNull().And.Be("Mdlc");
 			}
 		});

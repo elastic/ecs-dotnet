@@ -117,9 +117,9 @@ namespace Elastic.CommonSchema.Serilog
 				? null
 				: spanId.Value.ToString();
 
-		private static IDictionary<string, object> GetMetadata(LogEvent logEvent, ISet<string> logEventPropertiesToFilter)
+		private static MetadataDictionary GetMetadata(LogEvent logEvent, ISet<string> logEventPropertiesToFilter)
 		{
-			var dict = new Dictionary<string, object>
+			var dict = new MetadataDictionary
 			{
 				{ "MessageTemplate", logEvent.MessageTemplate.Text }
 			};
