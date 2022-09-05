@@ -132,7 +132,7 @@ internal static class LoggingEventConverter
         return hostName != null ? new Host { Hostname = hostName.ToString() } : null;
     }
 
-    private static IDictionary<string, object> GetMetadata(LoggingEvent loggingEvent)
+    private static MetadataDictionary GetMetadata(LoggingEvent loggingEvent)
     {
         var properties = loggingEvent.GetProperties();
         if (properties.Count == 0)
@@ -140,7 +140,7 @@ internal static class LoggingEventConverter
             return null;
         }
 
-        var metadata = new Dictionary<string, object>();
+        var metadata = new MetadataDictionary();
 
         foreach (var property in properties.GetKeys())
         {

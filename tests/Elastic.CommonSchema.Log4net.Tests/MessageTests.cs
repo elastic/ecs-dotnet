@@ -147,7 +147,7 @@ namespace Elastic.CommonSchema.Log4net.Tests
 			info.Should().NotBeNull();
 			info.Metadata.Should().NotBeNull();
 
-			info.Metadata["message_template"].Should().Be("Log with {0}");
+			info.Metadata["MessageTemplate"].Should().Be("Log with {0}");
 			info.Metadata["0"].Should().Be("format");
 		});
 
