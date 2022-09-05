@@ -87,6 +87,21 @@ filesystem target and [Elastic Filebeat](https://www.elastic.co/downloads/beats/
   - _LogOriginCallSiteFile_ - Default: `${exception:format=source}`
   - _LogOriginCallSiteLine_ -
 
+* **Http Options**
+  - _HttpRequestId_ - Default: `${aspnet-trace-identifier}`
+  - _HttpRequestMethod_ - Default: `${aspnet-request-method}`
+  - _HttpRequestBytes_ - Default: `${aspnet-request-contentlength}`
+  - _HttpRequestReferrer_ - Default: `${aspnet-request-referrer}`
+  - _HttpResponseStatusCode_ - Default: `${aspnet-response-statuscode}`
+
+* **Url Options**
+  - _UrlScheme_ - Default: `${aspnet-request-url:IncludeScheme=true:IncludeHost=false:IncludePath=false}`
+  - _UrlDomain_ - Default: `${aspnet-request-url:IncludeScheme=false:IncludeHost=true:IncludePath=false}`
+  - _UrlPath_ - Default: `${aspnet-request-url:IncludeScheme=false:IncludeHost=false:IncludePath=true}`
+  - _UrlPort_ - Default: `${aspnet-request-url:IncludeScheme=false:IncludeHost=false:IncludePath=false:IncludePort=true}`
+  - _UrlQuery_ - Default: `${aspnet-request-url:IncludeScheme=false:IncludeHost=false:IncludePath=false:IncludeQueryString=true}`
+  - _UrlUserName_ - Default: `${aspnet-user-identity}`
+
 * **Trace Options**
   - _ApmTraceId_ - Default: `${ElasticApmTraceId}`
 
