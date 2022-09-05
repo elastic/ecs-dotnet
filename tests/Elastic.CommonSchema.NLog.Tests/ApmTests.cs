@@ -5,6 +5,7 @@
 using System.Diagnostics;
 using System.Linq;
 using Elastic.Apm;
+using Elastic.Apm.Test.Common;
 using FluentAssertions;
 using Xunit;
 
@@ -15,8 +16,9 @@ namespace Elastic.CommonSchema.NLog.Tests
 		[Fact]
 		public void ElasticApmEndUpOnEcsLog() => TestLogger((logger, getLogEvents) =>
 		{
+			var configuration = new MockConfiguration("my-service", "my-service-node-name", "0.2.1");
 			if (!Apm.Agent.IsConfigured)
-				Apm.Agent.Setup(new AgentComponents());
+				Apm.Agent.Setup(new AgentComponents(payloadSender: new NoopPayloadSender(), configurationReader: configuration));
 
 			string traceId = null;
 			string transactionId = null;
@@ -44,6 +46,10 @@ namespace Elastic.CommonSchema.NLog.Tests
 			info.TraceId.Should().Be(traceId);
 			info.TransactionId.Should().Be(transactionId);
 			info.SpanId.Should().Be(spanId);
+			info.Service.Should().NotBeNull();
+			info.Service.Name.Should().Be("my-service");
+			info.Service.NodeName.Should().Be("my-service-node-name");
+			info.Service.Version.Should().Be("0.2.1");
 		});
 	}
 }
