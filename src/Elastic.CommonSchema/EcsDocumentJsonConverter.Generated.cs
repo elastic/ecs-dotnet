@@ -30,7 +30,7 @@ namespace Elastic.CommonSchema.Serialization
 			return propertyName switch
 			{
 				"log.level" => ReadString(ref reader, ref loglevel),
-				"metadata" => ReadProp<IDictionary<string, object>>(ref reader, "metadata", ecsEvent, (b, v) => b.Metadata = v),
+				"metadata" => ReadProp<MetadataDictionary>(ref reader, "metadata", ecsEvent, (b, v) => b.Metadata = v),
 				"@timestamp" => ReadDateTime(ref reader, ref @timestamp),
 				"message" => ReadProp<string>(ref reader, "message", ecsEvent, (b, v) => b.Message = v),
 				"tags" => ReadProp<string[]>(ref reader, "tags", ecsEvent, (b, v) => b.Tags = v),

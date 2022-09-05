@@ -70,8 +70,6 @@ namespace Elastic.CommonSchema.Serialization
 			 * This used to be a documented fast path that appears to be broken with STJ 5.0. Leaving this commented out to revisit the true performance impact
 			 */
 
-			//if (typeof(T) != typeof(object) && (options?.GetConverter(typeof(TValue)) is JsonConverter<TValue> keyConverter))
-			//	return keyConverter.Read(ref reader, t, options);
 			return JsonSerializer.Deserialize<TValue>(ref reader, options);
 		}
 
