@@ -26,6 +26,7 @@ namespace Elastic.CommonSchema.Generator
 			{
 				{ m => Generate(m, "EcsDocument"), "Base ECS Document" },
 				{ m => Generate(m, "EcsDocumentJsonConverter"), "Base ECS Document Json Converter" },
+				{ m => Generate(m, "EcsJsonContext"), "Ecs System Text Json Source Generators" },
 				{ m => Generate(m, "FieldSets"), "Field Sets" },
 				{ m => Generate(m, "Entities"), "Entities" },
 				{ m => Generate(m, "InlineObjects"), "Inline Objects" },

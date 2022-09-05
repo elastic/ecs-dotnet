@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using System.Text.Json.Serialization.Metadata;
 
 namespace Elastic.CommonSchema.Serialization
 {
@@ -45,6 +46,19 @@ namespace Elastic.CommonSchema.Serialization
 				JsonSerializer.Serialize(writer, value, type, options);
 		}
 
+		protected static void WriteProp<TValue>(Utf8JsonWriter writer, string key, TValue value, JsonTypeInfo<TValue> typeInfo)
+		{
+			if (value == null) return;
+
+			writer.WritePropertyName(key);
+			var type = value.GetType();
+
+			//To support user supplied subtypes
+			if (type != typeof(TValue))
+				JsonSerializer.Serialize(writer, value, type, EcsJsonConfiguration.SerializerOptions);
+			else JsonSerializer.Serialize(writer, value, typeInfo);
+		}
+
 		internal static object ReadPropDeserialize(ref Utf8JsonReader reader, Type type)
 		{
 			if (reader.TokenType == JsonTokenType.Null) return null;
@@ -59,17 +73,6 @@ namespace Elastic.CommonSchema.Serialization
 			if (reader.TokenType == JsonTokenType.Null) return null;
 
 			var options = EcsJsonConfiguration.SerializerOptions;
-
-			/*
-			 * System.NullReferenceException : Object reference not set to an instance of an object.
-  Stack Trace:
-     at System.Text.Json.JsonSerializer.LookupProperty(Object obj, ReadOnlySpan`1 unescapedPropertyName, ReadStack& state, Boolean& useExtensionProperty, Boolean createExtensionProperty)
-   at System.Text.Json.Serialization.Converters.ObjectDefaultConverter`1.OnTryRead(Utf8JsonReader& reader, Type typeToConvert, JsonSerializerOptions options, ReadStack& state, T& value)
-   at System.Text.Json.Serialization.JsonConverter`1.TryRead(Utf8JsonReader& reader, Type typeToConvert, JsonSerializerOptions options, ReadStack& state, T& value)
-			 *
-			 * This used to be a documented fast path that appears to be broken with STJ 5.0. Leaving this commented out to revisit the true performance impact
-			 */
-
 			return JsonSerializer.Deserialize<TValue>(ref reader, options);
 		}
 
@@ -77,6 +80,13 @@ namespace Elastic.CommonSchema.Serialization
 			where TValue : class
 		{
 			set(b, ReadProp<TValue>(ref reader, key));
+			return true;
+		}
+		protected static bool ReadProp<TValue>(ref Utf8JsonReader reader, string key, JsonTypeInfo<TValue> typeInfo, T b, Action<T, TValue> set)
+			where TValue : class
+		{
+			var value = JsonSerializer.Deserialize<TValue>(ref reader, typeInfo);
+			set(b, value);
 			return true;
 		}
 	}

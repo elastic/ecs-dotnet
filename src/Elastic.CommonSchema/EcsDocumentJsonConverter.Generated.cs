@@ -38,52 +38,52 @@ namespace Elastic.CommonSchema.Serialization
 				"trace.id" => ReadProp<string>(ref reader, "trace.id", ecsEvent, (b, v) => b.TraceId = v),
 				"transaction.id" => ReadProp<string>(ref reader, "transaction.id", ecsEvent, (b, v) => b.TransactionId = v),
 				"labels" => ReadProp<Labels>(ref reader, "labels", ecsEvent, (b, v) => b.Labels = v),
-				"agent" => ReadProp<Agent>(ref reader, "agent", ecsEvent, (b, v) => b.Agent = v),
-				"as" => ReadProp<As>(ref reader, "as", ecsEvent, (b, v) => b.As = v),
-				"client" => ReadProp<Client>(ref reader, "client", ecsEvent, (b, v) => b.Client = v),
-				"cloud" => ReadProp<Cloud>(ref reader, "cloud", ecsEvent, (b, v) => b.Cloud = v),
-				"code_signature" => ReadProp<CodeSignature>(ref reader, "code_signature", ecsEvent, (b, v) => b.CodeSignature = v),
-				"container" => ReadProp<Container>(ref reader, "container", ecsEvent, (b, v) => b.Container = v),
-				"data_stream" => ReadProp<DataStream>(ref reader, "data_stream", ecsEvent, (b, v) => b.DataStream = v),
-				"destination" => ReadProp<Destination>(ref reader, "destination", ecsEvent, (b, v) => b.Destination = v),
-				"dll" => ReadProp<Dll>(ref reader, "dll", ecsEvent, (b, v) => b.Dll = v),
-				"dns" => ReadProp<Dns>(ref reader, "dns", ecsEvent, (b, v) => b.Dns = v),
-				"ecs" => ReadProp<Ecs>(ref reader, "ecs", ecsEvent, (b, v) => b.Ecs = v),
-				"elf" => ReadProp<Elf>(ref reader, "elf", ecsEvent, (b, v) => b.Elf = v),
-				"email" => ReadProp<Email>(ref reader, "email", ecsEvent, (b, v) => b.Email = v),
-				"error" => ReadProp<Error>(ref reader, "error", ecsEvent, (b, v) => b.Error = v),
-				"event" => ReadProp<Event>(ref reader, "event", ecsEvent, (b, v) => b.Event = v),
-				"faas" => ReadProp<Faas>(ref reader, "faas", ecsEvent, (b, v) => b.Faas = v),
-				"file" => ReadProp<File>(ref reader, "file", ecsEvent, (b, v) => b.File = v),
-				"geo" => ReadProp<Geo>(ref reader, "geo", ecsEvent, (b, v) => b.Geo = v),
-				"group" => ReadProp<Group>(ref reader, "group", ecsEvent, (b, v) => b.Group = v),
-				"hash" => ReadProp<Hash>(ref reader, "hash", ecsEvent, (b, v) => b.Hash = v),
-				"host" => ReadProp<Host>(ref reader, "host", ecsEvent, (b, v) => b.Host = v),
-				"http" => ReadProp<Http>(ref reader, "http", ecsEvent, (b, v) => b.Http = v),
-				"interface" => ReadProp<Interface>(ref reader, "interface", ecsEvent, (b, v) => b.Interface = v),
-				"log" => ReadProp<Log>(ref reader, "log", ecsEvent, (b, v) => b.Log = v),
-				"network" => ReadProp<Network>(ref reader, "network", ecsEvent, (b, v) => b.Network = v),
-				"observer" => ReadProp<Observer>(ref reader, "observer", ecsEvent, (b, v) => b.Observer = v),
-				"orchestrator" => ReadProp<Orchestrator>(ref reader, "orchestrator", ecsEvent, (b, v) => b.Orchestrator = v),
-				"organization" => ReadProp<Organization>(ref reader, "organization", ecsEvent, (b, v) => b.Organization = v),
-				"os" => ReadProp<Os>(ref reader, "os", ecsEvent, (b, v) => b.Os = v),
-				"package" => ReadProp<Package>(ref reader, "package", ecsEvent, (b, v) => b.Package = v),
-				"pe" => ReadProp<Pe>(ref reader, "pe", ecsEvent, (b, v) => b.Pe = v),
-				"process" => ReadProp<Process>(ref reader, "process", ecsEvent, (b, v) => b.Process = v),
-				"registry" => ReadProp<Registry>(ref reader, "registry", ecsEvent, (b, v) => b.Registry = v),
-				"related" => ReadProp<Related>(ref reader, "related", ecsEvent, (b, v) => b.Related = v),
-				"rule" => ReadProp<Rule>(ref reader, "rule", ecsEvent, (b, v) => b.Rule = v),
-				"server" => ReadProp<Server>(ref reader, "server", ecsEvent, (b, v) => b.Server = v),
-				"service" => ReadProp<Service>(ref reader, "service", ecsEvent, (b, v) => b.Service = v),
-				"source" => ReadProp<Source>(ref reader, "source", ecsEvent, (b, v) => b.Source = v),
-				"threat" => ReadProp<Threat>(ref reader, "threat", ecsEvent, (b, v) => b.Threat = v),
-				"tls" => ReadProp<Tls>(ref reader, "tls", ecsEvent, (b, v) => b.Tls = v),
-				"url" => ReadProp<Url>(ref reader, "url", ecsEvent, (b, v) => b.Url = v),
-				"user" => ReadProp<User>(ref reader, "user", ecsEvent, (b, v) => b.User = v),
-				"user_agent" => ReadProp<UserAgent>(ref reader, "user_agent", ecsEvent, (b, v) => b.UserAgent = v),
-				"vlan" => ReadProp<Vlan>(ref reader, "vlan", ecsEvent, (b, v) => b.Vlan = v),
-				"vulnerability" => ReadProp<Vulnerability>(ref reader, "vulnerability", ecsEvent, (b, v) => b.Vulnerability = v),
-				"x509" => ReadProp<X509>(ref reader, "x509", ecsEvent, (b, v) => b.X509 = v),
+				"agent" => ReadProp<Agent>(ref reader, "agent", EcsJsonContext.Default.Agent, ecsEvent, (b, v) => b.Agent = v),
+				"as" => ReadProp<As>(ref reader, "as", EcsJsonContext.Default.As, ecsEvent, (b, v) => b.As = v),
+				"client" => ReadProp<Client>(ref reader, "client", EcsJsonContext.Default.Client, ecsEvent, (b, v) => b.Client = v),
+				"cloud" => ReadProp<Cloud>(ref reader, "cloud", EcsJsonContext.Default.Cloud, ecsEvent, (b, v) => b.Cloud = v),
+				"code_signature" => ReadProp<CodeSignature>(ref reader, "code_signature", EcsJsonContext.Default.CodeSignature, ecsEvent, (b, v) => b.CodeSignature = v),
+				"container" => ReadProp<Container>(ref reader, "container", EcsJsonContext.Default.Container, ecsEvent, (b, v) => b.Container = v),
+				"data_stream" => ReadProp<DataStream>(ref reader, "data_stream", EcsJsonContext.Default.DataStream, ecsEvent, (b, v) => b.DataStream = v),
+				"destination" => ReadProp<Destination>(ref reader, "destination", EcsJsonContext.Default.Destination, ecsEvent, (b, v) => b.Destination = v),
+				"dll" => ReadProp<Dll>(ref reader, "dll", EcsJsonContext.Default.Dll, ecsEvent, (b, v) => b.Dll = v),
+				"dns" => ReadProp<Dns>(ref reader, "dns", EcsJsonContext.Default.Dns, ecsEvent, (b, v) => b.Dns = v),
+				"ecs" => ReadProp<Ecs>(ref reader, "ecs", EcsJsonContext.Default.Ecs, ecsEvent, (b, v) => b.Ecs = v),
+				"elf" => ReadProp<Elf>(ref reader, "elf", EcsJsonContext.Default.Elf, ecsEvent, (b, v) => b.Elf = v),
+				"email" => ReadProp<Email>(ref reader, "email", EcsJsonContext.Default.Email, ecsEvent, (b, v) => b.Email = v),
+				"error" => ReadProp<Error>(ref reader, "error", EcsJsonContext.Default.Error, ecsEvent, (b, v) => b.Error = v),
+				"event" => ReadProp<Event>(ref reader, "event", EcsJsonContext.Default.Event, ecsEvent, (b, v) => b.Event = v),
+				"faas" => ReadProp<Faas>(ref reader, "faas", EcsJsonContext.Default.Faas, ecsEvent, (b, v) => b.Faas = v),
+				"file" => ReadProp<File>(ref reader, "file", EcsJsonContext.Default.File, ecsEvent, (b, v) => b.File = v),
+				"geo" => ReadProp<Geo>(ref reader, "geo", EcsJsonContext.Default.Geo, ecsEvent, (b, v) => b.Geo = v),
+				"group" => ReadProp<Group>(ref reader, "group", EcsJsonContext.Default.Group, ecsEvent, (b, v) => b.Group = v),
+				"hash" => ReadProp<Hash>(ref reader, "hash", EcsJsonContext.Default.Hash, ecsEvent, (b, v) => b.Hash = v),
+				"host" => ReadProp<Host>(ref reader, "host", EcsJsonContext.Default.Host, ecsEvent, (b, v) => b.Host = v),
+				"http" => ReadProp<Http>(ref reader, "http", EcsJsonContext.Default.Http, ecsEvent, (b, v) => b.Http = v),
+				"interface" => ReadProp<Interface>(ref reader, "interface", EcsJsonContext.Default.Interface, ecsEvent, (b, v) => b.Interface = v),
+				"log" => ReadProp<Log>(ref reader, "log", EcsJsonContext.Default.Log, ecsEvent, (b, v) => b.Log = v),
+				"network" => ReadProp<Network>(ref reader, "network", EcsJsonContext.Default.Network, ecsEvent, (b, v) => b.Network = v),
+				"observer" => ReadProp<Observer>(ref reader, "observer", EcsJsonContext.Default.Observer, ecsEvent, (b, v) => b.Observer = v),
+				"orchestrator" => ReadProp<Orchestrator>(ref reader, "orchestrator", EcsJsonContext.Default.Orchestrator, ecsEvent, (b, v) => b.Orchestrator = v),
+				"organization" => ReadProp<Organization>(ref reader, "organization", EcsJsonContext.Default.Organization, ecsEvent, (b, v) => b.Organization = v),
+				"os" => ReadProp<Os>(ref reader, "os", EcsJsonContext.Default.Os, ecsEvent, (b, v) => b.Os = v),
+				"package" => ReadProp<Package>(ref reader, "package", EcsJsonContext.Default.Package, ecsEvent, (b, v) => b.Package = v),
+				"pe" => ReadProp<Pe>(ref reader, "pe", EcsJsonContext.Default.Pe, ecsEvent, (b, v) => b.Pe = v),
+				"process" => ReadProp<Process>(ref reader, "process", EcsJsonContext.Default.Process, ecsEvent, (b, v) => b.Process = v),
+				"registry" => ReadProp<Registry>(ref reader, "registry", EcsJsonContext.Default.Registry, ecsEvent, (b, v) => b.Registry = v),
+				"related" => ReadProp<Related>(ref reader, "related", EcsJsonContext.Default.Related, ecsEvent, (b, v) => b.Related = v),
+				"rule" => ReadProp<Rule>(ref reader, "rule", EcsJsonContext.Default.Rule, ecsEvent, (b, v) => b.Rule = v),
+				"server" => ReadProp<Server>(ref reader, "server", EcsJsonContext.Default.Server, ecsEvent, (b, v) => b.Server = v),
+				"service" => ReadProp<Service>(ref reader, "service", EcsJsonContext.Default.Service, ecsEvent, (b, v) => b.Service = v),
+				"source" => ReadProp<Source>(ref reader, "source", EcsJsonContext.Default.Source, ecsEvent, (b, v) => b.Source = v),
+				"threat" => ReadProp<Threat>(ref reader, "threat", EcsJsonContext.Default.Threat, ecsEvent, (b, v) => b.Threat = v),
+				"tls" => ReadProp<Tls>(ref reader, "tls", EcsJsonContext.Default.Tls, ecsEvent, (b, v) => b.Tls = v),
+				"url" => ReadProp<Url>(ref reader, "url", EcsJsonContext.Default.Url, ecsEvent, (b, v) => b.Url = v),
+				"user" => ReadProp<User>(ref reader, "user", EcsJsonContext.Default.User, ecsEvent, (b, v) => b.User = v),
+				"user_agent" => ReadProp<UserAgent>(ref reader, "user_agent", EcsJsonContext.Default.UserAgent, ecsEvent, (b, v) => b.UserAgent = v),
+				"vlan" => ReadProp<Vlan>(ref reader, "vlan", EcsJsonContext.Default.Vlan, ecsEvent, (b, v) => b.Vlan = v),
+				"vulnerability" => ReadProp<Vulnerability>(ref reader, "vulnerability", EcsJsonContext.Default.Vulnerability, ecsEvent, (b, v) => b.Vulnerability = v),
+				"x509" => ReadProp<X509>(ref reader, "x509", EcsJsonContext.Default.X509, ecsEvent, (b, v) => b.X509 = v),
 				_ =>
 					typeof(EcsDocument) == ecsEvent.GetType()
 						? false
@@ -114,52 +114,52 @@ namespace Elastic.CommonSchema.Serialization
 				WriteProp(writer, "transaction.id", value.TransactionId);
 			WriteProp(writer, "labels", value.Labels);
 			// Complex types
-			WriteProp(writer, "agent", value.Agent);
-			WriteProp(writer, "as", value.As);
-			WriteProp(writer, "client", value.Client);
-			WriteProp(writer, "cloud", value.Cloud);
-			WriteProp(writer, "code_signature", value.CodeSignature);
-			WriteProp(writer, "container", value.Container);
-			WriteProp(writer, "data_stream", value.DataStream);
-			WriteProp(writer, "destination", value.Destination);
-			WriteProp(writer, "dll", value.Dll);
-			WriteProp(writer, "dns", value.Dns);
-			WriteProp(writer, "ecs", value.Ecs);
-			WriteProp(writer, "elf", value.Elf);
-			WriteProp(writer, "email", value.Email);
-			WriteProp(writer, "error", value.Error);
-			WriteProp(writer, "event", value.Event);
-			WriteProp(writer, "faas", value.Faas);
-			WriteProp(writer, "file", value.File);
-			WriteProp(writer, "geo", value.Geo);
-			WriteProp(writer, "group", value.Group);
-			WriteProp(writer, "hash", value.Hash);
-			WriteProp(writer, "host", value.Host);
-			WriteProp(writer, "http", value.Http);
-			WriteProp(writer, "interface", value.Interface);
-			WriteProp(writer, "log", value.Log);
-			WriteProp(writer, "network", value.Network);
-			WriteProp(writer, "observer", value.Observer);
-			WriteProp(writer, "orchestrator", value.Orchestrator);
-			WriteProp(writer, "organization", value.Organization);
-			WriteProp(writer, "os", value.Os);
-			WriteProp(writer, "package", value.Package);
-			WriteProp(writer, "pe", value.Pe);
-			WriteProp(writer, "process", value.Process);
-			WriteProp(writer, "registry", value.Registry);
-			WriteProp(writer, "related", value.Related);
-			WriteProp(writer, "rule", value.Rule);
-			WriteProp(writer, "server", value.Server);
-			WriteProp(writer, "service", value.Service);
-			WriteProp(writer, "source", value.Source);
-			WriteProp(writer, "threat", value.Threat);
-			WriteProp(writer, "tls", value.Tls);
-			WriteProp(writer, "url", value.Url);
-			WriteProp(writer, "user", value.User);
-			WriteProp(writer, "user_agent", value.UserAgent);
-			WriteProp(writer, "vlan", value.Vlan);
-			WriteProp(writer, "vulnerability", value.Vulnerability);
-			WriteProp(writer, "x509", value.X509);
+			WriteProp(writer, "agent", value.Agent, EcsJsonContext.Default.Agent);
+			WriteProp(writer, "as", value.As, EcsJsonContext.Default.As);
+			WriteProp(writer, "client", value.Client, EcsJsonContext.Default.Client);
+			WriteProp(writer, "cloud", value.Cloud, EcsJsonContext.Default.Cloud);
+			WriteProp(writer, "code_signature", value.CodeSignature, EcsJsonContext.Default.CodeSignature);
+			WriteProp(writer, "container", value.Container, EcsJsonContext.Default.Container);
+			WriteProp(writer, "data_stream", value.DataStream, EcsJsonContext.Default.DataStream);
+			WriteProp(writer, "destination", value.Destination, EcsJsonContext.Default.Destination);
+			WriteProp(writer, "dll", value.Dll, EcsJsonContext.Default.Dll);
+			WriteProp(writer, "dns", value.Dns, EcsJsonContext.Default.Dns);
+			WriteProp(writer, "ecs", value.Ecs, EcsJsonContext.Default.Ecs);
+			WriteProp(writer, "elf", value.Elf, EcsJsonContext.Default.Elf);
+			WriteProp(writer, "email", value.Email, EcsJsonContext.Default.Email);
+			WriteProp(writer, "error", value.Error, EcsJsonContext.Default.Error);
+			WriteProp(writer, "event", value.Event, EcsJsonContext.Default.Event);
+			WriteProp(writer, "faas", value.Faas, EcsJsonContext.Default.Faas);
+			WriteProp(writer, "file", value.File, EcsJsonContext.Default.File);
+			WriteProp(writer, "geo", value.Geo, EcsJsonContext.Default.Geo);
+			WriteProp(writer, "group", value.Group, EcsJsonContext.Default.Group);
+			WriteProp(writer, "hash", value.Hash, EcsJsonContext.Default.Hash);
+			WriteProp(writer, "host", value.Host, EcsJsonContext.Default.Host);
+			WriteProp(writer, "http", value.Http, EcsJsonContext.Default.Http);
+			WriteProp(writer, "interface", value.Interface, EcsJsonContext.Default.Interface);
+			WriteProp(writer, "log", value.Log, EcsJsonContext.Default.Log);
+			WriteProp(writer, "network", value.Network, EcsJsonContext.Default.Network);
+			WriteProp(writer, "observer", value.Observer, EcsJsonContext.Default.Observer);
+			WriteProp(writer, "orchestrator", value.Orchestrator, EcsJsonContext.Default.Orchestrator);
+			WriteProp(writer, "organization", value.Organization, EcsJsonContext.Default.Organization);
+			WriteProp(writer, "os", value.Os, EcsJsonContext.Default.Os);
+			WriteProp(writer, "package", value.Package, EcsJsonContext.Default.Package);
+			WriteProp(writer, "pe", value.Pe, EcsJsonContext.Default.Pe);
+			WriteProp(writer, "process", value.Process, EcsJsonContext.Default.Process);
+			WriteProp(writer, "registry", value.Registry, EcsJsonContext.Default.Registry);
+			WriteProp(writer, "related", value.Related, EcsJsonContext.Default.Related);
+			WriteProp(writer, "rule", value.Rule, EcsJsonContext.Default.Rule);
+			WriteProp(writer, "server", value.Server, EcsJsonContext.Default.Server);
+			WriteProp(writer, "service", value.Service, EcsJsonContext.Default.Service);
+			WriteProp(writer, "source", value.Source, EcsJsonContext.Default.Source);
+			WriteProp(writer, "threat", value.Threat, EcsJsonContext.Default.Threat);
+			WriteProp(writer, "tls", value.Tls, EcsJsonContext.Default.Tls);
+			WriteProp(writer, "url", value.Url, EcsJsonContext.Default.Url);
+			WriteProp(writer, "user", value.User, EcsJsonContext.Default.User);
+			WriteProp(writer, "user_agent", value.UserAgent, EcsJsonContext.Default.UserAgent);
+			WriteProp(writer, "vlan", value.Vlan, EcsJsonContext.Default.Vlan);
+			WriteProp(writer, "vulnerability", value.Vulnerability, EcsJsonContext.Default.Vulnerability);
+			WriteProp(writer, "x509", value.X509, EcsJsonContext.Default.X509);
 
 			if (typeof(EcsDocument) != value.GetType())
 				value.WriteAdditionalProperties((k, v) => WriteProp(writer, k, v));

@@ -2,6 +2,7 @@ using System;
 using System.Text;
 using AutoBogus;
 using BenchmarkDotNet.Attributes;
+using Bogus;
 
 namespace Elastic.CommonSchema.Benchmarks
 {
@@ -58,7 +59,18 @@ namespace Elastic.CommonSchema.Benchmarks
 			return ecs.Serialize(new StringBuilder());
 		}
 
-		public static readonly EcsDocument FullInstance = new AutoFaker<EcsDocument>().Generate();
+		private static Faker<EcsDocument> Generator;
+		private static EcsDocument FullInstance;
+
+		[GlobalSetup]
+		public void GlobalSetup()
+		{
+			Generator =
+				new AutoFaker<EcsDocument>()
+					.RuleFor(d => d.Metadata, d => new MetadataDictionary { { "x", "y" } })
+					.UseSeed(1337);
+			FullInstance = Generator.Generate();
+		}
 
 		[Benchmark]
 		public StringBuilder Full() => FullInstance.Serialize(new StringBuilder());
