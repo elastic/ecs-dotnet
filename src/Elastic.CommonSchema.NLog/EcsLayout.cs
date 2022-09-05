@@ -22,12 +22,21 @@ namespace Elastic.CommonSchema.NLog
 		public const string Name = nameof(EcsLayout);
 
 		private static bool? _nlogApmLoaded;
+		private static bool? _nlogWebLoaded;
 
 		private static bool NLogApmLoaded()
 		{
 			if (_nlogApmLoaded.HasValue) return _nlogApmLoaded.Value;
 			_nlogApmLoaded = Type.GetType("Elastic.Apm.NLog.ApmTraceIdLayoutRenderer, Elastic.Apm.NLog") != null;
 			return _nlogApmLoaded.Value;
+		}
+
+		private static bool NLogWeb5Loaded()
+		{
+			if (_nlogWebLoaded.HasValue)
+				return _nlogWebLoaded.Value;
+			_nlogWebLoaded = Type.GetType("NLog.Web.LayoutRenderers.AspNetRequestDurationLayoutRenderer, NLog.Web.AspNetCore") != null;
+			return _nlogWebLoaded.Value;
 		}
 
 		private readonly Layout _disableThreadAgnostic = "${threadid:cached=true}";
@@ -61,6 +70,29 @@ namespace Elastic.CommonSchema.NLog
 				ApmServiceNodeName = "${ElasticApmServiceNodeName}";
 				ApmServiceVersion = "${ElasticApmServiceVersion}";
 			}
+
+			if (NLogWeb5Loaded())
+			{
+				EventDurationMs = "${aspnet-request-duration}";
+
+				HttpRequestId = "${aspnet-TraceIdentifier}";
+				HttpRequestMethod = "${aspnet-request-method}";
+				RequestBodyBytes = "${aspnet-request-contentlength}";
+				HttpRequestReferrer = "${aspnet-request-referrer}";
+				HttpResponseStatusCode = "${aspnet-response-statuscode}";
+
+				UrlScheme = "${aspnet-request-url:IncludeScheme=true:IncludeHost=false:IncludePath=false}";
+				UrlDomain = "${aspnet-request-url:IncludeScheme=false:IncludeHost=true:IncludePath=false}";
+				UrlPath = "${aspnet-request-url:IncludeScheme=false:IncludeHost=false:IncludePath=true}";
+				UrlPort = "${aspnet-request-url:IncludeScheme=false:IncludeHost=false:IncludePath=false:IncludePort=true}";
+				UrlQuery = "${aspnet-request-url:IncludeScheme=false:IncludeHost=false:IncludePath=false:IncludeQueryString=true}";
+				UrlUserName = "${aspnet-user-identity}";
+
+				if (!NLogApmLoaded())
+				{
+					ApmTraceId = "${scopeproperty:item=RequestId:whenEmpty=${aspnet-TraceIdentifier}}}";
+				}
+			}
 		}
 
 		public Layout AgentId { get; set; }
@@ -91,6 +123,7 @@ namespace Elastic.CommonSchema.NLog
 		public Layout EventId { get; set; }
 		public Layout EventKind { get; set; }
 		public Layout EventSeverity { get; set; }
+		public Layout EventDurationMs { get; set; }
 
 		public Layout HostId { get; set; }
 		public Layout HostIp { get; set; }
@@ -121,6 +154,19 @@ namespace Elastic.CommonSchema.NLog
 		public Layout ServerAddress { get; set; }
 		public Layout ServerIp { get; set; }
 		public Layout ServerUser { get; set; }
+
+		public Layout HttpRequestId { get; set; }
+		public Layout HttpRequestMethod { get; set; }
+		public Layout RequestBodyBytes { get; set; }
+		public Layout HttpRequestReferrer { get; set; }
+		public Layout HttpResponseStatusCode { get; set; }
+
+		public Layout UrlScheme { get; set; }
+		public Layout UrlDomain { get; set; }
+		public Layout UrlPort { get; set; }
+		public Layout UrlPath { get; set; }
+		public Layout UrlQuery { get; set; }
+		public Layout UrlUserName { get; set; }
 
 		/// <summary>
 		/// Optional action to enrich the constructed <see cref="Base">EcsEvent</see> before it is serialized
@@ -156,7 +202,9 @@ namespace Elastic.CommonSchema.NLog
 				Labels = GetLabels(logEvent),
 				Agent = GetAgent(logEvent),
 				Server = GetServer(logEvent),
-				Host = GetHost(logEvent)
+				Host = GetHost(logEvent),
+				Http = GetHttp(logEvent),
+				Url = GetUrl(logEvent),
 			};
 
 			//Give any deriving classes a chance to enrich the event
@@ -368,6 +416,7 @@ namespace Elastic.CommonSchema.NLog
 		{
 			var eventCategory = EventCategory?.Render(logEventInfo);
 			var eventSeverity = EventSeverity?.Render(logEventInfo);
+			var eventDurationMs = EventDurationMs?.Render(logEventInfo);
 
 			var evnt = new Event
 			{
@@ -381,6 +430,11 @@ namespace Elastic.CommonSchema.NLog
 					: GetSysLogSeverity(logEventInfo.Level),
 				Timezone = TimeZoneInfo.Local.StandardName
 			};
+
+			if (!string.IsNullOrEmpty(eventDurationMs) && double.TryParse(eventDurationMs, System.Globalization.NumberStyles.Any, System.Globalization.CultureInfo.InvariantCulture, out var durationMs))
+			{
+				evnt.Duration = (long)(durationMs * 1000000.0);   // milliseconds to nanoseconds
+			}
 
 			return evnt;
 		}
@@ -468,6 +522,69 @@ namespace Elastic.CommonSchema.NLog
 		{
 			var spanId = ApmSpanId?.Render(logEventInfo);
 			return string.IsNullOrEmpty(spanId) ? null : spanId;
+		}
+
+		private Http GetHttp(LogEventInfo logEventInfo)
+		{
+			var requestId = HttpRequestId?.Render(logEventInfo);
+			var requestMethod = HttpRequestMethod?.Render(logEventInfo);
+			if (string.IsNullOrEmpty(requestMethod) && string.IsNullOrEmpty(requestId))
+				return null;
+
+			var http = new Http()
+			{
+				RequestId = requestId,
+				RequestMethod = requestMethod,
+			};
+
+			var requestReferrer = HttpRequestReferrer?.Render(logEventInfo);
+			if (!string.IsNullOrEmpty(requestReferrer))
+			{
+				http.RequestReferrer = requestReferrer;
+			}
+
+			var requestBytes = RequestBodyBytes?.Render(logEventInfo);
+			if (!string.IsNullOrEmpty(requestBytes) && long.TryParse(requestBytes, out var requestSize) && requestSize > 0)
+			{
+				http.RequestBodyBytes = requestSize;
+			}
+
+			var responseStatusCode = HttpResponseStatusCode?.Render(logEventInfo);
+			if (!string.IsNullOrEmpty(responseStatusCode) && long.TryParse(responseStatusCode, out var statusCode) && statusCode > 0)
+			{
+				http.ResponseStatusCode = statusCode;
+			}
+
+			return http;
+		}
+
+		private Url GetUrl(LogEventInfo logEventInfo)
+		{
+			var urlScheme = UrlScheme?.Render(logEventInfo);
+			var urlPath = UrlPath?.Render(logEventInfo);
+			var urlQuery = UrlQuery?.Render(logEventInfo);
+			if (string.IsNullOrEmpty(urlScheme) && string.IsNullOrEmpty(urlPath) && string.IsNullOrEmpty(urlQuery))
+				return null;
+
+			var urlDomain = UrlDomain?.Render(logEventInfo);
+			var urlUserName = UrlUserName?.Render(logEventInfo);
+			var urlPort = UrlPort?.Render(logEventInfo);
+
+			var url = new Url()
+			{
+				Scheme = urlScheme,
+				Domain = urlDomain,
+				Path = urlPath,
+				Query = urlQuery,
+				Username = urlUserName,
+			};
+
+			if (!string.IsNullOrEmpty(urlPort) && long.TryParse(urlPort, out var portNumber) && portNumber > 0)
+			{
+				url.Port = portNumber;
+			}
+
+			return url;
 		}
 
 		private Host GetHost(LogEventInfo logEventInfo)

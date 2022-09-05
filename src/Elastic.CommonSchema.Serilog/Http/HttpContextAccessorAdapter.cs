@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Http.Features;
 using UAParser;
 
@@ -100,17 +101,17 @@ namespace Elastic.CommonSchema.Serilog
 				if (_httpContextAccessor.HttpContext == null)
 					return null;
 
-				var uri = ConvertToUri(_httpContextAccessor.HttpContext.Request);
+				var request = _httpContextAccessor.HttpContext.Request;
 
 				return new Url
 				{
-					Path = _httpContextAccessor.HttpContext.Request.Path,
-					Original = _httpContextAccessor.HttpContext.Request.Path,
-					Full = uri.ToString(),
-					Scheme = uri.Scheme,
-					Query = string.IsNullOrEmpty(uri.Query) ? null : uri.Query,
-					Domain = uri.Authority,
-					Port = uri.Port
+					Path = request.Path,
+					Original = request.GetDisplayUrl(),
+					Full = request.GetDisplayUrl(),
+					Scheme = request.Scheme,
+					Query = request.QueryString.HasValue ? request.QueryString.Value.TrimStart('?') : null,
+					Domain = request.Host.HasValue ? request.Host.Host : null,
+					Port = request.Host.HasValue ? request.Host.Port : null
 				};
 			}
 		}
@@ -124,19 +125,16 @@ namespace Elastic.CommonSchema.Serilog
 
 				var ip4 = _httpContextAccessor.HttpContext.Connection.LocalIpAddress.MapToIPv4();
 
-				var uri = ConvertToUri(_httpContextAccessor.HttpContext.Request);
+				var request = _httpContextAccessor.HttpContext.Request;
 
 				return new Server
 				{
 					Address = ip4.ToString(),
 					Ip = ip4.ToString(),
-					Domain = uri.Authority
+					Domain = request.Host.HasValue ? request.Host.Host : null
 				};
 			}
 		}
-
-		private static Uri ConvertToUri(Microsoft.AspNetCore.Http.HttpRequest request) =>
-			new Uri($"{request.Scheme}://{request.Host}{request.Path}");
 
 		public Client Client
 		{
