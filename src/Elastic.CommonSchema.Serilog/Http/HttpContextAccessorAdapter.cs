@@ -41,7 +41,7 @@ namespace Elastic.CommonSchema.Serilog
 
 				return new UserAgent
 				{
-					Name = userAgent,
+					Name = clientInfo.UA.Family,
 					Original = userAgent,
 					DeviceName = clientInfo.Device.ToString(),
 					Os = new Os

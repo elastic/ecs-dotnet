@@ -57,7 +57,7 @@ namespace Elastic.CommonSchema.Serilog
 			DeviceName = _httpContext.Request.Browser != null
 				? _httpContext.Request.Browser?.MobileDeviceModel
 				: null,
-			Name = _httpContext.Request.UserAgent,
+			Name = _httpContext.Request.Browser?.Browser,
 			Original = _httpContext.Request.UserAgent,
 			Version = _httpContext.Request.Browser?.Version
 		};
