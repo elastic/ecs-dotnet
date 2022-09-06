@@ -134,7 +134,7 @@ On run, the console will show various events written in ECS format, an example g
       "name": "Other"
     },
     "original": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.132 Safari/537.36",
-    "name": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.132 Safari/537.36",
+    "name": "Firefox",
     "version": "80.0.3987"
   }
 }
