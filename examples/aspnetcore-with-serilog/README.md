@@ -60,20 +60,16 @@ On run, the console will show various events written in ECS format, an example g
 
 ```json
 {
-  "@timestamp": "2020-03-13T14:17:18.4976763+11:00",
+  "@timestamp": "2022-08-30T16:17:18.4976763+11:00",
   "log.level": "Information",
   "message": "Request finished in 353.60360000000003ms 200 application/json; charset=utf-8",
   "metadata": {
     "message_template": "{HostingRequestFinishedLog:l}",
-    "elapsed_milliseconds": 353.60360000000003,
-    "status_code": 200,
     "content_type": "application/json; charset=utf-8",
     "hosting_request_finished_log": "Request finished in 353.60360000000003ms 200 application/json; charset=utf-8",
     "event_id": {
       "id": 2
     },
-    "request_id": "0HLU6VK4GT6MU:00000001",
-    "request_path": "/weatherforecast",
     "span_id": "|b4fce741-48d10adaba0a6f30.",
     "trace_id": "b4fce741-48d10adaba0a6f30",
     "parent_id": ""
@@ -88,10 +84,12 @@ On run, the console will show various events written in ECS format, an example g
   "event": {
     "severity": 2,
     "timezone": "AUS Eastern Standard Time",
-    "created": "2020-03-13T14:17:18.4976763+11:00"
+    "created": "2022-08-30T16:17:18.4976763+11:00",
+    "duration": 353603600
   },
   "http": {
     "request": {
+      "id": "0HLU6VK4GT6MU:00000001"
       "method": "GET"
     },
     "response": {
