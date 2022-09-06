@@ -98,14 +98,14 @@ namespace Elastic.CommonSchema.Generator.Projection
 
 			Projection = new CommonSchemaTypesProjection
 			{
-				Version = Schema.GitRef,
+				Version = Schema.Version,
+				GitRef = Schema.GitRef,
 				FieldSets = FieldSetsBaseClasses.Values.Where(e=>e.FieldSet.Root != true || e.FieldSet.Name == "base" ).ToList(),
 				EntityClasses = EntityClasses.Values.Where(e=>e.Name != "EcsDocument" && e.BaseFieldSet.FieldSet.Root != true).ToList(),
 				Base = EntityClasses.Values.First(e=>e.Name == "EcsDocument"),
 				InlineObjects = InlineObjects.Values.ToList(),
 				NestedEntityClasses = nestedEntityTypes.Values.ToList(),
 				Warnings = Warnings.AsReadOnly(),
-				GitRef = Schema.GitRef,
 				IndexTemplates = Schema.Templates.Select(kv=>new IndexTemplate(kv.Key, kv.Value)).OrderBy(t=>t.Name).ToList(),
 				IndexComponents = Schema.Components.Select(kv=>new IndexComponent(kv.Key, kv.Value, Schema.Version)).OrderBy(t=>t.Name).ToList(),
 
