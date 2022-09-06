@@ -28,8 +28,8 @@ namespace Elastic.CommonSchema.Serilog.Tests
 				.Enrich.WithEnvironmentUserName()
 				.Enrich.WithElasticApmCorrelationInfo();
 
-			Formatter = new EcsTextFormatter(new EcsTextFormatterConfiguration()
-					.LogEventPropertiesToFilter(new HashSet<string>(){{ "foo" }}));
+			var config = new EcsTextFormatterConfiguration { LogEventPropertiesToFilter = new HashSet<string>() { { "foo" } } };
+			Formatter = new EcsTextFormatter(config);
 		}
 
 		private LogEvent BuildLogEvent()
@@ -74,8 +74,8 @@ namespace Elastic.CommonSchema.Serilog.Tests
 		[Fact]
 		public void NullFilterLogEventProperty() => TestLogger((logger, getLogEvents) =>
 		{
-			Formatter = new EcsTextFormatter(new EcsTextFormatterConfiguration()
-					.LogEventPropertiesToFilter(null));
+			var config = new EcsTextFormatterConfiguration { LogEventPropertiesToFilter = null };
+			Formatter = new EcsTextFormatter(config);
 
 			var evnt = BuildLogEvent();
 			logger.Write(evnt);
@@ -98,8 +98,8 @@ namespace Elastic.CommonSchema.Serilog.Tests
 		[Fact]
 		public void EmptyFilterLogEventProperty() => TestLogger((logger, getLogEvents) =>
 		{
-			Formatter = new EcsTextFormatter(new EcsTextFormatterConfiguration()
-				.LogEventPropertiesToFilter(new HashSet<string>()));
+			var config = new EcsTextFormatterConfiguration { LogEventPropertiesToFilter = new HashSet<string>() };
+			Formatter = new EcsTextFormatter(config);
 
 			var evnt = BuildLogEvent();
 			logger.Write(evnt);
@@ -121,8 +121,8 @@ namespace Elastic.CommonSchema.Serilog.Tests
 		[Fact]
 		public void CaseInsensitiveFilterLogEventProperty() => TestLogger((logger, getLogEvents) =>
 		{
-			Formatter = new EcsTextFormatter(new EcsTextFormatterConfiguration()
-				.LogEventPropertiesToFilter(new HashSet<string>(StringComparer.OrdinalIgnoreCase){{ "FOO" }}));
+			var config = new EcsTextFormatterConfiguration { LogEventPropertiesToFilter = new HashSet<string>(StringComparer.OrdinalIgnoreCase){{ "FOO" }} };
+			Formatter = new EcsTextFormatter(config);
 
 			var evnt = BuildLogEvent();
 			logger.Write(evnt);
@@ -144,8 +144,8 @@ namespace Elastic.CommonSchema.Serilog.Tests
 		[Fact]
 		public void CaseSensitiveFilterLogEventProperty() => TestLogger((logger, getLogEvents) =>
 		{
-			Formatter = new EcsTextFormatter(new EcsTextFormatterConfiguration()
-				.LogEventPropertiesToFilter(new HashSet<string>(StringComparer.Ordinal){{ "FOO" }}));
+			var config = new EcsTextFormatterConfiguration { LogEventPropertiesToFilter = new HashSet<string>(StringComparer.Ordinal){{ "FOO" }} };
+			Formatter = new EcsTextFormatter(config);
 
 			var evnt = BuildLogEvent();
 			logger.Write(evnt);

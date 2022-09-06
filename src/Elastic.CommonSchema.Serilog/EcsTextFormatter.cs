@@ -12,19 +12,28 @@ namespace Elastic.CommonSchema.Serilog
 	/// <summary>
 	/// A serilog formatter that writes log events using the Elasticsearch Common Schema format
 	/// </summary>
-	public class EcsTextFormatter : ITextFormatter
+	public class EcsTextFormatter<TEcsDocument> : ITextFormatter
+		where TEcsDocument : EcsDocument, new()
 	{
-		private readonly EcsTextFormatterConfiguration _configuration;
 
-		public EcsTextFormatter() : this(new EcsTextFormatterConfiguration()) { }
+		protected EcsTextFormatterConfiguration<TEcsDocument> Configuration { get; }
 
-		public EcsTextFormatter(EcsTextFormatterConfiguration configuration) =>
-			_configuration = configuration ?? new EcsTextFormatterConfiguration();
+		public EcsTextFormatter() : this(new EcsTextFormatterConfiguration<TEcsDocument>()) { }
+
+		public EcsTextFormatter(EcsTextFormatterConfiguration<TEcsDocument> configuration) =>
+			Configuration = configuration ?? new EcsTextFormatterConfiguration<TEcsDocument>();
 
 		public virtual void Format(LogEvent logEvent, TextWriter output)
 		{
-			var ecsEvent = LogEventConverter.ConvertToEcs(logEvent, _configuration);
+			var ecsEvent = LogEventConverter.ConvertToEcs<TEcsDocument>(logEvent, Configuration);
 			output.WriteLine(ecsEvent.Serialize());
 		}
+	}
+
+	public class EcsTextFormatter : EcsTextFormatter<EcsDocument>
+	{
+		public EcsTextFormatter() : base() {}
+		public EcsTextFormatter(EcsTextFormatterConfiguration<EcsDocument> configuration) : base(configuration) {}
+		public EcsTextFormatter(EcsTextFormatterConfiguration configuration) : base(configuration) {}
 	}
 }
