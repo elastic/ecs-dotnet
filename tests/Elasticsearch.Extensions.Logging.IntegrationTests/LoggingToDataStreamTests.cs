@@ -57,6 +57,7 @@ namespace Elasticsearch.Extensions.Logging.IntegrationTests
 			var loggedError = response.Documents.First();
 			loggedError.Message.Should().Be("an error occurred");
 			loggedError.Ecs.Version.Should().Be(EcsDocument.Version);
+			loggedError.Ecs.Version.Should().NotStartWith("v");
 		}
 
 		[Fact]
