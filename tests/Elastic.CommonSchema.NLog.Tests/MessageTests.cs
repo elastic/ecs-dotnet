@@ -50,6 +50,50 @@ namespace Elastic.CommonSchema.NLog.Tests
 		});
 
 		[Fact]
+		public void SeesMessageWithSafeProp() => TestLogger((logger, getLogEvents) =>
+		{
+			logger.Info("Info {@SafeValue}", new NiceObject() { ValueX = "X", SomeY = 2.2 });
+
+			var logEvents = getLogEvents();
+			logEvents.Should().HaveCount(1);
+
+			var ecsEvents = ToEcsEvents(logEvents);
+
+			var (_, info) = ecsEvents.First();
+			info.Message.Should().Be("Info {\"ValueX\":\"X\", \"SomeY\":2.2}");
+			info.Metadata.Should().ContainKey("SafeValue");
+
+			var x = info.Metadata["SafeValue"] as System.Collections.Generic.Dictionary<string, object>;
+			x.Should().NotBeNull().And.NotBeEmpty();
+		});
+
+		[Fact]
+		public void SeesMessageWithUnsafeProp() => TestLogger((logger, getLogEvents) =>
+		{
+			logger.Info("Info {UnsafeValue}", new NiceObject() { ValueX = "X", SomeY = 2.2 });
+
+			var logEvents = getLogEvents();
+			logEvents.Should().HaveCount(1);
+
+			var ecsEvents = ToEcsEvents(logEvents);
+
+			var (_, info) = ecsEvents.First();
+			info.Message.Should().Be("Info X=X");
+			info.Metadata.Should().ContainKey("UnsafeValue");
+
+			var x = info.Metadata["UnsafeValue"] as string;
+			x.Should().NotBeNull().And.Be("X=X");
+		});
+
+		public class NiceObject
+		{
+			public string ValueX { get; set; }
+			public double SomeY { get; set; }
+
+			public override string ToString() => $"X={ValueX}";
+		}		 
+
+		[Fact]
 		public void SeesMessageWithException() => TestLogger((logger, getLogEvents) =>
 		{
 			try
