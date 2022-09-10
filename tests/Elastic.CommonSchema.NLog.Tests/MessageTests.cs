@@ -97,6 +97,36 @@ namespace Elastic.CommonSchema.NLog.Tests
 		}
 
 		[Fact]
+		public void SeesMessageWithEvilProp() => TestLogger((logger, getLogEvents) =>
+		{
+			logger.Info("Info {@EvilValue}", new BadObject());
+
+			var logEvents = getLogEvents();
+			logEvents.Should().HaveCount(1);
+
+			var ecsEvents = ToEcsEvents(logEvents);
+
+			var (_, info) = ecsEvents.First();
+			info.Metadata.Should().ContainKey("EvilValue");
+
+			var x = info.Metadata["EvilValue"] as System.Collections.Generic.Dictionary<string, object>;
+			x.Should().NotBeNull().And.NotBeEmpty();
+		});
+
+		public class BadObject
+		{
+			//public IEnumerable<object> Recursive => new List<object>(new[] { "Hello", (object)this })
+
+			//public string EvilProperty => throw new NotSupportedException()
+
+			public System.Type TypeProperty { get; } = typeof(BadObject);
+
+			public System.Reflection.MethodInfo MethodInfoProperty { get; } = typeof(BadObject).GetProperty(nameof(MethodInfoProperty)).GetMethod;
+
+			public System.Action DelegateProperty { get; } = new System.Action(() => throw new NotSupportedException());
+		}
+
+		[Fact]
 		public void SeesMessageWithException() => TestLogger((logger, getLogEvents) =>
 		{
 			try
