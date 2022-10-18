@@ -26,11 +26,11 @@ namespace AspnetCoreExample
 
 					// Ensure HttpContextAccessor is accessible
 					var httpAccessor = ctx.Configuration.Get<HttpContextAccessor>();
-					
+
 					// Create a formatter configuration to se this accessor
 					var formatterConfig = new EcsTextFormatterConfiguration();
-					formatterConfig.MapHttpContext(httpAccessor);
-					
+					formatterConfig.MapHttpAdapter = new HttpAdapter(httpAccessor);
+
 					// Write events to the console using this configration
 					var formatter = new EcsTextFormatter(formatterConfig);
 

@@ -17,44 +17,29 @@ namespace Elastic.CommonSchema.Serilog
 	public interface IEcsTextFormatterConfiguration
 	{
 		bool MapCurrentThread { get; set; }
-		Func<EcsDocument, LogEvent, EcsDocument> MapCustom { get; set; }
 		bool MapExceptions { get; set; }
 		IHttpAdapter MapHttpAdapter { get; set; }
 		ISet<string> LogEventPropertiesToFilter { get;set; }
 	}
 
-	public class EcsTextFormatterConfiguration : IEcsTextFormatterConfiguration
+	public interface IEcsTextFormatterConfiguration<TEcsDocument> : IEcsTextFormatterConfiguration
+		where TEcsDocument : EcsDocument, new()
 	{
-		bool IEcsTextFormatterConfiguration.MapExceptions { get; set; } = true;
-		bool IEcsTextFormatterConfiguration.MapCurrentThread { get; set; } = true;
+		Func<TEcsDocument, LogEvent, TEcsDocument> MapCustom { get; set; }
+	}
 
-		IHttpAdapter IEcsTextFormatterConfiguration.MapHttpAdapter { get; set; }
-		ISet<string> IEcsTextFormatterConfiguration.LogEventPropertiesToFilter { get; set; }
+	public class EcsTextFormatterConfiguration<TEcsDocument> : IEcsTextFormatterConfiguration<TEcsDocument>
+		where TEcsDocument : EcsDocument, new()
+	{
+		public bool MapCurrentThread { get; set; } = true;
+		public bool MapExceptions { get; set; } = true;
+		public IHttpAdapter MapHttpAdapter { get; set; }
+		public ISet<string> LogEventPropertiesToFilter { get; set; }
+		public Func<TEcsDocument, LogEvent, TEcsDocument> MapCustom { get; set; }
+	}
 
-		Func<EcsDocument, LogEvent, EcsDocument> IEcsTextFormatterConfiguration.MapCustom { get; set; } = (b, e) => b;
+	public class EcsTextFormatterConfiguration : EcsTextFormatterConfiguration<EcsDocument>
+	{
 
-#if NETSTANDARD
-        public EcsTextFormatterConfiguration MapHttpContext(IHttpContextAccessor contextAccessor) => Assign(this, contextAccessor, (o, v) => o.MapHttpAdapter
- = new HttpAdapter(v));
-#else
-		public EcsTextFormatterConfiguration MapHttpContext(HttpContext httpContext) =>
-			Assign(this, httpContext, (o, v) => o.MapHttpAdapter = new HttpAdapter(v));
-#endif
-		public EcsTextFormatterConfiguration MapExceptions(bool value) => Assign(this, value, (o, v) => o.MapExceptions = v);
-
-		public EcsTextFormatterConfiguration MapCurrentThread(bool value) => Assign(this, value, (o, v) => o.MapCurrentThread = v);
-
-		public EcsTextFormatterConfiguration MapCustom(Func<EcsDocument, LogEvent, EcsDocument> value) => Assign(this, value, (o, v) => o.MapCustom = v);
-
-		public EcsTextFormatterConfiguration LogEventPropertiesToFilter(ISet<string> value) => Assign(this, value, (o, v) => o.LogEventPropertiesToFilter = v);
-
-		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		private static EcsTextFormatterConfiguration Assign<TValue>(
-			EcsTextFormatterConfiguration self, TValue value, Action<IEcsTextFormatterConfiguration, TValue> assign
-		)
-		{
-			assign(self, value);
-			return self;
-		}
 	}
 }

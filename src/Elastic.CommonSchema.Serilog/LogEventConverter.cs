@@ -49,7 +49,8 @@ namespace Elastic.CommonSchema.Serilog
 			public const string RequestId = nameof(RequestId);
 		}
 
-		public static EcsDocument ConvertToEcs(LogEvent logEvent, IEcsTextFormatterConfiguration configuration)
+		public static TEcsDocument ConvertToEcs<TEcsDocument>(LogEvent logEvent, IEcsTextFormatterConfiguration<TEcsDocument> configuration)
+			where TEcsDocument : EcsDocument, new()
 		{
 			var exceptions = logEvent.Exception != null
 				? new List<Exception> { logEvent.Exception }
@@ -58,7 +59,7 @@ namespace Elastic.CommonSchema.Serilog
 			if (configuration.MapHttpAdapter != null)
 				exceptions.AddRange(configuration.MapHttpAdapter.Exceptions);
 
-			var ecsEvent = new EcsDocument
+			var ecsEvent = new TEcsDocument
 			{
 				Timestamp = logEvent.Timestamp,
 				Message = logEvent.RenderMessage(),
@@ -89,6 +90,9 @@ namespace Elastic.CommonSchema.Serilog
 
 			return ecsEvent;
 		}
+
+		public static EcsDocument ConvertToEcs(LogEvent logEvent, IEcsTextFormatterConfiguration<EcsDocument> configuration) =>
+			ConvertToEcs<EcsDocument>(logEvent, configuration);
 
 		private static Service GetService(LogEvent logEvent)
 		{
