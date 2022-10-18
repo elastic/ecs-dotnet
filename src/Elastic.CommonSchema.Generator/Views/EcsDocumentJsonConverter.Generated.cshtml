@@ -53,7 +53,7 @@ namespace Elastic.CommonSchema.Serialization
 @foreach (var entity in Model.EntityClasses)
 {
 	var entityName = entity.BaseFieldSet.FieldSet.Name;
-	<text>				"@entityName" => ReadProp<@(entity.Name)>(ref reader, "@entityName", ecsEvent, (b, v) => b.@(entity.Name) = v),
+	<text>				"@entityName" => ReadProp<@(entity.Name)>(ref reader, "@entityName", EcsJsonContext.Default.@(entity.Name), ecsEvent, (b, v) => b.@(entity.Name) = v),
 </text>}
 				_ =>
 					typeof(@(Model.Base.Name)) == ecsEvent.GetType()
@@ -102,7 +102,7 @@ namespace Elastic.CommonSchema.Serialization
 @foreach (var entity in Model.EntityClasses)
 {
 	var entityName = entity.BaseFieldSet.FieldSet.Name;
-<text>			WriteProp(writer, "@(entityName)", value.@(entity.Name));
+<text>			WriteProp(writer, "@(entityName)", value.@(entity.Name), EcsJsonContext.Default.@(entity.Name));
 </text>
 }
 

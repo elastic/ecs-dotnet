@@ -30,11 +30,10 @@ namespace Elastic.CommonSchema.Serilog.Tests
 			infoString.Should().Contain("Значение");
 			infoString.Should().Contain("Русский");
 
-			var bites = new byte[1024];
-			var stream = new MemoryStream(bites);
+			var stream = new MemoryStream();
 			info.Serialize(stream);
 
-			var streamString = Encoding.UTF8.GetString(bites);
+			var streamString = Encoding.UTF8.GetString(stream.GetBuffer());
 			streamString.Should().Contain("Язык");
 			streamString.Should().Contain("Значение");
 			streamString.Should().Contain("Русский");

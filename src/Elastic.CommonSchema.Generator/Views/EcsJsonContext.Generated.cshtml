@@ -1,0 +1,31 @@
+@using System
+@using Generator
+@inherits Elastic.CommonSchema.Generator.Views.CodeTemplatePage<Elastic.CommonSchema.Generator.Projection.CommonSchemaTypesProjection>
+// Licensed to Elasticsearch B.V under one or more agreements.
+// Elasticsearch B.V licenses this file to you under the Apache 2.0 License.
+// See the LICENSE file in the project root for more information
+
+
+/*
+IMPORTANT NOTE
+==============
+This file has been generated. 
+If you wish to submit a PR please modify the original csharp file and submit the PR with that change. Thanks!
+*/
+
+using System.Text.Json.Serialization;
+
+namespace Elastic.CommonSchema;
+
+@foreach (var property in Model.Base.EntityProperties)
+{
+<text>[JsonSerializable(typeof(@property.Entity.Name))]
+</text>
+}
+@foreach (var entity in Model.EntityClasses)
+{
+<text>[JsonSerializable(typeof(@entity.Name))]
+</text>
+}
+[JsonSourceGenerationOptions(DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull)]
+internal partial class EcsJsonContext : JsonSerializerContext { }
