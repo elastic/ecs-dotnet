@@ -26,6 +26,8 @@ namespace Elastic.CommonSchema.Generator
 			{
 				{ m => Generate(m, "EcsDocument"), "Base ECS Document" },
 				{ m => Generate(m, "EcsDocumentJsonConverter"), "Base ECS Document Json Converter" },
+				{ m => Generate(m, "LogTemplateProperties"), "Strongly types ECS fields supported in log templates" },
+				{ m => Generate(m, "PropDispatch"), "ECS key value setter generation" },
 				{ m => Generate(m, "EcsJsonContext"), "Ecs System Text Json Source Generators" },
 				{ m => Generate(m, "FieldSets"), "Field Sets" },
 				{ m => Generate(m, "Entities"), "Entities" },
@@ -35,7 +37,7 @@ namespace Elastic.CommonSchema.Generator
 			};
 
 			using (var progressBar = new ProgressBar(actions.Count, "Generating code",
-				new ProgressBarOptions { BackgroundColor = ConsoleColor.DarkGray }))
+					   new ProgressBarOptions { BackgroundColor = ConsoleColor.DarkGray }))
 			{
 				foreach (var kv in actions)
 				{

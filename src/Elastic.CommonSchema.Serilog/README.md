@@ -43,6 +43,19 @@ An example of the output is given below:
 }
 ```
 
+### ECS Aware Message Templates
+
+This formatter also allows you to set ECS fields directly from the message template using properties that adhere to the
+https://messagetemplates.org/ format. 
+
+The available ECS message template properties are listed under `LogTemplateProperties.*` e.g `LogTemplateProperties.TraceId`
+
+```chsarp
+Log.Information("The time is {TraceId}", "my-trace-id");
+```
+
+Will override `trace.id` on the resulting ECS json document. 
+
 ## Copyright and License
 
 This software is Copyright (c) 2014-2020 by Elasticsearch BV.

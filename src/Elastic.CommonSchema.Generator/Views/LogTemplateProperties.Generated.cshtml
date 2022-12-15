@@ -1,0 +1,67 @@
+@using RazorLight
+@using System
+@using Generator
+@inherits Elastic.CommonSchema.Generator.Views.CodeTemplatePage<Elastic.CommonSchema.Generator.Projection.CommonSchemaTypesProjection>
+// Licensed to Elasticsearch B.V under one or more agreements.
+// Elasticsearch B.V licenses this file to you under the Apache 2.0 License.
+// See the LICENSE file in the project root for more information
+
+/*
+IMPORTANT NOTE
+==============
+This file has been generated. 
+If you wish to submit a PR please modify the original csharp file and submit the PR with that change. Thanks!
+*/
+
+// ReSharper disable RedundantUsingDirective
+using System;
+using System.Collections.Generic;
+using System.Threading;
+using System.Threading.Tasks;
+using System.Linq;
+using System.Net;
+using System.Runtime.Serialization;
+using System.Text.Json.Serialization;
+using Elastic.CommonSchema.Serialization;
+using static Elastic.CommonSchema.PropDispatch;
+
+namespace Elastic.CommonSchema
+{
+	public static class LogTemplateProperties
+	{
+@foreach (var prop in Model.Base.BaseFieldSet.SettableProperties)
+{
+<text>		public static string @prop.LogTemplateAlternative = nameof(@prop.LogTemplateAlternative);
+</text>
+}
+@foreach (var entity in Model.EntityClasses)
+{
+	@foreach (var prop in entity.BaseFieldSet.SettableProperties)
+	{
+<text>		public static string @prop.LogTemplateAlternative = nameof(@prop.LogTemplateAlternative);
+</text>
+		
+	}
+}
+
+		public static readonly HashSet@(Raw("<string>")) All = new()
+		{
+@foreach (var prop in Model.Base.BaseFieldSet.SettableProperties)
+{
+<text>			"@prop.FullPath", @prop.LogTemplateAlternative,
+</text>
+	
+}
+@foreach (var entity in Model.EntityClasses)
+{
+	@foreach (var prop in entity.BaseFieldSet.SettableProperties)
+	{
+<text>			"@prop.FullPath", @prop.LogTemplateAlternative,
+</text>
+		
+	}
+}
+		};
+	}
+
+}

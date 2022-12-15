@@ -57,7 +57,7 @@ namespace Elastic.Ingest.IntegrationTests
 			var dataStream = await Client.Indices.GetDataStreamAsync(new DataStreamRequest(targetDataStream.ToString()));
 			dataStream.DataStreams.Should().BeNullOrEmpty();
 
-			ecsChannel.TryWrite(new EcsDocument { @Timestamp = DateTimeOffset.Now, Message = "hello-world" });
+			ecsChannel.TryWrite(new EcsDocument { Timestamp = DateTimeOffset.Now, Message = "hello-world" });
 			if (!slim.WaitHandle.WaitOne(TimeSpan.FromSeconds(10)))
 					throw new Exception("ecs document was not persisted within 10 seconds");
 

@@ -13,6 +13,9 @@ namespace Elastic.CommonSchema.Generator.Projection
 
 		public Dictionary<string, PropertyReference> Properties { get; } = new();
 
+		public IEnumerable<ValueTypePropertyReference> SettableProperties =>
+			ValueProperties.Where(p => !string.IsNullOrEmpty(p.CastFromObject));
+
 		public IEnumerable<ValueTypePropertyReference> ValueProperties =>
 			Properties.Values.OfType<ValueTypePropertyReference>();
 
