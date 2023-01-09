@@ -250,6 +250,10 @@ information for an event
 // end::nlog[]
 
 // tag::log4net[]
+// These docs are currently not included in the documentation.
+// See this comment for details: https://github.com/elastic/sdh-apm/issues/759#issuecomment-1299789675.
+// To readd these docs, update the widget to include them.
+
 **log4net Layout**
 
 `EcsLayout` is a `ILayout` implementation in Elastic.CommonSchema.Log4net that

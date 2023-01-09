@@ -1,8 +1,6 @@
 [[setup]]
 == Get Started
 
-include::./tab-widgets/code.asciidoc[]
-
 [float]
 [[setup-step-1]]
 === Step 1: Configure application logging
@@ -11,7 +9,6 @@ The following logging frameworks are supported:
 
 * Serilog
 * NLog
-* log4net
 
 [float]
 ==== Add the dependency
