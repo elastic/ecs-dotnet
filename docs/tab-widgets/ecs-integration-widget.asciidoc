@@ -14,13 +14,6 @@
             tabindex="-1">
       NLog
     </button>
-    <button role="tab"
-            aria-selected="false"
-            aria-controls="log4net-tab-ecs-integration"
-            id="log4net-ecs-integration"
-            tabindex="-1">
-      log4net
-    </button>
   </div>
   <div tabindex="0"
        role="tabpanel"
@@ -40,17 +33,6 @@ include::ecs-integration.asciidoc[tag=serilog]
 ++++
 
 include::ecs-integration.asciidoc[tag=nlog]
-
-++++
-  </div>
-  <div tabindex="0"
-       role="tabpanel"
-       id="log4net-tab-ecs-integration"
-       aria-labelledby="log4net-ecs-integration"
-       hidden="">
-++++
-
-include::ecs-integration.asciidoc[tag=log4net]
 
 ++++
   </div>
