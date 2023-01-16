@@ -80,9 +80,11 @@ namespace Elastic.CommonSchema.NLog.Tests
 
 			var (_, info) = ecsEvents.First();
 			info.Message.Should().Be("Info X=X");
-			info.Metadata.Should().ContainKey("UnsafeValue");
+			info.Metadata.Should().BeNull();
+			info.Labels.Should().NotBeNull();
+			info.Labels.Should().ContainKey("UnsafeValue");
 
-			var x = info.Metadata["UnsafeValue"] as string;
+			var x = info.Labels["UnsafeValue"];
 			x.Should().NotBeNull().And.Be("X=X");
 		});
 
@@ -92,7 +94,7 @@ namespace Elastic.CommonSchema.NLog.Tests
 			public double SomeY { get; set; }
 
 			public override string ToString() => $"X={ValueX}";
-		}		 
+		}
 
 		[Fact]
 		public void SeesMessageWithException() => TestLogger((logger, getLogEvents) =>
