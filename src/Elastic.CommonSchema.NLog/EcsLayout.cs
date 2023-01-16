@@ -51,13 +51,15 @@ namespace Elastic.CommonSchema.NLog
 			ProcessId = "${processid}";
 			ProcessName = "${processname:FullName=false}";
 			ProcessExecutable = "${processname:FullName=true}";
-			ProcessTitle = "${processinfo:MainWindowTitle}";
+			ProcessTitle = "${processinfo:MainWindowTitle:whenEmpty=${assembly-version:cached=true}}";
 			ProcessThreadId = "${threadid}";
 
-			HostName = "${machinename}";
+			HostName = "${hostname}";	// NLog 4.6
 			HostIp = "${local-ip:cachedSeconds=60}"; // NLog 4.6.8
 
 			ServerUser = "${environment-user}"; // NLog 4.6.4
+
+			EventCode = "${event-properties:EventId}";
 
 			// These values are set by the Elastic.Apm.NLog package
 			if (NLogApmLoaded())
@@ -70,6 +72,7 @@ namespace Elastic.CommonSchema.NLog
 				ApmServiceNodeName = "${ElasticApmServiceNodeName}";
 				ApmServiceVersion = "${ElasticApmServiceVersion}";
 			}
+
 
 			if (NLogWeb5Loaded())
 			{
@@ -121,6 +124,7 @@ namespace Elastic.CommonSchema.NLog
 		public Layout EventAction { get; set; }
 		public Layout EventCategory { get; set; }
 		public Layout EventId { get; set; }
+		public Layout EventCode { get; set; }
 		public Layout EventKind { get; set; }
 		public Layout EventSeverity { get; set; }
 		public Layout EventDurationMs { get; set; }
@@ -419,6 +423,9 @@ namespace Elastic.CommonSchema.NLog
 			var eventCategory = EventCategory?.Render(logEventInfo);
 			var eventSeverity = EventSeverity?.Render(logEventInfo);
 			var eventDurationMs = EventDurationMs?.Render(logEventInfo);
+			var eventCode = EventCode?.Render(logEventInfo);
+			if (string.IsNullOrEmpty(eventCode) || eventCode == "0")
+				eventCode = null;
 
 			var evnt = new Event
 			{
@@ -426,6 +433,7 @@ namespace Elastic.CommonSchema.NLog
 				Category = !string.IsNullOrEmpty(eventCategory) ? new[] { eventCategory } : null,
 				Action = EventAction?.Render(logEventInfo),
 				Id = EventId?.Render(logEventInfo),
+				Code = eventCode,
 				Kind = EventKind?.Render(logEventInfo),
 				Severity = !string.IsNullOrEmpty(eventSeverity)
 					? long.Parse(eventSeverity)
@@ -577,8 +585,8 @@ namespace Elastic.CommonSchema.NLog
 				Scheme = urlScheme,
 				Domain = urlDomain,
 				Path = urlPath,
-				Query = urlQuery,
-				Username = urlUserName,
+				Query = string.IsNullOrEmpty(urlQuery) ? null : urlQuery,
+				Username = string.IsNullOrEmpty(urlUserName) ? null : urlUserName,
 			};
 
 			if (!string.IsNullOrEmpty(urlPort) && long.TryParse(urlPort, out var portNumber) && portNumber > 0)
@@ -602,8 +610,8 @@ namespace Elastic.CommonSchema.NLog
 
 			var host = new Host
 			{
-				Id = hostId,
-				Name = hostName,
+				Id = string.IsNullOrEmpty(hostId) ? null : hostId,
+				Name = string.IsNullOrEmpty(hostName) ? null : hostName,
 				Ip = string.IsNullOrEmpty(hostIp) ? null : new[] { hostIp }
 			};
 
