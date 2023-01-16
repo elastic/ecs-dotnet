@@ -196,7 +196,6 @@ namespace Elastic.CommonSchema.NLog
 				Log = GetLog(logEvent),
 				Service = GetService(logEvent),
 				Event = GetEvent(logEvent),
-				Metadata = GetMetadata(logEvent),
 				Process = GetProcess(logEvent),
 				TraceId = GetTrace(logEvent),
 				TransactionId = GetTransaction(logEvent),
@@ -210,6 +209,9 @@ namespace Elastic.CommonSchema.NLog
 				Http = GetHttp(logEvent),
 				Url = GetUrl(logEvent),
 			};
+			var metadata = GetMetadata(logEvent) ?? MetadataDictionary.Default;
+			foreach(var kv in metadata)
+				ecsEvent.SetLogMessageProperty(kv.Key, kv.Value);
 
 			//Give any deriving classes a chance to enrich the event
 			EnrichEvent(logEvent, ref ecsEvent);

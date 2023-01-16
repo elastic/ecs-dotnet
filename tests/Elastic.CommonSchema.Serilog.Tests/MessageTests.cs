@@ -49,10 +49,10 @@ namespace Elastic.CommonSchema.Serilog.Tests
 
 			var (_, info) = ecsEvents.First();
 			info.Message.Should().Be("Info \"X\" 2.2");
-			info.Metadata.Should().ContainKey("ValueX");
+			info.Labels.Should().ContainKey("ValueX");
 			info.Metadata.Should().ContainKey("SomeY");
 
-			var x = info.Metadata["ValueX"] as string;
+			var x = info.Labels["ValueX"];
 			x.Should().NotBeNull().And.Be("X");
 
 			var y = info.Metadata["SomeY"] as double?;
@@ -72,11 +72,11 @@ namespace Elastic.CommonSchema.Serilog.Tests
 
 			var (_, info) = ecsEvents.First();
 			info.Message.Should().Be("Info \"X\" 2.2 [(\"fieldOne\": \"value1\"), (\"fieldTwo\": \"value2\")]");
-			info.Metadata.Should().ContainKey("ValueX");
+			info.Labels.Should().ContainKey("ValueX");
 			info.Metadata.Should().ContainKey("SomeY");
 			info.Metadata.Should().ContainKey("DictValue");
 
-			var x = info.Metadata["ValueX"] as string;
+			var x = info.Labels["ValueX"];
 			x.Should().NotBeNull().And.Be("X");
 
 			var y = info.Metadata["SomeY"] as double?;
@@ -125,7 +125,7 @@ namespace Elastic.CommonSchema.Serilog.Tests
 
 			var (_, info) = ecsEvents.First();
 			info.Event.Duration.Should().Be(2200000);
-			info.Metadata.Should().NotContainKey(property);
+			info.Metadata.Should().BeNull();
 		});
 
 		[Theory]
@@ -142,7 +142,7 @@ namespace Elastic.CommonSchema.Serilog.Tests
 
 			var (_, info) = ecsEvents.First();
 			info.Http.RequestMethod.Should().Be("GET");
-			info.Metadata.Should().NotContainKey(property);
+			info.Metadata.Should().BeNull();
 		});
 
 		[Theory]
@@ -159,7 +159,7 @@ namespace Elastic.CommonSchema.Serilog.Tests
 
 			var (_, info) = ecsEvents.First();
 			info.Url.Path.Should().Be("/");
-			info.Metadata.Should().NotContainKey(property);
+			info.Metadata.Should().BeNull();
 		});
 
 		[Fact]
@@ -174,7 +174,7 @@ namespace Elastic.CommonSchema.Serilog.Tests
 
 			var (_, info) = ecsEvents.First();
 			info.Http.ResponseStatusCode.Should().Be(200);
-			info.Metadata.Should().NotContainKey("StatusCode");
+			info.Metadata.Should().BeNull();
 		});
 
 		[Fact]
@@ -189,7 +189,7 @@ namespace Elastic.CommonSchema.Serilog.Tests
 
 			var (_, info) = ecsEvents.First();
 			info.Url.Scheme.Should().Be("https");
-			info.Metadata.Should().NotContainKey("Scheme");
+			info.Metadata.Should().BeNull();
 		});
 
 		[Theory]
@@ -207,7 +207,7 @@ namespace Elastic.CommonSchema.Serilog.Tests
 
 			var (_, info) = ecsEvents.First();
 			info.Url.Query.Should().Equals(expectedValue);
-			info.Metadata.Should().NotContainKey(property);
+			info.Metadata.Should().BeNull();
 		});
 
 		[Fact]
@@ -222,7 +222,7 @@ namespace Elastic.CommonSchema.Serilog.Tests
 
 			var (_, info) = ecsEvents.First();
 			info.Http.RequestId.Should().Be("34985y39y6tg95");
-			info.Metadata.Should().NotContainKey("RequestId");
+			info.Metadata.Should().BeNull();
 		});
 	}
 }
