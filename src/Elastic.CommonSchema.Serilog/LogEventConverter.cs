@@ -68,7 +68,6 @@ namespace Elastic.CommonSchema.Serilog
 				Service = GetService(logEvent),
 				Agent = GetAgent(logEvent),
 				Event = GetEvent(logEvent),
-				Metadata = GetMetadata(logEvent, configuration.LogEventPropertiesToFilter),
 				Process = GetProcess(logEvent, configuration.MapCurrentThread),
 				Host = GetHost(logEvent),
 				TraceId = GetTrace(logEvent),
@@ -81,6 +80,9 @@ namespace Elastic.CommonSchema.Serilog
 				Client = GetClient(configuration),
 				User = GetUser(configuration)
 			};
+			var metaData = GetMetadata(logEvent, configuration.LogEventPropertiesToFilter);
+			foreach (var kv in metaData)
+				ecsEvent.SetLogMessageProperty(kv.Key, kv.Value);
 
 			if (configuration.MapExceptions)
 				ecsEvent.Error = GetError(exceptions);
@@ -157,10 +159,7 @@ namespace Elastic.CommonSchema.Serilog
 				dict.Add(logEventPropertyValue.Key, PropertyValueToObject(logEventPropertyValue.Value));
 			}
 
-			if (dict.Count == 0)
-				return null;
-
-			return dict;
+			return dict.Count == 0 ? MetadataDictionary.Default : dict;
 		}
 
 		private static bool PropertyAlreadyMapped(string property)
