@@ -3,6 +3,7 @@
 // See the LICENSE file in the project root for more information
 
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
@@ -138,11 +139,11 @@ namespace Elastic.CommonSchema.Serilog
 				if (logEventPropertyValues != null)
 				{
 					foreach (var item in logEventPropertyValues.Select(x => x.ToString()
-							.Replace("\"", string.Empty)
-							.Replace("[", string.Empty)
-							.Replace("]", string.Empty)
-							.Split(','))
-						.Select(value => new { Key = value[0].Trim(), Value = value[1].Trim() }))
+									 .Replace("\"", string.Empty)
+									 .Replace("[", string.Empty)
+									 .Replace("]", string.Empty)
+									 .Split(','))
+								 .Select(value => new { Key = value[0].Trim(), Value = value[1].Trim() }))
 						dict.Add(item.Key, item.Value);
 				}
 			}
@@ -257,9 +258,9 @@ namespace Elastic.CommonSchema.Serilog
 			e.TryGetScalarPropertyValue(SpecialKeys.ProcessId, out var processIdProp);
 			e.TryGetScalarPropertyValue(SpecialKeys.ThreadId, out var threadIdProp);
 			if (processNameProp == null
-				&& processIdProp == null
-				&& threadIdProp == null
-				&& !mapFromCurrentThread)
+			    && processIdProp == null
+			    && threadIdProp == null
+			    && !mapFromCurrentThread)
 				return null;
 
 			var processName = processNameProp?.Value.ToString();
@@ -280,10 +281,38 @@ namespace Elastic.CommonSchema.Serilog
 				};
 			}
 
-			var currentThread = Thread.CurrentThread;
+			if (pid == null)
+				return CurrentProcess ??= ToEcsProcess(null, processName);
+
+			if (ProcessLookup.TryGetValue(pid.Value, out var cachedProcess))
+				return cachedProcess;
+
+			var process = ToEcsProcess(pid, processName);
+			if (!ProcessLookup.TryAdd(pid.Value, process)) return process;
+
+			// simplistic fixed memory cache
+			// if we spot that we are caching more then 10k process id's assume something is wrong
+			// and purge cache
+			var count = Interlocked.Increment(ref LookupCount);
+			if (count <= 10_000) return process;
+
+			ProcessLookup.Clear();
+			// This could reset a previous increment from possible other threads adding.
+			// The count being approximately 10k is good enough
+			Interlocked.Exchange(ref LookupCount, 0);
+			return process;
+		}
+
+		private static Process CurrentProcess = null;
+		private static readonly ConcurrentDictionary<int, Process> ProcessLookup = new();
+		private static int LookupCount = 0;
+
+		private static Process ToEcsProcess(int? pid, string processName)
+		{
 			var process = TryGetProcess(pid);
 
 			var mainWindowTitle = process?.MainWindowTitle;
+			var currentThread = Thread.CurrentThread;
 			return new Process
 			{
 				Title = string.IsNullOrEmpty(mainWindowTitle) ? null : mainWindowTitle,
@@ -312,8 +341,8 @@ namespace Elastic.CommonSchema.Serilog
 		private static Log GetLog(LogEvent e, IReadOnlyList<Exception> exceptions, IEcsTextFormatterConfiguration configuration)
 		{
 			var source = e.TryGetScalarPropertyValue(SpecialKeys.SourceContext, out var context)
-				 ? context.Value.ToString()
-				 : SpecialKeys.DefaultLogger;
+				? context.Value.ToString()
+				: SpecialKeys.DefaultLogger;
 
 			var log = new Log { Level = e.Level.ToString("F"), Logger = source };
 
