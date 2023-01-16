@@ -11,7 +11,6 @@ using Elastic.Ingest.Elasticsearch;
 using Elastic.Ingest.Elasticsearch.CommonSchema;
 using Elastic.Ingest.Elasticsearch.DataStreams;
 using Elastic.Transport;
-using Elastic.Transport.Products.Elasticsearch;
 using FluentAssertions;
 using Xunit;
 
