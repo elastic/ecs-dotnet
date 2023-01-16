@@ -107,6 +107,18 @@ filesystem target and [Elastic Filebeat](https://www.elastic.co/downloads/beats/
 
 * **Transaction Options**
   - _ApmTransactionId_ - Default: `${ElasticApmTransactionId}`
+  - 
+### ECS Aware Message Templates
+
+Additionally any valid ECS log template properties that is available under `LogTemplateProperties.*` e.g `LogTemplateProperties.TraceId`
+is supported and will directly set the appropriate ECS fields.
+
+```chsarp
+logger.Info("The time is {TraceId}", "my-trace-id");
+```
+
+Will override `trace.id` on the resulting ECS json document.
+
 
 ## Example output from EcsLayout
 An example of the output is given below:

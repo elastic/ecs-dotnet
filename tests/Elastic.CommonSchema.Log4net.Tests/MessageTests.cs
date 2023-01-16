@@ -146,10 +146,10 @@ namespace Elastic.CommonSchema.Log4net.Tests
 			var (_, info) = ToEcsEvents(logEvents).First();
 
 			info.Should().NotBeNull();
-			info.Metadata.Should().NotBeNull();
+			info.Labels.Should().NotBeNull();
 
-			info.Metadata["MessageTemplate"].Should().Be("Log with {0}");
-			info.Metadata["0"].Should().Be("format");
+			info.Labels["MessageTemplate"].Should().Be("Log with {0}");
+			info.Labels["0"].Should().Be("format");
 		});
 
 		[Fact]
@@ -167,6 +167,12 @@ namespace Elastic.CommonSchema.Log4net.Tests
 				info.Metadata.Should().NotContainKey(LoggingEvent.IdentityProperty);
 				info.Metadata.Should().NotContainKey(LoggingEvent.HostNameProperty);
 				info.Metadata.Should().NotContainKey(LoggingEvent.UserNameProperty);
+			}
+			if (info.Labels != null)
+			{
+				info.Labels.Should().NotContainKey(LoggingEvent.IdentityProperty);
+				info.Labels.Should().NotContainKey(LoggingEvent.HostNameProperty);
+				info.Labels.Should().NotContainKey(LoggingEvent.UserNameProperty);
 			}
 		});
 
@@ -186,8 +192,8 @@ namespace Elastic.CommonSchema.Log4net.Tests
 
 				var (_, info) = ToEcsEvents(logEvents).First();
 
-				info.Metadata.Should().ContainKey(property);
-				info.Metadata[property].Should().Be(propertyValue);
+				info.Labels.Should().ContainKey(property);
+				info.Labels[property].Should().Be(propertyValue);
 			}
 			finally
 			{
@@ -209,8 +215,8 @@ namespace Elastic.CommonSchema.Log4net.Tests
 
 			var (_, info) = ToEcsEvents(logEvents).First();
 
-			info.Metadata.Should().ContainKey(property);
-			info.Metadata[property].Should().Be(propertyValue);
+			info.Labels.Should().ContainKey(property);
+			info.Labels[property].Should().Be(propertyValue);
 		});
 
 		[Fact]
@@ -229,8 +235,8 @@ namespace Elastic.CommonSchema.Log4net.Tests
 
 				var (_, info) = ToEcsEvents(logEvents).First();
 
-				info.Metadata.Should().ContainKey(property);
-				info.Metadata[property].Should().Be(propertyValue);
+				info.Labels.Should().ContainKey(property);
+				info.Labels[property].Should().Be(propertyValue);
 			}
 			finally
 			{
@@ -252,8 +258,11 @@ namespace Elastic.CommonSchema.Log4net.Tests
 
 			var (_, info) = ToEcsEvents(logEvents).First();
 
-			info.Metadata.Should().ContainKey(property);
-			info.Metadata[property].Should().Be(propertyValue);
+			info.Metadata.Should().BeNull();
+			info.Labels.Should().NotBeNull();
+
+			info.Labels.Should().ContainKey(property);
+			info.Labels[property].Should().Be(propertyValue);
 		});
 
 		[Fact]
@@ -261,7 +270,9 @@ namespace Elastic.CommonSchema.Log4net.Tests
 		{
 			const string property = "logical-thread-context-prop";
 			const string propertyValue = "logical-thread-context-value";
+			const string metadataProperty = "logical-thread-context-prop-metadata";
 			LogicalThreadContext.Properties[property] = propertyValue;
+			LogicalThreadContext.Properties[metadataProperty] = 2.0;
 
 			try
 			{
@@ -272,8 +283,10 @@ namespace Elastic.CommonSchema.Log4net.Tests
 
 				var (_, info) = ToEcsEvents(logEvents).First();
 
-				info.Metadata.Should().ContainKey(property);
-				info.Metadata[property].Should().Be(propertyValue);
+				info.Labels.Should().ContainKey(property);
+				info.Labels[property].Should().Be(propertyValue);
+				info.Metadata.Should().ContainKey(metadataProperty);
+				info.Metadata[metadataProperty].Should().Be(2.0);
 			}
 			finally
 			{
@@ -296,8 +309,8 @@ namespace Elastic.CommonSchema.Log4net.Tests
 
 			var (_, info) = ToEcsEvents(logEvents).First();
 
-			info.Metadata.Should().ContainKey(property);
-			info.Metadata[property].Should().Be(propertyValue);
+			info.Labels.Should().ContainKey(property);
+			info.Labels[property].Should().Be(propertyValue);
 		});
 	}
 }

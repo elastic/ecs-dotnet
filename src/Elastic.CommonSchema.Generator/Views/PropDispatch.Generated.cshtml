@@ -1,0 +1,128 @@
+@using RazorLight
+@using System
+@using Generator
+@using System.Linq;
+@inherits Elastic.CommonSchema.Generator.Views.CodeTemplatePage<Elastic.CommonSchema.Generator.Projection.CommonSchemaTypesProjection>
+// Licensed to Elasticsearch B.V under one or more agreements.
+// Elasticsearch B.V licenses this file to you under the Apache 2.0 License.
+// See the LICENSE file in the project root for more information
+
+/*
+IMPORTANT NOTE
+==============
+This file has been generated. 
+If you wish to submit a PR please modify the original csharp file and submit the PR with that change. Thanks!
+*/
+
+// ReSharper disable RedundantUsingDirective
+using System;
+using System.Collections.Generic;
+using System.Threading;
+using System.Threading.Tasks;
+using System.Linq;
+using System.Net;
+using System.Runtime.Serialization;
+using System.Text.Json.Serialization;
+using Elastic.CommonSchema.Serialization;
+using static Elastic.CommonSchema.PropDispatch;
+
+namespace Elastic.CommonSchema
+{
+	///<inheritdoc cref="@Model.Base.BaseFieldSet.Name"/>
+	public partial class @Model.Base.Name : @Model.Base.BaseFieldSet.Name 
+	{
+		/// <summary>
+		/// Set ECS fields by name on <see cref="EcsDocument"/>.
+		/// <para>Allows valid ECS fields to be set from log message templates.</para>
+		/// Given <paramref name="value"/>'s type matches the corresponding property on <see cref="EcsDocument"/>
+		/// <para></para>
+		/// <para>See <see cref="LogTemplateProperties"/> for a strongly typed list of valid ECS log template properties</para>
+		/// <para>If its not a supported ECS log template property or using the wrong type:</para>
+		/// <list type="bullet">
+		/// <item>Assigns strings to <see cref="EcsDocument.Labels"/> on <see cref="EcsDocument"/></item>
+		/// <item>Assigns everything else to <see cref="EcsDocument.Metadata"/> on <see cref="EcsDocument"/></item>
+		/// </list>
+		/// </summary>
+		/// <para@(Raw("m")) name="path">Either a supported ECS Log Template property or any key</para@(Raw("m"))>
+		/// <para@(Raw("m")) name="value">The value to persist</para@(Raw("m"))>
+		public void SetLogMessageProperty(string path, object value)
+		{
+			var assigned = LogTemplateProperties.All.Contains(path) && TrySet(this, path, value);
+			if (!assigned) 
+				SetMetaOrLabel(this, path, value);
+		}
+	}
+	internal static partial class PropDispatch
+	{
+		public static bool TrySet(EcsDocument document, string path, object value) 
+		{
+			switch (path) 
+			{
+	@foreach (var prop in Model.Base.BaseFieldSet.SettableProperties)
+	{
+<text>				case "@prop.FullPath":
+				case "@prop.LogTemplateAlternative":
+</text>
+	}
+					return TrySet@(@Model.Base.Name)(document, path, value);
+@foreach (var entity in Model.EntityClasses)
+{
+	if (!entity.BaseFieldSet.SettableProperties.Any())
+	{
+		continue;
+	}
+	@foreach (var prop in entity.BaseFieldSet.SettableProperties) 
+	{
+<text>				case "@prop.FullPath":
+				case "@prop.LogTemplateAlternative":
+</text>
+	}
+<text>					return TrySet@(@entity.Name)(document, path, value);
+</text>
+}
+				default:
+					SetMetaOrLabel(document, path, value);
+					return true;
+			}
+		}
+
+		public static bool TrySet@(@Model.Base.Name)(EcsDocument document, string path, object value)
+		{
+			Func@(Raw("<"))@(Model.Base.Name), object, bool@(Raw(">")) assign = path switch
+			{
+		@foreach (var prop in Model.Base.BaseFieldSet.SettableProperties)
+		{
+<text>				"@prop.FullPath" => static (e, v) => @(prop.CastFromObject)(e, v, static (ee, p) => ee.@(prop.Name) = p),
+				"@prop.LogTemplateAlternative" => static (e, v) => @(prop.CastFromObject)(e, v, static (ee, p) => ee.@(prop.Name) = p),
+</text>
+		}
+				_ => null
+			};
+			return assign != null && assign(document, value);
+		}
+@foreach (var entity in Model.EntityClasses)
+{
+<text>
+		public static bool TrySet@(entity.Name)(EcsDocument document, string path, object value)
+		{
+			Func@(Raw("<"))@(entity.Name), object, bool@(Raw(">")) assign = path switch
+			{
+		@foreach (var prop in entity.BaseFieldSet.SettableProperties)
+		{
+<text>				"@prop.FullPath" => static (e, v) => @(prop.CastFromObject)(e, v, static (ee, p) => ee.@(prop.Name) = p),
+				"@prop.LogTemplateAlternative" => static (e, v) => @(prop.CastFromObject)(e, v, static (ee, p) => ee.@(prop.Name) = p),
+</text>
+		}
+				_ => null
+			};
+			if (assign == null) return false;
+
+			var entity = document.@(entity.Name) ?? new @(entity.Name)();
+			var assigned = assign(entity, value);
+			if (assigned) document.@(entity.Name) = entity;
+			return assigned;
+		}
+</text>
+}
+	}
+}

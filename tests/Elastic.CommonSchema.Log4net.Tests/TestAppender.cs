@@ -11,11 +11,12 @@ namespace Elastic.CommonSchema.Log4net.Tests
 {
 	internal class TestAppender : AppenderSkeleton
 	{
-		public List<string> Events { get; } = new List<string>();
+		public List<string> Events { get; } = new();
 
 		protected override void Append(LoggingEvent loggingEvent)
 		{
 			using var writer = new StringWriter();
+
 
 			if (Layout == null)
 			{

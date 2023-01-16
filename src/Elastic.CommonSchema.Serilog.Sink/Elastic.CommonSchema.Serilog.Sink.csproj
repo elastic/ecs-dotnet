@@ -1,0 +1,14 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.1</TargetFramework>
+    <Nullable>enable</Nullable>
+    <IsPackable>false</IsPackable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Elastic.CommonSchema.Serilog\Elastic.CommonSchema.Serilog.csproj" />
+    <ProjectReference Include="..\Elastic.Ingest.Elasticsearch.CommonSchema\Elastic.Ingest.Elasticsearch.CommonSchema.csproj" />
+  </ItemGroup>
+
+</Project>

@@ -36,6 +36,11 @@ The `Layout = new EcsLayout()` line then instructs log4net to use ECS layout.
 The sample above uses the console appender, but you are free to use any appender of your choice, perhaps consider using a
 filesystem target and [Elastic Filebeat](https://www.elastic.co/downloads/beats/filebeat) for durable and reliable ingestion.
 
+### ECS Aware Properties
+
+Any valid ECS log template properties that is available under `LogTemplateProperties.*` e.g `LogTemplateProperties.TraceId`
+is supported and will directly set the appropriate ECS field.
+
 ## Output
 
 Apart from [mandatory fields](https://www.elastic.co/guide/en/ecs/current/ecs-guidelines.html#_general_guidelines), the output contains additional data:
