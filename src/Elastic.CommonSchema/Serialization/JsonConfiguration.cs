@@ -14,16 +14,21 @@ namespace Elastic.CommonSchema.Serialization
 		public static JsonSerializerOptions SerializerOptions { get; } = new ()
 		{
 			DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingDefault,
+
 			Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
 			PropertyNamingPolicy = new SnakeCaseJsonNamingPolicy(),
 			Converters =
 			{
 				new EcsDocumentJsonConverterFactory(),
-				new EcsJsonStringConverter<System.Reflection.Assembly>(),	// Cannot transfer assembly-objects over the wire
-				new EcsJsonStringConverter<System.Reflection.Module>(),		// Cannot transfer module-objects over the wire
-				new EcsJsonStringConverter<System.Reflection.MemberInfo>(),	// Cannot transfer method-addresses over the wire
-				new EcsJsonStringConverter<System.Delegate>(),				// Cannot transfer methods over the wire
-				new EcsJsonStringConverter<System.IO.Stream>(),				// Stream-properties often throws exceptions
+				// System.Text.Json got significantly better at not tripping over BCL types with .NET 7.0.
+				// ECS should fallback from serialization failures in metadata however this list catches the most
+				// common offenders. This to ensure better interop with older ASP.NET version out of the box see:
+				// https://github.com/elastic/ecs-dotnet/issues/219
+				new EcsJsonStringConverter<System.Reflection.Assembly>(),
+				new EcsJsonStringConverter<System.Reflection.Module>(),
+				new EcsJsonStringConverter<System.Reflection.MemberInfo>(),
+				new EcsJsonStringConverter<System.Delegate>(),
+				new EcsJsonStringConverter<System.IO.Stream>(),
 			},
 		};
 

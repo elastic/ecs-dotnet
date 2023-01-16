@@ -7,11 +7,14 @@ using System.Linq;
 using FluentAssertions;
 using Xunit;
 using NLog;
+using Xunit.Abstractions;
 
 namespace Elastic.CommonSchema.NLog.Tests
 {
 	public class EcsFieldsInTemplateTests : LogTestsBase
 	{
+		public EcsFieldsInTemplateTests(ITestOutputHelper output) : base(output) { }
+
 		[Fact]
 		public void CanUseEcsFieldNamesAsTemplateProperty() => TestLogger((logger, getLogEvents) =>
 		{

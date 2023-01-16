@@ -8,13 +8,13 @@ using Elastic.Apm;
 using Elastic.Apm.Test.Common;
 using FluentAssertions;
 using Xunit;
+using Xunit.Abstractions;
 
 namespace Elastic.CommonSchema.NLog.Tests
 {
 	public class ApmTests : LogTestsBase
 	{
-
-		public ApmTests()
+		public ApmTests(ITestOutputHelper output) : base(output)
 		{
 			var configuration = new MockConfiguration("my-service", "my-service-node-name", "0.2.1");
 			if (!Apm.Agent.IsConfigured)

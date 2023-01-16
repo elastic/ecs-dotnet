@@ -6,11 +6,14 @@ using System;
 using System.Linq;
 using FluentAssertions;
 using Xunit;
+using Xunit.Abstractions;
 
 namespace Elastic.CommonSchema.NLog.Tests
 {
 	public class OutputTests : LogTestsBase
 	{
+		public OutputTests(ITestOutputHelper output) : base(output) { }
+
 		[Fact]
 		public void LogMultiple() => TestLogger((logger, getLogEvents) =>
 		{
