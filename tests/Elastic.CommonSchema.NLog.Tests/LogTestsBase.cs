@@ -12,16 +12,21 @@ using NLog.LayoutRenderers;
 using NLog.Layouts;
 using Config=NLog.Config;
 using NLog.Targets;
+using Xunit.Abstractions;
 
 namespace Elastic.CommonSchema.NLog.Tests
 {
 	public abstract class LogTestsBase
 	{
+		protected LogTestsBase(ITestOutputHelper output) => TestOut = output;
+
+		private ITestOutputHelper TestOut { get; }
+
 		protected List<(string Json, EcsDocument Base)> ToEcsEvents(List<string> logEvents) =>
 			logEvents.Select(s => (s, EcsDocument.Deserialize(s)))
 				.ToList();
 
-		protected static void TestLogger(Action<ILogger, Func<List<string>>> act)
+		protected void TestLogger(Action<ILogger, Func<List<string>>> act)
 		{
 			// These layout renderers need to registered statically as ultimately ConfigurationItemFactory.Default is called in the call stack.
 			LayoutRenderer.Register<ApmTraceIdLayoutRenderer>(ApmTraceIdLayoutRenderer.Name); //generic
@@ -43,7 +48,11 @@ namespace Elastic.CommonSchema.NLog.Tests
 			List<string> GetAndValidateLogEvents()
 			{
 				foreach (var log in memoryTarget.Logs)
+				{
+					TestOut.WriteLine(log);
 					Spec.Validate(log);
+
+				}
 
 				return memoryTarget.Logs.ToList();
 			}

@@ -5,6 +5,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
@@ -12,6 +13,15 @@ namespace Elastic.CommonSchema.Serialization
 {
 	internal class MetadataDictionaryConverter : JsonConverter<MetadataDictionary>
 	{
+		internal class MetaDataSerializationFailure
+		{
+			[JsonPropertyName("reason"), DataMember(Name = "reason")]
+			public string SerializationFailure { get; set; }
+
+			[JsonPropertyName("key"), DataMember(Name = "key")]
+			public string Property { get; set; }
+		}
+
 		public override MetadataDictionary Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
 		{
 			if (reader.TokenType != JsonTokenType.StartObject)
@@ -43,18 +53,40 @@ namespace Elastic.CommonSchema.Serialization
 		{
 			writer.WriteStartObject();
 
+			List<MetaDataSerializationFailure> failures = null;
+
 			foreach (var kvp in value)
 			{
 				var propertyName = kvp.Key;
-				writer.WritePropertyName(propertyName);
 
 				if (kvp.Value == null)
+				{
+					writer.WritePropertyName(propertyName);
 					writer.WriteNullValue();
+				}
 				else
 				{
-					var inputType = kvp.Value.GetType();
-					JsonSerializer.Serialize(writer, kvp.Value, inputType, options);
+					try
+					{
+						// The following is not safe
+						// JsonSerializer.Serialize(writer, kvp.Value, inputType, options);
+						// If a getter throws an exception we risk not logging anything
+
+						var bytes = JsonSerializer.SerializeToUtf8Bytes(kvp.Value, options);
+						writer.WritePropertyName(propertyName);
+						writer.WriteRawValue(bytes);
+					}
+					catch (Exception e)
+					{
+						failures ??= new List<MetaDataSerializationFailure>();
+						failures.Add(new MetaDataSerializationFailure { Property = propertyName, SerializationFailure = e.Message });
+					}
 				}
+			}
+			if (failures != null)
+			{
+				writer.WritePropertyName("__failures__");
+				JsonSerializer.Serialize(writer, failures, typeof(List<MetaDataSerializationFailure>), options);
 			}
 			writer.WriteEndObject();
 		}
@@ -68,7 +100,8 @@ namespace Elastic.CommonSchema.Serialization
 				case JsonTokenType.False: return false;
 				case JsonTokenType.True: return true;
 				case JsonTokenType.Null: return null;
-				case JsonTokenType.Number: return reader.TryGetInt64(out var result) ? result : reader.TryGetDouble(out var d) ? d : reader.GetDecimal();
+				case JsonTokenType.Number:
+					return reader.TryGetInt64(out var result) ? result : reader.TryGetDouble(out var d) ? d : reader.GetDecimal();
 				case JsonTokenType.StartObject:
 					return Read(ref reader, null, options);
 				case JsonTokenType.StartArray:

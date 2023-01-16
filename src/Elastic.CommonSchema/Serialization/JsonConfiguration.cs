@@ -14,18 +14,42 @@ namespace Elastic.CommonSchema.Serialization
 		public static JsonSerializerOptions SerializerOptions { get; } = new ()
 		{
 			DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingDefault,
+
 			Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
 			PropertyNamingPolicy = new SnakeCaseJsonNamingPolicy(),
 			Converters =
 			{
-				new EcsDocumentJsonConverterFactory()
+				new EcsDocumentJsonConverterFactory(),
+				// System.Text.Json got significantly better at not tripping over BCL types with .NET 7.0.
+				// ECS should fallback from serialization failures in metadata however this list catches the most
+				// common offenders. This to ensure better interop with older ASP.NET version out of the box see:
+				// https://github.com/elastic/ecs-dotnet/issues/219
+				new EcsJsonStringConverter<System.Reflection.Assembly>(),
+				new EcsJsonStringConverter<System.Reflection.Module>(),
+				new EcsJsonStringConverter<System.Reflection.MemberInfo>(),
+				new EcsJsonStringConverter<System.Delegate>(),
+				new EcsJsonStringConverter<System.IO.Stream>(),
 			},
-
 		};
 
 		internal static readonly JsonConverter<DateTimeOffset> DateTimeOffsetConverter =
 			(JsonConverter<DateTimeOffset>)SerializerOptions.GetConverter(typeof(DateTimeOffset));
 
 		public static readonly EcsDocumentJsonConverter DefaultEcsDocumentJsonConverter = new();
+
+		private sealed class EcsJsonStringConverter<T> : JsonConverter<T>
+		{
+			public override bool CanConvert(Type typeToConvert) => typeof(T).IsAssignableFrom(typeToConvert);
+
+			public override T Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options) => default;
+
+			public override void Write(Utf8JsonWriter writer, T value, JsonSerializerOptions options)
+			{
+				if (value is null)
+					writer.WriteNullValue();
+				else
+					writer.WriteStringValue(value.ToString());
+			}
+		}
 	}
 }
