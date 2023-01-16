@@ -41,7 +41,11 @@ namespace Elastic.CommonSchema.Tests.Specs
 				if (property != null)
 				{
 					ValidateIndex(property, log, specFieldValue);
-					ValidateType(property, specFieldValue);
+					try { ValidateType(property, specFieldValue);}
+					catch (Exception e)
+					{
+						throw new Exception(logEvent, e);
+					}
 				}
 			}
 		}
@@ -72,8 +76,14 @@ namespace Elastic.CommonSchema.Tests.Specs
 					case "string":
 						property.Value.Type.Should().Be(JTokenType.String);
 						break;
+					case "object" when property.Path == "labels":
+						property.Value.Type.Should().Be(JTokenType.Object);
+						var labels = (JObject)property.Value;
+						foreach (var prop in labels.Properties())
+							prop.Value.Type.Should().Be(JTokenType.String, $"label {prop.Name} holds {prop.Value.Type} but may only hold string");
+						break;
 					default:
-						Assert.True(false, $"Cannot yet assert on {type}. Add assertion for this type");
+						Assert.True(false, $"Cannot yet assert on {type}. Add assertion for this type: {property.Path}");
 						break;
 				}
 			}

@@ -18,6 +18,7 @@ namespace Elastic.CommonSchema.Generator.Projection
 
 		public string LocalPath { get; }
 		public string FullPath { get; }
+		public string LogTemplateAlternative => FullPath.PascalCase();
 
 		public abstract string Description { get; }
 		public abstract string Example { get; }
@@ -79,11 +80,12 @@ namespace Elastic.CommonSchema.Generator.Projection
 		public ValueTypePropertyReference(string parentPath, string fullPath, Field field) : base(parentPath, fullPath)
 		{
 			ClrType = field.GetClrType();
+			CastFromObject = field.GetCastFromObject();
 			Description = GetFieldDescription(field);
 			Example = field.Example?.ToString() ?? string.Empty;
-
 		}
 
+		public string CastFromObject { get; }
 		public string ClrType { get; }
 		public override string Description { get; }
 		public override string Example { get; }

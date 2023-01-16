@@ -6,7 +6,6 @@
 
  - Elastic.CommonSchema.Serilog 
  - ASP.NET Core
- - netcoreapp3.0
  
 ## Configuration
 

@@ -118,7 +118,7 @@ namespace Elastic.CommonSchema
 		/// <example>5/23/2016 8:05:34 AM</example>
 		///</summary>
 		[JsonPropertyName("@timestamp"), DataMember(Name = "@timestamp")]
-		public DateTimeOffset? @Timestamp { get; set; }
+		public DateTimeOffset? Timestamp { get; set; }
 
 		///<summary>
 		/// <para><c>message</c></para>
