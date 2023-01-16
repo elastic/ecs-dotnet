@@ -309,13 +309,31 @@ namespace Elastic.CommonSchema.NLog
 
 			if (IncludeEventProperties && e.HasProperties)
 			{
+				global::NLog.MessageTemplates.MessageTemplateParameters templateParameters = null; 
+
 				foreach (var prop in e.Properties)
 				{
 					var propertyName = prop.Key?.ToString();
 					if (string.IsNullOrEmpty(propertyName) || ExcludeProperties.Contains(propertyName))
 						continue;
 
-					Populate(metadata, propertyName, prop.Value);
+					var propertyValue = prop.Value;
+					if (propertyValue is null || propertyValue is IConvertible || propertyValue.GetType().IsValueType)
+					{
+						Populate(metadata, propertyName, propertyValue);
+					}
+					else
+					{
+						templateParameters = templateParameters ?? e.MessageTemplateParameters;
+						if (AllowSerializePropertyValue(propertyName, templateParameters))
+						{
+							Populate(metadata, propertyName, propertyValue);
+						}
+						else
+						{
+							Populate(metadata, propertyName, propertyValue?.ToString());
+						}
+					}
 				}
 			}
 
@@ -344,6 +362,22 @@ namespace Elastic.CommonSchema.NLog
 			return metadata.Count > 0
 				? metadata
 				: null;
+		}
+
+		private bool AllowSerializePropertyValue(string propertyName, global::NLog.MessageTemplates.MessageTemplateParameters templateParameters)
+		{
+			if (templateParameters.Count > 0 && !templateParameters.IsPositional)
+			{
+				// System.Text.Json is very fragile, and can only handle safe objects
+				// Microsoft ASP.NET often uses message-templates for logging unsafe objects
+				foreach (var messageProperty in templateParameters)
+				{
+					if (propertyName == messageProperty.Name)
+						return messageProperty.CaptureType == global::NLog.MessageTemplates.CaptureType.Serialize;
+				}
+			}
+
+			return true;	// Not from Message-Template, then probably safe
 		}
 
 		private Log GetLog(LogEventInfo logEventInfo)
