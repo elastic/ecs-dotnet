@@ -80,12 +80,14 @@ namespace Elastic.CommonSchema.Generator.Projection
 		public ValueTypePropertyReference(string parentPath, string fullPath, Field field) : base(parentPath, fullPath)
 		{
 			ClrType = field.GetClrType();
+			ReadJsonType = ClrType.PascalCase();
 			CastFromObject = field.GetCastFromObject();
 			Description = GetFieldDescription(field);
 			Example = field.Example?.ToString() ?? string.Empty;
 		}
 
 		public string CastFromObject { get; }
+		public string ReadJsonType { get; }
 		public string ClrType { get; }
 		public override string Description { get; }
 		public override string Example { get; }

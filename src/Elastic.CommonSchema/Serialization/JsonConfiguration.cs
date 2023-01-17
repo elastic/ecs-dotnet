@@ -20,6 +20,7 @@ namespace Elastic.CommonSchema.Serialization
 			Converters =
 			{
 				new EcsDocumentJsonConverterFactory(),
+				new EcsLogJsonConverter(),
 				// System.Text.Json got significantly better at not tripping over BCL types with .NET 7.0.
 				// ECS should fallback from serialization failures in metadata however this list catches the most
 				// common offenders. This to ensure better interop with older ASP.NET version out of the box see:

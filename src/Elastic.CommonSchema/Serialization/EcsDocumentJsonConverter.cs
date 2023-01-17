@@ -33,23 +33,34 @@ namespace Elastic.CommonSchema.Serialization
 
 				var read = ReadProperties(ref reader, ecsEvent, ref timestamp, ref loglevel);
 			}
-			ecsEvent.Log ??= new Log();
-			ecsEvent.Log.Level = loglevel;
+			if (!string.IsNullOrEmpty(loglevel))
+			{
+				ecsEvent.Log ??= new Log();
+				ecsEvent.Log.Level = loglevel;
+			}
 			ecsEvent.Timestamp = timestamp;
 
 			return ecsEvent;
 		}
 
-		private static void WriteMessage(Utf8JsonWriter writer, EcsDocument value) => writer.WriteString("message", value.Message);
-
-		private static void WriteLogLevel(Utf8JsonWriter writer, EcsDocument value) => writer.WriteString("log.level", value.Log?.Level);
-
-		private static void WriteTimestamp(Utf8JsonWriter writer, EcsDocument value)
+		private static void WriteMessage(Utf8JsonWriter writer, EcsDocument value)
 		{
+			if (!string.IsNullOrEmpty(value?.Message))
+				writer.WriteString("message", value.Message);
+		}
+
+		private static void WriteLogLevel(Utf8JsonWriter writer, EcsDocument value)
+		{
+			if (!string.IsNullOrEmpty(value?.Log?.Level))
+				writer.WriteString("log.level", value.Log?.Level);
+		}
+
+		private static void WriteTimestamp(Utf8JsonWriter writer, BaseFieldSet value)
+		{
+			if (!value.Timestamp.HasValue) return;
+
 			writer.WritePropertyName("@timestamp");
-			if (value.Timestamp.HasValue)
-				EcsJsonConfiguration.DateTimeOffsetConverter.Write(writer, value.Timestamp.Value, EcsJsonConfiguration.SerializerOptions);
-			else writer.WriteNullValue();
+			EcsJsonConfiguration.DateTimeOffsetConverter.Write(writer, value.Timestamp.Value, EcsJsonConfiguration.SerializerOptions);
 		}
 	}
 

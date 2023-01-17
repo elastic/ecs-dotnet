@@ -12,7 +12,7 @@ If you wish to submit a PR please modify the original csharp file and submit the
 
 using System.Text.Json.Serialization;
 
-namespace Elastic.CommonSchema;
+namespace Elastic.CommonSchema.Serialization;
 
 [JsonSerializable(typeof(Agent))]
 [JsonSerializable(typeof(As))]
