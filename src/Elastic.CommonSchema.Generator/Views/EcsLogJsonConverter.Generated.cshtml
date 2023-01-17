@@ -1,0 +1,95 @@
+@using System.Collections.Generic
+@using Generator
+@inherits Elastic.CommonSchema.Generator.Views.CodeTemplatePage<Elastic.CommonSchema.Generator.Projection.CommonSchemaTypesProjection>
+// Licensed to Elasticsearch B.V under one or more agreements.
+// Elasticsearch B.V licenses this file to you under the Apache 2.0 License.
+// See the LICENSE file in the project root for more information
+
+/*
+IMPORTANT NOTE
+==============
+This file has been generated. 
+If you wish to submit a PR please modify the original csharp file and submit the PR with that change. Thanks!
+*/
+
+using System;
+using System.Collections.Generic;
+using System.Text.Json;
+
+namespace Elastic.CommonSchema.Serialization
+{
+	public partial class Ecs@(Model.Log.Name)JsonConverter : EcsJsonConverterBase@(Raw("<Log>"))
+	{
+		private static bool ReadProperties(ref Utf8JsonReader reader, Log ecsEvent)
+		{
+			var propertyName = reader.GetString();
+			reader.Read();
+			return propertyName switch
+			{
+@foreach (var property in Model.Log.BaseFieldSet.ValueProperties)
+{
+	var name = property.JsonProperty;
+<text>				"@(name)" => ReadProp@(Raw(property.ReadJsonType))(ref reader, "@name", ecsEvent, (b, v) => b.@(property.Name) = v),
+</text>
+}
+@foreach (var property in Model.Log.BaseFieldSet.InlineObjectProperties)
+{
+	var name = property.JsonProperty;
+<text>				"@(name)" => ReadProp<@(Raw(property.InlineObject.Name))>(ref reader, "@name", ecsEvent, (b, v) => b.@(property.Name) = v),
+</text>
+}
+				_ => false
+			};
+		}
+
+@{
+	var manualFields = new List<string>() { "level" };
+}
+		public override void Write(Utf8JsonWriter writer, Log value, JsonSerializerOptions options)
+		{
+			if (value == null)
+			{
+				writer.WriteNullValue();
+				return;
+			}
+			if (
+@foreach (var field in Model.Log.BaseFieldSet.ValueProperties)
+{
+	if (manualFields.Contains(field.JsonProperty)) 
+	{
+		continue;
+	}
+	<text>			value.@field.Name == null &&
+	</text>
+}
+@foreach (var property in Model.Log.BaseFieldSet.InlineObjectProperties)
+{
+<text>		value.@(property.Name) == null &&
+</text>
+}
+			true) {
+				writer.WriteNullValue();
+				return;
+			}
+			writer.WriteStartObject();
+
+@foreach (var field in Model.Log.BaseFieldSet.ValueProperties)
+{
+	if (manualFields.Contains(field.JsonProperty))
+	{
+		continue;
+	}
+	<text>			WriteProp(writer, "@field.JsonProperty", value.@field.Name);
+	</text>
+}
+@foreach (var property in Model.Log.BaseFieldSet.InlineObjectProperties)
+{
+	var name = property.JsonProperty;
+<text>		WriteProp(writer, "@(name)", value.@(property.Name));
+</text>
+}
+
+			writer.WriteEndObject();
+		}
+	}
+}

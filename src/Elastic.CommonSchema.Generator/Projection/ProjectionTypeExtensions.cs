@@ -11,6 +11,7 @@ namespace Elastic.CommonSchema.Generator.Projection
 		public static string PascalCase(this string s) => new CultureInfo("en-US")
 			.TextInfo
 			.ToTitleCase(s.ToLowerInvariant())
+			.Replace("?", string.Empty)
 			.Replace("@", string.Empty)
 			.Replace("_", string.Empty)
 			.Replace(".", string.Empty);

@@ -68,7 +68,31 @@ namespace Elastic.CommonSchema.Serialization
 			return JsonSerializer.Deserialize(ref reader, type, options);
 		}
 
-		protected static TValue ReadProp<TValue>(ref Utf8JsonReader reader, string key)  where TValue : class
+		private static long? ReadPropLong(ref Utf8JsonReader reader, string key)
+		{
+			if (reader.TokenType == JsonTokenType.PropertyName) reader.Read();
+			return reader.TokenType != JsonTokenType.Number ? null : reader.TryGetInt64(out var l) ? l : null;
+		}
+
+		protected static bool ReadPropLong(ref Utf8JsonReader reader, string key, T b, Action<T, long?> set)
+		{
+			set(b, ReadPropLong(ref reader, key));
+			return true;
+		}
+
+		private static string ReadPropString(ref Utf8JsonReader reader, string key)
+		{
+			if (reader.TokenType == JsonTokenType.PropertyName) reader.Read();
+			return reader.TokenType != JsonTokenType.String ? null : reader.GetString();
+		}
+
+		protected static bool ReadPropString(ref Utf8JsonReader reader, string key, T b, Action<T, string> set)
+		{
+			set(b, ReadPropString(ref reader, key));
+			return true;
+		}
+
+		private static TValue ReadProp<TValue>(ref Utf8JsonReader reader, string key)  where TValue : class
 		{
 			if (reader.TokenType == JsonTokenType.Null) return null;
 

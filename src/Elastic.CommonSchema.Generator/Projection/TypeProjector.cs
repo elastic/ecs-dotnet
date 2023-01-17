@@ -19,6 +19,7 @@ namespace Elastic.CommonSchema.Generator.Projection
 		public IReadOnlyCollection<FieldSetBaseClass> FieldSets { get; set; }
 		public IReadOnlyCollection<EntityClass> EntityClasses { get; set; }
 		public EntityClass Base { get; set; }
+		public EntityClass Log => EntityClasses.First(e => e.Name == "Log");
 		public IReadOnlyCollection<EntityClass> NestedEntityClasses { get; set; }
 		public IReadOnlyCollection<InlineObject> InlineObjects { get; set; }
 		public ReadOnlyCollection<string> Warnings { get; set; }

@@ -63,6 +63,31 @@ namespace Elastic.CommonSchema.Serialization
 							: false
 			};
 		}
+@{
+	var manualLogFields = new List<string>() { "level" };
+}
+		public void WriteLogEntity(Utf8JsonWriter writer, Log value) {
+			if (value == null) return;
+			// only write the log object if it has values other then log.level
+			if (
+@foreach (var field in Model.Log.BaseFieldSet.ValueProperties)
+{
+	if (manualLogFields.Contains(field.JsonProperty)) 
+	{
+		continue;
+	}
+	<text>			value.@field.Name == null &&
+	</text>
+}
+@foreach (var property in Model.Log.BaseFieldSet.InlineObjectProperties)
+{
+<text>		value.@(property.Name) == null &&
+</text>
+}
+			true) return;
+
+			WriteProp(writer, "log", value, EcsJsonContext.Default.Log);
+		}
 
 		public override void Write(Utf8JsonWriter writer, TBase value, JsonSerializerOptions options)
 		{
@@ -76,18 +101,17 @@ namespace Elastic.CommonSchema.Serialization
 			WriteTimestamp(writer, value);
 			WriteLogLevel(writer, value);
 			WriteMessage(writer, value);
-			WriteProp(writer, "metadata", value.Metadata);
+			WriteLogEntity(writer, value.Log);
 
 			// Base fields
 @{
-	var manualFields = new List<string>() { "@timestamp", "message" };
+	var manualFields = new List<string>() { "@timestamp", "message", "log" };
 }
 @foreach (var field in Model.Base.BaseFieldSet.ValueProperties)
 {
 	if (manualFields.Contains(field.JsonProperty))
 	{
 		continue;
-		
 	}
 	<text>			WriteProp(writer, "@field.JsonProperty", value.@field.Name);
 	</text>
@@ -102,9 +126,14 @@ namespace Elastic.CommonSchema.Serialization
 @foreach (var entity in Model.EntityClasses)
 {
 	var entityName = entity.BaseFieldSet.FieldSet.Name;
+	if (manualFields.Contains(entityName))
+	{
+		continue;
+	}
 <text>			WriteProp(writer, "@(entityName)", value.@(entity.Name), EcsJsonContext.Default.@(entity.Name));
 </text>
 }
+			WriteProp(writer, "metadata", value.Metadata);
 
 			if (typeof(@Model.Base.Name) != value.GetType())
 				value.WriteAdditionalProperties((k, v) => WriteProp(writer, k, v));

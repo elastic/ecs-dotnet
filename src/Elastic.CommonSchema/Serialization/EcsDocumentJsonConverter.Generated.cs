@@ -92,6 +92,20 @@ namespace Elastic.CommonSchema.Serialization
 							: false
 			};
 		}
+		public void WriteLogEntity(Utf8JsonWriter writer, Log value) {
+			if (value == null) return;
+			// only write the log object if it has values other then log.level
+			if (
+			value.FilePath == null &&
+				value.Logger == null &&
+				value.OriginFileLine == null &&
+				value.OriginFileName == null &&
+				value.OriginFunction == null &&
+			value.Syslog == null &&
+			true) return;
+
+			WriteProp(writer, "log", value, EcsJsonContext.Default.Log);
+		}
 
 		public override void Write(Utf8JsonWriter writer, TBase value, JsonSerializerOptions options)
 		{
@@ -105,7 +119,7 @@ namespace Elastic.CommonSchema.Serialization
 			WriteTimestamp(writer, value);
 			WriteLogLevel(writer, value);
 			WriteMessage(writer, value);
-			WriteProp(writer, "metadata", value.Metadata);
+			WriteLogEntity(writer, value.Log);
 
 			// Base fields
 			WriteProp(writer, "tags", value.Tags);
@@ -137,7 +151,6 @@ namespace Elastic.CommonSchema.Serialization
 			WriteProp(writer, "host", value.Host, EcsJsonContext.Default.Host);
 			WriteProp(writer, "http", value.Http, EcsJsonContext.Default.Http);
 			WriteProp(writer, "interface", value.Interface, EcsJsonContext.Default.Interface);
-			WriteProp(writer, "log", value.Log, EcsJsonContext.Default.Log);
 			WriteProp(writer, "network", value.Network, EcsJsonContext.Default.Network);
 			WriteProp(writer, "observer", value.Observer, EcsJsonContext.Default.Observer);
 			WriteProp(writer, "orchestrator", value.Orchestrator, EcsJsonContext.Default.Orchestrator);
@@ -160,6 +173,7 @@ namespace Elastic.CommonSchema.Serialization
 			WriteProp(writer, "vlan", value.Vlan, EcsJsonContext.Default.Vlan);
 			WriteProp(writer, "vulnerability", value.Vulnerability, EcsJsonContext.Default.Vulnerability);
 			WriteProp(writer, "x509", value.X509, EcsJsonContext.Default.X509);
+			WriteProp(writer, "metadata", value.Metadata);
 
 			if (typeof(EcsDocument) != value.GetType())
 				value.WriteAdditionalProperties((k, v) => WriteProp(writer, k, v));

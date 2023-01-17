@@ -25,10 +25,13 @@ namespace Elastic.CommonSchema.Generator
 			var actions = new Dictionary<Action<CommonSchemaTypesProjection>, string>
 			{
 				{ m => Generate(m, "EcsDocument"), "Base ECS Document" },
-				{ m => Generate(m, "EcsDocumentJsonConverter"), "Base ECS Document Json Converter" },
+
+				{ m => Generate(m, "EcsDocumentJsonConverter", "Serialization"), "Base ECS Document Json Converter" },
+				{ m => Generate(m, "EcsLogJsonConverter", "Serialization"), "Log fieldset needs a custom converter to omit level on write" },
+				{ m => Generate(m, "EcsJsonContext", "Serialization"), "Ecs System Text Json Source Generators" },
+
 				{ m => Generate(m, "LogTemplateProperties"), "Strongly types ECS fields supported in log templates" },
 				{ m => Generate(m, "PropDispatch"), "ECS key value setter generation" },
-				{ m => Generate(m, "EcsJsonContext"), "Ecs System Text Json Source Generators" },
 				{ m => Generate(m, "FieldSets"), "Field Sets" },
 				{ m => Generate(m, "Entities"), "Entities" },
 				{ m => Generate(m, "InlineObjects"), "Inline Objects" },
@@ -53,10 +56,10 @@ namespace Elastic.CommonSchema.Generator
 		private static string DoRazor(string name, string template, CommonSchemaTypesProjection model) =>
 			Razor.CompileRenderStringAsync(name, template, model).GetAwaiter().GetResult();
 
-		private static void Generate(CommonSchemaTypesProjection model, string what)
+		private static void Generate(CommonSchemaTypesProjection model, string what, string subFolder = "")
 		{
 			var targetDir = Path.GetFullPath(CodeConfiguration.ElasticCommonSchemaGeneratedFolder);
-			var outputFile = Path.Combine(targetDir, $"{what}.Generated.cs");
+			var outputFile = Path.Combine(targetDir, subFolder, $"{what}.Generated.cs");
 			var path = Path.Combine(CodeConfiguration.ViewFolder, $"{what}.Generated.cshtml");
 			var template = File.ReadAllText(path);
 			var source = DoRazor(nameof(Generate) + what, template, model);
