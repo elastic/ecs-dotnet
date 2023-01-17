@@ -1,4 +1,3 @@
-using System;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -6,7 +5,7 @@ using FluentAssertions;
 using Xunit;
 using Xunit.Abstractions;
 
-namespace Elastic.CommonSchema.Serilog.Tests
+namespace Elastic.CommonSchema.Serilog.Tests.Repro
 {
 	public class GithubIssue31 : LogTestsBase
 	{

@@ -12,7 +12,7 @@ using Serilog.Sinks.TestCorrelator;
 using Xunit;
 using Xunit.Abstractions;
 
-namespace Elastic.CommonSchema.Serilog.Tests
+namespace Elastic.CommonSchema.Serilog.Tests.Repro
 {
 	public class GithubIssue167
 	{

@@ -23,6 +23,7 @@ namespace Elastic.CommonSchema.Serilog.Tests
 		protected LogTestsBase(ITestOutputHelper output) =>
 			LoggerConfiguration = new LoggerConfiguration()
 				.MinimumLevel.Verbose()
+				.Enrich.FromLogContext()
 				.WriteTo.Console(Formatter)
 				.WriteTo.TestOutput(output, formatter: Formatter, LogEventLevel.Verbose)
 				.WriteTo.TestCorrelator();
