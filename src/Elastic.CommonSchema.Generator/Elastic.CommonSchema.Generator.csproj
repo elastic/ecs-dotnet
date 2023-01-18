@@ -18,4 +18,28 @@
     <PackageReference Include="ShellProgressBar" Version="5.0.0" />
     <PackageReference Include="YamlDotNet" Version="6.0.0" />
   </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="Views\EcsDocument.Generated.cshtml" />
+    <Content Include="Views\EcsDocument.Generated.cshtml" />
+    <None Remove="Views\EcsDocumentJsonConverter.Generated.cshtml" />
+    <Content Include="Views\EcsDocumentJsonConverter.Generated.cshtml" />
+    <None Remove="Views\EcsJsonContext.Generated.cshtml" />
+    <Content Include="Views\EcsJsonContext.Generated.cshtml" />
+    <None Remove="Views\EcsLogJsonConverter.Generated.cshtml" />
+    <None Remove="Views\Entities.Generated.cshtml" />
+    <Content Include="Views\Entities.Generated.cshtml" />
+    <None Remove="Views\FieldSets.Generated.cshtml" />
+    <Content Include="Views\FieldSets.Generated.cshtml" />
+    <None Remove="Views\IndexComponents.Generated.cshtml" />
+    <Content Include="Views\IndexComponents.Generated.cshtml" />
+    <None Remove="Views\IndexTemplates.Generated.cshtml" />
+    <Content Include="Views\IndexTemplates.Generated.cshtml" />
+    <None Remove="Views\InlineObjects.Generated.cshtml" />
+    <Content Include="Views\InlineObjects.Generated.cshtml" />
+    <None Remove="Views\LogTemplateProperties.Generated.cshtml" />
+    <Content Include="Views\LogTemplateProperties.Generated.cshtml" />
+    <None Remove="Views\PropDispatch.Generated.cshtml" />
+    <Content Include="Views\PropDispatch.Generated.cshtml" />
+  </ItemGroup>
 </Project>

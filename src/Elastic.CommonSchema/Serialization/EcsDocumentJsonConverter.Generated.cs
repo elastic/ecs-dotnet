@@ -22,7 +22,8 @@ namespace Elastic.CommonSchema.Serialization
 			ref Utf8JsonReader reader, 
 			TBase ecsEvent, 
 			ref DateTimeOffset? timestamp, 
-			ref string loglevel
+			ref string loglevel,
+			ref string ecsVersion
 		)
 		{
 			var propertyName = reader.GetString();
@@ -30,6 +31,7 @@ namespace Elastic.CommonSchema.Serialization
 			return propertyName switch
 			{
 				"log.level" => ReadString(ref reader, ref loglevel),
+				"ecs.version" => ReadString(ref reader, ref ecsVersion),
 				"metadata" => ReadProp<MetadataDictionary>(ref reader, "metadata", ecsEvent, (b, v) => b.Metadata = v),
 				"@timestamp" => ReadDateTime(ref reader, ref @timestamp),
 				"message" => ReadProp<string>(ref reader, "message", ecsEvent, (b, v) => b.Message = v),
@@ -92,20 +94,6 @@ namespace Elastic.CommonSchema.Serialization
 							: false
 			};
 		}
-		public void WriteLogEntity(Utf8JsonWriter writer, Log value) {
-			if (value == null) return;
-			// only write the log object if it has values other then log.level
-			if (
-			value.FilePath == null &&
-				value.Logger == null &&
-				value.OriginFileLine == null &&
-				value.OriginFileName == null &&
-				value.OriginFunction == null &&
-			value.Syslog == null &&
-			true) return;
-
-			WriteProp(writer, "log", value, EcsJsonContext.Default.Log);
-		}
 
 		public override void Write(Utf8JsonWriter writer, TBase value, JsonSerializerOptions options)
 		{
@@ -119,7 +107,9 @@ namespace Elastic.CommonSchema.Serialization
 			WriteTimestamp(writer, value);
 			WriteLogLevel(writer, value);
 			WriteMessage(writer, value);
+			WriteEcsVersion(writer, value);
 			WriteLogEntity(writer, value.Log);
+			WriteEcsEntity(writer, value.Ecs);
 
 			// Base fields
 			WriteProp(writer, "tags", value.Tags);
@@ -138,7 +128,6 @@ namespace Elastic.CommonSchema.Serialization
 			WriteProp(writer, "destination", value.Destination, EcsJsonContext.Default.Destination);
 			WriteProp(writer, "dll", value.Dll, EcsJsonContext.Default.Dll);
 			WriteProp(writer, "dns", value.Dns, EcsJsonContext.Default.Dns);
-			WriteProp(writer, "ecs", value.Ecs, EcsJsonContext.Default.Ecs);
 			WriteProp(writer, "elf", value.Elf, EcsJsonContext.Default.Elf);
 			WriteProp(writer, "email", value.Email, EcsJsonContext.Default.Email);
 			WriteProp(writer, "error", value.Error, EcsJsonContext.Default.Error);

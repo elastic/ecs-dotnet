@@ -74,7 +74,7 @@ namespace Elastic.CommonSchema.Generator.Projection
 
 		public string Name { get; }
 		public FieldSetBaseClass BaseFieldSet { get; }
-		public bool Partial => Name is "EcsDocument" or "Log";
+		public bool Partial => Name is "EcsDocument" or "Log" or "Ecs";
 
 		public Dictionary<string, EntityPropertyReference> EntityReferences { get; } = new();
 

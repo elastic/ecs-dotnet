@@ -19,7 +19,8 @@ namespace Elastic.CommonSchema.Generator.Projection
 		public IReadOnlyCollection<FieldSetBaseClass> FieldSets { get; set; }
 		public IReadOnlyCollection<EntityClass> EntityClasses { get; set; }
 		public EntityClass Base { get; set; }
-		public EntityClass Log => EntityClasses.First(e => e.Name == "Log");
+		public IReadOnlyDictionary<EntityClass, string[]> EntitiesWithPropertiesAtRoot { get; set; }
+		//public EntityClass Log => EntityClasses.First(e => e.Name == "Log");
 		public IReadOnlyCollection<EntityClass> NestedEntityClasses { get; set; }
 		public IReadOnlyCollection<InlineObject> InlineObjects { get; set; }
 		public ReadOnlyCollection<string> Warnings { get; set; }
@@ -103,6 +104,11 @@ namespace Elastic.CommonSchema.Generator.Projection
 				GitRef = Schema.GitRef,
 				FieldSets = FieldSetsBaseClasses.Values.Where(e=>e.FieldSet.Root != true || e.FieldSet.Name == "base" ).ToList(),
 				EntityClasses = EntityClasses.Values.Where(e=>e.Name != "EcsDocument" && e.BaseFieldSet.FieldSet.Root != true).ToList(),
+				EntitiesWithPropertiesAtRoot = new Dictionary<EntityClass, string[]>
+				{
+					{ EntityClasses.Values.First(e=>e.Name == "Log"), new []{"level"}},
+					{ EntityClasses.Values.First(e=>e.Name == "Ecs"), new []{"version"}},
+				},
 				Base = EntityClasses.Values.First(e=>e.Name == "EcsDocument"),
 				InlineObjects = InlineObjects.Values.ToList(),
 				NestedEntityClasses = nestedEntityTypes.Values.ToList(),
