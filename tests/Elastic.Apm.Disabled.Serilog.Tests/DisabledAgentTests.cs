@@ -28,7 +28,7 @@ namespace Elastic.Apm.Disabled.Serilog.Tests
 		[Fact]
 		public void DisabledAgentShouldNeverInjectTracingProperties()
 		{
-			var template = "{Message:lj} (ElasticApmServiceName) ({ElasticApmTraceId})";
+			var template = "{Message:lj} ({ElasticApmServiceName}) ({ElasticApmTraceId})";
 			var logger = new LoggerConfiguration()
 				.Enrich.WithElasticApmCorrelationInfo()
 				.WriteTo.InMemory(outputTemplate: template)
