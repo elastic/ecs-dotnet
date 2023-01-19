@@ -5,12 +5,14 @@
 using System;
 using System.Runtime.Serialization;
 using System.Text.Json.Serialization;
+using Elastic.CommonSchema.Serialization;
 
 namespace Elastic.CommonSchema.BenchmarkDotNetExporter.Domain
 {
 	/// <summary>
 	/// Represents a benchmark case with information of the overall benchmark run.
 	/// </summary>
+	[JsonConverter(typeof(EcsDocumentJsonConverterFactory))]
 	public class BenchmarkDocument : EcsDocument
 	{
 		[JsonPropertyName("benchmark"), DataMember(Name = "benchmark")]

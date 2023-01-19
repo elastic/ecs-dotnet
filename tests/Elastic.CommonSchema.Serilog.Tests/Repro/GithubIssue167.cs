@@ -16,6 +16,7 @@ namespace Elastic.CommonSchema.Serilog.Tests.Repro
 {
 	public class GithubIssue167
 	{
+		[JsonConverter(typeof(EcsDocumentJsonConverterFactory))]
 		public class ContosoDocument : EcsDocument
 		{
 			[JsonPropertyName("contoso"), DataMember(Name = "contoso")]

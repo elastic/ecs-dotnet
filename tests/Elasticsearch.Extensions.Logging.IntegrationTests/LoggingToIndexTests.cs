@@ -2,33 +2,27 @@
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Elastic.Clients.Elasticsearch;
 using Elastic.CommonSchema;
 using Elastic.Elasticsearch.Xunit;
 using Elastic.Elasticsearch.Xunit.XunitPlumbing;
+using Elastic.Transport;
 using Elasticsearch.Extensions.Logging.Options;
-using Elasticsearch.Net;
 using FluentAssertions;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using Nest;
 using Xunit;
+using Xunit.Abstractions;
 using LogLevel = Microsoft.Extensions.Logging.LogLevel;
 
 namespace Elasticsearch.Extensions.Logging.IntegrationTests
 {
 	public class LoggingToIndexTests : IClusterFixture<LoggingCluster>
 	{
-		public LoggingToIndexTests(LoggingCluster cluster) =>
-			Client = cluster.GetOrAddClient(c =>
-			{
-				var nodes = cluster.NodesUris();
-				var connectionPool = new StaticConnectionPool(nodes);
-				var settings = new ConnectionSettings(connectionPool)
-					.EnableDebugMode();
-				return new ElasticClient(settings);
-			});
+		public LoggingToIndexTests(LoggingCluster cluster, ITestOutputHelper output) =>
+			Client = cluster.CreateClient(output);
 
-		private ElasticClient Client { get; }
+		private ElasticsearchClient Client { get; }
 
 		[Fact]
 		public async Task LogsEndUpInCluster()
@@ -45,7 +39,7 @@ namespace Elasticsearch.Extensions.Logging.IntegrationTests
 
 			var response = Client.Search<LogEvent>(new SearchRequest($"{indexPrefix}-*"));
 
-			response.IsValid.Should().BeTrue("{0}", response.DebugInformation);
+			response.IsValidResponse.Should().BeTrue("{0}", response.DebugInformation);
 			response.Total.Should().BeGreaterThan(0);
 
 			var loggedError = response.Documents.First();
@@ -71,7 +65,7 @@ namespace Elasticsearch.Extensions.Logging.IntegrationTests
 
 				var response = Client.Search<LogEvent>(new SearchRequest($"{indexPrefix}-*"));
 
-				response.IsValid.Should().BeTrue("{0}", response.DebugInformation);
+				response.IsValidResponse.Should().BeTrue("{0}", response.DebugInformation);
 				response.Total.Should().BeGreaterThan(0);
 
 				var loggedError = response.Documents.First();
@@ -90,7 +84,7 @@ namespace Elasticsearch.Extensions.Logging.IntegrationTests
 				o =>
 				{
 					o.Index = new IndexNameOptions { Format = $"{pre}-{{0:yyyy.MM.dd}}" };
-					var nodes = Client.ConnectionSettings.ConnectionPool.Nodes.Select(n => n.Uri).ToArray();
+					var nodes = Client.ElasticsearchClientSettings.NodePool.Nodes.Select(n => n.Uri).ToArray();
 					o.ShipTo = new ShipToOptions() { NodeUris = nodes, ConnectionPoolType = ConnectionPoolType.Static };
 				});
 

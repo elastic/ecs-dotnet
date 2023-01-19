@@ -4,13 +4,8 @@ using Elastic.Transport;
 
 namespace Elastic.Ingest.Apm.Model
 {
-	public class EventIntakeResponse : ITransportResponse
+	public class EventIntakeResponse : TransportResponse
 	{
-		[JsonIgnore]
-		IApiCallDetails ITransportResponse.ApiCall { get; set; } = null!;
-		[JsonIgnore]
-		public IApiCallDetails ApiCall => ((ITransportResponse)this).ApiCall;
-
 		[JsonPropertyName("accepted")]
 		public long Accepted { get; set; }
 

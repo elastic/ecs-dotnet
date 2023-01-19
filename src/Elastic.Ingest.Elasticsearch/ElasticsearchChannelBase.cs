@@ -20,13 +20,13 @@ namespace Elastic.Ingest.Elasticsearch
 
 		protected override bool Retry(BulkResponse response)
 		{
-			var success = response.ApiCall.Success;
-			if (!success)
-				Options.ExceptionCallback?.Invoke(new Exception(response.ApiCall.ToString(), response.ApiCall.OriginalException));
-			return success;
+			var details = response.ApiCallDetails;
+			if (!details.HasSuccessfulStatusCode)
+				Options.ExceptionCallback?.Invoke(new Exception(details.ToString(), details.OriginalException));
+			return details.HasSuccessfulStatusCode;
 		}
 
-		protected override bool RetryAllItems(BulkResponse response) => response.ApiCall.HttpStatusCode == 429;
+		protected override bool RetryAllItems(BulkResponse response) => response.ApiCallDetails.HttpStatusCode == 429;
 
 		protected override List<(TEvent, BulkResponseItem)> Zip(BulkResponse response, IReadOnlyCollection<TEvent> page) =>
 			page.Zip(response.Items, (doc, item) => (doc, item)).ToList();
@@ -37,7 +37,7 @@ namespace Elastic.Ingest.Elasticsearch
 		protected override bool RejectEvent((TEvent, BulkResponseItem) @event) =>
 			@event.Item2.Status < 200 || @event.Item2.Status > 300;
 
-		protected override Task<BulkResponse> Send(ITransport transport, IReadOnlyCollection<TEvent> page) =>
+		protected override Task<BulkResponse> Send(HttpTransport transport, IReadOnlyCollection<TEvent> page) =>
 			transport.RequestAsync<BulkResponse>(HttpMethod.POST, "/_bulk",
 				PostData.StreamHandler(page,
 					(b, stream) =>

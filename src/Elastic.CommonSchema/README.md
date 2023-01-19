@@ -169,6 +169,7 @@ Through `TryRead`/`ReceiveProperty`/`WriteAdditionalProperties` you can hook int
 /// <summary>
 /// An extended ECS document with an additional property
 /// </summary>
+[JsonConverter(typeof(EcsDocumentJsonConverterFactory))]
 public class MyEcsDocument : EcsDocument
 {
 	[JsonPropertyName("my_root_property"), DataMember(Name = "my_root_property")]
