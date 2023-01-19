@@ -25,6 +25,7 @@ namespace Elastic.Apm.SerilogEnricher
 			if (Agent.Config.GlobalLabels != null)
 				logEvent.AddPropertyIfAbsent(propertyFactory.CreateProperty("ElasticApmGlobalLabels", Agent.Config.GlobalLabels));
 
+			if (!Agent.Config.Enabled) return;
 			if (Agent.Tracer is null) return;
 			if (Agent.Tracer.CurrentTransaction is null) return;
 

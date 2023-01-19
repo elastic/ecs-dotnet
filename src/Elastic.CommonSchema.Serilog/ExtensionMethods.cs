@@ -16,7 +16,7 @@ namespace Elastic.CommonSchema.Serilog
 				return false;
 			}
 
-			if (!(scalarValue is ScalarValue propertyValue))
+			if (scalarValue is not ScalarValue propertyValue)
 			{
 				value = null;
 				return false;
