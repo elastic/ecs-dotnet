@@ -6,7 +6,7 @@ namespace Elastic.Ingest.Elasticsearch
 {
 	public class ElasticsearchChannelOptionsBase<TEvent> : TransportChannelOptionsBase<TEvent, BulkResponse, BulkResponseItem, ElasticsearchBufferOptions<TEvent>>
 	{
-		protected ElasticsearchChannelOptionsBase(ITransport transport) : base(transport)
+		protected ElasticsearchChannelOptionsBase(HttpTransport transport) : base(transport)
 		{
 		}
 	}

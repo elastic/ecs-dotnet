@@ -4,7 +4,7 @@ using System.Text.Json.Serialization;
 
 namespace Elastic.CommonSchema.Serialization
 {
-	internal class EcsDocumentJsonConverterFactory : JsonConverterFactory
+	public class EcsDocumentJsonConverterFactory : JsonConverterFactory
 	{
 		public override bool CanConvert(Type typeToConvert) => typeof(EcsDocument).IsAssignableFrom(typeToConvert);
 

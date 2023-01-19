@@ -11,6 +11,7 @@ using Elastic.Transport;
 
 namespace Elastic.Ingest.Elasticsearch
 {
+	internal class ElasticsearchRequestParameters : RequestParameters { }
 	internal static class ElasticsearchChannelStatics
 	{
 		public static readonly byte[] LineFeed = { (byte)'\n' };
@@ -18,12 +19,12 @@ namespace Elastic.Ingest.Elasticsearch
 		public static readonly byte[] DocUpdateHeaderStart = Encoding.UTF8.GetBytes("{\"doc\": ");
 		public static readonly byte[] DocUpdateHeaderEnd = Encoding.UTF8.GetBytes(" }");
 
-		public static readonly RequestParameters RequestParams =
+		public static readonly ElasticsearchRequestParameters RequestParams =
 			new() { QueryString = { { "filter_path", "error, items.*.status,items.*.error" } } };
 
 		public static readonly HashSet<int> RetryStatusCodes = new(new[] { 502, 503, 504, 429 });
 
-		public static readonly JsonSerializerOptions SerializerOptions = new JsonSerializerOptions()
+		public static readonly JsonSerializerOptions SerializerOptions = new ()
 		{
 			DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingDefault,
 			Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping,

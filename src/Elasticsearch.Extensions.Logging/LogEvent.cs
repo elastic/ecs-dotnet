@@ -11,6 +11,7 @@ using Elastic.CommonSchema.Serialization;
 
 namespace Elasticsearch.Extensions.Logging
 {
+	[JsonConverter(typeof(EcsDocumentJsonConverterFactory))]
 	public class LogEvent : EcsDocument
 	{
 		// Custom fields; use capitalisation as per ECS

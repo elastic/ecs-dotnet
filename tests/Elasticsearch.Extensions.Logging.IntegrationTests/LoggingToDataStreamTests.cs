@@ -2,37 +2,27 @@
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Elastic.Clients.Elasticsearch;
 using Elastic.CommonSchema;
 using Elastic.Elasticsearch.Xunit;
 using Elastic.Elasticsearch.Xunit.XunitPlumbing;
+using Elastic.Transport;
 using Elasticsearch.Extensions.Logging.Options;
-using Elasticsearch.Net;
 using FluentAssertions;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using Nest;
 using Xunit;
+using Xunit.Abstractions;
 using LogLevel = Microsoft.Extensions.Logging.LogLevel;
 
 namespace Elasticsearch.Extensions.Logging.IntegrationTests
 {
 	public class LoggingToDataStreamTests : IClusterFixture<LoggingCluster>
 	{
-		public LoggingToDataStreamTests(LoggingCluster cluster) =>
-			Client = cluster.GetOrAddClient(c =>
-			{
-				var hostName = (System.Diagnostics.Process.GetProcessesByName("mitmproxy").Any()
-					? "ipv4.fiddler"
-					: "localhost");
-				var nodes = cluster.NodesUris(hostName);
-				var connectionPool = new StaticConnectionPool(nodes);
-				var settings = new ConnectionSettings(connectionPool)
-					.Proxy(new Uri("http://ipv4.fiddler:8080"), (string)null, (string)null)
-					.EnableDebugMode();
-				return new ElasticClient(settings);
-			});
+		public LoggingToDataStreamTests(LoggingCluster cluster, ITestOutputHelper output) =>
+			Client = cluster.CreateClient(output);
 
-		private ElasticClient Client { get; }
+		private ElasticsearchClient Client { get; }
 
 		[Fact]
 		public async Task LogsEndUpInCluster()
@@ -49,13 +39,15 @@ namespace Elasticsearch.Extensions.Logging.IntegrationTests
 
 			var refresh = await Client.Indices.RefreshAsync(dataStream);
 
-			var response = Client.Search<LogEvent>(new SearchRequest(dataStream));
+			var response = Client.Search<EcsDocument>(new SearchRequest(dataStream));
 
-			response.IsValid.Should().BeTrue("{0}", response.DebugInformation);
+			response.IsValidResponse.Should().BeTrue("{0}", response.DebugInformation);
 			response.Total.Should().BeGreaterThan(0);
 
 			var loggedError = response.Documents.First();
 			loggedError.Message.Should().Be("an error occurred");
+			loggedError.Log.Should().NotBeNull();
+			loggedError.Log.Level.Should().Be("Error");
 			loggedError.Ecs.Version.Should().Be(EcsDocument.Version);
 			loggedError.Ecs.Version.Should().NotStartWith("v");
 		}
@@ -79,7 +71,7 @@ namespace Elasticsearch.Extensions.Logging.IntegrationTests
 
 				var response = Client.Search<LogEvent>(new SearchRequest(dataStream));
 
-				response.IsValid.Should().BeTrue("{0}", response.DebugInformation);
+				response.IsValidResponse.Should().BeTrue("{0}", response.DebugInformation);
 				response.Total.Should().BeGreaterThan(0);
 
 				var loggedError = response.Documents.First();
@@ -99,7 +91,7 @@ namespace Elasticsearch.Extensions.Logging.IntegrationTests
 				o =>
 				{
 					o.DataStream = new DataStreamNameOptions { Type = "x", Namespace = s, DataSet = "dotnet" };
-					var nodes = Client.ConnectionSettings.ConnectionPool.Nodes.Select(n => n.Uri).ToArray();
+					var nodes = Client.ElasticsearchClientSettings.NodePool.Nodes.Select(n => n.Uri).ToArray();
 					o.ShipTo = new ShipToOptions() { NodeUris = nodes, ConnectionPoolType = ConnectionPoolType.Static };
 				});
 

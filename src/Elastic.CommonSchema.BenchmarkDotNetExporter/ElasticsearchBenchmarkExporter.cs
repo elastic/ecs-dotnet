@@ -30,17 +30,17 @@ namespace Elastic.CommonSchema.BenchmarkDotNetExporter
 		{
 			Options = options;
 			var config = Options.CreateTransportConfiguration();
-			Transport = new Transport<TransportConfiguration>(config);
+			Transport = new DefaultHttpTransport<TransportConfiguration>(config);
 		}
 
 		public ElasticsearchBenchmarkExporter(ElasticsearchBenchmarkExporterOptions options, Func<ElasticsearchBenchmarkExporterOptions, TransportConfiguration> configure)
 		{
 			Options = options;
-			Transport = new Transport<TransportConfiguration>(configure(Options));
+			Transport = new DefaultHttpTransport<TransportConfiguration>(configure(Options));
 		}
 
 
-		private Transport<TransportConfiguration> Transport { get; }
+		private HttpTransport<TransportConfiguration> Transport { get; }
 		private ElasticsearchBenchmarkExporterOptions Options { get; }
 
 		// We only log when we cannot write to Elasticsearch

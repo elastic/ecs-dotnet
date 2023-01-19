@@ -62,7 +62,7 @@ namespace Serilog.Sinks.Elasticsearch.IntegrationTests
 
 			var indexName = SinkOptions.DataStream.ToString();
 			var refreshed = await Client.Indices.RefreshAsync(new RefreshRequest(indexName));
-			refreshed.IsValid.Should().BeTrue("{0}", refreshed.DebugInformation);
+			refreshed.IsValidResponse.Should().BeTrue("{0}", refreshed.DebugInformation);
 
 			var search = await Client.SearchAsync<EcsDocument>(new SearchRequest(indexName));
 

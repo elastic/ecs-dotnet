@@ -39,7 +39,7 @@ namespace Elasticsearch.Extensions.Logging.Example
 							channel.PublishRejectionCallback = e => Console.Write("!");
 						}
 						channel.ResponseCallback = (r, b) =>
-							Console.WriteLine($"Indexed: {r.ApiCall.Success} items: {b.Count} time since first read: {b.DurationSinceFirstRead}");
+							Console.WriteLine($"statusCode: {r.ApiCallDetails.HttpStatusCode} items: {b.Count} time since first read: {b.DurationSinceFirstRead}");
 					});
 				})
 				.ConfigureServices((hostContext, services) =>

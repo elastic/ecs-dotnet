@@ -21,7 +21,7 @@ namespace Elastic.Ingest.Apm
 	{
 		public static readonly byte[] LineFeed = { (byte)'\n' };
 
-		public static readonly RequestParameters RequestParams = new()
+		public static readonly DefaultRequestParameters RequestParams = new ()
 		{
 			RequestConfiguration = new RequestConfiguration { ContentType = "application/x-ndjson" }
 		};
@@ -39,9 +39,9 @@ namespace Elastic.Ingest.Apm
 		public ApmChannel(ApmChannelOptions options) : base(options) { }
 
 		//retry if APM server returns 429
-		protected override bool Retry(EventIntakeResponse response) => response.ApiCall.HttpStatusCode == 429;
+		protected override bool Retry(EventIntakeResponse response) => response.ApiCallDetails.HttpStatusCode == 429;
 
-		protected override bool RetryAllItems(EventIntakeResponse response) => response.ApiCall.HttpStatusCode == 429;
+		protected override bool RetryAllItems(EventIntakeResponse response) => response.ApiCallDetails.HttpStatusCode == 429;
 
 		//APM does not return the status for all events sent. Therefor we always return an empty set for individual items to retry
 		private List<(IIntakeObject, IntakeErrorItem)> _emptyZip = new();
@@ -49,7 +49,7 @@ namespace Elastic.Ingest.Apm
 		protected override bool RetryEvent((IIntakeObject, IntakeErrorItem) @event) => false;
 		protected override bool RejectEvent((IIntakeObject, IntakeErrorItem) @event) => false;
 
-		protected override Task<EventIntakeResponse> Send(ITransport transport, IReadOnlyCollection<IIntakeObject> page) =>
+		protected override Task<EventIntakeResponse> Send(HttpTransport transport, IReadOnlyCollection<IIntakeObject> page) =>
 			transport.RequestAsync<EventIntakeResponse>(HttpMethod.POST, "/intake/v2/events",
 				PostData.StreamHandler(page,
 					(b, stream) =>

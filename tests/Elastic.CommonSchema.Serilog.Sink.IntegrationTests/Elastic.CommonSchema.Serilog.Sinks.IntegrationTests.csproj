@@ -11,7 +11,7 @@
   </PropertyGroup>
   
   <ItemGroup>
-    <PackageReference Include="Elastic.Clients.Elasticsearch" Version="8.0.0-beta.4" />
+    <PackageReference Include="Elastic.Clients.Elasticsearch" Version="8.0.4" />
     <PackageReference Include="Serilog.Sinks.ColoredConsole" Version="3.0.1" />
 
     <PackageReference Include="Elastic.Elasticsearch.Xunit" Version="0.3.5" />

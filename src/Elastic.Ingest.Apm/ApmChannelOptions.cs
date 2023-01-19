@@ -7,7 +7,7 @@ namespace Elastic.Ingest.Apm
 {
 	public class ApmChannelOptions : TransportChannelOptionsBase<IIntakeObject, EventIntakeResponse, IntakeErrorItem, ApmBufferOptions>
 	{
-		public ApmChannelOptions(ITransport<ITransportConfiguration> transport) : base(transport) { }
+		public ApmChannelOptions(HttpTransport transport) : base(transport) { }
 	}
 
 

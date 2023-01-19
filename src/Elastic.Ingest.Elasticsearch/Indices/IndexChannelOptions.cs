@@ -5,7 +5,7 @@ namespace Elastic.Ingest.Elasticsearch.Indices
 {
 	public class IndexChannelOptions<TEvent> : ElasticsearchChannelOptionsBase<TEvent>
 	{
-		public IndexChannelOptions(ITransport<ITransportConfiguration> transport) : base(transport) { }
+		public IndexChannelOptions(HttpTransport transport) : base(transport) { }
 
 		/// <summary>
 		/// Gets or sets the format string for the Elastic search index. The current <c>DateTimeOffset</c> is passed as parameter
