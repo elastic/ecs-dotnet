@@ -54,7 +54,7 @@ namespace Elastic.Ingest.IntegrationTests
 
 			exists.Exists.Should().BeTrue("{0}", exists);
 
-			var dataStream = await Client.Indices.GetDataStreamAsync(new DataStreamRequest(targetDataStream.ToString()));
+			var dataStream = await Client.Indices.GetDataStreamAsync(new GetDataStreamRequest(targetDataStream.ToString()));
 			dataStream.DataStreams.Should().BeNullOrEmpty();
 
 			ecsChannel.TryWrite(new EcsDocument { Timestamp = DateTimeOffset.Now, Message = "hello-world" });

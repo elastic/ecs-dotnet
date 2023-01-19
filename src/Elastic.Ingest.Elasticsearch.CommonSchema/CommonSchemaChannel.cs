@@ -25,14 +25,15 @@ namespace Elastic.Ingest.Elasticsearch.CommonSchema
 			var templateExists = await Options.Transport.RequestAsync<HeadIndexTemplateResponse>
 					(HttpMethod.HEAD, $"_index_template/{prefix}")
 				.ConfigureAwait(false);
-			if (templateExists.HttpStatusCode != null && templateExists.HttpStatusCode == 200) return false;
+			var statusCode = templateExists.ApiCallDetails.HttpStatusCode;
+			if (statusCode is 200) return false;
 
 			foreach (var (name, component) in IndexComponents.Components)
 			{
 				var putComponentTemplate = await Options.Transport.RequestAsync<PutComponentTemplateResponse>
 						(HttpMethod.PUT, $"_component_template/{name}", PostData.String(component))
 					.ConfigureAwait(false);
-				if (!putComponentTemplate.Success)
+				if (!putComponentTemplate.ApiCallDetails.HasSuccessfulStatusCode)
 					throw new Exception(
 						$"Failure to create component template `${name}` for {Options.DataStream.GetTemplatePrefix()}: {putComponentTemplate}");
 			}
@@ -42,7 +43,7 @@ namespace Elastic.Ingest.Elasticsearch.CommonSchema
 			var putIndexTemplateResponse = await Options.Transport.RequestAsync<PutIndexTemplateResponse>
 					(HttpMethod.PUT, $"_index_template/{prefix}", PostData.String(template))
 				.ConfigureAwait(false);
-			if (!putIndexTemplateResponse.Success)
+			if (!putIndexTemplateResponse.ApiCallDetails.HasSuccessfulStatusCode)
 				throw new Exception($"Failure to create index templates for {Options.DataStream.GetTemplatePrefix()}: {putIndexTemplateResponse}");
 
 			return true;
@@ -52,13 +53,14 @@ namespace Elastic.Ingest.Elasticsearch.CommonSchema
 			var transport = Options.Transport;
 			var prefix = $"{Options.DataStream.Type}-{Options.DataStream.DataSet}";
 			var templateExists = transport.Request<HeadIndexTemplateResponse>(HttpMethod.HEAD, $"_index_template/{prefix}");
-			if (templateExists.HttpStatusCode != null && templateExists.HttpStatusCode == 200) return true;
+			var statusCode = templateExists.ApiCallDetails.HttpStatusCode;
+			if (statusCode is 200) return true;
 
 			foreach (var (name, component) in IndexComponents.Components)
 			{
 				var putComponentTemplate =
 					transport.Request<PutComponentTemplateResponse>(HttpMethod.PUT, $"_component_template/{name}", PostData.String(component));
-				if (!putComponentTemplate.Success)
+				if (!putComponentTemplate.ApiCallDetails.HasSuccessfulStatusCode)
 					throw new Exception(
 						$"Failure to create component template `${name}` for {Options.DataStream.GetTemplatePrefix()}: {putComponentTemplate}");
 			}
@@ -66,16 +68,16 @@ namespace Elastic.Ingest.Elasticsearch.CommonSchema
 
 			var template = IndexTemplates.GetIndexTemplateForElasticsearchComposable($"{prefix}-*");
 			var putIndexTemplateResponse = transport.Request<PutIndexTemplateResponse>(HttpMethod.PUT, $"_index_template/{prefix}", PostData.String(template));
-			if (!putIndexTemplateResponse.Success)
+			if (!putIndexTemplateResponse.ApiCallDetails.HasSuccessfulStatusCode)
 				throw new Exception($"Failure to create index templates for {Options.DataStream.GetTemplatePrefix()}: {putIndexTemplateResponse}");
 
 			return true;
 		}
 
-		private class HeadIndexTemplateResponse : TransportResponseBase { }
+		private class HeadIndexTemplateResponse : TransportResponse { }
 
-		private class PutIndexTemplateResponse : TransportResponseBase { }
+		private class PutIndexTemplateResponse : TransportResponse { }
 
-		private class PutComponentTemplateResponse : TransportResponseBase { }
+		private class PutComponentTemplateResponse : TransportResponse { }
 	}
 }

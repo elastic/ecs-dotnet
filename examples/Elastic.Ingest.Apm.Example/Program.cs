@@ -27,7 +27,7 @@ namespace Elastic.Ingest.Apm.Example
 				.EnableDebugMode()
 				.Authentication(new ApiKey(args[1]));
 			//TODO needs
-			var transport = new Transport<TransportConfiguration>(config);
+			var transport = new DefaultHttpTransport<TransportConfiguration>(config);
 
 			var numberOfEvents = 800;
 			var maxBufferSize = 200;
@@ -52,7 +52,7 @@ namespace Elastic.Ingest.Apm.Example
 				ResponseCallback = (r, b) =>
 				{
 					Interlocked.Increment(ref _responses);
-					Console.WriteLine(r.ApiCall.DebugInformation);
+					Console.WriteLine(r.ApiCallDetails.DebugInformation);
 				},
 				MaxRetriesExceededCallback = (list) => Interlocked.Increment(ref _maxRetriesExceeded),
 				RetryCallBack = (list) => Interlocked.Increment(ref _retries),

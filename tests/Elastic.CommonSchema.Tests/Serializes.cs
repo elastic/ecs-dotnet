@@ -70,6 +70,7 @@ namespace Elastic.CommonSchema.Tests
 			deserialized.Metadata.Should().ContainKey("rule");
 		}
 
+		[JsonConverter(typeof(EcsDocumentJsonConverterFactory))]
 		public class SubclassedDocument : EcsDocument
 		{
 			[JsonPropertyName("agent2")]

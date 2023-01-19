@@ -9,13 +9,8 @@ using Elastic.Transport.Products.Elasticsearch;
 namespace Elastic.Ingest.Elasticsearch.Serialization
 {
 
-	public class BulkResponse : ITransportResponse
+	public class BulkResponse : TransportResponse
 	{
-		[JsonIgnore]
-		IApiCallDetails ITransportResponse.ApiCall { get; set; } = null!;
-		[JsonIgnore]
-		public IApiCallDetails ApiCall => ((ITransportResponse)this).ApiCall;
-
 		[JsonPropertyName("items")]
 		[JsonConverter(typeof(ResponseItemsConverter))]
 		public IReadOnlyCollection<BulkResponseItem> Items { get; set; } = null!;
@@ -29,7 +24,7 @@ namespace Elastic.Ingest.Elasticsearch.Serialization
 			return !string.IsNullOrWhiteSpace(reason);
 		}
 
-		public override string ToString() => ApiCall.DebugInformation;
+		public override string ToString() => ApiCallDetails.DebugInformation;
 	}
 	internal class ResponseItemsConverter : JsonConverter<IReadOnlyCollection<BulkResponseItem>>
 	{

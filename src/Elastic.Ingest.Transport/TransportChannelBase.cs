@@ -14,7 +14,7 @@ namespace Elastic.Ingest.Transport
 		ChannelBase<TChannelOptions, TBuffer, TEvent, TResponse, TBulkResponseItem>, IDisposable
 		where TChannelOptions : TransportChannelOptionsBase<TEvent, TResponse, TBulkResponseItem, TBuffer>
 		where TBuffer : BufferOptions<TEvent>, new()
-		where TResponse : class, ITransportResponse, new()
+		where TResponse : TransportResponse, new()
 
 	{
 		protected TransportChannelBase(TChannelOptions options) : base(options) { }
@@ -23,7 +23,7 @@ namespace Elastic.Ingest.Transport
 		/// <param name="transport"></param>
 		/// <param name="page">Active page of the buffer that needs to be send to the output</param>
 		/// <returns><see cref="TResponse"/></returns>
-		protected abstract Task<TResponse> Send(ITransport transport, IReadOnlyCollection<TEvent> page);
+		protected abstract Task<TResponse> Send(HttpTransport transport, IReadOnlyCollection<TEvent> page);
 
 		protected override Task<TResponse> Send(IReadOnlyCollection<TEvent> page) => Send(Options.Transport, page);
 	}

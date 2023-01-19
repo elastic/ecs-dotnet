@@ -13,7 +13,7 @@ namespace Elastic.Ingest.Tests.Elasticsearch
 {
 	public static class TestSetup
 	{
-		public static ITransport<ITransportConfiguration> CreateClient(Func<VirtualCluster, VirtualCluster> setup)
+		public static HttpTransport<TransportConfiguration> CreateClient(Func<VirtualCluster, VirtualCluster> setup)
 		{
 			var cluster = Virtual.Elasticsearch.Bootstrap(numberOfNodes: 1).Ping(c=>c.SucceedAlways());
 			var virtualSettings = setup(cluster)
@@ -26,7 +26,7 @@ namespace Elastic.Ingest.Tests.Elasticsearch
 			var settings = new TransportConfiguration(virtualSettings.ConnectionPool, virtualSettings.Connection)
 				.DisablePing()
 				.EnableDebugMode();
-			return new Transport<TransportConfiguration>(settings);
+			return new DefaultHttpTransport<TransportConfiguration>(settings);
 		}
 
 		public static ClientCallRule BulkResponse(this ClientCallRule rule, params int[] statusCodes) =>
@@ -40,7 +40,7 @@ namespace Elastic.Ingest.Tests.Elasticsearch
 			private int _retries;
 			private int _maxRetriesExceeded;
 
-			public TestSession(ITransport<ITransportConfiguration> transport)
+			public TestSession(HttpTransport<TransportConfiguration> transport)
 			{
 				Transport = transport;
 				BufferOptions = new ElasticsearchBufferOptions<EcsDocument>()
@@ -67,7 +67,7 @@ namespace Elastic.Ingest.Tests.Elasticsearch
 
 			public IndexChannel<EcsDocument> Channel { get; }
 
-			public ITransport<ITransportConfiguration> Transport { get; }
+			public HttpTransport<TransportConfiguration> Transport { get; }
 
 			public IndexChannelOptions<EcsDocument> ChannelOptions { get; }
 
@@ -95,7 +95,7 @@ namespace Elastic.Ingest.Tests.Elasticsearch
 			}
 		}
 
-		public static TestSession CreateTestSession(ITransport<ITransportConfiguration> transport) =>
+		public static TestSession CreateTestSession(HttpTransport<TransportConfiguration> transport) =>
 			new TestSession(transport);
 
 		public static void WriteAndWait(this TestSession session, int events = 1)

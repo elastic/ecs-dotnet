@@ -15,9 +15,9 @@ namespace Elastic.CommonSchema.Serilog.Sink
 	public class ElasticsearchSchemaSinkOptions
 	{
 		public ElasticsearchSchemaSinkOptions() : this(TransportHelper.Default()) {}
-		public ElasticsearchSchemaSinkOptions(ITransport transport) => Transport = transport;
+		public ElasticsearchSchemaSinkOptions(HttpTransport transport) => Transport = transport;
 
-		public ITransport Transport { get; }
+		public HttpTransport Transport { get; }
 		public EcsTextFormatterConfiguration EcsTextFormatterConfiguration { get; set; } = new ();
 		public DataStreamName DataStream { get; set; } = new("logs", "dotnet");
 		public Action<DataStreamChannelOptions<EcsDocument>>? ConfigureChannel { get; set; }
