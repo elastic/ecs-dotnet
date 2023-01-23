@@ -26,7 +26,7 @@ namespace Elastic.CommonSchema.Tests
 			var serialized = b.Serialize();
 			_output.WriteLine(serialized);
 			serialized.Should().NotBeNullOrWhiteSpace();
-			serialized.Should().Be("{\"log.level\":\"debug\"}");
+			serialized.Should().Be(@$"{{""log.level"":""debug"",""ecs.version"":""{EcsDocument.Version}""}}");
 
 			var deserialized = EcsDocument.Deserialize(serialized);
 			deserialized.Log.Should().NotBeNull();
@@ -57,12 +57,28 @@ namespace Elastic.CommonSchema.Tests
 			var serialized = b.Serialize();
 			_output.WriteLine(serialized);
 			serialized.Should().NotBeNullOrWhiteSpace();
-			serialized.Should().Be("{\"log.level\":\"debug\",\"log\":{\"logger\":\"x\"}}");
+			serialized.Should().Be(@$"{{""log.level"":""debug"",""ecs.version"":""{EcsDocument.Version}"",""log"":{{""logger"":""x""}}}}");
 
 			var deserialized = EcsDocument.Deserialize(serialized);
 			deserialized.Log.Should().NotBeNull();
 			deserialized.Log.Level.Should().Be("debug");
 			deserialized.Log.Logger.Should().Be("x");
+			deserialized.Ecs.Should().NotBeNull();
+			deserialized.Ecs.Version.Should().Be(EcsDocument.Version);
+		}
+
+		[Fact] public void EcsVersionCanBeOverriden()
+		{
+			var b = new EcsDocument { Ecs = new Ecs { Version = "x"} };
+
+			var serialized = b.Serialize();
+			_output.WriteLine(serialized);
+			serialized.Should().NotBeNullOrWhiteSpace();
+			serialized.Should().Be(@$"{{""ecs.version"":""x""}}");
+
+			var deserialized = EcsDocument.Deserialize(serialized);
+			deserialized.Ecs.Should().NotBeNull();
+			deserialized.Ecs.Version.Should().Be("x");
 		}
 	}
 }

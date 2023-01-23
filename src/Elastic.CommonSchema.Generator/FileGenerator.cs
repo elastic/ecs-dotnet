@@ -27,13 +27,14 @@ namespace Elastic.CommonSchema.Generator
 				{ m => Generate(m, "EcsDocument"), "Base ECS Document" },
 
 				{ m => Generate(m, "EcsDocumentJsonConverter", "Serialization"), "Base ECS Document Json Converter" },
-				{ m => Generate(m, "EcsLogJsonConverter", "Serialization"), "Log fieldset needs a custom converter to omit level on write" },
+				{ m => Generate(m, "EcsShouldSerializeJsonConverter", "Serialization"), "Generate converters for entities with optional serialization behaviour" },
 				{ m => Generate(m, "EcsJsonContext", "Serialization"), "Ecs System Text Json Source Generators" },
 
 				{ m => Generate(m, "LogTemplateProperties"), "Strongly types ECS fields supported in log templates" },
 				{ m => Generate(m, "PropDispatch"), "ECS key value setter generation" },
 				{ m => Generate(m, "FieldSets"), "Field Sets" },
 				{ m => Generate(m, "Entities"), "Entities" },
+				{ m => Generate(m, "Entities.ShouldSerialize"), "Generate ShouldSerialize special handling for Log and ECS" },
 				{ m => Generate(m, "InlineObjects"), "Inline Objects" },
 				{ m => Generate(m, "IndexTemplates"), "Elasticsearch index templates" },
 				{ m => Generate(m, "IndexComponents"), "Elasticsearch index components" },

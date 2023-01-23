@@ -7,19 +7,20 @@ using System.Text.Json;
 
 namespace Elastic.CommonSchema.Serialization
 {
-	public partial class EcsLogJsonConverter
+	public abstract class EcsShouldSerializeJsonConverter<T> : EcsJsonConverterBase<T>
+		where T : new()
 	{
-		public override Log Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+		public override T Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
 		{
 			if (reader.TokenType == JsonTokenType.Null)
 			{
 				reader.Read();
-				return null;
+				return default;
 			}
 			if (reader.TokenType != JsonTokenType.StartObject)
 				throw new JsonException();
 
-			var ecsEvent = new Log();
+			var ecsEvent = new T();
 
 			while (reader.Read())
 			{
@@ -34,5 +35,7 @@ namespace Elastic.CommonSchema.Serialization
 
 			return ecsEvent;
 		}
+
+		protected abstract bool ReadProperties(ref Utf8JsonReader reader, T ecsEvent);
 	}
 }
