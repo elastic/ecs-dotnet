@@ -25,7 +25,8 @@ namespace Elastic.CommonSchema.Serialization
 			ref Utf8JsonReader reader, 
 			TBase ecsEvent, 
 			ref DateTimeOffset? timestamp, 
-			ref string loglevel
+			ref string loglevel,
+			ref string ecsVersion
 		)
 		{
 			var propertyName = reader.GetString();
@@ -33,6 +34,7 @@ namespace Elastic.CommonSchema.Serialization
 			return propertyName switch
 			{
 				"log.level" => ReadString(ref reader, ref loglevel),
+				"ecs.version" => ReadString(ref reader, ref ecsVersion),
 				"metadata" => ReadProp@(Raw("<MetadataDictionary>"))(ref reader, "metadata", ecsEvent, (b, v) => b.Metadata = v),
 @foreach (var property in Model.Base.BaseFieldSet.ValueProperties)
 {
@@ -63,31 +65,6 @@ namespace Elastic.CommonSchema.Serialization
 							: false
 			};
 		}
-@{
-	var manualLogFields = new List<string>() { "level" };
-}
-		public void WriteLogEntity(Utf8JsonWriter writer, Log value) {
-			if (value == null) return;
-			// only write the log object if it has values other then log.level
-			if (
-@foreach (var field in Model.Log.BaseFieldSet.ValueProperties)
-{
-	if (manualLogFields.Contains(field.JsonProperty)) 
-	{
-		continue;
-	}
-	<text>			value.@field.Name == null &&
-	</text>
-}
-@foreach (var property in Model.Log.BaseFieldSet.InlineObjectProperties)
-{
-<text>		value.@(property.Name) == null &&
-</text>
-}
-			true) return;
-
-			WriteProp(writer, "log", value, EcsJsonContext.Default.Log);
-		}
 
 		public override void Write(Utf8JsonWriter writer, TBase value, JsonSerializerOptions options)
 		{
@@ -101,11 +78,13 @@ namespace Elastic.CommonSchema.Serialization
 			WriteTimestamp(writer, value);
 			WriteLogLevel(writer, value);
 			WriteMessage(writer, value);
+			WriteEcsVersion(writer, value);
 			WriteLogEntity(writer, value.Log);
+			WriteEcsEntity(writer, value.Ecs);
 
 			// Base fields
 @{
-	var manualFields = new List<string>() { "@timestamp", "message", "log" };
+	var manualFields = new List<string>() { "@timestamp", "message", "log", "ecs" };
 }
 @foreach (var field in Model.Base.BaseFieldSet.ValueProperties)
 {

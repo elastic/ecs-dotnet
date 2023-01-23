@@ -22,6 +22,7 @@ namespace Elastic.CommonSchema.Serialization
 			var ecsEvent = new TBase();
 
 			string loglevel = null;
+			string ecsVersion = null;
 			DateTimeOffset? timestamp = default;
 			while (reader.Read())
 			{
@@ -31,12 +32,17 @@ namespace Elastic.CommonSchema.Serialization
 				if (reader.TokenType != JsonTokenType.PropertyName)
 					throw new JsonException();
 
-				var read = ReadProperties(ref reader, ecsEvent, ref timestamp, ref loglevel);
+				var read = ReadProperties(ref reader, ecsEvent, ref timestamp, ref loglevel, ref ecsVersion);
 			}
 			if (!string.IsNullOrEmpty(loglevel))
 			{
 				ecsEvent.Log ??= new Log();
 				ecsEvent.Log.Level = loglevel;
+			}
+			if (!string.IsNullOrEmpty(ecsVersion))
+			{
+				ecsEvent.Ecs ??= new Ecs();
+				ecsEvent.Ecs.Version = ecsVersion;
 			}
 			ecsEvent.Timestamp = timestamp;
 
@@ -49,11 +55,28 @@ namespace Elastic.CommonSchema.Serialization
 				writer.WriteString("message", value.Message);
 		}
 
+		private static void WriteLogEntity(Utf8JsonWriter writer, Log value) {
+			if (value == null) return;
+			if (!value.ShouldSerialize) return;
+
+			WriteProp(writer, "log", value, EcsJsonContext.Default.Log);
+		}
+
 		private static void WriteLogLevel(Utf8JsonWriter writer, EcsDocument value)
 		{
 			if (!string.IsNullOrEmpty(value?.Log?.Level))
 				writer.WriteString("log.level", value.Log?.Level);
 		}
+
+		private static void WriteEcsEntity(Utf8JsonWriter writer, Ecs value) {
+			if (value == null) return;
+			if (!value.ShouldSerialize) return;
+
+			WriteProp(writer, "ecs", value, EcsJsonContext.Default.Ecs);
+		}
+
+		private static void WriteEcsVersion(Utf8JsonWriter writer, EcsDocument value) =>
+			writer.WriteString("ecs.version", value.Ecs?.Version ?? EcsDocument.Version);
 
 		private static void WriteTimestamp(Utf8JsonWriter writer, BaseFieldSet value)
 		{

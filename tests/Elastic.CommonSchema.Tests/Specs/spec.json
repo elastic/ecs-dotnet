@@ -42,6 +42,7 @@
         "ecs.version": {
             "type": "string",
             "required": true,
+            "top_level_field": true,
             "url": "https://www.elastic.co/guide/en/ecs/current/ecs-ecs.html"
         },
         "labels": {

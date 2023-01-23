@@ -243,7 +243,7 @@ namespace Elastic.CommonSchema
 	}
 
 	///<inheritdoc cref="EcsFieldSet"/>
-	public class Ecs : EcsFieldSet {
+	public partial class Ecs : EcsFieldSet {
 	}
 
 	///<inheritdoc cref="ElfFieldSet"/>

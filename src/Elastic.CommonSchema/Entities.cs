@@ -8,7 +8,6 @@ namespace Elastic.CommonSchema;
 // Most of the entities are generated under Entities.Generated.cs
 
 [JsonConverter(typeof(EcsLogJsonConverter))]
-public partial class Log
-{
-
-}
+public partial class Log { }
+[JsonConverter(typeof(EcsEcsJsonConverter))]
+public partial class Ecs { }
