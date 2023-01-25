@@ -38,42 +38,6 @@ pipeline {
         stash allowEmpty: true, name: 'source', useDefaultExcludes: false
       }
     }
-    stage('Parallel'){
-      when {
-        not { buildingTag() }
-        beforeAgent true
-      }
-      parallel {
-        stage('Linux') {
-          options { skipDefaultCheckout() }
-          environment {
-            MSBUILDDEBUGPATH = "${env.WORKSPACE}"
-          }
-          steps {
-            withGithubNotify(context: 'Linux') {
-              deleteDir()
-              unstash 'source'
-              dir("${BASE_DIR}"){
-                dotnet(){
-                  sh script: './build.sh release -c false', label: 'build'
-                }
-              }
-            }
-          }
-          post {
-            unsuccessful {
-              archiveArtifacts(allowEmptyArchive: true, artifacts: "${MSBUILDDEBUGPATH}/**/MSBuild_*.failure.txt")
-            }
-            always {
-              dir("${BASE_DIR}"){
-                junit(allowEmptyResults: true, keepLongStdio: true, testResults: 'build/output/junit-*.xml')
-                archiveArtifacts(allowEmptyArchive: true, artifacts: 'build/output/**/*')
-              }
-            }
-          }
-        }
-      }
-    }
     stage('Release') {
       when {
         beforeAgent true

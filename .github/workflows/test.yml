@@ -10,8 +10,7 @@ permissions:
   contents: read
 
 jobs:
-  test:
-
+  test-windows:
     runs-on: windows-latest
 
     steps:
@@ -24,6 +23,25 @@ jobs:
 
     - run: build.bat release -c false
       shell: cmd
+
+    - name: Store test results
+      if: success() || failure()
+      uses: actions/upload-artifact@v3
+      with:
+        name: test-results
+        path: build/output/junit-*.xml
+
+  test-linux:
+    runs-on: linux-latest
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: '6.0.400'
+
+    - run: ./build.sh release -c false
 
     - name: Store test results
       if: success() || failure()
