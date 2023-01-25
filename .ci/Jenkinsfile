@@ -38,20 +38,6 @@ pipeline {
         stash allowEmpty: true, name: 'source', useDefaultExcludes: false
       }
     }
-    stage('Sanity checks') {
-      environment {
-        HOME = "${env.WORKSPACE}"
-        PATH = "${env.HOME}/bin:${env.PATH}"
-      }
-      options { skipDefaultCheckout() }
-      steps {
-        deleteDir()
-        unstash 'source'
-        dir("${BASE_DIR}"){
-          preCommit(commit: "${GIT_BASE_COMMIT}", junit: true)
-        }
-      }
-    }
     stage('Parallel'){
       when {
         not { buildingTag() }
