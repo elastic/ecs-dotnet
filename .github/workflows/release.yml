@@ -1,0 +1,41 @@
+name: release
+
+on:
+  push:
+    branches: [ "main" ]
+  create:
+    tags: [ "v*" ]
+
+permissions:
+  contents: read
+
+env:
+  # This is the version to be used for both OS platforms (windows and linux)
+  DOTNET_VERSION: '6.0.400'
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+      with:
+       fetch-depth: 0
+
+    - name: Generate local nuget packages
+      uses: ./.github/workflows/docker-run
+      with:
+        dotnet-sdk-version: ${{ env.DOTNET_VERSION }}
+        command: ./build.sh generatepackages -s true
+
+    - name: Validate *.npkg files that were created
+      uses: ./.github/workflows/docker-run
+      with:
+        dotnet-sdk-version: ${{ env.DOTNET_VERSION }}
+        command: ./build.sh validatepackages -s true
+
+    - name: Inspect public API change
+      uses: ./.github/workflows/docker-run
+      with:
+        dotnet-sdk-version: ${{ env.DOTNET_VERSION }}
+        command: ./build.sh generateapichanges -s true
