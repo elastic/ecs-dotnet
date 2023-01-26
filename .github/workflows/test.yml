@@ -2,9 +2,15 @@ name: test
 
 on:
   push:
-    branches: [ "main" ]
+    paths-ignore:
+    - '*.md'
+    - '*.asciidoc'
+    - 'docs/**'
   pull_request:
-    branches: [ "main" ]
+    paths-ignore:
+    - '*.md'
+    - '*.asciidoc'
+    - 'docs/**'
 
 permissions:
   contents: read
