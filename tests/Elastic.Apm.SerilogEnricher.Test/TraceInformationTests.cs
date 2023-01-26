@@ -53,6 +53,10 @@ namespace Elastic.Apm.SerilogEnricher.Test
 
 			logger.Information("Line4");
 
+			traceId.Should().NotBeNullOrEmpty();
+			transactionId.Should().NotBeNullOrEmpty();
+			spanId.Should().NotBeNullOrEmpty();
+
 			InMemorySink.Instance
 				.LogEvents.Should()
 				.HaveCount(4);
