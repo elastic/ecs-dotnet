@@ -3,15 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Elastic.Channels;
 using Elastic.Clients.Elasticsearch;
 using Elastic.Clients.Elasticsearch.IndexManagement;
 using Elastic.CommonSchema;
 using Elastic.CommonSchema.Serilog.Sink;
 using Elastic.Elasticsearch.Xunit.XunitPlumbing;
-using Elastic.Ingest.Elasticsearch;
 using FluentAssertions;
 using Serilog.Core;
-using DataStreamName = Elastic.Ingest.Elasticsearch.DataStreamName;
+using DataStreamName = Elastic.Ingest.Elasticsearch.DataStreams.DataStreamName;
 
 namespace Serilog.Sinks.Elasticsearch.IntegrationTests
 {
@@ -37,7 +37,7 @@ namespace Serilog.Sinks.Elasticsearch.IntegrationTests
 				DataStream = new DataStreamName("logs", "serilog", "tests"),
 				ConfigureChannel = c =>
 				{
-					c.BufferOptions = new ElasticsearchBufferOptions<EcsDocument>
+					c.BufferOptions = new BufferOptions
 					{
 						WaitHandle = _waitHandle,
 						MaxConsumerBufferSize = logs.Count
