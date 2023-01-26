@@ -29,6 +29,8 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
+      with:
+       fetch-depth: 0
 
     - name: Install dotnet-sdk
       run: choco install dotnet-sdk -m -y --no-progress -r --version $env:DOTNET_VERSION
@@ -53,6 +55,8 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
+      with:
+       fetch-depth: 0
 
     - name: Run release -c false within the docker container
       run: |
