@@ -20,12 +20,15 @@ jobs:
     steps:
     - uses: actions/checkout@v3
 
-    - run: choco install dotnet-sdk -m -y --no-progress -r --version 6.0.400
+    - name: Install dotnet-sdk
+      run: choco install dotnet-sdk -m -y --no-progress -r --version 6.0.400
 
-    - run: build.bat clean -c false
+    - name: Run clean -c false
+      run: build.bat clean -c false
       shell: cmd
 
-    - run: build.bat release -c false
+    - name: Run release -c false
+      run: build.bat release -c false
       shell: cmd
 
     - name: Store test results
@@ -37,15 +40,13 @@ jobs:
 
   test-linux:
     runs-on: ubuntu-latest
+    container: mcr.microsoft.com/dotnet/sdk:6.0-jammy
 
     steps:
     - uses: actions/checkout@v3
 
-    - uses: actions/setup-dotnet@v3
-      with:
-        dotnet-version: '6.0.400'
-
-    - run: ./build.sh release -c false
+    - name: Run release -c false
+      run: ./build.sh release -c false
 
     - name: Store test results
       if: success() || failure()
