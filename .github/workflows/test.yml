@@ -2,6 +2,9 @@ name: test
 
 on:
   push:
+    branches:
+      - main
+      - 1.*
     paths-ignore:
     - '*.md'
     - '*.asciidoc'
