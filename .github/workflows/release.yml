@@ -103,7 +103,8 @@ jobs:
         dotnet-sdk-version: ${{ env.DOTNET_VERSION }}
         command: .ci/deploy.sh ${REPO_API_KEY} ${REPO_API_URL}
 
-    - if: ${{ success() }}
+    # if a success release then notify
+    - if: ${{ success() }} && startsWith(github.ref, 'refs/tags/')
       uses: elastic/apm-pipeline-library/.github/actions/slack-message@current
       with:
         url: ${{ secrets.VAULT_ADDR }}
@@ -111,7 +112,7 @@ jobs:
         secretId: ${{ secrets.VAULT_SECRET_ID }}
         channel: "#apm-agent-dotnet"
         message: |
-          :large_green_circle: [${{ github.repository }}] Release *${{ github.ref_name }}* published."
+          :large_green_circle: [${{ github.repository }}] Release *${{ github.ref_name }}* published.
           Build: (<${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}|here>)
 
     - if: ${{ failure() }}
@@ -122,5 +123,5 @@ jobs:
         secretId: ${{ secrets.VAULT_SECRET_ID }}
         channel: "#apm-agent-dotnet"
         message: |
-          :large_yellow_circle: [${{ github.repository }}] Release *${{ github.ref_name }}* could not be published."
+          :large_yellow_circle: [${{ github.repository }}] Release *${{ github.ref_name }}* could not be published.
           Build: (<${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}|here>)
