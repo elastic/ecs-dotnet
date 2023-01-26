@@ -17,6 +17,7 @@ namespace Elastic.Apm.Test.Common
 			string serviceName,
 			string serviceNodeName,
 			string serviceVersion,
+			bool enabled = true,
 			IReadOnlyDictionary<string, string> globalLabels = null
 		)
 		{
@@ -24,7 +25,12 @@ namespace Elastic.Apm.Test.Common
 			ServiceName = serviceName;
 			ServiceNodeName = serviceNodeName;
 			ServiceVersion = serviceVersion;
+			Enabled = enabled;
+			Recording = true;
 		}
+
+		public bool Enabled { get; }
+
 		public IReadOnlyDictionary<string, string> GlobalLabels { get; }
 		public string ServiceName { get; }
 		public string ServiceNodeName { get; }
@@ -37,10 +43,16 @@ namespace Elastic.Apm.Test.Common
 		public LogLevel LogLevel { get; } = LogLevel.Information;
 
 		// ReSharper disable UnassignedGetOnlyAutoProperty
+		public bool Recording { get; }
+		public string HostName { get; }
+		public Uri ServerUrl { get; }
+		public string CloudProvider { get; }
+		public IReadOnlyCollection<string> ApplicationNamespaces { get; }
 		public string CaptureBody { get; }
 		public bool CaptureHeaders { get; }
 		public bool CentralConfig { get; }
 		public string Environment { get; }
+		public IReadOnlyCollection<string> ExcludedNamespaces { get; }
 		public TimeSpan FlushInterval { get; }
 		public int MaxBatchEventCount { get; }
 		public int MaxQueueEventCount { get; }
@@ -49,6 +61,7 @@ namespace Elastic.Apm.Test.Common
 		public string ApiKey { get; }
 		public double SpanFramesMinDurationInMilliseconds { get; }
 		public int StackTraceLimit { get; }
+		public IReadOnlyList<WildcardMatcher> TransactionIgnoreUrls { get; }
 		public int TransactionMaxSpans { get; }
 		public double TransactionSampleRate { get; }
 		public bool UseElasticTraceparentHeader { get; }
