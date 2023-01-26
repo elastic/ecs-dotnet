@@ -43,7 +43,11 @@
             "type": "string",
             "required": true,
             "top_level_field": true,
-            "url": "https://www.elastic.co/guide/en/ecs/current/ecs-ecs.html"
+            "url": "https://www.elastic.co/guide/en/ecs/current/ecs-ecs.html",
+            "comment": [
+                "This field SHOULD NOT be a nested object field but at the top level with a dot in the property name.",
+                "This is to make the JSON logs more human-readable."
+            ]
         },
         "labels": {
             "type": "object",
