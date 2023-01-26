@@ -1,8 +1,6 @@
 name: release
 
 on:
-  push:
-    branches: [ "main" ]
   create:
     tags: [ '[0-9]+.[0-9]+.[0-9]+.*' ]
 
@@ -10,7 +8,6 @@ permissions:
   contents: write
 
 env:
-  # This is the version to be used for both OS platforms (windows and linux)
   DOTNET_VERSION: '6.0.400'
 
 jobs:
@@ -42,50 +39,25 @@ jobs:
         dotnet-sdk-version: ${{ env.DOTNET_VERSION }}
         command: ./build.sh generateapichanges -s true
 
-    # For the MAIN branch ONLY
-    - if: github.ref == 'refs/heads/main'
-      name: Prepare feedz.io
-      uses: hashicorp/vault-action@v2.4.2
-      with:
-        url: ${{ secrets.VAULT_ADDR }}
-        method: approle
-        roleId: ${{ secrets.VAULT_ROLE_ID }}
-        secretId: ${{ secrets.VAULT_SECRET_ID }}
-        secrets: |
-          secret/apm-team/ci/elastic-observability-feedz.io apiKey | REPO_API_KEY ;
-          secret/apm-team/ci/elastic-observability-feedz.io url | REPO_API_URL
-
-    - if: github.ref == 'refs/heads/main'
-      name: Release to feedz.io
-      uses: ./.github/workflows/docker-run
-      with:
-        dotnet-sdk-version: ${{ env.DOTNET_VERSION }}
-        command: .ci/deploy.sh ${REPO_API_KEY} ${REPO_API_URL}
-
-    # For TAG releases only
-    - if: startsWith(github.ref, 'refs/tags/')
-      name: Generate release notes
+    - name: Generate release notes
       uses: ./.github/workflows/docker-run
       with:
         dotnet-sdk-version: ${{ env.DOTNET_VERSION }}
         command: ./build.sh generatereleasenotes -s true
 
-    - if: startsWith(github.ref, 'refs/tags/')
-      name: Inspect public API change
+    - name: Inspect public API change
       uses: ./.github/workflows/docker-run
       with:
         dotnet-sdk-version: ${{ env.DOTNET_VERSION }}
         command: ./build.sh generateapichanges -s true
 
-    - if: startsWith(github.ref, 'refs/tags/')
-      name: Create or update release for tag on github
+    - name: Create or update release for tag on github
       uses: ./.github/workflows/docker-run
       with:
         dotnet-sdk-version: ${{ env.DOTNET_VERSION }}
         command: ./build.sh createreleaseongithub -s true --token ${{ secrets.GITHUB_TOKEN }}
 
-    - if: startsWith(github.ref, 'refs/tags/')
-      name: Prepare Nuget
+    - name: Prepare Nuget
       uses: hashicorp/vault-action@v2.4.2
       with:
         url: ${{ secrets.VAULT_ADDR }}
@@ -96,15 +68,13 @@ jobs:
           secret/apm-team/ci/elastic-observability-nuget apiKey | REPO_API_KEY ;
           secret/apm-team/ci/elastic-observability-nuget url | REPO_API_URL
 
-    - if: startsWith(github.ref, 'refs/tags/')
-      name: Release to Nuget
+    - name: Release to Nuget
       uses: ./.github/workflows/docker-run
       with:
         dotnet-sdk-version: ${{ env.DOTNET_VERSION }}
         command: .ci/deploy.sh ${REPO_API_KEY} ${REPO_API_URL}
 
-    # if a success release then notify
-    - if: ${{ success() }} && startsWith(github.ref, 'refs/tags/')
+    - if: ${{ success() }}
       uses: elastic/apm-pipeline-library/.github/actions/slack-message@current
       with:
         url: ${{ secrets.VAULT_ADDR }}
