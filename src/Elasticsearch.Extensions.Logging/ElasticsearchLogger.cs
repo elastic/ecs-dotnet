@@ -9,7 +9,7 @@ using System.Diagnostics;
 using System.Text;
 using System.Threading;
 using Elastic.CommonSchema;
-using Elastic.Ingest;
+using Elastic.Channels;
 using Elasticsearch.Extensions.Logging.Options;
 using Microsoft.Extensions.Logging;
 
@@ -18,13 +18,13 @@ namespace Elasticsearch.Extensions.Logging
 	public class ElasticsearchLogger : ILogger
 	{
 		private readonly string _categoryName;
-		private readonly IIngestChannel<LogEvent> _channel;
+		private readonly IBufferedChannel<LogEvent> _channel;
 		private readonly ElasticsearchLoggerOptions _options;
 		private readonly IExternalScopeProvider? _scopeProvider;
 
 		internal ElasticsearchLogger(
 			string categoryName,
-			IIngestChannel<LogEvent> channel,
+			IBufferedChannel<LogEvent> channel,
 			ElasticsearchLoggerOptions options,
 			IExternalScopeProvider? scopeProvider
 		)
