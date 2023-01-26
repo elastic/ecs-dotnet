@@ -26,6 +26,7 @@ namespace Elastic.Apm.Test.Common
 			ServiceNodeName = serviceNodeName;
 			ServiceVersion = serviceVersion;
 			Enabled = enabled;
+			Recording = true;
 		}
 
 		public bool Enabled { get; }
