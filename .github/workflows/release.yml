@@ -24,6 +24,8 @@ jobs:
       with:
        fetch-depth: 0
 
+    - uses: elastic/apm-pipeline-library/.github/actions/setup-git@current
+
     - name: Generate local nuget packages
       uses: ./.github/workflows/docker-run
       with:
