@@ -13,6 +13,10 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: ${{ github.ref != 'refs/heads/main' }}
 
+env:
+  # This is the version to be used for both OS platforms (windows and linux)
+  DOTNET_VERSION: '6.0.400'
+
 jobs:
   test-windows:
     runs-on: windows-latest
@@ -21,7 +25,7 @@ jobs:
     - uses: actions/checkout@v3
 
     - name: Install dotnet-sdk
-      run: choco install dotnet-sdk -m -y --no-progress -r --version 6.0.400
+      run: choco install dotnet-sdk -m -y --no-progress -r --version $env:DOTNET_VERSION
 
     - name: Run clean -c false
       run: build.bat clean -c false
@@ -40,15 +44,19 @@ jobs:
 
   test-linux:
     runs-on: ubuntu-latest
-    container:
-      image: mcr.microsoft.com/dotnet/sdk:6.0-jammy
-      options: --user $UID:$GID
 
     steps:
     - uses: actions/checkout@v3
 
-    - name: Run release -c false
-      run: ./build.sh release -c false
+    - name: Run release -c false within the docker container
+      run: |
+        docker run --rm -ti \
+            -u "$(id -u):$(id -g)" \
+            -v $(pwd):/src \
+            -w /src \
+            -e HOME=/tmp \
+            mcr.microsoft.com/dotnet/sdk:$DOTNET_VERSION-jammy \
+            ./build.sh release -c false
 
     - name: Store test results
       if: success() || failure()
