@@ -11,9 +11,8 @@ using BenchmarkDotNet.Environments;
 using BenchmarkDotNet.Exporters;
 using BenchmarkDotNet.Loggers;
 using BenchmarkDotNet.Reports;
+using Elastic.Channels;
 using Elastic.CommonSchema.BenchmarkDotNetExporter.Domain;
-using Elastic.Ingest;
-using Elastic.Ingest.Elasticsearch;
 using Elastic.Ingest.Elasticsearch.CommonSchema;
 using Elastic.Ingest.Elasticsearch.DataStreams;
 using Elastic.Transport;
@@ -55,7 +54,7 @@ namespace Elastic.CommonSchema.BenchmarkDotNetExporter
 			var options = new DataStreamChannelOptions<BenchmarkDocument>(Transport)
 			{
 				DataStream = new DataStreamName("benchmarks", "dotnet", Options.DataStreamNamespace),
-				BufferOptions = new ElasticsearchBufferOptions<BenchmarkDocument>
+				BufferOptions = new BufferOptions
 				{
 					WaitHandle = waitHandle,
 					MaxConsumerBufferSize = benchmarksCount
