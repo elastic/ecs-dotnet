@@ -7,8 +7,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security;
 using System.Threading;
+using Elastic.Channels;
 using Elastic.Ingest;
 using Elastic.Ingest.Elasticsearch;
+using Elastic.Ingest.Elasticsearch.CommonSchema;
 using Elastic.Ingest.Elasticsearch.DataStreams;
 using Elastic.Ingest.Elasticsearch.Indices;
 using Elastic.Transport;
@@ -26,7 +28,7 @@ namespace Elasticsearch.Extensions.Logging
 		private readonly IOptionsMonitor<ElasticsearchLoggerOptions> _options;
 		private readonly IDisposable _optionsReloadToken;
 		private IExternalScopeProvider? _scopeProvider;
-		private IIngestChannel<LogEvent> _shipper;
+		private IBufferedChannel<LogEvent> _shipper;
 
 		public ElasticsearchLoggerProvider(IOptionsMonitor<ElasticsearchLoggerOptions> options,
 			IEnumerable<IChannelSetup> channelConfigurations
@@ -119,14 +121,14 @@ namespace Elasticsearch.Extensions.Logging
 
 		public Exception? LastSeenException { get; private set; }
 
-		private IIngestChannel<LogEvent> CreatIngestChannel(ElasticsearchLoggerOptions loggerOptions)
+		private IBufferedChannel<LogEvent> CreatIngestChannel(ElasticsearchLoggerOptions loggerOptions)
 		{
 			var transport = CreateTransport(loggerOptions);
 			if (loggerOptions.Index != null)
 			{
 				var indexChannelOptions = new IndexChannelOptions<LogEvent>(transport)
 				{
-					Index = loggerOptions.Index.Format,
+					IndexFormat = loggerOptions.Index.Format,
 					IndexOffset = loggerOptions.Index.IndexOffset,
 					WriteEvent = async (stream, ctx, logEvent) => await logEvent.SerializeAsync(stream, ctx).ConfigureAwait(false),
 					TimestampLookup = l => l.Timestamp,
@@ -145,7 +147,7 @@ namespace Elasticsearch.Extensions.Logging
 					ExceptionCallback = (e) => LastSeenException = e
 				};
 				SetupChannelOptions(_channelConfigurations, indexChannelOptions);
-				return new DataStreamChannel<LogEvent>(indexChannelOptions);
+				return new CommonSchemaChannel<LogEvent>(indexChannelOptions);
 			}
 		}
 	}

@@ -48,6 +48,7 @@ namespace Elastic.Ingest.Elasticsearch.CommonSchema
 
 			return true;
 		}
+
 		public bool SetupElasticsearchTemplates()
 		{
 			var transport = Options.Transport;

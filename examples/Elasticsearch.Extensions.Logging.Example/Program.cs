@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
+using Elastic.Channels;
 using Elastic.Elasticsearch.Ephemeral;
 using Elastic.Ingest.Elasticsearch;
 using Elasticsearch.Net;
@@ -35,11 +36,11 @@ namespace Elasticsearch.Extensions.Logging.Example
 					{
 						if (highLoadUseCase)
 						{
-							channel.BufferOptions = new ElasticsearchBufferOptions<LogEvent> { ConcurrentConsumers = 4 };
+							channel.BufferOptions = new BufferOptions { ConcurrentConsumers = 4 };
 							channel.PublishRejectionCallback = e => Console.Write("!");
 						}
 						channel.ResponseCallback = (r, b) =>
-							Console.WriteLine($"statusCode: {r.ApiCallDetails.HttpStatusCode} items: {b.Count} time since first read: {b.DurationSinceFirstRead}");
+							Console.WriteLine($"statusCode: {r.ApiCallDetails.HttpStatusCode} items: {b.Count} time since first write: {b.DurationSinceFirstWrite}");
 					});
 				})
 				.ConfigureServices((hostContext, services) =>
