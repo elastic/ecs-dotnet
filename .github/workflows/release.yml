@@ -5,6 +5,8 @@ on:
     branches: [ "main" ]
   create:
     tags: [ "v*" ]
+  # NOTE: for testing purposes
+  pull_request:
 
 permissions:
   contents: read
