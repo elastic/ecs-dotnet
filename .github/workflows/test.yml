@@ -40,7 +40,9 @@ jobs:
 
   test-linux:
     runs-on: ubuntu-latest
-    container: mcr.microsoft.com/dotnet/sdk:6.0-jammy
+    container:
+      image: mcr.microsoft.com/dotnet/sdk:6.0-jammy
+      options: --user $UID:$GID
 
     steps:
     - uses: actions/checkout@v3
