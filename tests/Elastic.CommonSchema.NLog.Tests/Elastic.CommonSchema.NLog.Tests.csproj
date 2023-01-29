@@ -8,8 +8,7 @@
   </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="NLog" Version="4.5.11" />
-        <PackageReference Include="NLog.Config" Version="4.5.4" />
+        <PackageReference Include="NLog" Version="4.7.15" />
         <PackageReference Include="Elastic.Apm" Version="1.8.0" />
     </ItemGroup>
 
