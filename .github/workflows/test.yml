@@ -1,0 +1,84 @@
+name: test
+
+on:
+  push:
+    branches:
+      - main
+      - 1.*
+    paths-ignore:
+    - '*.md'
+    - '*.asciidoc'
+    - 'docs/**'
+  pull_request:
+    paths-ignore:
+    - '*.md'
+    - '*.asciidoc'
+    - 'docs/**'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: ${{ github.ref != 'refs/heads/main' }}
+
+env:
+  # This is the version to be used for both OS platforms (windows and linux)
+  DOTNET_VERSION: '6.0.400'
+
+jobs:
+# TODO: There are some failures when running the tests
+#  - Failed to retrieve shard stats from node
+#  - Logs were not written to Elasticsearch within margin of 10 seconds
+# To be solved in a follow up
+
+#   test-windows:
+#     runs-on: windows-latest
+
+#     steps:
+#     - uses: actions/checkout@v3
+#       with:
+#        fetch-depth: 0
+
+#     - name: Install dotnet-sdk
+#       run: choco install dotnet-sdk -m -y --no-progress -r --version $env:DOTNET_VERSION
+
+#     - name: Run clean -c false
+#       run: build.bat clean -c false
+#       shell: cmd
+
+#     - name: Run release -c false
+#       run: build.bat release -c false
+#       shell: cmd
+
+#     - name: Store test results
+#       if: success() || failure()
+#       uses: actions/upload-artifact@v3
+#       with:
+#         name: test-results
+#         path: build/output/junit-*.xml
+
+  test-linux:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+      with:
+       fetch-depth: 0
+
+    - name: Run release -c false within the docker container
+      run: |
+        docker run --rm -t \
+            -u "$(id -u):$(id -g)" \
+            -v $(pwd):/src \
+            -w /src \
+            -e HOME=/tmp \
+            mcr.microsoft.com/dotnet/sdk:$DOTNET_VERSION-jammy \
+            ./build.sh release -c false
+
+    - name: Store test results
+      if: success() || failure()
+      uses: actions/upload-artifact@v3
+      with:
+        name: test-results
+        path: build/output/junit-*.xml
