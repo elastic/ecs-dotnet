@@ -73,60 +73,6 @@ pipeline {
         }
       }
     }
-    stage('Release') {
-      when {
-        beforeAgent true
-        anyOf {
-          tag pattern: '\\d+\\.\\d+\\.\\d+(-(alpha|beta|rc)\\d*)?', comparator: 'REGEXP'
-          branch 'main'
-        }
-      }
-      stages {
-        stage('Generate') {
-          steps {
-            deleteDir()
-            unstash 'source'
-            dir("${BASE_DIR}"){
-              dotnet() {
-                sh(label: 'Generate local nuget packages', script: './build.sh generatepackages -s true')
-                sh(label: 'Validate *.npkg files that were created', script: './build.sh validatepackages -s true')
-                sh(label: 'Inspect public API change', script: './build.sh generateapichanges -s true')
-              }
-            }
-          }
-        }
-        stage('Release to feedz.io') {
-          when { branch 'main' }
-          steps {
-            dir("${BASE_DIR}"){
-              deploy(secret: 'secret/apm-team/ci/elastic-observability-feedz.io')
-            }
-          }
-        }
-        stage('Release Notes') {
-          when { buildingTag() }
-          steps {
-            dir("${BASE_DIR}"){
-              withGitRelease(credentialsId: '2a9602aa-ab9f-4e52-baf3-b71ca88469c7-UserAndToken') {
-                dotnet() {
-                  sh(label: 'Generate release notes', script: './build.sh generatereleasenotes -s true')
-                  sh(label: 'Inspect public API change', script: './build.sh generateapichanges -s true')
-                  sh(label: 'Create or update release for tag on github', script: "./build.sh createreleaseongithub -s true --token ${GITHUB_TOKEN}")
-                }
-              }
-            }
-          }
-        }
-        stage('Release to NuGet') {
-          when { buildingTag() }
-          steps {
-            dir("${BASE_DIR}"){
-              deploy(secret: 'secret/apm-team/ci/elastic-observability-nuget')
-            }
-          }
-        }
-      }
-    }
   }
   post {
     cleanup {
@@ -144,20 +90,5 @@ def dotnet(Closure body){
   }
   docker.image("${dockerTagName}").inside("-e HOME='${env.WORKSPACE}/${env.BASE_DIR}'"){
     body()
-  }
-}
-
-def deploy(Map args = [:]) {
-  def secret = args.secret
-  dotnet(){
-    def repo = getVaultSecret(secret: secret)
-    wrap([$class: 'MaskPasswordsBuildWrapper', varPasswordPairs: [
-      [var: 'REPO_API_KEY', password: repo.data.apiKey],
-      [var: 'REPO_API_URL', password: repo.data.url],
-      ]]) {
-      withEnv(["REPO_API_KEY=${repo.data.apiKey}", "REPO_API_URL=${repo.data.url}"]) {
-        sh(label: 'Deploy', script: '.ci/deploy.sh ${REPO_API_KEY} ${REPO_API_URL}')
-      }
-    }
   }
 }
