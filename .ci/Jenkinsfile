@@ -38,87 +38,37 @@ pipeline {
         stash allowEmpty: true, name: 'source', useDefaultExcludes: false
       }
     }
-    stage('Sanity checks') {
+    stage('Windows') {
+      agent { label 'windows-2019-immutable' }
+      options { skipDefaultCheckout() }
       environment {
         HOME = "${env.WORKSPACE}"
-        PATH = "${env.HOME}/bin:${env.PATH}"
+        DOTNET_ROOT = "C:\\Program Files\\dotnet"
+        PATH = "${env.DOTNET_ROOT};${env.DOTNET_ROOT}\\tools;${env.PATH};${env.HOME}\\bin"
+        MSBUILDDEBUGPATH = "${env.WORKSPACE}"
       }
-      options { skipDefaultCheckout() }
-      steps {
-        deleteDir()
-        unstash 'source'
-        dir("${BASE_DIR}"){
-          preCommit(commit: "${GIT_BASE_COMMIT}", junit: true)
-        }
-      }
-    }
-    stage('Parallel'){
       when {
         not { buildingTag() }
         beforeAgent true
       }
-      parallel {
-        stage('Linux') {
-          options { skipDefaultCheckout() }
-          environment {
-            MSBUILDDEBUGPATH = "${env.WORKSPACE}"
-          }
-          steps {
-            withGithubNotify(context: 'Linux') {
-              deleteDir()
-              unstash 'source'
-              dir("${BASE_DIR}"){
-                dotnet(){
-                  sh script: './build.sh release -c false', label: 'build'
-                }
-              }
-            }
-          }
-          post {
-            unsuccessful {
-              archiveArtifacts(allowEmptyArchive: true, artifacts: "${MSBUILDDEBUGPATH}/**/MSBuild_*.failure.txt")
-            }
-            always {
-              dir("${BASE_DIR}"){
-                junit(allowEmptyResults: true, keepLongStdio: true, testResults: 'build/output/junit-*.xml')
-                archiveArtifacts(allowEmptyArchive: true, artifacts: 'build/output/**/*')
-              }
-            }
+      steps {
+        withGithubNotify(context: 'Windows') {
+          unstash 'source'
+          dir("${BASE_DIR}"){
+            bat script: 'choco install dotnet-sdk -m -y --no-progress -r --version 6.0.400', label: 'Tools'
+            bat script: 'build.bat clean -c false', label: 'build'
+            bat script: 'build.bat release -c false', label: 'build'
           }
         }
-        stage('Windows') {
-          agent { label 'windows-2019-immutable' }
-          options { skipDefaultCheckout() }
-          environment {
-            HOME = "${env.WORKSPACE}"
-            DOTNET_ROOT = "C:\\Program Files\\dotnet"
-            PATH = "${env.DOTNET_ROOT};${env.DOTNET_ROOT}\\tools;${env.PATH};${env.HOME}\\bin"
-            MSBUILDDEBUGPATH = "${env.WORKSPACE}"
-          }
-          stages {
-            stage('Build') {
-              steps {
-                withGithubNotify(context: 'Windows') {
-                  unstash 'source'
-                  dir("${BASE_DIR}"){
-                    bat script: 'choco install dotnet-sdk -m -y --no-progress -r --version 6.0.400', label: 'Tools'
-                    bat script: 'build.bat clean -c false', label: 'build'
-                    bat script: 'build.bat release -c false', label: 'build'
-                  }
-                }
-              }
-              post {
-                unsuccessful {
-                  archiveArtifacts(allowEmptyArchive: true, artifacts: "${MSBUILDDEBUGPATH}/**/MSBuild_*.failure.txt")
-                }
-                always {
-                  dir("${BASE_DIR}"){
-                    junit(allowEmptyResults: true, keepLongStdio: true, testResults: 'build/output/junit-*.xml')
-                    archiveArtifacts(allowEmptyArchive: true, artifacts: 'build/output/**/*')
-                  }
-                }
-              }
-            }
+      }
+      post {
+        unsuccessful {
+          archiveArtifacts(allowEmptyArchive: true, artifacts: "${MSBUILDDEBUGPATH}/**/MSBuild_*.failure.txt")
+        }
+        always {
+          dir("${BASE_DIR}"){
+            junit(allowEmptyResults: true, keepLongStdio: true, testResults: 'build/output/junit-*.xml')
+            archiveArtifacts(allowEmptyArchive: true, artifacts: 'build/output/**/*')
           }
         }
       }
