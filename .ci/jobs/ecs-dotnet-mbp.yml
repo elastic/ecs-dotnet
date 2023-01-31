@@ -1,5 +1,0 @@
----
-- job:
-    name: apm-agent-dotnet/ecs-dotnet-mbp
-    display-name: ecs-dotnet
-    description: Elastic Common Schema .NET
