@@ -72,7 +72,7 @@ namespace Elastic.CommonSchema.BenchmarkDotNetExporter
 
 				})
 			};
-			var channel = new CommonSchemaChannel<BenchmarkDocument>(options);
+			var channel = new EcsDataStreamChannel<BenchmarkDocument>(options);
 			if (!channel.BootstrapElasticsearch(Options.BootstrapMethod)) return;
 
 			var benchmarks = CreateBenchmarkDocuments(summary);

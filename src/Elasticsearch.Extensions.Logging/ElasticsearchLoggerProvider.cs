@@ -146,7 +146,7 @@ namespace Elasticsearch.Extensions.Logging
 					ExceptionCallback = (e) => LastSeenException = e
 				};
 				SetupChannelOptions(_channelConfigurations, indexChannelOptions);
-				var channel =  new CommonSchemaChannel<LogEvent>(indexChannelOptions);
+				var channel =  new EcsDataStreamChannel<LogEvent>(indexChannelOptions);
 				channel.BootstrapElasticsearch(loggerOptions.BootstrapMethod);
 				return channel;
 			}

@@ -11,10 +11,13 @@ using Elastic.Ingest.Elasticsearch.DataStreams;
 
 namespace Elastic.Ingest.Elasticsearch.CommonSchema
 {
-	public class CommonSchemaChannel<TEcsDocument> : DataStreamChannel<TEcsDocument>
+	/// <summary>
+	/// An channel implementation that allows you to push ECS data to Elasticsearch data streams
+	/// </summary>
+	public class EcsDataStreamChannel<TEcsDocument> : DataStreamChannel<TEcsDocument>
 		where TEcsDocument : EcsDocument
 	{
-		public CommonSchemaChannel(DataStreamChannelOptions<TEcsDocument> options) : base(options) =>
+		public EcsDataStreamChannel(DataStreamChannelOptions<TEcsDocument> options) : base(options) =>
 			options.WriteEvent = async (stream, ctx, @event) =>
 				await JsonSerializer.SerializeAsync(stream, @event, typeof(TEcsDocument), EcsJsonConfiguration.SerializerOptions, ctx)
 					.ConfigureAwait(false);
@@ -32,21 +35,16 @@ namespace Elastic.Ingest.Elasticsearch.CommonSchema
 				if (!PutComponentTemplate(bootstrapMethod, componentName, component))
 					return false;
 			}
-			var additionalComponents = new List<string> {"data-streams-mappings"};
+
+			var additionalComponents = GetInferredComponentTemplates();
 			if (!string.IsNullOrEmpty(ilmPolicy))
 			{
-				// create a component template that sets  index.lifecycle.name
+				// create a component template that sets index.lifecycle.name
 				var (settingsName, settingsBody) = GetDefaultComponentSettings(name, ilmPolicy);
 				if (!PutComponentTemplate(bootstrapMethod, settingsName, settingsBody))
 					return false;
 				additionalComponents.Add(settingsName);
 			}
-
-			// if we know the type of data is logs or metrics apply certain defaults that Elasticsearch ships with.
-			if (Options.DataStream.Type.ToLowerInvariant() == "logs")
-				additionalComponents.AddRange(new[] { "logs-settings", "logs-mappings" });
-			else if (Options.DataStream.Type.ToLowerInvariant() == "metrics")
-				additionalComponents.AddRange(new[] { "metrics-settings", "metrics-mappings" });
 
 			var template = IndexTemplates.GetIndexTemplateForElasticsearchComposable(match, additionalComponents.ToArray());
 			if (!PutIndexTemplate(bootstrapMethod, name, template))
@@ -68,7 +66,7 @@ namespace Elastic.Ingest.Elasticsearch.CommonSchema
 				if (!await PutComponentTemplateAsync(bootstrapMethod, componentName, component, ctx).ConfigureAwait(false))
 					return false;
 			}
-			var additionalComponents = new List<string> {"data-streams-mappings"};
+			var additionalComponents = GetInferredComponentTemplates();
 			if (!string.IsNullOrEmpty(ilmPolicy))
 			{
 				// create a component template that sets  index.lifecycle.name
@@ -77,12 +75,6 @@ namespace Elastic.Ingest.Elasticsearch.CommonSchema
 					return false;
 				additionalComponents.Add(settingsName);
 			}
-
-			// if we know the type of data is logs or metrics apply certain defaults that Elasticsearch ships with.
-			if (Options.DataStream.Type.ToLowerInvariant() == "logs")
-				additionalComponents.AddRange(new[] { "logs-settings", "logs-mappings" });
-			else if (Options.DataStream.Type.ToLowerInvariant() == "metrics")
-				additionalComponents.AddRange(new[] { "metrics-settings", "metrics-mappings" });
 
 			var template = IndexTemplates.GetIndexTemplateForElasticsearchComposable(match, additionalComponents.ToArray());
 			if (!await PutIndexTemplateAsync(bootstrapMethod, name, template, ctx).ConfigureAwait(false))

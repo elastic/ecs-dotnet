@@ -27,7 +27,7 @@ namespace Elastic.CommonSchema.Serilog.Sink
 	public class ElasticsearchSink : ILogEventSink
 	{
 		private readonly EcsTextFormatterConfiguration _formatterConfiguration;
-		private readonly CommonSchemaChannel<EcsDocument> _channel;
+		private readonly EcsDataStreamChannel<EcsDocument> _channel;
 
 		public ElasticsearchSink(ElasticsearchSchemaSinkOptions options)
 		{
@@ -46,7 +46,7 @@ namespace Elastic.CommonSchema.Serilog.Sink
 				})
 			};
 			options.ConfigureChannel?.Invoke(channelOptions);
-			_channel = new CommonSchemaChannel<EcsDocument>(channelOptions);
+			_channel = new EcsDataStreamChannel<EcsDocument>(channelOptions);
 			_channel.BootstrapElasticsearch(options.BootstrapMethod);
 		}
 
