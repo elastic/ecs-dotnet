@@ -1,12 +1,13 @@
 ﻿#nullable enable
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using System.Threading;
 using System.Threading.Tasks;
 using Elastic.CommonSchema;
 using Elastic.CommonSchema.Elasticsearch;
 using Elastic.CommonSchema.Serialization;
 using Elastic.Ingest.Elasticsearch.DataStreams;
-using Elastic.Transport;
 
 namespace Elastic.Ingest.Elasticsearch.CommonSchema
 {
@@ -18,67 +19,77 @@ namespace Elastic.Ingest.Elasticsearch.CommonSchema
 				await JsonSerializer.SerializeAsync(stream, @event, typeof(TEcsDocument), EcsJsonConfiguration.SerializerOptions, ctx)
 					.ConfigureAwait(false);
 
-
-		public async Task<bool> SetupElasticsearchTemplatesAsync()
+		public override bool BootstrapElasticsearch(BootstrapMethod bootstrapMethod, string? ilmPolicy = null)
 		{
-			var prefix = $"{Options.DataStream.Type}-{Options.DataStream.DataSet}";
-			var templateExists = await Options.Transport.RequestAsync<HeadIndexTemplateResponse>
-					(HttpMethod.HEAD, $"_index_template/{prefix}")
-				.ConfigureAwait(false);
-			var statusCode = templateExists.ApiCallDetails.HttpStatusCode;
-			if (statusCode is 200) return false;
+			if (bootstrapMethod == BootstrapMethod.None) return true;
 
-			foreach (var (name, component) in IndexComponents.Components)
+			var name = TemplateName;
+			var match = TemplateWildcard;
+			if (IndexTemplateExists(name)) return false;
+
+			foreach (var (componentName, component) in IndexComponents.Components)
 			{
-				var putComponentTemplate = await Options.Transport.RequestAsync<PutComponentTemplateResponse>
-						(HttpMethod.PUT, $"_component_template/{name}", PostData.String(component))
-					.ConfigureAwait(false);
-				if (!putComponentTemplate.ApiCallDetails.HasSuccessfulStatusCode)
-					throw new Exception(
-						$"Failure to create component template `${name}` for {Options.DataStream.GetTemplatePrefix()}: {putComponentTemplate}");
+				if (!PutComponentTemplate(bootstrapMethod, componentName, component))
+					return false;
+			}
+			var additionalComponents = new List<string> {"data-streams-mappings"};
+			if (!string.IsNullOrEmpty(ilmPolicy))
+			{
+				// create a component template that sets  index.lifecycle.name
+				var (settingsName, settingsBody) = GetDefaultComponentSettings(name, ilmPolicy);
+				if (!PutComponentTemplate(bootstrapMethod, settingsName, settingsBody))
+					return false;
+				additionalComponents.Add(settingsName);
 			}
 
+			// if we know the type of data is logs or metrics apply certain defaults that Elasticsearch ships with.
+			if (Options.DataStream.Type.ToLowerInvariant() == "logs")
+				additionalComponents.AddRange(new[] { "logs-settings", "logs-mappings" });
+			else if (Options.DataStream.Type.ToLowerInvariant() == "metrics")
+				additionalComponents.AddRange(new[] { "metrics-settings", "metrics-mappings" });
 
-			var template = IndexTemplates.GetIndexTemplateForElasticsearchComposable($"{prefix}-*");
-			var putIndexTemplateResponse = await Options.Transport.RequestAsync<PutIndexTemplateResponse>
-					(HttpMethod.PUT, $"_index_template/{prefix}", PostData.String(template))
-				.ConfigureAwait(false);
-			if (!putIndexTemplateResponse.ApiCallDetails.HasSuccessfulStatusCode)
-				throw new Exception($"Failure to create index templates for {Options.DataStream.GetTemplatePrefix()}: {putIndexTemplateResponse}");
+			var template = IndexTemplates.GetIndexTemplateForElasticsearchComposable(match, additionalComponents.ToArray());
+			if (!PutIndexTemplate(bootstrapMethod, name, template))
+				return false;
 
 			return true;
 		}
 
-		public bool SetupElasticsearchTemplates()
+		public override async Task<bool> BootstrapElasticsearchAsync(BootstrapMethod bootstrapMethod, string? ilmPolicy = null, CancellationToken ctx = default)
 		{
-			var transport = Options.Transport;
-			var prefix = $"{Options.DataStream.Type}-{Options.DataStream.DataSet}";
-			var templateExists = transport.Request<HeadIndexTemplateResponse>(HttpMethod.HEAD, $"_index_template/{prefix}");
-			var statusCode = templateExists.ApiCallDetails.HttpStatusCode;
-			if (statusCode is 200) return true;
+			if (bootstrapMethod == BootstrapMethod.None) return true;
 
-			foreach (var (name, component) in IndexComponents.Components)
+			var name = TemplateName;
+			var match = TemplateWildcard;
+			if (await IndexTemplateExistsAsync(name, ctx).ConfigureAwait(false)) return false;
+
+			foreach (var (componentName, component) in IndexComponents.Components)
 			{
-				var putComponentTemplate =
-					transport.Request<PutComponentTemplateResponse>(HttpMethod.PUT, $"_component_template/{name}", PostData.String(component));
-				if (!putComponentTemplate.ApiCallDetails.HasSuccessfulStatusCode)
-					throw new Exception(
-						$"Failure to create component template `${name}` for {Options.DataStream.GetTemplatePrefix()}: {putComponentTemplate}");
+				if (!await PutComponentTemplateAsync(bootstrapMethod, componentName, component, ctx).ConfigureAwait(false))
+					return false;
+			}
+			var additionalComponents = new List<string> {"data-streams-mappings"};
+			if (!string.IsNullOrEmpty(ilmPolicy))
+			{
+				// create a component template that sets  index.lifecycle.name
+				var (settingsName, settingsBody) = GetDefaultComponentSettings(name, ilmPolicy);
+				if (!await PutComponentTemplateAsync(bootstrapMethod, settingsName, settingsBody, ctx).ConfigureAwait(false))
+					return false;
+				additionalComponents.Add(settingsName);
 			}
 
+			// if we know the type of data is logs or metrics apply certain defaults that Elasticsearch ships with.
+			if (Options.DataStream.Type.ToLowerInvariant() == "logs")
+				additionalComponents.AddRange(new[] { "logs-settings", "logs-mappings" });
+			else if (Options.DataStream.Type.ToLowerInvariant() == "metrics")
+				additionalComponents.AddRange(new[] { "metrics-settings", "metrics-mappings" });
 
-			var template = IndexTemplates.GetIndexTemplateForElasticsearchComposable($"{prefix}-*");
-			var putIndexTemplateResponse = transport.Request<PutIndexTemplateResponse>(HttpMethod.PUT, $"_index_template/{prefix}", PostData.String(template));
-			if (!putIndexTemplateResponse.ApiCallDetails.HasSuccessfulStatusCode)
-				throw new Exception($"Failure to create index templates for {Options.DataStream.GetTemplatePrefix()}: {putIndexTemplateResponse}");
+			var template = IndexTemplates.GetIndexTemplateForElasticsearchComposable(match, additionalComponents.ToArray());
+			if (!await PutIndexTemplateAsync(bootstrapMethod, name, template, ctx).ConfigureAwait(false))
+				return false;
 
 			return true;
 		}
 
-		private class HeadIndexTemplateResponse : TransportResponse { }
-
-		private class PutIndexTemplateResponse : TransportResponse { }
-
-		private class PutComponentTemplateResponse : TransportResponse { }
 	}
 }

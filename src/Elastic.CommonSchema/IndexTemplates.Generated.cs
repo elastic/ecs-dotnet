@@ -21,21 +21,24 @@ using System.Text.Json.Serialization;
 
 namespace Elastic.CommonSchema.Elasticsearch
 {
+/// <summary>
+/// Elastic Common Schema version v8.4.0 index templates to be used with Elasticsearch.
+/// </summary>
+public static class IndexTemplates
+{
 	/// <summary>
-	/// Elastic Common Schema version v8.4.0 index templates to be used with Elasticsearch.
-	/// </summary>
-	public static class IndexTemplates
-	{
-		/// <summary>
-		/// Elastic Common Schema version v8.4.0 Composable index template  
-		/// See the Put Index Template API documentation: https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-templates.html
-		/// </summary>
-		/// <returns>Index template string that can be used with the Put Index Template API.</returns>
-		public static string GetIndexTemplateForElasticsearchComposable(string indexPattern = "ecs-*") 
-		{ 
-			return @"{
+	 /// Elastic Common Schema version v8.4.0 Composable index template  
+	 /// See the Put Index Template API documentation: https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-templates.html
+	 /// </summary>
+	 /// <returns>Index template string that can be used with the Put Index Template API.</returns>
+	public static string GetIndexTemplateForElasticsearchComposable(string indexPattern = "ecs-*", string[] additionalComponents = null)
+	{ 
+		additionalComponents ??= new string[]{};
+		var userComponents = additionalComponents.Length == 0 ? "" : $", {string.Join(", ", additionalComponents.Select(a=>$"\"{a}\""))}";
+		 		 
+		return @"{
   ""_meta"": {
-    ""description"": ""Sample composable template that includes all ECS fields"",
+    ""description"": ""Template installed by .NET ECS libraries (https://github.com/elastic/ecs-dotnet)"",
     ""ecs_version"": ""8.4.0""
   },
   ""composed_of"": [
@@ -76,12 +79,12 @@ namespace Elastic.CommonSchema.Elasticsearch
     ""ecs_8.4.0_url"",
     ""ecs_8.4.0_user_agent"",
     ""ecs_8.4.0_user"",
-    ""ecs_8.4.0_vulnerability""
+    ""ecs_8.4.0_vulnerability""" + userComponents + @"
   ],
   ""index_patterns"": [
     """ + indexPattern + @"""
   ],
-  ""priority"": 1,
+  ""priority"": 201,
   ""data_stream"": {},
   ""template"": {
     ""mappings"": {
@@ -111,16 +114,17 @@ namespace Elastic.CommonSchema.Elasticsearch
   }
 }
 ";
-		}
+	 }
 
-		/// <summary>
-		/// Elastic Common Schema version v8.4.0 Legacy index template  
-		/// See the Put Index Template API documentation: https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-templates.html
-		/// </summary>
-		/// <returns>Index template string that can be used with the Put Index Template API.</returns>
-		public static string GetIndexTemplateForElasticsearchLegacy(string indexPattern = "ecs-*") 
-		{ 
-			return @"{
+ 	/// <summary>
+	 /// Elastic Common Schema version v8.4.0 Legacy index template  
+	 /// See the Put Index Template API documentation: https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-templates.html
+	 /// </summary>
+	 /// <returns>Index template string that can be used with the Put Index Template API.</returns>
+	public static string GetIndexTemplateForElasticsearchLegacy(string indexPattern = "ecs-*")
+	{ 
+		 		 
+		return @"{
   ""index_patterns"": [
     """ + indexPattern + @"""
   ],
@@ -7143,7 +7147,7 @@ namespace Elastic.CommonSchema.Elasticsearch
   }
 }
 ";
-		}
+	 }
 
-	}
+ }
 }

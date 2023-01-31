@@ -13,6 +13,7 @@ using BenchmarkDotNet.Loggers;
 using BenchmarkDotNet.Reports;
 using Elastic.Channels;
 using Elastic.CommonSchema.BenchmarkDotNetExporter.Domain;
+using Elastic.Ingest.Elasticsearch;
 using Elastic.Ingest.Elasticsearch.CommonSchema;
 using Elastic.Ingest.Elasticsearch.DataStreams;
 using Elastic.Transport;
@@ -72,7 +73,7 @@ namespace Elastic.CommonSchema.BenchmarkDotNetExporter
 				})
 			};
 			var channel = new CommonSchemaChannel<BenchmarkDocument>(options);
-			if (!channel.SetupElasticsearchTemplates()) return;
+			if (!channel.BootstrapElasticsearch(Options.BootstrapMethod)) return;
 
 			var benchmarks = CreateBenchmarkDocuments(summary);
 			channel.TryWriteMany(benchmarks);

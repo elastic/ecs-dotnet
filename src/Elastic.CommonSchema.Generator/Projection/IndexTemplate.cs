@@ -11,8 +11,14 @@ namespace Elastic.CommonSchema.Generator.Projection
 			Template =
 				//Regex.Replace(template, @"\r\n?|\n", "")
 				template
-					.Replace("\"priority\": 1,", "\"priority\": 1,\r\n  \"data_stream\": {},")
+					// ensure our template beats out builtin templates or elastic agent integrations
+					// force datastreams for new index templates
+
+					.Replace("\"priority\": 1,", "\"priority\": 201,\r\n  \"data_stream\": {},")
+					.Replace("Sample composable template that includes all ECS fields",
+						"Template installed by .NET ECS libraries (https://github.com/elastic/ecs-dotnet)")
 					.Replace("\"", "\"\"")
+					.Replace("\"\"ecs_8.4.0_vulnerability\"\"", "\"\"ecs_8.4.0_vulnerability\"\"\" + userComponents + @\"")
 					.Replace("try-ecs-*", "\" + indexPattern + @\"");
 		}
 	}

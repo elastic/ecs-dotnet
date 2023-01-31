@@ -107,7 +107,6 @@ namespace Elasticsearch.Extensions.Logging
 			// TODO: Injectable factory? Or some way of testing.
 			var connectionPool = CreateConnectionPool(loggerOptions);
 			var config = new TransportConfiguration(connectionPool, productRegistration: new ElasticsearchProductRegistration());
-
 			var transport = new DefaultHttpTransport<TransportConfiguration>(config);
 			return transport;
 		}
@@ -147,7 +146,9 @@ namespace Elasticsearch.Extensions.Logging
 					ExceptionCallback = (e) => LastSeenException = e
 				};
 				SetupChannelOptions(_channelConfigurations, indexChannelOptions);
-				return new CommonSchemaChannel<LogEvent>(indexChannelOptions);
+				var channel =  new CommonSchemaChannel<LogEvent>(indexChannelOptions);
+				channel.BootstrapElasticsearch(loggerOptions.BootstrapMethod);
+				return channel;
 			}
 		}
 	}

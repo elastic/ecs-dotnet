@@ -3,6 +3,8 @@ using System.Threading.Tasks;
 using Elastic.Channels;
 using Elastic.Elasticsearch.Ephemeral;
 using Elastic.Ingest.Elasticsearch;
+using Elastic.Ingest.Elasticsearch.CommonSchema;
+using Elasticsearch.Extensions.Logging.Options;
 using Elasticsearch.Net;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -32,7 +34,11 @@ namespace Elasticsearch.Extensions.Logging.Example
 					if (highLoadUseCase)
 						loggingBuilder.ClearProviders();
 
-					loggingBuilder.AddElasticsearch(options => {}, channel =>
+					loggingBuilder.AddElasticsearch(options =>
+					{
+						options.DataStream = new DataStreamNameOptions { DataSet = highLoadUseCase ? "high" : "low" + "load" };
+						options.BootstrapMethod = BootstrapMethod.Silent;
+					}, channel =>
 					{
 						if (highLoadUseCase)
 						{
@@ -53,7 +59,7 @@ namespace Elasticsearch.Extensions.Logging.Example
 
 		public static async Task Main(string[] args)
 		{
-			using var cluster = new EphemeralCluster("7.8.0");
+			using var cluster = new EphemeralCluster("8.4.0");
 			var client = CreateClient(cluster);
 			if (!(await client.RootNodeInfoAsync()).IsValid)
 				cluster.Start(TimeSpan.FromMinutes(1));
