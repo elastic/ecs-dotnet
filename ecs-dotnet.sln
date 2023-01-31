@@ -88,6 +88,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Elastic.CommonSchema.Serilo
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Elastic.Apm.Disabled.Serilog.Tests", "tests\Elastic.Apm.Disabled.Serilog.Tests\Elastic.Apm.Disabled.Serilog.Tests.csproj", "{73829D36-DB98-4D8F-8741-F167A787BF7B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Elastic.Ingest.Elasticsearch.CommonSchema.IntegrationTests", "tests\Elastic.Ingest.Elasticsearch.CommonSchema.IntegrationTests\Elastic.Ingest.Elasticsearch.CommonSchema.IntegrationTests.csproj", "{1AF36656-7950-42D1-996D-DF5985298926}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -206,6 +208,10 @@ Global
 		{73829D36-DB98-4D8F-8741-F167A787BF7B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{73829D36-DB98-4D8F-8741-F167A787BF7B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{73829D36-DB98-4D8F-8741-F167A787BF7B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1AF36656-7950-42D1-996D-DF5985298926}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1AF36656-7950-42D1-996D-DF5985298926}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1AF36656-7950-42D1-996D-DF5985298926}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1AF36656-7950-42D1-996D-DF5985298926}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -241,6 +247,7 @@ Global
 		{DD7D6E56-58DB-4E13-9DFC-AE031F1C31B3} = {7610B796-BB3E-4CB2-8296-79BBFF6D23FC}
 		{14BFAF67-8DB6-48D0-B57E-84767BA2A239} = {3582B07D-C2B0-49CC-B676-EAF806EB010E}
 		{73829D36-DB98-4D8F-8741-F167A787BF7B} = {3582B07D-C2B0-49CC-B676-EAF806EB010E}
+		{1AF36656-7950-42D1-996D-DF5985298926} = {3582B07D-C2B0-49CC-B676-EAF806EB010E}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {7F60C4BB-6216-4E50-B1E4-9C38EB484843}

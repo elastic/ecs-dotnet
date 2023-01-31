@@ -78,6 +78,8 @@ namespace Elastic.Ingest.Elasticsearch.CommonSchema
 			}
 
 			var template = IndexTemplates.GetIndexTemplateForElasticsearchComposable(match, additionalComponents.ToArray());
+			//hack but this would setup the target as a datastream
+			template = template.Replace("\"data_stream\": {},", "");
 			if (!await PutIndexTemplateAsync(bootstrapMethod, name, template, ctx).ConfigureAwait(false))
 				return false;
 

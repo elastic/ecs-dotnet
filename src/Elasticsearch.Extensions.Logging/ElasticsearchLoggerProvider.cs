@@ -134,7 +134,7 @@ namespace Elasticsearch.Extensions.Logging
 					ExceptionCallback = (e) => LastSeenException = e
 				};
 				SetupChannelOptions(_channelConfigurations, indexChannelOptions);
-				return new IndexChannel<LogEvent>(indexChannelOptions);
+				return new EcsIndexChannel<LogEvent>(indexChannelOptions);
 			}
 			else
 			{
