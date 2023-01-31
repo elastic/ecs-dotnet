@@ -33,33 +33,33 @@ jobs:
 # To be solved in a follow up
 
   test-windows:
-     runs-on: windows-latest
+    runs-on: windows-latest
     
-  steps:
-  - uses: actions/checkout@v3
-    with:
-      fetch-depth: 0
+    steps:
+    - uses: actions/checkout@v3
+      with:
+        fetch-depth: 0
 
-  - uses: actions/setup-dotnet@v1
-    with:
-      dotnet-version: |
-        5.0.x
-        6.0.x
-    
-  - name: Run clean -c false
-    run: build.bat clean -c false
-    shell: cmd
-    
-  - name: Run release -c false
-    run: build.bat release -c false
-    shell: cmd
-    
-  - name: Store test results
-    if: success() || failure()
-    uses: actions/upload-artifact@v3
-    with:
-      name: test-results
-      path: build/output/junit-*.xml
+    - uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: |
+          5.0.x
+          6.0.x
+        
+    - name: Run clean -c false
+      run: build.bat clean -c false
+      shell: cmd
+       
+    - name: Run release -c false
+      run: build.bat release -c false
+      shell: cmd
+       
+    - name: Store test results
+      if: success() || failure()
+      uses: actions/upload-artifact@v3
+      with:
+        name: test-results
+        path: build/output/junit-*.xml
    
   test-linux:
     runs-on: ubuntu-latest
