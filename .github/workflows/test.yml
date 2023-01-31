@@ -29,10 +29,6 @@ env:
   ELASTIC_STACK_VERSION: '8.4.0'
 
 jobs:
-# TODO: There are some failures when running the tests
-#  - Failed to retrieve shard stats from node
-#  - Logs were not written to Elasticsearch within margin of 10 seconds
-# To be solved in a follow up
 
   test-windows:
     runs-on: windows-latest
