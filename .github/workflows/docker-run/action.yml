@@ -1,0 +1,22 @@
+---
+name: common build tasks
+inputs:
+  command:
+    description: 'Command to run'
+    required: true
+  dotnet-sdk-version:
+    description: 'dotnet SDK version'
+    required: true
+
+runs:
+  using: "composite"
+  steps:
+    - run: |
+        docker run --rm -t \
+            -u "$(id -u):$(id -g)" \
+            -v $(pwd):/src \
+            -w /src \
+            -e HOME=/tmp \
+            mcr.microsoft.com/dotnet/sdk:${{ inputs.dotnet-sdk-version }}-jammy \
+            ${{ inputs.command }}
+      shell: bash
