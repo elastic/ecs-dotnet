@@ -41,8 +41,7 @@ jobs:
     - uses: actions/setup-dotnet@v1
       with:
         dotnet-version: |
-          5.0.x
-          6.0.x
+          ${{ env.DOTNET_VERSION }}
             
     - uses: actions/cache@v3
       with:
