@@ -16,7 +16,8 @@ on:
     - 'docs/**'
 
 permissions:
-  contents: read
+  # clean needs write permissions
+  contents: write
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
@@ -25,6 +26,7 @@ concurrency:
 env:
   # This is the version to be used for both OS platforms (windows and linux)
   DOTNET_VERSION: '6.0.400'
+  ELASTIC_STACK_VERSION: '8.4.0'
 
 jobs:
 # TODO: There are some failures when running the tests
@@ -45,13 +47,23 @@ jobs:
         dotnet-version: |
           5.0.x
           6.0.x
+            
+    - uses: actions/cache@v2
+      with:
+        path: ${{ github.workspace }}/.nuget/packages
+        key: ${{ runner.os }}-nuget-${{ hashFiles('**/packages.lock.json') }}
+        restore-keys: |
+          ${{ runner.os }}-nuget-
+            
+    - uses: actions/cache@v2
+      with:
+        path: ~\AppData\Local\ElasticManaged\elasticsearch-${{ env.ELASTIC_STACK_VERSION }}
+        key: ${{ runner.os }}-elastic-managed-${{ env.ELASTIC_STACK_VERSION }}
+        restore-keys: |
+          ${{ runner.os }}-elastic-managed-
         
-    - name: Run clean -c false
-      run: build.bat clean -c false
-      shell: cmd
-       
-    - name: Run release -c false
-      run: build.bat release -c false
+    - name: Run test
+      run: build.bat test
       shell: cmd
        
     - name: Store test results

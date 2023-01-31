@@ -10,7 +10,7 @@ namespace Serilog.Sinks.Elasticsearch.IntegrationTests
 		public SerilogCluster() : base(CreateConfiguration()) { }
 
 		private static XunitClusterConfiguration CreateConfiguration() =>
-			new ("8.3.1")
+			new ("8.4.0")
 			{
 				StartingPortNumber = 9205,
 			};
