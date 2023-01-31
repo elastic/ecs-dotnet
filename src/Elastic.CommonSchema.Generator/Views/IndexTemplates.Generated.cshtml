@@ -25,22 +25,34 @@ using System.Text.Json.Serialization;
 
 namespace Elastic.CommonSchema.Elasticsearch
 {
-	/// <summary>
-	/// Elastic Common Schema version @(Model.GitRef) index templates to be used with Elasticsearch.
-	/// </summary>
-	public static class IndexTemplates
-	{
+/// <summary>
+/// Elastic Common Schema version @(Model.GitRef) index templates to be used with Elasticsearch.
+/// </summary>
+public static class IndexTemplates
+{
 @foreach (var template in Model.IndexTemplates)
-{<text>		/// <summary>
-		/// Elastic Common Schema version @(Model.GitRef) @(template.Name) index template  
-		/// See the Put Index Template API documentation: https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-templates.html
-		/// </summary>
-		/// <returns>Index template string that can be used with the Put Index Template API.</returns>
-		public static string GetIndexTemplateForElasticsearch@(template.Name)(string indexPattern = "ecs-*") 
-		{ 
-			return @Raw("@")"@Raw(template.Template)";
-		}
+{<text>	/// <summary>
+	 /// Elastic Common Schema version @(Model.GitRef) @(template.Name) index template  
+	 /// See the Put Index Template API documentation: https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-templates.html
+	 /// </summary>
+	 /// <returns>Index template string that can be used with the Put Index Template API.</returns>
+	 @if (template.Name == "Composable")
+	 {
+		 <text>	public static string GetIndexTemplateForElasticsearch@(template.Name)(string indexPattern = "ecs-*", string[] additionalComponents = null)
+	{ 
+		additionalComponents ??= new string[]{};
+		var userComponents = additionalComponents.Length == 0 ? "" : $", {string.Join(", ", additionalComponents.Select(a=>$"\"{a}\""))}";
+		 </text>
+	 }
+	 else {
+		 <text>	public static string GetIndexTemplateForElasticsearch@(template.Name)(string indexPattern = "ecs-*")
+	{ 
+		 </text>
+	 }
+		 
+		return @Raw("@")"@Raw(template.Template)";
+	 }
 
-</text>}
-	}
+ </text>}
+}
 }

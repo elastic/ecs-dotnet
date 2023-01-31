@@ -14,6 +14,7 @@ using BenchmarkDotNet.Running;
 using Elastic.CommonSchema.BenchmarkDotNetExporter.Domain;
 using Elastic.Elasticsearch.Xunit;
 using Elastic.Elasticsearch.Xunit.XunitPlumbing;
+using Elastic.Ingest.Elasticsearch;
 using Elasticsearch.Net;
 using FluentAssertions;
 using Xunit;
@@ -59,7 +60,9 @@ namespace Elastic.CommonSchema.BenchmarkDotNetExporter.IntegrationTests
 			{
 				GitBranch = "externally-provided-branch",
 				GitCommitMessage = "externally provided git commit message",
-				GitRepositoryIdentifier = "repository"
+				GitRepositoryIdentifier = "repository",
+				BootstrapMethod = BootstrapMethod.Silent,
+
 			};
 			var exporter = new ElasticsearchBenchmarkExporter(options);
 			var config = CreateDefaultConfig().AddExporter(exporter);

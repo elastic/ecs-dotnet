@@ -25,12 +25,12 @@ public partial class EcsLogJsonConverter : EcsShouldSerializeJsonConverter<Log>
 		return propertyName switch
 		{
 			"file.path" => ReadPropString(ref reader, "file.path", ecsEvent, (b, v) => b.FilePath = v),
-						"level" => ReadPropString(ref reader, "level", ecsEvent, (b, v) => b.Level = v),
-						"logger" => ReadPropString(ref reader, "logger", ecsEvent, (b, v) => b.Logger = v),
-						"origin.file.line" => ReadPropLong(ref reader, "origin.file.line", ecsEvent, (b, v) => b.OriginFileLine = v),
-						"origin.file.name" => ReadPropString(ref reader, "origin.file.name", ecsEvent, (b, v) => b.OriginFileName = v),
-						"origin.function" => ReadPropString(ref reader, "origin.function", ecsEvent, (b, v) => b.OriginFunction = v),
-				"syslog" => ReadProp<LogSyslog>(ref reader, "syslog", ecsEvent, (b, v) => b.Syslog = v),
+			"level" => ReadPropString(ref reader, "level", ecsEvent, (b, v) => b.Level = v),
+			"logger" => ReadPropString(ref reader, "logger", ecsEvent, (b, v) => b.Logger = v),
+			"origin.file.line" => ReadPropLong(ref reader, "origin.file.line", ecsEvent, (b, v) => b.OriginFileLine = v),
+			"origin.file.name" => ReadPropString(ref reader, "origin.file.name", ecsEvent, (b, v) => b.OriginFileName = v),
+			"origin.function" => ReadPropString(ref reader, "origin.function", ecsEvent, (b, v) => b.OriginFunction = v),
+	"syslog" => ReadProp<LogSyslog>(ref reader, "syslog", ecsEvent, (b, v) => b.Syslog = v),
 			_ => false
 		};
 	}
@@ -64,7 +64,7 @@ public partial class EcsEcsJsonConverter : EcsShouldSerializeJsonConverter<Ecs>
 		return propertyName switch
 		{
 			"version" => ReadPropString(ref reader, "version", ecsEvent, (b, v) => b.Version = v),
-						_ => false
+			_ => false
 		};
 	}
 		

@@ -21,13 +21,13 @@ namespace Elastic.CommonSchema.Serilog.Sink
 		public EcsTextFormatterConfiguration EcsTextFormatterConfiguration { get; set; } = new ();
 		public DataStreamName DataStream { get; set; } = new("logs", "dotnet");
 		public Action<DataStreamChannelOptions<EcsDocument>>? ConfigureChannel { get; set; }
-		public bool DisableElasticsearchTemplateSetup { get; set; }
+		public BootstrapMethod BootstrapMethod { get; set; }
 
 	}
 	public class ElasticsearchSink : ILogEventSink
 	{
 		private readonly EcsTextFormatterConfiguration _formatterConfiguration;
-		private readonly CommonSchemaChannel<EcsDocument> _channel;
+		private readonly EcsDataStreamChannel<EcsDocument> _channel;
 
 		public ElasticsearchSink(ElasticsearchSchemaSinkOptions options)
 		{
@@ -46,9 +46,8 @@ namespace Elastic.CommonSchema.Serilog.Sink
 				})
 			};
 			options.ConfigureChannel?.Invoke(channelOptions);
-			_channel = new CommonSchemaChannel<EcsDocument>(channelOptions);
-			if (!options.DisableElasticsearchTemplateSetup)
-				_channel.SetupElasticsearchTemplates();
+			_channel = new EcsDataStreamChannel<EcsDocument>(channelOptions);
+			_channel.BootstrapElasticsearch(options.BootstrapMethod);
 		}
 
 

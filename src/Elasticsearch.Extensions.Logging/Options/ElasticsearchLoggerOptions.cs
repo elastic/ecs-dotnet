@@ -1,3 +1,5 @@
+using Elastic.Ingest.Elasticsearch;
+
 namespace Elasticsearch.Extensions.Logging.Options
 {
 	public class ElasticsearchLoggerOptions
@@ -28,18 +30,23 @@ namespace Elasticsearch.Extensions.Logging.Options
 		public DataStreamNameOptions? DataStream { get; set; }
 
 		/// <summary>
+		/// Indicates how to bootstrap the target <see cref="DataStream"/> or <see cref="Index"/> automatically.
+		/// The default is to do no bootstrapping, assuming the target <see cref="DataStream"/> or <see cref="Index"/> is already properly setup.
+		/// </summary>
+		public BootstrapMethod BootstrapMethod { get; set; } = BootstrapMethod.None;
+
+		/// <summary>
 		/// The index to log into, if this is not set the logger integration will assume it will write into datastreams <see cref="DataStream"/>.
 		/// <para>
 		/// If both <see cref="Index"/> and <see cref="DataStream"/> are set <see cref="DataStream"/> takes precedence.
 		/// </para>
 		/// <para>
 		/// If neither <see cref="Index"/> and <see cref="DataStream"/> are set a default for <see cref="DataStream"/> will be assumed namely
-		/// <c>logs-generic-default</c>.
+		/// <c>logs-dotnet-default</c>.
 		/// </para>
 		/// </summary>
 		public IndexNameOptions? Index { get; set; }
 
-		//TODO index patterns are more complex then this, ILM, write alias, buffer tier, datastreams
 		/// <summary>
 		/// Gets or sets flag indicating if the logger is enabled. Default is <c>true</c>.
 		/// </summary>

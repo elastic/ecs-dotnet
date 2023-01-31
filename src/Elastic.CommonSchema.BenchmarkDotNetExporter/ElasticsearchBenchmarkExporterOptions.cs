@@ -5,6 +5,7 @@
 using System;
 using System.ComponentModel.Design.Serialization;
 using System.Linq;
+using Elastic.Ingest.Elasticsearch;
 using Elastic.Transport;
 using Elastic.Transport.Products.Elasticsearch;
 
@@ -79,6 +80,12 @@ namespace Elastic.CommonSchema.BenchmarkDotNetExporter
 
 		/// <summary> The datastream namespace to write to, by default writes to benchmarks-dotnet-default</summary>
 		public string DataStreamNamespace { get; set; } = "default";
+
+		/// <summary>
+		/// Allows the target datastream to be bootstrapped. The default is no bootstrapping
+		/// since we assume the configured user might not have management privileges
+		/// </summary>
+		public BootstrapMethod BootstrapMethod { get; set; } = BootstrapMethod.None;
 
 		private static Uri[] Parse(string urls)
 		{
