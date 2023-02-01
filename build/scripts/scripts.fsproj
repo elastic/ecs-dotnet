@@ -17,18 +17,6 @@
     <Compile Include="CommandLine.fs" />
     <Compile Include="Targets.fs" />
     <Compile Include="Program.fs" />
-    <Content Include="..\..\.github\workflows\opentelemetry.yml">
-      <Link>opentelemetry.yml</Link>
-    </Content>
-    <Content Include="..\..\.github\workflows\pre-commit.yml">
-      <Link>pre-commit.yml</Link>
-    </Content>
-    <Content Include="..\..\.github\workflows\test-reporter.yml">
-      <Link>test-reporter.yml</Link>
-    </Content>
-    <Content Include="..\..\.github\workflows\test.yml">
-      <Link>test.yml</Link>
-    </Content>
   </ItemGroup>
 
 </Project>
