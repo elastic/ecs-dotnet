@@ -73,7 +73,7 @@ jobs:
             -v $(pwd):/src \
             -w /src \
             -e HOME=/tmp \
-            mcr.microsoft.com/dotnet/sdk:$DOTNET_VERSION-jammy \
+            mcr.microsoft.com/dotnet/sdk:$DOTNET_VERSION \
             ./build.sh release -c false
 
     - name: Store test results
