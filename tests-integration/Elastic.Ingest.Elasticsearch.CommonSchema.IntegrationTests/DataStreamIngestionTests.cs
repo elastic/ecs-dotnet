@@ -27,7 +27,8 @@ namespace Elastic.Ingest.Elasticsearch.CommonSchema.IntegrationTests
 			var options = new DataStreamChannelOptions<TimeSeriesDocument>(Client.Transport)
 			{
 				DataStream = targetDataStream,
-				BufferOptions = new BufferOptions { WaitHandle = slim, MaxConsumerBufferSize = 1 }
+				BufferOptions = new BufferOptions { WaitHandle = slim, MaxConsumerBufferSize = 1 },
+				ExceptionCallback = e => ObservedException ??= e
 			};
 			var channel = new EcsDataStreamChannel<TimeSeriesDocument>(options);
 
@@ -40,7 +41,7 @@ namespace Elastic.Ingest.Elasticsearch.CommonSchema.IntegrationTests
 
 			channel.TryWrite(new TimeSeriesDocument { Timestamp = DateTimeOffset.Now, Message = "hello-world" });
 			if (!slim.WaitHandle.WaitOne(TimeSpan.FromSeconds(10)))
-				throw new Exception("document was not persisted within 10 seconds");
+				throw new Exception($"No flush occurred in 10 seconds: {ObservedException?.Message}", ObservedException);
 
 			var refreshResult = await Client.Indices.RefreshAsync(targetDataStream.ToString());
 			refreshResult.IsValidResponse.Should().BeTrue("{0}", refreshResult.DebugInformation);

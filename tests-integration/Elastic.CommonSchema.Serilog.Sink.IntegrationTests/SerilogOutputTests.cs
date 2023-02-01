@@ -18,6 +18,7 @@ namespace Elastic.CommonSchema.Serilog.Sinks.IntegrationTests
 {
 	public class Serilog : SerilogTestBase
 	{
+		private Exception _observedException;
 		private readonly CountdownEvent _waitHandle;
 		private ElasticsearchSchemaSinkOptions SinkOptions { get; }
 
@@ -43,6 +44,7 @@ namespace Elastic.CommonSchema.Serilog.Sinks.IntegrationTests
 						WaitHandle = _waitHandle,
 						MaxConsumerBufferSize = logs.Count
 					};
+					c.ExceptionCallback = e => _observedException ??= e;
 				}
 			};
 
@@ -59,7 +61,7 @@ namespace Elastic.CommonSchema.Serilog.Sinks.IntegrationTests
 		[I] public async Task AssertLogs()
 		{
 			if (!_waitHandle.WaitHandle.WaitOne(TimeSpan.FromSeconds(10)))
-				throw new Exception("ecs document was not persisted within 10 seconds");
+				throw new Exception($"No flush occurred in 10 seconds: {_observedException?.Message}", _observedException);
 
 			var indexName = SinkOptions.DataStream.ToString();
 			var refreshed = await Client.Indices.RefreshAsync(new RefreshRequest(indexName));
