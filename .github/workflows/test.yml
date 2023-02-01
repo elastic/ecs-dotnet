@@ -58,6 +58,10 @@ jobs:
       run: build.bat test
       shell: cmd
        
+    - name: Run integration tests
+      run: build.bat integrate
+      shell: cmd
+      
     - name: Store test results
       if: success() || failure()
       uses: actions/upload-artifact@v3
