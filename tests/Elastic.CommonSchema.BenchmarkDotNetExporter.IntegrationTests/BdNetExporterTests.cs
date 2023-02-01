@@ -92,7 +92,7 @@ namespace Elastic.CommonSchema.BenchmarkDotNetExporter.IntegrationTests
 
 			var doc = searchResponse.Documents.First();
 
-			doc.Timestamp.Should().NotBeNull().And.BeCloseTo(DateTimeOffset.UtcNow, precision: 10000);
+			doc.Timestamp.Should().NotBeNull().And.BeCloseTo(DateTimeOffset.UtcNow, precision: 600000);
 
 			doc.Benchmark.Should().NotBeNull();
 

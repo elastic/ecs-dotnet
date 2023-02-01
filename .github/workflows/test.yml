@@ -25,39 +25,46 @@ concurrency:
 env:
   # This is the version to be used for both OS platforms (windows and linux)
   DOTNET_VERSION: '6.0.400'
+  ELASTIC_STACK_VERSION: '8.4.0'
 
 jobs:
-# TODO: There are some failures when running the tests
-#  - Failed to retrieve shard stats from node
-#  - Logs were not written to Elasticsearch within margin of 10 seconds
-# To be solved in a follow up
 
-#   test-windows:
-#     runs-on: windows-latest
+  test-windows:
+    runs-on: windows-latest
+    
+    steps:
+    - uses: actions/checkout@v3
+      with:
+        fetch-depth: 0
 
-#     steps:
-#     - uses: actions/checkout@v3
-#       with:
-#        fetch-depth: 0
-
-#     - name: Install dotnet-sdk
-#       run: choco install dotnet-sdk -m -y --no-progress -r --version $env:DOTNET_VERSION
-
-#     - name: Run clean -c false
-#       run: build.bat clean -c false
-#       shell: cmd
-
-#     - name: Run release -c false
-#       run: build.bat release -c false
-#       shell: cmd
-
-#     - name: Store test results
-#       if: success() || failure()
-#       uses: actions/upload-artifact@v3
-#       with:
-#         name: test-results
-#         path: build/output/junit-*.xml
-
+    - uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: |
+          ${{ env.DOTNET_VERSION }}
+            
+    - uses: actions/cache@v3
+      with:
+        path: ~/.nuget/packages
+        key: ${{ runner.os }}-nuget-${{ hashFiles('**/packages.lock.json') }}
+        restore-keys: |
+          ${{ runner.os }}-nuget-
+            
+    - uses: actions/cache@v3
+      with:
+        path: ~\AppData\Local\ElasticManaged\elasticsearch-${{ env.ELASTIC_STACK_VERSION }}
+        key: ${{ runner.os }}-elastic-managed-${{ env.ELASTIC_STACK_VERSION }}
+        
+    - name: Run test
+      run: build.bat test
+      shell: cmd
+       
+    - name: Store test results
+      if: success() || failure()
+      uses: actions/upload-artifact@v3
+      with:
+        name: test-results
+        path: build/output/junit-*.xml
+   
   test-linux:
     runs-on: ubuntu-latest
 
