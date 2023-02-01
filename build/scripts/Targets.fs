@@ -61,10 +61,10 @@ let private validatePackages (arguments:ParseResults<Arguments>) =
         Paths.Output.GetFiles("*.nupkg") |> Seq.sortByDescending(fun f -> f.CreationTimeUtc)
         |> Seq.map (fun p -> Paths.RootRelative p.FullName)
         
-    let jenkinsOnWindowsArgs =
-        if Fake.Core.Environment.hasEnvironVar "JENKINS_URL" && Fake.Core.Environment.isWindows then ["-r"; "true"] else []
+    let ciOnWindowsArgs =
+        if Fake.Core.Environment.hasEnvironVar "CI" && Fake.Core.Environment.isWindows then ["-r"; "true"] else []
     
-    let args = ["-v"; currentVersionInformational.Value; "-k"; Paths.SignKey; "-t"; output] @ jenkinsOnWindowsArgs
+    let args = ["-v"; currentVersionInformational.Value; "-k"; Paths.SignKey; "-t"; output] @ ciOnWindowsArgs
     nugetPackages |> Seq.iter (fun p -> exec "dotnet" (["nupkg-validator"; p] @ args) |> ignore)
     
 

@@ -3,6 +3,8 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.3.32819.101
 MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = ".github", ".github\.github.csproj", "{80D7CE12-D0C9-44E2-9BF9-5762D52ADA05}"
+EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Elastic.CommonSchema", "src\Elastic.CommonSchema\Elastic.CommonSchema.csproj", "{70072EAB-C5DF-4100-B594-B9DC3169D604}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Elastic.CommonSchema.Serilog", "src\Elastic.CommonSchema.Serilog\Elastic.CommonSchema.Serilog.csproj", "{45BC8315-6AD6-4F3C-B590-7B52D19ED401}"
@@ -35,15 +37,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{3582B07D
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "build", "build", "{441B3323-3651-4B6E-95B3-7CD43E5E223A}"
 	ProjectSection(SolutionItems) = preProject
-		.editorconfig = .editorconfig
-		.gitattributes = .gitattributes
-		.gitignore = .gitignore
 		build.bat = build.bat
 		build.sh = build.sh
 		Directory.Build.props = Directory.Build.props
 		global.json = global.json
-		license.txt = license.txt
-		README.md = README.md
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Elastic.CommonSchema.Tests", "tests\Elastic.CommonSchema.Tests\Elastic.CommonSchema.Tests.csproj", "{EE4EA2DE-411D-400C-9BF6-8F6AFC17697C}"
@@ -72,8 +69,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Elasticsearch.Extensions.Lo
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "console-with-extensions-logging", "examples\console-with-extensions-logging\console-with-extensions-logging.csproj", "{D87AE73E-8112-444C-8F2F-CFBC4F738026}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = ".ci", ".ci\.ci.csproj", "{80D7CE12-D0C9-44E2-9BF9-5762D52ADA05}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Elastic.CommonSchema.Generator", "src\Elastic.CommonSchema.Generator\Elastic.CommonSchema.Generator.csproj", "{D6F0D170-39D7-4868-86EE-990B6B05C14D}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Elastic.Ingest.Elasticsearch.CommonSchema", "src\Elastic.Ingest.Elasticsearch.CommonSchema\Elastic.Ingest.Elasticsearch.CommonSchema.csproj", "{68128AE4-350C-4FB2-A971-C9272A1F3829}"
@@ -89,6 +84,27 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Elastic.Apm.Disabled.Serilog.Tests", "tests\Elastic.Apm.Disabled.Serilog.Tests\Elastic.Apm.Disabled.Serilog.Tests.csproj", "{73829D36-DB98-4D8F-8741-F167A787BF7B}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Elastic.Ingest.Elasticsearch.CommonSchema.IntegrationTests", "tests\Elastic.Ingest.Elasticsearch.CommonSchema.IntegrationTests\Elastic.Ingest.Elasticsearch.CommonSchema.IntegrationTests.csproj", "{1AF36656-7950-42D1-996D-DF5985298926}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{BAF28E09-EAAE-400D-8E0D-6E7C3000997A}"
+	ProjectSection(SolutionItems) = preProject
+		global.json = global.json
+		.editorconfig = .editorconfig
+		ecs-dotnet.sln = ecs-dotnet.sln
+		dotnet-tools.json = dotnet-tools.json
+		ecs-dotnet.sln.DotSettings = ecs-dotnet.sln.DotSettings
+		Directory.Build.props = Directory.Build.props
+		build.sh = build.sh
+		.pre-commit-config.yaml = .pre-commit-config.yaml
+		.gitattributes = .gitattributes
+		license.txt = license.txt
+		build.bat = build.bat
+		issue_template.md = issue_template.md
+		.gitignore = .gitignore
+		README.md = README.md
+		contributing.md = contributing.md
+		nuget.config = nuget.config
+		nuget-icon.png = nuget-icon.png
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -178,8 +194,6 @@ Global
 		{D87AE73E-8112-444C-8F2F-CFBC4F738026}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D87AE73E-8112-444C-8F2F-CFBC4F738026}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D87AE73E-8112-444C-8F2F-CFBC4F738026}.Release|Any CPU.Build.0 = Release|Any CPU
-		{80D7CE12-D0C9-44E2-9BF9-5762D52ADA05}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{80D7CE12-D0C9-44E2-9BF9-5762D52ADA05}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D6F0D170-39D7-4868-86EE-990B6B05C14D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{D6F0D170-39D7-4868-86EE-990B6B05C14D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D6F0D170-39D7-4868-86EE-990B6B05C14D}.Release|Any CPU.ActiveCfg = Release|Any CPU
