@@ -1,5 +1,16 @@
 root=true
 
+[*.fs]
+max_line_length=160
+fsharp_max_if_then_else_short_width=160
+fsharp_max_infix_operator_expression=120
+fsharp_max_record_width=160
+fsharp_max_record_number_of_items=3
+fsharp_max_array_or_list_width=160
+fsharp_max_array_or_list_number_of_items=10
+fsharp_multiline_bracket_style=experimental_stroustrup
+
+
 [*.cs]
 trim_trailing_whitespace=true
 insert_final_newline=true

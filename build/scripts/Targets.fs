@@ -63,7 +63,7 @@ let private runTests (arguments: ParseResults<Arguments>) filterArg =
     let loggerPathArgs = sprintf "LogFilePath=%s" junitOutput
     let loggerArg = sprintf "--logger:\"junit;%s\"" loggerPathArgs
 
-    execWithTimeout "dotnet" ([ "test";] @ filterArg @ ["-c"; "RELEASE"; "-m:1"; loggerArg]) (TimeSpan.FromMinutes 10)
+    execWithTimeout "dotnet" ([ "test" ] @ filterArg @ [ "-c"; "RELEASE"; "-m:1"; loggerArg ]) (TimeSpan.FromMinutes 10)
     |> ignore
 
 let private test (arguments: ParseResults<Arguments>) =
@@ -86,17 +86,12 @@ let private validatePackages (arguments: ParseResults<Arguments>) =
         |> Seq.map (fun p -> Paths.RootRelative p.FullName)
 
     let ciOnWindowsArgs =
-        if Fake.Core.Environment.hasEnvironVar "CI" && Fake.Core.Environment.isWindows then
-            [ "-r"; "true" ]
-        else
-            []
+        if Fake.Core.Environment.hasEnvironVar "CI" && Fake.Core.Environment.isWindows then [ "-r"; "true" ] else []
 
     let args =
-        [ "-v"; currentVersionInformational.Value; "-k"; Paths.SignKey; "-t"; output ]
-        @ ciOnWindowsArgs
+        [ "-v"; currentVersionInformational.Value; "-k"; Paths.SignKey; "-t"; output ] @ ciOnWindowsArgs
 
-    nugetPackages
-    |> Seq.iter (fun p -> exec "dotnet" ([ "nupkg-validator"; p ] @ args) |> ignore)
+    nugetPackages |> Seq.iter (fun p -> exec "dotnet" ([ "nupkg-validator"; p ] @ args) |> ignore)
 
 
 let private generateApiChanges (arguments: ParseResults<Arguments>) =
@@ -149,8 +144,7 @@ let private generateReleaseNotes (arguments: ParseResults<Arguments>) =
     let currentVersion = currentVersion.Value
 
     let output =
-        Paths.RootRelative
-        <| Path.Combine(Paths.Output.FullName, sprintf "release-notes-%s.md" currentVersion)
+        Paths.RootRelative <| Path.Combine(Paths.Output.FullName, sprintf "release-notes-%s.md" currentVersion)
 
     let tokenArgs =
         match arguments.TryGetResult Token with
@@ -185,21 +179,16 @@ let private createReleaseOnGithub (arguments: ParseResults<Arguments>) =
         | Some token -> [ "--token"; token ]
 
     let releaseNotes =
-        Paths.RootRelative
-        <| Path.Combine(Paths.Output.FullName, sprintf "release-notes-%s.md" currentVersion)
+        Paths.RootRelative <| Path.Combine(Paths.Output.FullName, sprintf "release-notes-%s.md" currentVersion)
 
     let breakingChanges =
         let breakingChangesDocs = Paths.Output.GetFiles("breaking-changes-*.md")
 
-        breakingChangesDocs
-        |> Seq.map (fun f -> [ "--body"; Paths.RootRelative f.FullName ])
-        |> Seq.collect id
-        |> Seq.toList
+        breakingChangesDocs |> Seq.map (fun f -> [ "--body"; Paths.RootRelative f.FullName ]) |> Seq.collect id |> Seq.toList
 
     let releaseArgs =
         (Paths.Repository.Split("/") |> Seq.toList)
-        @ [ "create-release"; "--version"; currentVersion; "--body"; releaseNotes ]
-          @ breakingChanges @ tokenArgs
+        @ [ "create-release"; "--version"; currentVersion; "--body"; releaseNotes ] @ breakingChanges @ tokenArgs
 
     exec "dotnet" ([ "release-notes" ] @ releaseArgs) |> ignore
 
@@ -217,27 +206,18 @@ let private updateLoggingSpec (arguments: ParseResults<Arguments>) =
                 let url =
                     sprintf "https://raw.githubusercontent.com/elastic/ecs-logging/%s/spec/spec.json" commit
 
-                client.GetAsync(url, HttpCompletionOption.ResponseHeadersRead)
-                |> Async.AwaitTask
+                client.GetAsync(url, HttpCompletionOption.ResponseHeadersRead) |> Async.AwaitTask
 
             response.EnsureSuccessStatusCode() |> ignore
             use! stream = response.Content.ReadAsStreamAsync() |> Async.AwaitTask
 
             use fileStream =
-                new FileStream(
-                    Paths.RootRelative("tests/Elastic.CommonSchema.Tests/Specs/spec.json"),
-                    FileMode.Create,
-                    FileAccess.Write,
-                    FileShare.None
-                )
+                new FileStream(Paths.RootRelative("tests/Elastic.CommonSchema.Tests/Specs/spec.json"), FileMode.Create, FileAccess.Write, FileShare.None)
 
             do! stream.CopyToAsync(fileStream) |> Async.AwaitTask
 
             do!
-                File.WriteAllTextAsync(
-                    Paths.RootRelative("tests/Elastic.CommonSchema.Tests/Specs/spec_version.txt"),
-                    commit
-                )
+                File.WriteAllTextAsync(Paths.RootRelative("tests/Elastic.CommonSchema.Tests/Specs/spec_version.txt"), commit)
                 |> Async.AwaitTask
         with ex ->
             printfn "Could not update logging spec: %A" ex
@@ -283,16 +263,9 @@ let Setup (parsed: ParseResults<Arguments>) (subCommand: Arguments) =
     cmd
         Release.Name
         (Some [ PristineCheck.Name; Test.Name; Integrate.Name ])
-        (Some
-            [
-                GeneratePackages.Name
-                ValidatePackages.Name
-                GenerateReleaseNotes.Name
-                GenerateApiChanges.Name
-            ])
+        (Some [ GeneratePackages.Name; ValidatePackages.Name; GenerateReleaseNotes.Name; GenerateApiChanges.Name ])
     <| fun _ -> release parsed
 
     step CreateReleaseOnGithub.Name createReleaseOnGithub
 
-    cmd Publish.Name (Some [ Release.Name ]) (Some [ CreateReleaseOnGithub.Name ])
-    <| fun _ -> publish parsed
+    cmd Publish.Name (Some [ Release.Name ]) (Some [ CreateReleaseOnGithub.Name ]) <| fun _ -> publish parsed
