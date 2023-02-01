@@ -4,6 +4,7 @@
   <PropertyGroup>
     <RunSettingsFilePath>$(MSBuildThisFileDirectory)\.runsettings</RunSettingsFilePath>
     <IsTestProject>True</IsTestProject>
+    <DebugSymbols>embedded</DebugSymbols>
   </PropertyGroup> 
   <ItemGroup>
     <PackageReference Include="JunitXml.TestLogger" Version="3.0.114" PrivateAssets="All" />

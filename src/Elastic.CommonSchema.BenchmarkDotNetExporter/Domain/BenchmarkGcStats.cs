@@ -11,6 +11,7 @@ namespace Elastic.CommonSchema.BenchmarkDotNetExporter.Domain
 {
 	public class BenchmarkGcStats
 	{
+		public BenchmarkGcStats() {}
 		public BenchmarkGcStats(GcStats statistics, BenchmarkCase benchmarkCase)
 		{
 			Gen0Collections = statistics.Gen0Collections;
