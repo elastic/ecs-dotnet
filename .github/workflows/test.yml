@@ -24,7 +24,7 @@ concurrency:
 
 env:
   # This is the version to be used for both OS platforms (windows and linux)
-  DOTNET_VERSION: '6.0.400'
+  DOTNET_VERSION: '5.0.100'
 
 jobs:
 # TODO: There are some failures when running the tests
