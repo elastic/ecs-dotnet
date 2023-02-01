@@ -8,6 +8,44 @@ using BenchmarkDotNet.Mathematics;
 
 namespace Elastic.CommonSchema.BenchmarkDotNetExporter.Domain
 {
+	public class Percentiles
+	{
+		[JsonConstructor]
+		public Percentiles() {}
+
+		[JsonPropertyName("p0"), DataMember(Name = "p0"), JsonInclude]
+		public double P0 { get; internal set; }
+		[JsonPropertyName("p25"), DataMember(Name = "p25"), JsonInclude]
+		public double P25 { get; internal set; }
+		[JsonPropertyName("p50"), DataMember(Name = "p50"), JsonInclude]
+		public double P50 { get; internal set; }
+		[JsonPropertyName("p67"), DataMember(Name = "p67"), JsonInclude]
+		public double P67 { get; internal set; }
+		[JsonPropertyName("p80"), DataMember(Name = "p80"), JsonInclude]
+		public double P80 { get; internal set;  }
+		[JsonPropertyName("p85"), DataMember(Name = "p85"), JsonInclude]
+		public double P85 { get; internal set; }
+		[JsonPropertyName("p90"), DataMember(Name = "p90"), JsonInclude]
+		public double P90 { get; internal set; }
+		[JsonPropertyName("p95"), DataMember(Name = "p95"), JsonInclude]
+		public double P95 { get; internal set; }
+		[JsonPropertyName("p100"), DataMember(Name = "p100"), JsonInclude]
+		public double P100 { get; internal set; }
+
+		public Percentiles(PercentileValues values)
+		{
+			P0 = values.P0;
+			P25 = values.P25;
+			P50 = values.P50;
+			P67 = values.P67;
+			P80 = values.P80;
+			P85 = values.P85;
+			P90 = values.P90;
+			P95 = values.P95;
+			P100 = values.P100;
+		}
+	}
+
 	public class BenchmarkData
 	{
 		[JsonConstructor]
@@ -33,7 +71,7 @@ namespace Elastic.CommonSchema.BenchmarkDotNetExporter.Domain
 			Skewness = statistics.Skewness;
 			Kurtosis = statistics.Kurtosis;
 			ConfidenceInterval = new BenchmarkConfidence(statistics.ConfidenceInterval);
-			Percentiles = statistics.Percentiles;
+			Percentiles = new Percentiles(statistics.Percentiles);
 		}
 
 		[JsonPropertyName("all_outliers"), DataMember(Name = "all_outliers"), JsonInclude]
@@ -73,7 +111,7 @@ namespace Elastic.CommonSchema.BenchmarkDotNetExporter.Domain
 		public int N { get; internal set; }
 
 		[JsonPropertyName("percentiles"), DataMember(Name = "percentiles"), JsonInclude]
-		public PercentileValues Percentiles { get; internal set; }
+		public Percentiles Percentiles { get; internal set; }
 
 		[JsonPropertyName("q1"), DataMember(Name = "q1"), JsonInclude]
 		public double Q1 { get; internal set; }
