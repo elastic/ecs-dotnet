@@ -3,6 +3,7 @@ using System.Linq;
 using Elastic.Clients.Elasticsearch;
 using Elastic.Elasticsearch.Xunit;
 using Elastic.Transport;
+using Elasticsearch.IntegrationDefaults;
 using Xunit;
 using Xunit.Abstractions;
 
@@ -11,30 +12,9 @@ using Xunit.Abstractions;
 namespace Elasticsearch.Extensions.Logging.IntegrationTests
 {
 	/// <summary> Declare our cluster that we want to inject into our test classes </summary>
-	public class LoggingCluster : XunitClusterBase
+	public class LoggingCluster : TestClusterBase
 	{
-		public LoggingCluster() : base(new XunitClusterConfiguration("8.4.0")
-		{
-			StartingPortNumber = 9201
-		}) { }
+		public LoggingCluster() : base(9201) { }
 
-		public ElasticsearchClient CreateClient(ITestOutputHelper output) =>
-			this.GetOrAddClient(c =>
-			{
-				var hostName = (System.Diagnostics.Process.GetProcessesByName("mitmproxy").Any()
-					? "ipv4.fiddler"
-					: "localhost");
-				var nodes = NodesUris(hostName);
-				var connectionPool = new StaticNodePool(nodes);
-				var settings = new ElasticsearchClientSettings(connectionPool)
-					.Proxy(new Uri("http://ipv4.fiddler:8080"), (string)null, (string)null)
-					.OnRequestCompleted(d =>
-					{
-						try { output.WriteLine(d.DebugInformation);}
-						catch { }
-					})
-					.EnableDebugMode();
-				return new ElasticsearchClient(settings);
-			});
 	}
 }

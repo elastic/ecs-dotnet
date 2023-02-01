@@ -1,20 +1,13 @@
-using Elastic.Elasticsearch.Xunit;
+using Elasticsearch.IntegrationDefaults;
 using Xunit;
 
 [assembly: TestFramework("Elastic.Elasticsearch.Xunit.Sdk.ElasticTestFramework", "Elastic.Elasticsearch.Xunit")]
 
-namespace Serilog.Sinks.Elasticsearch.IntegrationTests
+namespace Elastic.CommonSchema.Serilog.Sinks.IntegrationTests
 {
-	public class SerilogCluster : XunitClusterBase
+	public class SerilogCluster : TestClusterBase
 	{
-		public SerilogCluster() : base(CreateConfiguration()) { }
+		public SerilogCluster() : base(9205) { }
 
-		private static XunitClusterConfiguration CreateConfiguration() =>
-			new ("8.4.0")
-			{
-				StartingPortNumber = 9205,
-			};
-
-		protected override void SeedCluster() { }
 	}
 }

@@ -1,23 +1,15 @@
 ﻿using Elastic.Clients.Elasticsearch;
-using Elastic.Elasticsearch.Xunit;
 using Elastic.Elasticsearch.Xunit.XunitPlumbing;
-using Elastic.Transport;
+using Xunit.Abstractions;
 
-namespace Serilog.Sinks.Elasticsearch.IntegrationTests
+namespace Elastic.CommonSchema.Serilog.Sinks.IntegrationTests
 {
 	public abstract class SerilogTestBase : IClusterFixture<SerilogCluster>
 	{
         protected ElasticsearchClient Client { get; }
 
-		protected SerilogTestBase(SerilogCluster cluster) =>
-			Client = cluster.GetOrAddClient(c =>
-			{
-				var nodes = cluster.NodesUris();
-				var connectionPool = new StaticNodePool(nodes);
-				var settings = new ElasticsearchClientSettings(connectionPool)
-					.EnableDebugMode();
-				return new ElasticsearchClient(settings);
-			});
+		protected SerilogTestBase(SerilogCluster cluster, ITestOutputHelper output) =>
+			Client = cluster.CreateClient(output);
 	}
 
 }

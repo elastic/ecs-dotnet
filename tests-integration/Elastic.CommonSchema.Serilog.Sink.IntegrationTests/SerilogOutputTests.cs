@@ -6,21 +6,22 @@ using System.Threading.Tasks;
 using Elastic.Channels;
 using Elastic.Clients.Elasticsearch;
 using Elastic.Clients.Elasticsearch.IndexManagement;
-using Elastic.CommonSchema;
 using Elastic.CommonSchema.Serilog.Sink;
 using Elastic.Elasticsearch.Xunit.XunitPlumbing;
 using FluentAssertions;
+using Serilog;
 using Serilog.Core;
+using Xunit.Abstractions;
 using DataStreamName = Elastic.Ingest.Elasticsearch.DataStreams.DataStreamName;
 
-namespace Serilog.Sinks.Elasticsearch.IntegrationTests
+namespace Elastic.CommonSchema.Serilog.Sinks.IntegrationTests
 {
-	public class Serilog : SerilogTestBase, IClusterFixture<SerilogCluster>
+	public class Serilog : SerilogTestBase
 	{
 		private readonly CountdownEvent _waitHandle;
 		private ElasticsearchSchemaSinkOptions SinkOptions { get; }
 
-		public Serilog(SerilogCluster cluster) : base(cluster)
+		public Serilog(SerilogCluster cluster, ITestOutputHelper output) : base(cluster, output)
 		{
 			var logs = new List<Action<Logger>>
 			{
