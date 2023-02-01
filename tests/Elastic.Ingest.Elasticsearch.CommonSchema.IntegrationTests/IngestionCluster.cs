@@ -15,7 +15,7 @@ namespace Elastic.Ingest.Elasticsearch.CommonSchema.IntegrationTests
 	/// <summary> Declare our cluster that we want to inject into our test classes </summary>
 	public class IngestionCluster : XunitClusterBase
 	{
-		public IngestionCluster() : base(new XunitClusterConfiguration("8.3.1") { StartingPortNumber = 9202 }) { }
+		public IngestionCluster() : base(new XunitClusterConfiguration("8.4.0") { StartingPortNumber = 9202 }) { }
 
 		public ElasticsearchClient CreateClient(ITestOutputHelper output) =>
 			this.GetOrAddClient(_ =>
