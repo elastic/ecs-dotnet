@@ -87,7 +87,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Elastic.Apm.Disabled.Serilo
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Elastic.Ingest.Elasticsearch.CommonSchema.IntegrationTests", "tests-integration\Elastic.Ingest.Elasticsearch.CommonSchema.IntegrationTests\Elastic.Ingest.Elasticsearch.CommonSchema.IntegrationTests.csproj", "{1AF36656-7950-42D1-996D-DF5985298926}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{BAF28E09-EAAE-400D-8E0D-6E7C3000997A}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_solution", "_solution", "{BAF28E09-EAAE-400D-8E0D-6E7C3000997A}"
 	ProjectSection(SolutionItems) = preProject
 		global.json = global.json
 		.editorconfig = .editorconfig
