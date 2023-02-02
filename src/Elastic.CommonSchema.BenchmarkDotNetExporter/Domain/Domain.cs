@@ -34,6 +34,7 @@ namespace Elastic.CommonSchema.BenchmarkDotNetExporter.Domain
 
 		public Percentiles(PercentileValues values)
 		{
+			if (values == null) return;
 			P0 = values.P0;
 			P25 = values.P25;
 			P50 = values.P50;
