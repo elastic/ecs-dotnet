@@ -15,13 +15,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Specification", "src\Specif
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Elastic.Apm.SerilogEnricher", "src\Elastic.Apm.SerilogEnricher\Elastic.Apm.SerilogEnricher.csproj", "{240A3E16-78BF-4430-A3ED-C7479F12A6DE}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Elastic.Apm.SerilogEnricher.Test", "tests\Elastic.Apm.SerilogEnricher.Test\Elastic.Apm.SerilogEnricher.Test.csproj", "{D8117E06-8856-4D61-A02E-570E9B6C3646}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Elastic.Apm.SerilogEnricher.Tests", "tests\Elastic.Apm.SerilogEnricher.Tests\Elastic.Apm.SerilogEnricher.Tests.csproj", "{D8117E06-8856-4D61-A02E-570E9B6C3646}"
 EndProject
 Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "scripts", "build\scripts\scripts.fsproj", "{4779DD6F-AE49-4A80-9F67-D9F2DB05E557}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Elastic.Apm.NLog", "src\Elastic.Apm.NLog\Elastic.Apm.NLog.csproj", "{A1DEDE4E-0876-41E8-8DF0-8F85EAF3FAFA}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Elastic.Apm.NLog.Test", "tests\Elastic.Apm.NLog.Test\Elastic.Apm.NLog.Test.csproj", "{4755093F-5A27-4EF4-BC7F-DB8676E9B81A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Elastic.Apm.NLog.Tests", "tests\Elastic.Apm.NLog.Tests\Elastic.Apm.NLog.Tests.csproj", "{4755093F-5A27-4EF4-BC7F-DB8676E9B81A}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Elastic.Apm.Test.Common", "tests\Elastic.Apm.Test.Common\Elastic.Apm.Test.Common.csproj", "{4E0D951B-FEC5-4043-913A-BED795892405}"
 EndProject
