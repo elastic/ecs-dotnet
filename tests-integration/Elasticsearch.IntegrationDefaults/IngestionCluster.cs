@@ -1,5 +1,7 @@
-using System;
-using System.Linq;
+// Licensed to Elasticsearch B.V under one or more agreements.
+// Elasticsearch B.V licenses this file to you under the Apache 2.0 License.
+// See the LICENSE file in the project root for more information
+
 using Elastic.Clients.Elasticsearch;
 using Elastic.Elasticsearch.Xunit;
 using Elastic.Transport;
@@ -8,18 +10,18 @@ using Xunit.Abstractions;
 
 [assembly: TestFramework("Elastic.Elasticsearch.Xunit.Sdk.ElasticTestFramework", "Elastic.Elasticsearch.Xunit")]
 
-namespace Elasticsearch.Extensions.Logging.IntegrationTests
+namespace Elasticsearch.IntegrationDefaults
 {
 	/// <summary> Declare our cluster that we want to inject into our test classes </summary>
-	public class LoggingCluster : XunitClusterBase
+	public abstract class TestClusterBase : XunitClusterBase
 	{
-		public LoggingCluster() : base(new XunitClusterConfiguration("8.4.0")
+		protected TestClusterBase(int port = 9200) : base(new XunitClusterConfiguration("8.4.0")
 		{
-			StartingPortNumber = 9201
+			StartingPortNumber = port
 		}) { }
 
 		public ElasticsearchClient CreateClient(ITestOutputHelper output) =>
-			this.GetOrAddClient(c =>
+			this.GetOrAddClient(_ =>
 			{
 				var hostName = (System.Diagnostics.Process.GetProcessesByName("mitmproxy").Any()
 					? "ipv4.fiddler"
@@ -27,11 +29,14 @@ namespace Elasticsearch.Extensions.Logging.IntegrationTests
 				var nodes = NodesUris(hostName);
 				var connectionPool = new StaticNodePool(nodes);
 				var settings = new ElasticsearchClientSettings(connectionPool)
-					.Proxy(new Uri("http://ipv4.fiddler:8080"), (string)null, (string)null)
+					.Proxy(new Uri("http://ipv4.fiddler:8080"), null!, null!)
 					.OnRequestCompleted(d =>
 					{
 						try { output.WriteLine(d.DebugInformation);}
-						catch { }
+						catch
+						{
+							// ignored
+						}
 					})
 					.EnableDebugMode();
 				return new ElasticsearchClient(settings);

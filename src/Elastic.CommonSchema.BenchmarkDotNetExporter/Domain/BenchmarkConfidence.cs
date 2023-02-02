@@ -11,6 +11,7 @@ namespace Elastic.CommonSchema.BenchmarkDotNetExporter.Domain
 {
 	public class BenchmarkConfidence
 	{
+		public BenchmarkConfidence() {}
 		public BenchmarkConfidence(ConfidenceInterval interval)
 		{
 			Level = interval.Level;

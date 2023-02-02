@@ -32,7 +32,8 @@ namespace Elastic.Ingest.Elasticsearch.CommonSchema.IntegrationTests
 				BufferOptions = new BufferOptions
 				{
 					WaitHandle = slim, MaxConsumerBufferSize = 1,
-				}
+				},
+				ExceptionCallback = e => ObservedException ??= e
 			};
 			var channel = new EcsIndexChannel<CatalogDocument>(options);
 			var bootstrapped = await channel.BootstrapElasticsearchAsync(BootstrapMethod.Failure, "7-days-default");
@@ -46,7 +47,7 @@ namespace Elastic.Ingest.Elasticsearch.CommonSchema.IntegrationTests
 
 			channel.TryWrite(new CatalogDocument { Created = date, Title = "Hello World!", Id = "hello-world" });
 			if (!slim.WaitHandle.WaitOne(TimeSpan.FromSeconds(10)))
-				throw new Exception("ecs document was not persisted within 10 seconds");
+				throw new Exception($"No flush occurred in 10 seconds: {ObservedException?.Message}", ObservedException);
 
 			var refreshResult = await Client.Indices.RefreshAsync(indexName);
 			refreshResult.IsValidResponse.Should().BeTrue("{0}", refreshResult.DebugInformation);

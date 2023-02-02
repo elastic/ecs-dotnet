@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$([MSBuild]::GetPathOfFileAbove('Directory.Build.props', '$(MSBuildThisFileDirectory)../'))"/>
+  <PropertyGroup Condition="$([System.Text.RegularExpressions.Regex]::IsMatch($(ProjectName), '^(.*)Tests$'))">
+    <RunSettingsFilePath>$(MSBuildThisFileDirectory)\.runsettings</RunSettingsFilePath>
+    <IsTestProject>True</IsTestProject>
+    <DebugSymbols>embedded</DebugSymbols>
+  </PropertyGroup> 
+  <ItemGroup Condition="$([System.Text.RegularExpressions.Regex]::IsMatch($(ProjectName), '^(.*)Tests$'))">
+
+    <PackageReference Include="JunitXml.TestLogger" Version="3.0.114" PrivateAssets="All" />
+    <PackageReference Include="Nullean.VsTest.Pretty.TestLogger" Version="0.3.0" PrivateAssets="All" />
+
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.8.0" />
+    <PackageReference Include="FluentAssertions" Version="5.9.0" />
+    <PackageReference Include="xunit" Version="2.4.1" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.4.3">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+</Project>

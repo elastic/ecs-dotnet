@@ -23,6 +23,7 @@ namespace Elasticsearch.Extensions.Logging.IntegrationTests
 			Client = cluster.CreateClient(output);
 
 		private ElasticsearchClient Client { get; }
+		private Exception ObservedException { get; set; }
 
 		[Fact]
 		public async Task LogsEndUpInCluster()
@@ -33,7 +34,7 @@ namespace Elasticsearch.Extensions.Logging.IntegrationTests
 			logger.LogError("an error occurred");
 
 			if (!waitHandle.WaitOne(TimeSpan.FromSeconds(10)))
-				throw new Exception("Logs were not written to Elasticsearch within margin of 10 seconds");
+				throw new Exception($"No flush occurred in 10 seconds: {ObservedException?.Message}", ObservedException);
 
 			provider.LastSeenException.Should().BeNull();
 
@@ -101,6 +102,7 @@ namespace Elasticsearch.Extensions.Logging.IntegrationTests
 				c.BufferOptions.MaxConsumerBufferSize = 1;
 				c.BufferOptions.WaitHandle = slim;
 				c.BufferOptions.ConcurrentConsumers = 1;
+				c.ExceptionCallback = e => ObservedException ??= e;
 			}) };
 
 			var optionsFactory = new OptionsFactory<ElasticsearchLoggerOptions>(

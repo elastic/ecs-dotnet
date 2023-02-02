@@ -6,21 +6,23 @@ using System.Threading.Tasks;
 using Elastic.Channels;
 using Elastic.Clients.Elasticsearch;
 using Elastic.Clients.Elasticsearch.IndexManagement;
-using Elastic.CommonSchema;
 using Elastic.CommonSchema.Serilog.Sink;
 using Elastic.Elasticsearch.Xunit.XunitPlumbing;
 using FluentAssertions;
+using Serilog;
 using Serilog.Core;
+using Xunit.Abstractions;
 using DataStreamName = Elastic.Ingest.Elasticsearch.DataStreams.DataStreamName;
 
-namespace Serilog.Sinks.Elasticsearch.IntegrationTests
+namespace Elastic.CommonSchema.Serilog.Sinks.IntegrationTests
 {
-	public class Serilog : SerilogTestBase, IClusterFixture<SerilogCluster>
+	public class Serilog : SerilogTestBase
 	{
+		private Exception _observedException;
 		private readonly CountdownEvent _waitHandle;
 		private ElasticsearchSchemaSinkOptions SinkOptions { get; }
 
-		public Serilog(SerilogCluster cluster) : base(cluster)
+		public Serilog(SerilogCluster cluster, ITestOutputHelper output) : base(cluster, output)
 		{
 			var logs = new List<Action<Logger>>
 			{
@@ -42,6 +44,7 @@ namespace Serilog.Sinks.Elasticsearch.IntegrationTests
 						WaitHandle = _waitHandle,
 						MaxConsumerBufferSize = logs.Count
 					};
+					c.ExceptionCallback = e => _observedException ??= e;
 				}
 			};
 
@@ -58,7 +61,7 @@ namespace Serilog.Sinks.Elasticsearch.IntegrationTests
 		[I] public async Task AssertLogs()
 		{
 			if (!_waitHandle.WaitHandle.WaitOne(TimeSpan.FromSeconds(10)))
-				throw new Exception("ecs document was not persisted within 10 seconds");
+				throw new Exception($"No flush occurred in 10 seconds: {_observedException?.Message}", _observedException);
 
 			var indexName = SinkOptions.DataStream.ToString();
 			var refreshed = await Client.Indices.RefreshAsync(new RefreshRequest(indexName));

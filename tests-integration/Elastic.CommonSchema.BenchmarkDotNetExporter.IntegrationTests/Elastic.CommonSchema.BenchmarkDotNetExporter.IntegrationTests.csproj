@@ -1,0 +1,22 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+
+    <IsPackable>false</IsPackable>
+
+    <!-- BUG: workaround for https://github.com/dotnet/BenchmarkDotNet/issues/1452 -->
+    <LangVersion>9.0</LangVersion>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="BenchmarkDotNet" Version="0.13.1"/>
+    <PackageReference Include="BenchmarkDotNet.Annotations" Version="0.13.1"/>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\Elastic.CommonSchema.BenchmarkDotNetExporter\Elastic.CommonSchema.BenchmarkDotNetExporter.csproj"/>
+    <ProjectReference Include="..\Elasticsearch.IntegrationDefaults\Elasticsearch.IntegrationDefaults.csproj"/>
+  </ItemGroup>
+
+</Project>

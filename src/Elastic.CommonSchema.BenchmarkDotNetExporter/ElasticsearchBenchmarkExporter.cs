@@ -52,6 +52,7 @@ namespace Elastic.CommonSchema.BenchmarkDotNetExporter
 			var waitHandle = new CountdownEvent(1);
 
 			var benchmarksCount = summary.Reports.Length;
+			Exception observedException = null;
 			var options = new DataStreamChannelOptions<BenchmarkDocument>(Transport)
 			{
 				DataStream = new DataStreamName("benchmarks", "dotnet", Options.DataStreamNamespace),
@@ -60,6 +61,7 @@ namespace Elastic.CommonSchema.BenchmarkDotNetExporter
 					WaitHandle = waitHandle,
 					MaxConsumerBufferSize = benchmarksCount
 				},
+				ExceptionCallback = e => observedException ??= e,
 				ResponseCallback = ((response, statistics) =>
 				{
 					var errorItems = response.Items.Where(i => i.Status >= 300).ToList();
@@ -76,11 +78,15 @@ namespace Elastic.CommonSchema.BenchmarkDotNetExporter
 			if (!channel.BootstrapElasticsearch(Options.BootstrapMethod)) return;
 
 			var benchmarks = CreateBenchmarkDocuments(summary);
-			channel.TryWriteMany(benchmarks);
+			var writeResult = channel.TryWriteMany(benchmarks);
 
-			var waited = waitHandle.Wait(TimeSpan.FromSeconds(10));
-			if (!waited)
-				logger.WriteError($"failed to flush benchmarks within 10second timeout");
+			var completedOnTime = waitHandle.Wait(TimeSpan.FromSeconds(20));
+			if (!completedOnTime)
+			{
+				logger.WriteError($"No flush in 20 seconds, published: {writeResult}, possible error: {observedException?.Message}");
+				if (observedException != null)
+					logger.WriteError(observedException.ToString());
+			}
 		}
 
 		private List<BenchmarkDocument> CreateBenchmarkDocuments(Summary summary)
@@ -156,14 +162,13 @@ namespace Elastic.CommonSchema.BenchmarkDotNetExporter
 						Method = FullNameProvider.GetBenchmarkName(r.BenchmarkCase),
 						Parameters = r.BenchmarkCase.Parameters.PrintInfo,
 					};
-
 					var data = new BenchmarkDocument
 					{
 						Timestamp = DateTime.UtcNow,
 						Host = host,
 						Agent = agent,
 						Event = @event,
-						Benchmark = new BenchmarkData(r.ResultStatistics),
+						Benchmark = new BenchmarkData(r.ResultStatistics, r.Success),
 					};
 
 					if (summary.BenchmarksCases.Any(c => c.Config.HasMemoryDiagnoser()))

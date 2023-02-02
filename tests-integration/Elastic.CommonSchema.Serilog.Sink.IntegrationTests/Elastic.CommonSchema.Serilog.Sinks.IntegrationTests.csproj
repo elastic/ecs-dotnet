@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <LangVersion>latest</LangVersion>
+    <IsTestProject>False</IsTestProject>
+  </PropertyGroup>
+  
+  <ItemGroup>
+    <PackageReference Include="Serilog.Sinks.ColoredConsole" Version="3.0.1" />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\Elastic.CommonSchema.Serilog.Sink\Elastic.CommonSchema.Serilog.Sink.csproj" />
+    <ProjectReference Include="..\Elasticsearch.IntegrationDefaults\Elasticsearch.IntegrationDefaults.csproj" />
+  </ItemGroup>
+
+</Project>
