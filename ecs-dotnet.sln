@@ -42,6 +42,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "build", "build", "{441B3323
 		build.sh = build.sh
 		Directory.Build.props = Directory.Build.props
 		global.json = global.json
+		.ci.runsettings = .ci.runsettings
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Elastic.CommonSchema.Tests", "tests\Elastic.CommonSchema.Tests\Elastic.CommonSchema.Tests.csproj", "{EE4EA2DE-411D-400C-9BF6-8F6AFC17697C}"

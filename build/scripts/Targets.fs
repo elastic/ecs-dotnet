@@ -62,8 +62,9 @@ let private runTests (arguments: ParseResults<Arguments>) filterArg =
 
     let loggerPathArgs = sprintf "LogFilePath=%s" junitOutput
     let loggerArg = sprintf "--logger:\"junit;%s\"" loggerPathArgs
+    let settingsArg = if Fake.Core.Environment.hasEnvironVar "CI" then (["-s"; ".ci.runsettings"]) else [];
 
-    execWithTimeout "dotnet" ([ "test" ] @ filterArg @ [ "-c"; "RELEASE"; "-m:1"; loggerArg ]) (TimeSpan.FromMinutes 10)
+    execWithTimeout "dotnet" ([ "test" ] @ filterArg @ settingsArg @ [ "-c"; "RELEASE"; "-m:1"; loggerArg ]) (TimeSpan.FromMinutes 15)
     |> ignore
 
 let private test (arguments: ParseResults<Arguments>) =
