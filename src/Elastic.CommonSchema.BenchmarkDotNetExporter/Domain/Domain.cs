@@ -51,8 +51,12 @@ namespace Elastic.CommonSchema.BenchmarkDotNetExporter.Domain
 	{
 		[JsonConstructor]
 		public BenchmarkData() {}
-		public BenchmarkData(Statistics statistics)
+
+		public BenchmarkData(Statistics statistics, bool success)
 		{
+			Success = success;
+			if (statistics == null) return;
+
 			N = statistics.N;
 			Min = statistics.Min;
 			LowerFence = statistics.LowerFence;
@@ -74,6 +78,9 @@ namespace Elastic.CommonSchema.BenchmarkDotNetExporter.Domain
 			ConfidenceInterval = new BenchmarkConfidence(statistics.ConfidenceInterval);
 			Percentiles = new Percentiles(statistics.Percentiles);
 		}
+
+		[JsonPropertyName("success"), DataMember(Name = "success"), JsonInclude]
+		public bool Success { get; internal set; }
 
 		[JsonPropertyName("all_outliers"), DataMember(Name = "all_outliers"), JsonInclude]
 		public double[] AllOutliers { get; internal set; }

@@ -15,7 +15,7 @@ let runningOnWindows = Fake.Core.Environment.isWindows
 let execWithTimeout binary args timeout =
     let opts =
         ExecArguments(binary, args |> List.map (sprintf "\"%s\"") |> List.toArray)
-
+        
     let r = Proc.Exec(opts, timeout)
 
     match r.HasValue with

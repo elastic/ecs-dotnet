@@ -169,7 +169,7 @@ namespace Elastic.CommonSchema.BenchmarkDotNetExporter
 						Host = host,
 						Agent = agent,
 						Event = @event,
-						Benchmark = new BenchmarkData(r.ResultStatistics),
+						Benchmark = new BenchmarkData(r.ResultStatistics, r.Success),
 					};
 
 					if (summary.BenchmarksCases.Any(c => c.Config.HasMemoryDiagnoser()))
