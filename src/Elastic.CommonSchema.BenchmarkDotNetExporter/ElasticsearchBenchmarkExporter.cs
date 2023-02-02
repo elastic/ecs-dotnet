@@ -162,7 +162,6 @@ namespace Elastic.CommonSchema.BenchmarkDotNetExporter
 						Method = FullNameProvider.GetBenchmarkName(r.BenchmarkCase),
 						Parameters = r.BenchmarkCase.Parameters.PrintInfo,
 					};
-
 					var data = new BenchmarkDocument
 					{
 						Timestamp = DateTime.UtcNow,
