@@ -1,14 +1,16 @@
 module Targets
 
 open System.Net.Http
+open Fake.Tools.Git
 open Argu
 open System
 open System.IO
 open Bullseye
 open CommandLine
-open Fake.Tools.Git
 open ProcNet
 
+let runningOnCI = Fake.Core.Environment.hasEnvironVar "CI"
+let runningOnWindows = Fake.Core.Environment.isWindows
 
 let execWithTimeout binary args timeout =
     let opts =
@@ -57,19 +59,19 @@ let private pristineCheck (arguments: ParseResults<Arguments>) =
 
 let private runTests (arguments: ParseResults<Arguments>) filterArg =
 
+    let os = if runningOnWindows then "win" else "linux"
     let junitOutput =
-        Path.Combine(Paths.Output.FullName, "junit-{assembly}-{framework}-test-results.xml")
+        Path.Combine(Paths.Output.FullName, $"junit-%s{os}-{{assembly}}-{{framework}}-test-results.xml")
 
     let loggerPathArgs = sprintf "LogFilePath=%s" junitOutput
-    let loggerArg = sprintf "--logger:\"junit;%s\"" loggerPathArgs
-    let settingsArg = if Fake.Core.Environment.hasEnvironVar "CI" then (["-s"; ".ci.runsettings"]) else [];
+    let loggerArg = $"--logger:\"junit;%s{loggerPathArgs};MethodFormat=Class;FailureBodyFormat=Verbose\""
+    let settingsArg = if runningOnCI then (["-s"; ".ci.runsettings"]) else [];
 
     execWithTimeout "dotnet" ([ "test" ] @ filterArg @ settingsArg @ [ "-c"; "RELEASE"; "-m:1"; loggerArg ]) (TimeSpan.FromMinutes 15)
     |> ignore
 
 let private test (arguments: ParseResults<Arguments>) =
     runTests arguments [ "--filter"; "FullyQualifiedName!~IntegrationTests" ]
-
 
 let private integrate (arguments: ParseResults<Arguments>) =
     runTests arguments [ "--filter"; "FullyQualifiedName~IntegrationTests" ]
@@ -86,14 +88,12 @@ let private validatePackages (arguments: ParseResults<Arguments>) =
         |> Seq.sortByDescending (fun f -> f.CreationTimeUtc)
         |> Seq.map (fun p -> Paths.RootRelative p.FullName)
 
-    let ciOnWindowsArgs =
-        if Fake.Core.Environment.hasEnvironVar "CI" && Fake.Core.Environment.isWindows then [ "-r"; "true" ] else []
+    let ciOnWindowsArgs = if runningOnCI && runningOnWindows then [ "-r"; "true" ] else []
 
     let args =
         [ "-v"; currentVersionInformational.Value; "-k"; Paths.SignKey; "-t"; output ] @ ciOnWindowsArgs
 
     nugetPackages |> Seq.iter (fun p -> exec "dotnet" ([ "nupkg-validator"; p ] @ args) |> ignore)
-
 
 let private generateApiChanges (arguments: ParseResults<Arguments>) =
     let output = Paths.RootRelative <| Paths.Output.FullName

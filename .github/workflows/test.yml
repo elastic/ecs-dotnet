@@ -83,6 +83,7 @@ jobs:
             -u "$(id -u):$(id -g)" \
             -v $(pwd):/src \
             -w /src \
+            -e CI=true \
             -e HOME=/tmp \
             mcr.microsoft.com/dotnet/sdk:$DOTNET_VERSION-jammy \
             ./build.sh release -c false
