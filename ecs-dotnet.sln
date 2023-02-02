@@ -61,7 +61,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AspnetCoreExample", "exampl
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "aspnetcore-with-serilog", "aspnetcore-with-serilog", "{9F103D76-F7FA-4D10-8214-6E79C28D5AEC}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Elastic.CommonSchema.Benchmarks", "tests\Elastic.CommonSchema.Benchmarks\Elastic.CommonSchema.Benchmarks.csproj", "{EC19A9E1-79CC-46A8-94D7-EE66ED22D3BD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Elastic.CommonSchema.Benchmarks", "tools\Elastic.CommonSchema.Benchmarks\Elastic.CommonSchema.Benchmarks.csproj", "{EC19A9E1-79CC-46A8-94D7-EE66ED22D3BD}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Elasticsearch.Extensions.Logging", "src\Elasticsearch.Extensions.Logging\Elasticsearch.Extensions.Logging.csproj", "{D88AAA7D-1AEE-4B4C-BE37-69BA85DA07DA}"
 EndProject
@@ -71,7 +71,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Elasticsearch.Extensions.Lo
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "console-with-extensions-logging", "examples\console-with-extensions-logging\console-with-extensions-logging.csproj", "{D87AE73E-8112-444C-8F2F-CFBC4F738026}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Elastic.CommonSchema.Generator", "src\Elastic.CommonSchema.Generator\Elastic.CommonSchema.Generator.csproj", "{D6F0D170-39D7-4868-86EE-990B6B05C14D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Elastic.CommonSchema.Generator", "tools\Elastic.CommonSchema.Generator\Elastic.CommonSchema.Generator.csproj", "{D6F0D170-39D7-4868-86EE-990B6B05C14D}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Elastic.Ingest.Elasticsearch.CommonSchema", "src\Elastic.Ingest.Elasticsearch.CommonSchema\Elastic.Ingest.Elasticsearch.CommonSchema.csproj", "{68128AE4-350C-4FB2-A971-C9272A1F3829}"
 EndProject
@@ -115,6 +115,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests-integration", "tests-
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Elasticsearch.IntegrationDefaults", "tests-integration\Elasticsearch.IntegrationDefaults\Elasticsearch.IntegrationDefaults.csproj", "{AB197BBD-D90D-4ACB-AD09-C59913FA109F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tools", "tools", "{B268060B-83ED-4944-B135-C362DFCBFC0C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -261,12 +263,10 @@ Global
 		{89ADA999-1A1D-4B51-8CEE-39A553F669D1} = {3582B07D-C2B0-49CC-B676-EAF806EB010E}
 		{03FD4BFA-F9A5-4C16-ACA1-30FD060DFAEA} = {9F103D76-F7FA-4D10-8214-6E79C28D5AEC}
 		{9F103D76-F7FA-4D10-8214-6E79C28D5AEC} = {05075402-8669-45BD-913A-BD40A29BBEAB}
-		{EC19A9E1-79CC-46A8-94D7-EE66ED22D3BD} = {3582B07D-C2B0-49CC-B676-EAF806EB010E}
 		{D88AAA7D-1AEE-4B4C-BE37-69BA85DA07DA} = {7610B796-BB3E-4CB2-8296-79BBFF6D23FC}
 		{F319AD28-A0A4-4012-8480-E2A4CFA755C2} = {05075402-8669-45BD-913A-BD40A29BBEAB}
 		{D87AE73E-8112-444C-8F2F-CFBC4F738026} = {05075402-8669-45BD-913A-BD40A29BBEAB}
 		{80D7CE12-D0C9-44E2-9BF9-5762D52ADA05} = {441B3323-3651-4B6E-95B3-7CD43E5E223A}
-		{D6F0D170-39D7-4868-86EE-990B6B05C14D} = {7610B796-BB3E-4CB2-8296-79BBFF6D23FC}
 		{68128AE4-350C-4FB2-A971-C9272A1F3829} = {7610B796-BB3E-4CB2-8296-79BBFF6D23FC}
 		{30080079-D3EE-4BDC-9BE9-9D1B3B2BEF8D} = {7610B796-BB3E-4CB2-8296-79BBFF6D23FC}
 		{DD7D6E56-58DB-4E13-9DFC-AE031F1C31B3} = {7610B796-BB3E-4CB2-8296-79BBFF6D23FC}
@@ -277,6 +277,8 @@ Global
 		{622CC10E-B475-4649-8411-CABC31E7C252} = {947B298F-9139-4868-B337-729541932E4D}
 		{4138E98A-4714-4139-BD89-D9FF4F2A3A73} = {947B298F-9139-4868-B337-729541932E4D}
 		{AB197BBD-D90D-4ACB-AD09-C59913FA109F} = {947B298F-9139-4868-B337-729541932E4D}
+		{D6F0D170-39D7-4868-86EE-990B6B05C14D} = {B268060B-83ED-4944-B135-C362DFCBFC0C}
+		{EC19A9E1-79CC-46A8-94D7-EE66ED22D3BD} = {B268060B-83ED-4944-B135-C362DFCBFC0C}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {7F60C4BB-6216-4E50-B1E4-9C38EB484843}
