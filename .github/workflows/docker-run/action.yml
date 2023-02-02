@@ -17,6 +17,7 @@ runs:
             -v $(pwd):/src \
             -w /src \
             -e HOME=/tmp \
+            --env-file <(env | grep -E "^(GITHUB_|CI)") \
             mcr.microsoft.com/dotnet/sdk:${{ inputs.dotnet-sdk-version }}-jammy \
             ${{ inputs.command }}
       shell: bash
