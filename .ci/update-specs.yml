@@ -1,0 +1,48 @@
+---
+name: update specs
+
+scms:
+  githubConfig:
+    kind: github
+    spec:
+      user: '{{ requiredEnv "GIT_USER" }}'
+      email: '{{ requiredEnv "GIT_EMAIL" }}'
+      owner: elastic
+      repository: ecs-dotnet
+      token: '{{ requiredEnv "GITHUB_TOKEN" }}'
+      username: '{{ requiredEnv "GIT_USER" }}'
+      branch: main
+
+actions:
+  ecs-dotnet:
+    kind: github/pullrequest
+    scmid: githubConfig
+    spec:
+      automerge: false
+      labels:
+        - dependencies
+      title: 'synchronize ecs-logging spec'
+
+sources:
+  spec.json:
+    name: Get specs from json
+    kind: file
+    spec:
+      file: https://raw.githubusercontent.com/elastic/ecs-logging/main/spec/spec.json
+
+conditions:
+  spec.json-HasSameContentAsSource:
+    name: has specs same content?
+    kind: file
+    sourceid: spec.json
+    spec:
+      file: tests/Elastic.CommonSchema.Tests/Specs/spec.json
+
+targets:
+  spec.json-update:
+    name: Update spec.json
+    kind: file
+    sourceid: spec.json
+    scmid: githubConfig
+    spec:
+      file: tests/Elastic.CommonSchema.Tests/Specs/spec.json
