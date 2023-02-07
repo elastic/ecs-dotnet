@@ -49,7 +49,7 @@ sources:
 
 targets:
   spec.json-update:
-    name: Update spec.json
+    name: 'synchronize ecs-logging spec'
     kind: file
     sourceid: spec.json
     scmid: githubConfig
