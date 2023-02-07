@@ -2,6 +2,7 @@
 
 using Elastic.Channels;
 using Elastic.Clients.Elasticsearch;
+using Elastic.CommonSchema;
 using Elastic.CommonSchema.Serilog;
 using Elastic.CommonSchema.Serilog.Sink;
 using Elastic.CommonSchema.Serilog.Sink.Example;

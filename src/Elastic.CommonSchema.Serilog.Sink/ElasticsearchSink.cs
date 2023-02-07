@@ -12,29 +12,41 @@ using Serilog.Events;
 
 namespace Elastic.CommonSchema.Serilog.Sink
 {
-	public class ElasticsearchSchemaSinkOptions
+	public class ElasticsearchSchemaSinkOptions : ElasticsearchSchemaSinkOptions<EcsDocument>
+	{
+		public ElasticsearchSchemaSinkOptions() : base() { }
+
+		public ElasticsearchSchemaSinkOptions(HttpTransport transport) : base(transport) { }
+	}
+	public class ElasticsearchSchemaSinkOptions<TEcsDocument> where TEcsDocument : EcsDocument, new()
 	{
 		public ElasticsearchSchemaSinkOptions() : this(TransportHelper.Default()) { }
 
 		public ElasticsearchSchemaSinkOptions(HttpTransport transport) => Transport = transport;
 
 		public HttpTransport Transport { get; }
-		public EcsTextFormatterConfiguration TextFormatting { get; set; } = new();
+		public EcsTextFormatterConfiguration<TEcsDocument> TextFormatting { get; set; } = new();
 		public DataStreamName DataStream { get; set; } = new("logs", "dotnet");
-		public Action<DataStreamChannelOptions<EcsDocument>>? ConfigureChannel { get; set; }
+		public Action<DataStreamChannelOptions<TEcsDocument>>? ConfigureChannel { get; set; }
 		public BootstrapMethod BootstrapMethod { get; set; }
 
 	}
 
-	public class ElasticsearchSink : ILogEventSink
+	public class ElasticsearchSink : ElasticsearchSink<EcsDocument>
 	{
-		private readonly EcsTextFormatterConfiguration _formatterConfiguration;
-		private readonly EcsDataStreamChannel<EcsDocument> _channel;
+		public ElasticsearchSink(ElasticsearchSchemaSinkOptions options) : base(options) {}
+	}
 
-		public ElasticsearchSink(ElasticsearchSchemaSinkOptions options)
+	public class ElasticsearchSink<TEcsDocument> : ILogEventSink
+		where TEcsDocument : EcsDocument, new()
+	{
+		private readonly EcsTextFormatterConfiguration<TEcsDocument> _formatterConfiguration;
+		private readonly EcsDataStreamChannel<TEcsDocument> _channel;
+
+		public ElasticsearchSink(ElasticsearchSchemaSinkOptions<TEcsDocument> options)
 		{
 			_formatterConfiguration = options.TextFormatting;
-			var channelOptions = new DataStreamChannelOptions<EcsDocument>(options.Transport)
+			var channelOptions = new DataStreamChannelOptions<TEcsDocument>(options.Transport)
 			{
 				DataStream = options.DataStream,
 				ResponseCallback = ((response, statistics) =>
@@ -48,15 +60,16 @@ namespace Elastic.CommonSchema.Serilog.Sink
 				})
 			};
 			options.ConfigureChannel?.Invoke(channelOptions);
-			_channel = new EcsDataStreamChannel<EcsDocument>(channelOptions);
+			_channel = new EcsDataStreamChannel<TEcsDocument>(channelOptions);
 			_channel.BootstrapElasticsearch(options.BootstrapMethod);
 		}
 
 
 		public void Emit(LogEvent logEvent)
 		{
-			var ecsDoc = LogEventConverter.ConvertToEcs(logEvent, _formatterConfiguration);
+			var ecsDoc = LogEventConverter.ConvertToEcs<TEcsDocument>(logEvent, _formatterConfiguration);
 			_channel.TryWrite(ecsDoc);
 		}
+
 	}
 }
