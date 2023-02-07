@@ -17,11 +17,21 @@ actions:
   ecs-dotnet:
     kind: github/pullrequest
     scmid: githubConfig
+    sourceid: sha
     spec:
       automerge: false
       labels:
         - dependencies
       title: 'synchronize ecs-logging spec'
+      description: |-
+        ### What
+
+        ECS logging specs automatic sync
+
+        ### Why
+
+        *Changeset*
+        * https://github.com/elastic/ecs-logging/commit/{{ source "sha" }}
 
 sources:
   spec.json:
@@ -29,6 +39,13 @@ sources:
     kind: file
     spec:
       file: https://raw.githubusercontent.com/elastic/ecs-logging/main/spec/spec.json
+
+  sha:
+    name: Get commit
+    kind: json
+    spec:
+      file: 'https://api.github.com/repos/elastic/ecs-logging/commits?path=spec%2Fspec.json&page=1&per_page=1'
+      key: ".[0].sha"
 
 conditions:
   spec.json-HasSameContentAsSource:
