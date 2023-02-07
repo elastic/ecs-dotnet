@@ -11,17 +11,8 @@
   <ItemGroup>
     <PackageReference Include="Elastic.Clients.Elasticsearch" Version="8.0.4" />
     <PackageReference Include="Elastic.Elasticsearch.Xunit" Version="0.3.5" />
+    <PackageReference Include="Elastic.Ingest.Elasticsearch" Version="0.2.2" />
 
-
-  </ItemGroup>
-
-  <ItemGroup>
-    <Reference Include="Elastic.Channels">
-      <HintPath>..\..\..\..\.nuget\packages\elastic.channels\0.2.2\lib\netstandard2.1\Elastic.Channels.dll</HintPath>
-    </Reference>
-    <Reference Include="Elastic.Ingest.Elasticsearch">
-      <HintPath>..\..\..\..\.nuget\packages\elastic.ingest.elasticsearch\0.2.2\lib\netstandard2.1\Elastic.Ingest.Elasticsearch.dll</HintPath>
-    </Reference>
   </ItemGroup>
 
 </Project>
