@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using Serilog;
 using Serilog.Configuration;
 
@@ -14,9 +15,9 @@ namespace Elastic.CommonSchema.Serilog.Sink
 
 		public static LoggerConfiguration Elasticsearch(
 			this LoggerSinkConfiguration loggerConfiguration,
-			string[] nodes,
-			bool useSniffing = true,
-			Action<ElasticsearchSchemaSinkOptions>? configureOptions = null
+			ICollection<Uri> nodes,
+			Action<ElasticsearchSchemaSinkOptions>? configureOptions = null,
+			bool useSniffing = true
 		)
 		{
 			var sinkOptions = new ElasticsearchSchemaSinkOptions(useSniffing ? TransportHelper.Static(nodes) : TransportHelper.Sniffing(nodes));

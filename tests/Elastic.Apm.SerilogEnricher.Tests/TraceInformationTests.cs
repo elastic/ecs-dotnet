@@ -12,7 +12,7 @@ using Serilog;
 using Serilog.Sinks.InMemory;
 using Xunit;
 
-namespace Elastic.Apm.SerilogEnricher.Test
+namespace Elastic.Apm.SerilogEnricher.Tests
 {
 	public class TraceInformationTests : IDisposable
 	{
