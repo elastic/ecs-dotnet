@@ -242,15 +242,15 @@ let private publish (arguments: ParseResults<Arguments>) = printfn "publish"
 
 // temp fix for unit reporting: https://github.com/elastic/apm-pipeline-library/issues/2063
 let teardown () =
-    let isSkippedFile p =
-        File.ReadLines(p).FirstOrDefault() = "<testsuites />"
-    let junitFiles =
+    if Paths.Output.Exists then
+        let isSkippedFile p =
+            File.ReadLines(p).FirstOrDefault() = "<testsuites />"
         Paths.Output.GetFiles("junit-*.xml")
-        |> Seq.filter (fun p -> isSkippedFile p.FullName)
-        |> Seq.iter (fun f ->
-            printfn $"Removing empty test file: %s{f.FullName}"
-            f.Delete()
-        )
+            |> Seq.filter (fun p -> isSkippedFile p.FullName)
+            |> Seq.iter (fun f ->
+                printfn $"Removing empty test file: %s{f.FullName}"
+                f.Delete()
+            )
     Console.WriteLine "Ran teardown"
 
 let Setup (parsed: ParseResults<Arguments>) (subCommand: Arguments) =
