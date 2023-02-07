@@ -118,6 +118,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Elasticsearch.IntegrationDe
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tools", "tools", "{B268060B-83ED-4944-B135-C362DFCBFC0C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Elastic.CommonSchema.Serilog.Sink.Example", "examples\Elastic.CommonSchema.Serilog.Sink.Example\Elastic.CommonSchema.Serilog.Sink.Example.csproj", "{1CAEFBD7-B800-41C4-81D3-CB6839FA563D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -242,6 +244,10 @@ Global
 		{AB197BBD-D90D-4ACB-AD09-C59913FA109F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AB197BBD-D90D-4ACB-AD09-C59913FA109F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AB197BBD-D90D-4ACB-AD09-C59913FA109F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1CAEFBD7-B800-41C4-81D3-CB6839FA563D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1CAEFBD7-B800-41C4-81D3-CB6839FA563D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1CAEFBD7-B800-41C4-81D3-CB6839FA563D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1CAEFBD7-B800-41C4-81D3-CB6839FA563D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -279,6 +285,7 @@ Global
 		{AB197BBD-D90D-4ACB-AD09-C59913FA109F} = {947B298F-9139-4868-B337-729541932E4D}
 		{D6F0D170-39D7-4868-86EE-990B6B05C14D} = {B268060B-83ED-4944-B135-C362DFCBFC0C}
 		{EC19A9E1-79CC-46A8-94D7-EE66ED22D3BD} = {B268060B-83ED-4944-B135-C362DFCBFC0C}
+		{1CAEFBD7-B800-41C4-81D3-CB6839FA563D} = {05075402-8669-45BD-913A-BD40A29BBEAB}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {7F60C4BB-6216-4E50-B1E4-9C38EB484843}

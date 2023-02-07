@@ -29,7 +29,7 @@ internal static class LoggingEventConverter
 		if (metadata == null) return ecsDocument;
 
 		foreach(var kv in metadata)
-			ecsDocument.SetLogMessageProperty(kv.Key, kv.Value);
+			ecsDocument.AssignField(kv.Key, kv.Value);
 		return ecsDocument;
 	}
 

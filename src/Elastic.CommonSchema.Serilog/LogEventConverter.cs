@@ -83,7 +83,7 @@ namespace Elastic.CommonSchema.Serilog
 			};
 			var metaData = GetMetadata(logEvent, configuration.LogEventPropertiesToFilter);
 			foreach (var kv in metaData)
-				ecsEvent.SetLogMessageProperty(kv.Key, kv.Value);
+				ecsEvent.AssignField(kv.Key, kv.Value);
 
 			if (configuration.MapExceptions)
 				ecsEvent.Error = GetError(exceptions);

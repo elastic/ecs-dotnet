@@ -13,28 +13,33 @@ namespace Elastic.CommonSchema.Serilog.Sink
 		public static HttpTransport Default() =>
 			new DefaultHttpTransport(new TransportConfiguration(new Uri("http://localhost:9200"), DefaultProduct));
 
-		public static HttpTransport Static(IEnumerable<string> nodes)
+		public static HttpTransport Static(IEnumerable<string> nodes) => Static(nodes.Select(n => new Uri(n)));
+
+		public static HttpTransport Static(IEnumerable<Uri> nodes)
 		{
-			var pool = new StaticNodePool(nodes.Select(e => new Node(new Uri(e))));
-			return new DefaultHttpTransport(new TransportConfiguration(pool, productRegistration: DefaultProduct));
-		}
-		public static HttpTransport Sniffing(IEnumerable<string> nodes)
-		{
-			var pool = new SniffingNodePool(nodes.Select(e => new Node(new Uri(e))));
+			var pool = new StaticNodePool(nodes.Select(e => new Node(e)));
 			return new DefaultHttpTransport(new TransportConfiguration(pool, productRegistration: DefaultProduct));
 		}
 
-		public static HttpTransport Cloud(string endpoint, string apiKey)
+		public static HttpTransport Sniffing(IEnumerable<string> nodes) => Sniffing(nodes.Select(n => new Uri(n)));
+
+		public static HttpTransport Sniffing(IEnumerable<Uri> nodes)
+		{
+			var pool = new SniffingNodePool(nodes.Select(e => new Node(e)));
+			return new DefaultHttpTransport(new TransportConfiguration(pool, productRegistration: DefaultProduct));
+		}
+
+		public static HttpTransport Cloud(string cloudId, string apiKey)
 		{
 			var header = new ApiKey(apiKey);
-			var pool = new CloudNodePool(endpoint, header);
+			var pool = new CloudNodePool(cloudId, header);
 			return new DefaultHttpTransport(new TransportConfiguration(pool, productRegistration: DefaultProduct));
 		}
 
-		public static HttpTransport Cloud(string endpoint, string username, string password)
+		public static HttpTransport Cloud(string cloudId, string username, string password)
 		{
 			var header = new BasicAuthentication(username, password);
-			var pool = new CloudNodePool(endpoint, header);
+			var pool = new CloudNodePool(cloudId, header);
 			return new DefaultHttpTransport(new TransportConfiguration(pool, productRegistration: DefaultProduct));
 		}
 

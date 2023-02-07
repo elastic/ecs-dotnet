@@ -14,16 +14,18 @@ namespace Elastic.CommonSchema.Serilog.Sink
 {
 	public class ElasticsearchSchemaSinkOptions
 	{
-		public ElasticsearchSchemaSinkOptions() : this(TransportHelper.Default()) {}
+		public ElasticsearchSchemaSinkOptions() : this(TransportHelper.Default()) { }
+
 		public ElasticsearchSchemaSinkOptions(HttpTransport transport) => Transport = transport;
 
 		public HttpTransport Transport { get; }
-		public EcsTextFormatterConfiguration EcsTextFormatterConfiguration { get; set; } = new ();
+		public EcsTextFormatterConfiguration TextFormatting { get; set; } = new();
 		public DataStreamName DataStream { get; set; } = new("logs", "dotnet");
 		public Action<DataStreamChannelOptions<EcsDocument>>? ConfigureChannel { get; set; }
 		public BootstrapMethod BootstrapMethod { get; set; }
 
 	}
+
 	public class ElasticsearchSink : ILogEventSink
 	{
 		private readonly EcsTextFormatterConfiguration _formatterConfiguration;
@@ -31,7 +33,7 @@ namespace Elastic.CommonSchema.Serilog.Sink
 
 		public ElasticsearchSink(ElasticsearchSchemaSinkOptions options)
 		{
-			_formatterConfiguration = options.EcsTextFormatterConfiguration;
+			_formatterConfiguration = options.TextFormatting;
 			var channelOptions = new DataStreamChannelOptions<EcsDocument>(options.Transport)
 			{
 				DataStream = options.DataStream,

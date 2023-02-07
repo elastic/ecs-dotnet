@@ -45,7 +45,7 @@ namespace Elastic.CommonSchema
 		/// </summary>
 		/// <para@(Raw("m")) name="path">Either a supported ECS Log Template property or any key</para@(Raw("m"))>
 		/// <para@(Raw("m")) name="value">The value to persist</para@(Raw("m"))>
-		public void SetLogMessageProperty(string path, object value)
+		public void AssignField(string path, object value)
 		{
 			var assigned = LogTemplateProperties.All.Contains(path) && TrySet(this, path, value);
 			if (!assigned) 
