@@ -4,6 +4,7 @@ open System.Net.Http
 open Fake.Tools.Git
 open Argu
 open System
+open System.Linq
 open System.IO
 open Bullseye
 open CommandLine
@@ -57,11 +58,19 @@ let private pristineCheck (arguments: ParseResults<Arguments>) =
     | false, _ -> printf "Checkout is dirty but -c was specified to ignore this"
     | _ -> failwithf "The checkout folder has pending changes, aborting"
 
-let private runTests (arguments: ParseResults<Arguments>) filterArg =
+type TestMode = | Unit | Integration
+let private runTests (arguments: ParseResults<Arguments>) testMode =
+    
+    let mode = match testMode with | Unit ->  "unit" | Integration -> "integration"
+        
+    let filterArg =
+        match testMode with
+        | Unit ->  [ "--filter"; "FullyQualifiedName!~IntegrationTests" ]
+        | Integration -> [ "--filter"; "FullyQualifiedName~IntegrationTests" ]
 
     let os = if runningOnWindows then "win" else "linux"
     let junitOutput =
-        Path.Combine(Paths.Output.FullName, $"junit-%s{os}-{{assembly}}-{{framework}}-test-results.xml")
+        Path.Combine(Paths.Output.FullName, $"junit-%s{os}-%s{mode}-{{assembly}}-{{framework}}-test-results.xml")
 
     let loggerPathArgs = sprintf "LogFilePath=%s" junitOutput
     let loggerArg = $"--logger:\"junit;%s{loggerPathArgs};MethodFormat=Class;FailureBodyFormat=Verbose\""
@@ -71,10 +80,10 @@ let private runTests (arguments: ParseResults<Arguments>) filterArg =
     |> ignore
 
 let private test (arguments: ParseResults<Arguments>) =
-    runTests arguments [ "--filter"; "FullyQualifiedName!~IntegrationTests" ]
+    runTests arguments Unit
 
 let private integrate (arguments: ParseResults<Arguments>) =
-    runTests arguments [ "--filter"; "FullyQualifiedName~IntegrationTests" ]
+    runTests arguments Integration
 
 let private generatePackages (arguments: ParseResults<Arguments>) =
     let output = Paths.RootRelative Paths.Output.FullName
@@ -230,6 +239,19 @@ let private updateLoggingSpec (arguments: ParseResults<Arguments>) =
 let private release (arguments: ParseResults<Arguments>) = printfn "release"
 
 let private publish (arguments: ParseResults<Arguments>) = printfn "publish"
+
+// temp fix for unit reporting: https://github.com/elastic/apm-pipeline-library/issues/2063
+let teardown () =
+    let isSkippedFile p =
+        File.ReadLines(p).FirstOrDefault() = "<testsuites />"
+    let junitFiles =
+        Paths.Output.GetFiles("junit-*.xml")
+        |> Seq.filter (fun p -> isSkippedFile p.FullName)
+        |> Seq.iter (fun f ->
+            printfn $"Removing empty test file: %s{f.FullName}"
+            f.Delete()
+        )
+    Console.WriteLine "Ran teardown"
 
 let Setup (parsed: ParseResults<Arguments>) (subCommand: Arguments) =
     let step (name: string) action =
