@@ -16,6 +16,7 @@ using Elastic.Clients.Elasticsearch.Core.Search;
 using Elastic.CommonSchema.BenchmarkDotNetExporter.Domain;
 using Elastic.Elasticsearch.Xunit.XunitPlumbing;
 using Elastic.Ingest.Elasticsearch;
+using Elasticsearch.IntegrationDefaults;
 using FluentAssertions;
 using Xunit;
 using Xunit.Abstractions;
@@ -49,17 +50,21 @@ namespace Elastic.CommonSchema.BenchmarkDotNetExporter.IntegrationTests
 		public void BenchmarkingPersistsResults()
 		{
 			var url = Client.ElasticsearchClientSettings.NodePool.Nodes.First().Uri;
+			var listener = new ChannelListener<BenchmarkDocument>();
 			var options = new ElasticsearchBenchmarkExporterOptions(url)
 			{
 				GitBranch = "externally-provided-branch",
 				GitCommitMessage = "externally provided git commit message",
 				GitRepositoryIdentifier = "repository",
 				BootstrapMethod = BootstrapMethod.Silent,
-
+				ChannelOptionsCallback = (o) => listener.Register(o)
 			};
 			var exporter = new ElasticsearchBenchmarkExporter(options);
 			var config = CreateDefaultConfig().AddExporter(exporter);
 			var summary = BenchmarkRunner.Run(typeof(Md5VsSha256), config);
+
+			// ensure publication was success
+			listener.PublishSuccess.Should().BeTrue("{0}", listener);
 
 			if (summary.HasCriticalValidationErrors)
 			{
