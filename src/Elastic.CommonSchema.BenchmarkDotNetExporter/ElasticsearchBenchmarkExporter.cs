@@ -59,7 +59,8 @@ namespace Elastic.CommonSchema.BenchmarkDotNetExporter
 				BufferOptions = new BufferOptions
 				{
 					WaitHandle = waitHandle,
-					MaxConsumerBufferSize = benchmarksCount
+					MaxConsumerBufferSize = benchmarksCount,
+					MaxConsumerBufferLifetime = TimeSpan.FromSeconds(5)
 				},
 				ExceptionCallback = e => observedException ??= e,
 				ResponseCallback = ((response, statistics) =>

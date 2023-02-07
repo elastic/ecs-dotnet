@@ -29,7 +29,7 @@ public class ChannelListener<TEvent>
 	private string? _firstItemError;
 
 	public ChannelListener() {}
-	public void Register(ResponseItemsChannelOptionsBase<TEvent, BulkResponse, BulkResponseItem> options)
+	public ChannelListener<TEvent> Register(ResponseItemsChannelOptionsBase<TEvent, BulkResponse, BulkResponseItem> options)
 	{
 		options.BufferOptions.BufferFlushCallback = () => Interlocked.Increment(ref _bufferFlushCallback);
 		options.ResponseCallback = (r, b) => Interlocked.Increment(ref _responses);
@@ -54,6 +54,7 @@ public class ChannelListener<TEvent>
 
 		if (options.ExceptionCallback == null) options.ExceptionCallback = (e) => _exception ??= e;
 		else options.ExceptionCallback += (e) => _exception ??= e;
+		return this;
 	}
 
 

@@ -8,6 +8,7 @@ using Elastic.Clients.Elasticsearch;
 using Elastic.Clients.Elasticsearch.IndexManagement;
 using Elastic.CommonSchema.Serilog.Sink;
 using Elastic.Elasticsearch.Xunit.XunitPlumbing;
+using Elasticsearch.IntegrationDefaults;
 using FluentAssertions;
 using Serilog;
 using Serilog.Core;
@@ -18,8 +19,8 @@ namespace Elastic.CommonSchema.Serilog.Sinks.IntegrationTests
 {
 	public class Serilog : SerilogTestBase
 	{
-		private Exception _observedException;
 		private readonly CountdownEvent _waitHandle;
+		private readonly ChannelListener<EcsDocument> _listener;
 		private ElasticsearchSchemaSinkOptions SinkOptions { get; }
 
 		public Serilog(SerilogCluster cluster, ITestOutputHelper output) : base(cluster, output)
@@ -34,6 +35,7 @@ namespace Elastic.CommonSchema.Serilog.Sinks.IntegrationTests
 			};
 
 			_waitHandle = new CountdownEvent(1);
+			_listener = new ChannelListener<EcsDocument>();
 			SinkOptions = new ElasticsearchSchemaSinkOptions(Client.Transport)
 			{
 				DataStream = new DataStreamName("logs", "serilog", "tests"),
@@ -44,7 +46,7 @@ namespace Elastic.CommonSchema.Serilog.Sinks.IntegrationTests
 						WaitHandle = _waitHandle,
 						MaxConsumerBufferSize = logs.Count
 					};
-					c.ExceptionCallback = e => _observedException ??= e;
+					_listener.Register(c);
 				}
 			};
 
@@ -61,7 +63,7 @@ namespace Elastic.CommonSchema.Serilog.Sinks.IntegrationTests
 		[I] public async Task AssertLogs()
 		{
 			if (!_waitHandle.WaitHandle.WaitOne(TimeSpan.FromSeconds(10)))
-				throw new Exception($"No flush occurred in 10 seconds: {_observedException?.Message}", _observedException);
+				throw new Exception($"No flush occurred in 10 seconds: {_listener}", _listener.ObservedException);
 
 			var indexName = SinkOptions.DataStream.ToString();
 			var refreshed = await Client.Indices.RefreshAsync(new RefreshRequest(indexName));
