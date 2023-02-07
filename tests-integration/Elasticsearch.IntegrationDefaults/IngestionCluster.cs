@@ -28,17 +28,30 @@ namespace Elasticsearch.IntegrationDefaults
 					: "localhost");
 				var nodes = NodesUris(hostName);
 				var connectionPool = new StaticNodePool(nodes);
+				var isCi = !string.IsNullOrEmpty(Environment.GetEnvironmentVariable("CI"));
 				var settings = new ElasticsearchClientSettings(connectionPool)
 					.Proxy(new Uri("http://ipv4.fiddler:8080"), null!, null!)
 					.OnRequestCompleted(d =>
 					{
-						try { output.WriteLine(d.DebugInformation);}
+						try
+						{
+							// ON CI only logged failed requests
+							// Locally we just log everything for ease of development
+							if (isCi)
+							{
+								if (!d.HasSuccessfulStatusCode)
+									output.WriteLine(d.DebugInformation);
+							}
+							else output.WriteLine(d.DebugInformation);
+						}
 						catch
 						{
 							// ignored
 						}
 					})
-					.EnableDebugMode();
+					.EnableDebugMode()
+					//do not request server stack traces on CI, too noisy
+					.IncludeServerStackTraceOnError(!isCi);
 				return new ElasticsearchClient(settings);
 			});
 	}
