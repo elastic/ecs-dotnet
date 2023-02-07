@@ -1,6 +1,6 @@
 ---
 # Send PRs to the subscribed ECS Agents if the spec files (JSON) are modified
-name: Update specs
+name: update-specs
 
 on:
   workflow_dispatch:

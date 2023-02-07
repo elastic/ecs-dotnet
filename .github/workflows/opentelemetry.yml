@@ -7,6 +7,7 @@ on:
       - pre-commit
       - test
       - test-reporter
+      - update-specs
     types: [completed]
 
 jobs:
