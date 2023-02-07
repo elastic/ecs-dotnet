@@ -6,6 +6,11 @@ The intention is that this library forms a reliable and correct basis for integr
 
 These types can be used in either as-is, or in conjunction with, the [Official .NET clients for Elasticsearch](https://github.com/elastic/elasticsearch-net). The types are annotated with the corresponding `DataMember` attributes, enabling out-of-the-box serialisation support with the Elasticsearch.net clients.
 
+
+See also:
+
+* [Elastic.Ingest.Elasticsearch.CommonSchema](https://github.com/elastic/ecs-dotnet/tree/main/src/Elastic.Ingest.Elasticsearch.CommonSchema) to easily persist ECS document to Elasticsearch or Elastic Cloud. 
+
 ## Packages
 
 The .NET assemblies are published to NuGet under the package name [Elastic.CommonSchema](http://nuget.org/packages/Elastic.CommonSchema)
@@ -32,40 +37,6 @@ You can install Elastic.CommonSchema from the package manager console:
 Alternatively, simply search for Elastic.CommonSchema in the package manager UI.
 
 ### Usage
-
-#### Client Installation
-
-In this example, we will also install the [Elasticsearch.net Low Level Client](https://github.com/elastic/elasticsearch-net#elasticsearchnet) and use this to perform the HTTP communications with our Elasticsearch server.
-
-    PM> Install-Package Elasticsearch.Net
-
-#### Connecting to Elasticsearch
-
-```csharp
-var node = new Uri("http://localhost:9200");
-var config = new ConnectionConfiguration(node);
-var lowLevelClient = new ElasticLowLevelClient(config);
-```
-#### Creating an Index Template
-
-Now we need to put an index template, so that any new indices that match our configured index name pattern are to use ECS.
-
-We ship with different index templates for different major versions of Elasticsearch within the `Elastic.CommonSchema.Elasticsearch` namespace.
-
-```csharp
-// We are using Elasticsearch version 7.4.0, lets use a 7 version index template
-var template = Elastic.CommonSchema.Elasticsearch.IndexTemplates.GetIndexTemplateForElasticsearch7("ecs-*");
-
-// Send the template to the Elasticsearch server
-var templateResponse = lowLevelClient.Indices.PutTemplateForAll<StringResponse>("ecs-template", template);
-   
-// Check everything was successful
-Debug.Assert(templateResponse.Success);
-```
-
-Now that we have applied the index template, any indices that match the pattern `ecs-*` will use ECS.
-
-NOTE: We only need to apply the index template once.
 
 #### Creating an ECS event
 
@@ -134,16 +105,16 @@ var ecsDocument = new EcsDocument
 
 ```
 
-This can then be indexed into Elasticsearch:
+### Dynamically assign ECS fields
+
+Additionally ecs fields can be dynamically assigned through 
 
 ```csharp
-var indexResponse = lowLevelClient.Index<StringResponse>(index,PostData.Serializable(ecsDocument));
-
-// Check everything was successful
-Debug.Assert(indexResponse.Success);
+ecsDocument.AssignProperty("orchestrator.cluster.id", "id");
 ```
+This will assign `ecsDocument.Orchestrator.ClusterId` to `"id"` and automatically create a new `Orchestrator` instance if needed.
 
-Congratulations, you are now using the Elastic Common Schema!
+Any `string` or `boolean` value that is not a known `ecs` field will be assigned to `labels.*` everything else to `metatadata.*`
 
 #### A note on the `Metadata` property
 
@@ -156,7 +127,6 @@ The C# `EcsDocument` type includes a property called `Metadata` with the signatu
 [JsonPropertyName("metadata"), DataMember(Name = "metadata")]
 public IDictionary<string, object> Metadata { get; set; }
 ```
-
 This property is not part of the ECS specification, but is included as a means to index supplementary information.
 
 #### Extending EcsDocument

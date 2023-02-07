@@ -8,7 +8,7 @@ using NLog;
 using NLog.Targets;
 using Xunit;
 
-namespace Elastic.Apm.NLog.Test
+namespace Elastic.Apm.NLog.Tests
 {
 	public class NLogTests
 	{

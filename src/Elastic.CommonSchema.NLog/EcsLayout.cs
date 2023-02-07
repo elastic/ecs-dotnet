@@ -211,7 +211,7 @@ namespace Elastic.CommonSchema.NLog
 			};
 			var metadata = GetMetadata(logEvent) ?? MetadataDictionary.Default;
 			foreach(var kv in metadata)
-				ecsEvent.SetLogMessageProperty(kv.Key, kv.Value);
+				ecsEvent.AssignField(kv.Key, kv.Value);
 
 			//Give any deriving classes a chance to enrich the event
 			EnrichEvent(logEvent, ref ecsEvent);
