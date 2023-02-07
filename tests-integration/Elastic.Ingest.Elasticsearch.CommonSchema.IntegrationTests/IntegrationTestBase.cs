@@ -12,8 +12,6 @@ public abstract class IntegrationTestBase : IClusterFixture<IngestionCluster>
 {
 	protected ElasticsearchClient Client { get; }
 
-	protected Exception? ObservedException { get; set; }
-
 	protected IntegrationTestBase(IngestionCluster cluster, ITestOutputHelper output) =>
 		Client = cluster.CreateClient(output);
 }

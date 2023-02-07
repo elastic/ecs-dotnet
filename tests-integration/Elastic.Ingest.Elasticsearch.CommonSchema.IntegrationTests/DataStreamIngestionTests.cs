@@ -6,6 +6,7 @@ using Elastic.Channels;
 using Elastic.Clients.Elasticsearch.IndexManagement;
 using Elastic.Ingest.Elasticsearch.DataStreams;
 using Elastic.Transport;
+using Elasticsearch.IntegrationDefaults;
 using FluentAssertions;
 using Xunit;
 using Xunit.Abstractions;
@@ -28,8 +29,8 @@ namespace Elastic.Ingest.Elasticsearch.CommonSchema.IntegrationTests
 			{
 				DataStream = targetDataStream,
 				BufferOptions = new BufferOptions { WaitHandle = slim, MaxConsumerBufferSize = 1 },
-				ExceptionCallback = e => ObservedException ??= e
 			};
+			var listener = new ChannelListener<TimeSeriesDocument>().Register(options);
 			var channel = new EcsDataStreamChannel<TimeSeriesDocument>(options);
 
 			var bootstrapped = await channel.BootstrapElasticsearchAsync(BootstrapMethod.Failure, "7-days-default");
@@ -41,7 +42,7 @@ namespace Elastic.Ingest.Elasticsearch.CommonSchema.IntegrationTests
 
 			channel.TryWrite(new TimeSeriesDocument { Timestamp = DateTimeOffset.Now, Message = "hello-world" });
 			if (!slim.WaitHandle.WaitOne(TimeSpan.FromSeconds(10)))
-				throw new Exception($"No flush occurred in 10 seconds: {ObservedException?.Message}", ObservedException);
+				throw new Exception($"No flush occurred in 10 seconds: {listener}", listener.ObservedException);
 
 			var refreshResult = await Client.Indices.RefreshAsync(targetDataStream.ToString());
 			refreshResult.IsValidResponse.Should().BeTrue("{0}", refreshResult.DebugInformation);

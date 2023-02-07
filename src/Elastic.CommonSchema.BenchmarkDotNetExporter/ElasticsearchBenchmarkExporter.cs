@@ -59,7 +59,8 @@ namespace Elastic.CommonSchema.BenchmarkDotNetExporter
 				BufferOptions = new BufferOptions
 				{
 					WaitHandle = waitHandle,
-					MaxConsumerBufferSize = benchmarksCount
+					MaxConsumerBufferSize = benchmarksCount,
+					MaxConsumerBufferLifetime = TimeSpan.FromSeconds(5)
 				},
 				ExceptionCallback = e => observedException ??= e,
 				ResponseCallback = ((response, statistics) =>
@@ -74,6 +75,7 @@ namespace Elastic.CommonSchema.BenchmarkDotNetExporter
 
 				})
 			};
+			Options.ChannelOptionsCallback?.Invoke(options);
 			var channel = new EcsDataStreamChannel<BenchmarkDocument>(options);
 			if (!channel.BootstrapElasticsearch(Options.BootstrapMethod)) return;
 
