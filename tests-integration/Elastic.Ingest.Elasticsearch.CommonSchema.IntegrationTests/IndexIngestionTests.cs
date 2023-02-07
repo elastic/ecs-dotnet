@@ -6,6 +6,7 @@ using Elastic.Channels;
 using Elastic.Clients.Elasticsearch.IndexManagement;
 using Elastic.Ingest.Elasticsearch.Indices;
 using Elastic.Transport;
+using Elasticsearch.IntegrationDefaults;
 using FluentAssertions;
 using Xunit;
 using Xunit.Abstractions;
@@ -33,8 +34,8 @@ namespace Elastic.Ingest.Elasticsearch.CommonSchema.IntegrationTests
 				{
 					WaitHandle = slim, MaxConsumerBufferSize = 1,
 				},
-				ExceptionCallback = e => ObservedException ??= e
 			};
+			var listener = new ChannelListener<CatalogDocument>().Register(options);
 			var channel = new EcsIndexChannel<CatalogDocument>(options);
 			var bootstrapped = await channel.BootstrapElasticsearchAsync(BootstrapMethod.Failure, "7-days-default");
 			bootstrapped.Should().BeTrue("Expected to be able to bootstrap index channel");
@@ -47,7 +48,7 @@ namespace Elastic.Ingest.Elasticsearch.CommonSchema.IntegrationTests
 
 			channel.TryWrite(new CatalogDocument { Created = date, Title = "Hello World!", Id = "hello-world" });
 			if (!slim.WaitHandle.WaitOne(TimeSpan.FromSeconds(10)))
-				throw new Exception($"No flush occurred in 10 seconds: {ObservedException?.Message}", ObservedException);
+				throw new Exception($"No flush occurred in 10 seconds: {listener}", listener.ObservedException);
 
 			var refreshResult = await Client.Indices.RefreshAsync(indexName);
 			refreshResult.IsValidResponse.Should().BeTrue("{0}", refreshResult.DebugInformation);

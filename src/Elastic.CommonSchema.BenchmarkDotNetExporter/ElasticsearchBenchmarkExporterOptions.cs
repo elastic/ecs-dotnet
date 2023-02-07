@@ -5,7 +5,9 @@
 using System;
 using System.ComponentModel.Design.Serialization;
 using System.Linq;
+using Elastic.CommonSchema.BenchmarkDotNetExporter.Domain;
 using Elastic.Ingest.Elasticsearch;
+using Elastic.Ingest.Elasticsearch.DataStreams;
 using Elastic.Transport;
 using Elastic.Transport.Products.Elasticsearch;
 
@@ -86,6 +88,8 @@ namespace Elastic.CommonSchema.BenchmarkDotNetExporter
 		/// since we assume the configured user might not have management privileges
 		/// </summary>
 		public BootstrapMethod BootstrapMethod { get; set; } = BootstrapMethod.None;
+
+		public Action<DataStreamChannelOptions<BenchmarkDocument>> ChannelOptionsCallback { get; set; }
 
 		private static Uri[] Parse(string urls)
 		{
