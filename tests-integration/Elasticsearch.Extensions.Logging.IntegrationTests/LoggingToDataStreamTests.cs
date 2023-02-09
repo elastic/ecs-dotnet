@@ -31,13 +31,16 @@ namespace Elasticsearch.Extensions.Logging.IntegrationTests
 				o.ShipTo = new ShipToOptions { NodeUris = nodes, ConnectionPoolType = ConnectionPoolType.Static };
 			});
 
+		// ReSharper disable once UnusedMember.Local
+		private enum MyEnum { Success, Failure }
+
 		[Fact]
 		public async Task LogsEndUpInCluster()
 		{
 			using var _ = CreateLogger(out var logger, out var provider, out var @namespace, out var waitHandle, out var listener);
 			var dataStream = $"x-dotnet-{@namespace}";
 
-			logger.LogError("an error occurred");
+			logger.LogError("an error occurred {Status}", MyEnum.Failure);
 
 			if (!waitHandle.WaitOne(TimeSpan.FromSeconds(10)))
 				throw new Exception($"No flush occurred in 10 seconds: {listener}", listener.ObservedException);
@@ -54,11 +57,14 @@ namespace Elasticsearch.Extensions.Logging.IntegrationTests
 			response.Total.Should().BeGreaterThan(0);
 
 			var loggedError = response.Documents.First();
-			loggedError.Message.Should().Be("an error occurred");
+			loggedError.Message.Should().Be("an error occurred Failure");
 			loggedError.Log.Should().NotBeNull();
 			loggedError.Log.Level.Should().Be("Error");
 			loggedError.Ecs.Version.Should().Be(EcsDocument.Version);
 			loggedError.Ecs.Version.Should().NotStartWith("v");
+
+			loggedError.Labels.Should().ContainKey("Status");
+			loggedError.Labels["Status"].Should().Be("Failure");
 		}
 
 		[Fact]
