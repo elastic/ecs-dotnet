@@ -209,6 +209,8 @@ namespace Elastic.CommonSchema.NLog
 				Http = GetHttp(logEvent),
 				Url = GetUrl(logEvent),
 			};
+			ecsEvent.SetActivityData();
+
 			var metadata = GetMetadata(logEvent) ?? MetadataDictionary.Default;
 			foreach(var kv in metadata)
 				ecsEvent.AssignField(kv.Key, kv.Value);
@@ -309,7 +311,7 @@ namespace Elastic.CommonSchema.NLog
 
 			if (IncludeEventProperties && e.HasProperties)
 			{
-				global::NLog.MessageTemplates.MessageTemplateParameters templateParameters = null; 
+				global::NLog.MessageTemplates.MessageTemplateParameters templateParameters = null;
 
 				foreach (var prop in e.Properties)
 				{

@@ -122,34 +122,6 @@ namespace Elasticsearch.Extensions.Logging
 			}
 		}
 
-		private void AddTracing(LogEvent logEvent)
-		{
-			var activity = Activity.Current;
-
-			if (activity != null)
-			{
-				if (activity.IdFormat == ActivityIdFormat.W3C)
-				{
-					// Unique identifier of the trace.
-					// A trace groups multiple events like transactions that belong together. For example, a user request handled by multiple inter-connected services.
-					logEvent.TraceId = activity.TraceId.ToString();
-					logEvent.SpanId = activity.SpanId.ToString();
-				}
-				else
-				{
-					if (activity.RootId != null) logEvent.TraceId = activity.RootId;
-					if (activity.Id != null) logEvent.SpanId = activity.Id;
-				}
-			}
-			else
-			{
-				if (!Trace.CorrelationManager.ActivityId.Equals(Guid.Empty))
-				{
-					logEvent.TraceId = Trace.CorrelationManager.ActivityId.ToString();
-				}
-			}
-		}
-
 		private LogEvent BuildLogEvent<TState>(string categoryName, LogLevel logLevel,
 			EventId eventId, TState state, Exception? exception,
 			Func<TState, Exception, string> formatter
@@ -182,8 +154,7 @@ namespace Elasticsearch.Extensions.Logging
 					Id = Thread.CurrentPrincipal?.Identity.Name, Name = Environment.UserName, Domain = Environment.UserDomainName
 				};
 			}
-
-			AddTracing(logEvent);
+			logEvent.SetActivityData();
 
 			if (_options.IncludeScopes) AddScopeValues(logEvent);
 
