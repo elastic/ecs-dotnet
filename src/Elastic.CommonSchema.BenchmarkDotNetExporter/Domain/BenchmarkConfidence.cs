@@ -4,7 +4,6 @@
 
 using System.Runtime.Serialization;
 using System.Text.Json.Serialization;
-using BenchmarkDotNet.Mathematics;
 using Perfolizer.Mathematics.Common;
 
 namespace Elastic.CommonSchema.BenchmarkDotNetExporter.Domain

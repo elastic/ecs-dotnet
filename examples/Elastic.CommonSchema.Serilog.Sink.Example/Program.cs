@@ -2,7 +2,6 @@
 
 using Elastic.Channels;
 using Elastic.Clients.Elasticsearch;
-using Elastic.CommonSchema;
 using Elastic.CommonSchema.Serilog;
 using Elastic.CommonSchema.Serilog.Sink;
 using Elastic.CommonSchema.Serilog.Sink.Example;
@@ -38,7 +37,7 @@ Log.Logger = new LoggerConfiguration()
 		DataStream = new DataStreamName("logs", "console-example"),
 		TextFormatting = new EcsTextFormatterConfiguration
 		{
-			MapCustom = (e, l) => e,
+			MapCustom = (e, _) => e
 		},
 		ConfigureChannel = channelOpts =>  {
 			channelOpts.BufferOptions = new BufferOptions { ConcurrentConsumers = 10 };
@@ -59,17 +58,16 @@ static ElasticsearchClient CreateClient(EphemeralCluster cluster)
 
 static IHostBuilder CreateHostBuilder(string[] args, ElasticsearchClient client)
 {
-	var highLoadUseCase = args.Length == 0 || args[0] != "low";
 	return Host.CreateDefaultBuilder(args)
 		.UseConsoleLifetime()
-		.ConfigureAppConfiguration((hostContext, configurationBuilder) =>
+		.ConfigureAppConfiguration((_, configurationBuilder) =>
 		{
 			configurationBuilder.SetBasePath(AppDomain.CurrentDomain.BaseDirectory);
 		})
-		.ConfigureServices((hostContext, services) =>
+		.ConfigureServices((_, services) =>
 		{
 			services.AddHostedService<HighVolumeWorkSimulation>();
-			services.AddSingleton<ElasticsearchClient>(client);
+			services.AddSingleton(client);
 		})
 		.UseSerilog();
 }

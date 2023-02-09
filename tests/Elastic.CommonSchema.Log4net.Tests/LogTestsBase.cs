@@ -9,7 +9,6 @@ using Elastic.CommonSchema.Tests.Specs;
 using log4net;
 using log4net.Core;
 using log4net.Repository.Hierarchy;
-using Xunit;
 
 
 namespace Elastic.CommonSchema.Log4net.Tests

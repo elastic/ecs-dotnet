@@ -1,5 +1,4 @@
 ﻿#nullable enable
-using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading;
@@ -13,7 +12,7 @@ namespace Elastic.Ingest.Elasticsearch.CommonSchema
 {
 	/// <summary>
 	/// An channel implementation that allows you to push ECS data to Elasticsearch indices
-	/// <pre>Note for timeseries data <see cref="EcsDataStreamChannel{TEcsDocument}"/> ships with better defaults
+	/// <para>Note for timeseries data <see cref="EcsDataStreamChannel{TEcsDocument}"/> ships with better defaults</para>
 	/// </summary>
 	public class EcsIndexChannel<TEcsDocument> : IndexChannel<TEcsDocument>
 		where TEcsDocument : EcsDocument

@@ -44,12 +44,10 @@ namespace AspnetCoreExample
 			try
 			{
 				BuildWebHost(args).Run();
-				return;
 			}
 			catch (Exception ex)
 			{
 				Log.Fatal(ex, "Host terminated unexpectedly");
-				return;
 			}
 			finally
 			{

@@ -10,7 +10,6 @@ using Microsoft.Extensions.Logging;
 
 namespace Elasticsearch.Extensions.Logging.Example
 {
-
 	/// <summary> Simulate work that logs in low volume with some time in between each log call </summary>
 	public class LowVolumeWorkSimulation : BackgroundService
 	{
@@ -39,12 +38,10 @@ namespace Elasticsearch.Extensions.Logging.Example
 				try
 				{
 					using (_logger.BeginScope(new Dictionary<string, object> { ["SecretToken"] = token }))
-					{
 						Log.SignInToken(_logger, checksum, success, null);
-					}
 
 					using (_logger.BeginScope("Customer {CustomerId}, Order {OrderId}, Due {DueDate:yyyy-MM-dd}",
-						customerId, orderId, dueDate))
+							   customerId, orderId, dueDate))
 					{
 						Log.StartingProcessing(_logger, 10, null);
 						var items = new List<Guid>();
@@ -64,7 +61,8 @@ namespace Elasticsearch.Extensions.Logging.Example
 
 						try
 						{
-							var points = total / rate;
+							// ReSharper disable once IntDivisionByZero
+							var _ = total / rate;
 						}
 						catch (Exception ex)
 						{
@@ -75,9 +73,7 @@ namespace Elasticsearch.Extensions.Logging.Example
 				catch (Exception ex)
 				{
 					using (_logger.BeginScope("PlainScope"))
-					{
 						Log.ErrorProcessingCustomer(_logger, customerId, ex);
-					}
 				}
 			}
 

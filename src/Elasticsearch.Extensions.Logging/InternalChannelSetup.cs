@@ -4,7 +4,6 @@
 
 using System;
 using Elastic.Ingest.Elasticsearch;
-using Elasticsearch.Extensions.Logging.Options;
 
 namespace Elasticsearch.Extensions.Logging
 {

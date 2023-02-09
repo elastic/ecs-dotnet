@@ -4,8 +4,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using Elastic.Clients.Elasticsearch;
 using Elastic.CommonSchema;
-using Elastic.Elasticsearch.Xunit;
-using Elastic.Transport;
 using Elasticsearch.Extensions.Logging.Options;
 using Elasticsearch.IntegrationDefaults;
 using FluentAssertions;
@@ -30,7 +28,7 @@ namespace Elasticsearch.Extensions.Logging.IntegrationTests
 			{
 				o.DataStream = new DataStreamNameOptions { Type = "x", Namespace = s, DataSet = "dotnet" };
 				var nodes = Client.ElasticsearchClientSettings.NodePool.Nodes.Select(n => n.Uri).ToArray();
-				o.ShipTo = new ShipToOptions() { NodeUris = nodes, ConnectionPoolType = ConnectionPoolType.Static };
+				o.ShipTo = new ShipToOptions { NodeUris = nodes, ConnectionPoolType = ConnectionPoolType.Static };
 			});
 
 		// ReSharper disable once UnusedMember.Local
@@ -51,7 +49,7 @@ namespace Elasticsearch.Extensions.Logging.IntegrationTests
 			provider.ObservedException.Should().BeNull();
 			listener.ObservedException.Should().BeNull();
 
-			var refresh = await Client.Indices.RefreshAsync(dataStream);
+			await Client.Indices.RefreshAsync(dataStream);
 
 			var response = Client.Search<EcsDocument>(new SearchRequest(dataStream));
 
@@ -85,7 +83,7 @@ namespace Elasticsearch.Extensions.Logging.IntegrationTests
 			provider.ObservedException.Should().BeNull();
 			listener.ObservedException.Should().BeNull();
 
-			var refresh = await Client.Indices.RefreshAsync(dataStream);
+			await Client.Indices.RefreshAsync(dataStream);
 
 			var response = Client.Search<LogEvent>(new SearchRequest(dataStream));
 

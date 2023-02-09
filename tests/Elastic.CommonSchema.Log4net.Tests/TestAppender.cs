@@ -7,27 +7,22 @@ using System.IO;
 using log4net.Appender;
 using log4net.Core;
 
-namespace Elastic.CommonSchema.Log4net.Tests
+namespace Elastic.CommonSchema.Log4net.Tests;
+
+internal class TestAppender : AppenderSkeleton
 {
-	internal class TestAppender : AppenderSkeleton
+	public List<string> Events { get; } = new();
+
+	protected override void Append(LoggingEvent loggingEvent)
 	{
-		public List<string> Events { get; } = new();
-
-		protected override void Append(LoggingEvent loggingEvent)
-		{
-			using var writer = new StringWriter();
+		using var writer = new StringWriter();
 
 
-			if (Layout == null)
-			{
-				loggingEvent.WriteRenderedMessage(writer);
-			}
-			else
-			{
-				Layout.Format(writer, loggingEvent);
-			}
+		if (Layout == null)
+			loggingEvent.WriteRenderedMessage(writer);
+		else
+			Layout.Format(writer, loggingEvent);
 
-			Events.Add(writer.ToString());
-		}
+		Events.Add(writer.ToString());
 	}
 }

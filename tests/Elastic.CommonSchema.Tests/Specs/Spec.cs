@@ -33,7 +33,7 @@ namespace Elastic.CommonSchema.Tests.Specs
 			var log = JObject.Parse(logEvent);
 			var specFields = ((JObject)JObject["fields"])?.Properties();
 
-			foreach (var specField in specFields)
+			foreach (var specField in specFields!)
 			{
 				var property = GetProperty(specField, log);
 				var specFieldValue = (JObject)specField.Value;
@@ -115,7 +115,7 @@ namespace Elastic.CommonSchema.Tests.Specs
 		private static void ValidateRequiredField(JProperty property, JProperty specField)
 		{
 			var specFieldValues = specField.Value as JObject;
-			if (specFieldValues.ContainsKey("required") && specFieldValues.Value<bool>("required"))
+			if (specFieldValues!.ContainsKey("required") && specFieldValues.Value<bool>("required"))
 			{
 				property.Should().NotBeNull($"{specField.Name} is required");
 				property?.Value.Should().NotBeNull($"{specField.Name} is not null");

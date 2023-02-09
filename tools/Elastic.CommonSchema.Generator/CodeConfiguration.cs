@@ -4,7 +4,7 @@
 
 using System.IO;
 
-namespace Generator
+namespace Elastic.CommonSchema.Generator
 {
 	public static class CodeConfiguration
 	{

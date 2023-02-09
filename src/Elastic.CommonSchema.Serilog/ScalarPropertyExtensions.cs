@@ -6,7 +6,7 @@ using Serilog.Events;
 
 namespace Elastic.CommonSchema.Serilog
 {
-	public static class ExtensionMethods
+	internal static class ScalarPropertyExtensions
 	{
 		public static bool TryGetScalarPropertyValue(this LogEvent e, string key, out ScalarValue value)
 		{

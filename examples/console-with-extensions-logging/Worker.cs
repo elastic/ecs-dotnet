@@ -61,7 +61,8 @@ namespace ConsoleExample
 
 						try
 						{
-							var points = total / rate;
+							// ReSharper disable once IntDivisionByZero
+							var _ = total / rate;
 						}
 						catch (Exception ex)
 						{

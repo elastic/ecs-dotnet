@@ -1,4 +1,3 @@
-using System.IO;
 using System.Linq;
 using FluentAssertions;
 using Serilog;
@@ -9,8 +8,6 @@ namespace Elastic.CommonSchema.Serilog.Tests.Repro
 {
 	public class GithubIssue30 : LogTestsBase
 	{
-		private readonly string _path = Path.GetTempFileName();
-
 		public GithubIssue30(ITestOutputHelper output) : base(output) =>
 			LoggerConfiguration = LoggerConfiguration
 				.Enrich.WithThreadId()

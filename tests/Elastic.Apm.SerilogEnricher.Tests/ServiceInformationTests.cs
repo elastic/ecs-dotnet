@@ -4,8 +4,6 @@
 
 using System;
 using System.Linq;
-using System.Threading.Tasks;
-using Elastic.Apm.Api;
 using Elastic.Apm.Test.Common;
 using FluentAssertions;
 using Serilog;
@@ -28,9 +26,9 @@ namespace Elastic.Apm.SerilogEnricher.Tests
 
 			logger.Information("Line1");
 
-			Agent.Tracer.CaptureTransaction("Test", "Test", (t) =>
+			Agent.Tracer.CaptureTransaction("Test", "Test", t =>
 			{
-				t.CaptureSpan("Span", "Test", s =>
+				t.CaptureSpan("Span", "Test", _ =>
 				{
 					logger.Information("Line2");
 				});

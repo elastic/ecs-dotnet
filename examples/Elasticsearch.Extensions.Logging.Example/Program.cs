@@ -3,7 +3,6 @@ using System.Threading.Tasks;
 using Elastic.Channels;
 using Elastic.Elasticsearch.Ephemeral;
 using Elastic.Ingest.Elasticsearch;
-using Elastic.Ingest.Elasticsearch.CommonSchema;
 using Elasticsearch.Extensions.Logging.Options;
 using Elasticsearch.Net;
 using Microsoft.Extensions.Configuration;
@@ -24,11 +23,11 @@ namespace Elasticsearch.Extensions.Logging.Example
 			var highLoadUseCase = args.Length == 0 || args[0] != "low";
 			return Host.CreateDefaultBuilder(args)
 				.UseConsoleLifetime()
-				.ConfigureAppConfiguration((hostContext, configurationBuilder) =>
+				.ConfigureAppConfiguration((_, configurationBuilder) =>
 				{
 					configurationBuilder.SetBasePath(AppDomain.CurrentDomain.BaseDirectory);
 				})
-				.ConfigureLogging((hostContext, loggingBuilder) =>
+				.ConfigureLogging((_, loggingBuilder) =>
 				{
 					// removing console logger when showcasing high traffic, too noisy otherwise
 					if (highLoadUseCase)
@@ -43,13 +42,13 @@ namespace Elasticsearch.Extensions.Logging.Example
 						if (highLoadUseCase)
 						{
 							channel.BufferOptions = new BufferOptions { ConcurrentConsumers = 4 };
-							channel.PublishRejectionCallback = e => Console.Write("!");
+							channel.PublishRejectionCallback = _ => Console.Write("!");
 						}
 						channel.ResponseCallback = (r, b) =>
 							Console.WriteLine($"statusCode: {r.ApiCallDetails.HttpStatusCode} items: {b.Count} time since first write: {b.DurationSinceFirstWrite}");
 					});
 				})
-				.ConfigureServices((hostContext, services) =>
+				.ConfigureServices((_, services) =>
 				{
 					if (args.Length > 0 && args[0] == "low")
 						services.AddHostedService<LowVolumeWorkSimulation>();

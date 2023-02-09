@@ -2,20 +2,15 @@
 // Elasticsearch B.V licenses this file to you under the Apache 2.0 License.
 // See the LICENSE file in the project root for more information
 
-using Elastic.Clients.Elasticsearch;
-using Elastic.Elasticsearch.Xunit;
-using Elastic.Transport;
 using Elasticsearch.IntegrationDefaults;
 using Xunit;
-using Xunit.Abstractions;
 
 [assembly: TestFramework("Elastic.Elasticsearch.Xunit.Sdk.ElasticTestFramework", "Elastic.Elasticsearch.Xunit")]
 
-namespace Elastic.Ingest.Elasticsearch.CommonSchema.IntegrationTests
+namespace Elastic.Ingest.Elasticsearch.CommonSchema.IntegrationTests;
+
+/// <summary> Declare our cluster that we want to inject into our test classes </summary>
+public class IngestionCluster : TestClusterBase
 {
-	/// <summary> Declare our cluster that we want to inject into our test classes </summary>
-	public class IngestionCluster : TestClusterBase
-	{
-		public IngestionCluster() : base(9202) { }
-	}
+	public IngestionCluster() : base(9202) { }
 }

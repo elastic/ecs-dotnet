@@ -1,11 +1,5 @@
-using System;
-using System.Linq;
-using Elastic.Clients.Elasticsearch;
-using Elastic.Elasticsearch.Xunit;
-using Elastic.Transport;
 using Elasticsearch.IntegrationDefaults;
 using Xunit;
-using Xunit.Abstractions;
 
 [assembly: TestFramework("Elastic.Elasticsearch.Xunit.Sdk.ElasticTestFramework", "Elastic.Elasticsearch.Xunit")]
 

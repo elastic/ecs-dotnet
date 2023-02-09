@@ -16,16 +16,17 @@ using static Elastic.CommonSchema.Serialization.EcsJsonConfiguration;
 namespace Elastic.CommonSchema
 {
 	[JsonConverter(typeof(EcsDocumentJsonConverterFactory))]
-	public partial class EcsDocument : BaseFieldSet
+	public partial class EcsDocument
 	{
 		/// <summary>
-		/// If implemented in a subclass, this allows you to hook into <see cref="BaseJsonConverter"/>
-		/// and make it aware of properties on a subclass of <see cref="Base"/>.
+		/// If implemented in a subclass, this allows you to hook into <see cref="EcsDocumentJsonConverter"/>
+		/// and make it aware of properties on a subclass of <see cref="EcsDocument"/>.
 		/// If <paramref name="propertyName"/> is known, set <paramref name="type"/> to the correct type and return true.
 		/// </summary>
-		/// <param name="propertyName">The additional property that <see cref="BaseJsonConverter"/> encountered</param>
+		/// <param name="propertyName">The additional property that <see cref="EcsDocumentJsonConverter"/> encountered</param>
 		/// <param name="type">Set this to the type you wish to deserialize to</param>
 		/// <returns>Return true if <paramref name="propertyName"/> is handled</returns>
+		// ReSharper disable once UnusedParameter.Global
 		protected internal virtual bool TryRead(string propertyName, out Type type)
 		{
 			type = null;
@@ -35,33 +36,42 @@ namespace Elastic.CommonSchema
 		/// <summary>
 		/// If <see cref="TryRead"/> returns <c>true</c> this will be called with the deserialized <paramref name="value"/>
 		/// </summary>
-		/// <param name="propertyName">The additional property <see cref="BaseJsonConverter"/> encountered</param>
+		/// <param name="propertyName">The additional property <see cref="EcsDocumentJsonConverter"/> encountered</param>
 		/// <param name="value">The deserialized boxed value you will have to manually unbox to the type that <see cref="TryRead"/> set</param>
 		/// <returns></returns>
+		// ReSharper disable UnusedParameter.Global
 		protected internal virtual bool ReceiveProperty(string propertyName, object value) => false;
+		// ReSharper restore UnusedParameter.Global
 
 		/// <summary>
-		/// Write any additional properties in your subclass during <see cref="BaseJsonConverter"/> serialization.
+		/// Write any additional properties in your subclass during <see cref="EcsDocumentJsonConverter"/> serialization.
 		/// </summary>
 		/// <param name="write">An action taking a <c>property name</c> and <c>boxed value</c> to write to the output</param>
+		// ReSharper disable once UnusedParameter.Global
 		protected internal virtual void WriteAdditionalProperties(Action<string, object> write) { }
 
+		// ReSharper disable once UnusedMember.Global
 		public static EcsDocument Deserialize(string json) => EcsSerializerFactory<EcsDocument>.Deserialize(json);
 
+		// ReSharper disable once UnusedMember.Global
 		public static EcsDocument Deserialize(ReadOnlySpan<byte> json) => EcsSerializerFactory<EcsDocument>.Deserialize(json);
 
+		// ReSharper disable once UnusedMember.Global
 		public static EcsDocument Deserialize(Stream stream) => EcsSerializerFactory<EcsDocument>.Deserialize(stream);
 
+		// ReSharper disable once UnusedMember.Global
 		public static ValueTask<EcsDocument> DeserializeAsync(Stream stream, CancellationToken ctx = default) =>
 			EcsSerializerFactory<EcsDocument>.DeserializeAsync(stream, ctx);
 
 		public string Serialize() => JsonSerializer.Serialize(this, GetType(), SerializerOptions);
 
+		// ReSharper disable once UnusedMember.Global
 		public byte[] SerializeToUtf8Bytes() => JsonSerializer.SerializeToUtf8Bytes(this, GetType(), SerializerOptions);
 
-		private static ReusableUtf8JsonWriter _reusableJsonWriter;
-		private static ReusableUtf8JsonWriter ReusableJsonWriter => _reusableJsonWriter ??= new ReusableUtf8JsonWriter();
+		private static ReusableUtf8JsonWriter CachedReusableUtf8JsonWriter;
+		private static ReusableUtf8JsonWriter ReusableJsonWriter => CachedReusableUtf8JsonWriter ??= new ReusableUtf8JsonWriter();
 
+		// ReSharper disable once UnusedMethodReturnValue.Global
 		public StringBuilder Serialize(StringBuilder stringBuilder)
 		{
 			using var reusableWriter = ReusableJsonWriter.AllocateJsonWriter(stringBuilder);
@@ -69,6 +79,7 @@ namespace Elastic.CommonSchema
 			return stringBuilder;
 		}
 
+		// ReSharper disable once UnusedMember.Global
 		public void Serialize(Stream stream)
 		{
 			using var writer = new Utf8JsonWriter(stream, new JsonWriterOptions

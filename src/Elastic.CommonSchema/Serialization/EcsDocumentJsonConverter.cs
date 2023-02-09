@@ -37,7 +37,7 @@ namespace Elastic.CommonSchema.Serialization
 				if (reader.TokenType != JsonTokenType.PropertyName)
 					throw new JsonException();
 
-				var read = ReadProperties(ref reader, ecsEvent, ref timestamp, ref loglevel, ref ecsVersion);
+				var _ = ReadProperties(ref reader, ecsEvent, ref timestamp, ref loglevel, ref ecsVersion);
 			}
 			if (!string.IsNullOrEmpty(loglevel))
 			{
@@ -92,7 +92,7 @@ namespace Elastic.CommonSchema.Serialization
 		}
 	}
 
-	public partial class EcsDocumentJsonConverter : EcsDocumentJsonConverter<EcsDocument>
+	public class EcsDocumentJsonConverter : EcsDocumentJsonConverter<EcsDocument>
 	{
 	}
 }

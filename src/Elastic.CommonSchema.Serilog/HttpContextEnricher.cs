@@ -2,6 +2,7 @@
 // Elasticsearch B.V licenses this file to you under the Apache 2.0 License.
 // See the LICENSE file in the project root for more information
 
+using Elastic.CommonSchema.Serilog.Adapters;
 using Serilog.Core;
 using Serilog.Events;
 #if NETSTANDARD
@@ -49,7 +50,7 @@ public class HttpContextEnricher : ILogEventEnricher
 	public class HttpContextEnrichments
 	{
 		public Client Client { get; set; }
-		public CommonSchema.Http Http { get; set; }
+		public Http Http { get; set; }
 		public Server Server { get; set; }
 		public Url Url { get; set; }
 		public User User { get; set; }

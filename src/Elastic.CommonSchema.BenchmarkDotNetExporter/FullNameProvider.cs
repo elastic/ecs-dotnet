@@ -53,7 +53,6 @@ namespace Elastic.CommonSchema.BenchmarkDotNetExporter
 		internal static string GetBenchmarkName(BenchmarkCase benchmarkCase)
 		{
 			var type = benchmarkCase.Descriptor.Type;
-			var method = benchmarkCase.Descriptor.WorkloadMethod;
 
 			// we can't just use type.FullName because we need sth different for generics (it reports SimpleGeneric`1[[System.Int32, mscorlib, Version=4.0.0.0)
 			var name = new StringBuilder();
@@ -197,7 +196,7 @@ namespace Elastic.CommonSchema.BenchmarkDotNetExporter
 		{
 			if (Aliases.TryGetValue(type, out var alias))
 				return alias;
-			;
+
 			if (Nullable.GetUnderlyingType(type) != null)
 				return $"{GetTypeArgumentName(Nullable.GetUnderlyingType(type))}?";
 

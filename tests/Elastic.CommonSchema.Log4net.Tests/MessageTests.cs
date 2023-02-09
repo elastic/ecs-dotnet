@@ -75,13 +75,9 @@ namespace Elastic.CommonSchema.Log4net.Tests
 
 			info.Process.Should().NotBeNull();
 			if (int.TryParse(loggingEvent.ThreadName, out var threadId))
-			{
 				info.Process.ThreadId.Should().Be(threadId);
-			}
 			else
-			{
 				info.Process.ThreadName.Should().Be(loggingEvent.ThreadName);
-			}
 		});
 
 		[Fact]

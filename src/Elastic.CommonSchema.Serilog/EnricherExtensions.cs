@@ -13,10 +13,11 @@ namespace Elastic.CommonSchema.Serilog;
 
 public static class EnricherExtensions
 {
+#if NETSTANDARD
 	/// <summary></summary>
 	/// <param name="enrichmentConfiguration">Logger enrichment configuration.</param>
+	/// <param name="httpContextAccessor"></param>
 	/// <returns>Configuration object allowing method chaining.</returns>
-#if NETSTANDARD
 	public static LoggerConfiguration WithEcsHttpContext(this LoggerEnrichmentConfiguration enrichmentConfiguration, IHttpContextAccessor httpContextAccessor)
 	{
 		if (enrichmentConfiguration == null)

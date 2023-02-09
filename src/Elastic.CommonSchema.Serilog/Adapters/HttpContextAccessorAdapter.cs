@@ -12,7 +12,7 @@ using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Http.Features;
 using UAParser;
 
-namespace Elastic.CommonSchema.Serilog
+namespace Elastic.CommonSchema.Serilog.Adapters
 {
 	public class HttpAdapter : IHttpAdapter
 	{

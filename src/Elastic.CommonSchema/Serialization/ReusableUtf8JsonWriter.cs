@@ -54,7 +54,7 @@ namespace Elastic.CommonSchema.Serialization
 			for (var i = 0; i < byteArray.Count; i += encodingBuffer.Length)
 			{
 				var byteCount = Math.Min(byteArray.Count - i, encodingBuffer.Length);
-				var charCount = Encoding.UTF8.GetChars(byteArray.Array, byteArray.Offset + i, byteCount, encodingBuffer, 0);
+				var charCount = Encoding.UTF8.GetChars(byteArray.Array!, byteArray.Offset + i, byteCount, encodingBuffer, 0);
 				output.Append(encodingBuffer, 0, charCount);
 			}
 		}

@@ -13,7 +13,6 @@ using BenchmarkDotNet.Loggers;
 using BenchmarkDotNet.Reports;
 using Elastic.Channels;
 using Elastic.CommonSchema.BenchmarkDotNetExporter.Domain;
-using Elastic.Ingest.Elasticsearch;
 using Elastic.Ingest.Elasticsearch.CommonSchema;
 using Elastic.Ingest.Elasticsearch.DataStreams;
 using Elastic.Transport;
@@ -23,6 +22,7 @@ namespace Elastic.CommonSchema.BenchmarkDotNetExporter
 {
 	public class ElasticsearchBenchmarkExporter : ExporterBase
 	{
+		// ReSharper disable once UnusedMember.Global
 		public ElasticsearchBenchmarkExporter(string cloudId, string apiKey)
 			: this(new ElasticsearchBenchmarkExporterOptions(cloudId) { ApiKey = apiKey}) { }
 
@@ -33,6 +33,7 @@ namespace Elastic.CommonSchema.BenchmarkDotNetExporter
 			Transport = new DefaultHttpTransport<TransportConfiguration>(config);
 		}
 
+		// ReSharper disable once UnusedMember.Global
 		public ElasticsearchBenchmarkExporter(ElasticsearchBenchmarkExporterOptions options, Func<ElasticsearchBenchmarkExporterOptions, TransportConfiguration> configure)
 		{
 			Options = options;
@@ -63,7 +64,7 @@ namespace Elastic.CommonSchema.BenchmarkDotNetExporter
 					MaxConsumerBufferLifetime = TimeSpan.FromSeconds(5)
 				},
 				ExceptionCallback = e => observedException ??= e,
-				ResponseCallback = ((response, statistics) =>
+				ResponseCallback = (response, _) =>
 				{
 					var errorItems = response.Items.Where(i => i.Status >= 300).ToList();
 					if (response.TryGetElasticsearchServerError(out var error))
@@ -73,7 +74,7 @@ namespace Elastic.CommonSchema.BenchmarkDotNetExporter
 					foreach (var errorItem in errorItems)
 						logger.WriteError($"Failed to {errorItem.Action} document status: ${errorItem.Status}, error: ${errorItem.Error}");
 
-				})
+				}
 			};
 			Options.ChannelOptionsCallback?.Invoke(options);
 			var channel = new EcsDataStreamChannel<BenchmarkDocument>(options);

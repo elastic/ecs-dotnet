@@ -3,13 +3,13 @@
 // See the LICENSE file in the project root for more information
 
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.IO;
 using System.Linq;
 using System.Reflection;
-using System.Runtime.InteropServices;
 using System.Threading;
+#if !NETFRAMEWORK
+using System.Runtime.InteropServices;
+#endif
 
 namespace Elastic.CommonSchema;
 
@@ -126,7 +126,7 @@ public partial class EcsDocument
 				var process = System.Diagnostics.Process.GetCurrentProcess();
 				ProcessId = process.Id;
 				ProcessName = process.ProcessName;
-				MainWindowTitle = process?.MainWindowTitle;
+				MainWindowTitle = process.MainWindowTitle;
 			}
 			catch
 			{
