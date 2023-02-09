@@ -1,6 +1,4 @@
-using System.IO;
 using System.Linq;
-using System.Text;
 using FluentAssertions;
 using Serilog.Context;
 using Xunit;
@@ -17,9 +15,7 @@ namespace Elastic.CommonSchema.Serilog.Tests.Repro
 		{
 			using (LogContext.PushProperty("ShipmentId", "my-shipment-id"))
 			using (LogContext.PushProperty("ShipmentAmount", 2.3))
-			{
 				logger.Information("Logging something with log context");
-			}
 
 			var logEvents = getLogEvents();
 			logEvents.Should().HaveCount(1);

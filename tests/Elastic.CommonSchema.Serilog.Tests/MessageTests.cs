@@ -4,7 +4,6 @@
 
 using System.Collections.Generic;
 using System.Linq;
-using System.Text.Json;
 using FluentAssertions;
 using Serilog;
 using Xunit;
@@ -84,7 +83,7 @@ namespace Elastic.CommonSchema.Serilog.Tests
 
 			var dict = info.Metadata["DictValue"] as MetadataDictionary;
 			dict.Should().NotBeNull();
-			dict["fieldOne"].Should().Be("value1");
+			dict!["fieldOne"].Should().Be("value1");
 			dict["fieldTwo"].Should().Be("value2");
 		});
 
@@ -105,10 +104,10 @@ namespace Elastic.CommonSchema.Serilog.Tests
 
 			var json = info.Metadata["MyObj"] as MetadataDictionary;
 			json.Should().NotBeNull();
-			json["TestProp"].Should().Be("testing");
+			json!["TestProp"].Should().Be("testing");
 			var child = json["Child"] as MetadataDictionary;
 			child.Should().NotBeNull();
-			child["ChildProp"].Should().Be(3.3);
+			child!["ChildProp"].Should().Be(3.3);
 		});
 
 		[Theory]
@@ -206,7 +205,7 @@ namespace Elastic.CommonSchema.Serilog.Tests
 			var ecsEvents = ToEcsEvents(logEvents);
 
 			var (_, info) = ecsEvents.First();
-			info.Url.Query.Should().Equals(expectedValue);
+			((object)info.Url.Query).Should().Be(expectedValue);
 			info.Metadata.Should().BeNull();
 		});
 

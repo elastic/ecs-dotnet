@@ -17,16 +17,15 @@
 //
 #endregion
 
-using System.Reflection;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Text.RegularExpressions;
+
 
 namespace UAParser
 {
-    using System;
-    using System.Collections.Generic;
-    using System.IO;
-    using System.Linq;
-    using System.Text.RegularExpressions;
-
     /// <summary>
     /// Represents the physical device the user agent is using
     /// </summary>
@@ -569,7 +568,8 @@ namespace UAParser
                 for (var state = initial; ; state = next(state))
                     yield return state;
                 // ReSharper disable once FunctionNeverReturns
-            }
+				// ReSharper disable once IteratorNeverReturns
+			}
         }
     }
 

@@ -3,7 +3,6 @@
 // See the LICENSE file in the project root for more information
 
 using System;
-using System.ComponentModel.Design.Serialization;
 using System.Linq;
 using Elastic.CommonSchema.BenchmarkDotNetExporter.Domain;
 using Elastic.Ingest.Elasticsearch;
@@ -19,7 +18,7 @@ namespace Elastic.CommonSchema.BenchmarkDotNetExporter
 	public class ElasticsearchBenchmarkExporterOptions
 	{
 		/// <summary>
-		/// Configure the exporter options, the <see cref="commaSeparatedListOfUrls"> parameter is required.
+		/// Configure the exporter options, the <see cref="commaSeparatedListOfUrls" /> parameter is required.
 		/// <para>The other options can be specified in the property initializer</para>
 		/// </summary>
 		/// <param name="commaSeparatedListOfUrls">
@@ -30,7 +29,7 @@ namespace Elastic.CommonSchema.BenchmarkDotNetExporter
 		public ElasticsearchBenchmarkExporterOptions(string commaSeparatedListOfUrls) : this(Parse(commaSeparatedListOfUrls)) { }
 
 		/// <summary>
-		/// Configure the exporter options, the <see cref="nodes"> parameter is required.
+		/// Configure the exporter options, the <see cref="nodes"/> parameter is required.
 		/// <para>The other options can be specified in the property initializer</para>
 		/// </summary>
 		/// <param name="nodes">
@@ -109,9 +108,9 @@ namespace Elastic.CommonSchema.BenchmarkDotNetExporter
 			{
 				if (!string.IsNullOrWhiteSpace(ApiKey))
 					return new CloudNodePool(CloudId, new ApiKey(ApiKey));
-				else if (!string.IsNullOrWhiteSpace(Username) && !string.IsNullOrWhiteSpace(Password))
+				if (!string.IsNullOrWhiteSpace(Username) && !string.IsNullOrWhiteSpace(Password))
 					return new CloudNodePool(CloudId, new BasicAuthentication(Username, Password));
-				else throw new Exception("A cloud id was provided but neither apikey nor username/pass combination was set");
+				throw new Exception("A cloud id was provided but neither apikey nor username/pass combination was set");
 			}
 
 			var uris = Nodes;
@@ -119,9 +118,11 @@ namespace Elastic.CommonSchema.BenchmarkDotNetExporter
 				return new SingleNodePool(new Uri("http://localhost:9200"));
 
 			if (uris.Length == 1)
+			{
 				return UseSniffingConnectionPool
 					? new SniffingNodePool(uris)
-					: (NodePool)new SingleNodePool(uris[0]);
+					: new SingleNodePool(uris[0]);
+			}
 
 			return UseSniffingConnectionPool
 				? new SniffingNodePool(uris)

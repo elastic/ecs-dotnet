@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -134,7 +133,7 @@ namespace Elastic.CommonSchema.Generator.Projection
 				foreach (var reuse in fieldSet.ReusedHere)
 				{
 					var fieldTokens = reuse.Full.Split('.').ToArray();
-					var isArray = (reuse.Normalize != null && reuse.Normalize.Contains("array"));
+					var isArray = reuse.Normalize != null && reuse.Normalize.Contains("array");
 					// most common case a reference to a different schema
 					if (fieldTokens.Length <= 2 && reuse.SchemaName != name)
 					{
@@ -146,7 +145,7 @@ namespace Elastic.CommonSchema.Generator.Projection
 						// We can't assume the direct parent is an ECS field e.g
 						// email.attachments.file.hash -> file.hash is a property on email.attachments
 
-						var basePaths = fieldTokens.Select((token, i) => string.Join('.', fieldTokens.Take(i + 1))).Reverse().ToArray();
+						var basePaths = fieldTokens.Select((_, i) => string.Join('.', fieldTokens.Take(i + 1))).Reverse().ToArray();
 						var inlineObjectPath = basePaths.FirstOrDefault(p => InlineObjects.ContainsKey(p));
 						var entityObjectPath = basePaths.FirstOrDefault(p => EntityClasses.ContainsKey(p));
 						// check if this deeply nested reference refers to an inline object
@@ -174,7 +173,7 @@ namespace Elastic.CommonSchema.Generator.Projection
 			foreach (var (fullName, entity) in nestedEntityClasses)
 			{
 				var fieldTokens = fullName.Split('.').ToArray();
-				var parentPaths = fieldTokens.Select((token, i) => string.Join('.', fieldTokens.Take(i + 1))).Reverse().Skip(1).ToArray();
+				var parentPaths = fieldTokens.Select((_, i) => string.Join('.', fieldTokens.Take(i + 1))).Reverse().Skip(1).ToArray();
 				var nestedPath = parentPaths.FirstOrDefault(p => nestedEntityClasses.ContainsKey(p));
 				var entityPath = parentPaths.FirstOrDefault(p => EntityClasses.ContainsKey(p));
 				var description = entity is SelfReferentialReusedEntityClass s ? s.ReuseDescription : entity.BaseFieldSet.FieldSet.Description;
@@ -190,9 +189,7 @@ namespace Elastic.CommonSchema.Generator.Projection
 					EntityClasses[entityPath].EntityReferences[fullName] = nestedEntityClassRef;
 				}
 				else
-				{
 					Warnings.Add($"Unable find host to hold the entity reference ${fullName}");
-				}
 			}
 
 			return nestedEntityClasses;
@@ -246,17 +243,12 @@ namespace Elastic.CommonSchema.Generator.Projection
 
 						// path is referencing an embedded nested ECS entity
 						if (fieldSet.Nestings != null && fieldSet.Nestings.Any(nesting => fullPath.StartsWith($"{nesting}.")))
-						{
 							continue;
-						}
 
 						var foundInlineObjectPath = false;
 						foreach (var path in inlineObjectPaths)
 						{
-							if (!fields.ContainsKey(path))
-							{
-								continue;
-							}
+							if (!fields.ContainsKey(path)) continue;
 
 							InlineObjects[path] = InlineObjects.TryGetValue(path, out var o) ? o : new InlineObject(path, field);
 
@@ -268,10 +260,7 @@ namespace Elastic.CommonSchema.Generator.Projection
 							parentPath = path;
 							foundInlineObjectPath = true;
 						}
-						if (!foundInlineObjectPath)
-						{
-							parentPath = name;
-						}
+						if (!foundInlineObjectPath) parentPath = name;
 						currentPropertyReferences[fullPath] = new ValueTypePropertyReference(parentPath, fullPath, field);
 					}
 				}

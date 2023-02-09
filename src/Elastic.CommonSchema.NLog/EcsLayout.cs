@@ -100,17 +100,31 @@ namespace Elastic.CommonSchema.NLog
 				UrlUserName = "${aspnet-user-identity}";
 
 				if (!NLogApmLoaded())
-				{
 					ApmTraceId = "${scopeproperty:item=RequestId:whenEmpty=${aspnet-TraceIdentifier}}}";
-				}
 			}
 		}
+
+		// ReSharper disable UnusedMember.Global
+		[Obsolete("Replaced by IncludeEventProperties")]
+		public bool IncludeAllProperties { get => IncludeEventProperties; set => IncludeEventProperties = value; }
+
+		[Obsolete("Replaced by IncludeScopeProperties")]
+		public bool IncludeMdlc { get => IncludeScopeProperties; set => IncludeScopeProperties = value; }
+
+		/// <summary>
+		/// Allow dynamically disabling <see cref="ThreadAgnosticAttribute" /> to
+		/// ensure correct async context capture when necessary
+		/// </summary>
+		public Layout DisableThreadAgnostic => IncludeScopeProperties ? _disableThreadAgnostic : null;
+		// ReSharper restore UnusedMember.Global
+
 
 		public Layout AgentId { get; set; }
 		public Layout AgentName { get; set; }
 		public Layout AgentType { get; set; }
 		public Layout AgentVersion { get; set; }
 
+		// ReSharper disable AutoPropertyCanBeMadeGetOnly.Global
 		public Layout ApmTraceId { get; set; }
 		public Layout ApmTransactionId { get; set; }
 		public Layout ApmSpanId { get; set; }
@@ -118,12 +132,6 @@ namespace Elastic.CommonSchema.NLog
 		public Layout ApmServiceName { get; set; }
 		public Layout ApmServiceNodeName { get; set; }
 		public Layout ApmServiceVersion { get; set; }
-
-		/// <summary>
-		/// Allow dynamically disabling <see cref="ThreadAgnosticAttribute" /> to
-		/// ensure correct async context capture when necessary
-		/// </summary>
-		public Layout DisableThreadAgnostic => IncludeScopeProperties ? _disableThreadAgnostic : null;
 
 		public Layout LogOriginCallSiteMethod { get; set; }
 		public Layout LogOriginCallSiteFile { get; set; }
@@ -140,12 +148,6 @@ namespace Elastic.CommonSchema.NLog
 		public Layout HostId { get; set; }
 		public Layout HostIp { get; set; }
 		public Layout HostName { get; set; }
-
-		[Obsolete("Replaced by IncludeEventProperties")]
-		public bool IncludeAllProperties { get => IncludeEventProperties; set => IncludeEventProperties = value; }
-
-		[Obsolete("Replaced by IncludeScopeProperties")]
-		public bool IncludeMdlc { get => IncludeScopeProperties; set => IncludeScopeProperties = value; }
 
 		public bool IncludeEventProperties { get; set; }
 
@@ -181,7 +183,7 @@ namespace Elastic.CommonSchema.NLog
 		public Layout UrlUserName { get; set; }
 
 		/// <summary>
-		/// Optional action to enrich the constructed <see cref="Base">EcsEvent</see> before it is serialized
+		/// Optional action to enrich the constructed <see cref="EcsDocument">EcsDocument</see> before it is serialized
 		/// </summary>
 		/// <remarks>This is called last in the chain of enrichment functions</remarks>
 		public Action<EcsDocument,LogEventInfo> EnrichAction { get; set; }
@@ -193,6 +195,8 @@ namespace Elastic.CommonSchema.NLog
 		/// List of property names to exclude from MetaData, when <see cref="IncludeEventProperties"/> is true
 		/// </summary>
 		public ISet<string> ExcludeProperties { get; set; } = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+
+		// ReSharper restore AutoPropertyCanBeMadeGetOnly.Global
 
 		protected override void RenderFormattedMessage(LogEventInfo logEvent, StringBuilder target)
 		{
@@ -279,12 +283,12 @@ namespace Elastic.CommonSchema.NLog
 						continue;
 
 					var propertyValue = prop.Value;
-					if (propertyValue is null || propertyValue is IConvertible || propertyValue.GetType().IsValueType)
+					if (propertyValue is null or IConvertible || propertyValue.GetType().IsValueType)
 						Populate(metadata, propertyName, propertyValue);
 					else
 					{
 						templateParameters ??= e.MessageTemplateParameters;
-						var value = AllowSerializePropertyValue(propertyName, templateParameters) ? propertyValue : propertyValue?.ToString();
+						var value = AllowSerializePropertyValue(propertyName, templateParameters) ? propertyValue : propertyValue.ToString();
 						Populate(metadata, propertyName, value);
 					}
 				}
@@ -534,21 +538,15 @@ namespace Elastic.CommonSchema.NLog
 
 			var requestReferrer = HttpRequestReferrer?.Render(logEventInfo);
 			if (!string.IsNullOrEmpty(requestReferrer))
-			{
 				http.RequestReferrer = requestReferrer;
-			}
 
 			var requestBytes = RequestBodyBytes?.Render(logEventInfo);
 			if (!string.IsNullOrEmpty(requestBytes) && long.TryParse(requestBytes, out var requestSize) && requestSize > 0)
-			{
 				http.RequestBodyBytes = requestSize;
-			}
 
 			var responseStatusCode = HttpResponseStatusCode?.Render(logEventInfo);
 			if (!string.IsNullOrEmpty(responseStatusCode) && long.TryParse(responseStatusCode, out var statusCode) && statusCode > 0)
-			{
 				http.ResponseStatusCode = statusCode;
-			}
 
 			return http;
 		}
@@ -565,19 +563,17 @@ namespace Elastic.CommonSchema.NLog
 			var urlUserName = UrlUserName?.Render(logEventInfo);
 			var urlPort = UrlPort?.Render(logEventInfo);
 
-			var url = new Url()
+			var url = new Url
 			{
 				Scheme = urlScheme,
 				Domain = urlDomain,
 				Path = urlPath,
 				Query = string.IsNullOrEmpty(urlQuery) ? null : urlQuery,
-				Username = string.IsNullOrEmpty(urlUserName) ? null : urlUserName,
+				Username = string.IsNullOrEmpty(urlUserName) ? null : urlUserName
 			};
 
 			if (!string.IsNullOrEmpty(urlPort) && long.TryParse(urlPort, out var portNumber) && portNumber > 0)
-			{
 				url.Port = portNumber;
-			}
 
 			return url;
 		}

@@ -73,32 +73,6 @@ namespace Elastic.CommonSchema
 			}
 		}
 
-		private static bool TrySetInt(object value, out int i)
-		{
-			i = default;
-			switch (value)
-			{
-				case long l:
-					i = Convert.ToInt32(l);
-					return true;
-				case int ii:
-					i = ii;
-					return true;
-				case string s when int.TryParse(s, NumberStyles.None, CultureInfo.InvariantCulture, out var ll):
-					i = ll;
-					return true;
-				default:
-					return false;
-			}
-		}
-
-		private static bool TrySetInt(object value, Action<int> set)
-		{
-			if (!TrySetInt(value, out var b)) return false;
-			set(b);
-			return true;
-		}
-
 		private static bool TrySetFloat(object value, out float f)
 		{
 			f = default;
@@ -192,7 +166,7 @@ namespace Elastic.CommonSchema
 					return true;
 				case string s:
 				{
-					var formats = new string[]
+					var formats = new[]
 					{
 						"yyyy-MM-ddTHH:mm:ss.FFFK",
 						"yyyy-MM-dd'T'HH:mm:ss.FFFK"

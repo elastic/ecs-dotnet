@@ -61,7 +61,7 @@ namespace Elastic.CommonSchema.Benchmarks
 		{
 			Generator =
 				new AutoFaker<EcsDocument>()
-					.RuleFor(d => d.Metadata, d => new MetadataDictionary { { "x", "y" } })
+					.RuleFor(d => d.Metadata, _ => new MetadataDictionary { { "x", "y" } })
 					.UseSeed(1337);
 			FullInstance = Generator.Generate();
 		}

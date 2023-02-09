@@ -19,9 +19,7 @@ namespace Elasticsearch.Extensions.Logging.Example
 			{
 				_logger.LogWarning($"We are logging way too much: {i}");
 				if (i % 100 == 0)
-				{
 					await Task.Delay(1, ctx);
-				}
 			}
 		}
 	}

@@ -25,12 +25,10 @@ public class HighVolumeWorkSimulation : BackgroundService
 		{
 			_logger.LogWarning($"We are logging way too much: {i}");
 			if (i % 100 == 0)
-			{
 				await Task.Delay(1, ctx);
-			}
 		}
 
-		var refresh = await _client.Indices.RefreshAsync(new RefreshRequest("logs-*"), ctx);
+		var _ = await _client.Indices.RefreshAsync(new RefreshRequest("logs-*"), ctx);
 		var search = await _client.SearchAsync<EcsDocument>(new SearchRequest("logs-*") {  Size = 1, TrackTotalHits = new TrackHits(true) }, ctx);
 		Console.WriteLine(search.ApiCallDetails.DebugInformation);
 		Console.WriteLine();

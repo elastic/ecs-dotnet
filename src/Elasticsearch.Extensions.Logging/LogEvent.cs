@@ -34,7 +34,7 @@ namespace Elasticsearch.Extensions.Logging
 		/// <summary>
 		/// If <see cref="TryRead" /> returns <c>true</c> this will be called with the deserialized <paramref name="value" />
 		/// </summary>
-		/// <param name="propertyName">The additional property <see cref="BaseJsonConverter" /> encountered</param>
+		/// <param name="propertyName">The additional property <see cref="EcsDocumentJsonConverter" /> encountered</param>
 		/// <param name="value">
 		/// The deserialized boxed value you will have to manually unbox to the type that
 		/// <see cref="TryRead" /> set
@@ -49,11 +49,11 @@ namespace Elasticsearch.Extensions.Logging
 			};
 
 		/// <summary>
-		/// If implemented in a subclass, this allows you to hook into <see cref="BaseJsonConverter" />
-		/// and make it aware of properties on a subclass of <see cref="Base" />.
+		/// If implemented in a subclass, this allows you to hook into <see cref="EcsDocumentJsonConverter" />
+		/// and make it aware of properties on a subclass of <see cref="EcsDocument" />.
 		/// If <paramref name="propertyName" /> is known, set <paramref name="type" /> to the correct type and return true.
 		/// </summary>
-		/// <param name="propertyName">The additional property that <see cref="BaseJsonConverter" /> encountered</param>
+		/// <param name="propertyName">The additional property that <see cref="EcsDocumentJsonConverter" /> encountered</param>
 		/// <param name="type">Set this to the type you wish to deserialize to</param>
 		/// <returns>Return true if <paramref name="propertyName" /> is handled</returns>
 		protected override bool TryRead(string propertyName, out Type? type)
@@ -68,7 +68,7 @@ namespace Elasticsearch.Extensions.Logging
 		}
 
 		/// <summary>
-		/// Write any additional properties in your subclass during <see cref="BaseJsonConverter" /> serialization.
+		/// Write any additional properties in your subclass during <see cref="EcsDocumentJsonConverter" /> serialization.
 		/// </summary>
 		/// <param name="write">An action taking a <c>property name</c> and <c>boxed value</c> to write to the output</param>
 		protected override void WriteAdditionalProperties(Action<string, object> write)

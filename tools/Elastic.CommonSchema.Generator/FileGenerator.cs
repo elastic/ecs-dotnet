@@ -6,7 +6,6 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using Elastic.CommonSchema.Generator.Projection;
-using Generator;
 using RazorLight;
 using RazorLight.Razor;
 using ShellProgressBar;

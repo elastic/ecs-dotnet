@@ -29,9 +29,9 @@ namespace Elastic.CommonSchema.Serialization
 				new EcsJsonStringConverter<System.Reflection.Assembly>(),
 				new EcsJsonStringConverter<System.Reflection.Module>(),
 				new EcsJsonStringConverter<System.Reflection.MemberInfo>(),
-				new EcsJsonStringConverter<System.Delegate>(),
-				new EcsJsonStringConverter<System.IO.Stream>(),
-			},
+				new EcsJsonStringConverter<Delegate>(),
+				new EcsJsonStringConverter<System.IO.Stream>()
+			}
 		};
 
 		internal static readonly JsonConverter<DateTimeOffset> DateTimeOffsetConverter =

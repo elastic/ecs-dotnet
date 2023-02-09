@@ -1,18 +1,8 @@
-﻿using System;
-using AutoBogus;
-using BenchmarkDotNet.Running;
+﻿using BenchmarkDotNet.Running;
 
-namespace Elastic.CommonSchema.Benchmarks
+namespace Elastic.CommonSchema.Benchmarks;
+
+internal class Program
 {
-	internal class Program
-	{
-		public static void Main(string[] args)
-		{
-			var x = new AutoFaker<EcsDocument>()
-				.RuleFor(d => d.Metadata, d => new MetadataDictionary { { "x", "y" } })
-				.UseSeed(1337)
-				.Generate();
-			BenchmarkSwitcher.FromAssembly(typeof(Program).Assembly).Run(args);
-		}
-	}
+	public static void Main(string[] args) => BenchmarkSwitcher.FromAssembly(typeof(Program).Assembly).Run(args);
 }

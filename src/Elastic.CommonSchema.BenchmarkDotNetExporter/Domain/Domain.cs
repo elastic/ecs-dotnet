@@ -79,7 +79,7 @@ namespace Elastic.CommonSchema.BenchmarkDotNetExporter.Domain
 			Percentiles = new Percentiles(statistics.Percentiles);
 		}
 
-		[JsonPropertyName("success"), JsonIgnoreAttribute(Condition = JsonIgnoreCondition.Never), DataMember(Name = "success"), JsonInclude]
+		[JsonPropertyName("success"), JsonIgnore(Condition = JsonIgnoreCondition.Never), DataMember(Name = "success"), JsonInclude]
 		public bool Success { get; internal set; }
 
 		[JsonPropertyName("all_outliers"), DataMember(Name = "all_outliers"), JsonInclude]

@@ -28,7 +28,7 @@ namespace Elastic.CommonSchema.Serilog.Tests
 				.Enrich.WithEnvironmentUserName()
 				.Enrich.WithElasticApmCorrelationInfo();
 
-			var config = new EcsTextFormatterConfiguration { LogEventPropertiesToFilter = new HashSet<string>() { { "foo" } } };
+			var config = new EcsTextFormatterConfiguration { LogEventPropertiesToFilter = new HashSet<string> { "foo" } };
 			Formatter = new EcsTextFormatter(config);
 		}
 
@@ -40,7 +40,7 @@ namespace Elastic.CommonSchema.Serilog.Tests
 				LogEventLevel.Information,
 				null,
 				parser.Parse("My Log message!"),
-				new LogEventProperty[]
+				new[]
 				{
 					new LogEventProperty("foo", new ScalarValue("aaa")),
 					new LogEventProperty("bar", new ScalarValue("bbb")),
@@ -53,7 +53,6 @@ namespace Elastic.CommonSchema.Serilog.Tests
 		[Fact]
 		public void FilterLogEventProperty() => TestLogger((logger, getLogEvents) =>
 		{
-			var parser = new MessageTemplateParser();
 			var evnt = BuildLogEvent();
 			logger.Write(evnt);
 

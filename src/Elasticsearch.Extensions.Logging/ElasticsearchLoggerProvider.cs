@@ -5,10 +5,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Security;
 using System.Threading;
 using Elastic.Channels;
-using Elastic.Ingest;
 using Elastic.Ingest.Elasticsearch;
 using Elastic.Ingest.Elasticsearch.CommonSchema;
 using Elastic.Ingest.Elasticsearch.DataStreams;
@@ -45,6 +43,7 @@ namespace Elasticsearch.Extensions.Logging
 			_optionsReloadToken = _options.OnChange(o => ReloadShipper(o));
 		}
 
+		// ReSharper disable once AutoPropertyCanBeMadeGetOnly.Global
 		public static Func<DateTimeOffset> LocalDateTimeProvider { get; set; } = () => DateTimeOffset.UtcNow;
 
 		public ILogger CreateLogger(string name) =>

@@ -4,7 +4,6 @@
 
 using System;
 using Elastic.Ingest.Elasticsearch;
-using Elastic.Ingest.Transport;
 using Elasticsearch.Extensions.Logging.Options;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
@@ -16,6 +15,7 @@ namespace Elasticsearch.Extensions.Logging
 {
 	public static class LoggingBuilderExtensions
 	{
+		// ReSharper disable once UnusedMember.Global
 		public static ILoggingBuilder AddElasticCloud(this ILoggingBuilder builder, string cloudId, string apiKey)
 		{
 			if (string.IsNullOrEmpty(cloudId))
@@ -37,6 +37,7 @@ namespace Elasticsearch.Extensions.Logging
 			return builder;
 		}
 
+		// ReSharper disable once UnusedMember.Global
 		public static ILoggingBuilder AddElasticCloud(this ILoggingBuilder builder, string cloudId, string username, string password)
 		{
 			if (string.IsNullOrEmpty(cloudId))

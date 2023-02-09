@@ -8,7 +8,6 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using CsQuery;
-using Generator;
 using ShellProgressBar;
 
 namespace Elastic.CommonSchema.Generator
@@ -20,17 +19,17 @@ namespace Elastic.CommonSchema.Generator
 		private const string Composable = "composable";
 		private const string Components = "component";
 
-		private static readonly ProgressBarOptions MainProgressBarOptions = new ProgressBarOptions { BackgroundColor = ConsoleColor.DarkGray };
+		private static readonly ProgressBarOptions MainProgressBarOptions = new() { BackgroundColor = ConsoleColor.DarkGray };
 
-		private static readonly Dictionary<string, string> OnlineSpecifications = new Dictionary<string, string>
+		private static readonly Dictionary<string, string> OnlineSpecifications = new()
 		{
 			{ Core, "https://github.com/elastic/ecs/tree/{version}/generated/ecs" },
 			{ Legacy, "https://github.com/elastic/ecs/tree/{version}/generated/elasticsearch/legacy" },
 			{ Composable, "https://github.com/elastic/ecs/tree/{version}/generated/elasticsearch/composable" },
-			{ Path.Combine(Composable, Components), "https://github.com/elastic/ecs/tree/{version}/generated/elasticsearch/composable/component" },
+			{ Path.Combine(Composable, Components), "https://github.com/elastic/ecs/tree/{version}/generated/elasticsearch/composable/component" }
 		};
 
-		private static readonly ProgressBarOptions SubProgressBarOptions = new ProgressBarOptions
+		private static readonly ProgressBarOptions SubProgressBarOptions = new()
 		{
 			ForegroundColor = ConsoleColor.Cyan,
 			ForegroundColorDone = ConsoleColor.DarkGreen,
@@ -38,7 +37,7 @@ namespace Elastic.CommonSchema.Generator
 			BackgroundColor = ConsoleColor.DarkGray
 		};
 
-		private SpecificationDownloader(string branch)
+		public static void Download(string branch)
 		{
 			var specifications =
 				(from kv in OnlineSpecifications
@@ -56,7 +55,6 @@ namespace Elastic.CommonSchema.Generator
 			}
 		}
 
-		public static void Download(string branch) => new SpecificationDownloader(branch);
 
 		private static void DownloadDefinitions(Specification spec, IProgressBar progress, string filenameMatch)
 		{
@@ -99,6 +97,7 @@ namespace Elastic.CommonSchema.Generator
 
 		private class Specification
 		{
+			// ReSharper disable once UnusedAutoPropertyAccessor.Local
 			public string Branch { get; set; }
 			public string FolderOnDisk { get; set; }
 			public string GithubListingUrl { get; set; }

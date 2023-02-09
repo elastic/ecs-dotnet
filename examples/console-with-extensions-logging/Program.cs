@@ -15,11 +15,11 @@ namespace ConsoleExample
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
                 .UseConsoleLifetime()
-                .ConfigureAppConfiguration((hostContext, configurationBuilder) =>
+                .ConfigureAppConfiguration((_, configurationBuilder) =>
                 {
                     configurationBuilder.SetBasePath(AppDomain.CurrentDomain.BaseDirectory);
                 })
-                .ConfigureLogging((hostContext, loggingBuilder) =>
+                .ConfigureLogging((_, loggingBuilder) =>
                 {
                     /* 2. Add logger provider */
                     loggingBuilder.AddElasticsearch();
@@ -29,7 +29,7 @@ namespace ConsoleExample
                     // loggingBuilder.AddElasticsearch(options =>
                     //     hostContext.Configuration.Bind("Logging:CustomElasticsearch", options));
                 })
-                .ConfigureServices((hostContext, services) =>
+                .ConfigureServices((_, services) =>
                 {
                     services.AddHostedService<Worker>();
                 });

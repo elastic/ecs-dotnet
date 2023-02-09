@@ -5,7 +5,6 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using CsQuery.ExtensionMethods;
 using Elastic.CommonSchema.Generator.Schema.DTO;
-using Generator;
 using Newtonsoft.Json;
 using YamlDotNet.Serialization;
 
@@ -120,7 +119,7 @@ namespace Elastic.CommonSchema.Generator.Schema
 			public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
 			{
 				var cast = (T)value;
-				writer.WriteValue(cast.ToString().ToLower());
+				writer.WriteValue(cast.ToString()!.ToLower());
 			}
 
 			public override object ReadJson(JsonReader reader, Type type, object existingValue, JsonSerializer serializer) =>

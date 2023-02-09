@@ -9,7 +9,6 @@ using Elastic.Apm.NLog;
 using Elastic.CommonSchema.Tests.Specs;
 using NLog;
 using NLog.LayoutRenderers;
-using NLog.Layouts;
 using Config=NLog.Config;
 using NLog.Targets;
 using Xunit.Abstractions;

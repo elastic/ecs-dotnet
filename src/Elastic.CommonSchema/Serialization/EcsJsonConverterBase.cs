@@ -3,7 +3,6 @@
 // See the LICENSE file in the project root for more information
 
 using System;
-using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Text.Json.Serialization.Metadata;
@@ -12,18 +11,20 @@ namespace Elastic.CommonSchema.Serialization
 {
 	public abstract class EcsJsonConverterBase<T> : JsonConverter<T>
 	{
-		protected static bool ReadDateTime(ref Utf8JsonReader reader, ref DateTimeOffset? set)
+		// ReSharper disable once RedundantAssignment
+		protected static bool ReadDateTime(ref Utf8JsonReader reader, ref DateTimeOffset? dateTime)
 		{
 			if (reader.TokenType == JsonTokenType.Null)
 			{
-				set = null;
+				dateTime = null;
 				return true;
 			}
 
-			set = EcsJsonConfiguration.DateTimeOffsetConverter.Read(ref reader, typeof(DateTimeOffset), EcsJsonConfiguration.SerializerOptions);
+			dateTime = EcsJsonConfiguration.DateTimeOffsetConverter.Read(ref reader, typeof(DateTimeOffset), EcsJsonConfiguration.SerializerOptions);
 			return true;
 		}
 
+		// ReSharper disable once RedundantAssignment
 		protected static bool ReadString(ref Utf8JsonReader reader, ref string stringProp)
 		{
 			stringProp = reader.GetString();
@@ -40,7 +41,7 @@ namespace Elastic.CommonSchema.Serialization
 			// Attempt to use existing converter first before re-entering through JsonSerializer.Serialize().
 			// The default converter for object does not support writing.
 			var type = value.GetType();
-			if (typeof(TValue) != typeof(object) && type == typeof(TValue) && (options?.GetConverter(typeof(TValue)) is JsonConverter<TValue> keyConverter))
+			if (typeof(TValue) != typeof(object) && type == typeof(TValue) && options?.GetConverter(typeof(TValue)) is JsonConverter<TValue> keyConverter)
 				keyConverter.Write(writer, value, options);
 			else
 				JsonSerializer.Serialize(writer, value, type, options);
@@ -68,6 +69,7 @@ namespace Elastic.CommonSchema.Serialization
 			return JsonSerializer.Deserialize(ref reader, type, options);
 		}
 
+		// ReSharper disable once UnusedParameter.Local (key is used for readability)
 		private static long? ReadPropLong(ref Utf8JsonReader reader, string key)
 		{
 			if (reader.TokenType == JsonTokenType.PropertyName) reader.Read();
@@ -80,6 +82,7 @@ namespace Elastic.CommonSchema.Serialization
 			return true;
 		}
 
+		// ReSharper disable once UnusedParameter.Local (key is used for readability)
 		private static string ReadPropString(ref Utf8JsonReader reader, string key)
 		{
 			if (reader.TokenType == JsonTokenType.PropertyName) reader.Read();
@@ -92,6 +95,7 @@ namespace Elastic.CommonSchema.Serialization
 			return true;
 		}
 
+		// ReSharper disable once UnusedParameter.Local (key is used for readability)
 		private static TValue ReadProp<TValue>(ref Utf8JsonReader reader, string key)  where TValue : class
 		{
 			if (reader.TokenType == JsonTokenType.Null) return null;
@@ -106,10 +110,11 @@ namespace Elastic.CommonSchema.Serialization
 			set(b, ReadProp<TValue>(ref reader, key));
 			return true;
 		}
+		// ReSharper disable once UnusedParameter.Local (key is used for readability)
 		protected static bool ReadProp<TValue>(ref Utf8JsonReader reader, string key, JsonTypeInfo<TValue> typeInfo, T b, Action<T, TValue> set)
 			where TValue : class
 		{
-			var value = JsonSerializer.Deserialize<TValue>(ref reader, typeInfo);
+			var value = JsonSerializer.Deserialize(ref reader, typeInfo);
 			set(b, value);
 			return true;
 		}

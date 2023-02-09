@@ -1,6 +1,5 @@
 using System;
 using System.Linq;
-using System.Runtime.CompilerServices;
 using Elastic.Ingest.Elasticsearch;
 using Elastic.Ingest.Elasticsearch.CommonSchema;
 using Elastic.Ingest.Elasticsearch.DataStreams;
@@ -14,7 +13,7 @@ namespace Elastic.CommonSchema.Serilog.Sink
 {
 	public class ElasticsearchSchemaSinkOptions : ElasticsearchSchemaSinkOptions<EcsDocument>
 	{
-		public ElasticsearchSchemaSinkOptions() : base() { }
+		public ElasticsearchSchemaSinkOptions() { }
 
 		public ElasticsearchSchemaSinkOptions(HttpTransport transport) : base(transport) { }
 	}
@@ -49,7 +48,7 @@ namespace Elastic.CommonSchema.Serilog.Sink
 			var channelOptions = new DataStreamChannelOptions<TEcsDocument>(options.Transport)
 			{
 				DataStream = options.DataStream,
-				ResponseCallback = ((response, statistics) =>
+				ResponseCallback = (response, _) =>
 				{
 					var errorItems = response.Items.Where(i => i.Status >= 300).ToList();
 					if (response.TryGetElasticsearchServerError(out var error))
@@ -57,7 +56,7 @@ namespace Elastic.CommonSchema.Serilog.Sink
 					foreach (var errorItem in errorItems)
 						SelfLog.WriteLine("{0}", $"Failed to {errorItem.Action} document status: ${errorItem.Status}, error: ${errorItem.Error}");
 
-				})
+				}
 			};
 			options.ConfigureChannel?.Invoke(channelOptions);
 			_channel = new EcsDataStreamChannel<TEcsDocument>(channelOptions);
@@ -67,7 +66,7 @@ namespace Elastic.CommonSchema.Serilog.Sink
 
 		public void Emit(LogEvent logEvent)
 		{
-			var ecsDoc = LogEventConverter.ConvertToEcs<TEcsDocument>(logEvent, _formatterConfiguration);
+			var ecsDoc = LogEventConverter.ConvertToEcs(logEvent, _formatterConfiguration);
 			_channel.TryWrite(ecsDoc);
 		}
 

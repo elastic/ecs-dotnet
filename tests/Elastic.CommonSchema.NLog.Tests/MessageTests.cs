@@ -47,7 +47,7 @@ namespace Elastic.CommonSchema.NLog.Tests
 			info.Metadata.Should().NotContainKey("NotX");
 			info.Labels.Should().NotContainKey("NotX");
 
-			var x = info.Labels["ValueX"] as string;
+			var x = info.Labels["ValueX"];
 			x.Should().NotBeNull().And.Be("X");
 
 			var y = info.Metadata["SomeY"] as double?;
@@ -57,7 +57,7 @@ namespace Elastic.CommonSchema.NLog.Tests
 		[Fact]
 		public void SeesMessageWithSafeProp() => TestLogger((logger, getLogEvents) =>
 		{
-			logger.Info("Info {@SafeValue}", new NiceObject() { ValueX = "X", SomeY = 2.2 });
+			logger.Info("Info {@SafeValue}", new NiceObject { ValueX = "X", SomeY = 2.2 });
 
 			var logEvents = getLogEvents();
 			logEvents.Should().HaveCount(1);
@@ -68,14 +68,14 @@ namespace Elastic.CommonSchema.NLog.Tests
 			info.Message.Should().Be("Info {\"ValueX\":\"X\", \"SomeY\":2.2}");
 			info.Metadata.Should().ContainKey("SafeValue");
 
-			var x = info.Metadata["SafeValue"] as System.Collections.Generic.Dictionary<string, object>;
+			var x = info.Metadata["SafeValue"] as Dictionary<string, object>;
 			x.Should().NotBeNull().And.NotBeEmpty();
 		});
 
 		[Fact]
 		public void SeesMessageWithUnsafeProp() => TestLogger((logger, getLogEvents) =>
 		{
-			logger.Info("Info {UnsafeValue}", new NiceObject() { ValueX = "X", SomeY = 2.2 });
+			logger.Info("Info {UnsafeValue}", new NiceObject{ ValueX = "X", SomeY = 2.2 });
 
 			var logEvents = getLogEvents();
 			logEvents.Should().HaveCount(1);
@@ -103,7 +103,7 @@ namespace Elastic.CommonSchema.NLog.Tests
 		[Fact]
 		public void SeesMessageWithStructuredProperty() => TestLogger((logger, getLogEvents) =>
 		{
-			logger.Info("Info {@SafeValue}", new NiceObject() { ValueX = "X", SomeY = 2.2 });
+			logger.Info("Info {@SafeValue}", new NiceObject { ValueX = "X", SomeY = 2.2 });
 
 			var logEvents = getLogEvents();
 			logEvents.Should().HaveCount(1);
@@ -114,14 +114,14 @@ namespace Elastic.CommonSchema.NLog.Tests
 			info.Message.Should().Be("Info {\"ValueX\":\"X\", \"SomeY\":2.2}");
 			info.Metadata.Should().ContainKey("SafeValue");
 
-			var x = info.Metadata["SafeValue"] as System.Collections.Generic.Dictionary<string, object>;
+			var x = info.Metadata["SafeValue"] as Dictionary<string, object>;
 			x.Should().NotBeNull().And.NotBeEmpty();
 		});
 
 		[Fact]
 		public void SeesMessageWithStructuredPropAsString() => TestLogger((logger, getLogEvents) =>
 		{
-			logger.Info("Info {StructuredValue}", new NiceObject() { ValueX = "X", SomeY = 2.2 });
+			logger.Info("Info {StructuredValue}", new NiceObject { ValueX = "X", SomeY = 2.2 });
 
 			var logEvents = getLogEvents();
 			logEvents.Should().HaveCount(1);
@@ -152,7 +152,7 @@ namespace Elastic.CommonSchema.NLog.Tests
 			info.Message.Should().StartWith("Info {\"MethodInfoProperty");
 			info.Metadata.Should().ContainKey("EvilValue");
 
-			var x = info.Metadata["EvilValue"] as System.Collections.Generic.Dictionary<string, object>;
+			var x = info.Metadata["EvilValue"] as Dictionary<string, object>;
 			x.Should().NotBeNull().And.NotBeEmpty();
 		});
 
@@ -173,8 +173,8 @@ namespace Elastic.CommonSchema.NLog.Tests
 
 			var failures = info.Metadata["__failures__"] as List<object>;
 			failures.Should().NotBeNull().And.HaveCount(1);
-			var failure = failures[0] as MetadataDictionary;
-			failure["reason"].Should().NotBeNull();
+			var failure = failures![0] as MetadataDictionary;
+			failure!["reason"].Should().NotBeNull();
 			failure["key"].Should().Be("EvilValue");
 		});
 
@@ -186,17 +186,19 @@ namespace Elastic.CommonSchema.NLog.Tests
 			public BadObject() => _throws = false;
 			public BadObject(bool @throw) => _throws = @throw;
 
-			public System.Type TypeProperty { get; } = typeof(BadObject);
+			// ReSharper disable UnusedMember.Local
+			public Type TypeProperty { get; } = typeof(BadObject);
 
-			public System.Reflection.MethodInfo MethodInfoProperty { get; } = typeof(BadObject).GetProperty(nameof(MethodInfoProperty)).GetMethod;
+			public System.Reflection.MethodInfo MethodInfoProperty { get; } = typeof(BadObject).GetProperty(nameof(MethodInfoProperty))?.GetMethod;
 
-			public System.Action DelegateProperty { get; } = new System.Action(() => throw new NotSupportedException());
+			public Action DelegateProperty { get; } = () => throw new NotSupportedException();
 
 			public System.Collections.IEqualityComparer ComparerProperty { get; } = StringComparer.OrdinalIgnoreCase;
 
-			public System.IFormatProvider CultureProperty { get; } = System.Globalization.CultureInfo.InvariantCulture;
+			public IFormatProvider CultureProperty { get; } = System.Globalization.CultureInfo.InvariantCulture;
 
 			public string EvilProperty => _throws ? throw new NotSupportedException() : "EvilProperty";
+			// ReSharper restore UnusedMember.Local
 		}
 
 		[Fact]
@@ -209,7 +211,7 @@ namespace Elastic.CommonSchema.NLog.Tests
 			}
 			catch (Exception ex)
 			{
-				logger.Error(ex, "My Exception!");
+				logger?.Error(ex, "My Exception!");
 			}
 
 			var logEvents = getLogEvents();
@@ -242,10 +244,10 @@ namespace Elastic.CommonSchema.NLog.Tests
 				info.Labels.Should().ContainKey("DupKey");
 				info.Labels.Should().ContainKey("DupKey_1");
 
-				var x = info.Labels["DupKey"] as string;
+				var x = info.Labels["DupKey"];
 				x.Should().NotBeNull().And.Be("LoggerArg");
 
-				var y = info.Labels["DupKey_1"] as string;
+				var y = info.Labels["DupKey_1"];
 				y.Should().NotBeNull().And.Be("Mdlc");
 			}
 		});

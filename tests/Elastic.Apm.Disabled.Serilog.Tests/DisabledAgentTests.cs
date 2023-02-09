@@ -2,7 +2,6 @@
 // Elasticsearch B.V licenses this file to you under the Apache 2.0 License.
 // See the LICENSE file in the project root for more information
 
-using Elastic.Apm.Api;
 using Elastic.Apm.SerilogEnricher;
 using Elastic.Apm.Test.Common;
 using FluentAssertions;
@@ -35,19 +34,12 @@ namespace Elastic.Apm.Disabled.Serilog.Tests
 				.WriteTo.TestOutput(_output, LogEventLevel.Verbose, outputTemplate: template)
 				.CreateLogger();
 
-			string? traceId = null;
-			string? transactionId = null;
-			string? spanId = null;
-
 			logger.Information("Before Transaction");
 
-			Agent.Tracer.CaptureTransaction("Test", "Test", (t) =>
+			Agent.Tracer.CaptureTransaction("Test", "Test", t =>
 			{
-				t.CaptureSpan("Span", "Test", s =>
+				t.CaptureSpan("Span", "Test", _ =>
 				{
-					traceId = t.TraceId;
-					transactionId = t.Id;
-					spanId = s.Id;
 					logger.Information("During Span");
 				});
 
@@ -61,9 +53,7 @@ namespace Elastic.Apm.Disabled.Serilog.Tests
 				.HaveCount(4);
 
 			foreach (var log in InMemorySink.Instance.LogEvents)
-			{
 				log.Properties.Keys.Should().NotContain(_tracingKeys);
-			}
 
 		}
 

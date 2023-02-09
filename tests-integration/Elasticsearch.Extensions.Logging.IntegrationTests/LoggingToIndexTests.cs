@@ -4,17 +4,12 @@ using System.Threading;
 using System.Threading.Tasks;
 using Elastic.Clients.Elasticsearch;
 using Elastic.CommonSchema;
-using Elastic.Elasticsearch.Xunit;
-using Elastic.Elasticsearch.Xunit.XunitPlumbing;
-using Elastic.Transport;
 using Elasticsearch.Extensions.Logging.Options;
 using Elasticsearch.IntegrationDefaults;
 using FluentAssertions;
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
 using Xunit;
 using Xunit.Abstractions;
-using LogLevel = Microsoft.Extensions.Logging.LogLevel;
 
 namespace Elasticsearch.Extensions.Logging.IntegrationTests
 {
@@ -34,7 +29,7 @@ namespace Elasticsearch.Extensions.Logging.IntegrationTests
 				var pre = $"logs-{s}";
 				o.Index = new IndexNameOptions { Format = $"{pre}-{{0:yyyy.MM.dd}}" };
 				var nodes = Client.ElasticsearchClientSettings.NodePool.Nodes.Select(n => n.Uri).ToArray();
-				o.ShipTo = new ShipToOptions() { NodeUris = nodes, ConnectionPoolType = ConnectionPoolType.Static };
+				o.ShipTo = new ShipToOptions { NodeUris = nodes, ConnectionPoolType = ConnectionPoolType.Static };
 			});
 
 		[Fact]
@@ -51,7 +46,7 @@ namespace Elasticsearch.Extensions.Logging.IntegrationTests
 			provider.ObservedException.Should().BeNull();
 			listener.ObservedException.Should().BeNull();
 
-			var refresh = await Client.Indices.RefreshAsync($"{indexPrefix}-*");
+			await Client.Indices.RefreshAsync($"{indexPrefix}-*");
 
 			var response = Client.Search<LogEvent>(new SearchRequest($"{indexPrefix}-*"));
 
@@ -80,7 +75,7 @@ namespace Elasticsearch.Extensions.Logging.IntegrationTests
 			provider.ObservedException.Should().BeNull();
 			listener.ObservedException.Should().BeNull();
 
-			var refresh = await Client.Indices.RefreshAsync($"{indexPrefix}-*");
+			await Client.Indices.RefreshAsync($"{indexPrefix}-*");
 
 			var response = Client.Search<LogEvent>(new SearchRequest($"{indexPrefix}-*"));
 

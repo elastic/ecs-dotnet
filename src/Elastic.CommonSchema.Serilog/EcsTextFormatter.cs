@@ -3,7 +3,6 @@
 // See the LICENSE file in the project root for more information
 
 using System.IO;
-using System.Text;
 using Serilog.Events;
 using Serilog.Formatting;
 
@@ -25,14 +24,15 @@ namespace Elastic.CommonSchema.Serilog
 
 		public virtual void Format(LogEvent logEvent, TextWriter output)
 		{
-			var ecsEvent = LogEventConverter.ConvertToEcs<TEcsDocument>(logEvent, Configuration);
+			var ecsEvent = LogEventConverter.ConvertToEcs(logEvent, Configuration);
 			output.WriteLine(ecsEvent.Serialize());
 		}
 	}
 
+	// ReSharper disable once UnusedType.Global
 	public class EcsTextFormatter : EcsTextFormatter<EcsDocument>
 	{
-		public EcsTextFormatter() : base() {}
+		public EcsTextFormatter() {}
 		public EcsTextFormatter(EcsTextFormatterConfiguration<EcsDocument> configuration) : base(configuration) {}
 		public EcsTextFormatter(EcsTextFormatterConfiguration configuration) : base(configuration) {}
 	}

@@ -2,14 +2,9 @@
 // Elasticsearch B.V licenses this file to you under the Apache 2.0 License.
 // See the LICENSE file in the project root for more information
 
-#if NETSTANDARD
-using Microsoft.AspNetCore.Http;
-#else
-using System.Web;
-#endif
 using System;
 using System.Collections.Generic;
-using System.Runtime.CompilerServices;
+using Elastic.CommonSchema.Serilog.Adapters;
 using Serilog.Events;
 
 namespace Elastic.CommonSchema.Serilog

@@ -2,7 +2,6 @@
 using System.Linq;
 using Elastic.CommonSchema.Generator.Projection;
 using Elastic.CommonSchema.Generator.Schema;
-using Generator;
 
 namespace Elastic.CommonSchema.Generator
 {
@@ -10,6 +9,7 @@ namespace Elastic.CommonSchema.Generator
 	{
 		private const string DefaultDownloadBranch = "v8.4.0";
 
+		// ReSharper disable once UnusedParameter.Local
 		private static void Main(string[] args)
 		{
 			var redownloadCoreSpecification = true;
