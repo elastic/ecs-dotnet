@@ -16,5 +16,7 @@ namespace Elastic.CommonSchema.Serilog
 		Url Url { get; }
 		User User { get; }
 		UserAgent UserAgent { get; }
+
+		bool HasContext { get; }
 	}
 }

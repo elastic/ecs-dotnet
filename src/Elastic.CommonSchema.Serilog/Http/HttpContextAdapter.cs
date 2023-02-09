@@ -18,9 +18,11 @@ namespace Elastic.CommonSchema.Serilog
 
 		public Client Client => null;
 
+		public bool HasContext => _httpContext != null;
+
 		public IEnumerable<Exception> Exceptions => Enumerable.Empty<Exception>();
 
-		public Http Http => _httpContext == null ? null : new Http
+		public Http Http => !HasContext ? null : new Http
 		{
 			RequestMethod = _httpContext.Request.HttpMethod,
 			RequestBytes = _httpContext.Request.TotalBytes,
@@ -33,12 +35,12 @@ namespace Elastic.CommonSchema.Serilog
 			ResponseBodyContent = _httpContext.Response.OutputStream.ToString()
 		};
 
-		public Server Server => _httpContext == null ? null : new Server
+		public Server Server => !HasContext ? null : new Server
 		{
 			Domain = _httpContext.Request.Url.Authority
 		};
 
-		public Url Url => _httpContext == null ? null : new Url
+		public Url Url => !HasContext ? null : new Url
 		{
 			Original = _httpContext.Request.RawUrl,
 			Full = _httpContext.Request.Url.ToString(),
@@ -52,11 +54,9 @@ namespace Elastic.CommonSchema.Serilog
 
 		public User User => null;
 
-		public UserAgent UserAgent => _httpContext == null ? null : new UserAgent
+		public UserAgent UserAgent => !HasContext ? null : new UserAgent
 		{
-			DeviceName = _httpContext.Request.Browser != null
-				? _httpContext.Request.Browser?.MobileDeviceModel
-				: null,
+			DeviceName = _httpContext.Request.Browser?.MobileDeviceModel,
 			Name = _httpContext.Request.Browser?.Browser,
 			Original = _httpContext.Request.UserAgent,
 			Version = _httpContext.Request.Browser?.Version

@@ -23,11 +23,13 @@ namespace Elastic.CommonSchema.Serilog
 		public HttpAdapter(IHttpContextAccessor httpContextAccessor) =>
 			_httpContextAccessor = httpContextAccessor;
 
+		public bool HasContext => _httpContextAccessor?.HttpContext != null;
+
 		public UserAgent UserAgent
 		{
 			get
 			{
-				if (_httpContextAccessor.HttpContext == null)
+				if (!HasContext)
 					return null;
 
 				var userAgent = _httpContextAccessor.HttpContext.Request.Headers["User-Agent"];
@@ -59,7 +61,7 @@ namespace Elastic.CommonSchema.Serilog
 		{
 			get
 			{
-				if (_httpContextAccessor.HttpContext == null)
+				if (!HasContext)
 					return null;
 				else
 				{
@@ -79,6 +81,8 @@ namespace Elastic.CommonSchema.Serilog
 
 		private void SetResponseBody(Http http)
 		{
+			if (!HasContext) return;
+
 		// TODO!
 		// http.ResponseBodyBytes = 0, //response?.OutputStream.Length ?? 0,
 		// http.ResponseBodyContent  = _httpContextAccessor.HttpContext.Response.Body
@@ -86,6 +90,8 @@ namespace Elastic.CommonSchema.Serilog
 
 		private void SetRequestBody(Http http)
 		{
+			if (!HasContext) return;
+
 			if (!_httpContextAccessor.HttpContext.Request.ContentLength.HasValue)
 				return;
 
@@ -98,8 +104,7 @@ namespace Elastic.CommonSchema.Serilog
 		{
 			get
 			{
-				if (_httpContextAccessor.HttpContext == null)
-					return null;
+				if (!HasContext) return null;
 
 				var request = _httpContextAccessor.HttpContext.Request;
 
@@ -120,7 +125,7 @@ namespace Elastic.CommonSchema.Serilog
 		{
 			get
 			{
-				if (_httpContextAccessor.HttpContext == null)
+				if (!HasContext)
 					return null;
 
 				var ip4 = _httpContextAccessor.HttpContext.Connection.LocalIpAddress.MapToIPv4();
@@ -140,7 +145,7 @@ namespace Elastic.CommonSchema.Serilog
 		{
 			get
 			{
-				if (_httpContextAccessor.HttpContext == null)
+				if (!HasContext)
 					return null;
 
 				var ip4 = _httpContextAccessor.HttpContext.Features.Get<IHttpConnectionFeature>()?.RemoteIpAddress.MapToIPv4();
@@ -159,7 +164,7 @@ namespace Elastic.CommonSchema.Serilog
 		{
 			get
 			{
-				if (_httpContextAccessor.HttpContext == null)
+				if (!HasContext)
 					return null;
 
 				var idClaim = _httpContextAccessor.HttpContext.User.FindAll(ClaimTypes.NameIdentifier);
