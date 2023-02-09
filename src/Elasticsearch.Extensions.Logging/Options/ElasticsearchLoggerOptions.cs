@@ -1,8 +1,9 @@
+using Elastic.CommonSchema;
 using Elastic.Ingest.Elasticsearch;
 
 namespace Elasticsearch.Extensions.Logging.Options
 {
-	public class ElasticsearchLoggerOptions
+	public class ElasticsearchLoggerOptions : IEcsDocumentCreationOptions
 	{
 		/// <summary>
 		/// Gets or sets a flag indicating whether host details should be included in the message. Defaults to <c>true</c>.
@@ -66,6 +67,6 @@ namespace Elasticsearch.Extensions.Logging.Options
 		/// Gets or sets additional tags to pass in the message, for example you can tag with the environment name ('Development',
 		/// 'Production', etc).
 		/// </summary>
-		public string[] Tags { get; set; } = new string[0];
+		public string[]? Tags { get; set; }
 	}
 }

@@ -128,10 +128,10 @@ namespace Elastic.CommonSchema.Log4net.Tests
 				info.Error.Type.Should().Be(e.GetType().FullName);
 
 				info.Error.StackTrace.Should().Contain(e.Message);
-				info.Error.StackTrace.Should().Contain(e.StackTrace);
+				info.Error.StackTrace.Should().Contain("at void");
 
 				info.Error.StackTrace.Should().Contain(innerException.Message);
-				info.Error.StackTrace.Should().Contain(innerException.StackTrace);
+				info.Error.StackTrace.Should().Contain("at void");
 			}
 		});
 

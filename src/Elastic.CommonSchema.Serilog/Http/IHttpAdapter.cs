@@ -10,7 +10,6 @@ namespace Elastic.CommonSchema.Serilog
 	public interface IHttpAdapter
 	{
 		Client Client { get; }
-		IEnumerable<Exception> Exceptions { get; }
 		Http Http { get; }
 		Server Server { get; }
 		Url Url { get; }

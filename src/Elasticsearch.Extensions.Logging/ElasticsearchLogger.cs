@@ -5,9 +5,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Text;
-using System.Threading;
 using Elastic.CommonSchema;
 using Elastic.Channels;
 using Elasticsearch.Extensions.Logging.Options;
@@ -61,15 +59,6 @@ namespace Elasticsearch.Extensions.Logging
 			}
 		}
 
-		private static void AddException(Exception exception, LogEvent logEvent)
-		{
-			// Use the full string of the exception, which includes both the outer stack trace and any
-			// inner exceptions and their stack trace. It also includes any additional values that some
-			// exceptions have in ToString() that is not in Message.
-			var stackTrace = exception.ToString();
-			logEvent.Error = new Error { Type = exception.GetType().FullName, Message = exception.Message, StackTrace = stackTrace };
-		}
-
 		private void AddScopeValues(LogEvent logEvent)
 		{
 			if (_options.IncludeScopes)
@@ -89,10 +78,7 @@ namespace Elasticsearch.Extensions.Logging
 								isFormattedLogValues = true;
 								continue;
 							}
-
-							if (CheckTracingValues(le, kvp)) continue;
-
-							le.Labels[kvp.Key] = FormatValue(kvp.Value);
+							le.AssignField(kvp.Key, FormatValue(kvp.Value));
 						}
 					}
 
@@ -113,48 +99,26 @@ namespace Elasticsearch.Extensions.Logging
 						logEvent.MessageTemplate = kvp.Value.ToString();
 						continue;
 					}
-
-					if (CheckTracingValues(logEvent, kvp)) continue;
-
-					logEvent.Labels ??= new Labels();
-					logEvent.Labels[kvp.Key] = FormatValue(kvp.Value);
+					logEvent.AssignField(kvp.Key, FormatValue(kvp.Value));
 				}
 			}
 		}
 
+		private static Agent? DefaultAgent { get; } = EcsDocument.CreateAgent(typeof(ElasticsearchLogger));
 		private LogEvent BuildLogEvent<TState>(string categoryName, LogLevel logLevel,
 			EventId eventId, TState state, Exception? exception,
 			Func<TState, Exception, string> formatter
 		)
 		{
-			var logEvent = new LogEvent
-			{
-				Ecs = LogEventToEcsHelper.GetEcs(),
-				Timestamp = ElasticsearchLoggerProvider.LocalDateTimeProvider(),
-				Message = formatter(state, exception!),
-				Log = new Log { Level = LogEventToEcsHelper.GetLogLevelString(logLevel), Logger = categoryName },
-				Event = new Event { Action = eventId.Name, Code = eventId.Id.ToString(), Severity = LogEventToEcsHelper.GetSeverity(logLevel) }
-			};
+			var timestamp = ElasticsearchLoggerProvider.LocalDateTimeProvider();
+			var logEvent = EcsDocument.CreateNewWithDefaults<LogEvent>(timestamp, exception, _options);
 
-			if (exception != null) AddException(exception, logEvent);
-
-			logEvent.Agent = LogEventToEcsHelper.GetAgent();
-			logEvent.Service = LogEventToEcsHelper.GetService();
+			logEvent.Message = formatter(state, exception!);
+			logEvent.Log = new Log { Level = LogEventToEcsHelper.GetLogLevelString(logLevel), Logger = categoryName };
+			logEvent.Event = new Event { Action = eventId.Name, Code = eventId.Id.ToString(), Severity = LogEventToEcsHelper.GetSeverity(logLevel) };
+			logEvent.Agent = DefaultAgent;
 
 			if (_options.Tags != null && _options.Tags.Length > 0) logEvent.Tags = _options.Tags;
-
-			if (_options.IncludeHost) logEvent.Host = LogEventToEcsHelper.GetHost();
-
-			if (_options.IncludeProcess) logEvent.Process = LogEventToEcsHelper.GetProcess();
-
-			if (_options.IncludeUser)
-			{
-				logEvent.User = new User
-				{
-					Id = Thread.CurrentPrincipal?.Identity.Name, Name = Environment.UserName, Domain = Environment.UserDomainName
-				};
-			}
-			logEvent.SetActivityData();
 
 			if (_options.IncludeScopes) AddScopeValues(logEvent);
 
@@ -162,44 +126,6 @@ namespace Elasticsearch.Extensions.Logging
 			AddStateValues(state, logEvent);
 
 			return logEvent;
-		}
-
-		private bool CheckTracingValues(LogEvent logEvent, KeyValuePair<string, object> kvp)
-		{
-			if (kvp.Key == "span.id")
-			{
-				var value = FormatValue(kvp.Value);
-				if (!string.IsNullOrWhiteSpace(value))
-				{
-					logEvent.SpanId = value;
-				}
-
-				return true;
-			}
-
-			if (kvp.Key == "trace.id")
-			{
-				var value = FormatValue(kvp.Value);
-				if (!string.IsNullOrWhiteSpace(value))
-				{
-					logEvent.TraceId = value;
-				}
-
-				return true;
-			}
-
-			if (kvp.Key == "transaction.id")
-			{
-				var value = FormatValue(kvp.Value);
-				if (!string.IsNullOrWhiteSpace(value))
-				{
-					logEvent.TransactionId = value;
-				}
-
-				return true;
-			}
-
-			return false;
 		}
 
 		private string FormatEnumerable(IEnumerable enumerable, int depth)
@@ -258,26 +184,20 @@ namespace Elasticsearch.Extensions.Logging
 				case DateTime dateTime:
 					if (dateTime.TimeOfDay.Equals(TimeSpan.Zero))
 						return dateTime.ToString("yyyy'-'MM'-'dd");
-					else
-						return dateTime.ToString("o");
+					return dateTime.ToString("o");
 				case DateTimeOffset dateTimeOffset:
 					return dateTimeOffset.ToString("yyyy'-'MM'-'dd'T'HH':'mm':'ss.ffffffzzz");
 				case string s:
 					// since 'string' implements IEnumerable, special case it
 					return s;
 				default:
+					// need to special case dictionary before IEnumerable
 					if (depth < 1 && value is IDictionary<string, object> dictionary)
-					{
-						// need to special case dictionary before IEnumerable
 						return FormatStringDictionary(dictionary, depth);
-					}
-					else if (depth < 1 && value is IEnumerable enumerable)
-					{
-						// if the value implements IEnumerable, build a comma separated string
+					// if the value implements IEnumerable, build a comma separated string
+					if (depth < 1 && value is IEnumerable enumerable)
 						return FormatEnumerable(enumerable, depth);
-					}
-					else
-						return value.ToString();
+					return value.ToString();
 			}
 		}
 
