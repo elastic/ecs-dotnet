@@ -48,7 +48,6 @@ An example of the output is given below:
 | Option                        | Description                                                                            |
 |-------------------------------|----------------------------------------------------------------------------------------|
 | `MapCurrentThead`             | `true` map `ecs.process` by looking up the `Process` from the current thread           |                                              |
-| `MapExceptions`               | `true` default, map exceptions to `ecs.error`                                          |
 | `MapHttpAdapter`              | `null` a way to map `HttpContextAccessor` to ECS fields.                               | 
 | `LogEventsPropertiesToFilter` | A `Set<string>` of properties that should not be emitted as `labels.*` or `metadata.*` |
 | `MapCustom`                   | A Func that allows you to mutate the EcsDocument before its fully converted.           |
