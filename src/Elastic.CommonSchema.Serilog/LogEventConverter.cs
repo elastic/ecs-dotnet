@@ -50,6 +50,8 @@ namespace Elastic.CommonSchema.Serilog
 				Client = GetClient(logEvent, configuration),
 				User = GetUser(logEvent, configuration)
 			};
+			ecsEvent.SetActivityData();
+
 			var metaData = GetMetadata(logEvent, configuration.LogEventPropertiesToFilter);
 			foreach (var kv in metaData)
 				ecsEvent.AssignField(kv.Key, kv.Value);

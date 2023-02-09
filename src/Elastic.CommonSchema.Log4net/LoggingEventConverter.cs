@@ -25,6 +25,7 @@ internal static class LoggingEventConverter
 			Process = GetProcess(loggingEvent),
 			Host = GetHost(loggingEvent),
 		};
+		ecsDocument.SetActivityData();
 		var metadata = GetMetadata(loggingEvent);
 		if (metadata == null) return ecsDocument;
 
