@@ -14,30 +14,60 @@ using Serilog.Events;
 
 namespace Elastic.CommonSchema.Serilog
 {
+	/// <summary> Provides configuration options for <see cref="EcsTextFormatter"/> </summary>
 	public interface IEcsTextFormatterConfiguration
 	{
+		/// <summary>Defaults to true, attempts to get the current <see cref="System.Diagnostics.Process" /> and thread id. </summary>
 		bool MapCurrentThread { get; set; }
-		bool MapExceptions { get; set; }
+
+		/// <summary>
+		/// Expert option, its recommended to use <see cref="EnricherExtensions.WithEcsHttpContext"/> to ensure HttpContext gets mapped
+		/// to the appropriate ECS fields.
+		/// <para> Example: </para>
+		/// <code>
+		/// .UseSerilog((ctx, config) =>
+		/// {
+		///		var httpAccessor = ctx.Configuration.Get&lt;HttpContextAccessor&gt;();
+		///
+		///		config
+		///			.ReadFrom.Configuration(ctx.Configuration)
+		///			.Enrich.WithEcsHttpContext(httpAccessor);
+		/// </code>
+		/// </summary>
 		IHttpAdapter MapHttpAdapter { get; set; }
+
+		/// <summary>
+		/// Stop certain keys to be persisted as <see cref="EcsDocument.Metadata"/> or <see cref="EcsDocument.Labels"/>
+		/// </summary>
 		ISet<string> LogEventPropertiesToFilter { get;set; }
 	}
 
+	/// <summary> Provides configuration options for <see cref="EcsTextFormatter{TEcsDocument}"/> </summary>
 	public interface IEcsTextFormatterConfiguration<TEcsDocument> : IEcsTextFormatterConfiguration
 		where TEcsDocument : EcsDocument, new()
 	{
+		/// <summary>
+		/// Allows you to enrich <see cref="TEcsDocument"/> using <see cref="LogEvent"/> before its being formatted
+		/// </summary>
 		Func<TEcsDocument, LogEvent, TEcsDocument> MapCustom { get; set; }
 	}
 
+	/// <inheritdoc cref="IEcsTextFormatterConfiguration{TEcsDocument}"/>
 	public class EcsTextFormatterConfiguration<TEcsDocument> : IEcsTextFormatterConfiguration<TEcsDocument>
 		where TEcsDocument : EcsDocument, new()
 	{
+		/// <inheritdoc cref="IEcsTextFormatterConfiguration.MapCurrentThread"/>
 		public bool MapCurrentThread { get; set; } = true;
-		public bool MapExceptions { get; set; } = true;
+		/// <inheritdoc cref="IEcsTextFormatterConfiguration.MapHttpAdapter"/>
 		public IHttpAdapter MapHttpAdapter { get; set; }
+		/// <inheritdoc cref="IEcsTextFormatterConfiguration.LogEventPropertiesToFilter"/>
 		public ISet<string> LogEventPropertiesToFilter { get; set; }
+		/// <inheritdoc cref="IEcsTextFormatterConfiguration{TEcsDocument}.MapCustom"/>
 		public Func<TEcsDocument, LogEvent, TEcsDocument> MapCustom { get; set; }
 	}
 
+	// ReSharper disable once ClassNeverInstantiated.Global
+	/// <inheritdoc cref="IEcsTextFormatterConfiguration{TEcsDocument}"/>
 	public class EcsTextFormatterConfiguration : EcsTextFormatterConfiguration<EcsDocument>
 	{
 

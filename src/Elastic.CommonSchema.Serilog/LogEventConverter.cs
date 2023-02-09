@@ -18,37 +18,6 @@ namespace Elastic.CommonSchema.Serilog
 	/// </summary>
 	public static class LogEventConverter
 	{
-		private static class SpecialKeys
-		{
-			public const string DefaultLogger = "Elastic.CommonSchema.Serilog";
-
-			public const string SourceContext = nameof(SourceContext);
-			public const string EnvironmentUserName = nameof(EnvironmentUserName);
-			public const string Host = nameof(Host);
-			public const string ActionCategory = nameof(ActionCategory);
-			public const string ActionName = nameof(ActionName);
-			public const string ActionId = nameof(ActionId);
-			public const string ActionKind = nameof(ActionKind);
-			public const string ActionSeverity = nameof(ActionSeverity);
-			public const string ApplicationId = nameof(ApplicationId);
-			public const string ApplicationName = nameof(ApplicationName);
-			public const string ApplicationType = nameof(ApplicationType);
-			public const string ApplicationVersion = nameof(ApplicationVersion);
-			public const string ProcessName = nameof(ProcessName);
-			public const string ProcessId = nameof(ProcessId);
-			public const string ThreadId = nameof(ThreadId);
-			public const string MachineName = nameof(MachineName);
-			public const string Elapsed = nameof(Elapsed);
-			public const string ElapsedMilliseconds = nameof(ElapsedMilliseconds);
-			public const string Method = nameof(Method);
-			public const string RequestMethod = nameof(RequestMethod);
-			public const string Path = nameof(Path);
-			public const string RequestPath = nameof(RequestPath);
-			public const string StatusCode = nameof(StatusCode);
-			public const string Scheme = nameof(Scheme);
-			public const string QueryString = nameof(QueryString);
-			public const string RequestId = nameof(RequestId);
-		}
 
 		public static TEcsDocument ConvertToEcs<TEcsDocument>(LogEvent logEvent, IEcsTextFormatterConfiguration<TEcsDocument> configuration)
 			where TEcsDocument : EcsDocument, new()
@@ -77,9 +46,9 @@ namespace Elastic.CommonSchema.Serilog
 				Server = GetServer(logEvent, configuration),
 				Http = GetHttp(logEvent, configuration),
 				Url = GetUrl(logEvent, configuration),
-				UserAgent = GetUserAgent(configuration),
-				Client = GetClient(configuration),
-				User = GetUser(configuration)
+				UserAgent = GetUserAgent(logEvent, configuration),
+				Client = GetClient(logEvent, configuration),
+				User = GetUser(logEvent, configuration)
 			};
 			ecsEvent.SetActivityData();
 
@@ -87,8 +56,7 @@ namespace Elastic.CommonSchema.Serilog
 			foreach (var kv in metaData)
 				ecsEvent.AssignField(kv.Key, kv.Value);
 
-			if (configuration.MapExceptions)
-				ecsEvent.Error = GetError(exceptions);
+			ecsEvent.Error = GetError(exceptions);
 
 			if (configuration.MapCustom != null)
 				ecsEvent = configuration.MapCustom(ecsEvent, logEvent);
@@ -196,6 +164,9 @@ namespace Elastic.CommonSchema.Serilog
 				case SpecialKeys.Scheme:
 				case SpecialKeys.QueryString:
 				case SpecialKeys.RequestId:
+				case SpecialKeys.HttpContext:
+				case SpecialKeys.ContentType:
+				case SpecialKeys.HostingRequestFinishedLog:
 					return true;
 				default:
 					return false;
@@ -348,7 +319,7 @@ namespace Elastic.CommonSchema.Serilog
 
 			var log = new Log { Level = e.Level.ToString("F"), Logger = source };
 
-			if (configuration.MapExceptions)
+			if (exceptions.Count > 0)
 			{
 				// TODO - walk stack trace for other information
 			}
@@ -455,6 +426,10 @@ namespace Elastic.CommonSchema.Serilog
 
 		private static Http GetHttp(LogEvent e, IEcsTextFormatterConfiguration configuration)
 		{
+			if (e.TryGetScalarPropertyValue(SpecialKeys.HttpContext, out var httpContext)
+				&& httpContext?.Value is HttpContextEnricher.HttpContextEnrichments enriched)
+				return enriched.Http;
+
 			var http = configuration.MapHttpAdapter?.Http;
 
 			if (e.TryGetScalarPropertyValue(SpecialKeys.Method, out var method) || e.TryGetScalarPropertyValue(SpecialKeys.RequestMethod, out method))
@@ -474,12 +449,21 @@ namespace Elastic.CommonSchema.Serilog
 				http ??= new Http();
 				http.ResponseStatusCode = (int)statusCode.Value;
 			}
+			if (e.TryGetScalarPropertyValue(SpecialKeys.ContentType, out var contentType))
+			{
+				http ??= new Http();
+				http.ResponseMimeType = contentType.Value.ToString();
+			}
 
 			return http;
 		}
 
 		private static Url GetUrl(LogEvent e, IEcsTextFormatterConfiguration configuration)
 		{
+			if (e.TryGetScalarPropertyValue(SpecialKeys.HttpContext, out var httpContext)
+				&& httpContext?.Value is HttpContextEnricher.HttpContextEnrichments enriched)
+				return enriched.Url;
+
 			var url = configuration.MapHttpAdapter?.Url;
 
 			if (e.TryGetScalarPropertyValue(SpecialKeys.Path, out var path) || e.TryGetScalarPropertyValue(SpecialKeys.RequestPath, out path))
@@ -504,10 +488,29 @@ namespace Elastic.CommonSchema.Serilog
 			return url;
 		}
 
-		private static UserAgent GetUserAgent(IEcsTextFormatterConfiguration configuration) => configuration.MapHttpAdapter?.UserAgent;
+		private static UserAgent GetUserAgent(LogEvent e, IEcsTextFormatterConfiguration configuration)
+		{
+			if (e.TryGetScalarPropertyValue(SpecialKeys.HttpContext, out var httpContext)
+				&& httpContext?.Value is HttpContextEnricher.HttpContextEnrichments enriched)
+				return enriched.UserAgent;
+			return configuration.MapHttpAdapter?.UserAgent;
+		}
 
-		private static User GetUser(IEcsTextFormatterConfiguration configuration) => configuration.MapHttpAdapter?.User;
+		private static User GetUser(LogEvent e, IEcsTextFormatterConfiguration configuration)
+		{
+			if (e.TryGetScalarPropertyValue(SpecialKeys.HttpContext, out var httpContext)
+				&& httpContext?.Value is HttpContextEnricher.HttpContextEnrichments enriched)
+				return enriched.User;
+			return configuration.MapHttpAdapter?.User;
 
-		private static Client GetClient(IEcsTextFormatterConfiguration configuration) => configuration.MapHttpAdapter?.Client;
+		}
+
+		private static Client GetClient(LogEvent e, IEcsTextFormatterConfiguration configuration)
+		{
+			if (e.TryGetScalarPropertyValue(SpecialKeys.HttpContext, out var httpContext)
+				&& httpContext?.Value is HttpContextEnricher.HttpContextEnrichments enriched)
+				return enriched.Client;
+			return configuration.MapHttpAdapter?.Client;
+		}
 	}
 }
