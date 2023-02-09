@@ -16,6 +16,23 @@ var logger = new LoggerConfiguration()
 
 In the code snippet above `new EcsTextFormatter()` enables the text formatter and instructs Serilog to format the event as JSON. The sample above uses the Console sink, but you are free to use any sink of your choice, perhaps consider using a filesystem sink and [Elastic Filebeat](https://www.elastic.co/downloads/beats/filebeat) for durable and reliable ingestion.
 
+In ASP.NET (core) applications 
+
+```csharp
+.UseSerilog((ctx, config) =>
+{
+	// Ensure HttpContextAccessor is accessible
+	var httpAccessor = ctx.Configuration.Get<HttpContextAccessor>();
+
+	config
+		.ReadFrom.Configuration(ctx.Configuration)
+		.Enrich.WithEcsHttpContext(httpAccessor)
+		.WriteTo.Async(a => a.Console(new EcsTextFormatter()));
+})
+```
+
+The `WithEcsHttpContext` ensures logs will be enriched with `HttpContext` data.
+
 An example of the output is given below:
 
 ```json
