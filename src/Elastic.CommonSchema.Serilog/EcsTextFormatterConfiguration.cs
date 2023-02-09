@@ -15,11 +15,8 @@ using Serilog.Events;
 namespace Elastic.CommonSchema.Serilog
 {
 	/// <summary> Provides configuration options for <see cref="EcsTextFormatter"/> </summary>
-	public interface IEcsTextFormatterConfiguration
+	public interface IEcsTextFormatterConfiguration : IEcsDocumentCreationOptions
 	{
-		/// <summary>Defaults to true, attempts to get the current <see cref="System.Diagnostics.Process" /> and thread id. </summary>
-		bool MapCurrentThread { get; set; }
-
 		/// <summary>
 		/// Expert option, its recommended to use <see cref="EnricherExtensions.WithEcsHttpContext"/> to ensure HttpContext gets mapped
 		/// to the appropriate ECS fields.
@@ -56,8 +53,15 @@ namespace Elastic.CommonSchema.Serilog
 	public class EcsTextFormatterConfiguration<TEcsDocument> : IEcsTextFormatterConfiguration<TEcsDocument>
 		where TEcsDocument : EcsDocument, new()
 	{
-		/// <inheritdoc cref="IEcsTextFormatterConfiguration.MapCurrentThread"/>
-		public bool MapCurrentThread { get; set; } = true;
+		/// <inheritdoc cref="IEcsDocumentCreationOptions.IncludeHost"/>
+		public bool IncludeHost { get; set; } = true;
+
+		/// <inheritdoc cref="IEcsDocumentCreationOptions.IncludeProcess"/>
+		public bool IncludeProcess { get; set; } = true;
+
+		/// <inheritdoc cref="IEcsDocumentCreationOptions.IncludeUser"/>
+		public bool IncludeUser { get; set; } = true;
+
 		/// <inheritdoc cref="IEcsTextFormatterConfiguration.MapHttpAdapter"/>
 		public IHttpAdapter MapHttpAdapter { get; set; }
 		/// <inheritdoc cref="IEcsTextFormatterConfiguration.LogEventPropertiesToFilter"/>

@@ -3,17 +3,167 @@
 // See the LICENSE file in the project root for more information
 
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
+using System.Linq;
+using System.Reflection;
+using System.Runtime.InteropServices;
+using System.Threading;
 
 namespace Elastic.CommonSchema;
 
-public static class EcsDocumentExtensions
+public interface IEcsDocumentCreationOptions
 {
+	/// <summary>
+	/// Gets or sets a flag indicating whether host details should be included in the message. Defaults to <c>true</c>.
+	/// </summary>
+	public bool IncludeHost { get; set; }
+
+	/// <summary>
+	/// Gets or sets a flag indicating whether process details should be included in the message. Defaults to <c>true</c>.
+	/// </summary>
+	public bool IncludeProcess { get; set; }
+
+	/// <summary>
+	/// Gets or sets a flag indicating whether user details should be included in the message. Defaults to <c>true</c>.
+	/// </summary>
+	public bool IncludeUser { get; set; }
+}
+
+public partial class EcsDocument
+{
+	private static readonly Ecs EcsFieldDefault = new() { Version = Version };
+
+	public static TEcsDocument CreateNewWithDefaults<TEcsDocument>(
+		DateTimeOffset? timestamp = null,
+		Exception exception = null,
+		IEcsDocumentCreationOptions options = null
+	)
+		where TEcsDocument : EcsDocument, new()
+	{
+		var doc = new TEcsDocument
+		{
+			Timestamp = timestamp ?? DateTimeOffset.UtcNow, Ecs = EcsFieldDefault, Error = GetError(exception), Service = GetService()
+		};
+		SetActivityData(doc);
+
+		if (options?.IncludeHost is null or true) doc.Host = GetHost();
+		if (options?.IncludeProcess is null or true) doc.Process = GetProcess();
+		// TODO I think we can cache user? does CurrentPrincipal on Thread ever change?
+		if (options?.IncludeUser is null or true)
+			doc.User = new User { Id = Thread.CurrentPrincipal?.Identity.Name, Name = Environment.UserName, Domain = Environment.UserDomainName };
+
+		return doc;
+	}
+
+	private static Service CachedService;
+
+	private static Service GetService()
+	{
+		if (CachedService is not null) return CachedService;
+
+		var entryAssembly = Assembly.GetEntryAssembly();
+		var (type, version) = GetAssemblyVersion(entryAssembly);
+		CachedService = new Service { Type = type, Version = version };
+		return CachedService;
+	}
+
+	public static Agent CreateAgent(Type typeFromAgentLibrary)
+	{
+		var assembly = typeFromAgentLibrary.Assembly;
+		var (type, version) = GetAssemblyVersion(assembly);
+		return new Agent { Type = type, Version = version };
+	}
+
+	private static (string, string) GetAssemblyVersion(Assembly assembly)
+	{
+		var name = assembly.GetName();
+		var type = name.Name;
+		var versionAttribute = assembly.GetCustomAttributes(false)
+			.OfType<AssemblyInformationalVersionAttribute>()
+			.FirstOrDefault();
+		var version = versionAttribute?.InformationalVersion ?? name.Version.ToString();
+		return (type, version);
+	}
+
+	private static Host CachedHost;
+
+	private static Host GetHost()
+	{
+		if (CachedHost is not null) return CachedHost;
+
+		CachedHost = new Host
+		{
+			Hostname = Environment.MachineName,
+#if !NETFRAMEWORK
+			Architecture = RuntimeInformation.OSArchitecture.ToString(),
+#endif
+			Os = new Os
+			{
+#if !NETFRAMEWORK
+				Full = RuntimeInformation.OSDescription,
+#endif
+				Platform = Environment.OSVersion.Platform.ToString(),
+				Version = Environment.OSVersion.Version.ToString()
+			}
+		};
+
+		return CachedHost;
+	}
+
+	private static bool ProcessLookupFailed;
+	private static int ProcessId;
+	private static string ProcessName;
+	private static string MainWindowTitle;
+
+	private static Process GetProcess()
+	{
+		if (ProcessName is null && !ProcessLookupFailed)
+		{
+			try
+			{
+				var process = System.Diagnostics.Process.GetCurrentProcess();
+				ProcessId = process.Id;
+				ProcessName = process.ProcessName;
+				MainWindowTitle = process?.MainWindowTitle;
+			}
+			catch
+			{
+				ProcessLookupFailed = true;
+			}
+		}
+
+		var currentThread = Thread.CurrentThread;
+		return new Process
+		{
+			Title = MainWindowTitle,
+			Name = ProcessName,
+			Executable = ProcessName,
+			Pid = ProcessId,
+			ThreadName = currentThread.Name,
+			ThreadId = currentThread.ManagedThreadId
+		};
+	}
+
+	private static Error GetError(Exception exception)
+	{
+		if (exception == null)
+			return null;
+
+		// see: https://github.com/elastic/apm-agent-dotnet/pull/847
+		// see: https://github.com/elastic/apm-agent-dotnet/issues/6
+		// Mentions observed exceptions however this extension method itself is wrapped in try/catch
+		var exString = exception.ToStringDemystified();
+
+		return new Error { Message = exception.Message, Type = exception.GetType().FullName, StackTrace = exString };
+	}
+
 	/// <summary>
 	/// Mutates <see cref="doc"/> and sets tracing information based on <see cref="activity" /> or <see cref="Activity.Current"/>
 	/// <para>Note this will not override any explicitly set properties</para>
 	/// </summary>
-	public static void SetActivityData(this EcsDocument doc, Activity activity = null)
+	private static void SetActivityData(EcsDocument doc, Activity activity = null)
 	{
 		activity ??= Activity.Current;
 		if (activity == null)
@@ -33,7 +183,8 @@ public static class EcsDocumentExtensions
 			if (activity.Id != null) doc.SpanId ??= activity.Id;
 		}
 
-		//TODO Should we copy more data over?
-		//For now we just do the minimum to enable log correlation
+		// TODO Should we copy more data over?
+		// e.g can we infer OpenTelemetry resource from Activity?
+		// For now we just do the minimum to enable log correlation
 	}
 }

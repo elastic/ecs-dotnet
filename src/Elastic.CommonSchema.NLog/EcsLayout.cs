@@ -4,8 +4,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.IO;
 using System.Text;
 using NLog;
 using NLog.Config;
@@ -14,6 +12,14 @@ using NLog.Targets;
 
 namespace Elastic.CommonSchema.NLog
 {
+	internal class NlogEcsDocumentCreationOptions : IEcsDocumentCreationOptions
+	{
+		public static NlogEcsDocumentCreationOptions Default { get; } = new();
+		public bool IncludeHost { get; set; } = false;
+		public bool IncludeProcess { get; set; } = false;
+		public bool IncludeUser { get; set; } = false;
+	}
+
 	[Layout(Name)]
 	[ThreadSafe]
 	[ThreadAgnostic]
@@ -23,6 +29,7 @@ namespace Elastic.CommonSchema.NLog
 
 		private static bool? _nlogApmLoaded;
 		private static bool? _nlogWebLoaded;
+		private static Agent _defaultAgent;
 
 		private static bool NLogApmLoaded()
 		{
@@ -60,6 +67,7 @@ namespace Elastic.CommonSchema.NLog
 			ServerUser = "${environment-user}"; // NLog 4.6.4
 
 			EventCode = "${event-properties:EventId}";
+			_defaultAgent = EcsDocument.CreateAgent(typeof(EcsLayout));
 
 			// These values are set by the Elastic.Apm.NLog package
 			if (NLogApmLoaded())
@@ -188,28 +196,28 @@ namespace Elastic.CommonSchema.NLog
 
 		protected override void RenderFormattedMessage(LogEventInfo logEvent, StringBuilder target)
 		{
-			var ecsEvent = new EcsDocument
-			{
-				Timestamp = logEvent.TimeStamp,
-				Message = logEvent.FormattedMessage,
-				Ecs = new Ecs { Version = EcsDocument.Version },
-				Log = GetLog(logEvent),
-				Service = GetService(logEvent),
-				Event = GetEvent(logEvent),
-				Process = GetProcess(logEvent),
-				TraceId = GetTrace(logEvent),
-				TransactionId = GetTransaction(logEvent),
-				SpanId = GetSpan(logEvent),
-				Error = GetError(logEvent.Exception),
-				Tags = GetTags(logEvent),
-				Labels = GetLabels(logEvent),
-				Agent = GetAgent(logEvent),
-				Server = GetServer(logEvent),
-				Host = GetHost(logEvent),
-				Http = GetHttp(logEvent),
-				Url = GetUrl(logEvent),
-			};
-			ecsEvent.SetActivityData();
+			var ecsEvent = EcsDocument.CreateNewWithDefaults<EcsDocument>(logEvent.TimeStamp, logEvent.Exception, NlogEcsDocumentCreationOptions.Default);
+
+			// prefer tracing information set by Elastic APM
+			SetApmTraceId(ecsEvent, logEvent);
+			SetApmTransactionId(ecsEvent, logEvent);
+			SetApmSpanId(ecsEvent, logEvent);
+
+			// prefer setting service information set by Elastic APM
+			var service = GetService(logEvent);
+			if (service != null) ecsEvent.Service = service;
+
+			ecsEvent.Message = logEvent.FormattedMessage;
+			ecsEvent.Log = GetLog(logEvent);
+			ecsEvent.Event = GetEvent(logEvent);
+			ecsEvent.Process = GetProcess(logEvent);
+			ecsEvent.Tags = GetTags(logEvent);
+			ecsEvent.Labels = GetLabels(logEvent);
+			ecsEvent.Agent = GetAgent(logEvent) ?? _defaultAgent;
+			ecsEvent.Server = GetServer(logEvent);
+			ecsEvent.Host = GetHost(logEvent);
+			ecsEvent.Http = GetHttp(logEvent);
+			ecsEvent.Url = GetUrl(logEvent);
 
 			var metadata = GetMetadata(logEvent) ?? MetadataDictionary.Default;
 			foreach(var kv in metadata)
@@ -217,7 +225,7 @@ namespace Elastic.CommonSchema.NLog
 
 			//Give any deriving classes a chance to enrich the event
 			EnrichEvent(logEvent, ref ecsEvent);
-			//Allow programmatical actions to enrich before serializing
+			//Allow programmatic actions to enrich before serializing
 			EnrichAction?.Invoke(ecsEvent, logEvent);
 
 			ecsEvent.Serialize(target);
@@ -240,66 +248,17 @@ namespace Elastic.CommonSchema.NLog
 		/// <param name="ecsEvent">The EcsEvent to modify</param>
 		/// <returns>Enriched ECS Event</returns>
 		/// <remarks>Destructive for performance</remarks>
+		// ReSharper disable UnusedParameter.Global
 		protected virtual void EnrichEvent(LogEventInfo logEvent, ref EcsDocument ecsEvent)
 		{
 		}
+		// ReSharper restore UnusedParameter.Global
 
 		protected override string GetFormattedMessage(LogEventInfo logEvent)
 		{
 			var sb = new StringBuilder();
 			RenderFormattedMessage(logEvent, sb);
 			return sb.ToString();
-		}
-
-		private static Error GetError(Exception exception) =>
-			exception != null
-				? new Error
-				{
-					Message = exception.Message,
-					StackTrace = CatchError(exception),
-					Type = exception.GetType().ToString(),
-				}
-				: null;
-
-		private static string CatchError(Exception error)
-		{
-			if (error == null)
-				return string.Empty;
-
-			var i = 1;
-			var fullText = new StringWriter();
-			var frame = new StackTrace(error, true).GetFrame(0);
-
-			fullText.WriteLine($"Exception {i++:D2} ===================================");
-			fullText.WriteLine($"Type: {error.GetType()}");
-			fullText.WriteLine($"Source: {error.TargetSite?.DeclaringType?.AssemblyQualifiedName}");
-			fullText.WriteLine($"Message: {error.Message}");
-			fullText.WriteLine($"Trace: {error.StackTrace}");
-			if (frame != null)
-			{
-				fullText.WriteLine($"Location: {frame.GetFileName()}");
-				fullText.WriteLine($"Method: {frame.GetMethod()} ({frame.GetFileLineNumber()}, {frame.GetFileColumnNumber()})");
-			}
-
-			var exception = error.InnerException;
-			while (exception != null)
-			{
-				frame = new StackTrace(exception, true).GetFrame(0);
-				fullText.WriteLine($"\tException {i++:D2} inner --------------------------");
-				fullText.WriteLine($"\tType: {exception.GetType()}");
-				fullText.WriteLine($"\tSource: {exception.TargetSite?.DeclaringType?.AssemblyQualifiedName}");
-				fullText.WriteLine($"\tMessage: {exception.Message}");
-				fullText.WriteLine($"\tTrace: {exception.StackTrace}");
-				if (frame != null)
-				{
-					fullText.WriteLine($"\tLocation: {frame.GetFileName()}");
-					fullText.WriteLine($"\tMethod: {frame.GetMethod()} ({frame.GetFileLineNumber()}, {frame.GetFileColumnNumber()})");
-				}
-
-				exception = exception.InnerException;
-			}
-
-			return fullText.ToString();
 		}
 
 		private MetadataDictionary GetMetadata(LogEventInfo e)
@@ -321,20 +280,12 @@ namespace Elastic.CommonSchema.NLog
 
 					var propertyValue = prop.Value;
 					if (propertyValue is null || propertyValue is IConvertible || propertyValue.GetType().IsValueType)
-					{
 						Populate(metadata, propertyName, propertyValue);
-					}
 					else
 					{
-						templateParameters = templateParameters ?? e.MessageTemplateParameters;
-						if (AllowSerializePropertyValue(propertyName, templateParameters))
-						{
-							Populate(metadata, propertyName, propertyValue);
-						}
-						else
-						{
-							Populate(metadata, propertyName, propertyValue?.ToString());
-						}
+						templateParameters ??= e.MessageTemplateParameters;
+						var value = AllowSerializePropertyValue(propertyName, templateParameters) ? propertyValue : propertyValue?.ToString();
+						Populate(metadata, propertyName, value);
 					}
 				}
 			}
@@ -478,9 +429,7 @@ namespace Elastic.CommonSchema.NLog
 			};
 
 			if (!string.IsNullOrEmpty(eventDurationMs) && double.TryParse(eventDurationMs, System.Globalization.NumberStyles.Any, System.Globalization.CultureInfo.InvariantCulture, out var durationMs))
-			{
 				evnt.Duration = (long)(durationMs * 1000000.0);   // milliseconds to nanoseconds
-			}
 
 			return evnt;
 		}
@@ -552,22 +501,22 @@ namespace Elastic.CommonSchema.NLog
 			};
 		}
 
-		private string GetTrace(LogEventInfo logEventInfo)
+		private void SetApmTraceId(EcsDocument ecsDocument, LogEventInfo logEventInfo)
 		{
 			var traceId = ApmTraceId?.Render(logEventInfo);
-			return string.IsNullOrEmpty(traceId) ? null : traceId;
+			if (!string.IsNullOrEmpty(traceId)) ecsDocument.TraceId = traceId;
 		}
 
-		private string GetTransaction(LogEventInfo logEventInfo)
+		private void SetApmTransactionId(EcsDocument ecsDocument, LogEventInfo logEventInfo)
 		{
 			var transactionId = ApmTransactionId?.Render(logEventInfo);
-			return string.IsNullOrEmpty(transactionId) ? null : transactionId;
+			if (!string.IsNullOrEmpty(transactionId)) ecsDocument.TransactionId = transactionId;
 		}
 
-		private string GetSpan(LogEventInfo logEventInfo)
+		private void SetApmSpanId(EcsDocument ecsDocument, LogEventInfo logEventInfo)
 		{
 			var spanId = ApmSpanId?.Render(logEventInfo);
-			return string.IsNullOrEmpty(spanId) ? null : spanId;
+			if (!string.IsNullOrEmpty(spanId)) ecsDocument.SpanId = spanId;
 		}
 
 		private Http GetHttp(LogEventInfo logEventInfo)
@@ -577,10 +526,10 @@ namespace Elastic.CommonSchema.NLog
 			if (string.IsNullOrEmpty(requestMethod) && string.IsNullOrEmpty(requestId))
 				return null;
 
-			var http = new Http()
+			var http = new Http
 			{
 				RequestId = requestId,
-				RequestMethod = requestMethod,
+				RequestMethod = requestMethod
 			};
 
 			var requestReferrer = HttpRequestReferrer?.Render(logEventInfo);
