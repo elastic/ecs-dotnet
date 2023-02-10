@@ -24,6 +24,7 @@ using System.Linq;
 using System.Text.RegularExpressions;
 
 
+// ReSharper disable once CheckNamespace
 namespace UAParser
 {
     /// <summary>
@@ -354,7 +355,8 @@ namespace UAParser
 
         private class Config
         {
-            private readonly ParserOptions _options;
+			// ReSharper disable once NotAccessedField.Local
+			private readonly ParserOptions _options;
 
             internal Config(ParserOptions options) => _options = options;
 
@@ -407,9 +409,7 @@ namespace UAParser
                 var options = RegexOptions.Singleline | RegexOptions.CultureInvariant;
 
                 if ("i".Equals(regexFlag))
-                {
                     options |= RegexOptions.IgnoreCase;
-                }
 
 #if REGEX_COMPILATION
                 if (_options.UseCompiledRegex)
@@ -501,7 +501,7 @@ namespace UAParser
                         : replacementString;
                 }
 
-                return (m, num) =>
+                return (m, _) =>
                 {
                     var finalString = replacement;
                     if (finalString.Contains("$"))

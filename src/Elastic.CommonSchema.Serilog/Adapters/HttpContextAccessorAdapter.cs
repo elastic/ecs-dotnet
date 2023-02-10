@@ -3,8 +3,6 @@
 // See the LICENSE file in the project root for more information
 
 #if NETSTANDARD
-using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Http;
@@ -34,10 +32,7 @@ namespace Elastic.CommonSchema.Serilog.Adapters
 
 				var userAgent = _httpContextAccessor.HttpContext.Request.Headers["User-Agent"];
 
-				if (string.IsNullOrEmpty(userAgent))
-				{
-					return null;
-				}
+				if (string.IsNullOrEmpty(userAgent)) return null;
 
 				var clientInfo = UAParser.Parse(userAgent);
 
@@ -63,29 +58,28 @@ namespace Elastic.CommonSchema.Serilog.Adapters
 			{
 				if (!HasContext)
 					return null;
-				else
+
+				var http = new Http
 				{
-					var http = new Http
-					{
-						RequestMethod = _httpContextAccessor.HttpContext.Request.Method,
-						RequestBytes = _httpContextAccessor.HttpContext.Request.ContentLength,
-						RequestReferrer = _httpContextAccessor.HttpContext.Request.Headers["Referer"],
-						ResponseStatusCode = _httpContextAccessor.HttpContext.Response.StatusCode,
-					};
-					SetResponseBody(http);
-					SetRequestBody(http);
-					return http;
-				}
+					RequestMethod = _httpContextAccessor.HttpContext.Request.Method,
+					RequestBytes = _httpContextAccessor.HttpContext.Request.ContentLength,
+					RequestReferrer = _httpContextAccessor.HttpContext.Request.Headers["Referer"],
+					ResponseStatusCode = _httpContextAccessor.HttpContext.Response.StatusCode,
+				};
+				SetResponseBody(http);
+				SetRequestBody(http);
+				return http;
 			}
 		}
 
+		// ReSharper disable once UnusedParameter.Local
 		private void SetResponseBody(Http http)
 		{
-			if (!HasContext) return;
+			// if (!HasContext) return;
 
-		// TODO!
-		// http.ResponseBodyBytes = 0, //response?.OutputStream.Length ?? 0,
-		// http.ResponseBodyContent  = _httpContextAccessor.HttpContext.Response.Body
+			// TODO!
+			// http.ResponseBodyBytes = 0, //response?.OutputStream.Length ?? 0,
+			// http.ResponseBodyContent  = _httpContextAccessor.HttpContext.Response.Body
 		}
 
 		private void SetRequestBody(Http http)
@@ -152,8 +146,8 @@ namespace Elastic.CommonSchema.Serilog.Adapters
 
 				return new Client
 				{
-					Address = ip4.ToString(),
-					Ip = ip4.ToString(),
+					Address = ip4?.ToString(),
+					Ip = ip4?.ToString(),
 					Bytes = _httpContextAccessor.HttpContext.Request.ContentLength,
 					User = User
 				};
@@ -167,39 +161,31 @@ namespace Elastic.CommonSchema.Serilog.Adapters
 				if (!HasContext)
 					return null;
 
-				var idClaim = _httpContextAccessor.HttpContext.User.FindAll(ClaimTypes.NameIdentifier);
-				var nameClaim = _httpContextAccessor.HttpContext.User.FindAll(ClaimTypes.Name);
-				var hashClaim = _httpContextAccessor.HttpContext.User.FindAll(ClaimTypes.Hash);
-				var emailClaim = _httpContextAccessor.HttpContext.User.FindAll(ClaimTypes.Email);
-				var groupClaim = _httpContextAccessor.HttpContext.User.FindAll(ClaimTypes.GroupSid);
-				var groupId = groupClaim != null && groupClaim.Any() ? groupClaim.First().Value : null;
+				var idClaims = _httpContextAccessor.HttpContext.User.FindAll(ClaimTypes.NameIdentifier);
+				var nameClaims = _httpContextAccessor.HttpContext.User.FindAll(ClaimTypes.Name);
+				var hashClaims = _httpContextAccessor.HttpContext.User.FindAll(ClaimTypes.Hash);
+				var emailClaims = _httpContextAccessor.HttpContext.User.FindAll(ClaimTypes.Email);
+				var groupClaims = _httpContextAccessor.HttpContext.User.FindAll(ClaimTypes.GroupSid);
 
-				var hasIdClaim = idClaim != null && idClaim.Any();
-				var hasNameClaim = nameClaim != null && nameClaim.Any();
-				var hasEmailClaim = emailClaim != null && emailClaim.Any();
-				var hasHashClaim = hashClaim != null && hashClaim.Any();
-				var hasGroupId = groupId != null;
+				var groupId = groupClaims?.FirstOrDefault()?.Value;
+				var idClaim = idClaims?.FirstOrDefault()?.Value;
+				var nameClaim = nameClaims?.FirstOrDefault()?.Value;
+				var emailClaim = emailClaims?.FirstOrDefault()?.Value;
+				var hashClaim = hashClaims?.FirstOrDefault()?.Value;
 
-				if (!hasIdClaim && !hasNameClaim && !hasEmailClaim && !hasHashClaim && !hasGroupId)
+				if (groupId == null && nameClaim == null && emailClaim == null && hashClaim == null && idClaim == null)
 					return null;
 
 				return new User
 				{
-					Id = hasIdClaim ? idClaim.First().Value : null,
-					Name = hasNameClaim ? nameClaim.First().Value : null,
-					Email = hasEmailClaim ? emailClaim.First().Value : null,
-					Hash = hasHashClaim ? hashClaim.First().Value : null,
-					Group = hasGroupId
-								? new Group
-								{
-									Id = groupId
-								}
-								: null
+					Id = idClaim,
+					Name = nameClaim,
+					Email = emailClaim,
+					Hash = hashClaim,
+					Group = groupId != null ? new Group { Id = groupId } : null
 				};
 			}
 		}
-
-		public IEnumerable<Exception> Exceptions => Enumerable.Empty<Exception>();
 	}
 }
 #endif
