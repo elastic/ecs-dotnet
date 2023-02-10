@@ -1,5 +1,5 @@
 :ecs-repo-dir:  {ecs-logging-root}/docs/
-:ecs-logging-dotnet.version: 1.5.1
+:ecs-logging-dotnet.version: 8.4.0-alpha1
 
 include::{asciidoc-dir}/../../shared/versions/stack/current.asciidoc[]
 include::{asciidoc-dir}/../../shared/attributes.asciidoc[]
