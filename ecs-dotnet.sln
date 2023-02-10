@@ -120,6 +120,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tools", "tools", "{B268060B
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Elastic.CommonSchema.Serilog.Sink.Example", "examples\Elastic.CommonSchema.Serilog.Sink.Example\Elastic.CommonSchema.Serilog.Sink.Example.csproj", "{1CAEFBD7-B800-41C4-81D3-CB6839FA563D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "docs", "docs\docs.csproj", "{7FDB3B31-020A-40E3-B564-F06476320C40}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -248,6 +250,8 @@ Global
 		{1CAEFBD7-B800-41C4-81D3-CB6839FA563D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1CAEFBD7-B800-41C4-81D3-CB6839FA563D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1CAEFBD7-B800-41C4-81D3-CB6839FA563D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7FDB3B31-020A-40E3-B564-F06476320C40}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7FDB3B31-020A-40E3-B564-F06476320C40}.Release|Any CPU.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

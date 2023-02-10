@@ -4,34 +4,30 @@
 
 using System.IO;
 
-namespace Elastic.CommonSchema.Generator
+namespace Elastic.CommonSchema.Generator;
+
+public static class CodeConfiguration
 {
-	public static class CodeConfiguration
+	static CodeConfiguration()
 	{
-		private static string _root;
-		public static string ElasticCommonSchemaGeneratedFolder { get; } = $@"{Root}Elastic.CommonSchema/";
+		//tools/Elastic.CommonSchema.Generator/bin/Debug/net6.0
+		var directoryInfo = new DirectoryInfo(Directory.GetCurrentDirectory());
+		var rootInfo = new DirectoryInfo(Path.Combine(directoryInfo.FullName, @"../../../../../"));
+		Root = rootInfo.FullName;
 
-		private static string Root
-		{
-			get
-			{
-				if (_root != null)
-					return _root;
-
-				var currentDirectory = Directory.GetCurrentDirectory();
-				var directoryInfo = new DirectoryInfo(currentDirectory);
-
-				var runningAsDnx =
-					directoryInfo.Name == "Generator" &&
-					directoryInfo.Parent != null &&
-					directoryInfo.Parent.Name == "ECS";
-
-				_root = runningAsDnx ? "" : @"../../../../";
-				return _root;
-			}
-		}
-
-		public static string SpecificationFolder { get; } = $@"{Root}Specification/";
-		public static string ViewFolder { get; } = $@"{Root}Elastic.CommonSchema.Generator/Views/";
+		SourceFolder = Path.Combine(Root, "src");
+		ToolFolder = Path.Combine(Root, "tools");
+		ElasticCommonSchemaGeneratedFolder = Path.Combine(SourceFolder, "Elastic.CommonSchema");
+		SpecificationFolder = Path.Combine(SourceFolder, "Specification");
+		ViewFolder = Path.Combine(ToolFolder, "Elastic.CommonSchema.Generator", "Views");
 	}
+
+	private static string Root { get; }
+
+	private static string SourceFolder { get; }
+	private static string ToolFolder { get; }
+
+	public static string ElasticCommonSchemaGeneratedFolder { get; }
+	public static string SpecificationFolder { get; }
+	public static string ViewFolder { get; }
 }
