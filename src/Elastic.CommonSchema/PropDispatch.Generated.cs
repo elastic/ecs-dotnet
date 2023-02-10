@@ -5,7 +5,7 @@
 /*
 IMPORTANT NOTE
 ==============
-This file has been generated.
+This file has been generated. 
 If you wish to submit a PR please modify the original csharp file and submit the PR with that change. Thanks!
 */
 
@@ -24,7 +24,7 @@ using static Elastic.CommonSchema.PropDispatch;
 namespace Elastic.CommonSchema
 {
 	///<inheritdoc cref="BaseFieldSet"/>
-	public partial class EcsDocument : BaseFieldSet
+	public partial class EcsDocument : BaseFieldSet 
 	{
 		/// <summary>
 		/// Set ECS fields by name on <see cref="EcsDocument"/>.
@@ -43,15 +43,15 @@ namespace Elastic.CommonSchema
 		public void AssignField(string path, object value)
 		{
 			var assigned = LogTemplateProperties.All.Contains(path) && TrySet(this, path, value);
-			if (!assigned)
+			if (!assigned) 
 				SetMetaOrLabel(this, path, value);
 		}
 	}
 	internal static partial class PropDispatch
 	{
-		public static bool TrySet(EcsDocument document, string path, object value)
+		public static bool TrySet(EcsDocument document, string path, object value) 
 		{
-			switch (path)
+			switch (path) 
 			{
 				case "@timestamp":
 				case "Timestamp":

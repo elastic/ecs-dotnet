@@ -5,7 +5,7 @@
 /*
 IMPORTANT NOTE
 ==============
-This file has been generated.
+This file has been generated. 
 If you wish to submit a PR please modify the original csharp file and submit the PR with that change. Thanks!
 */
 
@@ -23,7 +23,7 @@ using Elastic.CommonSchema.Serialization;
 namespace Elastic.CommonSchema
 {
 	///<inheritdoc cref="BaseFieldSet"/>
-	public partial class EcsDocument : BaseFieldSet
+	public partial class EcsDocument : BaseFieldSet 
 	{
 
 		/// <summary>
@@ -35,7 +35,7 @@ namespace Elastic.CommonSchema
 		/// Container for additional metadata against this event.
 		/// <para/>
 		/// When working with unknown fields use <see cref="AssignField"/>. <br/>
-		/// <para> This will try to assign valid ECS fields to their respective property
+		/// <para> This will try to assign valid ECS fields to their respective property 
 		/// Failing that it will assign strings to <see cref="Labels"/> and everything else to <see cref="Metadata"/> </para>
 		/// </summary>
 		[JsonPropertyName("metadata"), DataMember(Name = "metadata")]
