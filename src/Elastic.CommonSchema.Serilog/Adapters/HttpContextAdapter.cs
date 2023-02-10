@@ -3,9 +3,6 @@
 // See the LICENSE file in the project root for more information
 
 #if !NETSTANDARD
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Web;
 
 namespace Elastic.CommonSchema.Serilog.Adapters
@@ -19,8 +16,6 @@ namespace Elastic.CommonSchema.Serilog.Adapters
 		public Client Client => null;
 
 		public bool HasContext => _httpContext != null;
-
-		public IEnumerable<Exception> Exceptions => Enumerable.Empty<Exception>();
 
 		public Http Http => !HasContext ? null : new Http
 		{
