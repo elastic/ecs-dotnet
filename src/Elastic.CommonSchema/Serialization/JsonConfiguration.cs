@@ -14,7 +14,7 @@ namespace Elastic.CommonSchema.Serialization
 		public static JsonSerializerOptions SerializerOptions { get; } = new ()
 		{
 			DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingDefault,
-
+			NumberHandling = JsonNumberHandling.AllowNamedFloatingPointLiterals,
 			Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
 			PropertyNamingPolicy = new SnakeCaseJsonNamingPolicy(),
 			Converters =
