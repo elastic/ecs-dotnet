@@ -122,6 +122,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Elastic.CommonSchema.Serilo
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "docs", "docs\docs.csproj", "{7FDB3B31-020A-40E3-B564-F06476320C40}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "aspnetcore-with-extensions-logging", "examples\aspnetcore-with-extensions-logging\aspnetcore-with-extensions-logging.csproj", "{D866F335-BC19-49A8-AF72-4BA66CC7AFFB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -252,6 +254,10 @@ Global
 		{1CAEFBD7-B800-41C4-81D3-CB6839FA563D}.Release|Any CPU.Build.0 = Release|Any CPU
 		{7FDB3B31-020A-40E3-B564-F06476320C40}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{7FDB3B31-020A-40E3-B564-F06476320C40}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D866F335-BC19-49A8-AF72-4BA66CC7AFFB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D866F335-BC19-49A8-AF72-4BA66CC7AFFB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D866F335-BC19-49A8-AF72-4BA66CC7AFFB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D866F335-BC19-49A8-AF72-4BA66CC7AFFB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -290,6 +296,7 @@ Global
 		{D6F0D170-39D7-4868-86EE-990B6B05C14D} = {B268060B-83ED-4944-B135-C362DFCBFC0C}
 		{EC19A9E1-79CC-46A8-94D7-EE66ED22D3BD} = {B268060B-83ED-4944-B135-C362DFCBFC0C}
 		{1CAEFBD7-B800-41C4-81D3-CB6839FA563D} = {05075402-8669-45BD-913A-BD40A29BBEAB}
+		{D866F335-BC19-49A8-AF72-4BA66CC7AFFB} = {05075402-8669-45BD-913A-BD40A29BBEAB}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {7F60C4BB-6216-4E50-B1E4-9C38EB484843}

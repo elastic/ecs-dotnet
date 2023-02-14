@@ -1,5 +1,6 @@
 using Elastic.CommonSchema;
 using Elastic.Ingest.Elasticsearch;
+using Elastic.Transport;
 
 namespace Elasticsearch.Extensions.Logging.Options
 {
@@ -68,5 +69,11 @@ namespace Elasticsearch.Extensions.Logging.Options
 		/// 'Production', etc).
 		/// </summary>
 		public string[]? Tags { get; set; }
+
+		/// <summary>
+		/// Allows the direct setting of a <see cref="HttpTransport{TConfiguration}"/> to be used to communicate with Elasticsearch.
+		/// <para>If set takes precedence over <see cref="ShipTo"/> </para>
+		/// </summary>
+		public HttpTransport? Transport { get; set; }
 	}
 }
