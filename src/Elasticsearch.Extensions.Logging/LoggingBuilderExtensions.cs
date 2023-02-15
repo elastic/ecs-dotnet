@@ -4,6 +4,7 @@
 
 using System;
 using Elastic.Ingest.Elasticsearch;
+using Elastic.Transport;
 using Elasticsearch.Extensions.Logging.Options;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
@@ -93,6 +94,24 @@ namespace Elasticsearch.Extensions.Logging
 
 			builder.AddElasticsearch();
 			builder.Services.Configure(configure);
+			builder.Services.TryAddEnumerable(ServiceDescriptor.Singleton<IChannelSetup>(new ChannelSetup(configureChannel)));
+			return builder;
+		}
+
+		public static ILoggingBuilder AddElasticsearch(
+			this ILoggingBuilder builder,
+			HttpTransport transport,
+			Action<ElasticsearchLoggerOptions>? configure = null,
+			Action<ElasticsearchChannelOptionsBase<LogEvent>>? configureChannel = null
+		)
+		{
+			builder.AddElasticsearch();
+			builder.Services.Configure<ElasticsearchLoggerOptions>(opts =>
+			{
+				opts.Transport = transport;
+				configure?.Invoke(opts);
+			});
+			configureChannel ??= b => { };
 			builder.Services.TryAddEnumerable(ServiceDescriptor.Singleton<IChannelSetup>(new ChannelSetup(configureChannel)));
 			return builder;
 		}

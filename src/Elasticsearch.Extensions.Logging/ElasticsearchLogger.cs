@@ -5,6 +5,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using Elastic.CommonSchema;
 using Elastic.Channels;
@@ -61,50 +62,103 @@ namespace Elasticsearch.Extensions.Logging
 
 		private void AddScopeValues(LogEvent logEvent)
 		{
-			if (_options.IncludeScopes)
+			if (!_options.IncludeScopes) return;
+
+			void AddScopeValue<TState>(TState scope, LogEvent log)
 			{
-				_scopeProvider?.ForEachScope((scope, le) =>
-				{
-					le.Labels ??= new Labels();
-					le.Scopes ??= new List<string>();
+				if (scope is null) return;
+				log.Labels ??= new Labels();
+				log.Scopes ??= new List<string>();
 
-					var isFormattedLogValues = false;
-					if (scope is IEnumerable<KeyValuePair<string, object>> scopeValues)
-					{
-						foreach (var kvp in scopeValues)
-						{
-							if (kvp.Key == "{OriginalFormat}")
-							{
-								isFormattedLogValues = true;
-								continue;
-							}
-							le.AssignField(kvp.Key, FormatValue(kvp.Value));
-						}
-					}
 
-					var formattedScope = isFormattedLogValues ? scope.ToString() : FormatValue(scope);
-					le.Scopes.Add(formattedScope);
-				}, logEvent);
+				var scopeValues = (scope as IEnumerable<KeyValuePair<string, object>>)?.ToList();
+				var scopeName = scope as string ?? scope.GetType().Name;
+				if (scopeValues != null && scopeValues.Any(kv=>kv.Key == "{OriginalFormat}"))
+					scopeName = FormatValue(scope);
+				log.Scopes.Add(scopeName);
+
+				if (scopeValues == null) return;
+
+				foreach (var kvp in scopeValues)
+					AssignStateOrScopeLabels(logEvent, kvp);
 			}
+
+			_scopeProvider?.ForEachScope((o, @event) => AddScopeValue(o, @event), logEvent);
 		}
 
 		private void AddStateValues<TState>(TState state, LogEvent logEvent)
 		{
-			if (state is IEnumerable<KeyValuePair<string, object>> stateValues)
+			var stateValues = state as IEnumerable<KeyValuePair<string, object>>;
+			if (stateValues == null) return;
+
+			foreach (var kvp in stateValues)
+				AssignStateOrScopeLabels(logEvent, kvp);
+		}
+
+		private void AssignStateOrScopeLabels(LogEvent logEvent, KeyValuePair<string, object> kvp)
+		{
+			if (kvp.Key == "{OriginalFormat}")
 			{
-				foreach (var kvp in stateValues)
-				{
-					if (kvp.Key == "{OriginalFormat}")
-					{
-						logEvent.MessageTemplate = kvp.Value.ToString();
-						continue;
-					}
-					logEvent.AssignField(kvp.Key, FormatValue(kvp.Value));
-				}
+				logEvent.MessageTemplate ??= kvp.Value.ToString();
+				return;
+			}
+			var value = FormatValue(kvp.Value);
+			if (!AssignKnownHttpKeys(logEvent, kvp.Key, value))
+				logEvent.AssignField(kvp.Key, value);
+		}
+
+		private static bool AssignKnownHttpKeys(LogEvent logEvent, string key, object value)
+		{
+			switch (key)
+			{
+				case "RequestId" when value is string requestId:
+					logEvent.Http ??= new Http();
+					logEvent.Http.RequestId = requestId;
+					return true;
+				case "RequestPath" when value is string path:
+					logEvent.Url ??= new Url();
+					logEvent.Url.Path = path;
+					return true;
+				// ReSharper disable once UnusedVariable
+				case "Protocol" when value is string protocol:
+					// TODO protocol
+					//logEvent.Http ??= new Http();
+					//logEvent.Http. = requestId;
+					return true;
+				case "Method" when value is string method:
+					logEvent.Http ??= new Http();
+					logEvent.Http.RequestMethod = method;
+					return true;
+				case "ContentType" when value is string contentType:
+					logEvent.Http ??= new Http();
+					logEvent.Http.RequestMimeType = contentType;
+					return true;
+				case "ContentLength" when value is string contentLength:
+					logEvent.Http ??= new Http();
+					logEvent.Http.RequestBytes = long.TryParse(contentLength, out var l) ? l : (long?)null;
+					return true;
+				case "Scheme" when value is string scheme:
+					logEvent.Http ??= new Http();
+					logEvent.Url.Scheme = scheme;
+					return true;
+				case "Host" when value is string host:
+					logEvent.Url ??= new Url();
+					logEvent.Url.Domain = host;
+					return true;
+				case "Path":
+				case "PathBase":
+					//covered by 'RequestPath'
+					return true;
+				case "QueryString" when value is string qs:
+					logEvent.Url ??= new Url();
+					logEvent.Url.Query = qs;
+					return true;
+				default: return false;
 			}
 		}
 
 		private static Agent? DefaultAgent { get; } = EcsDocument.CreateAgent(typeof(ElasticsearchLogger));
+
 		private LogEvent BuildLogEvent<TState>(string categoryName, LogLevel logLevel,
 			EventId eventId, TState state, Exception? exception,
 			Func<TState, Exception, string> formatter
@@ -184,6 +238,7 @@ namespace Elasticsearch.Extensions.Logging
 				case DateTime dateTime:
 					if (dateTime.TimeOfDay.Equals(TimeSpan.Zero))
 						return dateTime.ToString("yyyy'-'MM'-'dd");
+
 					return dateTime.ToString("o");
 				case DateTimeOffset dateTimeOffset:
 					return dateTimeOffset.ToString("yyyy'-'MM'-'dd'T'HH':'mm':'ss.ffffffzzz");
@@ -194,9 +249,11 @@ namespace Elasticsearch.Extensions.Logging
 					// need to special case dictionary before IEnumerable
 					if (depth < 1 && value is IDictionary<string, object> dictionary)
 						return FormatStringDictionary(dictionary, depth);
+
 					// if the value implements IEnumerable, build a comma separated string
 					if (depth < 1 && value is IEnumerable enumerable)
 						return FormatEnumerable(enumerable, depth);
+
 					return value.ToString();
 			}
 		}

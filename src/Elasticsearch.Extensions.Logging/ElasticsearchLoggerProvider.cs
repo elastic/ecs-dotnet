@@ -100,10 +100,11 @@ namespace Elasticsearch.Extensions.Logging
 			}
 		}
 
-		private static HttpTransport<TransportConfiguration> CreateTransport(ElasticsearchLoggerOptions loggerOptions)
+		private static HttpTransport CreateTransport(ElasticsearchLoggerOptions loggerOptions)
 		{
 			// TODO: Check if Uri has changed before recreating
 			// TODO: Injectable factory? Or some way of testing.
+			if (loggerOptions.Transport != null) return loggerOptions.Transport;
 			var connectionPool = CreateConnectionPool(loggerOptions);
 			var config = new TransportConfiguration(connectionPool, productRegistration: new ElasticsearchProductRegistration());
 			var transport = new DefaultHttpTransport<TransportConfiguration>(config);
