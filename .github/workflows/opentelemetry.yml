@@ -5,6 +5,8 @@ on:
   workflow_run:
     workflows:
       - pre-commit
+      - release
+      - release-main
       - test
       - test-reporter
       - update-specs
