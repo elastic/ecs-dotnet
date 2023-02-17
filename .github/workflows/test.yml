@@ -81,7 +81,7 @@ jobs:
       uses: ./.github/workflows/docker-run
       with:
         dotnet-sdk-version: ${{ env.DOTNET_VERSION }}
-        command: ./build.sh -c false
+        command: ./build.sh release -c false
 
     - name: Store test results
       if: success() || failure()
