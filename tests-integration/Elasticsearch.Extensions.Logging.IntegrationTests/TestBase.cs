@@ -1,13 +1,14 @@
 using System;
 using System.Linq;
 using System.Threading;
+using Elastic.Channels.Diagnostics;
 using Elastic.Clients.Elasticsearch;
 using Elastic.Elasticsearch.Xunit.XunitPlumbing;
 using Elasticsearch.Extensions.Logging.Options;
-using Elasticsearch.IntegrationDefaults;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Xunit.Abstractions;
+using BulkResponse = Elastic.Ingest.Elasticsearch.Serialization.BulkResponse;
 
 namespace Elasticsearch.Extensions.Logging.IntegrationTests;
 
@@ -23,11 +24,11 @@ public abstract class TestBase : IClusterFixture<LoggingCluster>
 		out ElasticsearchLoggerProvider provider,
 		out string @namespace,
 		out WaitHandle waitHandle,
-		out ChannelListener<LogEvent> listener,
+		out ChannelListener<LogEvent, BulkResponse> listener,
 		Action<ElasticsearchLoggerOptions, string> setupLogger
 	)
 	{
-		listener = new ChannelListener<LogEvent>();
+		listener = new ChannelListener<LogEvent, BulkResponse>();
 		var l = listener;
 		@namespace = Guid.NewGuid().ToString("N").ToLowerInvariant().Substring(0, 6);
 		var slim = new CountdownEvent(1);
@@ -39,11 +40,11 @@ public abstract class TestBase : IClusterFixture<LoggingCluster>
 		{
 			new ChannelSetup(c =>
 			{
-				c.BufferOptions.MaxRetries = 0;
-				c.BufferOptions.MaxConsumerBufferSize = 1;
-				c.BufferOptions.MaxConsumerBufferLifetime = TimeSpan.FromSeconds(1);
 				c.BufferOptions.WaitHandle = slim;
-				c.BufferOptions.ConcurrentConsumers = 1;
+				c.BufferOptions.OutboundBufferMaxSize = 1;
+				c.BufferOptions.OutboundBufferMaxLifetime = TimeSpan.FromSeconds(1);
+				c.BufferOptions.ExportMaxRetries = 0;
+				c.BufferOptions.ExportMaxConcurrency = 1;
 				l.Register(c);
 			})
 		};

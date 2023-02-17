@@ -2,14 +2,15 @@
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Elastic.Channels.Diagnostics;
 using Elastic.Clients.Elasticsearch;
 using Elastic.CommonSchema;
 using Elasticsearch.Extensions.Logging.Options;
-using Elasticsearch.IntegrationDefaults;
 using FluentAssertions;
 using Microsoft.Extensions.Logging;
 using Xunit;
 using Xunit.Abstractions;
+using BulkResponse = Elastic.Ingest.Elasticsearch.Serialization.BulkResponse;
 
 namespace Elasticsearch.Extensions.Logging.IntegrationTests
 {
@@ -22,7 +23,7 @@ namespace Elasticsearch.Extensions.Logging.IntegrationTests
 			out ElasticsearchLoggerProvider provider,
 			out string @namespace,
 			out WaitHandle waitHandle,
-			out ChannelListener<LogEvent> listener
+			out ChannelListener<LogEvent, BulkResponse> listener
 		) =>
 			base.CreateLogger(out logger, out provider, out @namespace, out waitHandle, out listener, (o, s) =>
 			{

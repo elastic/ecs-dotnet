@@ -11,6 +11,7 @@ using BenchmarkDotNet.Environments;
 using BenchmarkDotNet.Jobs;
 using BenchmarkDotNet.Loggers;
 using BenchmarkDotNet.Running;
+using Elastic.Channels.Diagnostics;
 using Elastic.Clients.Elasticsearch;
 using Elastic.Clients.Elasticsearch.Core.Search;
 using Elastic.CommonSchema.BenchmarkDotNetExporter.Domain;
@@ -20,6 +21,7 @@ using Elasticsearch.IntegrationDefaults;
 using FluentAssertions;
 using Xunit;
 using Xunit.Abstractions;
+using BulkResponse = Elastic.Ingest.Elasticsearch.Serialization.BulkResponse;
 using Job = BenchmarkDotNet.Jobs.Job;
 
 namespace Elastic.CommonSchema.BenchmarkDotNetExporter.IntegrationTests
@@ -50,7 +52,7 @@ namespace Elastic.CommonSchema.BenchmarkDotNetExporter.IntegrationTests
 		public void BenchmarkingPersistsResults()
 		{
 			var url = Client.ElasticsearchClientSettings.NodePool.Nodes.First().Uri;
-			var listener = new ChannelListener<BenchmarkDocument>();
+			var listener = new ChannelListener<BenchmarkDocument, BulkResponse>();
 			var options = new ElasticsearchBenchmarkExporterOptions(url)
 			{
 				GitBranch = "externally-provided-branch",

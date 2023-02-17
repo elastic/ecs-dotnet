@@ -60,11 +60,11 @@ namespace Elastic.CommonSchema.BenchmarkDotNetExporter
 				BufferOptions = new BufferOptions
 				{
 					WaitHandle = waitHandle,
-					MaxConsumerBufferSize = benchmarksCount,
-					MaxConsumerBufferLifetime = TimeSpan.FromSeconds(5)
+					OutboundBufferMaxSize = benchmarksCount,
+					OutboundBufferMaxLifetime = TimeSpan.FromSeconds(5)
 				},
-				ExceptionCallback = e => observedException ??= e,
-				ResponseCallback = (response, _) =>
+				ExportExceptionCallback = e => observedException ??= e,
+				ExportResponseCallback = (response, _) =>
 				{
 					var errorItems = response.Items.Where(i => i.Status >= 300).ToList();
 					if (response.TryGetElasticsearchServerError(out var error))

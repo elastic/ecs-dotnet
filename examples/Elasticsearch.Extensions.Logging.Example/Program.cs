@@ -41,10 +41,11 @@ namespace Elasticsearch.Extensions.Logging.Example
 					{
 						if (highLoadUseCase)
 						{
-							channel.BufferOptions = new BufferOptions { ConcurrentConsumers = 4 };
-							channel.PublishRejectionCallback = _ => Console.Write("!");
+							channel.BufferOptions = new BufferOptions { ExportMaxConcurrency = 4 };
+							channel.PublishToOutboundChannelFailureCallback = () => Console.Write("!");
+							channel.PublishToInboundChannelFailureCallback = () => Console.Write("!");
 						}
-						channel.ResponseCallback = (r, b) =>
+						channel.ExportResponseCallback = (r, b) =>
 							Console.WriteLine($"statusCode: {r.ApiCallDetails.HttpStatusCode} items: {b.Count} time since first write: {b.DurationSinceFirstWrite}");
 					});
 				})

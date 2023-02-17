@@ -48,7 +48,7 @@ namespace Elastic.CommonSchema.Serilog.Sink
 			var channelOptions = new DataStreamChannelOptions<TEcsDocument>(options.Transport)
 			{
 				DataStream = options.DataStream,
-				ResponseCallback = (response, _) =>
+				ExportResponseCallback = (response, _) =>
 				{
 					var errorItems = response.Items.Where(i => i.Status >= 300).ToList();
 					if (response.TryGetElasticsearchServerError(out var error))

@@ -3,8 +3,10 @@
 // See the LICENSE file in the project root for more information
 
 using Elastic.Channels;
+using Elastic.Channels.Diagnostics;
 using Elastic.Clients.Elasticsearch.IndexManagement;
 using Elastic.Ingest.Elasticsearch.Indices;
+using Elastic.Ingest.Elasticsearch.Serialization;
 using Elastic.Transport;
 using Elasticsearch.IntegrationDefaults;
 using FluentAssertions;
@@ -32,10 +34,10 @@ namespace Elastic.Ingest.Elasticsearch.CommonSchema.IntegrationTests
 				TimestampLookup = c => c.Created,
 				BufferOptions = new BufferOptions
 				{
-					WaitHandle = slim, MaxConsumerBufferSize = 1,
+					WaitHandle = slim, ExportMaxConcurrency = 1,
 				},
 			};
-			var listener = new ChannelListener<CatalogDocument>().Register(options);
+			var listener = new ChannelListener<CatalogDocument, BulkResponse>().Register(options);
 			var channel = new EcsIndexChannel<CatalogDocument>(options);
 			var bootstrapped = await channel.BootstrapElasticsearchAsync(BootstrapMethod.Failure, "7-days-default");
 			bootstrapped.Should().BeTrue("Expected to be able to bootstrap index channel");

@@ -24,7 +24,7 @@ builder.Host.ConfigureLogging((_, loggingBuilder) =>
 		log.Tags = new[] { "debug" };
 	}, channel =>
 	{
-		channel.ResponseCallback = (response, buffer) => Console.WriteLine($"Written  {buffer.Count} logs to Elasticsearch: {response.ApiCallDetails.HttpStatusCode}");
+		channel.ExportResponseCallback = (response, buffer) => Console.WriteLine($"Written  {buffer.Count} logs to Elasticsearch: {response.ApiCallDetails.HttpStatusCode}");
 	});
 });
 var app = builder.Build();

@@ -3,10 +3,11 @@
 // See the LICENSE file in the project root for more information
 
 using Elastic.Channels;
+using Elastic.Channels.Diagnostics;
 using Elastic.Clients.Elasticsearch.IndexManagement;
 using Elastic.Ingest.Elasticsearch.DataStreams;
+using Elastic.Ingest.Elasticsearch.Serialization;
 using Elastic.Transport;
-using Elasticsearch.IntegrationDefaults;
 using FluentAssertions;
 using Xunit;
 using Xunit.Abstractions;
@@ -28,9 +29,9 @@ namespace Elastic.Ingest.Elasticsearch.CommonSchema.IntegrationTests
 			var options = new DataStreamChannelOptions<TimeSeriesDocument>(Client.Transport)
 			{
 				DataStream = targetDataStream,
-				BufferOptions = new BufferOptions { WaitHandle = slim, MaxConsumerBufferSize = 1 },
+				BufferOptions = new BufferOptions { WaitHandle = slim, OutboundBufferMaxSize = 1 },
 			};
-			var listener = new ChannelListener<TimeSeriesDocument>().Register(options);
+			var listener = new ChannelListener<TimeSeriesDocument, BulkResponse>().Register(options);
 			var channel = new EcsDataStreamChannel<TimeSeriesDocument>(options);
 
 			var bootstrapped = await channel.BootstrapElasticsearchAsync(BootstrapMethod.Failure, "7-days-default");
