@@ -40,7 +40,7 @@ Log.Logger = new LoggerConfiguration()
 			MapCustom = (e, _) => e
 		},
 		ConfigureChannel = channelOpts =>  {
-			channelOpts.BufferOptions = new BufferOptions { ConcurrentConsumers = 10 };
+			channelOpts.BufferOptions = new BufferOptions { ExportMaxConcurrency = 10 };
 		}
 	})
 	.CreateLogger();

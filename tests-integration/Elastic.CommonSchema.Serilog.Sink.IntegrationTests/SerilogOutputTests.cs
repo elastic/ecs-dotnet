@@ -4,23 +4,24 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Elastic.Channels;
+using Elastic.Channels.Diagnostics;
 using Elastic.Clients.Elasticsearch;
 using Elastic.Clients.Elasticsearch.IndexManagement;
 using Elastic.CommonSchema.Serilog.Sink;
 using Elastic.Elasticsearch.Xunit.XunitPlumbing;
-using Elasticsearch.IntegrationDefaults;
 using FluentAssertions;
 using Serilog;
 using Serilog.Core;
 using Xunit.Abstractions;
 using DataStreamName = Elastic.Ingest.Elasticsearch.DataStreams.DataStreamName;
+using BulkResponse = Elastic.Ingest.Elasticsearch.Serialization.BulkResponse;
 
 namespace Elastic.CommonSchema.Serilog.Sinks.IntegrationTests
 {
 	public class Serilog : SerilogTestBase
 	{
 		private readonly CountdownEvent _waitHandle;
-		private readonly ChannelListener<EcsDocument> _listener;
+		private readonly ChannelListener<EcsDocument, BulkResponse> _listener;
 		private ElasticsearchSchemaSinkOptions SinkOptions { get; }
 
 		public Serilog(SerilogCluster cluster, ITestOutputHelper output) : base(cluster, output)
@@ -35,7 +36,7 @@ namespace Elastic.CommonSchema.Serilog.Sinks.IntegrationTests
 			};
 
 			_waitHandle = new CountdownEvent(1);
-			_listener = new ChannelListener<EcsDocument>();
+			_listener = new ChannelListener<EcsDocument, BulkResponse>();
 			SinkOptions = new ElasticsearchSchemaSinkOptions(Client.Transport)
 			{
 				DataStream = new DataStreamName("logs", "serilog", "tests"),
@@ -44,7 +45,7 @@ namespace Elastic.CommonSchema.Serilog.Sinks.IntegrationTests
 					c.BufferOptions = new BufferOptions
 					{
 						WaitHandle = _waitHandle,
-						MaxConsumerBufferSize = logs.Count
+						OutboundBufferMaxSize = logs.Count
 					};
 					_listener.Register(c);
 				}
