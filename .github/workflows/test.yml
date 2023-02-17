@@ -78,15 +78,10 @@ jobs:
        fetch-depth: 0
 
     - name: Run release -c false within the docker container
-      run: |
-        docker run --rm -t \
-            -u "$(id -u):$(id -g)" \
-            -v $(pwd):/src \
-            -w /src \
-            -e CI=true \
-            -e HOME=/tmp \
-            mcr.microsoft.com/dotnet/sdk:$DOTNET_VERSION-jammy \
-            ./build.sh release -c false
+      uses: ./.github/workflows/docker-run
+      with:
+        dotnet-sdk-version: ${{ env.DOTNET_VERSION }}
+        command: ./build.sh -c false
 
     - name: Store test results
       if: success() || failure()
