@@ -3713,7 +3713,7 @@ namespace Elastic.CommonSchema
 		///<summary>
 		/// <para><c>threat.framework</c></para>
 		/// <para>Name of the threat framework used to further categorize and classify the tactic and technique of the reported threat. Framework classification can be provided by detecting systems, evaluated at ingest time, or retrospectively tagged to events.</para>
-		/// <example>MITRE ATT&CK</example>
+		/// <example>MITRE ATT&amp;CK</example>
 		///</summary>
 		[JsonPropertyName("framework"), DataMember(Name = "framework")]
 		public string Framework { get; set; }
@@ -3721,7 +3721,7 @@ namespace Elastic.CommonSchema
 		///<summary>
 		/// <para><c>threat.group.alias</c></para>
 		/// <para>The alias(es) of the group for a set of related intrusion activity that are tracked by a common name in the security community.
-		/// While not required, you can use a MITRE ATT&CK® group alias(es).</para>
+		/// While not required, you can use a MITRE ATT&amp;CK® group alias(es).</para>
 		/// <example>[ "Magecart Group 6" ]</example>
 		///</summary>
 		[JsonPropertyName("group.alias"), DataMember(Name = "group.alias")]
@@ -3730,7 +3730,7 @@ namespace Elastic.CommonSchema
 		///<summary>
 		/// <para><c>threat.group.id</c></para>
 		/// <para>The id of the group for a set of related intrusion activity that are tracked by a common name in the security community.
-		/// While not required, you can use a MITRE ATT&CK® group id.</para>
+		/// While not required, you can use a MITRE ATT&amp;CK® group id.</para>
 		/// <example>G0037</example>
 		///</summary>
 		[JsonPropertyName("group.id"), DataMember(Name = "group.id")]
@@ -3739,7 +3739,7 @@ namespace Elastic.CommonSchema
 		///<summary>
 		/// <para><c>threat.group.name</c></para>
 		/// <para>The name of the group for a set of related intrusion activity that are tracked by a common name in the security community.
-		/// While not required, you can use a MITRE ATT&CK® group name.</para>
+		/// While not required, you can use a MITRE ATT&amp;CK® group name.</para>
 		/// <example>FIN6</example>
 		///</summary>
 		[JsonPropertyName("group.name"), DataMember(Name = "group.name")]
@@ -3748,7 +3748,7 @@ namespace Elastic.CommonSchema
 		///<summary>
 		/// <para><c>threat.group.reference</c></para>
 		/// <para>The reference URL of the group for a set of related intrusion activity that are tracked by a common name in the security community.
-		/// While not required, you can use a MITRE ATT&CK® group reference URL.</para>
+		/// While not required, you can use a MITRE ATT&amp;CK® group reference URL.</para>
 		/// <example>https://attack.mitre.org/groups/G0037/</example>
 		///</summary>
 		[JsonPropertyName("group.reference"), DataMember(Name = "group.reference")]
@@ -3904,7 +3904,7 @@ namespace Elastic.CommonSchema
 		///<summary>
 		/// <para><c>threat.software.alias</c></para>
 		/// <para>The alias(es) of the software for a set of related intrusion activity that are tracked by a common name in the security community.
-		/// While not required, you can use a MITRE ATT&CK® associated software description.</para>
+		/// While not required, you can use a MITRE ATT&amp;CK® associated software description.</para>
 		/// <example>[ "X-Agent" ]</example>
 		///</summary>
 		[JsonPropertyName("software.alias"), DataMember(Name = "software.alias")]
@@ -3912,8 +3912,8 @@ namespace Elastic.CommonSchema
 
 		///<summary>
 		/// <para><c>threat.software.id</c></para>
-		/// <para>The id of the software used by this threat to conduct behavior commonly modeled using MITRE ATT&CK®.
-		/// While not required, you can use a MITRE ATT&CK® software id.</para>
+		/// <para>The id of the software used by this threat to conduct behavior commonly modeled using MITRE ATT&amp;CK®.
+		/// While not required, you can use a MITRE ATT&amp;CK® software id.</para>
 		/// <example>S0552</example>
 		///</summary>
 		[JsonPropertyName("software.id"), DataMember(Name = "software.id")]
@@ -3921,8 +3921,8 @@ namespace Elastic.CommonSchema
 
 		///<summary>
 		/// <para><c>threat.software.name</c></para>
-		/// <para>The name of the software used by this threat to conduct behavior commonly modeled using MITRE ATT&CK®.
-		/// While not required, you can use a MITRE ATT&CK® software name.</para>
+		/// <para>The name of the software used by this threat to conduct behavior commonly modeled using MITRE ATT&amp;CK®.
+		/// While not required, you can use a MITRE ATT&amp;CK® software name.</para>
 		/// <example>AdFind</example>
 		///</summary>
 		[JsonPropertyName("software.name"), DataMember(Name = "software.name")]
@@ -3930,8 +3930,8 @@ namespace Elastic.CommonSchema
 
 		///<summary>
 		/// <para><c>threat.software.platforms</c></para>
-		/// <para>The platforms of the software used by this threat to conduct behavior commonly modeled using MITRE ATT&CK®.
-		/// While not required, you can use MITRE ATT&CK® software platform values.
+		/// <para>The platforms of the software used by this threat to conduct behavior commonly modeled using MITRE ATT&amp;CK®.
+		/// While not required, you can use MITRE ATT&amp;CK® software platform values.
 		/// <para><br/>Expected Values:</para>
 		/// <list type="bullet">
 		/// <item>AWS</item>
@@ -3952,8 +3952,8 @@ namespace Elastic.CommonSchema
 
 		///<summary>
 		/// <para><c>threat.software.reference</c></para>
-		/// <para>The reference URL of the software used by this threat to conduct behavior commonly modeled using MITRE ATT&CK®.
-		/// While not required, you can use a MITRE ATT&CK® software reference URL.</para>
+		/// <para>The reference URL of the software used by this threat to conduct behavior commonly modeled using MITRE ATT&amp;CK®.
+		/// While not required, you can use a MITRE ATT&amp;CK® software reference URL.</para>
 		/// <example>https://attack.mitre.org/software/S0552/</example>
 		///</summary>
 		[JsonPropertyName("software.reference"), DataMember(Name = "software.reference")]
@@ -3961,8 +3961,8 @@ namespace Elastic.CommonSchema
 
 		///<summary>
 		/// <para><c>threat.software.type</c></para>
-		/// <para>The type of software used by this threat to conduct behavior commonly modeled using MITRE ATT&CK®.
-		/// While not required, you can use a MITRE ATT&CK® software type.
+		/// <para>The type of software used by this threat to conduct behavior commonly modeled using MITRE ATT&amp;CK®.
+		/// While not required, you can use a MITRE ATT&amp;CK® software type.
 		/// <para><br/>Expected Values:</para>
 		/// <list type="bullet">
 		/// <item>Malware</item>
@@ -3975,7 +3975,7 @@ namespace Elastic.CommonSchema
 
 		///<summary>
 		/// <para><c>threat.tactic.id</c></para>
-		/// <para>The id of tactic used by this threat. You can use a MITRE ATT&CK® tactic, for example. (ex. https://attack.mitre.org/tactics/TA0002/ )</para>
+		/// <para>The id of tactic used by this threat. You can use a MITRE ATT&amp;CK® tactic, for example. (ex. https://attack.mitre.org/tactics/TA0002/ )</para>
 		/// <example>TA0002</example>
 		///</summary>
 		[JsonPropertyName("tactic.id"), DataMember(Name = "tactic.id")]
@@ -3983,7 +3983,7 @@ namespace Elastic.CommonSchema
 
 		///<summary>
 		/// <para><c>threat.tactic.name</c></para>
-		/// <para>Name of the type of tactic used by this threat. You can use a MITRE ATT&CK® tactic, for example. (ex. https://attack.mitre.org/tactics/TA0002/)</para>
+		/// <para>Name of the type of tactic used by this threat. You can use a MITRE ATT&amp;CK® tactic, for example. (ex. https://attack.mitre.org/tactics/TA0002/)</para>
 		/// <example>Execution</example>
 		///</summary>
 		[JsonPropertyName("tactic.name"), DataMember(Name = "tactic.name")]
@@ -3991,7 +3991,7 @@ namespace Elastic.CommonSchema
 
 		///<summary>
 		/// <para><c>threat.tactic.reference</c></para>
-		/// <para>The reference url of tactic used by this threat. You can use a MITRE ATT&CK® tactic, for example. (ex. https://attack.mitre.org/tactics/TA0002/ )</para>
+		/// <para>The reference url of tactic used by this threat. You can use a MITRE ATT&amp;CK® tactic, for example. (ex. https://attack.mitre.org/tactics/TA0002/ )</para>
 		/// <example>https://attack.mitre.org/tactics/TA0002/</example>
 		///</summary>
 		[JsonPropertyName("tactic.reference"), DataMember(Name = "tactic.reference")]
@@ -3999,7 +3999,7 @@ namespace Elastic.CommonSchema
 
 		///<summary>
 		/// <para><c>threat.technique.id</c></para>
-		/// <para>The id of technique used by this threat. You can use a MITRE ATT&CK® technique, for example. (ex. https://attack.mitre.org/techniques/T1059/)</para>
+		/// <para>The id of technique used by this threat. You can use a MITRE ATT&amp;CK® technique, for example. (ex. https://attack.mitre.org/techniques/T1059/)</para>
 		/// <example>T1059</example>
 		///</summary>
 		[JsonPropertyName("technique.id"), DataMember(Name = "technique.id")]
@@ -4007,7 +4007,7 @@ namespace Elastic.CommonSchema
 
 		///<summary>
 		/// <para><c>threat.technique.name</c></para>
-		/// <para>The name of technique used by this threat. You can use a MITRE ATT&CK® technique, for example. (ex. https://attack.mitre.org/techniques/T1059/)</para>
+		/// <para>The name of technique used by this threat. You can use a MITRE ATT&amp;CK® technique, for example. (ex. https://attack.mitre.org/techniques/T1059/)</para>
 		/// <example>Command and Scripting Interpreter</example>
 		///</summary>
 		[JsonPropertyName("technique.name"), DataMember(Name = "technique.name")]
@@ -4015,7 +4015,7 @@ namespace Elastic.CommonSchema
 
 		///<summary>
 		/// <para><c>threat.technique.reference</c></para>
-		/// <para>The reference url of technique used by this threat. You can use a MITRE ATT&CK® technique, for example. (ex. https://attack.mitre.org/techniques/T1059/)</para>
+		/// <para>The reference url of technique used by this threat. You can use a MITRE ATT&amp;CK® technique, for example. (ex. https://attack.mitre.org/techniques/T1059/)</para>
 		/// <example>https://attack.mitre.org/techniques/T1059/</example>
 		///</summary>
 		[JsonPropertyName("technique.reference"), DataMember(Name = "technique.reference")]
@@ -4023,7 +4023,7 @@ namespace Elastic.CommonSchema
 
 		///<summary>
 		/// <para><c>threat.technique.subtechnique.id</c></para>
-		/// <para>The full id of subtechnique used by this threat. You can use a MITRE ATT&CK® subtechnique, for example. (ex. https://attack.mitre.org/techniques/T1059/001/)</para>
+		/// <para>The full id of subtechnique used by this threat. You can use a MITRE ATT&amp;CK® subtechnique, for example. (ex. https://attack.mitre.org/techniques/T1059/001/)</para>
 		/// <example>T1059.001</example>
 		///</summary>
 		[JsonPropertyName("technique.subtechnique.id"), DataMember(Name = "technique.subtechnique.id")]
@@ -4031,7 +4031,7 @@ namespace Elastic.CommonSchema
 
 		///<summary>
 		/// <para><c>threat.technique.subtechnique.name</c></para>
-		/// <para>The name of subtechnique used by this threat. You can use a MITRE ATT&CK® subtechnique, for example. (ex. https://attack.mitre.org/techniques/T1059/001/)</para>
+		/// <para>The name of subtechnique used by this threat. You can use a MITRE ATT&amp;CK® subtechnique, for example. (ex. https://attack.mitre.org/techniques/T1059/001/)</para>
 		/// <example>PowerShell</example>
 		///</summary>
 		[JsonPropertyName("technique.subtechnique.name"), DataMember(Name = "technique.subtechnique.name")]
@@ -4039,7 +4039,7 @@ namespace Elastic.CommonSchema
 
 		///<summary>
 		/// <para><c>threat.technique.subtechnique.reference</c></para>
-		/// <para>The reference url of subtechnique used by this threat. You can use a MITRE ATT&CK® subtechnique, for example. (ex. https://attack.mitre.org/techniques/T1059/001/)</para>
+		/// <para>The reference url of subtechnique used by this threat. You can use a MITRE ATT&amp;CK® subtechnique, for example. (ex. https://attack.mitre.org/techniques/T1059/001/)</para>
 		/// <example>https://attack.mitre.org/techniques/T1059/001/</example>
 		///</summary>
 		[JsonPropertyName("technique.subtechnique.reference"), DataMember(Name = "technique.subtechnique.reference")]
