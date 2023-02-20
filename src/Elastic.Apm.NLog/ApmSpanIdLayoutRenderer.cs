@@ -8,6 +8,7 @@ namespace Elastic.Apm.NLog;
 /// <summary>
 /// Provides ElasticApmSpanId as special logging variable to render the current Elastic APM Span Id
 /// </summary>
+[LayoutRenderer(Name)]
 [ThreadSafe]
 public class ApmSpanIdLayoutRenderer : LayoutRenderer
 {
