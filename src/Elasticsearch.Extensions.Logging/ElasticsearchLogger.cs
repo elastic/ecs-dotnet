@@ -14,6 +14,9 @@ using Microsoft.Extensions.Logging;
 
 namespace Elasticsearch.Extensions.Logging
 {
+	/// <summary>
+	/// An <see cref="ILogger"/> implementation that writes logs directly to Elasticsearch
+	/// </summary>
 	public class ElasticsearchLogger : ILogger
 	{
 		private readonly string _categoryName;
@@ -34,10 +37,13 @@ namespace Elasticsearch.Extensions.Logging
 			_scopeProvider = scopeProvider;
 		}
 
+		/// <inheritdoc cref="ILogger.BeginScope{TState}"/>
 		public IDisposable? BeginScope<TState>(TState state) => _scopeProvider?.Push(state);
 
+		/// <inheritdoc cref="ILogger.IsEnabled"/>
 		public bool IsEnabled(LogLevel logLevel) => _options.IsEnabled;
 
+		/// <inheritdoc cref="ILogger.Log{TState}"/>
 		public void Log<TState>(LogLevel logLevel, EventId eventId, TState state, Exception exception,
 			Func<TState, Exception, string> formatter
 		)

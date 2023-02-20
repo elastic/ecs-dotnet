@@ -60,8 +60,8 @@ namespace Elastic.CommonSchema.BenchmarkDotNetExporter
 		/// <summary> If Elasticsearch security is enabled (it should!) this sets the api key. </summary>
 		public string ApiKey { get; set; }
 
-		/// <summary> Instructs the exporter to use a sniffing connection pool, which will discover the rest of the cluster</summary>
-		public bool UseSniffingConnectionPool { get; set; }
+		/// <summary> Instructs the exporter to use a sniffing node pool, which will discover the rest of the cluster</summary>
+		public bool UseSniffingNodePool { get; set; }
 
 		/// <summary> Whether to use debug mode on the Elasticsearch Client</summary>
 		public bool EnableDebugMode { get; set; } =
@@ -127,12 +127,12 @@ namespace Elastic.CommonSchema.BenchmarkDotNetExporter
 
 			if (uris.Length == 1)
 			{
-				return UseSniffingConnectionPool
+				return UseSniffingNodePool
 					? new SniffingNodePool(uris)
 					: new SingleNodePool(uris[0]);
 			}
 
-			return UseSniffingConnectionPool
+			return UseSniffingNodePool
 				? new SniffingNodePool(uris)
 				: new StaticNodePool(uris);
 		}

@@ -4,6 +4,9 @@ using Elastic.Transport;
 
 namespace Elasticsearch.Extensions.Logging.Options
 {
+	/// <summary>
+	/// Provide options to <see cref="ElasticsearchLogger"/> to control how data gets written to Elasticsearch
+	/// </summary>
 	public class ElasticsearchLoggerOptions : IEcsDocumentCreationOptions
 	{
 		/// <summary>

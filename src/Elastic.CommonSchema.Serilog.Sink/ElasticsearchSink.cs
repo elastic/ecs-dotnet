@@ -17,6 +17,7 @@ namespace Elastic.CommonSchema.Serilog.Sink
 
 		public ElasticsearchSchemaSinkOptions(HttpTransport transport) : base(transport) { }
 	}
+
 	public class ElasticsearchSchemaSinkOptions<TEcsDocument> where TEcsDocument : EcsDocument, new()
 	{
 		public ElasticsearchSchemaSinkOptions() : this(TransportHelper.Default()) { }

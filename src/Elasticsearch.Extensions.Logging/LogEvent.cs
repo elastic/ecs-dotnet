@@ -11,6 +11,10 @@ using Elastic.CommonSchema.Serialization;
 
 namespace Elasticsearch.Extensions.Logging
 {
+	/// <summary>
+	/// A subclass of <see cref="EcsDocument"/> that adds additional properties related to Extensions logging.
+	/// <para>For instance it adds scope information to each logged event</para>
+	/// </summary>
 	[JsonConverter(typeof(EcsDocumentJsonConverterFactory))]
 	public class LogEvent : EcsDocument
 	{

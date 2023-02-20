@@ -19,6 +19,10 @@ using Microsoft.Extensions.Options;
 
 namespace Elasticsearch.Extensions.Logging
 {
+	/// <summary>
+	/// An <see cref="ILoggerProvider"/> implementation that exposes a way to create <see cref="ElasticsearchLogger"/>
+	/// instances to <see cref="LoggerFactory"/>
+	/// </summary>
 	[ProviderAlias("Elasticsearch")]
 	public class ElasticsearchLoggerProvider : ILoggerProvider, ISupportExternalScope
 	{
@@ -28,6 +32,7 @@ namespace Elasticsearch.Extensions.Logging
 		private IExternalScopeProvider? _scopeProvider;
 		private IBufferedChannel<LogEvent> _shipper;
 
+		/// <inheritdoc cref="ElasticsearchLoggerProvider"/>
 		public ElasticsearchLoggerProvider(IOptionsMonitor<ElasticsearchLoggerOptions> options,
 			IEnumerable<IChannelSetup> channelConfigurations
 		)
@@ -44,17 +49,21 @@ namespace Elasticsearch.Extensions.Logging
 		}
 
 		// ReSharper disable once AutoPropertyCanBeMadeGetOnly.Global
+		/// <summary> Returns <see cref="DateTimeOffset.UtcNow"/></summary>
 		public static Func<DateTimeOffset> LocalDateTimeProvider { get; set; } = () => DateTimeOffset.UtcNow;
 
+		/// <inheritdoc cref="ILoggerProvider.CreateLogger"/>
 		public ILogger CreateLogger(string name) =>
 			new ElasticsearchLogger(name, _shipper, _options.CurrentValue, _scopeProvider);
 
+		/// <inheritdoc cref="IDisposable.Dispose"/>
 		public void Dispose()
 		{
 			_optionsReloadToken.Dispose();
 			_shipper.Dispose();
 		}
 
+		/// <inheritdoc cref="ISupportExternalScope.SetScopeProvider"/>
 		public void SetScopeProvider(IExternalScopeProvider scopeProvider) => _scopeProvider = scopeProvider;
 
 		private static void SetupChannelOptions(
@@ -65,28 +74,29 @@ namespace Elasticsearch.Extensions.Logging
 			foreach (var channelSetup in channelConfigurations)
 				channelSetup.ConfigureChannel(channelOptions);
 		}
-		public static NodePool CreateConnectionPool(ElasticsearchLoggerOptions loggerOptions)
+
+		private static NodePool CreateNodePool(ElasticsearchLoggerOptions loggerOptions)
 		{
 			var shipTo = loggerOptions.ShipTo;
-			var connectionPool = loggerOptions.ShipTo.ConnectionPoolType;
+			var connectionPool = loggerOptions.ShipTo.NodePoolType;
 			var nodeUris = loggerOptions.ShipTo.NodeUris?.ToArray() ?? Array.Empty<Uri>();
-			if (nodeUris.Length == 0 && connectionPool != ConnectionPoolType.Cloud)
+			if (nodeUris.Length == 0 && connectionPool != NodePoolType.Cloud)
 				return new SingleNodePool(new Uri("http://localhost:9200"));
-			if (connectionPool == ConnectionPoolType.SingleNode || connectionPool == ConnectionPoolType.Unknown && nodeUris.Length == 1)
+			if (connectionPool == NodePoolType.SingleNode || connectionPool == NodePoolType.Unknown && nodeUris.Length == 1)
 				return new SingleNodePool(nodeUris[0]);
 
 			switch (connectionPool)
 			{
 				// TODO: Add option to randomize pool
-				case ConnectionPoolType.Unknown:
-				case ConnectionPoolType.Sniffing:
+				case NodePoolType.Unknown:
+				case NodePoolType.Sniffing:
 					return new SniffingNodePool(nodeUris);
-				case ConnectionPoolType.Static:
+				case NodePoolType.Static:
 					return new StaticNodePool(nodeUris);
-				case ConnectionPoolType.Sticky:
+				case NodePoolType.Sticky:
 					return new StaticNodePool(nodeUris);
-				// case ConnectionPoolType.StickySniffing:
-				case ConnectionPoolType.Cloud:
+				// case NodePoolType.StickySniffing:
+				case NodePoolType.Cloud:
 					if (!string.IsNullOrEmpty(shipTo.ApiKey))
 					{
 						var apiKeyCredentials = new ApiKey(shipTo.ApiKey);
@@ -105,7 +115,7 @@ namespace Elasticsearch.Extensions.Logging
 			// TODO: Check if Uri has changed before recreating
 			// TODO: Injectable factory? Or some way of testing.
 			if (loggerOptions.Transport != null) return loggerOptions.Transport;
-			var connectionPool = CreateConnectionPool(loggerOptions);
+			var connectionPool = CreateNodePool(loggerOptions);
 			var config = new TransportConfiguration(connectionPool, productRegistration: new ElasticsearchProductRegistration());
 			var transport = new DefaultHttpTransport<TransportConfiguration>(config);
 			return transport;
@@ -118,8 +128,6 @@ namespace Elasticsearch.Extensions.Logging
 			oldShipper?.Dispose();
 		}
 
-		public Exception? ObservedException { get; private set; }
-
 		private IBufferedChannel<LogEvent> CreatIngestChannel(ElasticsearchLoggerOptions loggerOptions)
 		{
 			var transport = CreateTransport(loggerOptions);
@@ -131,7 +139,6 @@ namespace Elasticsearch.Extensions.Logging
 					IndexOffset = loggerOptions.Index.IndexOffset,
 					WriteEvent = async (stream, ctx, logEvent) => await logEvent.SerializeAsync(stream, ctx).ConfigureAwait(false),
 					TimestampLookup = l => l.Timestamp,
-					ExportExceptionCallback = (e) => ObservedException ??= e
 				};
 				SetupChannelOptions(_channelConfigurations, indexChannelOptions);
 				return new EcsIndexChannel<LogEvent>(indexChannelOptions);
@@ -143,7 +150,6 @@ namespace Elasticsearch.Extensions.Logging
 				{
 					DataStream = new DataStreamName(dataStreamNameOptions.Type, dataStreamNameOptions.DataSet, dataStreamNameOptions.Namespace),
 					WriteEvent = async (stream, ctx, logEvent) => await logEvent.SerializeAsync(stream, ctx).ConfigureAwait(false),
-					ExportExceptionCallback = (e) => ObservedException = e
 				};
 				SetupChannelOptions(_channelConfigurations, indexChannelOptions);
 				var channel =  new EcsDataStreamChannel<LogEvent>(indexChannelOptions);
