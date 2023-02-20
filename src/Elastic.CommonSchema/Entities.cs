@@ -7,7 +7,7 @@ namespace Elastic.CommonSchema;
 // These should be exceptions and not the norm.
 // Most of the entities are generated under Entities.Generated.cs
 
-[JsonConverter(typeof(EcsLogJsonConverter))]
+[JsonConverter(typeof(LogEntityJsonConverter))]
 public partial class Log { }
-[JsonConverter(typeof(EcsEcsJsonConverter))]
+[JsonConverter(typeof(EcsEntityJsonConverter))]
 public partial class Ecs { }

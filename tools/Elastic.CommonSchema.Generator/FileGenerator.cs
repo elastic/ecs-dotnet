@@ -26,7 +26,7 @@ namespace Elastic.CommonSchema.Generator
 				{ m => Generate(m, "EcsDocument"), "Base ECS Document" },
 
 				{ m => Generate(m, "EcsDocumentJsonConverter", "Serialization"), "Base ECS Document Json Converter" },
-				{ m => Generate(m, "EcsShouldSerializeJsonConverter", "Serialization"), "Generate converters for entities with optional serialization behaviour" },
+				{ m => Generate(m, "PropertiesReaderJsonConverterBase", "Serialization"), "Generate converters for entities with optional serialization behaviour" },
 				{ m => Generate(m, "EcsJsonContext", "Serialization"), "Ecs System Text Json Source Generators" },
 
 				{ m => Generate(m, "LogTemplateProperties"), "Strongly types ECS fields supported in log templates" },

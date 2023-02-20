@@ -34,7 +34,7 @@ namespace Elastic.CommonSchema
 		/// <para>See <see cref="LogTemplateProperties"/> for a strongly typed list of valid ECS log template properties</para>
 		/// <para>If its not a supported ECS log template property or using the wrong type:</para>
 		/// <list type="bullet">
-		/// <item>Assigns strings to <see cref="EcsDocument.Labels"/> on <see cref="EcsDocument"/></item>
+		/// <item>Assigns strings to <see cref="BaseFieldSet.Labels"/> on <see cref="EcsDocument"/></item>
 		/// <item>Assigns everything else to <see cref="EcsDocument.Metadata"/> on <see cref="EcsDocument"/></item>
 		/// </list>
 		/// </summary>

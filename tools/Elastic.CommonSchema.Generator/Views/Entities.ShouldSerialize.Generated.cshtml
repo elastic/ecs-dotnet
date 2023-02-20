@@ -30,10 +30,11 @@ namespace Elastic.CommonSchema;
 		emptyCheck = "false";
 	}
 	
-<text>	public partial class @entity.Name 
+<text>public partial class @entity.Name 
 {
 	[JsonIgnore]
-	internal bool ShouldSerialize => @Raw(emptyCheck);
+	internal bool ShouldSerialize =>
+		@Raw(emptyCheck);
 }
 </text>
 }

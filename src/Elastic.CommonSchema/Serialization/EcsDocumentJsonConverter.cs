@@ -4,11 +4,16 @@
 
 using System;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace Elastic.CommonSchema.Serialization
 {
+	/// <summary> A JsonConverter for <see cref="EcsDocument"/> that supports the
+	/// https://github.com/elastic/ecs-logging specification
+	/// </summary>
 	public partial class EcsDocumentJsonConverter<TBase> where TBase : EcsDocument, new()
 	{
+		/// <inheritdoc cref="JsonConverter{T}.Read"/>
 		public override TBase Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
 		{
 			if (reader.TokenType == JsonTokenType.Null)
@@ -92,6 +97,9 @@ namespace Elastic.CommonSchema.Serialization
 		}
 	}
 
+	/// <summary> A JsonConverter for <see cref="EcsDocument"/> that supports the
+	/// https://github.com/elastic/ecs-logging specification
+	/// </summary>
 	public class EcsDocumentJsonConverter : EcsDocumentJsonConverter<EcsDocument>
 	{
 	}

@@ -223,7 +223,7 @@ namespace Elastic.CommonSchema.NLog
 			ecsEvent.Http = GetHttp(logEvent);
 			ecsEvent.Url = GetUrl(logEvent);
 
-			var metadata = GetMetadata(logEvent) ?? MetadataDictionary.Default;
+			var metadata = GetMetadata(logEvent) ?? new MetadataDictionary();
 			foreach(var kv in metadata)
 				ecsEvent.AssignField(kv.Key, kv.Value);
 
