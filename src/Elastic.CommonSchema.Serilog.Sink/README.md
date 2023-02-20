@@ -35,7 +35,7 @@ Writing to `Elastic Cloud`:
 .WriteTo.ElasticCloud("cloudId", "cloudUser", "cloudPass", opts =>
 ```
 
-`opts` is an instance of `ElasticsearchSchemaSinkOptions` with the following options
+`opts` is an instance of `ElasticsearchSinkOptions` with the following options
 
 
 | Option | Description |
@@ -46,10 +46,10 @@ Writing to `Elastic Cloud`:
 | `TextFormatting`| Allows explicit control of over the `EcsTextFormatterConfiguration` used to emit ECS json documents. See [`Elastic.CommonSchema.Serilog`](https://github.com/elastic/ecs-dotnet/tree/main/src/Elastic.CommonSchema.Serilog) for available options. |
 | `ConfigureChannel` | A callback receiving the `DatastreamChannelOptions` which allows you to control sizing, backpressure etc. See [`Elastic.Ingest.Elasticsearch`](https://github.com/elastic/elastic-ingest-dotnet/blob/main/src/Elastic.Ingest.Elasticsearch/README.md#elasticingestelasticsearch) for more information.
 
-Note that you can also pass `ElasticsearchSchemaSinkOptions` directly
+Note that you can also pass `ElasticsearchSinkOptions` directly
 
 ```csharp
-.WriteTo.Elasticsearch(new ElasticsearchSchemaSinkOptions(client.Transport)
+.WriteTo.Elasticsearch(new ElasticsearchSinkOptions(client.Transport)
 ```
 
 This allows you to reuse the `Transport` used by the Elasticsearch Client for instance.

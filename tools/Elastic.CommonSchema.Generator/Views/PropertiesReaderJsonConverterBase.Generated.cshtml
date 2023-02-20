@@ -15,6 +15,7 @@ If you wish to submit a PR please modify the original csharp file and submit the
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace Elastic.CommonSchema.Serialization;
 
@@ -22,8 +23,10 @@ namespace Elastic.CommonSchema.Serialization;
 {
 	var entity = kv.Key;
 	<text>
-public partial class Ecs@(entity.Name)JsonConverter : EcsShouldSerializeJsonConverter@(Raw("<"))@(entity.Name)@Raw(">")
+/// <summary> Specialized converter for <see cref="@(entity.Name)"/> </summary>
+internal partial class @(entity.Name)EntityJsonConverter : PropertiesReaderJsonConverterBase@(Raw("<"))@(entity.Name)@Raw(">")
 {
+	/// <inheritdoc cref="PropertiesReaderJsonConverterBase{T}.ReadProperties"/>
 	protected override bool ReadProperties(ref Utf8JsonReader reader, @entity.Name ecsEvent)
 	{
 		var propertyName = reader.GetString();
@@ -46,6 +49,7 @@ public partial class Ecs@(entity.Name)JsonConverter : EcsShouldSerializeJsonConv
 		};
 	}
 		
+	/// <inheritdoc cref="JsonConverter{T}.Write"/>
 	public override void Write(Utf8JsonWriter writer, @entity.Name value, JsonSerializerOptions options)
 	{
 		if (value == null || !value.ShouldSerialize)

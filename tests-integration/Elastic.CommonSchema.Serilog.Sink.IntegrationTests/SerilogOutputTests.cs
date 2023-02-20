@@ -22,7 +22,7 @@ namespace Elastic.CommonSchema.Serilog.Sinks.IntegrationTests
 	{
 		private readonly CountdownEvent _waitHandle;
 		private readonly ChannelListener<EcsDocument, BulkResponse> _listener;
-		private ElasticsearchSchemaSinkOptions SinkOptions { get; }
+		private ElasticsearchSinkOptions SinkOptions { get; }
 
 		public Serilog(SerilogCluster cluster, ITestOutputHelper output) : base(cluster, output)
 		{
@@ -37,7 +37,7 @@ namespace Elastic.CommonSchema.Serilog.Sinks.IntegrationTests
 
 			_waitHandle = new CountdownEvent(1);
 			_listener = new ChannelListener<EcsDocument, BulkResponse>();
-			SinkOptions = new ElasticsearchSchemaSinkOptions(Client.Transport)
+			SinkOptions = new ElasticsearchSinkOptions(Client.Transport)
 			{
 				DataStream = new DataStreamName("logs", "serilog", "tests"),
 				ConfigureChannel = c =>

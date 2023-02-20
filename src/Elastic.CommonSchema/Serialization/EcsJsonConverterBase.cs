@@ -9,9 +9,10 @@ using System.Text.Json.Serialization.Metadata;
 
 namespace Elastic.CommonSchema.Serialization
 {
+	/// <summary> A base implementation for dedicated Ecs Fieldset json converters </summary>
 	public abstract class EcsJsonConverterBase<T> : JsonConverter<T>
 	{
-		// ReSharper disable once RedundantAssignment
+		/// <summary></summary>
 		protected static bool ReadDateTime(ref Utf8JsonReader reader, ref DateTimeOffset? dateTime)
 		{
 			if (reader.TokenType == JsonTokenType.Null)
@@ -24,6 +25,7 @@ namespace Elastic.CommonSchema.Serialization
 			return true;
 		}
 
+		/// <summary></summary>
 		// ReSharper disable once RedundantAssignment
 		protected static bool ReadString(ref Utf8JsonReader reader, ref string stringProp)
 		{
@@ -31,6 +33,7 @@ namespace Elastic.CommonSchema.Serialization
 			return true;
 		}
 
+		/// <summary></summary>
 		protected static void WriteProp<TValue>(Utf8JsonWriter writer, string key, TValue value)
 		{
 			if (value == null) return;
@@ -47,6 +50,7 @@ namespace Elastic.CommonSchema.Serialization
 				JsonSerializer.Serialize(writer, value, type, options);
 		}
 
+		/// <summary></summary>
 		protected static void WriteProp<TValue>(Utf8JsonWriter writer, string key, TValue value, JsonTypeInfo<TValue> typeInfo)
 		{
 			if (value == null) return;
@@ -76,12 +80,14 @@ namespace Elastic.CommonSchema.Serialization
 			return reader.TokenType != JsonTokenType.Number ? null : reader.TryGetInt64(out var l) ? l : null;
 		}
 
+		/// <summary></summary>
 		protected static bool ReadPropLong(ref Utf8JsonReader reader, string key, T b, Action<T, long?> set)
 		{
 			set(b, ReadPropLong(ref reader, key));
 			return true;
 		}
 
+		/// <summary></summary>
 		// ReSharper disable once UnusedParameter.Local (key is used for readability)
 		private static string ReadPropString(ref Utf8JsonReader reader, string key)
 		{
@@ -89,12 +95,14 @@ namespace Elastic.CommonSchema.Serialization
 			return reader.TokenType != JsonTokenType.String ? null : reader.GetString();
 		}
 
+		/// <summary></summary>
 		protected static bool ReadPropString(ref Utf8JsonReader reader, string key, T b, Action<T, string> set)
 		{
 			set(b, ReadPropString(ref reader, key));
 			return true;
 		}
 
+		/// <summary></summary>
 		// ReSharper disable once UnusedParameter.Local (key is used for readability)
 		private static TValue ReadProp<TValue>(ref Utf8JsonReader reader, string key)  where TValue : class
 		{
@@ -104,12 +112,15 @@ namespace Elastic.CommonSchema.Serialization
 			return JsonSerializer.Deserialize<TValue>(ref reader, options);
 		}
 
+		/// <summary></summary>
 		protected static bool ReadProp<TValue>(ref Utf8JsonReader reader, string key, T b, Action<T, TValue> set)
 			where TValue : class
 		{
 			set(b, ReadProp<TValue>(ref reader, key));
 			return true;
 		}
+
+		/// <summary></summary>
 		// ReSharper disable once UnusedParameter.Local (key is used for readability)
 		protected static bool ReadProp<TValue>(ref Utf8JsonReader reader, string key, JsonTypeInfo<TValue> typeInfo, T b, Action<T, TValue> set)
 			where TValue : class

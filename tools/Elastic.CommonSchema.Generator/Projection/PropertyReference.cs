@@ -27,6 +27,7 @@ namespace Elastic.CommonSchema.Generator.Projection
 		{
 			var multiLineDescription = Regex.Replace(description, @"\n", "\r\n		/// ");
 			multiLineDescription = multiLineDescription.Replace("<", "&lt;").Replace(">", "&gt;");
+			multiLineDescription = multiLineDescription.Replace("ATT&CK", "ATT&amp;CK");
 			return multiLineDescription;
 		}
 
@@ -83,7 +84,7 @@ namespace Elastic.CommonSchema.Generator.Projection
 			ReadJsonType = ClrType.PascalCase();
 			CastFromObject = field.GetCastFromObject();
 			Description = GetFieldDescription(field);
-			Example = field.Example?.ToString() ?? string.Empty;
+			Example = NormalizeDescription(field.Example?.ToString() ?? string.Empty);
 		}
 
 		public string CastFromObject { get; }
@@ -100,7 +101,7 @@ namespace Elastic.CommonSchema.Generator.Projection
 			InlineObject = inlineObject;
 			Field = field;
 			Description = GetFieldDescription(field);
-			Example = field.Example?.ToString() ?? string.Empty;
+			Example = NormalizeDescription(field.Example?.ToString() ?? string.Empty);
 		}
 
 		public InlineObject InlineObject { get; }

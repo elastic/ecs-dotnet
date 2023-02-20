@@ -12,6 +12,7 @@ If you wish to submit a PR please modify the original csharp file and submit the
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace Elastic.CommonSchema.Serialization
 {
@@ -95,6 +96,7 @@ namespace Elastic.CommonSchema.Serialization
 			};
 		}
 
+		/// <inheritdoc cref="JsonConverter{T}.Write"/>
 		public override void Write(Utf8JsonWriter writer, TBase value, JsonSerializerOptions options)
 		{
 			if (value == null)

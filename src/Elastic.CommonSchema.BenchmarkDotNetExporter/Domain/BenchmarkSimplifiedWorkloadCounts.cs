@@ -7,11 +7,14 @@ using System.Text.Json.Serialization;
 
 namespace Elastic.CommonSchema.BenchmarkDotNetExporter.Domain
 {
+	/// <summary></summary>
 	public class BenchmarkSimplifiedWorkloadCounts
 	{
+		/// <summary></summary>
 		[JsonPropertyName("warmup"), DataMember(Name = "warmup")]
 		public long Warmup { get; set; }
 
+		/// <summary></summary>
 		[JsonPropertyName("measured"), DataMember(Name = "measured")]
 		public long Measured { get; set; }
 	}

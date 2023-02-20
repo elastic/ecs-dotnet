@@ -9,9 +9,11 @@ using System.Text.Json.Serialization;
 
 namespace Elastic.CommonSchema.Serialization
 {
+	/// <summary>Static class holding <see cref="JsonSerializerOptions"/></summary>
 	public static class EcsJsonConfiguration
 	{
-		public static JsonSerializerOptions SerializerOptions { get; } = new ()
+		/// <summary>Default <see cref="JsonSerializerOptions"/> used by ECS integrations</summary>
+		public static JsonSerializerOptions SerializerOptions { get; } = new()
 		{
 			DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingDefault,
 			NumberHandling = JsonNumberHandling.AllowNamedFloatingPointLiterals,
@@ -20,8 +22,8 @@ namespace Elastic.CommonSchema.Serialization
 			Converters =
 			{
 				new EcsDocumentJsonConverterFactory(),
-				new EcsLogJsonConverter(),
-				new EcsEcsJsonConverter(),
+				new LogEntityJsonConverter(),
+				new EcsEntityJsonConverter(),
 				// System.Text.Json got significantly better at not tripping over BCL types with .NET 7.0.
 				// ECS should fallback from serialization failures in metadata however this list catches the most
 				// common offenders. This to ensure better interop with older ASP.NET version out of the box see:
@@ -37,6 +39,7 @@ namespace Elastic.CommonSchema.Serialization
 		internal static readonly JsonConverter<DateTimeOffset> DateTimeOffsetConverter =
 			(JsonConverter<DateTimeOffset>)SerializerOptions.GetConverter(typeof(DateTimeOffset));
 
+		/// <summary>Default <see cref="JsonConverter{T}"/> for <see cref="EcsDocument"/></summary>
 		public static readonly EcsDocumentJsonConverter DefaultEcsDocumentJsonConverter = new();
 
 		private sealed class EcsJsonStringConverter<T> : JsonConverter<T>

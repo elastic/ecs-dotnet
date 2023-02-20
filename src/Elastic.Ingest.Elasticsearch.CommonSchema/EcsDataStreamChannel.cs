@@ -15,11 +15,17 @@ namespace Elastic.Ingest.Elasticsearch.CommonSchema
 	public class EcsDataStreamChannel<TEcsDocument> : DataStreamChannel<TEcsDocument>
 		where TEcsDocument : EcsDocument
 	{
+		/// <inheritdoc cref="EcsDataStreamChannel{TEcsDocument}"/>
 		public EcsDataStreamChannel(DataStreamChannelOptions<TEcsDocument> options) : base(options) =>
 			options.WriteEvent = async (stream, ctx, @event) =>
 				await JsonSerializer.SerializeAsync(stream, @event, typeof(TEcsDocument), EcsJsonConfiguration.SerializerOptions, ctx)
 					.ConfigureAwait(false);
 
+		/// <summary>
+		/// Bootstrap the target data stream. Will register the appropriate index and component templates
+		/// </summary>
+		/// <param name="bootstrapMethod">Either None (no bootstrapping), Silent (quiet exit), Failure (throw exceptions)</param>
+		/// <param name="ilmPolicy">Registers a component template that ensures the template is managed by this ilm policy</param>
 		public override bool BootstrapElasticsearch(BootstrapMethod bootstrapMethod, string? ilmPolicy = null)
 		{
 			if (bootstrapMethod == BootstrapMethod.None) return true;
@@ -51,6 +57,12 @@ namespace Elastic.Ingest.Elasticsearch.CommonSchema
 			return true;
 		}
 
+		/// <summary>
+		/// Bootstrap the target data stream. Will register the appropriate index and component templates
+		/// </summary>
+		/// <param name="bootstrapMethod">Either None (no bootstrapping), Silent (quiet exit), Failure (throw exceptions)</param>
+		/// <param name="ilmPolicy">Registers a component template that ensures the template is managed by this ilm policy</param>
+		/// <param name="ctx"></param>
 		public override async Task<bool> BootstrapElasticsearchAsync(BootstrapMethod bootstrapMethod, string? ilmPolicy = null, CancellationToken ctx = default)
 		{
 			if (bootstrapMethod == BootstrapMethod.None) return true;

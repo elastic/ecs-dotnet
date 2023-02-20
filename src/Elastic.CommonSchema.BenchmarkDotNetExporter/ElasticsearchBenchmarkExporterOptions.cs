@@ -18,7 +18,7 @@ namespace Elastic.CommonSchema.BenchmarkDotNetExporter
 	public class ElasticsearchBenchmarkExporterOptions
 	{
 		/// <summary>
-		/// Configure the exporter options, the <see cref="commaSeparatedListOfUrls" /> parameter is required.
+		/// Configure the exporter options, the <paramref name="commaSeparatedListOfUrls" /> parameter is required.
 		/// <para>The other options can be specified in the property initializer</para>
 		/// </summary>
 		/// <param name="commaSeparatedListOfUrls">
@@ -29,7 +29,7 @@ namespace Elastic.CommonSchema.BenchmarkDotNetExporter
 		public ElasticsearchBenchmarkExporterOptions(string commaSeparatedListOfUrls) : this(Parse(commaSeparatedListOfUrls)) { }
 
 		/// <summary>
-		/// Configure the exporter options, the <see cref="nodes"/> parameter is required.
+		/// Configure the exporter options, the <paramref name="nodes"/> parameter is required.
 		/// <para>The other options can be specified in the property initializer</para>
 		/// </summary>
 		/// <param name="nodes">
@@ -43,6 +43,7 @@ namespace Elastic.CommonSchema.BenchmarkDotNetExporter
 				throw new ArgumentException($"No nodes were passed to {nameof(ElasticsearchBenchmarkExporterOptions)}", nameof(nodes));
 		}
 
+		/// <summary> The nodes to write data too </summary>
 		public Uri[] Nodes { get; }
 
 		/// <summary>
@@ -59,8 +60,8 @@ namespace Elastic.CommonSchema.BenchmarkDotNetExporter
 		/// <summary> If Elasticsearch security is enabled (it should!) this sets the api key. </summary>
 		public string ApiKey { get; set; }
 
-		/// <summary> Instructs the exporter to use a sniffing connection pool, which will discover the rest of the cluster</summary>
-		public bool UseSniffingConnectionPool { get; set; }
+		/// <summary> Instructs the exporter to use a sniffing node pool, which will discover the rest of the cluster</summary>
+		public bool UseSniffingNodePool { get; set; }
 
 		/// <summary> Whether to use debug mode on the Elasticsearch Client</summary>
 		public bool EnableDebugMode { get; set; } =
@@ -72,10 +73,13 @@ namespace Elastic.CommonSchema.BenchmarkDotNetExporter
 
 		/// <summary> (Optional) Report the sha of the commit we are benchmarking</summary>
 		public string GitCommitSha { get; set; }
+
 		/// <summary> (Optional) Report the message of the commit we are benchmarking</summary>
 		public string GitCommitMessage { get; set; }
+
 		/// <summary> (Optional) Report the branch of the commit we are benchmarking</summary>
 		public string GitBranch { get; set; }
+
 		/// <summary> (Optional) Report the repository, does not have to be a complete URI</summary>
 		public string GitRepositoryIdentifier { get; set; }
 
@@ -88,17 +92,20 @@ namespace Elastic.CommonSchema.BenchmarkDotNetExporter
 		/// </summary>
 		public BootstrapMethod BootstrapMethod { get; set; } = BootstrapMethod.None;
 
+		/// <summary> Allows the user to directly change <see cref="DataStreamChannelOptions{TEvent}"/> used to export the benchmarks </summary>
 		public Action<DataStreamChannelOptions<BenchmarkDocument>> ChannelOptionsCallback { get; set; }
 
 		private static Uri[] Parse(string urls)
 		{
 			if (string.IsNullOrWhiteSpace(urls)) throw new ArgumentException("no urls provided, empty string or null", nameof(urls));
-			var uris = urls.Split(new[] {','}, StringSplitOptions.RemoveEmptyEntries)
+
+			var uris = urls.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries)
 				.Select(u => u.Trim())
 				.Select(u => Uri.TryCreate(u, UriKind.Absolute, out var url) ? url : null)
 				.Where(u => u != null)
 				.ToList();
 			if (uris.Count == 0) throw new ArgumentException($"'{urls}' can not be parsed to a list of Uri", nameof(urls));
+
 			return uris.ToArray();
 		}
 
@@ -110,6 +117,7 @@ namespace Elastic.CommonSchema.BenchmarkDotNetExporter
 					return new CloudNodePool(CloudId, new ApiKey(ApiKey));
 				if (!string.IsNullOrWhiteSpace(Username) && !string.IsNullOrWhiteSpace(Password))
 					return new CloudNodePool(CloudId, new BasicAuthentication(Username, Password));
+
 				throw new Exception("A cloud id was provided but neither apikey nor username/pass combination was set");
 			}
 
@@ -119,12 +127,12 @@ namespace Elastic.CommonSchema.BenchmarkDotNetExporter
 
 			if (uris.Length == 1)
 			{
-				return UseSniffingConnectionPool
+				return UseSniffingNodePool
 					? new SniffingNodePool(uris)
 					: new SingleNodePool(uris[0]);
 			}
 
-			return UseSniffingConnectionPool
+			return UseSniffingNodePool
 				? new SniffingNodePool(uris)
 				: new StaticNodePool(uris);
 		}

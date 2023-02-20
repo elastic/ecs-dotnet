@@ -13,6 +13,9 @@ using System.Runtime.InteropServices;
 
 namespace Elastic.CommonSchema;
 
+/// <summary>
+/// Control how <see cref="EcsDocument.CreateNewWithDefaults{TEcsDocument}"/> should enrich the newly instantiated document
+/// </summary>
 public interface IEcsDocumentCreationOptions
 {
 	/// <summary>
@@ -35,6 +38,10 @@ public partial class EcsDocument
 {
 	private static readonly Ecs EcsFieldDefault = new() { Version = Version };
 
+	/// <summary>
+	/// Create an instance of <typeparamref name="TEcsDocument"/> and enrich it with as many fields as possible.
+	/// <para>use <paramref name="options"/> to control how much should be enriched</para>
+	/// </summary>
 	public static TEcsDocument CreateNewWithDefaults<TEcsDocument>(
 		DateTimeOffset? timestamp = null,
 		Exception exception = null,
@@ -69,6 +76,10 @@ public partial class EcsDocument
 		return CachedService;
 	}
 
+	/// <summary>
+	/// Create an instance of <see cref="Agent"/> that defaults to the assembly from
+	/// <paramref name="typeFromAgentLibrary"/> as the agent in control of generating the data
+	/// </summary>
 	public static Agent CreateAgent(Type typeFromAgentLibrary)
 	{
 		var assembly = typeFromAgentLibrary.Assembly;
@@ -160,7 +171,7 @@ public partial class EcsDocument
 	}
 
 	/// <summary>
-	/// Mutates <see cref="doc"/> and sets tracing information based on <see cref="activity" /> or <see cref="Activity.Current"/>
+	/// Mutates <paramref name="doc"/> and sets tracing information based on <paramref name="activity" /> or <see cref="Activity.Current"/>
 	/// <para>Note this will not override any explicitly set properties</para>
 	/// </summary>
 	private static void SetActivityData(EcsDocument doc, Activity activity = null)

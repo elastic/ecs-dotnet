@@ -14,8 +14,16 @@ using Microsoft.Extensions.Options;
 
 namespace Elasticsearch.Extensions.Logging
 {
+	/// <summary>
+	/// Provides builder extension methods to <see cref="ILoggingBuilder"/>
+	/// </summary>
 	public static class LoggingBuilderExtensions
 	{
+		/// <summary>
+		/// Log to Elastic Cloud ( https://cloud.elastic.co/ )
+		/// <para>using <paramref name="cloudId"/> to describe your running instance.</para>
+		/// <para>Using <paramref name="apiKey"/> for authentication</para>
+		/// </summary>
 		// ReSharper disable once UnusedMember.Global
 		public static ILoggingBuilder AddElasticCloud(this ILoggingBuilder builder, string cloudId, string apiKey)
 		{
@@ -29,7 +37,7 @@ namespace Elasticsearch.Extensions.Logging
 
 			void configure(ElasticsearchLoggerOptions options)
 			{
-				options.ShipTo.ConnectionPoolType = ConnectionPoolType.Cloud;
+				options.ShipTo.NodePoolType = NodePoolType.Cloud;
 				options.ShipTo.CloudId = cloudId;
 				options.ShipTo.ApiKey = apiKey;
 			}
@@ -38,6 +46,12 @@ namespace Elasticsearch.Extensions.Logging
 			return builder;
 		}
 
+		/// <summary>
+		/// Log to Elastic Cloud ( https://cloud.elastic.co/ )
+		/// <para>using <paramref name="cloudId"/> to describe your running instance.</para>
+		/// <para>Using <paramref name="username"/> and <paramref name="password"/> for basic authentication</para>
+		/// </summary>
+		// ReSharper disable once UnusedMember.Global
 		// ReSharper disable once UnusedMember.Global
 		public static ILoggingBuilder AddElasticCloud(this ILoggingBuilder builder, string cloudId, string username, string password)
 		{
@@ -54,7 +68,7 @@ namespace Elasticsearch.Extensions.Logging
 
 			void configure(ElasticsearchLoggerOptions options)
 			{
-				options.ShipTo.ConnectionPoolType = ConnectionPoolType.Cloud;
+				options.ShipTo.NodePoolType = NodePoolType.Cloud;
 				options.ShipTo.CloudId = cloudId;
 				options.ShipTo.Username = username;
 				options.ShipTo.Password = password;
@@ -64,6 +78,10 @@ namespace Elasticsearch.Extensions.Logging
 			return builder;
 		}
 
+		/// <summary>
+		/// Log to Elasticsearch
+		/// <para>This overload will use the configured options provider to configure the output</para>
+		/// </summary>
 		public static ILoggingBuilder AddElasticsearch(this ILoggingBuilder builder)
 		{
 			builder.Services.TryAddEnumerable(ServiceDescriptor
@@ -76,6 +94,11 @@ namespace Elasticsearch.Extensions.Logging
 			return builder;
 		}
 
+		/// <summary>
+		/// Log to Elasticsearch
+		/// <para>This overload will use the configured options provider to configure the output</para>
+		/// <para>Further configuration can be provided through the <paramref name="configure"/> parameter</para>
+		/// </summary>
 		public static ILoggingBuilder AddElasticsearch(this ILoggingBuilder builder, Action<ElasticsearchLoggerOptions> configure)
 		{
 			if (configure == null) throw new ArgumentNullException(nameof(configure));
@@ -85,6 +108,12 @@ namespace Elasticsearch.Extensions.Logging
 			return builder;
 		}
 
+		/// <summary>
+		/// Log to Elasticsearch
+		/// <para>This overload will use the configured options provider to configure the output</para>
+		/// <para>Further configuration can be provided through the <paramref name="configure"/> parameter</para>
+		/// <para>Expert channel configuration can be provided to the <paramref name="configureChannel"/> parameter</para>
+		/// </summary>
 		public static ILoggingBuilder AddElasticsearch(this ILoggingBuilder builder, Action<ElasticsearchLoggerOptions> configure,
 			Action<ElasticsearchChannelOptionsBase<LogEvent>> configureChannel
 		)
@@ -98,6 +127,12 @@ namespace Elasticsearch.Extensions.Logging
 			return builder;
 		}
 
+		/// <summary>
+		/// Log to Elasticsearch
+		/// <para>This overload also allows you to reuse an instance of <see cref="HttpTransport"/></para>
+		/// <para>Further configuration can be provided through the <paramref name="configure"/> parameter</para>
+		/// <para>Expert channel configuration can be provided to the <paramref name="configureChannel"/> parameter</para>
+		/// </summary>
 		public static ILoggingBuilder AddElasticsearch(
 			this ILoggingBuilder builder,
 			HttpTransport transport,

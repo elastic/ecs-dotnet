@@ -89,7 +89,7 @@ The following default settings are used.
       "MapCorrelationValues": true,
       "Tags": [],
       "ShipTo": {
-        "ConnectionPoolType": "SingleNode",
+        "NodePoolType": "SingleNode",
         "NodeUris": [ "http://localhost:9200" ]
       }
     }
@@ -111,14 +111,14 @@ The following default settings are used.
 
 The ShipTo settings can have the following properties, depending on the type of connection pool.
 
-| Setting | Type | Description |
-| ------- | ---- | ----------- |
-| ApiKey | string | API Key, where connection pool type is Cloud, and authenticating via API Key. |
-| CloudId | string | Cloud ID, where connection pool type is Cloud. |
-| ConnectionPoolType | enum | Default is `Singlenode`, or `Sniffing` for multiple nodes, or `Cloud` if `CloudId` is provided. Other supported values are `Static` or `Sticky`. |
-| NodeUris | array | URI(s) of the Elasticsearch nodes to connect to. Default is a single node `[ "http://localhost:9200" ]` |
-| Password | string | Password, where connection pool type is Cloud, and authenticating via username/password. |
-| Username | string | Username, where connection pool type is Cloud, and authenticating via username/password. |
+| Setting      | Type | Description |
+|--------------| ---- | ----------- |
+| ApiKey       | string | API Key, where connection pool type is Cloud, and authenticating via API Key. |
+| CloudId      | string | Cloud ID, where connection pool type is Cloud. |
+| NodePoolType | enum | Default is `Singlenode`, or `Sniffing` for multiple nodes, or `Cloud` if `CloudId` is provided. Other supported values are `Static` or `Sticky`. |
+| NodeUris     | array | URI(s) of the Elasticsearch nodes to connect to. Default is a single node `[ "http://localhost:9200" ]` |
+| Password     | string | Password, where connection pool type is Cloud, and authenticating via username/password. |
+| Username     | string | Username, where connection pool type is Cloud, and authenticating via username/password. |
 
 If you want to configure from a different section, it can be configured manually:
 

@@ -6,8 +6,14 @@ using Elastic.Ingest.Elasticsearch;
 
 namespace Elasticsearch.Extensions.Logging
 {
+	/// <summary>
+	/// Provide callbacks to further configure <see cref="ElasticsearchChannelOptionsBase{TEvent}"/>
+	/// </summary>
 	public interface IChannelSetup
 	{
+		/// <summary>
+		/// Provide callbacks to further configure <see cref="ElasticsearchChannelOptionsBase{TEvent}"/>
+		/// </summary>
 		void ConfigureChannel(ElasticsearchChannelOptionsBase<LogEvent> channelOptions);
 	}
 }

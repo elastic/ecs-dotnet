@@ -61,6 +61,7 @@ namespace Elastic.Apm.NLog.Tests
 			target.Logs.Count.Should().Be(4);
 			target.Logs[0].Should().Be("|||PreTransaction");
 			target.Logs[1].Should().Be($"{traceId}|{transactionId}||InTransaction");
+			spanId.Should().NotBeNullOrWhiteSpace();
 			target.Logs[2].Should().Be($"{traceId}|{transactionId}|{spanId}|InSpan");
 			target.Logs[3].Should().Be("|||PostTransaction");
 		}

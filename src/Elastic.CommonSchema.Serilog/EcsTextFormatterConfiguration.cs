@@ -29,7 +29,7 @@ namespace Elastic.CommonSchema.Serilog
 		IHttpAdapter MapHttpAdapter { get; set; }
 
 		/// <summary>
-		/// Stop certain keys to be persisted as <see cref="EcsDocument.Metadata"/> or <see cref="EcsDocument.Labels"/>
+		/// Stop certain keys to be persisted as <see cref="EcsDocument.Metadata"/> or <see cref="BaseFieldSet.Labels"/>
 		/// </summary>
 		ISet<string> LogEventPropertiesToFilter { get;set; }
 	}
@@ -39,7 +39,7 @@ namespace Elastic.CommonSchema.Serilog
 		where TEcsDocument : EcsDocument, new()
 	{
 		/// <summary>
-		/// Allows you to enrich <see cref="TEcsDocument"/> using <see cref="LogEvent"/> before its being formatted
+		/// Allows you to enrich <typeparamref name="TEcsDocument"/> using <see cref="LogEvent"/> before its being formatted
 		/// </summary>
 		Func<TEcsDocument, LogEvent, TEcsDocument> MapCustom { get; set; }
 	}

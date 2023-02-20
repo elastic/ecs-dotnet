@@ -2,6 +2,9 @@ using System;
 
 namespace Elasticsearch.Extensions.Logging.Options
 {
+	/// <summary>
+	/// Provides options to configure the naming of the index name to write too.
+	/// </summary>
 	public class IndexNameOptions
 	{
 		/// <summary>

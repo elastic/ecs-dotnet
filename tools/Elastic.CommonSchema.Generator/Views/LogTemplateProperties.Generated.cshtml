@@ -26,23 +26,35 @@ using static Elastic.CommonSchema.PropDispatch;
 
 namespace Elastic.CommonSchema
 {
+	///<summary>All properties that <see cref="EcsDocument.AssignField" /> supports </summary>
 	public static class LogTemplateProperties
 	{
 @foreach (var prop in Model.Base.BaseFieldSet.SettableProperties)
 {
-<text>		public static string @prop.LogTemplateAlternative = nameof(@prop.LogTemplateAlternative);
+<text>		///<summary>
+		/// <para><c>@prop.FullPath</c></para>
+		/// <para>@Raw(prop.Description)</para>
+		/// <example>@Raw(prop.Example)</example>
+		///</summary>
+		public static string @prop.LogTemplateAlternative = nameof(@prop.LogTemplateAlternative);
 </text>
 }
 @foreach (var entity in Model.EntityClasses)
 {
 	@foreach (var prop in entity.BaseFieldSet.SettableProperties)
 	{
-<text>		public static string @prop.LogTemplateAlternative = nameof(@prop.LogTemplateAlternative);
+<text>		///<summary>
+		/// <para><c>@prop.FullPath</c></para>
+		/// <para>@Raw(prop.Description)</para>
+		/// <example>@Raw(prop.Example)</example>
+		///</summary>
+		public static string @prop.LogTemplateAlternative = nameof(@prop.LogTemplateAlternative);
 </text>
 		
 	}
 }
 
+		///<summary>All properties that <see cref="EcsDocument.AssignField" /> supports </summary>
 		public static readonly HashSet@(Raw("<string>")) All = new()
 		{
 @foreach (var prop in Model.Base.BaseFieldSet.SettableProperties)

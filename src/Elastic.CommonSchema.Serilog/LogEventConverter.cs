@@ -16,6 +16,9 @@ namespace Elastic.CommonSchema.Serilog
 	{
 		private static Agent DefaultAgent { get; } = EcsDocument.CreateAgent(typeof(LogEventConverter));
 
+		/// <summary>
+		/// Converts a <see cref="LogEvent"/> to an <typeparamref name="TEcsDocument"/>
+		/// </summary>
 		public static TEcsDocument ConvertToEcs<TEcsDocument>(LogEvent logEvent, IEcsTextFormatterConfiguration<TEcsDocument> configuration)
 			where TEcsDocument : EcsDocument, new()
 		{
@@ -129,7 +132,7 @@ namespace Elastic.CommonSchema.Serilog
 				dict.Add(logEventPropertyValue.Key, PropertyValueToObject(logEventPropertyValue.Value));
 			}
 
-			return dict.Count == 0 ? MetadataDictionary.Default : dict;
+			return dict.Count == 0 ? new MetadataDictionary() : dict;
 		}
 
 		private static bool PropertyAlreadyMapped(string property)

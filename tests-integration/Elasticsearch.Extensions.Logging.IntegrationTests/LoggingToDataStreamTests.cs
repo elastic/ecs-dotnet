@@ -29,7 +29,7 @@ namespace Elasticsearch.Extensions.Logging.IntegrationTests
 			{
 				o.DataStream = new DataStreamNameOptions { Type = "x", Namespace = s, DataSet = "dotnet" };
 				var nodes = Client.ElasticsearchClientSettings.NodePool.Nodes.Select(n => n.Uri).ToArray();
-				o.ShipTo = new ShipToOptions { NodeUris = nodes, ConnectionPoolType = ConnectionPoolType.Static };
+				o.ShipTo = new ShipToOptions { NodeUris = nodes, NodePoolType = NodePoolType.Static };
 			});
 
 		// ReSharper disable once UnusedMember.Local
@@ -47,7 +47,6 @@ namespace Elasticsearch.Extensions.Logging.IntegrationTests
 				throw new Exception($"No flush occurred in 10 seconds: {listener}", listener.ObservedException);
 
 			listener.PublishSuccess.Should().BeTrue("{0}", listener);
-			provider.ObservedException.Should().BeNull();
 			listener.ObservedException.Should().BeNull();
 
 			await Client.Indices.RefreshAsync(dataStream);
@@ -81,7 +80,6 @@ namespace Elasticsearch.Extensions.Logging.IntegrationTests
 				throw new Exception($"No flush occurred in 10 seconds: {listener}", listener.ObservedException);
 
 			listener.PublishSuccess.Should().BeTrue("{0}", listener);
-			provider.ObservedException.Should().BeNull();
 			listener.ObservedException.Should().BeNull();
 
 			await Client.Indices.RefreshAsync(dataStream);

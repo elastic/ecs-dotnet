@@ -7,9 +7,14 @@ using System.Text.Json;
 
 namespace Elastic.CommonSchema.Serialization
 {
-	public abstract class EcsShouldSerializeJsonConverter<T> : EcsJsonConverterBase<T>
+	/// <summary>
+	/// An abstract implementation that makes it easier to read all properties of a json object.
+	/// Used to read properties both as <c>x.y: 1</c> and <c>x : { y: 1 }</c> for specific fields.
+	/// </summary>
+	public abstract class PropertiesReaderJsonConverterBase<T> : EcsJsonConverterBase<T>
 		where T : new()
 	{
+		/// <inheritdoc cref="System.Text.Json.Serialization.JsonConverter{T}.Read"/>
 		public override T Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
 		{
 			if (reader.TokenType == JsonTokenType.Null)
@@ -36,6 +41,7 @@ namespace Elastic.CommonSchema.Serialization
 			return ecsEvent;
 		}
 
+		/// <summary> Handle reading the current property</summary>
 		protected abstract bool ReadProperties(ref Utf8JsonReader reader, T ecsEvent);
 	}
 }

@@ -13,11 +13,13 @@ using System.Web;
 
 namespace Elastic.CommonSchema.Serilog;
 
+/// <summary>Include current HTTP context data on any ECS document created</summary>
 public class HttpContextEnricher : ILogEventEnricher
 {
 #if NETSTANDARD
 	private readonly IHttpContextAccessor _httpContextAccessor;
 
+	/// <summary>Include current HTTP context data on any ECS document created</summary>
 	public HttpContextEnricher(IHttpContextAccessor httpContextAccessor) =>
 		_httpContextAccessor = httpContextAccessor;
 
@@ -47,7 +49,7 @@ public class HttpContextEnricher : ILogEventEnricher
 		logEvent.AddPropertyIfAbsent(propertyFactory.CreateProperty(PropertyName, r));
 	}
 
-	public class HttpContextEnrichments
+	internal class HttpContextEnrichments
 	{
 		public Client Client { get; set; }
 		public Http Http { get; set; }

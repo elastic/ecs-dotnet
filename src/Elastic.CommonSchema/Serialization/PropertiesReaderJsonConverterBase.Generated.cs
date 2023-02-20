@@ -12,12 +12,15 @@ If you wish to submit a PR please modify the original csharp file and submit the
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace Elastic.CommonSchema.Serialization;
 
 
-public partial class EcsLogJsonConverter : EcsShouldSerializeJsonConverter<Log>
+/// <summary> Specialized converter for <see cref="Log"/> </summary>
+internal partial class LogEntityJsonConverter : PropertiesReaderJsonConverterBase<Log>
 {
+	/// <inheritdoc cref="PropertiesReaderJsonConverterBase{T}.ReadProperties"/>
 	protected override bool ReadProperties(ref Utf8JsonReader reader, Log ecsEvent)
 	{
 		var propertyName = reader.GetString();
@@ -35,6 +38,7 @@ public partial class EcsLogJsonConverter : EcsShouldSerializeJsonConverter<Log>
 		};
 	}
 		
+	/// <inheritdoc cref="JsonConverter{T}.Write"/>
 	public override void Write(Utf8JsonWriter writer, Log value, JsonSerializerOptions options)
 	{
 		if (value == null || !value.ShouldSerialize)
@@ -55,8 +59,10 @@ public partial class EcsLogJsonConverter : EcsShouldSerializeJsonConverter<Log>
 	}
 }
 
-public partial class EcsEcsJsonConverter : EcsShouldSerializeJsonConverter<Ecs>
+/// <summary> Specialized converter for <see cref="Ecs"/> </summary>
+internal partial class EcsEntityJsonConverter : PropertiesReaderJsonConverterBase<Ecs>
 {
+	/// <inheritdoc cref="PropertiesReaderJsonConverterBase{T}.ReadProperties"/>
 	protected override bool ReadProperties(ref Utf8JsonReader reader, Ecs ecsEvent)
 	{
 		var propertyName = reader.GetString();
@@ -68,6 +74,7 @@ public partial class EcsEcsJsonConverter : EcsShouldSerializeJsonConverter<Ecs>
 		};
 	}
 		
+	/// <inheritdoc cref="JsonConverter{T}.Write"/>
 	public override void Write(Utf8JsonWriter writer, Ecs value, JsonSerializerOptions options)
 	{
 		if (value == null || !value.ShouldSerialize)
