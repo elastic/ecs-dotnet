@@ -88,7 +88,7 @@ namespace Elastic.CommonSchema.BenchmarkDotNetExporter
 			if (!channel.BootstrapElasticsearch(Options.BootstrapMethod)) return;
 
 			var benchmarks = CreateBenchmarkDocuments(summary);
-			var writeResult = channel.TryWriteMany(benchmarks);
+			var writeResult = benchmarks.Select(b => channel.TryWrite(b)).All(b => b);
 
 			var completedOnTime = waitHandle.Wait(TimeSpan.FromSeconds(20));
 			if (!completedOnTime)
