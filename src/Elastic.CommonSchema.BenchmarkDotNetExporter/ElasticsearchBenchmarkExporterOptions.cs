@@ -18,7 +18,7 @@ namespace Elastic.CommonSchema.BenchmarkDotNetExporter
 	public class ElasticsearchBenchmarkExporterOptions
 	{
 		/// <summary>
-		/// Configure the exporter options, the <see cref="commaSeparatedListOfUrls" /> parameter is required.
+		/// Configure the exporter options, the <paramref name="commaSeparatedListOfUrls" /> parameter is required.
 		/// <para>The other options can be specified in the property initializer</para>
 		/// </summary>
 		/// <param name="commaSeparatedListOfUrls">
@@ -29,7 +29,7 @@ namespace Elastic.CommonSchema.BenchmarkDotNetExporter
 		public ElasticsearchBenchmarkExporterOptions(string commaSeparatedListOfUrls) : this(Parse(commaSeparatedListOfUrls)) { }
 
 		/// <summary>
-		/// Configure the exporter options, the <see cref="nodes"/> parameter is required.
+		/// Configure the exporter options, the <paramref name="nodes"/> parameter is required.
 		/// <para>The other options can be specified in the property initializer</para>
 		/// </summary>
 		/// <param name="nodes">

@@ -31,7 +31,7 @@ Log.Logger = new LoggerConfiguration()
 	.MinimumLevel.Override("Microsoft", LogEventLevel.Information)
 	.Enrich.FromLogContext()
 	// This is the bit that Elastic.CommonSchema.Serilog.Sink introduces
-	.WriteTo.Elasticsearch(new ElasticsearchSchemaSinkOptions(client.Transport)
+	.WriteTo.Elasticsearch(new ElasticsearchSinkOptions(client.Transport)
 	{
 		BootstrapMethod = BootstrapMethod.Failure,
 		DataStream = new DataStreamName("logs", "console-example"),

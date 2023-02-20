@@ -11,39 +11,60 @@ using Serilog.Events;
 
 namespace Elastic.CommonSchema.Serilog.Sink
 {
-	public class ElasticsearchSchemaSinkOptions : ElasticsearchSchemaSinkOptions<EcsDocument>
+	/// <summary>
+	/// Provides configuration options to <see cref="ElasticsearchSink"/> to control how and where data gets written
+	/// </summary>
+	public class ElasticsearchSinkOptions : ElasticsearchSinkOptions<EcsDocument>
 	{
-		public ElasticsearchSchemaSinkOptions() { }
+		/// <inheritdoc cref="ElasticsearchSinkOptions"/>
+		public ElasticsearchSinkOptions() { }
 
-		public ElasticsearchSchemaSinkOptions(HttpTransport transport) : base(transport) { }
+		/// <inheritdoc cref="ElasticsearchSinkOptions"/>
+		public ElasticsearchSinkOptions(HttpTransport transport) : base(transport) { }
 	}
 
-	public class ElasticsearchSchemaSinkOptions<TEcsDocument> where TEcsDocument : EcsDocument, new()
+	/// <inheritdoc cref="ElasticsearchSinkOptions{TEcsDocument}"/>
+	public class ElasticsearchSinkOptions<TEcsDocument> where TEcsDocument : EcsDocument, new()
 	{
-		public ElasticsearchSchemaSinkOptions() : this(TransportHelper.Default()) { }
+		/// <inheritdoc cref="ElasticsearchSinkOptions"/>
+		public ElasticsearchSinkOptions() : this(TransportHelper.Default()) { }
 
-		public ElasticsearchSchemaSinkOptions(HttpTransport transport) => Transport = transport;
+		/// <inheritdoc cref="ElasticsearchSinkOptions"/>
+		public ElasticsearchSinkOptions(HttpTransport transport) => Transport = transport;
 
+		/// <inheritdoc cref="HttpTransport{TConfiguration}"/>
 		public HttpTransport Transport { get; }
+		/// <inheritdoc cref="EcsTextFormatterConfiguration{TEcsDocument}"/>
 		public EcsTextFormatterConfiguration<TEcsDocument> TextFormatting { get; set; } = new();
+		/// <inheritdoc cref="DataStreamName"/>
 		public DataStreamName DataStream { get; set; } = new("logs", "dotnet");
+		/// <summary>
+		/// Allows you to configure the <see cref="EcsDataStreamChannel{TEcsDocument}"/> used by the sink to send data to Elasticsearch
+		/// </summary>
 		public Action<DataStreamChannelOptions<TEcsDocument>>? ConfigureChannel { get; set; }
+		/// <inheritdoc cref="BootstrapMethod"/>
 		public BootstrapMethod BootstrapMethod { get; set; }
 
 	}
 
+	/// <summary>
+	/// This sink allows you to write serilog logs directly to Elasticsearch or Elastic Cloud
+	/// </summary>
 	public class ElasticsearchSink : ElasticsearchSink<EcsDocument>
 	{
-		public ElasticsearchSink(ElasticsearchSchemaSinkOptions options) : base(options) {}
+		/// <inheritdoc cref="ElasticsearchSink"/>>
+		public ElasticsearchSink(ElasticsearchSinkOptions options) : base(options) {}
 	}
 
+	/// <inheritdoc cref="ElasticsearchSink"/>>
 	public class ElasticsearchSink<TEcsDocument> : ILogEventSink
 		where TEcsDocument : EcsDocument, new()
 	{
 		private readonly EcsTextFormatterConfiguration<TEcsDocument> _formatterConfiguration;
 		private readonly EcsDataStreamChannel<TEcsDocument> _channel;
 
-		public ElasticsearchSink(ElasticsearchSchemaSinkOptions<TEcsDocument> options)
+		/// <inheritdoc cref="ElasticsearchSink"/>>
+		public ElasticsearchSink(ElasticsearchSinkOptions<TEcsDocument> options)
 		{
 			_formatterConfiguration = options.TextFormatting;
 			var channelOptions = new DataStreamChannelOptions<TEcsDocument>(options.Transport)
@@ -65,6 +86,7 @@ namespace Elastic.CommonSchema.Serilog.Sink
 		}
 
 
+		/// <inheritdoc cref="ILogEventSink.Emit"/>
 		public void Emit(LogEvent logEvent)
 		{
 			var ecsDoc = LogEventConverter.ConvertToEcs(logEvent, _formatterConfiguration);

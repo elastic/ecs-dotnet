@@ -21,7 +21,7 @@ namespace Elasticsearch.Extensions.Logging
 	{
 		/// <summary>
 		/// Log to Elastic Cloud ( https://cloud.elastic.co/ )
-		/// <para>using <see cref="cloudId"/> to describe your running instance.</para>
+		/// <para>using <paramref name="cloudId"/> to describe your running instance.</para>
 		/// <para>Using <paramref name="apiKey"/> for authentication</para>
 		/// </summary>
 		// ReSharper disable once UnusedMember.Global
@@ -48,7 +48,7 @@ namespace Elasticsearch.Extensions.Logging
 
 		/// <summary>
 		/// Log to Elastic Cloud ( https://cloud.elastic.co/ )
-		/// <para>using <see cref="cloudId"/> to describe your running instance.</para>
+		/// <para>using <paramref name="cloudId"/> to describe your running instance.</para>
 		/// <para>Using <paramref name="username"/> and <paramref name="password"/> for basic authentication</para>
 		/// </summary>
 		// ReSharper disable once UnusedMember.Global
