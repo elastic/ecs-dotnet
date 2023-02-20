@@ -20,11 +20,13 @@ namespace Elastic.CommonSchema.NLog
 		public bool IncludeUser { get; set; } = false;
 	}
 
+	/// <summary> An NLOG layout implementation that renders logs as ECS json</summary>
 	[Layout(Name)]
 	[ThreadSafe]
 	[ThreadAgnostic]
 	public class EcsLayout : Layout
 	{
+		/// <summary> An NLOG layout implementation that renders logs as ECS json</summary>
 		public const string Name = nameof(EcsLayout);
 
 		private static bool? _nlogApmLoaded;
@@ -48,6 +50,7 @@ namespace Elastic.CommonSchema.NLog
 
 		private readonly Layout _disableThreadAgnostic = "${threadid:cached=true}";
 
+		/// <summary> An NLOG layout implementation that renders logs as ECS json</summary>
 		public EcsLayout()
 		{
 			IncludeEventProperties = true;
@@ -104,10 +107,12 @@ namespace Elastic.CommonSchema.NLog
 			}
 		}
 
+		/// <summary></summary>
 		// ReSharper disable UnusedMember.Global
 		[Obsolete("Replaced by IncludeEventProperties")]
 		public bool IncludeAllProperties { get => IncludeEventProperties; set => IncludeEventProperties = value; }
 
+		/// <summary></summary>
 		[Obsolete("Replaced by IncludeScopeProperties")]
 		public bool IncludeMdlc { get => IncludeScopeProperties; set => IncludeScopeProperties = value; }
 
@@ -119,67 +124,113 @@ namespace Elastic.CommonSchema.NLog
 		// ReSharper restore UnusedMember.Global
 
 
+		/// <summary></summary>
 		public Layout AgentId { get; set; }
+		/// <summary></summary>
 		public Layout AgentName { get; set; }
+		/// <summary></summary>
 		public Layout AgentType { get; set; }
+		/// <summary></summary>
 		public Layout AgentVersion { get; set; }
 
 		// ReSharper disable AutoPropertyCanBeMadeGetOnly.Global
+		/// <summary></summary>
 		public Layout ApmTraceId { get; set; }
+		/// <summary></summary>
 		public Layout ApmTransactionId { get; set; }
+		/// <summary></summary>
 		public Layout ApmSpanId { get; set; }
 
+		/// <summary></summary>
 		public Layout ApmServiceName { get; set; }
+		/// <summary></summary>
 		public Layout ApmServiceNodeName { get; set; }
+		/// <summary></summary>
 		public Layout ApmServiceVersion { get; set; }
 
+		/// <summary></summary>
 		public Layout LogOriginCallSiteMethod { get; set; }
+		/// <summary></summary>
 		public Layout LogOriginCallSiteFile { get; set; }
+		/// <summary></summary>
 		public Layout LogOriginCallSiteLine { get; set; }
 
+		/// <summary></summary>
 		public Layout EventAction { get; set; }
+		/// <summary></summary>
 		public Layout EventCategory { get; set; }
+		/// <summary></summary>
 		public Layout EventId { get; set; }
+		/// <summary></summary>
 		public Layout EventCode { get; set; }
+		/// <summary></summary>
 		public Layout EventKind { get; set; }
+		/// <summary></summary>
 		public Layout EventSeverity { get; set; }
+		/// <summary></summary>
 		public Layout EventDurationMs { get; set; }
 
+		/// <summary></summary>
 		public Layout HostId { get; set; }
+		/// <summary></summary>
 		public Layout HostIp { get; set; }
+		/// <summary></summary>
 		public Layout HostName { get; set; }
 
+		/// <summary></summary>
 		public bool IncludeEventProperties { get; set; }
 
+		/// <summary></summary>
 		public bool IncludeScopeProperties { get; set; }
 
+		/// <summary></summary>
 		[ArrayParameter(typeof(TargetPropertyWithContext), "label")]
 		public IList<TargetPropertyWithContext> Labels { get; } = new List<TargetPropertyWithContext>();
 
+		/// <summary></summary>
 		[ArrayParameter(typeof(TargetPropertyWithContext), "metadata")]
 		public IList<TargetPropertyWithContext> Metadata { get; } = new List<TargetPropertyWithContext>();
 
+		/// <summary></summary>
 		public Layout ProcessExecutable { get; set; }
+		/// <summary></summary>
 		public Layout ProcessId { get; set; }
+		/// <summary></summary>
 		public Layout ProcessName { get; set; }
+		/// <summary></summary>
 		public Layout ProcessThreadId { get; set; }
+		/// <summary></summary>
 		public Layout ProcessTitle { get; set; }
 
+		/// <summary></summary>
 		public Layout ServerAddress { get; set; }
+		/// <summary></summary>
 		public Layout ServerIp { get; set; }
+		/// <summary></summary>
 		public Layout ServerUser { get; set; }
 
+		/// <summary></summary>
 		public Layout HttpRequestId { get; set; }
+		/// <summary></summary>
 		public Layout HttpRequestMethod { get; set; }
+		/// <summary></summary>
 		public Layout RequestBodyBytes { get; set; }
+		/// <summary></summary>
 		public Layout HttpRequestReferrer { get; set; }
+		/// <summary></summary>
 		public Layout HttpResponseStatusCode { get; set; }
 
+		/// <summary></summary>
 		public Layout UrlScheme { get; set; }
+		/// <summary></summary>
 		public Layout UrlDomain { get; set; }
+		/// <summary></summary>
 		public Layout UrlPort { get; set; }
+		/// <summary></summary>
 		public Layout UrlPath { get; set; }
+		/// <summary></summary>
 		public Layout UrlQuery { get; set; }
+		/// <summary></summary>
 		public Layout UrlUserName { get; set; }
 
 		/// <summary>
@@ -188,6 +239,7 @@ namespace Elastic.CommonSchema.NLog
 		/// <remarks>This is called last in the chain of enrichment functions</remarks>
 		public Action<EcsDocument,LogEventInfo> EnrichAction { get; set; }
 
+		/// <summary></summary>
 		[ArrayParameter(typeof(TargetPropertyWithContext), "tag")]
 		public IList<TargetPropertyWithContext> Tags { get; } = new List<TargetPropertyWithContext>();
 
@@ -198,6 +250,7 @@ namespace Elastic.CommonSchema.NLog
 
 		// ReSharper restore AutoPropertyCanBeMadeGetOnly.Global
 
+		/// <inheritdoc cref="Layout.RenderFormattedMessage"/>
 		protected override void RenderFormattedMessage(LogEventInfo logEvent, StringBuilder target)
 		{
 			var ecsEvent = EcsDocument.CreateNewWithDefaults<EcsDocument>(logEvent.TimeStamp, logEvent.Exception, NlogEcsDocumentCreationOptions.Default);
@@ -258,6 +311,7 @@ namespace Elastic.CommonSchema.NLog
 		}
 		// ReSharper restore UnusedParameter.Global
 
+		/// <inheritdoc cref="Layout.GetFormattedMessage"/>
 		protected override string GetFormattedMessage(LogEventInfo logEvent)
 		{
 			var sb = new StringBuilder();

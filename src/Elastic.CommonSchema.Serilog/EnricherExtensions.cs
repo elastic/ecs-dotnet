@@ -11,10 +11,13 @@ using Microsoft.AspNetCore.Http;
 
 namespace Elastic.CommonSchema.Serilog;
 
+/// <summary>
+/// <see cref="LoggerEnrichmentConfiguration"/> Extensions to register ECS enrichers
+/// </summary>
 public static class EnricherExtensions
 {
 #if NETSTANDARD
-	/// <summary></summary>
+	/// <summary>Include current HTTP context data on any ECS document created</summary>
 	/// <param name="enrichmentConfiguration">Logger enrichment configuration.</param>
 	/// <param name="httpContextAccessor"></param>
 	/// <returns>Configuration object allowing method chaining.</returns>
@@ -25,6 +28,9 @@ public static class EnricherExtensions
 		return enrichmentConfiguration.With(new HttpContextEnricher(httpContextAccessor));
 	}
 #else
+	/// <summary>Include current HTTP context data on any ECS document created</summary>
+	/// <param name="enrichmentConfiguration">Logger enrichment configuration.</param>
+	/// <returns>Configuration object allowing method chaining.</returns>
 	public static LoggerConfiguration WithEcsHttpContext(this LoggerEnrichmentConfiguration enrichmentConfiguration)
 	{
 		if (enrichmentConfiguration == null)

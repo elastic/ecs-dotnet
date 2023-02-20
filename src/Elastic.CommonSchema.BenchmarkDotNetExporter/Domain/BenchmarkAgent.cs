@@ -7,6 +7,7 @@ using System.Reflection;
 
 namespace Elastic.CommonSchema.BenchmarkDotNetExporter.Domain
 {
+	/// <inheritdoc cref="Agent"/>
 	public class BenchmarkAgent : Agent
 	{
 		private static readonly AssemblyName Reference = typeof(BenchmarkAgent).Assembly.GetName();
@@ -17,6 +18,7 @@ namespace Elastic.CommonSchema.BenchmarkDotNetExporter.Domain
 				.GetCustomAttributes(typeof(AssemblyInformationalVersionAttribute), false)
 				.FirstOrDefault() as AssemblyInformationalVersionAttribute;
 
+		/// <inheritdoc cref="Agent"/>
 		public BenchmarkAgent()
 		{
 			Type = Reference.Name;
@@ -24,7 +26,9 @@ namespace Elastic.CommonSchema.BenchmarkDotNetExporter.Domain
 		}
 
 		// TODO should this be on Agent?
+		/// <summary></summary>
 		public BenchmarkGit Git { get; set; }
+		/// <summary></summary>
 		public BenchmarkLanguage Language { get; set; }
 	}
 }

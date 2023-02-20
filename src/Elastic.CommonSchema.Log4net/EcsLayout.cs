@@ -13,10 +13,13 @@ namespace Elastic.CommonSchema.Log4net;
 /// </summary>
 public class EcsLayout : LayoutSkeleton
 {
+	/// <inheritdoc cref="LayoutSkeleton.ContentType"/>
 	public override string ContentType => "application/json";
 
+	/// <inheritdoc cref="LayoutSkeleton.ActivateOptions"/>
 	public override void ActivateOptions() => IgnoresException = false;
 
+	/// <inheritdoc cref="LayoutSkeleton.Format(System.IO.TextWriter,log4net.Core.LoggingEvent)"/>
 	public override void Format(TextWriter writer, LoggingEvent loggingEvent)
 	{
 		var ecsEvent = loggingEvent.ToEcs();

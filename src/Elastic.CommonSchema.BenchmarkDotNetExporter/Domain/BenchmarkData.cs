@@ -8,50 +8,14 @@ using BenchmarkDotNet.Mathematics;
 
 namespace Elastic.CommonSchema.BenchmarkDotNetExporter.Domain
 {
-	public class Percentiles
-	{
-		[JsonConstructor]
-		public Percentiles() {}
-
-		[JsonPropertyName("p0"), DataMember(Name = "p0"), JsonInclude]
-		public double P0 { get; internal set; }
-		[JsonPropertyName("p25"), DataMember(Name = "p25"), JsonInclude]
-		public double P25 { get; internal set; }
-		[JsonPropertyName("p50"), DataMember(Name = "p50"), JsonInclude]
-		public double P50 { get; internal set; }
-		[JsonPropertyName("p67"), DataMember(Name = "p67"), JsonInclude]
-		public double P67 { get; internal set; }
-		[JsonPropertyName("p80"), DataMember(Name = "p80"), JsonInclude]
-		public double P80 { get; internal set;  }
-		[JsonPropertyName("p85"), DataMember(Name = "p85"), JsonInclude]
-		public double P85 { get; internal set; }
-		[JsonPropertyName("p90"), DataMember(Name = "p90"), JsonInclude]
-		public double P90 { get; internal set; }
-		[JsonPropertyName("p95"), DataMember(Name = "p95"), JsonInclude]
-		public double P95 { get; internal set; }
-		[JsonPropertyName("p100"), DataMember(Name = "p100"), JsonInclude]
-		public double P100 { get; internal set; }
-
-		public Percentiles(PercentileValues values)
-		{
-			if (values == null) return;
-			P0 = values.P0;
-			P25 = values.P25;
-			P50 = values.P50;
-			P67 = values.P67;
-			P80 = values.P80;
-			P85 = values.P85;
-			P90 = values.P90;
-			P95 = values.P95;
-			P100 = values.P100;
-		}
-	}
-
+	/// <summary></summary>
 	public class BenchmarkData
 	{
+		/// <summary></summary>
 		[JsonConstructor]
 		public BenchmarkData() {}
 
+		/// <summary></summary>
 		public BenchmarkData(Statistics statistics, bool success)
 		{
 			Success = success;
@@ -79,69 +43,91 @@ namespace Elastic.CommonSchema.BenchmarkDotNetExporter.Domain
 			Percentiles = new Percentiles(statistics.Percentiles);
 		}
 
+		/// <summary></summary>
 		[JsonPropertyName("success"), JsonIgnore(Condition = JsonIgnoreCondition.Never), DataMember(Name = "success"), JsonInclude]
 		public bool Success { get; internal set; }
 
+		/// <summary></summary>
 		[JsonPropertyName("all_outliers"), DataMember(Name = "all_outliers"), JsonInclude]
 		public double[] AllOutliers { get; internal set; }
 
+		/// <summary></summary>
 		[JsonPropertyName("confidence_interval"), DataMember(Name = "confidence_interval"), JsonInclude]
 		public BenchmarkConfidence ConfidenceInterval { get; internal set; }
 
+		/// <summary></summary>
 		[JsonPropertyName("interquartile_range"), DataMember(Name = "interquartile_range"), JsonInclude]
 		public double InterquartileRange { get; internal set; }
 
+		/// <summary></summary>
 		[JsonPropertyName("kurtosis"), DataMember(Name = "kurtosis"), JsonInclude]
 		public double Kurtosis { get; internal set; }
 
+		/// <summary></summary>
 		[JsonPropertyName("lower_fence"), DataMember(Name = "lower_fence"), JsonInclude]
 		public double LowerFence { get; internal set; }
 
+		/// <summary></summary>
 		[JsonPropertyName("lower_outliers"), DataMember(Name = "lower_outliers"), JsonInclude]
 		public double[] LowerOutliers { get; internal set; }
 
+		/// <summary></summary>
 		[JsonPropertyName("max"), DataMember(Name = "max"), JsonInclude]
 		public double Max { get; internal set; }
 
+		/// <summary></summary>
 		[JsonPropertyName("mean"), DataMember(Name = "mean"), JsonInclude]
 		public double Mean { get; internal set; }
 
+		/// <summary></summary>
 		[JsonPropertyName("median"), DataMember(Name = "median"), JsonInclude]
 		public double Median { get; internal set; }
 
+		/// <summary></summary>
 		[JsonPropertyName("memory"), DataMember(Name = "memory"), JsonInclude]
 		public BenchmarkGcStats Memory { get; internal set; }
 
+		/// <summary></summary>
 		[JsonPropertyName("min"), DataMember(Name = "min"), JsonInclude]
 		public double Min { get; internal set; }
 
+		/// <summary></summary>
 		[JsonPropertyName("n"), DataMember(Name = "n"), JsonInclude]
 		public int N { get; internal set; }
 
+		/// <summary></summary>
 		[JsonPropertyName("percentiles"), DataMember(Name = "percentiles"), JsonInclude]
 		public Percentiles Percentiles { get; internal set; }
 
+		/// <summary></summary>
 		[JsonPropertyName("q1"), DataMember(Name = "q1"), JsonInclude]
 		public double Q1 { get; internal set; }
 
+		/// <summary></summary>
 		[JsonPropertyName("q3"), DataMember(Name = "q3"), JsonInclude]
 		public double Q3 { get; internal set; }
 
+		/// <summary></summary>
 		[JsonPropertyName("skewness"), DataMember(Name = "skewness"), JsonInclude]
 		public double Skewness { get; internal set; }
 
+		/// <summary></summary>
 		[JsonPropertyName("standard_deviation"), DataMember(Name = "standard_deviation"), JsonInclude]
 		public double StandardDeviation { get; internal set; }
 
+		/// <summary></summary>
 		[JsonPropertyName("standard_error"), DataMember(Name = "standard_error"), JsonInclude]
 		public double StandardError { get; internal set; }
 
+		/// <summary></summary>
 		[JsonPropertyName("upper_fence"), DataMember(Name = "upper_fence"), JsonInclude]
 		public double UpperFence { get; internal set; }
 
+		/// <summary></summary>
 		[JsonPropertyName("upper_outliers"), DataMember(Name = "upper_outliers"), JsonInclude]
 		public double[] UpperOutliers { get; internal set; }
 
+		/// <summary></summary>
 		[JsonPropertyName("variance"), DataMember(Name = "variance"), JsonInclude]
 		public double Variance { get; internal set; }
 	}

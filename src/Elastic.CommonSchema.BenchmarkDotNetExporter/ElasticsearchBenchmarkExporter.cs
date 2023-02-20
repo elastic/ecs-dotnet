@@ -20,12 +20,15 @@ using Elastic.Transport.Products.Elasticsearch;
 
 namespace Elastic.CommonSchema.BenchmarkDotNetExporter
 {
+	/// <summary> Exports benchmark results to Elasticsearch </summary>
 	public class ElasticsearchBenchmarkExporter : ExporterBase
 	{
 		// ReSharper disable once UnusedMember.Global
+		/// <summary> Exports benchmark results to Elasticsearch </summary>
 		public ElasticsearchBenchmarkExporter(string cloudId, string apiKey)
 			: this(new ElasticsearchBenchmarkExporterOptions(cloudId) { ApiKey = apiKey}) { }
 
+		/// <summary> Exports benchmark results to Elasticsearch </summary>
 		public ElasticsearchBenchmarkExporter(ElasticsearchBenchmarkExporterOptions options)
 		{
 			Options = options;
@@ -34,6 +37,7 @@ namespace Elastic.CommonSchema.BenchmarkDotNetExporter
 		}
 
 		// ReSharper disable once UnusedMember.Global
+		/// <summary> Exports benchmark results to Elasticsearch </summary>
 		public ElasticsearchBenchmarkExporter(ElasticsearchBenchmarkExporterOptions options, Func<ElasticsearchBenchmarkExporterOptions, TransportConfiguration> configure)
 		{
 			Options = options;
@@ -45,9 +49,12 @@ namespace Elastic.CommonSchema.BenchmarkDotNetExporter
 		private ElasticsearchBenchmarkExporterOptions Options { get; }
 
 		// We only log when we cannot write to Elasticsearch
+		/// <inheritdoc cref="ExporterBase.FileExtension"/>
 		protected override string FileExtension => "log";
+		/// <inheritdoc cref="ExporterBase.FileNameSuffix"/>
 		protected override string FileNameSuffix => "-elasticsearch-error";
 
+		/// <inheritdoc cref="ExporterBase.ExportToLog"/>
 		public override void ExportToLog(Summary summary, ILogger logger)
 		{
 			var waitHandle = new CountdownEvent(1);

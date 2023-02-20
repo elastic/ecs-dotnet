@@ -12,17 +12,21 @@ using UAParser;
 
 namespace Elastic.CommonSchema.Serilog.Adapters
 {
+	/// <inheritdoc cref="IHttpAdapter"/>
 	public class HttpAdapter : IHttpAdapter
 	{
 		private static readonly Parser UAParser = Parser.GetDefault();
 
 		private readonly IHttpContextAccessor _httpContextAccessor;
 
+		/// <inheritdoc cref="IHttpAdapter"/>
 		public HttpAdapter(IHttpContextAccessor httpContextAccessor) =>
 			_httpContextAccessor = httpContextAccessor;
 
+		/// <inheritdoc cref="IHttpAdapter.HasContext"/>
 		public bool HasContext => _httpContextAccessor?.HttpContext != null;
 
+		/// <inheritdoc cref="IHttpAdapter.UserAgent"/>
 		public UserAgent UserAgent
 		{
 			get
@@ -52,6 +56,7 @@ namespace Elastic.CommonSchema.Serilog.Adapters
 			}
 		}
 
+		/// <inheritdoc cref="IHttpAdapter.Http"/>
 		public Http Http
 		{
 			get
@@ -94,6 +99,7 @@ namespace Elastic.CommonSchema.Serilog.Adapters
 			// http.RequestBodyContent = _httpContextAccessor.HttpContext.Request.Body
 		}
 
+		/// <inheritdoc cref="IHttpAdapter.Url"/>
 		public Url Url
 		{
 			get
@@ -115,6 +121,7 @@ namespace Elastic.CommonSchema.Serilog.Adapters
 			}
 		}
 
+		/// <inheritdoc cref="IHttpAdapter.Server"/>
 		public Server Server
 		{
 			get
@@ -135,6 +142,7 @@ namespace Elastic.CommonSchema.Serilog.Adapters
 			}
 		}
 
+		/// <inheritdoc cref="IHttpAdapter.Client"/>
 		public Client Client
 		{
 			get
@@ -154,6 +162,7 @@ namespace Elastic.CommonSchema.Serilog.Adapters
 			}
 		}
 
+		/// <inheritdoc cref="IHttpAdapter.User"/>
 		public User User
 		{
 			get
