@@ -9,6 +9,9 @@ using System.Text.Json.Serialization;
 
 namespace Elastic.CommonSchema
 {
+	/// <summary>
+	///   Represents a Latitude/Longitude as a 2 dimensional point.
+	/// </summary>
 	public class Location
 	{
 		/// <summary>
@@ -32,6 +35,7 @@ namespace Elastic.CommonSchema
 		[JsonPropertyName("lon"), DataMember(Name = "lon")]
 		public double Longitude { get; }
 
+		/// <inheritdoc cref="object.Equals(object)"/>>
 		public bool Equals(Location other)
 		{
 			if (ReferenceEquals(null, other))
@@ -42,12 +46,15 @@ namespace Elastic.CommonSchema
 			return Latitude.Equals(other.Latitude) && Longitude.Equals(other.Longitude);
 		}
 
+		/// <inheritdoc cref="object.ToString"/>>
 		public string ToString(string format, IFormatProvider formatProvider) => ToString();
 
+		/// <inheritdoc cref="object.ToString"/>>
 		public override string ToString() =>
 			Latitude.ToString("#0.0#######", CultureInfo.InvariantCulture) + "," +
 			Longitude.ToString("#0.0#######", CultureInfo.InvariantCulture);
 
+		/// <inheritdoc cref="object.Equals(object)"/>>
 		public override bool Equals(object obj)
 		{
 			if (ReferenceEquals(null, obj))
@@ -60,8 +67,10 @@ namespace Elastic.CommonSchema
 			return Equals((Location)obj);
 		}
 
+		/// <inheritdoc cref="object.GetHashCode"/>>
 		public override int GetHashCode() => unchecked((Latitude.GetHashCode() * 397) ^ Longitude.GetHashCode());
 
+		/// <summary> Implicitly convert from a lat, lon string </summary>
 		public static implicit operator Location(string latLon)
 		{
 			if (string.IsNullOrEmpty(latLon))
@@ -77,6 +86,7 @@ namespace Elastic.CommonSchema
 			return new Location(lat, lon);
 		}
 
+		/// <summary> Implicitly convert from a lat, lon array </summary>
 		public static implicit operator Location(double[] lonLat) =>
 			lonLat.Length != 2
 				? null

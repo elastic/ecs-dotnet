@@ -51,27 +51,34 @@ namespace Elastic.CommonSchema
 		protected internal virtual void WriteAdditionalProperties(Action<string, object> write) { }
 
 		// ReSharper disable once UnusedMember.Global
+		/// <summary> Deserialize json string to <see cref="EcsDocument"/> </summary>
 		public static EcsDocument Deserialize(string json) => EcsSerializerFactory<EcsDocument>.Deserialize(json);
 
 		// ReSharper disable once UnusedMember.Global
+		/// <summary> Deserialize readonly span of bytes to <see cref="EcsDocument"/> </summary>
 		public static EcsDocument Deserialize(ReadOnlySpan<byte> json) => EcsSerializerFactory<EcsDocument>.Deserialize(json);
 
 		// ReSharper disable once UnusedMember.Global
+		/// <summary> Deserialize stream to <see cref="EcsDocument"/> </summary>
 		public static EcsDocument Deserialize(Stream stream) => EcsSerializerFactory<EcsDocument>.Deserialize(stream);
 
 		// ReSharper disable once UnusedMember.Global
+		/// <summary> Deserialize asynchronously a stream to <see cref="EcsDocument"/> </summary>
 		public static ValueTask<EcsDocument> DeserializeAsync(Stream stream, CancellationToken ctx = default) =>
 			EcsSerializerFactory<EcsDocument>.DeserializeAsync(stream, ctx);
 
+		/// <summary> Serialize this <see cref="EcsDocument"/> instance to string</summary>
 		public string Serialize() => JsonSerializer.Serialize(this, GetType(), SerializerOptions);
 
 		// ReSharper disable once UnusedMember.Global
+		/// <summary> Serialize this <see cref="EcsDocument"/> instance to utf8 bytes</summary>
 		public byte[] SerializeToUtf8Bytes() => JsonSerializer.SerializeToUtf8Bytes(this, GetType(), SerializerOptions);
 
 		private static ReusableUtf8JsonWriter CachedReusableUtf8JsonWriter;
 		private static ReusableUtf8JsonWriter ReusableJsonWriter => CachedReusableUtf8JsonWriter ??= new ReusableUtf8JsonWriter();
 
 		// ReSharper disable once UnusedMethodReturnValue.Global
+		/// <summary> Serialize this <see cref="EcsDocument"/> instance to a StringBuilder</summary>
 		public StringBuilder Serialize(StringBuilder stringBuilder)
 		{
 			using var reusableWriter = ReusableJsonWriter.AllocateJsonWriter(stringBuilder);
@@ -80,6 +87,7 @@ namespace Elastic.CommonSchema
 		}
 
 		// ReSharper disable once UnusedMember.Global
+		/// <summary> Serialize this <see cref="EcsDocument"/> instance to a Stream</summary>
 		public void Serialize(Stream stream)
 		{
 			using var writer = new Utf8JsonWriter(stream, new JsonWriterOptions
@@ -92,6 +100,7 @@ namespace Elastic.CommonSchema
 
 		internal void Serialize(Utf8JsonWriter writer) => JsonSerializer.Serialize(writer, this, SerializerOptions);
 
+		/// <summary> Serialize this <see cref="EcsDocument"/> instance to a Stream asynchronously</summary>
 		public Task SerializeAsync(Stream stream, CancellationToken ctx = default) =>
 			JsonSerializer.SerializeAsync(stream, this, GetType(), SerializerOptions, ctx);
 	}
