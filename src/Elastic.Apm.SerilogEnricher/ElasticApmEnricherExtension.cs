@@ -8,6 +8,7 @@ using Serilog.Configuration;
 
 namespace Elastic.Apm.SerilogEnricher
 {
+	/// <summary> Provides configuration methods to <see cref="LoggerEnrichmentConfiguration"/> </summary>
 	public static class ElasticApmEnricherExtension
 	{
 		/// <summary>

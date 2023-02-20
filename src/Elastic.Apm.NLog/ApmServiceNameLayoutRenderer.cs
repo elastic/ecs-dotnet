@@ -7,18 +7,24 @@ using NLog;
 using NLog.Config;
 using NLog.LayoutRenderers;
 
-namespace Elastic.Apm.NLog
-{
-	[LayoutRenderer(Name)]
-	[ThreadSafe, ThreadAgnostic]
-	public class ApmServiceNameLayoutRenderer : LayoutRenderer
-	{
-		public const string Name = "ElasticApmServiceName";
+namespace Elastic.Apm.NLog;
 
-		protected override void Append(StringBuilder builder, LogEventInfo logEvent)
-		{
-			if (!Agent.IsConfigured) return;
-			builder.Append(Agent.Config.ServiceName);
-		}
+/// <summary>
+/// Provides ElasticApmServiceName as special logging variable to render the current Elastic APM Service Name
+/// </summary>
+[LayoutRenderer(Name)]
+[ThreadSafe, ThreadAgnostic]
+public class ApmServiceNameLayoutRenderer : LayoutRenderer
+{
+	/// <summary>
+	/// ElasticApmServiceName - the variable to use to inject into your logs
+	/// </summary>
+	public const string Name = "ElasticApmServiceName";
+
+	/// <inheritdoc cref="LayoutRenderer.Append"/>
+	protected override void Append(StringBuilder builder, LogEventInfo logEvent)
+	{
+		if (!Agent.IsConfigured) return;
+		builder.Append(Agent.Config.ServiceName);
 	}
 }

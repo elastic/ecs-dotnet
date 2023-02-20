@@ -3,19 +3,24 @@ using NLog;
 using NLog.Config;
 using NLog.LayoutRenderers;
 
-namespace Elastic.Apm.NLog
-{
-	[LayoutRenderer(Name)]
-	[ThreadSafe]
-	public class ApmSpanIdLayoutRenderer : LayoutRenderer
-	{
-		public const string Name = "ElasticApmSpanId";
+namespace Elastic.Apm.NLog;
 
-		protected override void Append(StringBuilder builder, LogEventInfo logEvent)
-		{
-			if (!Agent.IsConfigured) return;
-			if (!Agent.Config.Enabled) return;
-			builder.Append(Agent.Tracer?.CurrentSpan?.Id);
-		}
+/// <summary>
+/// Provides ElasticApmSpanId as special logging variable to render the current Elastic APM Span Id
+/// </summary>
+[ThreadSafe]
+public class ApmSpanIdLayoutRenderer : LayoutRenderer
+{
+	/// <summary>
+	/// ElasticApmSpanId - the variable to use to inject into your logs
+	/// </summary>
+	public const string Name = "ElasticApmSpanId";
+
+	/// <inheritdoc cref="LayoutRenderer.Append"/>
+	protected override void Append(StringBuilder builder, LogEventInfo logEvent)
+	{
+		if (!Agent.IsConfigured) return;
+		if (!Agent.Config.Enabled) return;
+		builder.Append(Agent.Tracer?.CurrentSpan?.Id);
 	}
 }

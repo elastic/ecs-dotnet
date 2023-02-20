@@ -7,19 +7,25 @@ using NLog;
 using NLog.Config;
 using NLog.LayoutRenderers;
 
-namespace Elastic.Apm.NLog
-{
-	[LayoutRenderer(Name)]
-	[ThreadSafe]
-	public class ApmTransactionIdLayoutRenderer : LayoutRenderer
-	{
-		public const string Name = "ElasticApmTransactionId";
+namespace Elastic.Apm.NLog;
 
-		protected override void Append(StringBuilder builder, LogEventInfo logEvent)
-		{
-			if (!Agent.IsConfigured) return;
-			if (!Agent.Config.Enabled) return;
-			builder.Append(Agent.Tracer?.CurrentTransaction?.Id);
-		}
+/// <summary>
+/// Provides ElasticApmTransactionId as special logging variable to render the current Elastic APM Transaction Id
+/// </summary>
+[LayoutRenderer(Name)]
+[ThreadSafe]
+public class ApmTransactionIdLayoutRenderer : LayoutRenderer
+{
+	/// <summary>
+	/// ElasticApmTransactionId - the variable to use to inject into your logs
+	/// </summary>
+	public const string Name = "ElasticApmTransactionId";
+
+	/// <inheritdoc cref="LayoutRenderer.Append"/>
+	protected override void Append(StringBuilder builder, LogEventInfo logEvent)
+	{
+		if (!Agent.IsConfigured) return;
+		if (!Agent.Config.Enabled) return;
+		builder.Append(Agent.Tracer?.CurrentTransaction?.Id);
 	}
 }

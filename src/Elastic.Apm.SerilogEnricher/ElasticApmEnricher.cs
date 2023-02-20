@@ -14,6 +14,7 @@ namespace Elastic.Apm.SerilogEnricher
 	/// </summary>
 	public sealed class ElasticApmEnricher : ILogEventEnricher
 	{
+		/// <inheritdoc cref="ILogEventEnricher.Enrich"/>>
 		public void Enrich(LogEvent logEvent, ILogEventPropertyFactory propertyFactory)
 		{
 			if (!Agent.IsConfigured) return;

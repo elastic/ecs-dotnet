@@ -5,10 +5,14 @@
     <SignAssembly>true</SignAssembly>
     <AssemblyOriginatorKeyFile>..\..\build\keys\keypair.snk</AssemblyOriginatorKeyFile>
 
-    <AllowedOutputExtensionsInPackageBuildOutputFolder>$(AllowedOutputExtensionsInPackageBuildOutputFolder);.pdb</AllowedOutputExtensionsInPackageBuildOutputFolder>
-    <PublishRepositoryUrl>true</PublishRepositoryUrl>
     <PackageIcon>nuget-icon.png</PackageIcon>
     <PackageReadmeFile>README.md</PackageReadmeFile>
+    <!-- Include .pdb in package -->
+    <AllowedOutputExtensionsInPackageBuildOutputFolder>$(AllowedOutputExtensionsInPackageBuildOutputFolder);.pdb</AllowedOutputExtensionsInPackageBuildOutputFolder>
+    <!-- Generate documentation files for each package -->
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <DebugSymbols>true</DebugSymbols>
+    <PublishRepositoryUrl>true</PublishRepositoryUrl>
     
   </PropertyGroup>
   
