@@ -8,6 +8,7 @@ on:
 
 permissions:
   contents: write
+  issues: write
 
 env:
   DOTNET_VERSION: '6.0.400'
