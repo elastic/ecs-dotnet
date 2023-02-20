@@ -5,7 +5,7 @@
     <Title>Elastic Common Schema (ECS) BenchmarkDotNet exporter</Title>
     <Description>Exports BenchmarkDotNet benchmarks to Elasticsearch using Elastic Common Schema (ECS) format</Description>
     <LangVersion>latest</LangVersion>
-    <IsPackable>False</IsPackable>
+    <IsPackable>True</IsPackable>
   </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="..\Elastic.Ingest.Elasticsearch.CommonSchema\Elastic.Ingest.Elasticsearch.CommonSchema.csproj" />
