@@ -308,27 +308,27 @@ namespace Elastic.CommonSchema.Serilog
 
 			var http = configuration.MapHttpAdapter?.Http;
 
-			if (e.TryGetScalarPropertyValue(SpecialKeys.Method, out var method) || e.TryGetScalarPropertyValue(SpecialKeys.RequestMethod, out method))
+			if ((e.TryGetScalarPropertyValue(SpecialKeys.Method, out var method) || e.TryGetScalarPropertyValue(SpecialKeys.RequestMethod, out method)) && method != null)
 			{
 				http ??= new Http();
-				http.RequestMethod = method.Value.ToString();
+				http.RequestMethod = method.Value?.ToString();
 			}
 
-			if (e.TryGetScalarPropertyValue(SpecialKeys.RequestId, out var requestId))
+			if (e.TryGetScalarPropertyValue(SpecialKeys.RequestId, out var requestId) && requestId != null)
 			{
 				http ??= new Http();
-				http.RequestId = requestId.Value.ToString();
+				http.RequestId = requestId.Value?.ToString();
 			}
 
-			if (e.TryGetScalarPropertyValue(SpecialKeys.StatusCode, out var statusCode))
+			if (e.TryGetScalarPropertyValue(SpecialKeys.StatusCode, out var statusCode) && statusCode != null)
 			{
 				http ??= new Http();
-				http.ResponseStatusCode = (int)statusCode.Value;
+				http.ResponseStatusCode = statusCode.Value is int s ? s : null;
 			}
-			if (e.TryGetScalarPropertyValue(SpecialKeys.ContentType, out var contentType))
+			if (e.TryGetScalarPropertyValue(SpecialKeys.ContentType, out var contentType) && contentType != null)
 			{
 				http ??= new Http();
-				http.ResponseMimeType = contentType.Value.ToString();
+				http.ResponseMimeType = contentType.Value?.ToString();
 			}
 
 			return http;
