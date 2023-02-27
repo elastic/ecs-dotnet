@@ -6,11 +6,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Elastic.CommonSchema\Elastic.CommonSchema.csproj"/>
+    <ProjectReference Include="..\Elastic.CommonSchema\Elastic.CommonSchema.csproj" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Elastic.Ingest.Elasticsearch" Version="0.3.1"/>
+    <PackageReference Include="Elastic.Ingest.Elasticsearch" Version="0.3.2" />
   </ItemGroup>
 
 </Project>
