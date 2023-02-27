@@ -46,7 +46,7 @@ jobs:
       uses: ./.github/workflows/docker-run
       with:
         dotnet-sdk-version: ${{ env.DOTNET_VERSION }}
-        command: ./build.sh generatereleasenotes -s true
+        command: ./build.sh generatereleasenotes -s true --token ${{ secrets.GITHUB_TOKEN }}
 
     - name: Inspect public API change
       uses: ./.github/workflows/docker-run
