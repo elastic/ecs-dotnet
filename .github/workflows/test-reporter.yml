@@ -18,5 +18,5 @@ jobs:
           name: Test Summary            # Name of the check run which will be created
           path: "junit-*.xml"           # Path to test results (inside artifact .zip)
           reporter: java-junit          # Format of test results
-          list-suites: 'only-failed'
-          list-tests: 'only-failed'
+          list-suites: 'failed'
+          list-tests: 'failed'
