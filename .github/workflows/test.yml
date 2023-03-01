@@ -23,8 +23,6 @@ concurrency:
   cancel-in-progress: ${{ github.ref != 'refs/heads/main' }}
 
 env:
-  # This is the version to be used for both OS platforms (windows and linux)
-  DOTNET_VERSION: '6.0.400'
   ELASTIC_STACK_VERSION: '8.4.0'
 
 jobs:
@@ -34,13 +32,8 @@ jobs:
     
     steps:
     - uses: actions/checkout@v3
-      with:
-        fetch-depth: 0
-
-    - uses: actions/setup-dotnet@v1
-      with:
-        dotnet-version: |
-          ${{ env.DOTNET_VERSION }}
+    - name: Bootstrap Action Workspace
+      uses: ./.github/workflows/bootstrap
             
     - uses: actions/cache@v3
       with:
@@ -54,12 +47,16 @@ jobs:
         path: ~\AppData\Local\ElasticManaged\elasticsearch-${{ env.ELASTIC_STACK_VERSION }}
         key: ${{ runner.os }}-elastic-managed-${{ env.ELASTIC_STACK_VERSION }}
         
-    - name: Run test
-      run: build.bat test
+    - name: Build the solution
+      run: build.bat build -s true
+      shell: cmd
+      
+    - name: Run tests
+      run: build.bat test -s true
       shell: cmd
        
     - name: Run integration tests
-      run: build.bat integrate
+      run: build.bat integrate -s true
       shell: cmd
       
     - name: Store test results
@@ -74,14 +71,11 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
-      with:
-       fetch-depth: 0
+    - name: Bootstrap Action Workspace
+      uses: ./.github/workflows/bootstrap
 
-    - name: Run release -c false within the docker container
-      uses: ./.github/workflows/docker-run
-      with:
-        dotnet-sdk-version: ${{ env.DOTNET_VERSION }}
-        command: ./build.sh release -c false
+    - name: Run release -c false 
+      run: ./build.sh release -c false --token ${{ secrets.GITHUB_TOKEN }}
 
     - name: Store test results
       if: success() || failure()
