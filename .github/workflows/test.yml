@@ -75,7 +75,7 @@ jobs:
       uses: ./.github/workflows/bootstrap
 
     - name: Run release -c false 
-      run: ./build.sh release -c false
+      run: ./build.sh release -c false --token ${{ secrets.GITHUB_TOKEN }}
 
     - name: Store test results
       if: success() || failure()

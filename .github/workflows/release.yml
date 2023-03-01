@@ -31,9 +31,6 @@ jobs:
     - name: Generate release notes
       run: ./build.sh generatereleasenotes -s true --token ${{ secrets.GITHUB_TOKEN }}
 
-    - name: Inspect public API change
-      run: ./build.sh generateapichanges -s true
-
     - name: Create or update release for tag on github
       run: ./build.sh createreleaseongithub -s true --token ${{ secrets.GITHUB_TOKEN }}
 
