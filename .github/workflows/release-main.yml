@@ -6,6 +6,7 @@ on:
 
 permissions:
   contents: read
+  packages: write
 
 env:
   DOTNET_VERSION: '6.0.400'
