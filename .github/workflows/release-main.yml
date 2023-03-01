@@ -41,7 +41,7 @@ jobs:
           secret/apm-team/ci/elastic-observability-feedz.io url | REPO_API_URL
 
     - name: Release to feedz.io
-    - run: dotnet nuget push 'build/output/*.nupkg' -k ${REPO_API_KEY} -s ${REPO_API_URL} --skip-duplicate --no-symbols
+      run: dotnet nuget push 'build/output/*.nupkg' -k ${REPO_API_KEY} -s ${REPO_API_URL} --skip-duplicate --no-symbols
 
     - name: publish canary packages github package repository
       shell: bash
