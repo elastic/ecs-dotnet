@@ -59,7 +59,7 @@ jobs:
       timeout-minutes: 10
       continue-on-error: true
       run: |
-          until dotnet nuget push 'build/output/*.nupkg' -k ${{secrets.GITHUB_TOKEN}} --skip-duplicate --no-symbols; do echo "Retrying"; sleep 1; done;
+          until dotnet nuget push 'build/output/*.nupkg' -k ${{secrets.GITHUB_TOKEN}} --skip-duplicate --no-symbols -s https://nuget.pkg.github.com/elastic/index.json; do echo "Retrying"; sleep 1; done;
 
     - if: ${{ failure() }}
       uses: elastic/apm-pipeline-library/.github/actions/slack-message@current
