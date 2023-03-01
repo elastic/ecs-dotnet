@@ -19,5 +19,5 @@ jobs:
           path: "junit-*.xml"           # Path to test results (inside artifact .zip)
           reporter: java-junit          # Format of test results
           # https://github.com/elastic/apm-pipeline-library/issues/2063
-          #list-suites: 'only-failed'
-          #list-tests: 'only-failed'
+          list-suites: 'failed'
+          list-tests: 'failed'
