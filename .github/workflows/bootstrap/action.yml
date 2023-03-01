@@ -12,7 +12,7 @@ runs:
         git tag --list
           
     # Install .NET version as mandated by global.json
-    - uses: actions/setup-dotnet@v1
+    - uses: actions/setup-dotnet@v3
       with:
           global-json-file: global.json
       
