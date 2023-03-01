@@ -34,9 +34,9 @@ namespace Elastic.Ingest.Elasticsearch.CommonSchema
 			var match = TemplateWildcard;
 			if (IndexTemplateExists(name)) return false;
 
-			foreach (var (componentName, component) in IndexComponents.Components)
+			foreach (var kv in IndexComponents.Components)
 			{
-				if (!PutComponentTemplate(bootstrapMethod, componentName, component))
+				if (!PutComponentTemplate(bootstrapMethod, kv.Key, kv.Value))
 					return false;
 			}
 
@@ -71,9 +71,9 @@ namespace Elastic.Ingest.Elasticsearch.CommonSchema
 			var match = TemplateWildcard;
 			if (await IndexTemplateExistsAsync(name, ctx).ConfigureAwait(false)) return false;
 
-			foreach (var (componentName, component) in IndexComponents.Components)
+			foreach (var kv in IndexComponents.Components)
 			{
-				if (!await PutComponentTemplateAsync(bootstrapMethod, componentName, component, ctx).ConfigureAwait(false))
+				if (!await PutComponentTemplateAsync(bootstrapMethod, kv.Key, kv.Value, ctx).ConfigureAwait(false))
 					return false;
 			}
 			var additionalComponents = GetInferredComponentTemplates();
