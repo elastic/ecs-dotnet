@@ -5,10 +5,6 @@ description: Ensures an action that needs to build has access to git tags
 runs:
   using: "composite"
   steps:
-    # Checkout with fetch 1 for performance
-    - uses: actions/checkout@v3
-      with:
-        fetch-depth: 1
     # Ensure we fetch all tags
     - shell: bash
       run: |
