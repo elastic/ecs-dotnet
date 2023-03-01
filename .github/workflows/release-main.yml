@@ -15,27 +15,17 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v3
-
-    - uses: elastic/apm-pipeline-library/.github/actions/setup-git@current
-
+    - name: Bootstrap Action Workspace
+      uses: ./.github/workflows/bootstrap
+      
     - name: Generate local nuget packages
-      uses: ./.github/workflows/docker-run
-      with:
-        dotnet-sdk-version: ${{ env.DOTNET_VERSION }}
-        command: ./build.sh generatepackages -s true
+      run: ./build.sh generatepackages -s true
 
     - name: Validate *.npkg files that were created
-      uses: ./.github/workflows/docker-run
-      with:
-        dotnet-sdk-version: ${{ env.DOTNET_VERSION }}
-        command: ./build.sh validatepackages -s true
+      run: ./build.sh validatepackages -s true
 
     - name: Inspect public API change
-      uses: ./.github/workflows/docker-run
-      with:
-        dotnet-sdk-version: ${{ env.DOTNET_VERSION }}
-        command: ./build.sh generateapichanges -s true
+      run: ./build.sh generateapichanges -s true
 
     - name: Prepare feedz.io
       uses: hashicorp/vault-action@v2.4.2
@@ -49,10 +39,7 @@ jobs:
           secret/apm-team/ci/elastic-observability-feedz.io url | REPO_API_URL
 
     - name: Release to feedz.io
-      uses: ./.github/workflows/docker-run
-      with:
-        dotnet-sdk-version: ${{ env.DOTNET_VERSION }}
-        command: .ci/deploy.sh ${REPO_API_KEY} ${REPO_API_URL}
+    - run: dotnet nuget push 'build/output/*.nupkg' -k ${REPO_API_KEY} -s ${REPO_API_URL} --skip-duplicate --no-symbols
 
     - name: publish canary packages github package repository
       shell: bash
