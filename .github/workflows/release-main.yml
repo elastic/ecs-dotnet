@@ -39,6 +39,7 @@ jobs:
 
     - name: publish canary packages github package repository
       shell: bash
+      timeout-minutes: 10
       run: |
         until dotnet nuget push 'build/output/*.nupkg' -k ${{secrets.GITHUB_TOKEN}} --skip-duplicate --no-symbols; do echo "Retrying"; sleep 1; done;
 
