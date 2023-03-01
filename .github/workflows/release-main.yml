@@ -37,12 +37,6 @@ jobs:
         dotnet-sdk-version: ${{ env.DOTNET_VERSION }}
         command: ./build.sh generateapichanges -s true
 
-    - name: publish canary packages github package repository
-      shell: bash
-      timeout-minutes: 10
-      run: |
-        until dotnet nuget push 'build/output/*.nupkg' -k ${{secrets.GITHUB_TOKEN}} --skip-duplicate --no-symbols; do echo "Retrying"; sleep 1; done;
-
     - name: Prepare feedz.io
       uses: hashicorp/vault-action@v2.4.2
       with:
@@ -59,6 +53,13 @@ jobs:
       with:
         dotnet-sdk-version: ${{ env.DOTNET_VERSION }}
         command: .ci/deploy.sh ${REPO_API_KEY} ${REPO_API_URL}
+
+    - name: publish canary packages github package repository
+      shell: bash
+      timeout-minutes: 10
+      continue-on-error: true
+      run: |
+          until dotnet nuget push 'build/output/*.nupkg' -k ${{secrets.GITHUB_TOKEN}} --skip-duplicate --no-symbols; do echo "Retrying"; sleep 1; done;
 
     - if: ${{ failure() }}
       uses: elastic/apm-pipeline-library/.github/actions/slack-message@current
