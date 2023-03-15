@@ -26,10 +26,22 @@ else Console.WriteLine("Using already running Elasticsearch instance");
 
 
 // -- Setup Serilog --
+var nodes = new[] { new Uri("http://localhost:9200") };
 Log.Logger = new LoggerConfiguration()
 	.MinimumLevel.Debug()
 	.MinimumLevel.Override("Microsoft", LogEventLevel.Information)
 	.Enrich.FromLogContext()
+	.WriteTo.Elasticsearch(nodes, opts =>
+	{
+		opts.BootstrapMethod = BootstrapMethod.Failure;
+		opts.DataStream = new DataStreamName("logs", "console-example");
+		opts.ConfigureChannel = channelOpts => {
+			channelOpts.BufferOptions = new BufferOptions { ExportMaxConcurrency = 10 };
+		};
+	}, transport =>
+	{
+		//transport.Authentication();
+	})
 	// This is the bit that Elastic.CommonSchema.Serilog.Sink introduces
 	.WriteTo.Elasticsearch(new ElasticsearchSinkOptions(client.Transport)
 	{

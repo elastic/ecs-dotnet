@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Elastic.Transport;
 using Serilog;
 using Serilog.Configuration;
 
@@ -35,10 +36,13 @@ namespace Elastic.CommonSchema.Serilog.Sink
 			this LoggerSinkConfiguration loggerConfiguration,
 			ICollection<Uri> nodes,
 			Action<ElasticsearchSinkOptions>? configureOptions = null,
+			Action<TransportConfiguration>? configureTransport = null,
 			bool useSniffing = true
 		)
 		{
-			var sinkOptions = new ElasticsearchSinkOptions(useSniffing ? TransportHelper.Static(nodes) : TransportHelper.Sniffing(nodes));
+			var transportConfig = useSniffing ? TransportHelper.Static(nodes) : TransportHelper.Sniffing(nodes);
+			configureTransport?.Invoke(transportConfig);
+			var sinkOptions = new ElasticsearchSinkOptions(new DefaultHttpTransport(transportConfig));
 			configureOptions?.Invoke(sinkOptions);
 
 			return loggerConfiguration.Sink(new ElasticsearchSink(sinkOptions));
@@ -54,10 +58,13 @@ namespace Elastic.CommonSchema.Serilog.Sink
 			this LoggerSinkConfiguration loggerConfiguration,
 			ICollection<Uri> nodes,
 			Action<ElasticsearchSinkOptions<TEcsDocument>>? configureOptions = null,
+			Action<TransportConfiguration>? configureTransport = null,
 			bool useSniffing = true
 		) where TEcsDocument : EcsDocument, new()
 		{
-			var sinkOptions = new ElasticsearchSinkOptions<TEcsDocument>(useSniffing ? TransportHelper.Static(nodes) : TransportHelper.Sniffing(nodes));
+			var transportConfig = useSniffing ? TransportHelper.Static(nodes) : TransportHelper.Sniffing(nodes);
+			configureTransport?.Invoke(transportConfig);
+			var sinkOptions = new ElasticsearchSinkOptions<TEcsDocument>(new DefaultHttpTransport(transportConfig));
 			configureOptions?.Invoke(sinkOptions);
 
 			return loggerConfiguration.Sink(new ElasticsearchSink<TEcsDocument>(sinkOptions));
@@ -73,10 +80,13 @@ namespace Elastic.CommonSchema.Serilog.Sink
 			this LoggerSinkConfiguration loggerConfiguration,
 			string cloudId,
 			string apiKey,
-			Action<ElasticsearchSinkOptions>? configureOptions = null
+			Action<ElasticsearchSinkOptions>? configureOptions = null,
+			Action<TransportConfiguration>? configureTransport = null
 		)
 		{
-			var sinkOptions = new ElasticsearchSinkOptions(TransportHelper.Cloud(cloudId, apiKey));
+			var transportConfig = TransportHelper.Cloud(cloudId, apiKey);
+			configureTransport?.Invoke(transportConfig);
+			var sinkOptions = new ElasticsearchSinkOptions(new DefaultHttpTransport(transportConfig));
 			configureOptions?.Invoke(sinkOptions);
 
 			return loggerConfiguration.Sink(new ElasticsearchSink(sinkOptions));
@@ -93,10 +103,13 @@ namespace Elastic.CommonSchema.Serilog.Sink
 			this LoggerSinkConfiguration loggerConfiguration,
 			string cloudId,
 			string apiKey,
-			Action<ElasticsearchSinkOptions<TEcsDocument>>? configureOptions = null
+			Action<ElasticsearchSinkOptions<TEcsDocument>>? configureOptions = null,
+			Action<TransportConfiguration>? configureTransport = null
 		) where TEcsDocument : EcsDocument, new()
 		{
-			var sinkOptions = new ElasticsearchSinkOptions<TEcsDocument>(TransportHelper.Cloud(cloudId, apiKey));
+			var transportConfig = TransportHelper.Cloud(cloudId, apiKey);
+			configureTransport?.Invoke(transportConfig);
+			var sinkOptions = new ElasticsearchSinkOptions<TEcsDocument>(new DefaultHttpTransport(transportConfig));
 			configureOptions?.Invoke(sinkOptions);
 
 			return loggerConfiguration.Sink(new ElasticsearchSink<TEcsDocument>(sinkOptions));
@@ -113,10 +126,13 @@ namespace Elastic.CommonSchema.Serilog.Sink
 			string cloudId,
 			string username,
 			string password,
-			Action<ElasticsearchSinkOptions>? configureOptions = null
+			Action<ElasticsearchSinkOptions>? configureOptions = null,
+			Action<TransportConfiguration>? configureTransport = null
 		)
 		{
-			var sinkOptions = new ElasticsearchSinkOptions(TransportHelper.Cloud(cloudId, username, password));
+			var transportConfig = TransportHelper.Cloud(cloudId, username, password);
+			configureTransport?.Invoke(transportConfig);
+			var sinkOptions = new ElasticsearchSinkOptions(new DefaultHttpTransport(transportConfig));
 			configureOptions?.Invoke(sinkOptions);
 
 			return loggerConfiguration.Sink(new ElasticsearchSink(sinkOptions));
@@ -134,10 +150,13 @@ namespace Elastic.CommonSchema.Serilog.Sink
 			string cloudId,
 			string username,
 			string password,
-			Action<ElasticsearchSinkOptions<TEcsDocument>>? configureOptions = null
+			Action<ElasticsearchSinkOptions<TEcsDocument>>? configureOptions = null,
+			Action<TransportConfiguration>? configureTransport = null
 		) where TEcsDocument : EcsDocument, new()
 		{
-			var sinkOptions = new ElasticsearchSinkOptions<TEcsDocument>(TransportHelper.Cloud(cloudId, username, password));
+			var transportConfig = TransportHelper.Cloud(cloudId, username, password);
+			configureTransport?.Invoke(transportConfig);
+			var sinkOptions = new ElasticsearchSinkOptions<TEcsDocument>(new DefaultHttpTransport(transportConfig));
 			configureOptions?.Invoke(sinkOptions);
 
 			return loggerConfiguration.Sink(new ElasticsearchSink<TEcsDocument>(sinkOptions));
