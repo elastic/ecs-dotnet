@@ -27,21 +27,25 @@ namespace Elastic.CommonSchema.Serilog.Sink
 	public class ElasticsearchSinkOptions<TEcsDocument> where TEcsDocument : EcsDocument, new()
 	{
 		/// <inheritdoc cref="ElasticsearchSinkOptions"/>
-		public ElasticsearchSinkOptions() : this(TransportHelper.Default()) { }
+		public ElasticsearchSinkOptions() : this(new DefaultHttpTransport(TransportHelper.Default())) { }
 
 		/// <inheritdoc cref="ElasticsearchSinkOptions"/>
 		public ElasticsearchSinkOptions(HttpTransport transport) => Transport = transport;
 
 		/// <inheritdoc cref="HttpTransport{TConfiguration}"/>
-		public HttpTransport Transport { get; }
+		internal HttpTransport Transport { get; }
+
 		/// <inheritdoc cref="EcsTextFormatterConfiguration{TEcsDocument}"/>
 		public EcsTextFormatterConfiguration<TEcsDocument> TextFormatting { get; set; } = new();
+
 		/// <inheritdoc cref="DataStreamName"/>
 		public DataStreamName DataStream { get; set; } = new("logs", "dotnet");
+
 		/// <summary>
 		/// Allows you to configure the <see cref="EcsDataStreamChannel{TEcsDocument}"/> used by the sink to send data to Elasticsearch
 		/// </summary>
 		public Action<DataStreamChannelOptions<TEcsDocument>>? ConfigureChannel { get; set; }
+
 		/// <inheritdoc cref="BootstrapMethod"/>
 		public BootstrapMethod BootstrapMethod { get; set; }
 
