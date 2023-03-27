@@ -120,7 +120,7 @@ namespace Elasticsearch.Extensions.Logging.IntegrationTests
 			var loggedError = response.Documents.First();
 			loggedError.Message.Should().Be("an error occurred for userId 1");
 			loggedError.MessageTemplate.Should().Be("an error occurred for userId {UserId}");
-			//loggedError.Scopes.Should().ContainSingle(s => s == "My Scope value");
+			loggedError.Scopes.Should().ContainSingle(s => s == "My Scope value");
 		}
 
 	}

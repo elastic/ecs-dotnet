@@ -58,7 +58,7 @@ namespace Elasticsearch.Extensions.Logging
 				// Maybe render to JSON in-process, then queue bytes for sending to index ??
 
 				var logEvent = BuildLogEvent(_categoryName, logLevel, eventId, state, exception, formatter);
-				_channel.TryWrite(logEvent);
+				var written = _channel.TryWrite(logEvent);
 			}
 			catch (Exception ex)
 			{
@@ -78,9 +78,7 @@ namespace Elasticsearch.Extensions.Logging
 
 
 				var scopeValues = (scope as IEnumerable<KeyValuePair<string, object>>)?.ToList();
-				var scopeName = scope as string ?? scope.GetType().Name;
-				if (scopeValues != null && scopeValues.Any(kv=>kv.Key == "{OriginalFormat}"))
-					scopeName = FormatValue(scope);
+				var scopeName = scopeValues != null && scopeValues.Any(kv => kv.Key == "{OriginalFormat}") ? scope.ToString() : FormatValue(scope, 0, scope.GetType().Name);
 				log.Scopes.Add(scopeName);
 
 				if (scopeValues == null) return;
@@ -229,7 +227,7 @@ namespace Elasticsearch.Extensions.Logging
 			return stringBuilder.ToString();
 		}
 
-		private string FormatValue(object value, int depth = 0)
+		private string FormatValue(object value, int depth = 0, string? defaultFallback = null)
 		{
 			switch (value)
 			{
@@ -261,7 +259,7 @@ namespace Elasticsearch.Extensions.Logging
 					if (depth < 1 && value is IEnumerable enumerable)
 						return FormatEnumerable(enumerable, depth);
 
-					return value.ToString();
+					return defaultFallback ?? value.ToString();
 			}
 		}
 
