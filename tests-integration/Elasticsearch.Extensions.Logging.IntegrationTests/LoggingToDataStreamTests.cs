@@ -95,5 +95,33 @@ namespace Elasticsearch.Extensions.Logging.IntegrationTests
 			loggedError.Scopes.Should().ContainSingle(s => s == "custom scope");
 		}
 
+		[Fact]
+		public async Task MessageTemplateOnLogIsNotTemplatedScope()
+		{
+			using var _ = CreateLogger(out var logger, out var provider, out var @namespace, out var waitHandle, out var listener);
+			using var scope = logger.BeginScope("My Scope {Value}", "value");
+			var dataStream = $"x-dotnet-{@namespace}";
+			var userId = 1;
+			logger.LogError("an error occurred for userId {UserId}", userId);
+
+			if (!waitHandle.WaitOne(TimeSpan.FromSeconds(10)))
+				throw new Exception($"No flush occurred in 10 seconds: {listener}", listener.ObservedException);
+
+			listener.PublishSuccess.Should().BeTrue("{0}", listener);
+			listener.ObservedException.Should().BeNull();
+
+			await Client.Indices.RefreshAsync(dataStream);
+
+			var response = Client.Search<LogEvent>(new SearchRequest(dataStream));
+
+			response.IsValidResponse.Should().BeTrue("{0}", response.DebugInformation);
+			response.Total.Should().BeGreaterThan(0);
+
+			var loggedError = response.Documents.First();
+			loggedError.Message.Should().Be("an error occurred for userId 1");
+			loggedError.MessageTemplate.Should().Be("an error occurred for userId {UserId}");
+			loggedError.Scopes.Should().ContainSingle(s => s == "My Scope value");
+		}
+
 	}
 }
