@@ -144,7 +144,7 @@ namespace Elasticsearch.Extensions.Logging
 					logEvent.Http.RequestBytes = long.TryParse(contentLength, out var l) ? l : (long?)null;
 					return true;
 				case "Scheme" when value is string scheme:
-					logEvent.Http ??= new Http();
+					logEvent.Url ??= new Url();
 					logEvent.Url.Scheme = scheme;
 					return true;
 				case "Host" when value is string host:
