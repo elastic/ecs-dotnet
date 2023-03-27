@@ -105,7 +105,8 @@ namespace Elasticsearch.Extensions.Logging
 		{
 			if (kvp.Key == "{OriginalFormat}")
 			{
-				logEvent.MessageTemplate ??= kvp.Value.ToString();
+				// we explicitly want this to override, preferring OriginalFormat from current state over scope
+				logEvent.MessageTemplate = kvp.Value.ToString();
 				return;
 			}
 			var value = FormatValue(kvp.Value);
