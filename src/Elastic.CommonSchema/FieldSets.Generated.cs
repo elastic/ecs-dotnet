@@ -218,7 +218,8 @@ namespace Elastic.CommonSchema
 		///<summary>
 		/// <para><c>client.mac</c></para>
 		/// <para>MAC address of the client.
-		/// The notation format from RFC 7042 is suggested: Each octet (that is, 8-bit byte) is represented by two [uppercase] hexadecimal digits giving the value of the octet as an unsigned integer. Successive octets are separated by a hyphen.</para>
+		/// The notation format from RFC 7042 is suggested: Each octet (that is, 8-bit byte) is represented by two [uppercase] hexadecimal digits giving the value of the octet as an unsigned integer. Successive octets are separated by a hyphen.
+		/// <para>pattern: </para></para>
 		/// <example>00-00-5E-00-53-23</example>
 		///</summary>
 		[JsonPropertyName("mac"), DataMember(Name = "mac")]
@@ -729,6 +730,46 @@ namespace Elastic.CommonSchema
 		///</summary>
 		[JsonPropertyName("top_level_domain"), DataMember(Name = "top_level_domain")]
 		public string TopLevelDomain { get; set; }
+	}
+
+	///<summary>
+	/// Fields that describe a device instance and its characteristics.  Data collected for applications and processes running on a (mobile) device can be enriched with these fields to describe the identity, type and other characteristics of the device.&#xA;This field group definition is based on the Device namespace of the OpenTelemetry Semantic Conventions (https://opentelemetry.io/docs/reference/specification/resource/semantic_conventions/device/).
+	///</summary>
+	public abstract class DeviceFieldSet {
+
+		///<summary>
+		/// <para><c>device.id</c></para>
+		/// <para>The unique identifier of a device. The identifier must not change across application sessions but stay fixex for an instance of a (mobile) device. 
+		/// On iOS, this value must be equal to the vendor identifier (https://developer.apple.com/documentation/uikit/uidevice/1620059-identifierforvendor). On Android, this value must be equal to the Firebase Installation ID or a globally unique UUID which is persisted across sessions in your application.
+		/// For GDPR and data protection law reasons this identifier should not carry information that would allow to identify a user.</para>
+		/// <example>00000000-54b3-e7c7-0000-000046bffd97</example>
+		///</summary>
+		[JsonPropertyName("id"), DataMember(Name = "id")]
+		public string Id { get; set; }
+
+		///<summary>
+		/// <para><c>device.manufacturer</c></para>
+		/// <para>The vendor name of the device manufacturer.</para>
+		/// <example>Samsung</example>
+		///</summary>
+		[JsonPropertyName("manufacturer"), DataMember(Name = "manufacturer")]
+		public string Manufacturer { get; set; }
+
+		///<summary>
+		/// <para><c>device.model.identifier</c></para>
+		/// <para>The machine readable identifier of the device model.</para>
+		/// <example>SM-G920F</example>
+		///</summary>
+		[JsonPropertyName("model.identifier"), DataMember(Name = "model.identifier")]
+		public string ModelIdentifier { get; set; }
+
+		///<summary>
+		/// <para><c>device.model.name</c></para>
+		/// <para>The human readable marketing name of the device model.</para>
+		/// <example>Samsung Galaxy S6</example>
+		///</summary>
+		[JsonPropertyName("model.name"), DataMember(Name = "model.name")]
+		public string ModelName { get; set; }
 	}
 
 	///<summary>
@@ -1284,6 +1325,7 @@ namespace Elastic.CommonSchema
 		/// <item><term>registry</term><description>Having to do with settings and assets stored in the Windows registry. Use this category to visualize and analyze activity such as registry access and modifications.</description></item>
 		/// <item><term>session</term><description>The session category is applied to events and metrics regarding logical persistent connections to hosts and services. Use this category to visualize and analyze interactive or automated persistent connections between assets. Data for this category may come from Windows Event logs, SSH logs, or stateless sessions such as HTTP cookie-based sessions, etc.</description></item>
 		/// <item><term>threat</term><description>Use this category to visualize and analyze events describing threat actors' targets, motives, or behaviors.</description></item>
+		/// <item><term>vulnerability</term><description>Relating to vulnerability scan results. Use this category to analyze vulnerabilities detected by Tenable, Qualys, internal scanners, and other vulnerability management sources.</description></item>
 		/// <item><term>web</term><description>Relating to web server access. Use this category to create a dashboard of web server/proxy activity from apache, IIS, nginx web servers, etc. Note: events from network observers such as Zeek http log may also be included in this category.</description></item>
 		/// </list></para>
 		/// <example>authentication</example>
@@ -2771,6 +2813,8 @@ namespace Elastic.CommonSchema
 		/// <item>macos</item>
 		/// <item>unix</item>
 		/// <item>windows</item>
+		/// <item>ios</item>
+		/// <item>android</item>
 		/// </list></para>
 		/// <example>macos</example>
 		///</summary>
@@ -3022,6 +3066,16 @@ namespace Elastic.CommonSchema
 		public string EntityId { get; set; }
 
 		///<summary>
+		/// <para><c>process.env_vars</c></para>
+		/// <para>Array of environment variable bindings. Captured from a snapshot of the environment at the time of execution.
+		/// May be filtered to protect sensitive information.
+		/// <para><br/>This field is beta and subject to change.</para></para>
+		/// <example>["PATH=/usr/local/bin:/usr/bin", "USER=ubuntu"]</example>
+		///</summary>
+		[JsonPropertyName("env_vars"), DataMember(Name = "env_vars")]
+		public string[] EnvVars { get; set; }
+
+		///<summary>
 		/// <para><c>process.executable</c></para>
 		/// <para>Absolute path to the process executable.</para>
 		/// <example>/usr/bin/ssh</example>
@@ -3042,8 +3096,7 @@ namespace Elastic.CommonSchema
 		/// <para><c>process.interactive</c></para>
 		/// <para>Whether the process is connected to an interactive shell.
 		/// Process interactivity is inferred from the processes file descriptors. If the character device for the controlling tty is the same as stdin and stderr for the process, the process is considered interactive.
-		/// Note: A non-interactive process can belong to an interactive session and is simply one that does not have open file descriptors reading the controlling TTY on FD 0 (stdin) or writing to the controlling TTY on FD 2 (stderr). A backgrounded process is still considered interactive if stdin and stderr are connected to the controlling TTY.
-		/// <para><br/>This field is beta and subject to change.</para></para>
+		/// Note: A non-interactive process can belong to an interactive session and is simply one that does not have open file descriptors reading the controlling TTY on FD 0 (stdin) or writing to the controlling TTY on FD 2 (stderr). A backgrounded process is still considered interactive if stdin and stderr are connected to the controlling TTY.</para>
 		/// <example>true</example>
 		///</summary>
 		[JsonPropertyName("interactive"), DataMember(Name = "interactive")]
@@ -3125,19 +3178,18 @@ namespace Elastic.CommonSchema
 		public string WorkingDirectory { get; set; }
 
 		///<summary>
-		/// <para><c>process.env_vars</c></para>
-		/// <para>Environment variables (`env_vars`) set at the time of the event. May be filtered to protect sensitive information.
-		/// The field should not contain nested objects. All values should use `keyword`.
+		/// <para><c>process.io</c></para>
+		/// <para>A chunk of input or output (IO) from a single process.
+		/// This field only appears on the top level process object, which is the process that wrote the output or read the input.
 		/// <para><br/>This field is beta and subject to change.</para></para>
-		/// <example>{"USER": "elastic","LANG": "en_US.UTF-8","HOME": "/home/elastic"}</example>
+		/// <example></example>
 		///</summary>
-		[JsonPropertyName("env_vars"), DataMember(Name = "env_vars")]
-		public ProcessEnvVars EnvVars { get; set; }
+		[JsonPropertyName("io"), DataMember(Name = "io")]
+		public ProcessIo Io { get; set; }
 
 		///<summary>
 		/// <para><c>process.tty</c></para>
-		/// <para>Information about the controlling TTY device. If set, the process belongs to an interactive session.
-		/// <para><br/>This field is beta and subject to change.</para></para>
+		/// <para>Information about the controlling TTY device. If set, the process belongs to an interactive session.</para>
 		/// <example></example>
 		///</summary>
 		[JsonPropertyName("tty"), DataMember(Name = "tty")]
@@ -3244,6 +3296,60 @@ namespace Elastic.CommonSchema
 		///</summary>
 		[JsonPropertyName("user"), DataMember(Name = "user")]
 		public string[] User { get; set; }
+	}
+
+	///<summary>
+	/// Fields for describing risk score and risk level of entities such as hosts and users.  These fields are not allowed to be nested under `event.*`. Please continue to use  `event.risk_score` and `event.risk_score_norm` for event risk.
+	///</summary>
+	public abstract class RiskFieldSet {
+
+		///<summary>
+		/// <para><c>risk.calculated_level</c></para>
+		/// <para>A risk classification level calculated by an internal system as part of entity analytics and entity risk scoring.</para>
+		/// <example>High</example>
+		///</summary>
+		[JsonPropertyName("calculated_level"), DataMember(Name = "calculated_level")]
+		public string CalculatedLevel { get; set; }
+
+		///<summary>
+		/// <para><c>risk.calculated_score</c></para>
+		/// <para>A risk classification score calculated by an internal system as part of entity analytics and entity risk scoring.</para>
+		/// <example>880.73</example>
+		///</summary>
+		[JsonPropertyName("calculated_score"), DataMember(Name = "calculated_score")]
+		public float? CalculatedScore { get; set; }
+
+		///<summary>
+		/// <para><c>risk.calculated_score_norm</c></para>
+		/// <para>A risk classification score calculated by an internal system as part of entity analytics and entity risk scoring, and normalized to a range of 0 to 100.</para>
+		/// <example>88.73</example>
+		///</summary>
+		[JsonPropertyName("calculated_score_norm"), DataMember(Name = "calculated_score_norm")]
+		public float? CalculatedScoreNorm { get; set; }
+
+		///<summary>
+		/// <para><c>risk.static_level</c></para>
+		/// <para>A risk classification level obtained from outside the system, such as from some external Threat Intelligence Platform.</para>
+		/// <example>High</example>
+		///</summary>
+		[JsonPropertyName("static_level"), DataMember(Name = "static_level")]
+		public string StaticLevel { get; set; }
+
+		///<summary>
+		/// <para><c>risk.static_score</c></para>
+		/// <para>A risk classification score obtained from outside the system, such as from some external Threat Intelligence Platform.</para>
+		/// <example>830.0</example>
+		///</summary>
+		[JsonPropertyName("static_score"), DataMember(Name = "static_score")]
+		public float? StaticScore { get; set; }
+
+		///<summary>
+		/// <para><c>risk.static_score_norm</c></para>
+		/// <para>A risk classification score obtained from outside the system, such as from some external Threat Intelligence Platform, and normalized to a range of 0 to 100.</para>
+		/// <example>83.0</example>
+		///</summary>
+		[JsonPropertyName("static_score_norm"), DataMember(Name = "static_score_norm")]
+		public float? StaticScoreNorm { get; set; }
 	}
 
 	///<summary>
@@ -3816,11 +3922,13 @@ namespace Elastic.CommonSchema
 		/// <para><br/>Expected Values:</para>
 		/// <list type="bullet">
 		/// <item>WHITE</item>
+		/// <item>CLEAR</item>
 		/// <item>GREEN</item>
 		/// <item>AMBER</item>
+		/// <item>AMBER+STRICT</item>
 		/// <item>RED</item>
 		/// </list></para>
-		/// <example>WHITE</example>
+		/// <example>CLEAR</example>
 		///</summary>
 		[JsonPropertyName("indicator.marking.tlp"), DataMember(Name = "indicator.marking.tlp")]
 		public string IndicatorMarkingTlp { get; set; }
@@ -4046,9 +4154,16 @@ namespace Elastic.CommonSchema
 		public string[] TechniqueSubtechniqueReference { get; set; }
 
 		///<summary>
+		/// <para><c>threat.threat.indicator.marking.tlp.version</c></para>
+		/// <para>Traffic Light Protocol version.</para>
+		/// <example>2.0</example>
+		///</summary>
+		[JsonPropertyName("threat.indicator.marking.tlp.version"), DataMember(Name = "threat.indicator.marking.tlp.version")]
+		public string ThreatIndicatorMarkingTlpVersion { get; set; }
+
+		///<summary>
 		/// <para><c>threat.enrichments</c></para>
-		/// <para>A list of associated indicators objects enriching the event, and the context of that association/enrichment.
-		/// <para><br/>This field is beta and subject to change.</para></para>
+		/// <para>A list of associated indicators objects enriching the event, and the context of that association/enrichment.</para>
 		/// <example></example>
 		///</summary>
 		[JsonPropertyName("enrichments"), DataMember(Name = "enrichments")]

@@ -112,7 +112,7 @@ namespace Elastic.CommonSchema.Generator.Projection
 				InlineObjects = InlineObjects.Values.ToList(),
 				NestedEntityClasses = nestedEntityTypes.Values.ToList(),
 				Warnings = Warnings.AsReadOnly(),
-				IndexTemplates = Schema.Templates.Select(kv=>new IndexTemplate(kv.Key, kv.Value)).OrderBy(t=>t.Name).ToList(),
+				IndexTemplates = Schema.Templates.Select(kv=>new IndexTemplate(kv.Key, kv.Value, Schema.Version)).OrderBy(t=>t.Name).ToList(),
 				IndexComponents = Schema.Components.Select(kv=>new IndexComponent(kv.Key, kv.Value, Schema.Version)).OrderBy(t=>t.Name).ToList(),
 
 			};

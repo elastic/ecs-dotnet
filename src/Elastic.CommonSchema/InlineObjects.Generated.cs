@@ -253,9 +253,41 @@ namespace Elastic.CommonSchema
 	}
 
 	///<summary>
-	/// Environment variables (`env_vars`) set at the time of the event. May be filtered to protect sensitive information.&#xA;The field should not contain nested objects. All values should use `keyword`.
+	/// A chunk of input or output (IO) from a single process.&#xA;This field only appears on the top level process object, which is the process that wrote the output or read the input.
 	///</summary>
-	public class ProcessEnvVars : Dictionary<string, string> {
+	public class ProcessIo {
+
+		///<summary>process.io.bytes_skipped</summary>
+		[JsonPropertyName("bytes_skipped"), DataMember(Name = "bytes_skipped")]
+		public object[] BytesSkipped { get; set; }
+
+		///<summary>process.io.bytes_skipped.length</summary>
+		[JsonPropertyName("bytes_skipped.length"), DataMember(Name = "bytes_skipped.length")]
+		public long? BytesSkippedLength { get; set; }
+
+		///<summary>process.io.bytes_skipped.offset</summary>
+		[JsonPropertyName("bytes_skipped.offset"), DataMember(Name = "bytes_skipped.offset")]
+		public long? BytesSkippedOffset { get; set; }
+
+		///<summary>process.io.max_bytes_per_process_exceeded</summary>
+		[JsonPropertyName("max_bytes_per_process_exceeded"), DataMember(Name = "max_bytes_per_process_exceeded")]
+		public bool? MaxBytesPerProcessExceeded { get; set; }
+
+		///<summary>process.io.text</summary>
+		[JsonPropertyName("text"), DataMember(Name = "text")]
+		public string Text { get; set; }
+
+		///<summary>process.io.total_bytes_captured</summary>
+		[JsonPropertyName("total_bytes_captured"), DataMember(Name = "total_bytes_captured")]
+		public long? TotalBytesCaptured { get; set; }
+
+		///<summary>process.io.total_bytes_skipped</summary>
+		[JsonPropertyName("total_bytes_skipped"), DataMember(Name = "total_bytes_skipped")]
+		public long? TotalBytesSkipped { get; set; }
+
+		///<summary>process.io.type</summary>
+		[JsonPropertyName("type"), DataMember(Name = "type")]
+		public string Type { get; set; }
 	}
 
 	///<summary>
@@ -270,6 +302,14 @@ namespace Elastic.CommonSchema
 		///<summary>process.tty.char_device.minor</summary>
 		[JsonPropertyName("char_device.minor"), DataMember(Name = "char_device.minor")]
 		public long? CharDeviceMinor { get; set; }
+
+		///<summary>process.tty.columns</summary>
+		[JsonPropertyName("columns"), DataMember(Name = "columns")]
+		public long? Columns { get; set; }
+
+		///<summary>process.tty.rows</summary>
+		[JsonPropertyName("rows"), DataMember(Name = "rows")]
+		public long? Rows { get; set; }
 	}
 
 	///<summary>
@@ -305,9 +345,9 @@ namespace Elastic.CommonSchema
 		[JsonPropertyName("indicator.last_seen"), DataMember(Name = "indicator.last_seen")]
 		public DateTimeOffset? IndicatorLastSeen { get; set; }
 
-		///<summary>threat.enrichments.indicator.marking.tlp</summary>
-		[JsonPropertyName("indicator.marking.tlp"), DataMember(Name = "indicator.marking.tlp")]
-		public string IndicatorMarkingTlp { get; set; }
+		///<summary>threat.enrichments.indicator.marking.tlp.version</summary>
+		[JsonPropertyName("indicator.marking.tlp.version"), DataMember(Name = "indicator.marking.tlp.version")]
+		public string IndicatorMarkingTlpVersion { get; set; }
 
 		///<summary>threat.enrichments.indicator.modified_at</summary>
 		[JsonPropertyName("indicator.modified_at"), DataMember(Name = "indicator.modified_at")]

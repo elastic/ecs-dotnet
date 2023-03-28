@@ -30,7 +30,7 @@ namespace Elastic.Ingest.Elasticsearch.CommonSchema
 		{
 			if (bootstrapMethod == BootstrapMethod.None) return true;
 
-			var name = TemplateName;
+			var name = $"{TemplateName}-{EcsDocument.Version}";
 			var match = TemplateWildcard;
 			if (IndexTemplateExists(name)) return false;
 
