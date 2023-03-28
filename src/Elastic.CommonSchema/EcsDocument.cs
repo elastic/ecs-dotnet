@@ -57,9 +57,7 @@ public partial class EcsDocument
 
 		if (options?.IncludeHost is null or true) doc.Host = GetHost();
 		if (options?.IncludeProcess is null or true) doc.Process = GetProcess();
-		// TODO I think we can cache user? does CurrentPrincipal on Thread ever change?
-		if (options?.IncludeUser is null or true)
-			doc.User = new User { Id = Thread.CurrentPrincipal?.Identity.Name, Name = Environment.UserName, Domain = Environment.UserDomainName };
+		if (options?.IncludeUser is null or true) doc.User = GetUser();
 
 		return doc;
 	}
@@ -156,6 +154,12 @@ public partial class EcsDocument
 			ThreadId = currentThread.ManagedThreadId
 		};
 	}
+
+	private static readonly string UserName = Environment.UserName;
+	private static readonly string UserDomainName = Environment.UserDomainName;
+
+	//Can not cache current thread's identity as it's used for role based security, different threads can have different identities
+	private static User GetUser() => new User { Id = Thread.CurrentPrincipal?.Identity.Name, Name = UserName, Domain = UserDomainName };
 
 	private static Error GetError(Exception exception)
 	{
