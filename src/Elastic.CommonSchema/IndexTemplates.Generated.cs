@@ -38,7 +38,7 @@ public static class IndexTemplates
 		 		 
 		return @"{
   ""_meta"": {
-    ""description"": ""Template installed by .NET ECS libraries (https://github.com/elastic/ecs-dotnet)"",
+    ""description"": ""Template installed by ECS.NET 8.6.0 (https://github.com/elastic/ecs-dotnet)"",
     ""ecs_version"": ""8.6.0""
   },
   ""composed_of"": [
@@ -80,12 +80,12 @@ public static class IndexTemplates
     ""ecs_8.6.0_url"",
     ""ecs_8.6.0_user_agent"",
     ""ecs_8.6.0_user"",
-    ""ecs_8.6.0_vulnerability""
+    ""ecs_8.6.0_vulnerability""" + userComponents + @"
   ],
   ""index_patterns"": [
     """ + indexPattern + @"""
   ],
-  ""priority"": 201,
+  ""priority"": 525824,
   ""data_stream"": {},
   ""template"": {
     ""mappings"": {
