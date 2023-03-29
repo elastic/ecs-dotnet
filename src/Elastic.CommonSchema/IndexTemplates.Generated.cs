@@ -22,12 +22,12 @@ using System.Text.Json.Serialization;
 namespace Elastic.CommonSchema.Elasticsearch
 {
 /// <summary>
-/// Elastic Common Schema version v8.4.0 index templates to be used with Elasticsearch.
+/// Elastic Common Schema version v8.6.0 index templates to be used with Elasticsearch.
 /// </summary>
 public static class IndexTemplates
 {
 	/// <summary>
-	 /// Elastic Common Schema version v8.4.0 Composable index template  
+	 /// Elastic Common Schema version v8.6.0 Composable index template  
 	 /// See the Put Index Template API documentation: https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-templates.html
 	 /// </summary>
 	 /// <returns>Index template string that can be used with the Put Index Template API.</returns>
@@ -38,53 +38,54 @@ public static class IndexTemplates
 		 		 
 		return @"{
   ""_meta"": {
-    ""description"": ""Template installed by .NET ECS libraries (https://github.com/elastic/ecs-dotnet)"",
-    ""ecs_version"": ""8.4.0""
+    ""description"": ""Template installed by ECS.NET 8.6.0 (https://github.com/elastic/ecs-dotnet)"",
+    ""ecs_version"": ""8.6.0""
   },
   ""composed_of"": [
-    ""ecs_8.4.0_base"",
-    ""ecs_8.4.0_agent"",
-    ""ecs_8.4.0_client"",
-    ""ecs_8.4.0_cloud"",
-    ""ecs_8.4.0_container"",
-    ""ecs_8.4.0_data_stream"",
-    ""ecs_8.4.0_destination"",
-    ""ecs_8.4.0_dll"",
-    ""ecs_8.4.0_dns"",
-    ""ecs_8.4.0_ecs"",
-    ""ecs_8.4.0_email"",
-    ""ecs_8.4.0_error"",
-    ""ecs_8.4.0_event"",
-    ""ecs_8.4.0_faas"",
-    ""ecs_8.4.0_file"",
-    ""ecs_8.4.0_group"",
-    ""ecs_8.4.0_host"",
-    ""ecs_8.4.0_http"",
-    ""ecs_8.4.0_log"",
-    ""ecs_8.4.0_network"",
-    ""ecs_8.4.0_observer"",
-    ""ecs_8.4.0_orchestrator"",
-    ""ecs_8.4.0_organization"",
-    ""ecs_8.4.0_package"",
-    ""ecs_8.4.0_process"",
-    ""ecs_8.4.0_registry"",
-    ""ecs_8.4.0_related"",
-    ""ecs_8.4.0_rule"",
-    ""ecs_8.4.0_server"",
-    ""ecs_8.4.0_service"",
-    ""ecs_8.4.0_source"",
-    ""ecs_8.4.0_threat"",
-    ""ecs_8.4.0_tls"",
-    ""ecs_8.4.0_tracing"",
-    ""ecs_8.4.0_url"",
-    ""ecs_8.4.0_user_agent"",
-    ""ecs_8.4.0_user"",
-    ""ecs_8.4.0_vulnerability""" + userComponents + @"
+    ""ecs_8.6.0_base"",
+    ""ecs_8.6.0_agent"",
+    ""ecs_8.6.0_client"",
+    ""ecs_8.6.0_cloud"",
+    ""ecs_8.6.0_container"",
+    ""ecs_8.6.0_data_stream"",
+    ""ecs_8.6.0_destination"",
+    ""ecs_8.6.0_device"",
+    ""ecs_8.6.0_dll"",
+    ""ecs_8.6.0_dns"",
+    ""ecs_8.6.0_ecs"",
+    ""ecs_8.6.0_email"",
+    ""ecs_8.6.0_error"",
+    ""ecs_8.6.0_event"",
+    ""ecs_8.6.0_faas"",
+    ""ecs_8.6.0_file"",
+    ""ecs_8.6.0_group"",
+    ""ecs_8.6.0_host"",
+    ""ecs_8.6.0_http"",
+    ""ecs_8.6.0_log"",
+    ""ecs_8.6.0_network"",
+    ""ecs_8.6.0_observer"",
+    ""ecs_8.6.0_orchestrator"",
+    ""ecs_8.6.0_organization"",
+    ""ecs_8.6.0_package"",
+    ""ecs_8.6.0_process"",
+    ""ecs_8.6.0_registry"",
+    ""ecs_8.6.0_related"",
+    ""ecs_8.6.0_rule"",
+    ""ecs_8.6.0_server"",
+    ""ecs_8.6.0_service"",
+    ""ecs_8.6.0_source"",
+    ""ecs_8.6.0_threat"",
+    ""ecs_8.6.0_tls"",
+    ""ecs_8.6.0_tracing"",
+    ""ecs_8.6.0_url"",
+    ""ecs_8.6.0_user_agent"",
+    ""ecs_8.6.0_user"",
+    ""ecs_8.6.0_vulnerability""" + userComponents + @"
   ],
   ""index_patterns"": [
     """ + indexPattern + @"""
   ],
-  ""priority"": 201,
+  ""priority"": 525824,
   ""data_stream"": {},
   ""template"": {
     ""mappings"": {
@@ -117,7 +118,7 @@ public static class IndexTemplates
 	 }
 
  	/// <summary>
-	 /// Elastic Common Schema version v8.4.0 Legacy index template  
+	 /// Elastic Common Schema version v8.6.0 Legacy index template  
 	 /// See the Put Index Template API documentation: https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-templates.html
 	 /// </summary>
 	 /// <returns>Index template string that can be used with the Put Index Template API.</returns>
@@ -130,7 +131,7 @@ public static class IndexTemplates
   ],
   ""mappings"": {
     ""_meta"": {
-      ""version"": ""8.4.0""
+      ""version"": ""8.6.0""
     },
     ""date_detection"": false,
     ""dynamic_templates"": [
@@ -831,6 +832,30 @@ public static class IndexTemplates
                 ""type"": ""keyword""
               },
               ""roles"": {
+                ""ignore_above"": 1024,
+                ""type"": ""keyword""
+              }
+            }
+          }
+        }
+      },
+      ""device"": {
+        ""properties"": {
+          ""id"": {
+            ""ignore_above"": 1024,
+            ""type"": ""keyword""
+          },
+          ""manufacturer"": {
+            ""ignore_above"": 1024,
+            ""type"": ""keyword""
+          },
+          ""model"": {
+            ""properties"": {
+              ""identifier"": {
+                ""ignore_above"": 1024,
+                ""type"": ""keyword""
+              },
+              ""name"": {
                 ""ignore_above"": 1024,
                 ""type"": ""keyword""
               }
@@ -1966,6 +1991,30 @@ public static class IndexTemplates
             ""ignore_above"": 1024,
             ""type"": ""keyword""
           },
+          ""risk"": {
+            ""properties"": {
+              ""calculated_level"": {
+                ""ignore_above"": 1024,
+                ""type"": ""keyword""
+              },
+              ""calculated_score"": {
+                ""type"": ""float""
+              },
+              ""calculated_score_norm"": {
+                ""type"": ""float""
+              },
+              ""static_level"": {
+                ""ignore_above"": 1024,
+                ""type"": ""keyword""
+              },
+              ""static_score"": {
+                ""type"": ""float""
+              },
+              ""static_score_norm"": {
+                ""type"": ""float""
+              }
+            }
+          },
           ""type"": {
             ""ignore_above"": 1024,
             ""type"": ""keyword""
@@ -2748,6 +2797,31 @@ public static class IndexTemplates
               ""args_count"": {
                 ""type"": ""long""
               },
+              ""attested_groups"": {
+                ""properties"": {
+                  ""name"": {
+                    ""ignore_above"": 1024,
+                    ""type"": ""keyword""
+                  }
+                }
+              },
+              ""attested_user"": {
+                ""properties"": {
+                  ""id"": {
+                    ""ignore_above"": 1024,
+                    ""type"": ""keyword""
+                  },
+                  ""name"": {
+                    ""fields"": {
+                      ""text"": {
+                        ""type"": ""match_only_text""
+                      }
+                    },
+                    ""ignore_above"": 1024,
+                    ""type"": ""keyword""
+                  }
+                }
+              },
               ""command_line"": {
                 ""fields"": {
                   ""text"": {
@@ -2959,7 +3033,8 @@ public static class IndexTemplates
             }
           },
           ""env_vars"": {
-            ""type"": ""object""
+            ""ignore_above"": 1024,
+            ""type"": ""keyword""
           },
           ""executable"": {
             ""fields"": {
@@ -3183,6 +3258,38 @@ public static class IndexTemplates
           },
           ""interactive"": {
             ""type"": ""boolean""
+          },
+          ""io"": {
+            ""properties"": {
+              ""bytes_skipped"": {
+                ""properties"": {
+                  ""length"": {
+                    ""type"": ""long""
+                  },
+                  ""offset"": {
+                    ""type"": ""long""
+                  }
+                },
+                ""type"": ""object""
+              },
+              ""max_bytes_per_process_exceeded"": {
+                ""type"": ""boolean""
+              },
+              ""text"": {
+                ""type"": ""wildcard""
+              },
+              ""total_bytes_captured"": {
+                ""type"": ""long""
+              },
+              ""total_bytes_skipped"": {
+                ""type"": ""long""
+              },
+              ""type"": {
+                ""ignore_above"": 1024,
+                ""type"": ""keyword""
+              }
+            },
+            ""type"": ""object""
           },
           ""name"": {
             ""fields"": {
@@ -4003,6 +4110,12 @@ public static class IndexTemplates
                     ""type"": ""long""
                   }
                 }
+              },
+              ""columns"": {
+                ""type"": ""long""
+              },
+              ""rows"": {
+                ""type"": ""long""
               }
             },
             ""type"": ""object""
@@ -5179,8 +5292,12 @@ public static class IndexTemplates
                   ""marking"": {
                     ""properties"": {
                       ""tlp"": {
-                        ""ignore_above"": 1024,
-                        ""type"": ""keyword""
+                        ""properties"": {
+                          ""version"": {
+                            ""ignore_above"": 1024,
+                            ""type"": ""keyword""
+                          }
+                        }
                       }
                     }
                   },
@@ -6336,6 +6453,26 @@ public static class IndexTemplates
                 }
               }
             }
+          },
+          ""threat"": {
+            ""properties"": {
+              ""indicator"": {
+                ""properties"": {
+                  ""marking"": {
+                    ""properties"": {
+                      ""tlp"": {
+                        ""properties"": {
+                          ""version"": {
+                            ""ignore_above"": 1024,
+                            ""type"": ""keyword""
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
           }
         }
       },
@@ -6930,6 +7067,30 @@ public static class IndexTemplates
             },
             ""ignore_above"": 1024,
             ""type"": ""keyword""
+          },
+          ""risk"": {
+            ""properties"": {
+              ""calculated_level"": {
+                ""ignore_above"": 1024,
+                ""type"": ""keyword""
+              },
+              ""calculated_score"": {
+                ""type"": ""float""
+              },
+              ""calculated_score_norm"": {
+                ""type"": ""float""
+              },
+              ""static_level"": {
+                ""ignore_above"": 1024,
+                ""type"": ""keyword""
+              },
+              ""static_score"": {
+                ""type"": ""float""
+              },
+              ""static_score_norm"": {
+                ""type"": ""float""
+              }
+            }
           },
           ""roles"": {
             ""ignore_above"": 1024,

@@ -49,6 +49,7 @@ namespace Elastic.CommonSchema.Serialization
 				"container" => ReadProp<Container>(ref reader, "container", EcsJsonContext.Default.Container, ecsEvent, (b, v) => b.Container = v),
 				"data_stream" => ReadProp<DataStream>(ref reader, "data_stream", EcsJsonContext.Default.DataStream, ecsEvent, (b, v) => b.DataStream = v),
 				"destination" => ReadProp<Destination>(ref reader, "destination", EcsJsonContext.Default.Destination, ecsEvent, (b, v) => b.Destination = v),
+				"device" => ReadProp<Device>(ref reader, "device", EcsJsonContext.Default.Device, ecsEvent, (b, v) => b.Device = v),
 				"dll" => ReadProp<Dll>(ref reader, "dll", EcsJsonContext.Default.Dll, ecsEvent, (b, v) => b.Dll = v),
 				"dns" => ReadProp<Dns>(ref reader, "dns", EcsJsonContext.Default.Dns, ecsEvent, (b, v) => b.Dns = v),
 				"ecs" => ReadProp<Ecs>(ref reader, "ecs", EcsJsonContext.Default.Ecs, ecsEvent, (b, v) => b.Ecs = v),
@@ -75,6 +76,7 @@ namespace Elastic.CommonSchema.Serialization
 				"process" => ReadProp<Process>(ref reader, "process", EcsJsonContext.Default.Process, ecsEvent, (b, v) => b.Process = v),
 				"registry" => ReadProp<Registry>(ref reader, "registry", EcsJsonContext.Default.Registry, ecsEvent, (b, v) => b.Registry = v),
 				"related" => ReadProp<Related>(ref reader, "related", EcsJsonContext.Default.Related, ecsEvent, (b, v) => b.Related = v),
+				"risk" => ReadProp<Risk>(ref reader, "risk", EcsJsonContext.Default.Risk, ecsEvent, (b, v) => b.Risk = v),
 				"rule" => ReadProp<Rule>(ref reader, "rule", EcsJsonContext.Default.Rule, ecsEvent, (b, v) => b.Rule = v),
 				"server" => ReadProp<Server>(ref reader, "server", EcsJsonContext.Default.Server, ecsEvent, (b, v) => b.Server = v),
 				"service" => ReadProp<Service>(ref reader, "service", EcsJsonContext.Default.Service, ecsEvent, (b, v) => b.Service = v),
@@ -128,6 +130,7 @@ namespace Elastic.CommonSchema.Serialization
 			WriteProp(writer, "container", value.Container, EcsJsonContext.Default.Container);
 			WriteProp(writer, "data_stream", value.DataStream, EcsJsonContext.Default.DataStream);
 			WriteProp(writer, "destination", value.Destination, EcsJsonContext.Default.Destination);
+			WriteProp(writer, "device", value.Device, EcsJsonContext.Default.Device);
 			WriteProp(writer, "dll", value.Dll, EcsJsonContext.Default.Dll);
 			WriteProp(writer, "dns", value.Dns, EcsJsonContext.Default.Dns);
 			WriteProp(writer, "elf", value.Elf, EcsJsonContext.Default.Elf);
@@ -152,6 +155,7 @@ namespace Elastic.CommonSchema.Serialization
 			WriteProp(writer, "process", value.Process, EcsJsonContext.Default.Process);
 			WriteProp(writer, "registry", value.Registry, EcsJsonContext.Default.Registry);
 			WriteProp(writer, "related", value.Related, EcsJsonContext.Default.Related);
+			WriteProp(writer, "risk", value.Risk, EcsJsonContext.Default.Risk);
 			WriteProp(writer, "rule", value.Rule, EcsJsonContext.Default.Rule);
 			WriteProp(writer, "server", value.Server, EcsJsonContext.Default.Server);
 			WriteProp(writer, "service", value.Service, EcsJsonContext.Default.Service);

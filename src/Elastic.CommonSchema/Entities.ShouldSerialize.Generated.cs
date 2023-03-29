@@ -16,13 +16,15 @@ using System.Text.Json.Serialization;
 
 namespace Elastic.CommonSchema;
 
-	public partial class Log 
+public partial class Log 
 {
 	[JsonIgnore]
-	internal bool ShouldSerialize => FilePath != null || Logger != null || OriginFileLine != null || OriginFileName != null || OriginFunction != null;
+	internal bool ShouldSerialize =>
+		FilePath != null || Logger != null || OriginFileLine != null || OriginFileName != null || OriginFunction != null;
 }
-	public partial class Ecs 
+public partial class Ecs 
 {
 	[JsonIgnore]
-	internal bool ShouldSerialize => false;
+	internal bool ShouldSerialize =>
+		false;
 }

@@ -202,6 +202,15 @@ namespace Elastic.CommonSchema
 				case "destination.top_level_domain":
 				case "DestinationTopLevelDomain":
 					return TrySetDestination(document, path, value);
+				case "device.id":
+				case "DeviceId":
+				case "device.manufacturer":
+				case "DeviceManufacturer":
+				case "device.model.identifier":
+				case "DeviceModelIdentifier":
+				case "device.model.name":
+				case "DeviceModelName":
+					return TrySetDevice(document, path, value);
 				case "dll.name":
 				case "DllName":
 				case "dll.path":
@@ -687,6 +696,19 @@ namespace Elastic.CommonSchema
 				case "registry.value":
 				case "RegistryValue":
 					return TrySetRegistry(document, path, value);
+				case "risk.calculated_level":
+				case "RiskCalculatedLevel":
+				case "risk.calculated_score":
+				case "RiskCalculatedScore":
+				case "risk.calculated_score_norm":
+				case "RiskCalculatedScoreNorm":
+				case "risk.static_level":
+				case "RiskStaticLevel":
+				case "risk.static_score":
+				case "RiskStaticScore":
+				case "risk.static_score_norm":
+				case "RiskStaticScoreNorm":
+					return TrySetRisk(document, path, value);
 				case "rule.category":
 				case "RuleCategory":
 				case "rule.description":
@@ -829,6 +851,8 @@ namespace Elastic.CommonSchema
 				case "ThreatSoftwareReference":
 				case "threat.software.type":
 				case "ThreatSoftwareType":
+				case "threat.threat.indicator.marking.tlp.version":
+				case "ThreatThreatIndicatorMarkingTlpVersion":
 					return TrySetThreat(document, path, value);
 				case "tls.cipher":
 				case "TlsCipher":
@@ -1251,6 +1275,28 @@ namespace Elastic.CommonSchema
 			var entity = document.Destination ?? new Destination();
 			var assigned = assign(entity, value);
 			if (assigned) document.Destination = entity;
+			return assigned;
+		}
+
+		public static bool TrySetDevice(EcsDocument document, string path, object value)
+		{
+			Func<Device, object, bool> assign = path switch
+			{
+				"device.id" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Id = p),
+				"DeviceId" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Id = p),
+				"device.manufacturer" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Manufacturer = p),
+				"DeviceManufacturer" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Manufacturer = p),
+				"device.model.identifier" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.ModelIdentifier = p),
+				"DeviceModelIdentifier" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.ModelIdentifier = p),
+				"device.model.name" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.ModelName = p),
+				"DeviceModelName" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.ModelName = p),
+				_ => null
+			};
+			if (assign == null) return false;
+
+			var entity = document.Device ?? new Device();
+			var assigned = assign(entity, value);
+			if (assigned) document.Device = entity;
 			return assigned;
 		}
 
@@ -2078,6 +2124,32 @@ namespace Elastic.CommonSchema
 			return assigned;
 		}
 
+		public static bool TrySetRisk(EcsDocument document, string path, object value)
+		{
+			Func<Risk, object, bool> assign = path switch
+			{
+				"risk.calculated_level" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.CalculatedLevel = p),
+				"RiskCalculatedLevel" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.CalculatedLevel = p),
+				"risk.calculated_score" => static (e, v) => TrySetFloat(e, v, static (ee, p) => ee.CalculatedScore = p),
+				"RiskCalculatedScore" => static (e, v) => TrySetFloat(e, v, static (ee, p) => ee.CalculatedScore = p),
+				"risk.calculated_score_norm" => static (e, v) => TrySetFloat(e, v, static (ee, p) => ee.CalculatedScoreNorm = p),
+				"RiskCalculatedScoreNorm" => static (e, v) => TrySetFloat(e, v, static (ee, p) => ee.CalculatedScoreNorm = p),
+				"risk.static_level" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.StaticLevel = p),
+				"RiskStaticLevel" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.StaticLevel = p),
+				"risk.static_score" => static (e, v) => TrySetFloat(e, v, static (ee, p) => ee.StaticScore = p),
+				"RiskStaticScore" => static (e, v) => TrySetFloat(e, v, static (ee, p) => ee.StaticScore = p),
+				"risk.static_score_norm" => static (e, v) => TrySetFloat(e, v, static (ee, p) => ee.StaticScoreNorm = p),
+				"RiskStaticScoreNorm" => static (e, v) => TrySetFloat(e, v, static (ee, p) => ee.StaticScoreNorm = p),
+				_ => null
+			};
+			if (assign == null) return false;
+
+			var entity = document.Risk ?? new Risk();
+			var assigned = assign(entity, value);
+			if (assigned) document.Risk = entity;
+			return assigned;
+		}
+
 		public static bool TrySetRule(EcsDocument document, string path, object value)
 		{
 			Func<Rule, object, bool> assign = path switch
@@ -2276,6 +2348,8 @@ namespace Elastic.CommonSchema
 				"ThreatSoftwareReference" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.SoftwareReference = p),
 				"threat.software.type" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.SoftwareType = p),
 				"ThreatSoftwareType" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.SoftwareType = p),
+				"threat.threat.indicator.marking.tlp.version" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.ThreatIndicatorMarkingTlpVersion = p),
+				"ThreatThreatIndicatorMarkingTlpVersion" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.ThreatIndicatorMarkingTlpVersion = p),
 				_ => null
 			};
 			if (assign == null) return false;

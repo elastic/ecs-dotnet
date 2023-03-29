@@ -27,9 +27,9 @@ namespace Elastic.CommonSchema
 	{
 
 		/// <summary>
-		/// Elastic Common Schema version 8.4.0
+		/// Elastic Common Schema version 8.6.0
 		/// </summary>
-		public static string Version => "8.4.0";
+		public static string Version => "8.6.0";
 
 		/// <summary>
 		/// Container for additional metadata against this event.
@@ -74,6 +74,10 @@ namespace Elastic.CommonSchema
 		///<summary>destination</summary>
 		[JsonPropertyName("destination"), DataMember(Name = "destination")]
 		public Destination Destination { get; set; }
+
+		///<summary>device</summary>
+		[JsonPropertyName("device"), DataMember(Name = "device")]
+		public Device Device { get; set; }
 
 		///<summary>dll</summary>
 		[JsonPropertyName("dll"), DataMember(Name = "dll")]
@@ -178,6 +182,10 @@ namespace Elastic.CommonSchema
 		///<summary>related</summary>
 		[JsonPropertyName("related"), DataMember(Name = "related")]
 		public Related Related { get; set; }
+
+		///<summary>risk</summary>
+		[JsonPropertyName("risk"), DataMember(Name = "risk")]
+		public Risk Risk { get; set; }
 
 		///<summary>rule</summary>
 		[JsonPropertyName("rule"), DataMember(Name = "rule")]

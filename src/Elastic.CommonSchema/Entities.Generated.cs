@@ -213,6 +213,10 @@ namespace Elastic.CommonSchema
 		public User User { get; set; }
 	}
 
+	///<inheritdoc cref="DeviceFieldSet"/>
+	public class Device : DeviceFieldSet {
+	}
+
 	///<inheritdoc cref="DllFieldSet"/>
 	public class Dll : DllFieldSet {
 
@@ -333,6 +337,13 @@ namespace Elastic.CommonSchema
 		///</summary>
 		[JsonPropertyName("os"), DataMember(Name = "os")]
 		public Os Os { get; set; }
+
+		///<summary>
+		/// <para><c>host.risk</c></para>
+		/// <example></example>
+		///</summary>
+		[JsonPropertyName("risk"), DataMember(Name = "risk")]
+		public Risk Risk { get; set; }
 	}
 
 	///<inheritdoc cref="HttpFieldSet"/>
@@ -428,6 +439,13 @@ namespace Elastic.CommonSchema
 		public Group[] SupplementalGroups { get; set; }
 
 		///<summary>
+		/// <para><c>process.attested_groups</c></para>
+		/// <example></example>
+		///</summary>
+		[JsonPropertyName("attested_groups"), DataMember(Name = "attested_groups")]
+		public Group[] AttestedGroups { get; set; }
+
+		///<summary>
 		/// <para><c>process.hash</c></para>
 		/// <example></example>
 		///</summary>
@@ -484,6 +502,13 @@ namespace Elastic.CommonSchema
 		public User RealUser { get; set; }
 
 		///<summary>
+		/// <para><c>process.attested_user</c></para>
+		/// <example></example>
+		///</summary>
+		[JsonPropertyName("attested_user"), DataMember(Name = "attested_user")]
+		public User AttestedUser { get; set; }
+
+		///<summary>
 		/// <para><c>process.parent</c></para>
 		/// <example></example>
 		///</summary>
@@ -525,6 +550,10 @@ namespace Elastic.CommonSchema
 
 	///<inheritdoc cref="RelatedFieldSet"/>
 	public class Related : RelatedFieldSet {
+	}
+
+	///<inheritdoc cref="RiskFieldSet"/>
+	public class Risk : RiskFieldSet {
 	}
 
 	///<inheritdoc cref="RuleFieldSet"/>
@@ -676,6 +705,13 @@ namespace Elastic.CommonSchema
 		///</summary>
 		[JsonPropertyName("group"), DataMember(Name = "group")]
 		public Group Group { get; set; }
+
+		///<summary>
+		/// <para><c>user.risk</c></para>
+		/// <example></example>
+		///</summary>
+		[JsonPropertyName("risk"), DataMember(Name = "risk")]
+		public Risk Risk { get; set; }
 
 		///<summary>
 		/// <para><c>user.target</c></para>

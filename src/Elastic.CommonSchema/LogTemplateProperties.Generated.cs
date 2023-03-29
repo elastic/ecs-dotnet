@@ -147,7 +147,8 @@ namespace Elastic.CommonSchema
 		///<summary>
 		/// <para><c>client.mac</c></para>
 		/// <para>MAC address of the client.
-		/// The notation format from RFC 7042 is suggested: Each octet (that is, 8-bit byte) is represented by two [uppercase] hexadecimal digits giving the value of the octet as an unsigned integer. Successive octets are separated by a hyphen.</para>
+		/// The notation format from RFC 7042 is suggested: Each octet (that is, 8-bit byte) is represented by two [uppercase] hexadecimal digits giving the value of the octet as an unsigned integer. Successive octets are separated by a hyphen.
+		/// <para>pattern: </para></para>
 		/// <example>00-00-5E-00-53-23</example>
 		///</summary>
 		public static string ClientMac = nameof(ClientMac);
@@ -499,6 +500,32 @@ namespace Elastic.CommonSchema
 		/// <example>co.uk</example>
 		///</summary>
 		public static string DestinationTopLevelDomain = nameof(DestinationTopLevelDomain);
+		///<summary>
+		/// <para><c>device.id</c></para>
+		/// <para>The unique identifier of a device. The identifier must not change across application sessions but stay fixex for an instance of a (mobile) device. 
+		/// On iOS, this value must be equal to the vendor identifier (https://developer.apple.com/documentation/uikit/uidevice/1620059-identifierforvendor). On Android, this value must be equal to the Firebase Installation ID or a globally unique UUID which is persisted across sessions in your application.
+		/// For GDPR and data protection law reasons this identifier should not carry information that would allow to identify a user.</para>
+		/// <example>00000000-54b3-e7c7-0000-000046bffd97</example>
+		///</summary>
+		public static string DeviceId = nameof(DeviceId);
+		///<summary>
+		/// <para><c>device.manufacturer</c></para>
+		/// <para>The vendor name of the device manufacturer.</para>
+		/// <example>Samsung</example>
+		///</summary>
+		public static string DeviceManufacturer = nameof(DeviceManufacturer);
+		///<summary>
+		/// <para><c>device.model.identifier</c></para>
+		/// <para>The machine readable identifier of the device model.</para>
+		/// <example>SM-G920F</example>
+		///</summary>
+		public static string DeviceModelIdentifier = nameof(DeviceModelIdentifier);
+		///<summary>
+		/// <para><c>device.model.name</c></para>
+		/// <para>The human readable marketing name of the device model.</para>
+		/// <example>Samsung Galaxy S6</example>
+		///</summary>
+		public static string DeviceModelName = nameof(DeviceModelName);
 		///<summary>
 		/// <para><c>dll.name</c></para>
 		/// <para>Name of the library.
@@ -1748,6 +1775,8 @@ namespace Elastic.CommonSchema
 		/// <item>macos</item>
 		/// <item>unix</item>
 		/// <item>windows</item>
+		/// <item>ios</item>
+		/// <item>android</item>
 		/// </list></para>
 		/// <example>macos</example>
 		///</summary>
@@ -1934,8 +1963,7 @@ namespace Elastic.CommonSchema
 		/// <para><c>process.interactive</c></para>
 		/// <para>Whether the process is connected to an interactive shell.
 		/// Process interactivity is inferred from the processes file descriptors. If the character device for the controlling tty is the same as stdin and stderr for the process, the process is considered interactive.
-		/// Note: A non-interactive process can belong to an interactive session and is simply one that does not have open file descriptors reading the controlling TTY on FD 0 (stdin) or writing to the controlling TTY on FD 2 (stderr). A backgrounded process is still considered interactive if stdin and stderr are connected to the controlling TTY.
-		/// <para><br/>This field is beta and subject to change.</para></para>
+		/// Note: A non-interactive process can belong to an interactive session and is simply one that does not have open file descriptors reading the controlling TTY on FD 0 (stdin) or writing to the controlling TTY on FD 2 (stderr). A backgrounded process is still considered interactive if stdin and stderr are connected to the controlling TTY.</para>
 		/// <example>true</example>
 		///</summary>
 		public static string ProcessInteractive = nameof(ProcessInteractive);
@@ -2033,6 +2061,42 @@ namespace Elastic.CommonSchema
 		/// <example>Debugger</example>
 		///</summary>
 		public static string RegistryValue = nameof(RegistryValue);
+		///<summary>
+		/// <para><c>risk.calculated_level</c></para>
+		/// <para>A risk classification level calculated by an internal system as part of entity analytics and entity risk scoring.</para>
+		/// <example>High</example>
+		///</summary>
+		public static string RiskCalculatedLevel = nameof(RiskCalculatedLevel);
+		///<summary>
+		/// <para><c>risk.calculated_score</c></para>
+		/// <para>A risk classification score calculated by an internal system as part of entity analytics and entity risk scoring.</para>
+		/// <example>880.73</example>
+		///</summary>
+		public static string RiskCalculatedScore = nameof(RiskCalculatedScore);
+		///<summary>
+		/// <para><c>risk.calculated_score_norm</c></para>
+		/// <para>A risk classification score calculated by an internal system as part of entity analytics and entity risk scoring, and normalized to a range of 0 to 100.</para>
+		/// <example>88.73</example>
+		///</summary>
+		public static string RiskCalculatedScoreNorm = nameof(RiskCalculatedScoreNorm);
+		///<summary>
+		/// <para><c>risk.static_level</c></para>
+		/// <para>A risk classification level obtained from outside the system, such as from some external Threat Intelligence Platform.</para>
+		/// <example>High</example>
+		///</summary>
+		public static string RiskStaticLevel = nameof(RiskStaticLevel);
+		///<summary>
+		/// <para><c>risk.static_score</c></para>
+		/// <para>A risk classification score obtained from outside the system, such as from some external Threat Intelligence Platform.</para>
+		/// <example>830.0</example>
+		///</summary>
+		public static string RiskStaticScore = nameof(RiskStaticScore);
+		///<summary>
+		/// <para><c>risk.static_score_norm</c></para>
+		/// <para>A risk classification score obtained from outside the system, such as from some external Threat Intelligence Platform, and normalized to a range of 0 to 100.</para>
+		/// <example>83.0</example>
+		///</summary>
+		public static string RiskStaticScoreNorm = nameof(RiskStaticScoreNorm);
 		///<summary>
 		/// <para><c>rule.category</c></para>
 		/// <para>A categorization value keyword used by the entity using the rule for detection of this event.</para>
@@ -2431,11 +2495,13 @@ namespace Elastic.CommonSchema
 		/// <para><br/>Expected Values:</para>
 		/// <list type="bullet">
 		/// <item>WHITE</item>
+		/// <item>CLEAR</item>
 		/// <item>GREEN</item>
 		/// <item>AMBER</item>
+		/// <item>AMBER+STRICT</item>
 		/// <item>RED</item>
 		/// </list></para>
-		/// <example>WHITE</example>
+		/// <example>CLEAR</example>
 		///</summary>
 		public static string ThreatIndicatorMarkingTlp = nameof(ThreatIndicatorMarkingTlp);
 		///<summary>
@@ -2533,6 +2599,12 @@ namespace Elastic.CommonSchema
 		/// <example>Tool</example>
 		///</summary>
 		public static string ThreatSoftwareType = nameof(ThreatSoftwareType);
+		///<summary>
+		/// <para><c>threat.threat.indicator.marking.tlp.version</c></para>
+		/// <para>Traffic Light Protocol version.</para>
+		/// <example>2.0</example>
+		///</summary>
+		public static string ThreatThreatIndicatorMarkingTlpVersion = nameof(ThreatThreatIndicatorMarkingTlpVersion);
 		///<summary>
 		/// <para><c>tls.cipher</c></para>
 		/// <para>String indicating the cipher used during the current connection.</para>
@@ -3078,6 +3150,10 @@ namespace Elastic.CommonSchema
 			"destination.registered_domain", DestinationRegisteredDomain,
 			"destination.subdomain", DestinationSubdomain,
 			"destination.top_level_domain", DestinationTopLevelDomain,
+			"device.id", DeviceId,
+			"device.manufacturer", DeviceManufacturer,
+			"device.model.identifier", DeviceModelIdentifier,
+			"device.model.name", DeviceModelName,
 			"dll.name", DllName,
 			"dll.path", DllPath,
 			"dns.id", DnsId,
@@ -3308,6 +3384,12 @@ namespace Elastic.CommonSchema
 			"registry.key", RegistryKey,
 			"registry.path", RegistryPath,
 			"registry.value", RegistryValue,
+			"risk.calculated_level", RiskCalculatedLevel,
+			"risk.calculated_score", RiskCalculatedScore,
+			"risk.calculated_score_norm", RiskCalculatedScoreNorm,
+			"risk.static_level", RiskStaticLevel,
+			"risk.static_score", RiskStaticScore,
+			"risk.static_score_norm", RiskStaticScoreNorm,
 			"rule.category", RuleCategory,
 			"rule.description", RuleDescription,
 			"rule.id", RuleId,
@@ -3377,6 +3459,7 @@ namespace Elastic.CommonSchema
 			"threat.software.name", ThreatSoftwareName,
 			"threat.software.reference", ThreatSoftwareReference,
 			"threat.software.type", ThreatSoftwareType,
+			"threat.threat.indicator.marking.tlp.version", ThreatThreatIndicatorMarkingTlpVersion,
 			"tls.cipher", TlsCipher,
 			"tls.client.certificate", TlsClientCertificate,
 			"tls.client.hash.md5", TlsClientHashMd5,
