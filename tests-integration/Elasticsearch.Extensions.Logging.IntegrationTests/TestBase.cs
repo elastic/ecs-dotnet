@@ -57,6 +57,7 @@ public abstract class TestBase : IClusterFixture<LoggingCluster>
 			new LoggerFilterOptions { MinLevel = LogLevel.Information }
 		);
 		logger = loggerFactory.CreateLogger<ElasticsearchLogger>();
+		listener = provider.DiagnosticsListener;
 		return loggerFactory;
 	}
 }

@@ -23,7 +23,7 @@ namespace Elasticsearch.Extensions.Logging.IntegrationTests
 			out ElasticsearchLoggerProvider provider,
 			out string @namespace,
 			out WaitHandle waitHandle,
-			out ChannelListener<LogEvent, BulkResponse> listener
+			out IChannelDiagnosticsListener listener
 		) =>
 			base.CreateLogger(out logger, out provider, out @namespace, out waitHandle, out listener, (o, s) =>
 			{
