@@ -85,6 +85,8 @@ namespace Elastic.CommonSchema.BenchmarkDotNetExporter
 			};
 			Options.ChannelOptionsCallback?.Invoke(options);
 			var channel = new EcsDataStreamChannel<BenchmarkDocument>(options);
+			if (channel.DiagnosticsListener != null)
+				Options.ChannelDiagnosticsCallback?.Invoke(channel.DiagnosticsListener);
 			if (!channel.BootstrapElasticsearch(Options.BootstrapMethod)) return;
 
 			var benchmarks = CreateBenchmarkDocuments(summary);

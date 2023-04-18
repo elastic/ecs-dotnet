@@ -1,11 +1,14 @@
 ﻿#nullable enable
+using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Elastic.Channels.Diagnostics;
 using Elastic.CommonSchema;
 using Elastic.CommonSchema.Elasticsearch;
 using Elastic.CommonSchema.Serialization;
 using Elastic.Ingest.Elasticsearch.DataStreams;
+using Elastic.Ingest.Elasticsearch.Serialization;
 
 namespace Elastic.Ingest.Elasticsearch.CommonSchema
 {
@@ -15,8 +18,15 @@ namespace Elastic.Ingest.Elasticsearch.CommonSchema
 	public class EcsDataStreamChannel<TEcsDocument> : DataStreamChannel<TEcsDocument>
 		where TEcsDocument : EcsDocument
 	{
+
 		/// <inheritdoc cref="EcsDataStreamChannel{TEcsDocument}"/>
-		public EcsDataStreamChannel(DataStreamChannelOptions<TEcsDocument> options) : base(options) =>
+		public EcsDataStreamChannel(DataStreamChannelOptions<TEcsDocument> options) : this(options, null) { }
+
+		/// <inheritdoc cref="EcsDataStreamChannel{TEcsDocument}"/>
+		public EcsDataStreamChannel(
+			DataStreamChannelOptions<TEcsDocument> options,
+			ICollection<IChannelCallbacks<TEcsDocument, BulkResponse>>? callbackListeners
+		) : base(options, callbackListeners) =>
 			options.WriteEvent = async (stream, ctx, @event) =>
 				await JsonSerializer.SerializeAsync(stream, @event, typeof(TEcsDocument), EcsJsonConfiguration.SerializerOptions, ctx)
 					.ConfigureAwait(false);
