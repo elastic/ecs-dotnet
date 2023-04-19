@@ -4,6 +4,7 @@
 
 using System;
 using System.Linq;
+using Elastic.Channels.Diagnostics;
 using Elastic.CommonSchema.BenchmarkDotNetExporter.Domain;
 using Elastic.Ingest.Elasticsearch;
 using Elastic.Ingest.Elasticsearch.DataStreams;
@@ -95,6 +96,11 @@ namespace Elastic.CommonSchema.BenchmarkDotNetExporter
 		/// <summary> Allows the user to directly change <see cref="DataStreamChannelOptions{TEvent}"/> used to export the benchmarks </summary>
 		public Action<DataStreamChannelOptions<BenchmarkDocument>> ChannelOptionsCallback { get; set; }
 
+		/// <summary>
+		/// Allows programmatic access to active channel diagnostics listener when its created.
+		/// </summary>
+		public Action<IChannelDiagnosticsListener> ChannelDiagnosticsCallback { get; set; }
+
 		private static Uri[] Parse(string urls)
 		{
 			if (string.IsNullOrWhiteSpace(urls)) throw new ArgumentException("no urls provided, empty string or null", nameof(urls));
@@ -146,4 +152,5 @@ namespace Elastic.CommonSchema.BenchmarkDotNetExporter
 			return settings;
 		}
 	}
+
 }

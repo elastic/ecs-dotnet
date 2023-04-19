@@ -20,17 +20,19 @@ namespace Elasticsearch.IntegrationDefaults
 			StartingPortNumber = port
 		}) { }
 
-		public ElasticsearchClient CreateClient(ITestOutputHelper output) =>
+		public ElasticsearchClient CreateClient(ITestOutputHelper output, Func<ICollection<Uri>, ICollection<Uri>>? alterNodes = null) =>
 			this.GetOrAddClient(_ =>
 			{
 				var hostName = (System.Diagnostics.Process.GetProcessesByName("mitmproxy").Any()
 					? "ipv4.fiddler"
 					: "localhost");
 				var nodes = NodesUris(hostName);
+				if (alterNodes != null) nodes = alterNodes(nodes);
 				var connectionPool = new StaticNodePool(nodes);
 				var isCi = !string.IsNullOrEmpty(Environment.GetEnvironmentVariable("CI"));
 				var settings = new ElasticsearchClientSettings(connectionPool)
 					.Proxy(new Uri("http://ipv4.fiddler:8080"), null!, null!)
+					.RequestTimeout(TimeSpan.FromSeconds(5))
 					.OnRequestCompleted(d =>
 					{
 						try

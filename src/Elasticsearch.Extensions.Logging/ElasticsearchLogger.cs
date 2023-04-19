@@ -9,6 +9,7 @@ using System.Linq;
 using System.Text;
 using Elastic.CommonSchema;
 using Elastic.Channels;
+using Elastic.Channels.Diagnostics;
 using Elasticsearch.Extensions.Logging.Options;
 using Microsoft.Extensions.Logging;
 
@@ -24,6 +25,9 @@ namespace Elasticsearch.Extensions.Logging
 		private readonly ElasticsearchLoggerOptions _options;
 		private readonly IExternalScopeProvider? _scopeProvider;
 
+		/// <inheritdoc cref="IChannelDiagnosticsListener"/>
+		public IChannelDiagnosticsListener? DiagnosticsListener { get; }
+
 		internal ElasticsearchLogger(
 			string categoryName,
 			IBufferedChannel<LogEvent> channel,
@@ -35,6 +39,7 @@ namespace Elasticsearch.Extensions.Logging
 			_channel = channel;
 			_options = options;
 			_scopeProvider = scopeProvider;
+			DiagnosticsListener = channel.DiagnosticsListener;
 		}
 
 		/// <inheritdoc cref="ILogger.BeginScope{TState}"/>

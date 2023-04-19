@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using Elastic.Channels;
+using Elastic.Channels.Diagnostics;
 using Elastic.Ingest.Elasticsearch;
 using Elastic.Ingest.Elasticsearch.CommonSchema;
 using Elastic.Ingest.Elasticsearch.DataStreams;
@@ -32,6 +33,9 @@ namespace Elasticsearch.Extensions.Logging
 		private IExternalScopeProvider? _scopeProvider;
 		private IBufferedChannel<LogEvent> _shipper;
 
+		/// <inheritdoc cref="IChannelDiagnosticsListener"/>
+		public IChannelDiagnosticsListener? DiagnosticsListener { get; }
+
 		/// <inheritdoc cref="ElasticsearchLoggerProvider"/>
 		public ElasticsearchLoggerProvider(IOptionsMonitor<ElasticsearchLoggerOptions> options,
 			IEnumerable<IChannelSetup> channelConfigurations
@@ -46,6 +50,7 @@ namespace Elasticsearch.Extensions.Logging
 
 			_shipper = CreatIngestChannel(options.CurrentValue);
 			_optionsReloadToken = _options.OnChange(o => ReloadShipper(o));
+			DiagnosticsListener = _shipper.DiagnosticsListener;
 		}
 
 		// ReSharper disable once AutoPropertyCanBeMadeGetOnly.Global

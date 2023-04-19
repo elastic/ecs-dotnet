@@ -52,20 +52,21 @@ namespace Elastic.CommonSchema.BenchmarkDotNetExporter.IntegrationTests
 		public void BenchmarkingPersistsResults()
 		{
 			var url = Client.ElasticsearchClientSettings.NodePool.Nodes.First().Uri;
-			var listener = new ChannelListener<BenchmarkDocument, BulkResponse>();
+			IChannelDiagnosticsListener listener = null;
 			var options = new ElasticsearchBenchmarkExporterOptions(url)
 			{
 				GitBranch = "externally-provided-branch",
 				GitCommitMessage = "externally provided git commit message",
 				GitRepositoryIdentifier = "repository",
 				BootstrapMethod = BootstrapMethod.Silent,
-				ChannelOptionsCallback = (o) => listener.Register(o)
+				ChannelDiagnosticsCallback = (l) => listener = l
 			};
 			var exporter = new ElasticsearchBenchmarkExporter(options);
 			var config = CreateDefaultConfig().AddExporter(exporter);
 			var summary = BenchmarkRunner.Run(typeof(Md5VsSha256), config);
 
 			// ensure publication was success
+			listener.Should().NotBeNull();
 			listener.PublishSuccess.Should().BeTrue("{0}", listener);
 
 			if (summary.HasCriticalValidationErrors)

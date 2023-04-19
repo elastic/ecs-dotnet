@@ -4,6 +4,7 @@
     <TargetFramework>net6.0</TargetFramework>
     <LangVersion>latest</LangVersion>
     <IsTestProject>False</IsTestProject>
+    <Nullable>enable</Nullable>
   </PropertyGroup>
   
   <ItemGroup>
