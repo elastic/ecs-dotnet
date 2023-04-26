@@ -5,6 +5,9 @@
     <RunSettingsFilePath>$(MSBuildThisFileDirectory)\.runsettings</RunSettingsFilePath>
     <IsTestProject>True</IsTestProject>
     <DebugSymbols>embedded</DebugSymbols>
+
+    <SignAssembly>true</SignAssembly>
+    <AssemblyOriginatorKeyFile>..\..\build\keys\keypair.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup Condition="$([System.Text.RegularExpressions.Regex]::IsMatch($(ProjectName), '^(.*)Tests$'))">
 

@@ -62,18 +62,6 @@ public partial class EcsDocument
 		return doc;
 	}
 
-	private static Service CachedService;
-
-	private static Service GetService()
-	{
-		if (CachedService is not null) return CachedService;
-
-		var entryAssembly = Assembly.GetEntryAssembly();
-		var (type, version) = GetAssemblyVersion(entryAssembly);
-		CachedService = new Service { Type = type, Version = version };
-		return CachedService;
-	}
-
 	/// <summary>
 	/// Create an instance of <see cref="Agent"/> that defaults to the assembly from
 	/// <paramref name="typeFromAgentLibrary"/> as the agent in control of generating the data
@@ -113,8 +101,7 @@ public partial class EcsDocument
 #if !NETFRAMEWORK
 				Full = RuntimeInformation.OSDescription,
 #endif
-				Platform = Environment.OSVersion.Platform.ToString(),
-				Version = Environment.OSVersion.Version.ToString()
+				Platform = Environment.OSVersion.Platform.ToString(), Version = Environment.OSVersion.Version.ToString()
 			}
 		};
 
