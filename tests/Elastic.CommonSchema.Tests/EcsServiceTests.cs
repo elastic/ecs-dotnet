@@ -19,6 +19,6 @@ public class EcsServiceTests
 		var b = EcsDocument.CreateNewWithDefaults<EcsDocument>();
 		b.Service.Should().NotBeNull();
 		b.Service.Name.Should().NotBeNull();
-		b.Service.Version.Should().NotBeNull();
+		b.Service.Version.Should().NotBeNull(b.Service.Name);
 	}
 }
