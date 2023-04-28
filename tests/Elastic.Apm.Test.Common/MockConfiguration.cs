@@ -31,6 +31,8 @@ namespace Elastic.Apm.Test.Common
 
 		public bool Enabled { get; }
 
+		public string Description { get; } = nameof(MockConfiguration);
+
 		public IReadOnlyDictionary<string, string> GlobalLabels { get; }
 		public string ServiceName { get; }
 		public string ServiceNodeName { get; }
@@ -43,8 +45,10 @@ namespace Elastic.Apm.Test.Common
 		public LogLevel LogLevel { get; } = LogLevel.Information;
 
 		// ReSharper disable UnassignedGetOnlyAutoProperty
+		public IReadOnlyList<WildcardMatcher> IgnoreMessageQueues { get; }
 		public bool Recording { get; }
 		public string HostName { get; }
+		public string ServerCert { get; }
 		public Uri ServerUrl { get; }
 		public string CloudProvider { get; }
 		public IReadOnlyCollection<string> ApplicationNamespaces { get; }
@@ -53,6 +57,7 @@ namespace Elastic.Apm.Test.Common
 		public bool CentralConfig { get; }
 		public string Environment { get; }
 		public IReadOnlyCollection<string> ExcludedNamespaces { get; }
+		public double ExitSpanMinDuration { get; }
 		public TimeSpan FlushInterval { get; }
 		public int MaxBatchEventCount { get; }
 		public int MaxQueueEventCount { get; }
@@ -61,11 +66,19 @@ namespace Elastic.Apm.Test.Common
 		public string ApiKey { get; }
 		public double SpanFramesMinDurationInMilliseconds { get; }
 		public int StackTraceLimit { get; }
+		public bool TraceContextIgnoreSampledFalse { get; }
+		public string TraceContinuationStrategy { get; }
 		public IReadOnlyList<WildcardMatcher> TransactionIgnoreUrls { get; }
 		public int TransactionMaxSpans { get; }
 		public double TransactionSampleRate { get; }
 		public bool UseElasticTraceparentHeader { get; }
 		public bool VerifyServerCert { get; }
+		public bool OpenTelemetryBridgeEnabled { get; }
+		public bool UseWindowsCredentials { get; }
+		public bool SpanCompressionEnabled { get; }
+		public double SpanCompressionExactMatchMaxDuration { get; }
+		public double SpanCompressionSameKindMaxDuration { get; }
+		public double SpanStackTraceMinDurationInMilliseconds { get; }
 		// ReSharper restore UnassignedGetOnlyAutoProperty
 	}
 }
