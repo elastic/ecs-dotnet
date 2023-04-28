@@ -8,21 +8,18 @@
     </PropertyGroup>
 
     <ItemGroup>
+      <PackageReference Include="Elastic.Apm" Version="1.22.0" />
       <PackageReference Include="Serilog" Version="2.10.0" />
       <PackageReference Include="Microsoft.Extensions.Hosting" Version="7.0.0" />
       <PackageReference Include="Elastic.Elasticsearch.Ephemeral" Version="0.3.5" />
       <PackageReference Include="Elastic.Clients.Elasticsearch" Version="8.0.4" />
       <PackageReference Include="Serilog.Extensions.Hosting" Version="5.0.1" />
+      <PackageReference Include="Serilog.Sinks.Console" Version="4.1.0" />
     </ItemGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\..\src\Elastic.Apm.SerilogEnricher\Elastic.Apm.SerilogEnricher.csproj" />
       <ProjectReference Include="..\..\src\Elastic.CommonSchema.Serilog.Sink\Elastic.CommonSchema.Serilog.Sink.csproj" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <Reference Include="Elastic.Clients.Elasticsearch">
-        <HintPath>..\..\..\..\.nuget\packages\elastic.clients.elasticsearch\8.0.4\lib\net6.0\Elastic.Clients.Elasticsearch.dll</HintPath>
-      </Reference>
     </ItemGroup>
 
 </Project>

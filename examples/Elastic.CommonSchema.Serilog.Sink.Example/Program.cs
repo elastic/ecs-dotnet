@@ -1,5 +1,7 @@
 ﻿// See https://aka.ms/new-console-template for more information
 
+using Elastic.Apm;
+using Elastic.Apm.SerilogEnricher;
 using Elastic.Channels;
 using Elastic.Channels.Diagnostics;
 using Elastic.Clients.Elasticsearch;
@@ -19,6 +21,8 @@ using DataStreamName = Elastic.Ingest.Elasticsearch.DataStreams.DataStreamName;
 using Host = Microsoft.Extensions.Hosting.Host;
 using Log = Serilog.Log;
 
+Elastic.Apm.Agent.Setup(new AgentComponents());
+
 // -- Start an Elasticsearch Instance --
 using var cluster = new EphemeralCluster("8.4.0");
 var client = CreateClient(cluster);
@@ -27,8 +31,6 @@ if (!(await client.InfoAsync()).IsValidResponse)
 	cluster.Start(TimeSpan.FromMinutes(1));
 else Console.WriteLine("Using already running Elasticsearch instance");
 
-var waitHandle = new CountdownEvent(1);
-IChannelDiagnosticsListener? listener = null;
 
 // -- Setup Serilog --
 var nodes = new[] { new Uri("http://localhost:9200") };
@@ -36,41 +38,44 @@ Log.Logger = new LoggerConfiguration()
 	.MinimumLevel.Debug()
 	.MinimumLevel.Override("Microsoft", LogEventLevel.Information)
 	.Enrich.FromLogContext()
+	.Enrich.WithElasticApmCorrelationInfo()
 	.WriteTo.Elasticsearch(nodes, opts =>
 	{
-		opts.BootstrapMethod = BootstrapMethod.None;
+		opts.BootstrapMethod = BootstrapMethod.Failure;
 		opts.DataStream = new DataStreamName("logs", "console-example");
 		opts.ConfigureChannel = channelOpts => {
-			channelOpts.BufferOptions = new BufferOptions
-			{
-				ExportMaxConcurrency = 1,
-				OutboundBufferMaxSize = 2,
-				WaitHandle = waitHandle
-			};
+			channelOpts.BufferOptions = new BufferOptions { ExportMaxConcurrency = 10 };
 		};
-		opts.ChannelDiagnosticsCallback = l => listener = l;
-
+	}, transport =>
+	{
+		//transport.Authentication();
 	})
+	// This is the bit that Elastic.CommonSchema.Serilog.Sink introduces
+	.WriteTo.Elasticsearch(new ElasticsearchSinkOptions(client.Transport)
+	{
+		BootstrapMethod = BootstrapMethod.Failure,
+		DataStream = new DataStreamName("logs", "console-example"),
+		TextFormatting = new EcsTextFormatterConfiguration
+		{
+			MapCustom = (e, _) => e
+		},
+		ConfigureChannel = channelOpts =>  {
+			channelOpts.BufferOptions = new BufferOptions { ExportMaxConcurrency = 10 };
+		}
+	})
+	.WriteTo.Console(new EcsTextFormatter())
 	.CreateLogger();
 
-// -- Log 2 items and wait for flush --
-Log.Logger.Information("Writing event 1");
-Log.Logger.Information("Writing event 2");
-
-if (!waitHandle.WaitHandle.WaitOne(TimeSpan.FromSeconds(10)))
-	throw new Exception($"No flush occurred in 10 seconds: {listener}", listener?.ObservedException);
-else
-{
-	Console.WriteLine("Successfully indexed data to Elasticsearch");
-	Console.WriteLine(listener);
-}
-
-
 // -- Setup Console Host --
-/*
 var consoleHost = CreateHostBuilder(args, client).Build();
 await consoleHost.RunAsync();
 
+static ElasticsearchClient CreateClient(EphemeralCluster cluster)
+{
+	var settings = new ElasticsearchClientSettings(cluster.NodesUris().First())
+		.EnableDebugMode();
+	return new ElasticsearchClient(settings);
+}
 
 static IHostBuilder CreateHostBuilder(string[] args, ElasticsearchClient client)
 {
@@ -87,11 +92,3 @@ static IHostBuilder CreateHostBuilder(string[] args, ElasticsearchClient client)
 		})
 		.UseSerilog();
 }
-*/
-static ElasticsearchClient CreateClient(EphemeralCluster cluster)
-{
-	var settings = new ElasticsearchClientSettings(cluster.NodesUris().First())
-		.EnableDebugMode();
-	return new ElasticsearchClient(settings);
-}
-
