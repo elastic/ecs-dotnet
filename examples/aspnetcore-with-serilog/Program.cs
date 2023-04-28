@@ -1,5 +1,6 @@
 using System;
 using System.IO;
+using Elastic.Apm.SerilogEnricher;
 using Elastic.CommonSchema.Serilog;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
@@ -27,6 +28,7 @@ namespace AspnetCoreExample
 
 					config
 						.ReadFrom.Configuration(ctx.Configuration)
+						.Enrich.WithElasticApmCorrelationInfo()
 						.Enrich.WithEcsHttpContext(httpAccessor);
 
 					//config.WriteTo.Console(formatter);

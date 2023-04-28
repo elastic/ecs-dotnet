@@ -5,12 +5,16 @@
     <WarnOnPackingNonPackableProject>false</WarnOnPackingNonPackableProject>
   </PropertyGroup>
   <ItemGroup>
+    <PackageReference Include="Elastic.Apm" Version="1.22.0" />
+    <PackageReference Include="Elastic.Apm.AspNetCore" Version="1.22.0" />
     <PackageReference Include="Serilog" Version="2.9.0" />
     <PackageReference Include="Serilog.AspNetCore" Version="3.2.0" />
     <PackageReference Include="Serilog.Sinks.Async" Version="1.5.0" />
     <PackageReference Include="Serilog.Sinks.Console" Version="3.1.1" />
+    <PackageReference Include="Microsoft.Extensions.Hosting" Version="5.0.0"/>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\src\Elastic.Apm.SerilogEnricher\Elastic.Apm.SerilogEnricher.csproj" />
     <ProjectReference Include="..\..\src\Elastic.CommonSchema.Serilog\Elastic.CommonSchema.Serilog.csproj" />
   </ItemGroup>
 </Project>
