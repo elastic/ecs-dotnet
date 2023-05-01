@@ -5,7 +5,7 @@ using Elastic.Transport;
 using Elastic.Transport.Products;
 using Elastic.Transport.Products.Elasticsearch;
 
-namespace Elastic.CommonSchema.Serilog.Sink
+namespace Elastic.Serilog.Sinks
 {
 	internal static class TransportHelper
 	{

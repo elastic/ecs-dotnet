@@ -3,12 +3,10 @@
 using Elastic.Apm;
 using Elastic.Apm.SerilogEnricher;
 using Elastic.Channels;
-using Elastic.Channels.Diagnostics;
 using Elastic.Clients.Elasticsearch;
-using Elastic.CommonSchema;
 using Elastic.CommonSchema.Serilog;
-using Elastic.CommonSchema.Serilog.Sink;
-using Elastic.CommonSchema.Serilog.Sink.Example;
+using Elastic.Serilog.Sinks;
+using Elastic.Serilog.Sinks.Example;
 using Elastic.Elasticsearch.Ephemeral;
 using Elastic.Ingest.Elasticsearch;
 using Microsoft.Extensions.Configuration;
@@ -16,7 +14,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Serilog;
 using Serilog.Events;
-using BulkResponse = Elastic.Ingest.Elasticsearch.Serialization.BulkResponse;
 using DataStreamName = Elastic.Ingest.Elasticsearch.DataStreams.DataStreamName;
 using Host = Microsoft.Extensions.Hosting.Host;
 using Log = Serilog.Log;
@@ -50,7 +47,7 @@ Log.Logger = new LoggerConfiguration()
 	{
 		//transport.Authentication();
 	})
-	// This is the bit that Elastic.CommonSchema.Serilog.Sink introduces
+	// This is the bit that Elastic.Serilog.Sinks introduces
 	.WriteTo.Elasticsearch(new ElasticsearchSinkOptions(client.Transport)
 	{
 		BootstrapMethod = BootstrapMethod.Failure,

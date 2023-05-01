@@ -12,7 +12,7 @@
   </ItemGroup>
   
   <ItemGroup>
-    <ProjectReference Include="..\..\src\Elastic.CommonSchema.Serilog.Sink\Elastic.CommonSchema.Serilog.Sink.csproj" />
+    <ProjectReference Include="..\..\src\Elastic.Serilog.Sinks\Elastic.Serilog.Sinks.csproj" />
     <ProjectReference Include="..\Elasticsearch.IntegrationDefaults\Elasticsearch.IntegrationDefaults.csproj" />
   </ItemGroup>
 

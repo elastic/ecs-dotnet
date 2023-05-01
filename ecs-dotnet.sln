@@ -75,13 +75,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Elastic.CommonSchema.Genera
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Elastic.Ingest.Elasticsearch.CommonSchema", "src\Elastic.Ingest.Elasticsearch.CommonSchema\Elastic.Ingest.Elasticsearch.CommonSchema.csproj", "{68128AE4-350C-4FB2-A971-C9272A1F3829}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Elastic.CommonSchema.Serilog.Sink", "src\Elastic.CommonSchema.Serilog.Sink\Elastic.CommonSchema.Serilog.Sink.csproj", "{30080079-D3EE-4BDC-9BE9-9D1B3B2BEF8D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Elastic.Serilog.Sinks", "src\Elastic.Serilog.Sinks\Elastic.Serilog.Sinks.csproj", "{30080079-D3EE-4BDC-9BE9-9D1B3B2BEF8D}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Elastic.CommonSchema.Log4net", "src\Elastic.CommonSchema.Log4net\Elastic.CommonSchema.Log4net.csproj", "{DD7D6E56-58DB-4E13-9DFC-AE031F1C31B3}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Elastic.CommonSchema.Log4net.Tests", "tests\Elastic.CommonSchema.Log4net.Tests\Elastic.CommonSchema.Log4net.Tests.csproj", "{14BFAF67-8DB6-48D0-B57E-84767BA2A239}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Elastic.CommonSchema.Serilog.Sinks.IntegrationTests", "tests-integration\Elastic.CommonSchema.Serilog.Sink.IntegrationTests\Elastic.CommonSchema.Serilog.Sinks.IntegrationTests.csproj", "{622CC10E-B475-4649-8411-CABC31E7C252}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Elastic.Serilog.Sinks.IntegrationTests", "tests-integration\Elastic.Serilog.Sinks.IntegrationTests\Elastic.Serilog.Sinks.IntegrationTests.csproj", "{622CC10E-B475-4649-8411-CABC31E7C252}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Elastic.Apm.Disabled.Serilog.Tests", "tests\Elastic.Apm.Disabled.Serilog.Tests\Elastic.Apm.Disabled.Serilog.Tests.csproj", "{73829D36-DB98-4D8F-8741-F167A787BF7B}"
 EndProject
@@ -118,7 +118,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Elasticsearch.IntegrationDe
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tools", "tools", "{B268060B-83ED-4944-B135-C362DFCBFC0C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Elastic.CommonSchema.Serilog.Sink.Example", "examples\Elastic.CommonSchema.Serilog.Sink.Example\Elastic.CommonSchema.Serilog.Sink.Example.csproj", "{1CAEFBD7-B800-41C4-81D3-CB6839FA563D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Elastic.Serilog.Sinks.Example", "examples\Elastic.Serilog.Sinks.Example\Elastic.Serilog.Sinks.Example.csproj", "{1CAEFBD7-B800-41C4-81D3-CB6839FA563D}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "docs", "docs\docs.csproj", "{7FDB3B31-020A-40E3-B564-F06476320C40}"
 EndProject

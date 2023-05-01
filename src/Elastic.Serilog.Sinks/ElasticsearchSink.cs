@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using Elastic.Channels.Buffers;
 using Elastic.Channels.Diagnostics;
+using Elastic.CommonSchema;
+using Elastic.CommonSchema.Serilog;
 using Elastic.Ingest.Elasticsearch;
 using Elastic.Ingest.Elasticsearch.CommonSchema;
 using Elastic.Ingest.Elasticsearch.DataStreams;
@@ -13,7 +15,7 @@ using Serilog.Core;
 using Serilog.Debugging;
 using Serilog.Events;
 
-namespace Elastic.CommonSchema.Serilog.Sink
+namespace Elastic.Serilog.Sinks
 {
 	/// <summary>
 	/// Provides configuration options to <see cref="ElasticsearchSink"/> to control how and where data gets written
