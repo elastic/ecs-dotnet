@@ -8,17 +8,17 @@ using System.Linq;
 using System.Threading;
 using Elastic.Channels;
 using Elastic.Channels.Diagnostics;
+using Elastic.Extensions.Logging.Options;
 using Elastic.Ingest.Elasticsearch;
 using Elastic.Ingest.Elasticsearch.CommonSchema;
 using Elastic.Ingest.Elasticsearch.DataStreams;
 using Elastic.Ingest.Elasticsearch.Indices;
 using Elastic.Transport;
 using Elastic.Transport.Products.Elasticsearch;
-using Elasticsearch.Extensions.Logging.Options;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 
-namespace Elasticsearch.Extensions.Logging
+namespace Elastic.Extensions.Logging
 {
 	/// <summary>
 	/// An <see cref="ILoggerProvider"/> implementation that exposes a way to create <see cref="ElasticsearchLogger"/>

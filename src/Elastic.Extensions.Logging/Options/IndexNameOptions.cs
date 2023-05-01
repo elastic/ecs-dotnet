@@ -1,6 +1,6 @@
 using System;
 
-namespace Elasticsearch.Extensions.Logging.Options
+namespace Elastic.Extensions.Logging.Options
 {
 	/// <summary>
 	/// Provides options to configure the naming of the index name to write too.

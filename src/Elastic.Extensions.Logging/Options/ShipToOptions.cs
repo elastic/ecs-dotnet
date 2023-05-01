@@ -4,7 +4,7 @@
 
 using System;
 
-namespace Elasticsearch.Extensions.Logging.Options
+namespace Elastic.Extensions.Logging.Options
 {
 	/// <summary>
 	/// Configures where to write Elasticsearch logs to

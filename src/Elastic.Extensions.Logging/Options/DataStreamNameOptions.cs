@@ -1,4 +1,4 @@
-namespace Elasticsearch.Extensions.Logging.Options
+namespace Elastic.Extensions.Logging.Options
 {
 	/// <summary>
 	/// Provides options to control the datastream to write Elasticsearch logs too

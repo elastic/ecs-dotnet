@@ -2,11 +2,11 @@
 // Elasticsearch B.V licenses this file to you under the Apache 2.0 License.
 // See the LICENSE file in the project root for more information
 
-using Elasticsearch.Extensions.Logging.Options;
+using Elastic.Extensions.Logging.Options;
 using Microsoft.Extensions.Logging.Configuration;
 using Microsoft.Extensions.Options;
 
-namespace Elasticsearch.Extensions.Logging
+namespace Elastic.Extensions.Logging
 {
 	internal class ElasticsearchLoggerOptionsSetup : ConfigureFromConfigurationOptions<ElasticsearchLoggerOptions>
 	{

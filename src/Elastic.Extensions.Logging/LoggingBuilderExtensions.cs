@@ -3,16 +3,16 @@
 // See the LICENSE file in the project root for more information
 
 using System;
+using Elastic.Extensions.Logging.Options;
 using Elastic.Ingest.Elasticsearch;
 using Elastic.Transport;
-using Elasticsearch.Extensions.Logging.Options;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Configuration;
 using Microsoft.Extensions.Options;
 
-namespace Elasticsearch.Extensions.Logging
+namespace Elastic.Extensions.Logging
 {
 	/// <summary>
 	/// Provides builder extension methods to <see cref="ILoggingBuilder"/>
