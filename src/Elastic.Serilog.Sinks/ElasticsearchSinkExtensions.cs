@@ -1,10 +1,11 @@
 using System;
 using System.Collections.Generic;
+using Elastic.CommonSchema;
 using Elastic.Transport;
 using Serilog;
 using Serilog.Configuration;
 
-namespace Elastic.CommonSchema.Serilog.Sink
+namespace Elastic.Serilog.Sinks
 {
 	/// <summary>
 	/// Extension methods on <see cref="LoggerSinkConfiguration"/> to aid with serilog log configuration building

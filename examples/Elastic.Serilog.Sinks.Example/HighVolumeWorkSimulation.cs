@@ -1,10 +1,11 @@
 using Elastic.Clients.Elasticsearch;
 using Elastic.Clients.Elasticsearch.Core.Search;
 using Elastic.Clients.Elasticsearch.IndexManagement;
+using Elastic.CommonSchema;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
-namespace Elastic.CommonSchema.Serilog.Sink.Example;
+namespace Elastic.Serilog.Sinks.Example;
 
 /// <summary> Simulate work that logs in low volume with some time in between each log call </summary>
 public class HighVolumeWorkSimulation : BackgroundService

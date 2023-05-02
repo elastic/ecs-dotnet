@@ -19,7 +19,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\..\src\Elastic.Apm.SerilogEnricher\Elastic.Apm.SerilogEnricher.csproj" />
-      <ProjectReference Include="..\..\src\Elastic.CommonSchema.Serilog.Sink\Elastic.CommonSchema.Serilog.Sink.csproj" />
+      <ProjectReference Include="..\..\src\Elastic.Serilog.Sinks\Elastic.Serilog.Sinks.csproj" />
     </ItemGroup>
 
 </Project>

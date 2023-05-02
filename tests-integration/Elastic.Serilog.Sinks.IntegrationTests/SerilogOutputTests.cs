@@ -7,7 +7,8 @@ using Elastic.Channels;
 using Elastic.Channels.Diagnostics;
 using Elastic.Clients.Elasticsearch;
 using Elastic.Clients.Elasticsearch.IndexManagement;
-using Elastic.CommonSchema.Serilog.Sink;
+using Elastic.CommonSchema;
+using Elastic.Serilog.Sinks;
 using Elastic.Elasticsearch.Xunit.XunitPlumbing;
 using FluentAssertions;
 using Serilog;
@@ -16,24 +17,25 @@ using Xunit.Abstractions;
 using DataStreamName = Elastic.Ingest.Elasticsearch.DataStreams.DataStreamName;
 using BulkResponse = Elastic.Ingest.Elasticsearch.Serialization.BulkResponse;
 
-namespace Elastic.CommonSchema.Serilog.Sinks.IntegrationTests
+namespace Elastic.Serilog.Sinks.IntegrationTests
 {
-	public class SerilogSelfLogTests : SerilogTestBase
+	public class SerilogOutputTests : SerilogTestBase
 	{
+		private IChannelDiagnosticsListener? _listener = null;
 		private readonly CountdownEvent _waitHandle;
-		private IChannelDiagnosticsListener? _listener;
 		private ElasticsearchSinkOptions SinkOptions { get; }
 
-		private static ICollection<Uri> AlterNodes(ICollection<Uri> uris) => uris.Select(u =>
-			{
-				var builder = new UriBuilder(u);
-				builder.Scheme = "https";
-				return builder.Uri;
-			})
-			.ToList();
-
-		public SerilogSelfLogTests(SerilogCluster cluster, ITestOutputHelper output) : base(cluster, output, AlterNodes)
+		public SerilogOutputTests(SerilogCluster cluster, ITestOutputHelper output) : base(cluster, output)
 		{
+			var logs = new List<Action<Logger>>
+			{
+				l => l.Information("Hello Information"),
+				l => l.Debug("Hello Debug"),
+				l => l.Warning("Hello Warning"),
+				l => l.Error("Hello Error"),
+				l => l.Fatal("Hello Fatal")
+			};
+
 			_waitHandle = new CountdownEvent(1);
 			SinkOptions = new ElasticsearchSinkOptions(Client.Transport)
 			{
@@ -42,23 +44,12 @@ namespace Elastic.CommonSchema.Serilog.Sinks.IntegrationTests
 				{
 					c.BufferOptions = new BufferOptions
 					{
-						ExportMaxRetries = 0,
 						WaitHandle = _waitHandle,
-						OutboundBufferMaxSize = 1
+						OutboundBufferMaxSize = logs.Count
 					};
 				},
 				ChannelDiagnosticsCallback = (l) => _listener = l
 			};
-		}
-
-
-		[I] public void AssertLogs()
-		{
-			List<string> messages = new();
-			global::Serilog.Debugging.SelfLog.Enable(msg =>
-			{
-				messages.Add(msg);
-			});
 
 			var loggerConfig = new LoggerConfiguration()
 				.MinimumLevel.Information()
@@ -66,13 +57,26 @@ namespace Elastic.CommonSchema.Serilog.Sinks.IntegrationTests
 				.WriteTo.Elasticsearch(SinkOptions);
 
 			using var logger = loggerConfig.CreateLogger();
-			logger.Information("Hello world");
+			foreach (var a in logs) a(logger);
+		}
 
+
+		[I] public async Task AssertLogs()
+		{
 			if (!_waitHandle.WaitHandle.WaitOne(TimeSpan.FromSeconds(10)))
 				throw new Exception($"No flush occurred in 10 seconds: {_listener}", _listener?.ObservedException);
 
-			messages.Should().NotBeEmpty();
-			global::Serilog.Debugging.SelfLog.Disable();
+			var indexName = SinkOptions.DataStream.ToString();
+			var refreshed = await Client.Indices.RefreshAsync(new RefreshRequest(indexName));
+			refreshed.IsValidResponse.Should().BeTrue("{0}", refreshed.DebugInformation);
+
+			var search = await Client.SearchAsync<EcsDocument>(new SearchRequest(indexName));
+
+			// Informational should be filtered
+			search.Documents.Count().Should().Be(4);
+
+			var messages = search.Documents.Select(e => e.Message);
+			messages.Should().Contain("Hello Error");
 		}
 
 	}
