@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using Elastic.Channels;
 using Elastic.Elasticsearch.Ephemeral;
 using Elastic.Ingest.Elasticsearch;
-using Elasticsearch.Extensions.Logging.Options;
+using Elastic.Extensions.Logging.Options;
 using Elasticsearch.Net;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -11,12 +11,12 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Nest;
 
-namespace Elasticsearch.Extensions.Logging.Example
+namespace Elastic.Extensions.Logging.Example
 {
 	internal static class Program
 	{
 		// Configuration can be overriden from command line, e.g.
-		// dotnet run --project ./examples/Elasticsearch.Extensions.Logging.Example/ --Logging:Elasticsearch:ShipTo:NodeUris:0 "http://ipv4.fiddler:9200"
+		// dotnet run --project ./examples/Elastic.Extensions.Logging.Example/ --Logging:Elasticsearch:ShipTo:NodeUris:0 "http://ipv4.fiddler:9200"
 
 		public static IHostBuilder CreateHostBuilder(string[] args)
 		{

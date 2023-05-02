@@ -2,7 +2,7 @@ using Elastic.CommonSchema;
 using Elastic.Ingest.Elasticsearch;
 using Elastic.Transport;
 
-namespace Elasticsearch.Extensions.Logging.Options
+namespace Elastic.Extensions.Logging.Options
 {
 	/// <summary>
 	/// Provide options to <see cref="ElasticsearchLogger"/> to control how data gets written to Elasticsearch

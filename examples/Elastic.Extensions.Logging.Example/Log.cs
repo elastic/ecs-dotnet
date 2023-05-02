@@ -1,7 +1,7 @@
 using System;
 using Microsoft.Extensions.Logging;
 
-namespace Elasticsearch.Extensions.Logging.Example
+namespace Elastic.Extensions.Logging.Example
 {
 	public class Log
 	{

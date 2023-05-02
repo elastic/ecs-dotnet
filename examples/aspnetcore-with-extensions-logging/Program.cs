@@ -2,7 +2,7 @@
 
 using Elastic.Clients.Elasticsearch;
 using Elastic.Elasticsearch.Ephemeral;
-using Elasticsearch.Extensions.Logging;
+using Elastic.Extensions.Logging;
 
 using var cluster = new EphemeralCluster("8.4.0");
 var client = CreateClient(cluster);

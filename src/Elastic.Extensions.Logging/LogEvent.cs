@@ -9,7 +9,7 @@ using System.Text.Json.Serialization;
 using Elastic.CommonSchema;
 using Elastic.CommonSchema.Serialization;
 
-namespace Elasticsearch.Extensions.Logging
+namespace Elastic.Extensions.Logging
 {
 	/// <summary>
 	/// A subclass of <see cref="EcsDocument"/> that adds additional properties related to Extensions logging.

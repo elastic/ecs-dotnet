@@ -1,6 +1,6 @@
 using Microsoft.Extensions.Logging;
 
-namespace Elasticsearch.Extensions.Logging
+namespace Elastic.Extensions.Logging
 {
 	internal static class LogEventToEcsHelper
 	{

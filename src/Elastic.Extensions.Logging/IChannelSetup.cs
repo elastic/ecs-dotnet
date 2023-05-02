@@ -4,7 +4,7 @@
 
 using Elastic.Ingest.Elasticsearch;
 
-namespace Elasticsearch.Extensions.Logging
+namespace Elastic.Extensions.Logging
 {
 	/// <summary>
 	/// Provide callbacks to further configure <see cref="ElasticsearchChannelOptionsBase{TEvent}"/>
