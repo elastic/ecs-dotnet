@@ -4,13 +4,12 @@ using System.Threading;
 using Elastic.Channels.Diagnostics;
 using Elastic.Clients.Elasticsearch;
 using Elastic.Elasticsearch.Xunit.XunitPlumbing;
-using Elasticsearch.Extensions.Logging.Options;
+using Elastic.Extensions.Logging.Options;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Xunit.Abstractions;
-using BulkResponse = Elastic.Ingest.Elasticsearch.Serialization.BulkResponse;
 
-namespace Elasticsearch.Extensions.Logging.IntegrationTests;
+namespace Elastic.Extensions.Logging.IntegrationTests;
 
 public abstract class TestBase : IClusterFixture<LoggingCluster>
 {

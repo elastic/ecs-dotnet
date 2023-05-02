@@ -4,7 +4,7 @@
 
 using Elastic.Transport;
 
-namespace Elasticsearch.Extensions.Logging.Options
+namespace Elastic.Extensions.Logging.Options
 {
 	/// <summary>
 	/// The type of connection pool to use

@@ -5,14 +5,13 @@ using System.Threading.Tasks;
 using Elastic.Channels.Diagnostics;
 using Elastic.Clients.Elasticsearch;
 using Elastic.CommonSchema;
-using Elasticsearch.Extensions.Logging.Options;
+using Elastic.Extensions.Logging.Options;
 using FluentAssertions;
 using Microsoft.Extensions.Logging;
 using Xunit;
 using Xunit.Abstractions;
-using BulkResponse = Elastic.Ingest.Elasticsearch.Serialization.BulkResponse;
 
-namespace Elasticsearch.Extensions.Logging.IntegrationTests
+namespace Elastic.Extensions.Logging.IntegrationTests
 {
 	public class LoggingToIndexTests : TestBase
 	{

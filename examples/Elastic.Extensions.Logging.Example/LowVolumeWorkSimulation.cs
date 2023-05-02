@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
-namespace Elasticsearch.Extensions.Logging.Example
+namespace Elastic.Extensions.Logging.Example
 {
 	/// <summary> Simulate work that logs in low volume with some time in between each log call </summary>
 	public class LowVolumeWorkSimulation : BackgroundService

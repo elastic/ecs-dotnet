@@ -13,7 +13,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\Elasticsearch.Extensions.Logging\Elasticsearch.Extensions.Logging.csproj" />
+    <ProjectReference Include="..\..\src\Elastic.Extensions.Logging\Elastic.Extensions.Logging.csproj" />
   </ItemGroup>
 
 </Project>

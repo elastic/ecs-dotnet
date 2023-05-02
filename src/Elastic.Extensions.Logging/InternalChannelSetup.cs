@@ -5,7 +5,7 @@
 using System;
 using Elastic.Ingest.Elasticsearch;
 
-namespace Elasticsearch.Extensions.Logging
+namespace Elastic.Extensions.Logging
 {
 	/// <inheritdoc cref="IChannelSetup"/>
 	public class ChannelSetup : IChannelSetup

@@ -10,10 +10,10 @@ using System.Text;
 using Elastic.CommonSchema;
 using Elastic.Channels;
 using Elastic.Channels.Diagnostics;
-using Elasticsearch.Extensions.Logging.Options;
+using Elastic.Extensions.Logging.Options;
 using Microsoft.Extensions.Logging;
 
-namespace Elasticsearch.Extensions.Logging
+namespace Elastic.Extensions.Logging
 {
 	/// <summary>
 	/// An <see cref="ILogger"/> implementation that writes logs directly to Elasticsearch

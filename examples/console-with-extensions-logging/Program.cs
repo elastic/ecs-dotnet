@@ -6,7 +6,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
 /* 1. Add using */
-using Elasticsearch.Extensions.Logging;
+using Elastic.Extensions.Logging;
 
 namespace ConsoleExample
 {

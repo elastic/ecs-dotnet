@@ -63,11 +63,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "aspnetcore-with-serilog", "
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Elastic.CommonSchema.Benchmarks", "tools\Elastic.CommonSchema.Benchmarks\Elastic.CommonSchema.Benchmarks.csproj", "{EC19A9E1-79CC-46A8-94D7-EE66ED22D3BD}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Elasticsearch.Extensions.Logging", "src\Elasticsearch.Extensions.Logging\Elasticsearch.Extensions.Logging.csproj", "{D88AAA7D-1AEE-4B4C-BE37-69BA85DA07DA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Elastic.Extensions.Logging", "src\Elastic.Extensions.Logging\Elastic.Extensions.Logging.csproj", "{D88AAA7D-1AEE-4B4C-BE37-69BA85DA07DA}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Elasticsearch.Extensions.Logging.IntegrationTests", "tests-integration\Elasticsearch.Extensions.Logging.IntegrationTests\Elasticsearch.Extensions.Logging.IntegrationTests.csproj", "{0E7008E1-B215-4B9B-BC28-DC9D31415FB9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Elastic.Extensions.Logging.IntegrationTests", "tests-integration\Elastic.Extensions.Logging.IntegrationTests\Elastic.Extensions.Logging.IntegrationTests.csproj", "{0E7008E1-B215-4B9B-BC28-DC9D31415FB9}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Elasticsearch.Extensions.Logging.Example", "examples\Elasticsearch.Extensions.Logging.Example\Elasticsearch.Extensions.Logging.Example.csproj", "{F319AD28-A0A4-4012-8480-E2A4CFA755C2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Elastic.Extensions.Logging.Example", "examples\Elastic.Extensions.Logging.Example\Elastic.Extensions.Logging.Example.csproj", "{F319AD28-A0A4-4012-8480-E2A4CFA755C2}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "console-with-extensions-logging", "examples\console-with-extensions-logging\console-with-extensions-logging.csproj", "{D87AE73E-8112-444C-8F2F-CFBC4F738026}"
 EndProject
