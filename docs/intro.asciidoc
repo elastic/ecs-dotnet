@@ -7,4 +7,41 @@ They make it easy to format your logs into ECS-compatible JSON.
 TIP: Want to learn more about ECS, ECS logging, and other available language plugins?
 See the {ecs-logging-ref}/intro.html[ECS logging overview].
 
+The .NET ECS libraries fall into several catagories
+
+=== Domain
+
+At its core all .NET ECS libraries are powered by `Elastic.CommonSchema`
+which strongly types the ECS specification to .NET classes. 
+
+This library can be used to map your events to ECS in a typesafe fashion.
+
+=== Log Formatters
+
+* `Elastic.CommonSchema.Log4Net`
+* `Elastic.CommonSchema.NLog`
+* `Elastic.CommonSchema.Serilog`
+
+=== Enrichers 
+
+* `Elastic.Apm.NLog`
+* `Elastic.Apm.SerilogEnricher`
+
+=== Shippers
+
+* `Elastic.Extensions.Logging`
+* `Elastic.Serilog.Sinks`
+* `Elastic.CommonSchema.BenchmarkDotNetExporter`
+
+These `shippers` are powered by 
+
+`Elastic.Channels` 
+
+
+`Elastic.Ingest.Elasticsearch.CommonSchema`
+
+Pushes `Elastic.CommonSchema` types to `Elasticsearch` through
+
+
+
 Ready to jump into `ecs-logging-dotnet`? <<setup,Get started>>.
