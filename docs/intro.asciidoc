@@ -18,30 +18,50 @@ This library can be used to map your events to ECS in a typesafe fashion.
 
 === Log Formatters
 
+Our log formatters allow you to change the way various logging frameworks
+log to IO (file/console) to use ECS json.
+
 * `Elastic.CommonSchema.Log4Net`
 * `Elastic.CommonSchema.NLog`
 * `Elastic.CommonSchema.Serilog`
 
-=== Enrichers 
+=== Data Shippers
 
-* `Elastic.Apm.NLog`
-* `Elastic.Apm.SerilogEnricher`
+Our datashippers integrate with logging frameworks to facilitate 
+sending events (logs) to various off Elastic receivers.
 
-=== Shippers
+Currently these shippers support Elastic Cloud & Elasticsearch but 
+other outputs are in the works.
 
 * `Elastic.Extensions.Logging`
 * `Elastic.Serilog.Sinks`
 * `Elastic.CommonSchema.BenchmarkDotNetExporter`
 
-These `shippers` are powered by 
-
-`Elastic.Channels` 
 
 
-`Elastic.Ingest.Elasticsearch.CommonSchema`
+=== Enrichers 
 
-Pushes `Elastic.CommonSchema` types to `Elasticsearch` through
+Enrichers can be installed next to `Log Formatters` and `Data Shippers` to automatically
+enrich the ECS json that gets produced.
 
+* `Elastic.Apm.NLog`
+* `Elastic.Apm.SerilogEnricher`
+
+==== Architecture
+
+image:images/ecs-dotnet-overview.png["ECS.NET Artichtecture overview"]
+
+The libraries reuse the same components that power other .NET libraries from Elastic.
+
+Ensuring a common way to both configure and monitor Elastic's .NET libraries.
+
+At its core all `Data Shippers` reuse `Elastic.Transport` to
+coordinate HttpRequests. This library is also the heart of Elastic's clients and ensures
+we share best practices and configuration options.
+
+Furthermore the ECS.NET libraries built upon the push based ingestion 
+abstractions from https://github.com/elastic/elastic-ingest-dotnet[Elastic.Ingest.*] that 
+presents an easy to use `System.Threading.Channels` backed method to push events as batches at variable rates to external datasources.
 
 
 Ready to jump into `ecs-logging-dotnet`? <<setup,Get started>>.
