@@ -31,4 +31,4 @@ inject trace, transaction and span id fields into log events.
 [[setup-step-3]]
 === Step 3: Configure Filebeat
 
-include::{ecs-repo-dir}/setup.asciidoc[tag=configure-filebeat]
+//include::{ecs-repo-dir}/setup.asciidoc[tag=configure-filebeat]
