@@ -9,15 +9,12 @@ NOTE: For the best reading experience,
 please view this documentation at https://www.elastic.co/guide/en/ecs-logging/dotnet[elastic.co]
 endif::[]
 
-== ECS Logging .NET Reference
-
-Our datashippers integrate with logging frameworks to facilitate
-sending events (logs) to various off Elastic receivers.
-
-Currently these shippers support Elastic Cloud & Elasticsearch but
-other outputs are in the works.
+= ECS Logging .NET Reference
 
 ifndef::env-github[]
 include::./intro.asciidoc[Introduction]
+include::./types/types.asciidoc[Types]
+include::./formatters/index.asciidoc[Formatters]
 include::./data-shippers/index.asciidoc[Data Shippers]
+include::./enrichers/index.asciidoc[Enrichers]
 endif::[]

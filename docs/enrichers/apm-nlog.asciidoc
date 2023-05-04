@@ -1,0 +1,54 @@
+=== APM NLog Layout
+
+Allows you to add the following place holders in your NLog templates:
+
+* `ElasticApmTraceId`
+* `ElasticApmTransactionId`
+* `ElasticApmSpanId`
+* `ElasticApmServiceName`
+* `ElasticApmServiceNodeName`
+* `ElasticApmServiceVersion`
+
+Which will be replaced with the appropriate Elastic APM variables if available
+
+==== Packages
+
+The .NET assemblies are published to NuGet under the package name http://nuget.org/packages/Elastic.Apm.NLog[Elastic.Apm.NLog]
+
+==== How to use from API
+
+[source,csharp]
+----
+// Logged message will be in format of `trace-id|transation-id|span-id|InTransaction`
+// or `|||InTransaction` if the place holders are not available
+var consoleTarget = new ConsoleTarget("console");
+consoleTarget.Layout = 
+    "${ElasticApmServiceName}|${ElasticApmTraceId}|${ElasticApmTransactionId}|${ElasticApmSpanId}|${message}";
+config.AddRule(LogLevel.Debug, LogLevel.Fatal, consoleTarget);
+LogManager.Configuration = config;
+var logger = LogManager.GetCurrentClassLogger();
+
+----
+
+==== How to use from NLog.config
+
+[source,xml]
+----
+<nlog>
+  <extensions>
+    <add assembly="Elastic.Apm.NLog"/>
+  </extensions>
+  <targets>
+    <target name="console" 
+        type="console" 
+        layout="${ElasticApmTraceId}|${ElasticApmTransactionId}|${ElasticApmSpanId}|${message}" />
+  </targets>
+  <rules>
+    <logger name="*" minLevel="Debug" writeTo="Console" />
+  </rules>
+</nlog>
+----
+
+==== Prerequisite
+
+The prerequisite for this to work is a configured https://github.com/elastic/apm-agent-dotnet[Elastic APM Agent]. If the agent is not configured the APM place holders will be empty.

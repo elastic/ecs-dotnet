@@ -1,20 +1,17 @@
-== Elasticsearch Logger Provider
+=== Elastic.Extensions.Logging
 
-Elasticsearch-Logstash-Kibana (ELK) stack logger provider for Microsoft.Extensions.Logging.
+Elastic logger provider for Microsoft.Extensions.Logging.
 
 Writes direct to Elasticsearch using the https://www.elastic.co/guide/en/ecs/current/ecs-reference.html[Elastic Common Schema (ECS)],
 with semantic logging of structured data from message and scope values. The results can be viewed and queried in the Kibana console.
 
-The logger uses the https://github.com/elastic/elasticsearch-net[Elasticsearch.Net low level client] to
-manage the network connection to Elasticsearch.
+==== Usage
 
-=== Usage
-
-Add a reference to the `Elasticsearch.Extensions.Logging` package:
+Add a reference to the `Elastic.Extensions.Logging` package:
 
 [source,powershell]
 ----
-dotnet add package Elasticsearch.Extensions.Logging
+dotnet add package Elastic.Extensions.Logging
 
 ----
 
@@ -47,7 +44,7 @@ include `service.type`, `service.version`, and `host.hostname`.
 Additional fields are defined below, and all individual message and scope values are logged
 as `labels.*` custom key/value pairs, e.g. `labels.CustomerId`.
 
-=== Basic configuration
+==== Basic configuration
 
 For deployment you will usually want to override the configuration with your actual server location(s).
 The other useful value to configure is a tag for the environment, e.g. Development/Staging/Production.
@@ -66,7 +63,7 @@ The other useful value to configure is a tag for the environment, e.g. Developme
 
 *NOTE:* You don't need any configuration to just use a local Elasticsearch instance, as it defaults to http://localhost:9200/.
 
-=== Configuration settings
+==== Configuration settings
 
 The logger provider will be automatically configured with any logging settings under the alias `Elasticsearch`. 
 
@@ -136,7 +133,7 @@ If you want to configure from a different section, it can be configured manually
 
 Configuration can, of course, also be done in code, e.g. to add the environment as a tag.
 
-=== Elastic Cloud configuration
+==== Elastic Cloud configuration
 
 If `CloudId` is provided, the `ConnectionPoolType` defaults to `Cloud`:
 
@@ -154,11 +151,11 @@ If `CloudId` is provided, the `ConnectionPoolType` defaults to `Cloud`:
 }
 ----
 
-=== Output - Elastic Common Schema (ECS)
+==== Output - Elastic Common Schema (ECS)
 
 Log messages sent to Elasticsearch follow the https://www.elastic.co/guide/en/ecs/current/ecs-reference.html[Elastic Common Schema (ECS)].
 
-=== Example document
+==== Example document
 
 The `_source` field is the message sent from the LoggerProvider, along with the `_index` and `_id` (a GUID).
 
@@ -249,7 +246,7 @@ The `_source` field is the message sent from the LoggerProvider, along with the 
 }
 ----
 
-=== Standard Fields
+==== Standard Fields
 
 |===
 |Field |Type |Description 
@@ -334,7 +331,7 @@ with specific formats for some types, e.g. calling string on a list is usually n
 
 *(1) See https://docs.microsoft.com/en-us/dotnet/standard/datetime/choosing-between-datetime*
 
-=== Agent fields
+==== Agent fields
 
 These identify the version of the logger provider being used.
 
@@ -346,7 +343,7 @@ These identify the version of the logger provider being used.
 |ecs.version |string |Version of ECS standard used, currently `1.5`. 
 |===
 
-=== Service fields
+==== Service fields
 
 This identifies the application/service that is running and generating the logs. 
 
@@ -383,7 +380,7 @@ dotnet gitversion
 
 You are welcome to use the link:../../build.ps1[`build.ps1`] script in this repository as an example.
 
-=== Tracing fields
+====Tracing fields
 
 |===
 |Field |Type |Description 
@@ -404,7 +401,7 @@ It is recommended to turn on W3C format, for compatibility with other systems:
 Activity.DefaultIdFormat = ActivityIdFormat.W3C;
 ----
 
-=== Host fields
+==== Host fields
 
 NOTE: Can be disabled via configuration.
 
@@ -418,7 +415,7 @@ NOTE: Can be disabled via configuration.
 |host.os.version |string |Operating system version. Value of `Environment.OSVersion.Version`. 
 |===
 
-=== Process fields
+==== Process fields
 
 NOTE: Can be disabled via configuration.
 
@@ -431,7 +428,7 @@ NOTE: Can be disabled via configuration.
 |process.thread.name |string |Name of the thread. From `Thread.CurrentThread.Name`. 
 |===
 
-=== User fields
+==== User fields
 
 NOTE: Can be disabled via configuration.
 
