@@ -1,3 +1,4 @@
+[[apm-serilog-enricher]]
 === APM Serilog Enricher
 
 This enricher adds the transaction id and trace id to every Serilog log message that is created during a transaction. 

@@ -1,3 +1,4 @@
+[[ecs-dotnet]]
 == .NET Model of ECS
 
 The `Elastic.CommonSchema` project contains a full C# representation of https://github.com/elastic/ecs[Elastic Common Schema] (ECS) - see https://www.elastic.co/guide/en/ecs/current/index.html[documentation].

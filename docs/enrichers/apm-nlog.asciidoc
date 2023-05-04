@@ -1,3 +1,4 @@
+[[apm-nlog-enricher]]
 === APM NLog Layout
 
 Allows you to add the following place holders in your NLog templates:

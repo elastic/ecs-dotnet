@@ -1,3 +1,4 @@
+[[ecs-ingest-channels]]
 === ECS Ingest Channels
 
 A specialization of https://www.nuget.org/packages/Elastic.Ingest.Elasticsearch#readme-body-tab[`Elastic.Ingest.Elasticsearch`] that offers two channel implementations that make it easy to write ECS formatted data and bootstrap the target datastreams/indices with ECS mappings and settings.

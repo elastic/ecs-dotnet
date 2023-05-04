@@ -1,3 +1,4 @@
+[[extensions-logging-data-shipper]]
 === Elastic.Extensions.Logging
 
 Elastic logger provider for Microsoft.Extensions.Logging.

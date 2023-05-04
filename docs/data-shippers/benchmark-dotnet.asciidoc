@@ -1,3 +1,4 @@
+[[benchmark-dotnet-data-shipper]]
 === BenchmarkDotnet Exporter
 
 An exporter for https://github.com/dotnet/BenchmarkDotNet[BenchmarkDotnet] that will index benchmarking results directly into Elasticsearch.

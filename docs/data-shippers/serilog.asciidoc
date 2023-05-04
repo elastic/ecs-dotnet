@@ -1,3 +1,4 @@
+[[serilog-data-shipper]]
 === Elastic.Serilog.Sinks
 
 A https://serilog.net/[Serilog] sink that writes logs directly to https://www.elastic.co/elasticsearch/[Elasticsearch] or https://www.elastic.co/cloud/[Elastic Cloud]

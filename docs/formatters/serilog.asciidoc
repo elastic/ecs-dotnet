@@ -1,3 +1,4 @@
+[[serilog-formatter]]
 === Serilog formatter
 
 This `ITextFormatter` implementation formats a Serilog event into a JSON representation that adheres to the Elastic Common Schema specification.
