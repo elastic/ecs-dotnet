@@ -22,8 +22,19 @@ Log.Information("The time is {TraceId}", "my-trace-id");
 Will directly override `trace.id` on the resulting ECS json document.
 
 All supported ECS message template properties are available as constants under the `LogTemplateProperties` static class. 
-For example `LogTemplateProperties.TraceId` will return `"TraceId"`. 
+For example `LogTemplateProperties.TraceId` will return `"TraceId"`.
 
+
+
+[float]
+=== Ingest ECS log files
+
+If you are using one of our formatter libraries to log to file or stdout/stderr you can use the following options 
+to get these logs into Elasticsearch or Elastic Cloud:
+
+NOTE: We also support writing logs directly to Elasticsearch or Elastic Cloud. See our <<data-shippers, various data shipper integrations>>
+
+include::{ecs-repo-dir}/setup.asciidoc[tag=configure-filebeat]
 
 include::./serilog.asciidoc[Serilog]
 include::./nlog.asciidoc[NLog]
