@@ -13,8 +13,4 @@
     <PackageReference Include="Elastic.Ingest.Elasticsearch" Version="0.5.0" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Content Remove="README.md" />
-  </ItemGroup>
-
 </Project>

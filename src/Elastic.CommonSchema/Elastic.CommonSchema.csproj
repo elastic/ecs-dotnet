@@ -12,7 +12,4 @@
     <PackageReference Include="System.Diagnostics.DiagnosticSource" Version="5.0.0" />
     <PackageReference Include="System.Text.Json" Version="6.0.1" />
   </ItemGroup>
-  <ItemGroup>
-    <Content Remove="README.md" />
-  </ItemGroup>
 </Project>
