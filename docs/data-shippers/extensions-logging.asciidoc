@@ -6,14 +6,13 @@ Elastic logger provider for Microsoft.Extensions.Logging.
 Writes direct to Elasticsearch using the https://www.elastic.co/guide/en/ecs/current/ecs-reference.html[Elastic Common Schema (ECS)],
 with semantic logging of structured data from message and scope values. The results can be viewed and queried in the Kibana console.
 
-==== Usage
+==== Installation
 
 Add a reference to the `Elastic.Extensions.Logging` package:
 
-[source,powershell]
+[source,bash]
 ----
 dotnet add package Elastic.Extensions.Logging
-
 ----
 
 Then, add the provider to the loggingBuilder during host construction, using the provided extension method. 
