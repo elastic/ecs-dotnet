@@ -3,7 +3,19 @@
 
 A specialization of https://www.nuget.org/packages/Elastic.Ingest.Elasticsearch#readme-body-tab[`Elastic.Ingest.Elasticsearch`] that offers two channel implementations that make it easy to write ECS formatted data and bootstrap the target datastreams/indices with ECS mappings and settings.
 
-==== EcsDataStreamChannel<TEvent>
+==== Installation
+
+Add a reference to the `Elastic.Ingest.Elasticsearch.CommonSchema` package:
+
+[source,xml]
+[subs="attributes"]
+----
+<PackageReference Include="Elastic.Ingest.Elasticsearch.CommonSchema" Version="{ecs-logging-dotnet-version}" />
+----
+
+==== Usage 
+
+===== EcsDataStreamChannel<TEvent>
 
 A channel that specializes to writing data with a timestamp to Elasticsearch data streams. 
 
@@ -37,7 +49,7 @@ var doc = new EcsDocument
 channel.TryWrite(doc);
 ----
 
-==== EcsIndexChannel<TEvent>
+===== EcsIndexChannel<TEvent>
 
 A channel that specializes in writing catalog data to Elastic indices.
 

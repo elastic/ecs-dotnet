@@ -1,13 +1,19 @@
 [[apm-serilog-enricher]]
 === APM Serilog Enricher
 
-This enricher adds the transaction id and trace id to every Serilog log message that is created during a transaction. 
+This enricher adds the transaction id and trace id to every Serilog log message that is created during a transaction.
 
-==== Packages
+==== Installation
 
-The .NET assemblies are published to NuGet under the package name http://nuget.org/packages/Elastic.Apm.SerilogEnricher[Elastic.Apm.SerilogEnricher]
+Add a reference to the http://nuget.org/packages/Elastic.Apm.SerilogEnricher[Elastic.Apm.SerilogEnricher] package:
 
-==== How to Enable
+[source,xml]
+[subs="attributes"]
+----
+<PackageReference Include="Elastic.Apm.SerilogEnricher" Version="{ecs-logging-dotnet-version}" />
+----
+
+==== Usage 
 
 [source,csharp]
 ----
@@ -16,6 +22,8 @@ var logger = new LoggerConfiguration()
    .WriteTo.Console(outputTemplate: "[{ElasticApmTraceId} {ElasticApmTransactionId} {ElasticApmSpanId} {Message:lj} {NewLine}{Exception}")
    .CreateLogger();
 ----
+
+==== Properties
 
 In the code snippet above `Enrich.WithElasticApmCorrelationInfo()` enables the enricher from this project,
 which will set 3 properties for log lines that are created during a transaction:

@@ -7,19 +7,22 @@ The intention is that this library forms a reliable and correct basis for integr
 
 These types can be used in either as-is, or in conjunction with, the https://github.com/elastic/elasticsearch-net[Official .NET clients for Elasticsearch]. The types are annotated with the corresponding `DataMember` attributes, enabling out-of-the-box serialisation support with the Elasticsearch.net clients.
 
-See also:
+[float]
+=== Installation
 
-* https://github.com/elastic/ecs-dotnet/tree/main/src/Elastic.Ingest.Elasticsearch.CommonSchema[Elastic.Ingest.Elasticsearch.CommonSchema] to easily persist ECS document to Elasticsearch or Elastic Cloud.
+Add a reference to the Elastic.CommonSchema package:
+
+[source,xml]
+[subs="attributes"]
+----
+<PackageReference Include="Elastic.CommonSchema" Version="{ecs-logging-dotnet-version}" />
+----
+
+TIP: https://github.com/elastic/ecs-dotnet/tree/main/src/Elastic.Ingest.Elasticsearch.CommonSchema[Elastic.Ingest.Elasticsearch.CommonSchema] to easily persist ECS document to Elasticsearch or Elastic Cloud.
+
 
 [float]
-=== Packages
-
-The .NET assemblies are published to NuGet under the package name http://nuget.org/packages/Elastic.CommonSchema[Elastic.CommonSchema]
-
-The main branch pushes new NuGet packages on successful CI builds to https://ci.appveyor.com/nuget/ecs-dotnet
-
-[float]
-=== Versioning
+==== Versioning
 
 The version of the Elastic.CommonSchema package matches the published ECS version, with the same corresponding branch names:
 

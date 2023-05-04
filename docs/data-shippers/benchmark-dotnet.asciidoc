@@ -3,11 +3,17 @@
 
 An exporter for https://github.com/dotnet/BenchmarkDotNet[BenchmarkDotnet] that will index benchmarking results directly into Elasticsearch.
 
-==== Packages
+==== Installation
 
-The .NET assemblies are published to NuGet under the package name http://nuget.org/packages/Elastic.CommonSchema.BenchmarkDotNetExporter[Elastic.CommonSchema.BenchmarkDotNetExporter]
+Add a reference to the http://nuget.org/packages/Elastic.CommonSchema.BenchmarkDotNetExporter[Elastic.CommonSchema.BenchmarkDotNetExporter] package:
 
-==== How to Enable
+[source,xml]
+[subs="attributes"]
+----
+<PackageReference Include="Elastic.CommonSchema.BenchmarkDotNetExporter" Version="{ecs-logging-dotnet-version}" />
+----
+
+==== Usage
 
 [source,csharp]
 ----

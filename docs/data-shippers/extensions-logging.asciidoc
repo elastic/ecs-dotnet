@@ -10,10 +10,13 @@ with semantic logging of structured data from message and scope values. The resu
 
 Add a reference to the `Elastic.Extensions.Logging` package:
 
-[source,bash]
+[source,xml]
+[subs="attributes"]
 ----
-dotnet add package Elastic.Extensions.Logging
+<PackageReference Include="Elastic.Extensions.Logging" Version="{ecs-logging-dotnet-version}" />
 ----
+
+==== Usage 
 
 Then, add the provider to the loggingBuilder during host construction, using the provided extension method. 
 
@@ -380,7 +383,7 @@ dotnet gitversion
 
 You are welcome to use the link:../../build.ps1[`build.ps1`] script in this repository as an example.
 
-====Tracing fields
+==== Tracing fields
 
 |===
 |Field |Type |Description 

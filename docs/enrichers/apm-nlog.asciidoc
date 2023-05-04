@@ -12,11 +12,19 @@ Allows you to add the following place holders in your NLog templates:
 
 Which will be replaced with the appropriate Elastic APM variables if available
 
-==== Packages
+==== Installation
 
-The .NET assemblies are published to NuGet under the package name http://nuget.org/packages/Elastic.Apm.NLog[Elastic.Apm.NLog]
+Add a reference to the http://nuget.org/packages/Elastic.Apm.NLog[Elastic.Apm.NLog] package:
 
-==== How to use from API
+[source,xml]
+[subs="attributes"]
+----
+<PackageReference Include="Elastic.Apm.NLog" Version="{ecs-logging-dotnet-version}" />
+----
+
+==== Usage 
+
+===== How to use from API
 
 [source,csharp]
 ----
@@ -31,7 +39,7 @@ var logger = LogManager.GetCurrentClassLogger();
 
 ----
 
-==== How to use from NLog.config
+===== How to use from NLog.config
 
 [source,xml]
 ----

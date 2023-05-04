@@ -3,11 +3,19 @@
 
 This Layout implementation formats an NLog event into a JSON representation that adheres to the Elastic Common Schema specification.
 
-==== Packages
+==== Installation
 
-The .NET assemblies are published to NuGet under the package name http://nuget.org/packages/Elastic.CommonSchema.NLog[Elastic.CommonSchema.NLog]
+Add a reference to the Elastic.CommonSchema.NLog package:
 
-==== Setup Programatically
+[source,xml]
+[subs="attributes"]
+----
+<PackageReference Include="Elastic.CommonSchema.NLog" Version="{ecs-logging-dotnet-version}" />
+----
+
+==== Usage 
+
+===== Setup Programatically
 
 [source,csharp]
 ----
@@ -25,7 +33,7 @@ The `Layout = new EcsLayout()` line then instructs NLog to use the registered la
 The sample above uses the console target, but you are free to use any target of your choice, perhaps consider using a
 filesystem target and https://www.elastic.co/downloads/beats/filebeat[Elastic Filebeat] for durable and reliable ingestion.
 
-==== Setup using NLog.config
+===== Setup using NLog.config
 
 [source,xml]
 ----

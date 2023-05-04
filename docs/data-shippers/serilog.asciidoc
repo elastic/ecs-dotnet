@@ -3,7 +3,17 @@
 
 A https://serilog.net/[Serilog] sink that writes logs directly to https://www.elastic.co/elasticsearch/[Elasticsearch] or https://www.elastic.co/cloud/[Elastic Cloud]
 
-==== Example
+==== Installation
+
+Add a reference to the `Elastic.Serilog.Sinks` package:
+
+[source,xml]
+[subs="attributes"]
+----
+<PackageReference Include="Elastic.Serilog.Sinks" Version="{ecs-logging-dotnet-version}" />
+----
+
+==== Usage 
 
 There's a few ways that you can extend a `Serilog` `LoggerConfiguration`:
 
