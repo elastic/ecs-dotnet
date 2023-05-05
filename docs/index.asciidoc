@@ -13,6 +13,7 @@ endif::[]
 
 ifndef::env-github[]
 include::./intro.asciidoc[Introduction]
+include::./setup.asciidoc[Set up]
 include::./types/types.asciidoc[Types]
 include::./formatters/index.asciidoc[Formatters]
 include::./data-shippers/index.asciidoc[Data Shippers]

@@ -1,4 +1,3 @@
-[[setup]]
 == Introduction
 
 ECS logging are integrations for your favorite .NET logging libraries.
