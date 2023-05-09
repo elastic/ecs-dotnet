@@ -56,9 +56,8 @@ All the data shippers utilize <<ecs-ingest-channels, `Elastic.Ingest.Elasticsear
 Enrichers can be installed next to `Log Formatters` and `Data Shippers` to automatically
 enrich the ECS json that gets produced.
 
-* `Elastic.Apm.NLog`
-* `Elastic.Apm.SerilogEnricher`
-
+* <<apm-serilog-enricher, `Elastic.Apm.SerilogEnricher`>>
+* <<apm-nlog-enricher, `Elastic.Apm.NLog`>>
 
 [float]
 === Architecture
