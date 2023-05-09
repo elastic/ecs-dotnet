@@ -5,20 +5,20 @@
 [[setup-step-1]]
 === Step 1: Configure application logging
 
-The following logging frameworks are supported:
+If you want to integrate with an existing logger emitting ECS json to a file or stdout/stderr.
 
-* Serilog
-* NLog
+Choose one of our formatters:
 
-[float]
-==== Add the dependency
+* <<serilog-formatter, `Elastic.CommonSchema.Serilog`>>
+* <<nlog-formatter, `Elastic.CommonSchema.NLog`>>
+* <<log4net-formatter, `Elastic.CommonSchema.Log4Net`>>
 
-include::./tab-widgets/add-dependency-widget.asciidoc[]
+If you want to write the logs directly to one of Elastic's endpoints (e.g Elastic Cloud / Elasticsearch)  
 
-[float]
-==== Use the ECS integration
+Choose one of our data shipping loggers:
 
-include::./tab-widgets/ecs-integration-widget.asciidoc[]
+* <<serilog-data-shipper, `Elastic.Serilog.Sinks`>>
+* <<extensions-logging-data-shipper, `Elastic.Extensions.Logging`>>
 
 [float]
 [[setup-step-2]]
@@ -27,8 +27,15 @@ If you are using the Elastic APM .NET agent,
 {apm-dotnet-ref}/log-correlation.html[log correlation can be configured] to
 inject trace, transaction and span id fields into log events.
 
+By default the ECS logging integrations will read tracing information from
+https://learn.microsoft.com/en-us/dotnet/api/system.diagnostics.activity?view=net-7.0[System.Diagnostics.Activity]
+if the APM logging corrolation libraries are not installed.
+
 [float]
 [[setup-step-3]]
-=== Step 3: Configure Filebeat
+=== Step 3: Configure Filebeat (optional)
+
+If you are using one of our log formatters you can use the following methods 
+to ship these logs to Elastic.
 
 include::{ecs-repo-dir}/setup.asciidoc[tag=configure-filebeat]

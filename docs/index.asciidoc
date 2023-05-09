@@ -1,5 +1,5 @@
 :ecs-repo-dir:  {ecs-logging-root}/docs/
-:ecs-logging-dotnet.version: 8.4.0-alpha1
+:ecs-logging-dotnet-version: 8.6.0
 
 include::{asciidoc-dir}/../../shared/versions/stack/current.asciidoc[]
 include::{asciidoc-dir}/../../shared/attributes.asciidoc[]
@@ -14,4 +14,8 @@ endif::[]
 ifndef::env-github[]
 include::./intro.asciidoc[Introduction]
 include::./setup.asciidoc[Set up]
+include::./types/types.asciidoc[Types]
+include::./formatters/index.asciidoc[Formatters]
+include::./data-shippers/index.asciidoc[Data Shippers]
+include::./enrichers/index.asciidoc[Enrichers]
 endif::[]

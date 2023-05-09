@@ -51,7 +51,10 @@ public partial class EcsDocument
 	{
 		var doc = new TEcsDocument
 		{
-			Timestamp = timestamp ?? DateTimeOffset.UtcNow, Ecs = EcsFieldDefault, Error = GetError(exception), Service = GetService()
+			Timestamp = timestamp ?? DateTimeOffset.UtcNow,
+			Ecs = EcsFieldDefault,
+			Error = GetError(exception),
+			Service = GetService()
 		};
 		SetActivityData(doc);
 
