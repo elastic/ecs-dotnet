@@ -28,9 +28,9 @@ var logger = LogManager.GetCurrentClassLogger();
 
 ----
 
-In the code snippet above `Layout.Register&lt;EcsLayout&gt;(&quot;EcsLayout&quot;)` registers the `EcsLayout` with NLog.
+In the code snippet above `Layout.Register<EcsLayout>("EcsLayout")` registers the `EcsLayout` with NLog.
 The `Layout = new EcsLayout()` line then instructs NLog to use the registered layout.
-The sample above uses the console target, but you are free to use any target of your choice, perhaps consider using a
+The sample above uses the console target, but you are free to use any target of your choice; perhaps consider using a
 filesystem target and https://www.elastic.co/downloads/beats/filebeat[Elastic Filebeat] for durable and reliable ingestion.
 
 ===== Setup using NLog.config

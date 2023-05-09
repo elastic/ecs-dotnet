@@ -34,10 +34,9 @@ var channel = new EcsDataStreamChannel<EcsDocument>(options);
 
 ----
 
-NOTE: read more about Elastic's data stream naming convention here:
-https://www.elastic.co/blog/an-introduction-to-the-elastic-data-stream-naming-scheme
+TIP: Learn more about Elastic's data stream naming convention in https://www.elastic.co/blog/an-introduction-to-the-elastic-data-stream-naming-scheme[this blog post].
 
-we can now push data to Elasticsearch using the `EcsDataStreamChannel`
+We can now push data to Elasticsearch using the `EcsDataStreamChannel`
 
 [source,csharp]
 ----
@@ -53,7 +52,7 @@ channel.TryWrite(doc);
 
 A channel that specializes in writing catalog data to Elastic indices.
 
-We can create an `EcsIndexChannel&lt;&gt;` to push `EcsDocument` (or subclassed) instances.
+We can create an `EcsIndexChannel<>` to push `EcsDocument` (or subclassed) instances.
 
 [source,csharp]
 ----
@@ -66,7 +65,7 @@ var options = new IndexChannelOptions<EcsDocument>(transport)
 var channel = new EcsIndexChannel<CatalogDocument>(options);
 ----
 
-now we can push data using:
+Now we can push data using:
 
 [source,csharp]
 ----
@@ -98,10 +97,10 @@ await channel.BootstrapElasticsearchAsync(BootstrapMethod.Failure, "7-days-defau
 This will bootstrap: 
 
 * Set up component templates for all ECS fieldsets
-* reference: https://www.elastic.co/guide/en/ecs/master/ecs-field-reference.html
+* reference: {ecs-ref}/ecs-field-reference.html
 * templates: https://github.com/elastic/ecs/tree/main/generated/elasticsearch/composable/component
 * Create a special `*-settings` component template for the datastream/indices that sets up ILM.
-* Set up an https://www.elastic.co/guide/en/elasticsearch/reference/current/index-templates.html[index template] for the target datastream or indices.
+* Set up an {ref}/index-templates.html[index template] for the target data streams or indices.
 
 If the index template already exists no further bootstrapping will occur.
 

@@ -1,11 +1,11 @@
 [[ecs-dotnet]]
 == .NET Model of ECS
 
-The `Elastic.CommonSchema` project contains a full C# representation of https://github.com/elastic/ecs[Elastic Common Schema] (ECS) - see https://www.elastic.co/guide/en/ecs/current/index.html[documentation].
+The `Elastic.CommonSchema` project contains a full C# representation of the https://github.com/elastic/ecs[Elastic Common Schema (ECS)].
+The intention of this library is to form a reliable and correct basis for integrating into Elasticsearch, using both
+Microsoft .NET and ECS.
 
-The intention is that this library forms a reliable and correct basis for integrations into Elasticsearch, that use both Microsoft .NET and ECS.
-
-These types can be used in either as-is, or in conjunction with, the https://github.com/elastic/elasticsearch-net[Official .NET clients for Elasticsearch]. The types are annotated with the corresponding `DataMember` attributes, enabling out-of-the-box serialisation support with the Elasticsearch.net clients.
+These types can be used either as-is or in conjunction with the https://github.com/elastic/elasticsearch-net[Official .NET clients for Elasticsearch]. The types are annotated with the corresponding `DataMember` attributes, enabling out-of-the-box serialization support with the Elasticsearch.net clients.
 
 [float]
 === Installation
@@ -114,7 +114,7 @@ var ecsDocument = new EcsDocument
 [float]
 === Dynamically assign ECS fields
 
-Additionally ecs fields can be dynamically assigned through 
+Additionally, ECS fields can be dynamically assigned through 
 
 [source,csharp]
 ----
@@ -122,9 +122,9 @@ ecsDocument.AssignProperty("orchestrator.cluster.id", "id");
 
 ----
 
-This will assign `ecsDocument.Orchestrator.ClusterId` to `&quot;id&quot;` and automatically create a new `Orchestrator` instance if needed.
+This will assign `ecsDocument.Orchestrator.ClusterId` to `"id"` and automatically create a new `Orchestrator` instance if needed.
 
-Any `string` or `boolean` value that is not a known `ecs` field will be assigned to `labels.*` everything else to `metatadata.*`
+Any `string` or `boolean` value that is not a known `ecs` field will be assigned to `labels.*` and everything else to `metatadata.*`
 
 [id=intro_to_xyz,titleabbrev=" XYZ Intro"]
 === A note on the `Metadata` property
@@ -180,4 +180,4 @@ public class MyEcsDocument : EcsDocument
 }
 ----
 
-The Elastic.CommonSchema.BenchmarkDotNetExporter project takes this approach, in the https://github.com/elastic/ecs-dotnet/tree/main/src/Elastic.CommonSchema.BenchmarkDotNetExporter[Domain source directory], where the BenchmarkDocument subclasses EcsDocument.
+The Elastic.CommonSchema.BenchmarkDotNetExporter project takes this approach in the https://github.com/elastic/ecs-dotnet/tree/main/src/Elastic.CommonSchema.BenchmarkDotNetExporter[Domain source directory], where the BenchmarkDocument subclasses EcsDocument.

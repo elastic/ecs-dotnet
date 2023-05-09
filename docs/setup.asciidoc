@@ -29,7 +29,6 @@ inject trace, transaction and span id fields into log events.
 
 By default the ECS logging integrations will read tracing information from
 https://learn.microsoft.com/en-us/dotnet/api/system.diagnostics.activity?view=net-7.0[System.Diagnostics.Activity]
-
 if the APM logging corrolation libraries are not installed.
 
 [float]

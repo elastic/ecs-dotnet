@@ -63,9 +63,7 @@ enrich the ECS json that gets produced.
 [float]
 === Architecture
 
-The libraries reuse the same components that power other .NET libraries from Elastic.
-
-Ensuring a common way to both configure and monitor Elastic's .NET libraries.
+The libraries reuse the same components that power other .NET libraries from Elastic--ensuring a common way to both configure and monitor Elastic's .NET libraries.
 
 image:images/ecs-dotnet-overview.png["ECS.NET Artichtecture overview"]
 

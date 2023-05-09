@@ -1,7 +1,7 @@
 [[serilog-data-shipper]]
 === Elastic.Serilog.Sinks
 
-A https://serilog.net/[Serilog] sink that writes logs directly to https://www.elastic.co/elasticsearch/[Elasticsearch] or https://www.elastic.co/cloud/[Elastic Cloud]
+A https://serilog.net/[Serilog] sink that writes logs directly to https://www.elastic.co/elasticsearch/[Elasticsearch] or {ess-cloud}[Elastic Cloud]
 
 ==== Installation
 
@@ -93,7 +93,7 @@ Will override `trace.id` on the resulting ECS json document.
 
 ==== Comparison with https://github.com/serilog-contrib/serilog-sinks-elasticsearch[`Serilog.Sinks.Elasticsearch`]
 
-* `Serilog.Sinks.Elasticsearch` is an amazing community led sink that has a ton of options and works against older Elasticsearch versions `&lt; 8.0`.
+* `Serilog.Sinks.Elasticsearch` is an amazing community led sink that has a ton of options and works against older Elasticsearch versions `< 8.0`.
 * `Serilog.Sinks.Elasticsearch` is unofficially supported by Elastic with some of the .NET team helping to maintain it.
 * `Elastic.CommonSchema.Serilog.Sink` is *officially* supported by Elastic and was purposely build to adhere to newer best practices around logging, datastreams and ILM.
 * `Elastic.CommonSchema.Serilog.Sink` is purposely build to have fewer configuration options and be more prescriptive than `Serilog.Sinks.Elasticsearch`.
@@ -107,6 +107,6 @@ Will override `trace.id` on the resulting ECS json document.
 * That doesn't mean you can not introduce your own additional properties though.
 * `Elastic.CommonSchema.Serilog.Sink` has no durable mode.
 * If you need higher guarantees on log delivery use https://github.com/serilog/serilog-sinks-file[`Serilog.Sinks.File`] with our https://www.nuget.org/packages/Elastic.CommonSchema.Serilog/[ECS log formatter] for Serilog and use https://www.elastic.co/beats/filebeat[filebeat] to ship these logs.
-* Check out https://www.elastic.co/guide/en/fleet/current/fleet-overview.html[Elastic Agent &amp; Fleet] to simplify collecting logs and metrics on the edge.
+* Check out {fleet-ref}/fleet-overview.html[Elastic Agent and Fleet] to simplify collecting logs and metrics on the edge.
 
 If you miss a particular feature from `Serilog.Sinks.Elasticsearch` in `Elastic.CommonSchema.Serilog.Sink` please open a https://github.com/elastic/ecs-dotnet/issues/new?assignees=&labels=enhancement&template=feature_request.md&title=%5BFEATURE%5D[feature request]! We'd love to grow this sink organically moving forward.

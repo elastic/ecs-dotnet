@@ -56,7 +56,7 @@ is supported and will directly set the appropriate ECS field.
 
 ==== Output
 
-Apart from https://www.elastic.co/guide/en/ecs/current/ecs-guidelines.html#_general_guidelines[mandatory fields], the output contains additional data:
+Apart from {ecs-ref}/ecs-guidelines.html#_general_guidelines[mandatory fields], the output contains additional data:
 
 * `log.origin.file.name` is taken from `LocationInformation`
 * `log.origin.file.line` is taken from `LocationInformation`
