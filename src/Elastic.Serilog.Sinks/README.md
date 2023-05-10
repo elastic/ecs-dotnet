@@ -80,7 +80,7 @@ Will override `trace.id` on the resulting ECS json document.
   * This is because the bootrapping (`BootstrapMethod`) attempts to load templates build for Elasticsearch 8.0 and up. 
 * `Elastic.Serilog.Sinks` has only one way it emits data to Elasticsearch conforming to the [ecs-logging specification](https://github.com/elastic/ecs-logging)
   * That doesn't mean you can not introduce your own additional properties though.
-* `Elasti.Serilog.Sinks` has no durable mode. 
+* `Elastic.Serilog.Sinks` has no durable mode. 
   * If you need higher guarantees on log delivery use [`Serilog.Sinks.File`](https://github.com/serilog/serilog-sinks-file) with our [ECS log formatter](https://www.nuget.org/packages/Elastic.CommonSchema.Serilog/) for Serilog and use [filebeat](https://www.elastic.co/beats/filebeat) to ship these logs.
   * Check out [Elastic Agent & Fleet](https://www.elastic.co/guide/en/fleet/current/fleet-overview.html) to simplify collecting logs and metrics on the edge.
 
