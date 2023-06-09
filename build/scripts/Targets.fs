@@ -24,7 +24,7 @@ let execWithTimeout binary args timeout =
     | false -> failwithf "invocation of `%s` timed out" binary
 
 let exec binary args =
-    execWithTimeout binary args (TimeSpan.FromMinutes 4)
+    execWithTimeout binary args (TimeSpan.FromMinutes 10)
 
 let private restoreTools = lazy (exec "dotnet" [ "tool"; "restore" ])
 
