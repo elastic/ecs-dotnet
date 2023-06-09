@@ -10,19 +10,19 @@ namespace Elastic.CommonSchema.Serilog.Adapters
 	/// <inheritdoc cref="IHttpAdapter"/>
 	public class HttpAdapter : IHttpAdapter
 	{
-		private readonly HttpContext _httpContext;
+		private readonly HttpContext? _httpContext;
 
 		/// <inheritdoc cref="IHttpAdapter"/>
-		public HttpAdapter(HttpContext httpContext) => _httpContext = httpContext;
+		public HttpAdapter(HttpContext? httpContext) => _httpContext = httpContext;
 
 		/// <inheritdoc cref="IHttpAdapter.Client"/>
-		public Client Client => null;
+		public Client? Client => null;
 
 		/// <inheritdoc cref="IHttpAdapter.HasContext"/>
 		public bool HasContext => _httpContext != null;
 
 		/// <inheritdoc cref="IHttpAdapter.Http"/>
-		public Http Http => !HasContext ? null : new Http
+		public Http? Http => _httpContext == null ? null : new Http
 		{
 			RequestMethod = _httpContext.Request.HttpMethod,
 			RequestBytes = _httpContext.Request.TotalBytes,
@@ -36,13 +36,13 @@ namespace Elastic.CommonSchema.Serilog.Adapters
 		};
 
 		/// <inheritdoc cref="IHttpAdapter.Server"/>
-		public Server Server => !HasContext ? null : new Server
+		public Server? Server => _httpContext == null ? null : new Server
 		{
 			Domain = _httpContext.Request.Url.Authority
 		};
 
 		/// <inheritdoc cref="IHttpAdapter.Url"/>
-		public Url Url => !HasContext ? null : new Url
+		public Url? Url => _httpContext == null ? null : new Url
 		{
 			Original = _httpContext.Request.RawUrl,
 			Full = _httpContext.Request.Url.ToString(),
@@ -55,10 +55,10 @@ namespace Elastic.CommonSchema.Serilog.Adapters
 		};
 
 		/// <inheritdoc cref="IHttpAdapter.User"/>
-		public User User => null;
+		public User? User => null;
 
 		/// <inheritdoc cref="IHttpAdapter.UserAgent"/>
-		public UserAgent UserAgent => !HasContext ? null : new UserAgent
+		public UserAgent? UserAgent => _httpContext == null ? null : new UserAgent
 		{
 			DeviceName = _httpContext.Request.Browser?.MobileDeviceModel,
 			Name = _httpContext.Request.Browser?.Browser,

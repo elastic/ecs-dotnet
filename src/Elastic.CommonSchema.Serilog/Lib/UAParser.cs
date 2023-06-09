@@ -23,6 +23,7 @@ using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 
+#nullable disable
 
 // ReSharper disable once CheckNamespace
 namespace UAParser
@@ -38,10 +39,8 @@ namespace UAParser
         internal Device(string family, string brand, string model)
         {
             Family = family.Trim();
-            if (brand != null)
-                Brand = brand.Trim();
-            if (model != null)
-                Model = model.Trim();
+            Brand = brand?.Trim();
+            Model = model?.Trim();
         }
 
         /// <summary>

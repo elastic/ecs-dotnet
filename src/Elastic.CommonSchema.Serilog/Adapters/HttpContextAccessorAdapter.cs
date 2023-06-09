@@ -17,21 +17,21 @@ namespace Elastic.CommonSchema.Serilog.Adapters
 	{
 		private static readonly Parser UAParser = Parser.GetDefault();
 
-		private readonly IHttpContextAccessor _httpContextAccessor;
+		private readonly IHttpContextAccessor? _httpContextAccessor;
 
 		/// <inheritdoc cref="IHttpAdapter"/>
-		public HttpAdapter(IHttpContextAccessor httpContextAccessor) =>
+		public HttpAdapter(IHttpContextAccessor? httpContextAccessor) =>
 			_httpContextAccessor = httpContextAccessor;
 
 		/// <inheritdoc cref="IHttpAdapter.HasContext"/>
 		public bool HasContext => _httpContextAccessor?.HttpContext != null;
 
 		/// <inheritdoc cref="IHttpAdapter.UserAgent"/>
-		public UserAgent UserAgent
+		public UserAgent? UserAgent
 		{
 			get
 			{
-				if (!HasContext)
+				if (_httpContextAccessor?.HttpContext == null)
 					return null;
 
 				var userAgent = _httpContextAccessor.HttpContext.Request.Headers["User-Agent"];
@@ -57,11 +57,11 @@ namespace Elastic.CommonSchema.Serilog.Adapters
 		}
 
 		/// <inheritdoc cref="IHttpAdapter.Http"/>
-		public Http Http
+		public Http? Http
 		{
 			get
 			{
-				if (!HasContext)
+				if (_httpContextAccessor?.HttpContext == null)
 					return null;
 
 				var http = new Http
@@ -89,9 +89,7 @@ namespace Elastic.CommonSchema.Serilog.Adapters
 
 		private void SetRequestBody(Http http)
 		{
-			if (!HasContext) return;
-
-			if (!_httpContextAccessor.HttpContext.Request.ContentLength.HasValue)
+			if (_httpContextAccessor?.HttpContext?.Request.ContentLength == null)
 				return;
 
 			http.RequestBodyBytes = _httpContextAccessor.HttpContext.Request.ContentLength;
@@ -100,11 +98,11 @@ namespace Elastic.CommonSchema.Serilog.Adapters
 		}
 
 		/// <inheritdoc cref="IHttpAdapter.Url"/>
-		public Url Url
+		public Url? Url
 		{
 			get
 			{
-				if (!HasContext) return null;
+				if (_httpContextAccessor?.HttpContext == null) return null;
 
 				var request = _httpContextAccessor.HttpContext.Request;
 
@@ -122,11 +120,11 @@ namespace Elastic.CommonSchema.Serilog.Adapters
 		}
 
 		/// <inheritdoc cref="IHttpAdapter.Server"/>
-		public Server Server
+		public Server? Server
 		{
 			get
 			{
-				if (!HasContext)
+				if (_httpContextAccessor?.HttpContext == null)
 					return null;
 
 				var ip4 = _httpContextAccessor.HttpContext.Connection.LocalIpAddress.MapToIPv4();
@@ -143,11 +141,11 @@ namespace Elastic.CommonSchema.Serilog.Adapters
 		}
 
 		/// <inheritdoc cref="IHttpAdapter.Client"/>
-		public Client Client
+		public Client? Client
 		{
 			get
 			{
-				if (!HasContext)
+				if (_httpContextAccessor?.HttpContext == null)
 					return null;
 
 				var ip4 = _httpContextAccessor.HttpContext.Features.Get<IHttpConnectionFeature>()?.RemoteIpAddress.MapToIPv4();
@@ -163,11 +161,11 @@ namespace Elastic.CommonSchema.Serilog.Adapters
 		}
 
 		/// <inheritdoc cref="IHttpAdapter.User"/>
-		public User User
+		public User? User
 		{
 			get
 			{
-				if (!HasContext)
+				if (_httpContextAccessor?.HttpContext == null)
 					return null;
 
 				var idClaims = _httpContextAccessor.HttpContext.User.FindAll(ClaimTypes.NameIdentifier);

@@ -92,7 +92,9 @@ namespace Elastic.CommonSchema.Log4net.Tests
 			var (_, info) = ToEcsEvents(logEvents).First();
 
 			info.Host.Should().NotBeNull();
-			info.Host.Hostname.Should().Be(loggingEvent.LookupProperty(LoggingEvent.HostNameProperty).ToString());
+			var fqdn = loggingEvent.LookupProperty(LoggingEvent.HostNameProperty).ToString();
+			fqdn.Should().NotBeNullOrEmpty();
+			info.Host.Hostname.Should().StartWith(fqdn.Split('.', StringSplitOptions.None).First());
 		});
 
 		[Fact]

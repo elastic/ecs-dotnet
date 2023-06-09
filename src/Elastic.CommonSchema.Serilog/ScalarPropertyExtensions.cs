@@ -2,13 +2,14 @@
 // Elasticsearch B.V licenses this file to you under the Apache 2.0 License.
 // See the LICENSE file in the project root for more information
 
+using System.Diagnostics.CodeAnalysis;
 using Serilog.Events;
 
 namespace Elastic.CommonSchema.Serilog
 {
 	internal static class ScalarPropertyExtensions
 	{
-		public static bool TryGetScalarPropertyValue(this LogEvent e, string key, out ScalarValue value)
+		public static bool TryGetScalarPropertyValue(this LogEvent e, string key, [NotNullWhen(true)]out ScalarValue? value)
 		{
 			if (!e.Properties.TryGetValue(key, out var scalarValue))
 			{
@@ -24,6 +25,19 @@ namespace Elastic.CommonSchema.Serilog
 
 			value = propertyValue;
 			return true;
+		}
+
+		public static bool TryGetScalarString(this LogEvent e, string key, [NotNullWhen(true)]out string? value)
+		{
+			value = null;
+			if (!e.TryGetScalarPropertyValue(key, out var scalar) || scalar.Value == null)
+				return false;
+
+			value = scalar.Value.ToString();
+			if (!string.IsNullOrWhiteSpace(value)) return true;
+
+			value = null;
+			return false;
 		}
 	}
 }
