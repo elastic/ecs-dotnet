@@ -22,7 +22,7 @@ namespace Elastic.CommonSchema.Serilog
 		public EcsTextFormatter() : this(new EcsTextFormatterConfiguration<TEcsDocument>()) { }
 
 		/// <inheritdoc cref="EcsTextFormatter{TEcsDocument}"/>
-		public EcsTextFormatter(EcsTextFormatterConfiguration<TEcsDocument> configuration) =>
+		public EcsTextFormatter(EcsTextFormatterConfiguration<TEcsDocument>? configuration) =>
 			Configuration = configuration ?? new EcsTextFormatterConfiguration<TEcsDocument>();
 
 		/// <inheritdoc cref="ITextFormatter.Format"/>

@@ -51,11 +51,11 @@ public class HttpContextEnricher : ILogEventEnricher
 
 	internal class HttpContextEnrichments
 	{
-		public Client Client { get; set; }
-		public Http Http { get; set; }
-		public Server Server { get; set; }
-		public Url Url { get; set; }
-		public User User { get; set; }
-		public UserAgent UserAgent { get; set; }
+		public Client? Client { get; set; }
+		public Http? Http { get; set; }
+		public Server? Server { get; set; }
+		public Url? Url { get; set; }
+		public User? User { get; set; }
+		public UserAgent? UserAgent { get; set; }
 	}
 }

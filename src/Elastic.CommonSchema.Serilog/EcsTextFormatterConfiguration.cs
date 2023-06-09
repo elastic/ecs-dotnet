@@ -26,12 +26,12 @@ namespace Elastic.CommonSchema.Serilog
 		///			.Enrich.WithEcsHttpContext(httpAccessor);
 		/// </code>
 		/// </summary>
-		IHttpAdapter MapHttpAdapter { get; set; }
+		IHttpAdapter? MapHttpAdapter { get; set; }
 
 		/// <summary>
 		/// Stop certain keys to be persisted as <see cref="EcsDocument.Metadata"/> or <see cref="BaseFieldSet.Labels"/>
 		/// </summary>
-		ISet<string> LogEventPropertiesToFilter { get;set; }
+		ISet<string>? LogEventPropertiesToFilter { get;set; }
 	}
 
 	/// <summary> Provides configuration options for <see cref="EcsTextFormatter{TEcsDocument}"/> </summary>
@@ -41,7 +41,7 @@ namespace Elastic.CommonSchema.Serilog
 		/// <summary>
 		/// Allows you to enrich <typeparamref name="TEcsDocument"/> using <see cref="LogEvent"/> before its being formatted
 		/// </summary>
-		Func<TEcsDocument, LogEvent, TEcsDocument> MapCustom { get; set; }
+		Func<TEcsDocument, LogEvent, TEcsDocument>? MapCustom { get; set; }
 	}
 
 	/// <inheritdoc cref="IEcsTextFormatterConfiguration{TEcsDocument}"/>
@@ -58,11 +58,13 @@ namespace Elastic.CommonSchema.Serilog
 		public bool IncludeUser { get; set; } = true;
 
 		/// <inheritdoc cref="IEcsTextFormatterConfiguration.MapHttpAdapter"/>
-		public IHttpAdapter MapHttpAdapter { get; set; }
+		public IHttpAdapter? MapHttpAdapter { get; set; }
+
 		/// <inheritdoc cref="IEcsTextFormatterConfiguration.LogEventPropertiesToFilter"/>
-		public ISet<string> LogEventPropertiesToFilter { get; set; }
+		public ISet<string>? LogEventPropertiesToFilter { get; set; }
+
 		/// <inheritdoc cref="IEcsTextFormatterConfiguration{TEcsDocument}.MapCustom"/>
-		public Func<TEcsDocument, LogEvent, TEcsDocument> MapCustom { get; set; }
+		public Func<TEcsDocument, LogEvent, TEcsDocument>? MapCustom { get; set; }
 	}
 
 	// ReSharper disable once ClassNeverInstantiated.Global
