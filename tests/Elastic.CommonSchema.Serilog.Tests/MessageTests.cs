@@ -205,7 +205,10 @@ namespace Elastic.CommonSchema.Serilog.Tests
 			var ecsEvents = ToEcsEvents(logEvents);
 
 			var (_, info) = ecsEvents.First();
-			((object)info.Url.Query).Should().Be(expectedValue);
+			if (expectedValue == null)
+				info.Url.Should().BeNull();
+			else
+				((object)info.Url.Query).Should().Be(expectedValue);
 			info.Metadata.Should().BeNull();
 		});
 

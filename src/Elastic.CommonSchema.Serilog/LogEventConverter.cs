@@ -4,6 +4,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Serilog.Events;
 
@@ -24,10 +25,10 @@ namespace Elastic.CommonSchema.Serilog
 		{
 			var ecsEvent = EcsDocument.CreateNewWithDefaults<TEcsDocument>(logEvent.Timestamp, logEvent.Exception, configuration);
 
-			if (logEvent.TryGetScalarPropertyValue(SpecialKeys.MachineName, out var machineName))
+			if (logEvent.TryGetScalarString(SpecialKeys.MachineName, out var machineName))
 			{
 				ecsEvent.Host ??= new Host();
-				ecsEvent.Host.Name = machineName.Value.ToString();
+				ecsEvent.Host.Name = machineName;
 			}
 
 			// if we don't want to lookup up process through System.Diagnostics still include whatever information we get from
@@ -68,38 +69,38 @@ namespace Elastic.CommonSchema.Serilog
 			return ecsEvent;
 		}
 
-		private static Service GetService(LogEvent logEvent)
+		private static Service? GetService(LogEvent logEvent)
 		{
-			if (!logEvent.TryGetScalarPropertyValue("ElasticApmServiceName", out var serviceName))
+			if (!logEvent.TryGetScalarString("ElasticApmServiceName", out var serviceName))
 				return null;
 
 			return new Service
 			{
-				Name = serviceName.Value.ToString(),
-				Version = logEvent.TryGetScalarPropertyValue("ElasticApmServiceVersion", out var version) ? version.Value.ToString() : null,
-				NodeName = logEvent.TryGetScalarPropertyValue("ElasticApmServiceNodeName", out var name) ? name.Value.ToString() : null
+				Name = serviceName,
+				Version = logEvent.TryGetScalarString("ElasticApmServiceVersion", out var version) ? version : null,
+				NodeName = logEvent.TryGetScalarString("ElasticApmServiceNodeName", out var name) ? name : null
 			};
 		}
 
-		private static bool TryGetTrace(LogEvent logEvent, out string traceId)
+		private static bool TryGetTrace(LogEvent logEvent, [NotNullWhen(true)]out string? traceId)
 		{
-			traceId = logEvent.TryGetScalarPropertyValue("ElasticApmTraceId", out var prop) ? prop.Value.ToString() : null;
+			traceId = logEvent.TryGetScalarString("ElasticApmTraceId", out var id) ? id : null;
 			return !string.IsNullOrWhiteSpace(traceId);
 		}
 
-		private static bool TryGetTransaction(LogEvent logEvent, out string transactionId)
+		private static bool TryGetTransaction(LogEvent logEvent, [NotNullWhen(true)]out string? transactionId)
 		{
-			transactionId = logEvent.TryGetScalarPropertyValue("ElasticApmTransactionId", out var prop) ? prop.Value.ToString() : null;
+			transactionId = logEvent.TryGetScalarString("ElasticApmTransactionId", out var id) ? id : null;
 			return !string.IsNullOrWhiteSpace(transactionId);
 		}
 
-		private static bool TryGetSpan(LogEvent logEvent, out string spanId)
+		private static bool TryGetSpan(LogEvent logEvent, [NotNullWhen(true)]out string? spanId)
 		{
-			spanId = logEvent.TryGetScalarPropertyValue("ElasticApmSpanId", out var prop) ? prop.Value.ToString() : null;
+			spanId = logEvent.TryGetScalarString("ElasticApmSpanId", out var id) ? id : null;
 			return !string.IsNullOrWhiteSpace(spanId);
 		}
 
-		private static MetadataDictionary GetMetadata(LogEvent logEvent, ISet<string> logEventPropertiesToFilter)
+		private static MetadataDictionary GetMetadata(LogEvent logEvent, ISet<string>? logEventPropertiesToFilter)
 		{
 			var dict = new MetadataDictionary { { "MessageTemplate", logEvent.MessageTemplate.Text } };
 
@@ -197,38 +198,33 @@ namespace Elastic.CommonSchema.Serilog
 			}
 		}
 
-		private static Server GetServer(LogEvent e, IEcsTextFormatterConfiguration configuration)
+		private static Server? GetServer(LogEvent e, IEcsTextFormatterConfiguration configuration)
 		{
-			var server = configuration.MapHttpAdapter?.Server;
-			e.TryGetScalarPropertyValue(SpecialKeys.EnvironmentUserName, out var environmentUserName);
-			e.TryGetScalarPropertyValue(SpecialKeys.Host, out var host);
+			e.TryGetScalarString(SpecialKeys.EnvironmentUserName, out var environmentUserName);
+			e.TryGetScalarString(SpecialKeys.Host, out var host);
 
+			var server = configuration.MapHttpAdapter?.Server;
 			if (server == null && environmentUserName == null && host == null)
 				return null;
 
 			server ??= new Server();
-			server.User = environmentUserName?.Value != null
-				? new User { Name = environmentUserName.Value.ToString() }
+			server.User = environmentUserName != null
+				? new User { Name = environmentUserName }
 				: null;
-			server.Address = host?.Value?.ToString();
+			server.Address = host;
 
 			return server;
 		}
 
-		private static Process GetProcessFromProperties(LogEvent e)
+		private static Process? GetProcessFromProperties(LogEvent e)
 		{
-			e.TryGetScalarPropertyValue(SpecialKeys.ProcessName, out var processNameProp);
-			e.TryGetScalarPropertyValue(SpecialKeys.ProcessId, out var processIdProp);
-			e.TryGetScalarPropertyValue(SpecialKeys.ThreadId, out var threadIdProp);
-			if (processNameProp == null && processIdProp == null && threadIdProp == null)
+			e.TryGetScalarString(SpecialKeys.ProcessName, out var processName);
+			e.TryGetScalarString(SpecialKeys.ProcessId, out var processId);
+			e.TryGetScalarString(SpecialKeys.ThreadId, out var threadId);
+			if (processName == null && processId == null && threadId== null)
 				return null;
 
-			var processName = processNameProp?.Value.ToString();
-			var processId = processIdProp?.Value.ToString();
-			var threadId = threadIdProp?.Value.ToString();
-			var pid = int.TryParse(processId ?? "", out var p)
-				? p
-				: (int?)null;
+			var pid = int.TryParse(processId ?? "", out var p) ? p : (int?)null;
 			return new Process
 			{
 				Title = string.IsNullOrEmpty(processName) ? null : processName,
@@ -240,8 +236,8 @@ namespace Elastic.CommonSchema.Serilog
 
 		private static Log GetLog(LogEvent e)
 		{
-			var source = e.TryGetScalarPropertyValue(SpecialKeys.SourceContext, out var context)
-				? context.Value.ToString()
+			var source = e.TryGetScalarString(SpecialKeys.SourceContext, out var context)
+				? context
 				: SpecialKeys.DefaultLogger;
 
 			var log = new Log { Level = e.Level.ToString("F"), Logger = source };
@@ -260,18 +256,18 @@ namespace Elastic.CommonSchema.Serilog
 			var evnt = new Event
 			{
 				Created = e.Timestamp,
-				Category = e.TryGetScalarPropertyValue(SpecialKeys.ActionCategory, out var actionCategoryProperty)
-					? new[] { actionCategoryProperty.Value.ToString() }
+				Category = e.TryGetScalarString(SpecialKeys.ActionCategory, out var actionCategory)
+					? new[] { actionCategory }
 					: null,
-				Action = e.TryGetScalarPropertyValue(SpecialKeys.ActionName, out var action)
-					? action.Value.ToString()
+				Action = e.TryGetScalarString(SpecialKeys.ActionName, out var action)
+					? action
 					: null,
-				Id = e.TryGetScalarPropertyValue(SpecialKeys.ActionId, out var actionId)
-					? actionId.Value.ToString()
+				Id = e.TryGetScalarString(SpecialKeys.ActionId, out var actionId)
+					? actionId
 					: null,
-				Kind = e.TryGetScalarPropertyValue(SpecialKeys.ActionKind, out var actionKindProperty) ? actionKindProperty.Value.ToString() : null,
-				Severity = e.TryGetScalarPropertyValue(SpecialKeys.ActionSeverity, out var actionSev)
-					? long.Parse(actionSev.Value.ToString())
+				Kind = e.TryGetScalarString(SpecialKeys.ActionKind, out var actionKind) ? actionKind : null,
+				Severity = e.TryGetScalarString(SpecialKeys.ActionSeverity, out var actionSev)
+					? long.Parse(actionSev)
 					: (int)e.Level,
 				Timezone = TimeZoneInfo.Local.StandardName,
 				Duration = elapsedMs != null ? (long)((double)elapsedMs * 1000000) : null
@@ -280,16 +276,16 @@ namespace Elastic.CommonSchema.Serilog
 			return evnt;
 		}
 
-		private static Agent GetAgent(LogEvent e)
+		private static Agent? GetAgent(LogEvent e)
 		{
-			Agent agent = null;
+			Agent? agent = null;
 
 			void Assign(string key, Action<Agent, string> assign)
 			{
-				if (!e.TryGetScalarPropertyValue(key, out var v)) return;
+				if (!e.TryGetScalarString(key, out var v)) return;
 
 				agent ??= new Agent();
-				assign(agent, v.Value.ToString());
+				assign(agent, v);
 			}
 
 			Assign(SpecialKeys.ApplicationId, (a, v) => a.Id = v);
@@ -300,92 +296,91 @@ namespace Elastic.CommonSchema.Serilog
 		}
 
 
-		private static Http GetHttp(LogEvent e, IEcsTextFormatterConfiguration configuration)
+		private static Http? GetHttp(LogEvent e, IEcsTextFormatterConfiguration configuration)
 		{
 			if (e.TryGetScalarPropertyValue(SpecialKeys.HttpContext, out var httpContext)
-			    && httpContext?.Value is HttpContextEnricher.HttpContextEnrichments enriched)
+			    && httpContext.Value is HttpContextEnricher.HttpContextEnrichments enriched)
 				return enriched.Http;
 
 			var http = configuration.MapHttpAdapter?.Http;
 
-			if ((e.TryGetScalarPropertyValue(SpecialKeys.Method, out var method) || e.TryGetScalarPropertyValue(SpecialKeys.RequestMethod, out method)) && method != null)
+			if (e.TryGetScalarString(SpecialKeys.Method, out var method) || e.TryGetScalarString(SpecialKeys.RequestMethod, out method))
 			{
 				http ??= new Http();
-				http.RequestMethod = method.Value?.ToString();
+				http.RequestMethod = method;
 			}
 
-			if (e.TryGetScalarPropertyValue(SpecialKeys.RequestId, out var requestId) && requestId != null)
+			if (e.TryGetScalarString(SpecialKeys.RequestId, out var requestId))
 			{
 				http ??= new Http();
-				http.RequestId = requestId.Value?.ToString();
+				http.RequestId = requestId;
 			}
 
-			if (e.TryGetScalarPropertyValue(SpecialKeys.StatusCode, out var statusCode) && statusCode != null)
+			if (e.TryGetScalarPropertyValue(SpecialKeys.StatusCode, out var statusCode))
 			{
 				http ??= new Http();
 				http.ResponseStatusCode = statusCode.Value is int s ? s : null;
 			}
-			if (e.TryGetScalarPropertyValue(SpecialKeys.ContentType, out var contentType) && contentType != null)
+			if (e.TryGetScalarString(SpecialKeys.ContentType, out var contentType))
 			{
 				http ??= new Http();
-				http.ResponseMimeType = contentType.Value?.ToString();
+				http.ResponseMimeType = contentType;
 			}
 
 			return http;
 		}
 
-		private static Url GetUrl(LogEvent e, IEcsTextFormatterConfiguration configuration)
+		private static Url? GetUrl(LogEvent e, IEcsTextFormatterConfiguration configuration)
 		{
 			if (e.TryGetScalarPropertyValue(SpecialKeys.HttpContext, out var httpContext)
-			    && httpContext?.Value is HttpContextEnricher.HttpContextEnrichments enriched)
+			    && httpContext.Value is HttpContextEnricher.HttpContextEnrichments enriched)
 				return enriched.Url;
 
 			var url = configuration.MapHttpAdapter?.Url;
 
-			if (e.TryGetScalarPropertyValue(SpecialKeys.Path, out var path) || e.TryGetScalarPropertyValue(SpecialKeys.RequestPath, out path))
+			if (e.TryGetScalarString(SpecialKeys.Path, out var path) || e.TryGetScalarString(SpecialKeys.RequestPath, out path))
 			{
 				url ??= new Url();
-				url.Path = path.Value.ToString();
+				url.Path = path;
 			}
 
-			if (e.TryGetScalarPropertyValue(SpecialKeys.Scheme, out var scheme))
+			if (e.TryGetScalarString(SpecialKeys.Scheme, out var scheme))
 			{
 				url ??= new Url();
-				url.Scheme = scheme.Value.ToString();
+				url.Scheme = scheme;
 			}
 
-			if (e.TryGetScalarPropertyValue(SpecialKeys.QueryString, out var queryString))
+			if (e.TryGetScalarString(SpecialKeys.QueryString, out var queryString))
 			{
 				url ??= new Url();
-				var str = queryString.Value?.ToString();
-				url.Query = string.IsNullOrEmpty(str) ? null : str.TrimStart('?');
+				url.Query = string.IsNullOrEmpty(queryString) ? null : queryString.TrimStart('?');
 			}
 
 			return url;
 		}
 
-		private static UserAgent GetUserAgent(LogEvent e, IEcsTextFormatterConfiguration configuration)
+		private static UserAgent? GetUserAgent(LogEvent e, IEcsTextFormatterConfiguration configuration)
 		{
 			if (e.TryGetScalarPropertyValue(SpecialKeys.HttpContext, out var httpContext)
-			    && httpContext?.Value is HttpContextEnricher.HttpContextEnrichments enriched)
+			    && httpContext.Value is HttpContextEnricher.HttpContextEnrichments enriched)
 				return enriched.UserAgent;
 
 			return configuration.MapHttpAdapter?.UserAgent;
 		}
 
-		private static User GetUser(LogEvent e, IEcsTextFormatterConfiguration configuration)
+		private static User? GetUser(LogEvent e, IEcsTextFormatterConfiguration configuration)
 		{
 			if (e.TryGetScalarPropertyValue(SpecialKeys.HttpContext, out var httpContext)
-			    && httpContext?.Value is HttpContextEnricher.HttpContextEnrichments enriched)
+			    && httpContext.Value is HttpContextEnricher.HttpContextEnrichments enriched)
 				return enriched.User;
 
 			return configuration.MapHttpAdapter?.User;
 		}
 
-		private static Client GetClient(LogEvent e, IEcsTextFormatterConfiguration configuration)
+		private static Client? GetClient(LogEvent e, IEcsTextFormatterConfiguration configuration)
 		{
 			if (e.TryGetScalarPropertyValue(SpecialKeys.HttpContext, out var httpContext)
-			    && httpContext?.Value is HttpContextEnricher.HttpContextEnrichments enriched)
+			    && httpContext.Value is HttpContextEnricher.HttpContextEnrichments enriched)
 				return enriched.Client;
 
 			return configuration.MapHttpAdapter?.Client;

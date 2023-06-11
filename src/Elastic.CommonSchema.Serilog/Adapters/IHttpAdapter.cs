@@ -10,17 +10,17 @@ namespace Elastic.CommonSchema.Serilog.Adapters;
 public interface IHttpAdapter
 {
 	/// <summary> The current <see cref="Client"/> information</summary>
-	Client Client { get; }
+	Client? Client { get; }
 	/// <summary> The current <see cref="Http"/> information</summary>
-	Http Http { get; }
+	Http? Http { get; }
 	/// <summary> The current <see cref="Server"/> information</summary>
-	Server Server { get; }
+	Server? Server { get; }
 	/// <summary> The current <see cref="Url"/> information</summary>
-	Url Url { get; }
+	Url? Url { get; }
 	/// <summary> The current <see cref="User"/> information</summary>
-	User User { get; }
+	User? User { get; }
 	/// <summary> The current <see cref="UserAgent"/> information</summary>
-	UserAgent UserAgent { get; }
+	UserAgent? UserAgent { get; }
 
 	/// <summary>Whether there is a context to infer information from</summary>
 	bool HasContext { get; }
