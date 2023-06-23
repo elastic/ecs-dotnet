@@ -7,6 +7,7 @@
     <Description>Serilog TextFormatter that formats log events in accordance with Elastic Common Schema (ECS).</Description>
     <IsPackable>True</IsPackable>
     <Nullable>enable</Nullable>
+    <LangVersion>latest</LangVersion>
   </PropertyGroup>
   <ItemGroup>
     <None Remove="Lib\UAParser.regexes.yaml" />
@@ -20,13 +21,12 @@
     <ProjectReference Include="..\Elastic.CommonSchema\Elastic.CommonSchema.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="PolySharp" Version="1.13.2">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-    </PackageReference>
     <PackageReference Include="Serilog" Version="2.9.0.0" />
     <PackageReference Condition="$(DefineConstants.Contains(NETSTANDARD))" Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.1.0.0" />
     <PackageReference Condition="$(DefineConstants.Contains(NETSTANDARD))" Include="Microsoft.AspNetCore.Http.Extensions" Version="2.1.0.0" />
     <Reference Condition="$(DefineConstants.Contains(FULLFRAMEWORK))" Include="System.Web" />
+    <PackageReference Include="PolySharp" Version="1.13.2" PrivateAssets="all">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
   </ItemGroup>
 </Project>

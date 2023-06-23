@@ -14,12 +14,12 @@ namespace Elastic.Extensions.Logging.Options
 		/// <summary>
 		/// Gets or sets the API Key, where connection pool type is Cloud, and authenticating via API Key.
 		/// </summary>
-		public string ApiKey { get; set; } = "";
+		public string? ApiKey { get; set; }
 
 		/// <summary>
 		/// Gets or sets the cloud ID, where connection pool type is Cloud.
 		/// </summary>
-		public string CloudId { get; set; } = "";
+		public string? CloudId { get; set; }
 
 		/// <summary>
 		/// Gets or sets the connection pool type. Default for multiple nodes is <c>Sniffing</c>; other supported values are
@@ -36,11 +36,11 @@ namespace Elastic.Extensions.Logging.Options
 		/// <summary>
 		/// Gets or sets the password, where connection pool type is Cloud, and authenticating via username/password.
 		/// </summary>
-		public string Password { get; set; } = "";
+		public string? Password { get; set; } = "";
 
 		/// <summary>
 		/// Gets or sets the username, where connection pool type is Cloud, and authenticating via username/password.
 		/// </summary>
-		public string Username { get; set; } = "";
+		public string? Username { get; set; } = "";
 	}
 }
