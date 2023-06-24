@@ -102,16 +102,26 @@ namespace Elastic.Extensions.Logging
 					return new StaticNodePool(nodeUris);
 				// case NodePoolType.StickySniffing:
 				case NodePoolType.Cloud:
-					if (!string.IsNullOrEmpty(shipTo.ApiKey))
+					if (shipTo.CloudId.IsNullOrEmpty())
+						throw new Exception($"Cloud {nameof(CloudNodePool)} requires '{nameof(ShipToOptions.CloudId)}' to be provided as well");
+
+					if (!shipTo.ApiKey.IsNullOrEmpty())
 					{
 						var apiKeyCredentials = new ApiKey(shipTo.ApiKey);
 						return new CloudNodePool(shipTo.CloudId, apiKeyCredentials);
 					}
-
-					var basicAuthCredentials = new BasicAuthentication(shipTo.Username, shipTo.Password);
-					return new CloudNodePool(shipTo.CloudId, basicAuthCredentials);
+					if (!shipTo.Username.IsNullOrEmpty() && !shipTo.Password.IsNullOrEmpty())
+					{
+						var basicAuthCredentials = new BasicAuthentication(shipTo.Username, shipTo.Password);
+						return new CloudNodePool(shipTo.CloudId, basicAuthCredentials);
+					}
+					throw new Exception(
+						$"Cloud requires either '{nameof(ShipToOptions.ApiKey)}' or"
+						+ $"'{nameof(ShipToOptions.Username)}' and '{nameof(ShipToOptions.Password)}"
+					);
 				default:
-					throw new ArgumentException($"Unrecognised connection pool type '{connectionPool}' specified in the configuration.", nameof(connectionPool));
+					throw new ArgumentException($"Unrecognised connection pool type '{connectionPool}' specified in the configuration.",
+						nameof(connectionPool));
 			}
 		}
 
@@ -120,10 +130,27 @@ namespace Elastic.Extensions.Logging
 			// TODO: Check if Uri has changed before recreating
 			// TODO: Injectable factory? Or some way of testing.
 			if (loggerOptions.Transport != null) return loggerOptions.Transport;
+
 			var connectionPool = CreateNodePool(loggerOptions);
 			var config = new TransportConfiguration(connectionPool, productRegistration: new ElasticsearchProductRegistration());
+			// Cloud sets authentication as required parameter in the constructor
+			if (loggerOptions.ShipTo.NodePoolType != NodePoolType.Cloud)
+				config = SetAuthenticationOnTransport(loggerOptions, config);
+
 			var transport = new DefaultHttpTransport<TransportConfiguration>(config);
 			return transport;
+		}
+
+		private static TransportConfiguration SetAuthenticationOnTransport(ElasticsearchLoggerOptions loggerOptions, TransportConfiguration config)
+		{
+			var apiKey = loggerOptions.ShipTo.ApiKey;
+			var username = loggerOptions.ShipTo.Username;
+			var password = loggerOptions.ShipTo.Password;
+			if (!username.IsNullOrEmpty() && !password.IsNullOrEmpty())
+				config = config.Authentication(new BasicAuthentication(username, password));
+			else if (!apiKey.IsNullOrEmpty())
+				config = config.Authentication(new ApiKey(apiKey));
+			return config;
 		}
 
 		private void ReloadShipper(ElasticsearchLoggerOptions loggerOptions)
@@ -157,7 +184,7 @@ namespace Elastic.Extensions.Logging
 					WriteEvent = async (stream, ctx, logEvent) => await logEvent.SerializeAsync(stream, ctx).ConfigureAwait(false),
 				};
 				SetupChannelOptions(_channelConfigurations, indexChannelOptions);
-				var channel =  new EcsDataStreamChannel<LogEvent>(indexChannelOptions);
+				var channel = new EcsDataStreamChannel<LogEvent>(indexChannelOptions);
 				channel.BootstrapElasticsearch(loggerOptions.BootstrapMethod);
 				return channel;
 			}

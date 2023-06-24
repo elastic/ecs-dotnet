@@ -28,6 +28,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{7610B796-BB3E-4CB2-8296-79BBFF6D23FC}"
 	ProjectSection(SolutionItems) = preProject
 		src\Directory.Build.props = src\Directory.Build.props
+		src\NullableExtensions.cs = src\NullableExtensions.cs
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{3582B07D-C2B0-49CC-B676-EAF806EB010E}"
