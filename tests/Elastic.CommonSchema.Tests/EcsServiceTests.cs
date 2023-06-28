@@ -40,7 +40,7 @@ public class EcsServiceTests
 	{
 		using var env1 = new Env("ELASTIC_APM_SERVICE_NAME", "test-service");
 		using var env2 = new Env("ELASTIC_APM_SERVICE_VERSION", "0.0.2");
-		var b = EcsDocument.CreateNewWithDefaults<EcsDocument>(cache: new EcsDocumentCreationCache());
+		var b = EcsDocument.CreateNewWithDefaults<EcsDocument>(initialCache: new EcsDocumentCreationCache());
 		b.Service.Should().NotBeNull();
 		b.Service.Name.Should().Be("test-service");
 		b.Service.Version.Should().NotBeNull("0.0.2");
@@ -50,7 +50,7 @@ public class EcsServiceTests
 		using var env1 = new Env("OTEL_SERVICE_NAME", "test-service-otel");
 		using var env2 = new Env("ELASTIC_APM_SERVICE_NAME", "test-service");
 		using var env3 = new Env("ELASTIC_APM_SERVICE_VERSION", "0.0.2");
-		var b = EcsDocument.CreateNewWithDefaults<EcsDocument>(cache: new EcsDocumentCreationCache());
+		var b = EcsDocument.CreateNewWithDefaults<EcsDocument>(initialCache: new EcsDocumentCreationCache());
 		b.Service.Should().NotBeNull();
 		b.Service.Name.Should().Be("test-service-otel");
 		b.Service.Version.Should().NotBeNull("0.0.2");
@@ -60,7 +60,7 @@ public class EcsServiceTests
 		using var env1 = new Env("OTEL_RESOURCE_ATTRIBUTES", "service.name=test-service-otel-attr,some-other=x,y");
 		using var env2 = new Env("ELASTIC_APM_SERVICE_NAME", "test-service");
 		using var env3 = new Env("ELASTIC_APM_SERVICE_VERSION", "0.0.2");
-		var b = EcsDocument.CreateNewWithDefaults<EcsDocument>(cache: new EcsDocumentCreationCache());
+		var b = EcsDocument.CreateNewWithDefaults<EcsDocument>(initialCache: new EcsDocumentCreationCache());
 		b.Service.Should().NotBeNull();
 		b.Service.Name.Should().Be("test-service-otel-attr");
 		b.Service.Version.Should().NotBeNull("0.0.2");
@@ -70,7 +70,7 @@ public class EcsServiceTests
 		using var env1 = new Env("OTEL_RESOURCE_ATTRIBUTES", "service.name=otel-attr,some-other=x,y");
 		using var env2 = new Env("OTEL_SERVICE_NAME", "otel-service");
 		using var env3 = new Env("ELASTIC_APM_SERVICE_VERSION", "0.0.2");
-		var b = EcsDocument.CreateNewWithDefaults<EcsDocument>(cache: new EcsDocumentCreationCache());
+		var b = EcsDocument.CreateNewWithDefaults<EcsDocument>(initialCache: new EcsDocumentCreationCache());
 		b.Service.Should().NotBeNull();
 		b.Service.Name.Should().Be("otel-service");
 		b.Service.Version.Should().NotBeNull("0.0.2");
@@ -78,7 +78,7 @@ public class EcsServiceTests
 	[Fact] public void ApmServiceEnvironment()
 	{
 		using var env1 = new Env("ELASTIC_APM_ENVIRONMENT", "staging");
-		var b = EcsDocument.CreateNewWithDefaults<EcsDocument>(cache: new EcsDocumentCreationCache());
+		var b = EcsDocument.CreateNewWithDefaults<EcsDocument>(initialCache: new EcsDocumentCreationCache());
 		b.Service.Should().NotBeNull();
 		b.Service.Environment.Should().Be("staging");
 	}
@@ -86,7 +86,7 @@ public class EcsServiceTests
 	{
 		using var env1 = new Env("ELASTIC_APM_ENVIRONMENT", "staging");
 		using var env2 = new Env("OTEL_RESOURCE_ATTRIBUTES", "deployment.environment=production");
-		var b = EcsDocument.CreateNewWithDefaults<EcsDocument>(cache: new EcsDocumentCreationCache());
+		var b = EcsDocument.CreateNewWithDefaults<EcsDocument>(initialCache: new EcsDocumentCreationCache());
 		b.Service.Should().NotBeNull();
 		b.Service.Environment.Should().Be("production");
 	}

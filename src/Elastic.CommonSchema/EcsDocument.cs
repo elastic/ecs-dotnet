@@ -71,24 +71,24 @@ public partial class EcsDocument
 		DateTimeOffset? timestamp = null,
 		Exception? exception = null,
 		IEcsDocumentCreationOptions? options = null,
-		EcsDocumentCreationCache? cache = null
+		EcsDocumentCreationCache? initialCache = null
 	)
 		where TEcsDocument : EcsDocument, new()
 	{
-		cache ??= DefaultCache;
-		cache.OTelResourceAttributes ??= GetOTelResourceAttributes();
+		initialCache ??= DefaultCache;
+		initialCache.OTelResourceAttributes ??= GetOTelResourceAttributes();
 
 		var doc = new TEcsDocument
 		{
 			Timestamp = timestamp ?? DateTimeOffset.UtcNow,
-			Ecs = cache.Ecs,
+			Ecs = initialCache.Ecs,
 			Error = GetError(exception),
-			Service = GetService(cache)
+			Service = GetService(initialCache)
 		};
 		SetActivityData(doc);
 
-		if (options?.IncludeHost is null or true) doc.Host = GetHost(cache);
-		if (options?.IncludeProcess is null or true) doc.Process = GetProcess(cache);
+		if (options?.IncludeHost is null or true) doc.Host = GetHost(initialCache);
+		if (options?.IncludeProcess is null or true) doc.Process = GetProcess(initialCache);
 		if (options?.IncludeUser is null or true) doc.User = GetUser();
 
 		return doc;

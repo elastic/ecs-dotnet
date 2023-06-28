@@ -38,8 +38,8 @@ public partial class EcsDocument
 		var apmServiceVersion = Environment.GetEnvironmentVariable("ELASTIC_APM_SERVICE_VERSION");
 		if (resourceAttributes.TryGetValue("service.version", out var resourceServiceVersion))
 			service.Version = resourceServiceVersion;
-		else if (!string.IsNullOrEmpty(apmServiceName))
-			service.Version = apmServiceName;
+		else if (!string.IsNullOrEmpty(apmServiceVersion))
+			service.Version = apmServiceVersion;
 
 		//ServiceNodeName
 		var apmServiceNodeName = Environment.GetEnvironmentVariable("ELASTIC_APM_SERVICE_NODE_NAME");
