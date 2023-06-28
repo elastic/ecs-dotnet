@@ -22,6 +22,7 @@ using System.Net;
 using System.Runtime.Serialization;
 using System.Text.Json.Serialization;
 
+#nullable enable
 namespace Elastic.CommonSchema
 {
 @foreach (var inlineObject in Model.InlineObjects)
@@ -36,7 +37,7 @@ namespace Elastic.CommonSchema
 <text>
 		///<summary>@property.FullPath</summary>
 		[JsonPropertyName("@property.JsonProperty"), DataMember(Name = "@property.JsonProperty")]
-		public @property.ClrType @property.Name { get; set; }
+		public @property.ClrType? @property.Name { get; set; }
 </text>
 }
 @foreach (var property in inlineObject.EntityProperties)
@@ -44,7 +45,7 @@ namespace Elastic.CommonSchema
 <text>
 		///<summary>@property.FullPath</summary>
 		[JsonPropertyName("@property.JsonProperty"), DataMember(Name = "@property.JsonProperty")]
-		public @property.Entity.Name @property.Name { get; set; }
+		public @property.Entity.Name? @property.Name { get; set; }
 </text>
 }
 	}

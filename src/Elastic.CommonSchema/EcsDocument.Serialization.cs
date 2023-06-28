@@ -27,7 +27,7 @@ namespace Elastic.CommonSchema
 		/// <param name="type">Set this to the type you wish to deserialize to</param>
 		/// <returns>Return true if <paramref name="propertyName"/> is handled</returns>
 		// ReSharper disable once UnusedParameter.Global
-		protected internal virtual bool TryRead(string propertyName, out Type type)
+		protected internal virtual bool TryRead(string propertyName, out Type? type)
 		{
 			type = null;
 			return false;
@@ -52,19 +52,19 @@ namespace Elastic.CommonSchema
 
 		// ReSharper disable once UnusedMember.Global
 		/// <summary> Deserialize json string to <see cref="EcsDocument"/> </summary>
-		public static EcsDocument Deserialize(string json) => EcsSerializerFactory<EcsDocument>.Deserialize(json);
+		public static EcsDocument? Deserialize(string json) => EcsSerializerFactory<EcsDocument>.Deserialize(json);
 
 		// ReSharper disable once UnusedMember.Global
 		/// <summary> Deserialize readonly span of bytes to <see cref="EcsDocument"/> </summary>
-		public static EcsDocument Deserialize(ReadOnlySpan<byte> json) => EcsSerializerFactory<EcsDocument>.Deserialize(json);
+		public static EcsDocument? Deserialize(ReadOnlySpan<byte> json) => EcsSerializerFactory<EcsDocument>.Deserialize(json);
 
 		// ReSharper disable once UnusedMember.Global
 		/// <summary> Deserialize stream to <see cref="EcsDocument"/> </summary>
-		public static EcsDocument Deserialize(Stream stream) => EcsSerializerFactory<EcsDocument>.Deserialize(stream);
+		public static EcsDocument? Deserialize(Stream stream) => EcsSerializerFactory<EcsDocument>.Deserialize(stream);
 
 		// ReSharper disable once UnusedMember.Global
 		/// <summary> Deserialize asynchronously a stream to <see cref="EcsDocument"/> </summary>
-		public static ValueTask<EcsDocument> DeserializeAsync(Stream stream, CancellationToken ctx = default) =>
+		public static ValueTask<EcsDocument?> DeserializeAsync(Stream stream, CancellationToken ctx = default) =>
 			EcsSerializerFactory<EcsDocument>.DeserializeAsync(stream, ctx);
 
 		/// <summary> Serialize this <see cref="EcsDocument"/> instance to string</summary>
@@ -74,8 +74,7 @@ namespace Elastic.CommonSchema
 		/// <summary> Serialize this <see cref="EcsDocument"/> instance to utf8 bytes</summary>
 		public byte[] SerializeToUtf8Bytes() => JsonSerializer.SerializeToUtf8Bytes(this, GetType(), SerializerOptions);
 
-		private static ReusableUtf8JsonWriter CachedReusableUtf8JsonWriter;
-		private static ReusableUtf8JsonWriter ReusableJsonWriter => CachedReusableUtf8JsonWriter ??= new ReusableUtf8JsonWriter();
+		private static readonly ReusableUtf8JsonWriter ReusableJsonWriter = new();
 
 		// ReSharper disable once UnusedMethodReturnValue.Global
 		/// <summary> Serialize this <see cref="EcsDocument"/> instance to a StringBuilder</summary>

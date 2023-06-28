@@ -6,7 +6,7 @@ namespace Elastic.CommonSchema;
 
 public partial class EcsDocument
 {
-	private static Service CachedService;
+	private static Service? CachedService;
 
 	private static Service GetService()
 	{
@@ -19,18 +19,18 @@ public partial class EcsDocument
 		return CachedService;
 	}
 
-	internal static string DiscoverDefaultServiceName(Assembly entryAssembly)
+	internal static string? DiscoverDefaultServiceName(Assembly? entryAssembly)
 	{
 		var name = entryAssembly?.GetName().Name;
 		return name;
 	}
 
-	private static string DiscoverServiceVersion(Assembly entryAssembly) =>
+	private static string? DiscoverServiceVersion(Assembly? entryAssembly) =>
 		entryAssembly is not null && !IsMsOrElastic(entryAssembly.GetName().GetPublicKeyToken())
 			? entryAssembly.GetCustomAttribute<AssemblyInformationalVersionAttribute>()?.InformationalVersion
 			: null;
 
-	private static Assembly GetEntryAssembly()
+	private static Assembly? GetEntryAssembly()
 	{
 		var entryAssembly = Assembly.GetEntryAssembly();
 		var entryAssemblyName = entryAssembly?.GetName();
@@ -43,7 +43,9 @@ public partial class EcsDocument
 		var assemblies =
 			from frame in stackFrames
 			let assembly = frame?.GetMethod()?.DeclaringType?.Assembly
-			where assembly != null && !IsMsOrElastic(assembly.GetName()?.GetPublicKeyToken())
+			where assembly != null
+			let bytes = assembly.GetName()?.GetPublicKeyToken()
+			where bytes != null && !IsMsOrElastic(bytes)
 			select assembly;
 
 		return assemblies.FirstOrDefault();

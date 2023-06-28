@@ -14,7 +14,7 @@ namespace Elastic.CommonSchema.Serialization
 	public partial class EcsDocumentJsonConverter<TBase> where TBase : EcsDocument, new()
 	{
 		/// <inheritdoc cref="JsonConverter{T}.Read"/>
-		public override TBase Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+		public override TBase? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
 		{
 			if (reader.TokenType == JsonTokenType.Null)
 			{
@@ -26,8 +26,8 @@ namespace Elastic.CommonSchema.Serialization
 
 			var ecsEvent = new TBase();
 
-			string loglevel = null;
-			string ecsVersion = null;
+			string? loglevel = null;
+			string? ecsVersion = null;
 			DateTimeOffset? timestamp = default;
 			var originalDepth = reader.CurrentDepth;
 			while (reader.Read())
@@ -61,11 +61,11 @@ namespace Elastic.CommonSchema.Serialization
 
 		private static void WriteMessage(Utf8JsonWriter writer, EcsDocument value)
 		{
-			if (!string.IsNullOrEmpty(value?.Message))
+			if (!string.IsNullOrEmpty(value.Message))
 				writer.WriteString("message", value.Message);
 		}
 
-		private static void WriteLogEntity(Utf8JsonWriter writer, Log value) {
+		private static void WriteLogEntity(Utf8JsonWriter writer, Log? value) {
 			if (value == null) return;
 			if (!value.ShouldSerialize) return;
 
@@ -74,11 +74,12 @@ namespace Elastic.CommonSchema.Serialization
 
 		private static void WriteLogLevel(Utf8JsonWriter writer, EcsDocument value)
 		{
-			if (!string.IsNullOrEmpty(value?.Log?.Level))
+			if (!string.IsNullOrEmpty(value.Log?.Level))
 				writer.WriteString("log.level", value.Log?.Level);
 		}
 
-		private static void WriteEcsEntity(Utf8JsonWriter writer, Ecs value) {
+		private static void WriteEcsEntity(Utf8JsonWriter writer, Ecs? value)
+		{
 			if (value == null) return;
 			if (!value.ShouldSerialize) return;
 

@@ -21,23 +21,25 @@ public static class EcsSerializerFactory<TEcsDocument> where TEcsDocument : EcsD
 	/// <summary>
 	/// Deserialize a <typeparamref name="TEcsDocument"/> instance from a Stream asynchronously.
 	/// </summary>
-	public static ValueTask<TEcsDocument> DeserializeAsync(Stream stream, CancellationToken ctx = default) =>
+	public static ValueTask<TEcsDocument?> DeserializeAsync(Stream stream, CancellationToken ctx = default) =>
 		JsonSerializer.DeserializeAsync<TEcsDocument>(stream, EcsJsonConfiguration.SerializerOptions, ctx);
 
 	/// <summary>
 	/// Deserialize a <typeparamref name="TEcsDocument"/> instance from a json string.
 	/// </summary>
-	public static TEcsDocument Deserialize(string json) => JsonSerializer.Deserialize<TEcsDocument>(json, EcsJsonConfiguration.SerializerOptions);
+	public static TEcsDocument? Deserialize(string json) =>
+		JsonSerializer.Deserialize<TEcsDocument>(json, EcsJsonConfiguration.SerializerOptions);
 
 	/// <summary>
 	/// Deserialize a <typeparamref name="TEcsDocument"/> instance from a readonly span of bytes.
 	/// </summary>
-	public static TEcsDocument Deserialize(ReadOnlySpan<byte> json) => JsonSerializer.Deserialize<TEcsDocument>(json, EcsJsonConfiguration.SerializerOptions);
+	public static TEcsDocument? Deserialize(ReadOnlySpan<byte> json) =>
+		JsonSerializer.Deserialize<TEcsDocument>(json, EcsJsonConfiguration.SerializerOptions);
 
 	/// <summary>
 	/// Deserialize a <typeparamref name="TEcsDocument"/> instance from a Stream.
 	/// </summary>
-	public static TEcsDocument Deserialize(Stream stream)
+	public static TEcsDocument? Deserialize(Stream stream)
 	{
 		using var ms = new MemoryStream();
 		var buffer = ArrayPool<byte>.Shared.Rent(1024);
