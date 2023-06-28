@@ -9,7 +9,7 @@ namespace Elastic.CommonSchema;
 /// and preserving the failures
 /// </summary>
 [JsonConverter(typeof(MetadataDictionaryConverter))]
-public class MetadataDictionary : Dictionary<string, object>
+public class MetadataDictionary : Dictionary<string, object?>
 {
 
 }

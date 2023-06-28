@@ -46,7 +46,7 @@ namespace Elastic.CommonSchema.Serialization
 		{
 			public override bool CanConvert(Type typeToConvert) => typeof(T).IsAssignableFrom(typeToConvert);
 
-			public override T Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options) => default;
+			public override T? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options) => default;
 
 			public override void Write(Utf8JsonWriter writer, T value, JsonSerializerOptions options)
 			{

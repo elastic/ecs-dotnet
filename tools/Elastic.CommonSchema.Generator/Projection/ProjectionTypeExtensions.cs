@@ -67,21 +67,21 @@ namespace Elastic.CommonSchema.Generator.Projection
 				case FieldType.Ip:
 					return "string";
 				case FieldType.Long:
-					return "long?";
+					return "long";
 				case FieldType.Integer:
-					return "int?";
+					return "int";
 				case FieldType.Date:
-					return "DateTimeOffset?";
+					return "DateTimeOffset";
 				case FieldType.Nested:
 				case FieldType.Object:
 					return "object";
 				case FieldType.ScaledFloat:
 				case FieldType.Float:
-					return "float?";
+					return "float";
 				case FieldType.GeoPoint:
 					return "Location";
 				case FieldType.Boolean:
-					return "bool?";
+					return "bool";
 				default: throw new ArgumentOutOfRangeException(fieldType.ToString());
 			}
 		}

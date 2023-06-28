@@ -15,13 +15,13 @@ namespace Elastic.CommonSchema.Serialization
 		internal class MetaDataSerializationFailure
 		{
 			[JsonPropertyName("reason"), DataMember(Name = "reason")]
-			public string SerializationFailure { get; set; }
+			public string? SerializationFailure { get; set; }
 
 			[JsonPropertyName("key"), DataMember(Name = "key")]
-			public string Property { get; set; }
+			public string? Property { get; set; }
 		}
 
-		public override MetadataDictionary Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+		public override MetadataDictionary? Read(ref Utf8JsonReader reader, Type? typeToConvert, JsonSerializerOptions options)
 		{
 			if (reader.TokenType != JsonTokenType.StartObject)
 				throw new JsonException($"JsonTokenType was of type {reader.TokenType}, only objects are supported");
@@ -37,12 +37,12 @@ namespace Elastic.CommonSchema.Serialization
 
 				var propertyName = reader.GetString();
 
-				if (string.IsNullOrWhiteSpace(propertyName))
+				if (propertyName.IsNullOrEmpty())
 					throw new JsonException("Failed to get property name");
 
 				reader.Read();
-
-				dictionary.Add(propertyName, ExtractValue(ref reader, options));
+				var value = ExtractValue(ref reader, options);
+				dictionary.Add(propertyName, value);
 			}
 
 			return dictionary.Count > 0 ? dictionary : null;
@@ -52,7 +52,7 @@ namespace Elastic.CommonSchema.Serialization
 		{
 			writer.WriteStartObject();
 
-			List<MetaDataSerializationFailure> failures = null;
+			List<MetaDataSerializationFailure>? failures = null;
 
 			foreach (var kvp in value)
 			{
@@ -90,7 +90,7 @@ namespace Elastic.CommonSchema.Serialization
 			writer.WriteEndObject();
 		}
 
-		private object ExtractValue(ref Utf8JsonReader reader, JsonSerializerOptions options)
+		private object? ExtractValue(ref Utf8JsonReader reader, JsonSerializerOptions options)
 		{
 			switch (reader.TokenType)
 			{
@@ -104,7 +104,7 @@ namespace Elastic.CommonSchema.Serialization
 				case JsonTokenType.StartObject:
 					return Read(ref reader, null, options);
 				case JsonTokenType.StartArray:
-					var list = new List<object>();
+					var list = new List<object?>();
 					while (reader.Read() && reader.TokenType != JsonTokenType.EndArray) list.Add(ExtractValue(ref reader, options));
 					return list;
 				case JsonTokenType.None:

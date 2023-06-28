@@ -87,7 +87,7 @@ namespace Elastic.CommonSchema
 		}
 
 		/// <summary> Implicitly convert from a lat, lon array </summary>
-		public static implicit operator Location(double[] lonLat) =>
+		public static implicit operator Location?(double[] lonLat) =>
 			lonLat.Length != 2
 				? null
 				: new Location(lonLat[1], lonLat[0]);

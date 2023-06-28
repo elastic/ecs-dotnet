@@ -44,8 +44,8 @@ public partial class EcsDocument
 	/// </summary>
 	public static TEcsDocument CreateNewWithDefaults<TEcsDocument>(
 		DateTimeOffset? timestamp = null,
-		Exception exception = null,
-		IEcsDocumentCreationOptions options = null
+		Exception? exception = null,
+		IEcsDocumentCreationOptions? options = null
 	)
 		where TEcsDocument : EcsDocument, new()
 	{
@@ -87,7 +87,7 @@ public partial class EcsDocument
 		return (type, version);
 	}
 
-	private static Host CachedHost;
+	private static Host? CachedHost;
 
 	private static Host GetHost()
 	{
@@ -113,8 +113,8 @@ public partial class EcsDocument
 
 	private static bool ProcessLookupFailed;
 	private static int ProcessId;
-	private static string ProcessName;
-	private static string MainWindowTitle;
+	private static string? ProcessName;
+	private static string? MainWindowTitle;
 
 	private static Process GetProcess()
 	{
@@ -151,10 +151,9 @@ public partial class EcsDocument
 	//Can not cache current thread's identity as it's used for role based security, different threads can have different identities
 	private static User GetUser() => new User { Id = Thread.CurrentPrincipal?.Identity.Name, Name = UserName, Domain = UserDomainName };
 
-	private static Error GetError(Exception exception)
+	private static Error? GetError(Exception? exception)
 	{
-		if (exception == null)
-			return null;
+		if (exception == null) return null;
 
 		// see: https://github.com/elastic/apm-agent-dotnet/pull/847
 		// see: https://github.com/elastic/apm-agent-dotnet/issues/6
@@ -168,7 +167,7 @@ public partial class EcsDocument
 	/// Mutates <paramref name="doc"/> and sets tracing information based on <paramref name="activity" /> or <see cref="Activity.Current"/>
 	/// <para>Note this will not override any explicitly set properties</para>
 	/// </summary>
-	private static void SetActivityData(EcsDocument doc, Activity activity = null)
+	private static void SetActivityData(EcsDocument doc, Activity? activity = null)
 	{
 		activity ??= Activity.Current;
 		if (activity == null)

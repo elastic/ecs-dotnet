@@ -11,7 +11,7 @@ namespace Elastic.CommonSchema.Serialization
 {
 	internal sealed class ReusableUtf8JsonWriter
 	{
-		private Utf8JsonWriter _cachedJsonWriter;
+		private Utf8JsonWriter? _cachedJsonWriter;
 		private readonly MemoryStream _cachedMemoryStream;
 		private readonly char[] _cachedEncodingBuffer;
 
@@ -27,9 +27,6 @@ namespace Elastic.CommonSchema.Serialization
 			var writer = System.Threading.Interlocked.Exchange(ref _cachedJsonWriter, null);
 			return new ReusableJsonWriter(this, writer, text);
 		}
-
-		public ReusableJsonWriter NewJsonWriter(StringBuilder text) =>
-			new ReusableJsonWriter(this, new Utf8JsonWriter(new MemoryStream()), text);
 
 		private void Return(Utf8JsonWriter writer, StringBuilder output)
 		{
@@ -61,11 +58,11 @@ namespace Elastic.CommonSchema.Serialization
 
 		internal readonly struct ReusableJsonWriter : IDisposable
 		{
-			private readonly ReusableUtf8JsonWriter _owner;
-			private readonly Utf8JsonWriter _writer;
+			private readonly ReusableUtf8JsonWriter? _owner;
+			private readonly Utf8JsonWriter? _writer;
 			private readonly StringBuilder _output;
 
-			public ReusableJsonWriter(ReusableUtf8JsonWriter owner, Utf8JsonWriter writer, StringBuilder output)
+			public ReusableJsonWriter(ReusableUtf8JsonWriter owner, Utf8JsonWriter? writer, StringBuilder output)
 			{
 				_writer = writer;
 				_owner = writer != null ? owner : null;
@@ -83,7 +80,11 @@ namespace Elastic.CommonSchema.Serialization
 				}
 			}
 
-			public void Dispose() => _owner?.Return(_writer, _output);
+			public void Dispose()
+			{
+				if (_writer != null)
+					_owner?.Return(_writer, _output);
+			}
 		}
 	}
 }
