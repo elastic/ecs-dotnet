@@ -213,8 +213,7 @@ public partial class EcsDocument
 
 	private static Error? GetError(Exception? exception)
 	{
-		if (exception == null)
-			return null;
+		if (exception == null) return null;
 
 		// see: https://github.com/elastic/apm-agent-dotnet/pull/847
 		// see: https://github.com/elastic/apm-agent-dotnet/issues/6
