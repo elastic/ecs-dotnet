@@ -1,3 +1,5 @@
+using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
@@ -6,17 +8,52 @@ namespace Elastic.CommonSchema;
 
 public partial class EcsDocument
 {
-	private static Service? CachedService;
-
-	private static Service GetService()
+	private static Service GetService(EcsDocumentCreationCache cache)
 	{
-		if (CachedService is not null) return CachedService;
+		if (cache.Service is not null) return cache.Service;
 
 		var entryAssembly = GetEntryAssembly();
 		var serviceName = DiscoverDefaultServiceName(entryAssembly);
 		var serviceVersion = DiscoverServiceVersion(entryAssembly);
-		CachedService = new Service { Name = serviceName, Version = serviceVersion, Type = "dotnet"};
-		return CachedService;
+		var service = new Service { Name = serviceName, Version = serviceVersion, Type = "dotnet"};
+		var resourceAttributes = cache.OTelResourceAttributes ?? new Dictionary<string, string>();
+		UpdateServiceWithEnvironmentConfig(service, resourceAttributes);
+		cache.Service = service;
+		return cache.Service;
+	}
+
+	private static void UpdateServiceWithEnvironmentConfig(Service service, IDictionary<string, string> resourceAttributes)
+	{
+		//ServiceName
+		var oTelServiceName = Environment.GetEnvironmentVariable("OTEL_SERVICE_NAME");
+		var apmServiceName = Environment.GetEnvironmentVariable("ELASTIC_APM_SERVICE_NAME");
+		if (!string.IsNullOrEmpty(oTelServiceName))
+			service.Name = oTelServiceName;
+		else if (resourceAttributes.TryGetValue("service.name", out var resourceServiceName))
+			service.Name = resourceServiceName;
+		else if (!string.IsNullOrEmpty(apmServiceName))
+			service.Name = apmServiceName;
+
+		//ServiceVersion
+		var apmServiceVersion = Environment.GetEnvironmentVariable("ELASTIC_APM_SERVICE_VERSION");
+		if (resourceAttributes.TryGetValue("service.version", out var resourceServiceVersion))
+			service.Version = resourceServiceVersion;
+		else if (!string.IsNullOrEmpty(apmServiceName))
+			service.Version = apmServiceName;
+
+		//ServiceNodeName
+		var apmServiceNodeName = Environment.GetEnvironmentVariable("ELASTIC_APM_SERVICE_NODE_NAME");
+		if (resourceAttributes.TryGetValue("service.instance.id", out var resourceServiceNodeName))
+			service.NodeName = resourceServiceNodeName;
+		else if (!string.IsNullOrEmpty(apmServiceNodeName))
+			service.NodeName = apmServiceNodeName;
+
+		// Environment
+		var apmEnvironment = Environment.GetEnvironmentVariable("ELASTIC_APM_ENVIRONMENT");
+		if (resourceAttributes.TryGetValue("deployment.environment", out var resourceEnvironment))
+			service.Environment = resourceEnvironment;
+		else if (!string.IsNullOrWhiteSpace(apmEnvironment))
+			service.Environment = apmEnvironment;
 	}
 
 	internal static string? DiscoverDefaultServiceName(Assembly? entryAssembly)

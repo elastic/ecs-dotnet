@@ -3,10 +3,12 @@
 // See the LICENSE file in the project root for more information
 
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
 using System.Threading;
+using static System.StringSplitOptions;
 #if !NETFRAMEWORK
 using System.Runtime.InteropServices;
 #endif
@@ -21,22 +23,45 @@ public interface IEcsDocumentCreationOptions
 	/// <summary>
 	/// Gets or sets a flag indicating whether host details should be included in the message. Defaults to <c>true</c>.
 	/// </summary>
-	public bool IncludeHost { get; set; }
+	bool IncludeHost { get; set; }
 
 	/// <summary>
 	/// Gets or sets a flag indicating whether process details should be included in the message. Defaults to <c>true</c>.
 	/// </summary>
-	public bool IncludeProcess { get; set; }
+	bool IncludeProcess { get; set; }
 
 	/// <summary>
 	/// Gets or sets a flag indicating whether user details should be included in the message. Defaults to <c>true</c>.
 	/// </summary>
-	public bool IncludeUser { get; set; }
+	bool IncludeUser { get; set; }
+}
+
+/// <summary>
+/// A bucket to optionally provide <see cref="EcsDocument.CreateNewWithDefaults{TEcsDocument}"/> a 'local' version to cache
+/// various ECS fields. This allows you to cache-bust any default caching the method does out-of-the-box.
+/// <para>If any of the properties are null they will be set by <see cref="EcsDocument.CreateNewWithDefaults{TEcsDocument}"/></para>
+/// </summary>
+public sealed class EcsDocumentCreationCache
+{
+	/// <summary> Cached <see cref="Host"/> for reuse </summary>
+	public Host? Host { get; set; }
+	/// <summary> Cached <see cref="Service"/> for reuse </summary>
+	public Service? Service { get; set; }
+	/// <summary> Cached <see cref="Process"/> for reuse </summary>
+	public Process? Process { get; set; }
+	/// <summary> Cached <see cref="Ecs"/> for reuse </summary>
+	public Ecs Ecs { get; } = new() { Version = EcsDocument.Version };
+
+	/// <summary> Cached parsed OpenTelemetry resource attributes </summary>
+	public IDictionary<string, string>? OTelResourceAttributes { get; set; }
 }
 
 public partial class EcsDocument
 {
-	private static readonly Ecs EcsFieldDefault = new() { Version = Version };
+	private static readonly EcsDocumentCreationCache DefaultCache = new()
+	{
+		OTelResourceAttributes = GetOTelResourceAttributes()
+	};
 
 	/// <summary>
 	/// Create an instance of <typeparamref name="TEcsDocument"/> and enrich it with as many fields as possible.
@@ -45,25 +70,49 @@ public partial class EcsDocument
 	public static TEcsDocument CreateNewWithDefaults<TEcsDocument>(
 		DateTimeOffset? timestamp = null,
 		Exception? exception = null,
-		IEcsDocumentCreationOptions? options = null
+		IEcsDocumentCreationOptions? options = null,
+		EcsDocumentCreationCache? cache = null
 	)
 		where TEcsDocument : EcsDocument, new()
 	{
+		cache ??= DefaultCache;
+		cache.OTelResourceAttributes ??= GetOTelResourceAttributes();
+
 		var doc = new TEcsDocument
 		{
 			Timestamp = timestamp ?? DateTimeOffset.UtcNow,
-			Ecs = EcsFieldDefault,
+			Ecs = cache.Ecs,
 			Error = GetError(exception),
-			Service = GetService()
+			Service = GetService(cache)
 		};
 		SetActivityData(doc);
 
-		if (options?.IncludeHost is null or true) doc.Host = GetHost();
-		if (options?.IncludeProcess is null or true) doc.Process = GetProcess();
+		if (options?.IncludeHost is null or true) doc.Host = GetHost(cache);
+		if (options?.IncludeProcess is null or true) doc.Process = GetProcess(cache);
 		if (options?.IncludeUser is null or true) doc.User = GetUser();
 
 		return doc;
 	}
+
+	internal static IDictionary<string, string> GetOTelResourceAttributes()
+	{
+		var resourceAttributes = Environment.GetEnvironmentVariable("OTEL_RESOURCE_ATTRIBUTES");
+		return ParseOTelResourceAttributes(resourceAttributes);
+	}
+
+	private static IDictionary<string, string> ParseOTelResourceAttributes(string resourceAttributes)
+	{
+		if (string.IsNullOrEmpty(resourceAttributes)) return new Dictionary<string, string>();
+
+		var keyValues = resourceAttributes
+			.Split(new[] { ',' }, RemoveEmptyEntries)
+			.Select(k => k.Split(new[] { '=' }, 2, RemoveEmptyEntries))
+			.Where(kv => kv.Length == 2)
+			.ToDictionary(kv => kv[0].Trim().ToLowerInvariant(), kv => kv[1].Trim());
+
+		return keyValues;
+	}
+
 
 	/// <summary>
 	/// Create an instance of <see cref="Agent"/> that defaults to the assembly from
@@ -87,15 +136,21 @@ public partial class EcsDocument
 		return (type, version);
 	}
 
-	private static Host? CachedHost;
-
-	private static Host GetHost()
+	private static Host GetHost(EcsDocumentCreationCache cache)
 	{
-		if (CachedHost is not null) return CachedHost;
+		if (cache.Host is not null) return cache.Host;
 
-		CachedHost = new Host
+		var hostName = Environment.MachineName;
+		var apmHostName = Environment.GetEnvironmentVariable("ELASTIC_APM_HOST_NAME");
+		var resourceAttributes = cache.OTelResourceAttributes ?? new Dictionary<string, string>();
+		if (resourceAttributes.TryGetValue("host.name", out var resourceHostName))
+			hostName = resourceHostName;
+		else if (!string.IsNullOrWhiteSpace(apmHostName))
+			hostName = apmHostName;
+
+		var host = new Host
 		{
-			Hostname = Environment.MachineName,
+			Hostname = hostName,
 #if !NETFRAMEWORK
 			Architecture = RuntimeInformation.OSArchitecture.ToString(),
 #endif
@@ -107,53 +162,59 @@ public partial class EcsDocument
 				Platform = Environment.OSVersion.Platform.ToString(), Version = Environment.OSVersion.Version.ToString()
 			}
 		};
+		if (resourceAttributes.TryGetValue("host.type", out var hostType))
+			host.Type = hostType;
+		if (resourceAttributes.TryGetValue("host.arch", out var hostArch))
+			host.Architecture = hostArch;
 
-		return CachedHost;
+		cache.Host = host;
+		return cache.Host;
 	}
 
 	private static bool ProcessLookupFailed;
-	private static int ProcessId;
-	private static string? ProcessName;
-	private static string? MainWindowTitle;
 
-	private static Process GetProcess()
+	private static Process? GetProcess(EcsDocumentCreationCache cache)
 	{
-		if (ProcessName is null && !ProcessLookupFailed)
+		Process ReturnFromCache()
 		{
-			try
+			var thread = Thread.CurrentThread;
+			return new Process
 			{
-				var process = System.Diagnostics.Process.GetCurrentProcess();
-				ProcessId = process.Id;
-				ProcessName = process.ProcessName;
-				MainWindowTitle = process.MainWindowTitle;
-			}
-			catch
-			{
-				ProcessLookupFailed = true;
-			}
+				Title = cache.Process.Title,
+				Name = cache.Process.Name,
+				Executable = cache.Process.Executable,
+				Pid = cache.Process.Pid,
+				ThreadName = thread.Name,
+				ThreadId = thread.ManagedThreadId
+			};
 		}
 
-		var currentThread = Thread.CurrentThread;
-		return new Process
+		if (cache.Process is not null) return ReturnFromCache();
+		if (ProcessLookupFailed) return null;
+
+		try
 		{
-			Title = MainWindowTitle,
-			Name = ProcessName,
-			Executable = ProcessName,
-			Pid = ProcessId,
-			ThreadName = currentThread.Name,
-			ThreadId = currentThread.ManagedThreadId
-		};
+			var p = System.Diagnostics.Process.GetCurrentProcess();
+			cache.Process = new Process { Title = p.MainWindowTitle, Name = p.ProcessName, Pid = p.Id, };
+			return ReturnFromCache();
+		}
+		catch
+		{
+			ProcessLookupFailed = true;
+		}
+		return null;
 	}
 
 	private static readonly string UserName = Environment.UserName;
 	private static readonly string UserDomainName = Environment.UserDomainName;
 
 	//Can not cache current thread's identity as it's used for role based security, different threads can have different identities
-	private static User GetUser() => new User { Id = Thread.CurrentPrincipal?.Identity.Name, Name = UserName, Domain = UserDomainName };
+	private static User GetUser() => new () { Id = Thread.CurrentPrincipal?.Identity.Name, Name = UserName, Domain = UserDomainName };
 
 	private static Error? GetError(Exception? exception)
 	{
-		if (exception == null) return null;
+		if (exception == null)
+			return null;
 
 		// see: https://github.com/elastic/apm-agent-dotnet/pull/847
 		// see: https://github.com/elastic/apm-agent-dotnet/issues/6
