@@ -15,7 +15,7 @@ namespace Elastic.CommonSchema.Serialization
 		where T : new()
 	{
 		/// <inheritdoc cref="System.Text.Json.Serialization.JsonConverter{T}.Read"/>
-		public override T Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+		public override T? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
 		{
 			if (reader.TokenType == JsonTokenType.Null)
 			{

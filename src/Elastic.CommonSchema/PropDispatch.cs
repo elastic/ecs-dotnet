@@ -132,7 +132,7 @@ namespace Elastic.CommonSchema
 			return true;
 		}
 
-		private static bool TrySetString(object value, out string b)
+		private static bool TrySetString(object value, out string? b)
 		{
 			b = value switch
 			{

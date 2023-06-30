@@ -18,6 +18,6 @@ namespace Elastic.CommonSchema.Serialization
 			typeToConvert == typeof(EcsDocument)
 				? EcsJsonConfiguration.DefaultEcsDocumentJsonConverter
 				// TODO validate this is only called once
-				: Activator.CreateInstance(typeof(EcsDocumentJsonConverter<>).MakeGenericType(typeToConvert)) as JsonConverter;
+				: (JsonConverter)Activator.CreateInstance(typeof(EcsDocumentJsonConverter<>).MakeGenericType(typeToConvert));
 	}
 }

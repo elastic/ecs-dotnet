@@ -23,6 +23,7 @@ using System.Runtime.Serialization;
 using System.Text.Json.Serialization;
 using Elastic.CommonSchema.Serialization;
 
+#nullable enable
 namespace Elastic.CommonSchema
 {
 	///<inheritdoc cref="@Model.Base.BaseFieldSet.Name"/>
@@ -43,14 +44,14 @@ namespace Elastic.CommonSchema
 		/// </summary>
 		[JsonPropertyName("metadata"), DataMember(Name = "metadata")]
 		[JsonConverter(typeof(MetadataDictionaryConverter))]
-		public MetadataDictionary Metadata { get; set; }
+		public MetadataDictionary? Metadata { get; set; }
 
 @foreach (var property in Model.Base.EntityProperties)
 {
 <text>
 		///<summary>@property.FullPath</summary>
 		[JsonPropertyName("@property.JsonProperty"), DataMember(Name = "@property.JsonProperty")]
-		public @property.Entity.Name @property.Name { get; set; }
+		public @property.Entity.Name? @property.Name { get; set; }
 </text>
 }
 @foreach (var entity in Model.EntityClasses)
@@ -58,7 +59,7 @@ namespace Elastic.CommonSchema
 <text>
 		///<summary>@entity.BaseFieldSet.FieldSet.Name</summary>
 		[JsonPropertyName("@entity.BaseFieldSet.FieldSet.Name"), DataMember(Name = "@entity.BaseFieldSet.FieldSet.Name")]
-		public @entity.Name @entity.Name { get; set; }
+		public @entity.Name? @entity.Name { get; set; }
 </text>
 }
 	}
