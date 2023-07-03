@@ -8,7 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Elastic.Elasticsearch.Ephemeral" Version="0.3.5" />
+    <PackageReference Include="Elastic.Elasticsearch.Ephemeral" Version="0.4.0" />
     <PackageReference Include="Elastic.Clients.Elasticsearch" Version="8.0.4" />
   </ItemGroup>
 
