@@ -27,10 +27,15 @@ namespace Elastic.CommonSchema.Serialization
 
 			var ecsEvent = new T();
 
+			var originalDepth = reader.CurrentDepth;
 			while (reader.Read())
 			{
 				if (reader.TokenType == JsonTokenType.EndObject)
-					break;
+				{
+					if (reader.CurrentDepth <= originalDepth)
+						break;
+					continue;
+				}
 
 				if (reader.TokenType != JsonTokenType.PropertyName)
 					throw new JsonException();

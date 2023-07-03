@@ -27,10 +27,15 @@ namespace Elastic.CommonSchema.Serialization
 				throw new JsonException($"JsonTokenType was of type {reader.TokenType}, only objects are supported");
 
 			var dictionary = new MetadataDictionary();
+			var originalDepth = reader.CurrentDepth;
 			while (reader.Read())
 			{
 				if (reader.TokenType == JsonTokenType.EndObject)
-					return dictionary;
+				{
+					if (reader.CurrentDepth <= originalDepth)
+						break;
+					continue;
+				}
 
 				if (reader.TokenType != JsonTokenType.PropertyName)
 					throw new JsonException("JsonTokenType was not PropertyName");
