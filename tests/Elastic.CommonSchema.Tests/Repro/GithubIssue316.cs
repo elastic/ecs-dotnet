@@ -20,7 +20,9 @@ namespace Elastic.CommonSchema.Tests.Repro
 			doc.Log.Should().NotBeNull();
 			doc.Log.Logger.Should().Be("root");
 			doc.Log.Level.Should().Be("info");
-
+			doc.Log.OriginFunction.Should().Be("prepare_logging");
+			doc.Log.OriginFileName.Should().Be("main.py");
+			doc.Log.OriginFileLine.Should().Be(90);
 		}
 	}
 }
