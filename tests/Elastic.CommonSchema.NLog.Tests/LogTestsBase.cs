@@ -25,7 +25,10 @@ namespace Elastic.CommonSchema.NLog.Tests
 			logEvents.Select(s => (s, EcsDocument.Deserialize(s)))
 				.ToList();
 
-		protected void TestLogger(Action<ILogger, Func<List<string>>> act)
+		protected void TestLogger(Action<ILogger, Func<List<string>>> act) =>
+			TestLoggerAndLayout(null, (layout, logger, events) => act(logger, events));
+
+		protected void TestLoggerAndLayout(Action<EcsLayout> setup, Action<EcsLayout, ILogger, Func<List<string>>> act)
 		{
 			// These layout renderers need to registered statically as ultimately ConfigurationItemFactory.Default is called in the call stack.
 			LayoutRenderer.Register<ApmTraceIdLayoutRenderer>(ApmTraceIdLayoutRenderer.Name); //generic
@@ -39,6 +42,7 @@ namespace Elastic.CommonSchema.NLog.Tests
 			var logConfig = new Config.LoggingConfiguration(logFactory);
 			var ecsLayout = new EcsLayout { IncludeScopeProperties = true };
 			ecsLayout.ExcludeProperties.Add("NotX");
+			setup?.Invoke(ecsLayout);
 			var memoryTarget = new MemoryTarget { Layout = ecsLayout, OptimizeBufferReuse = true };
 			logConfig.AddRule(LogLevel.Trace, LogLevel.Fatal, memoryTarget);
 			logConfig.DefaultCultureInfo = System.Globalization.CultureInfo.InvariantCulture;
@@ -57,9 +61,7 @@ namespace Elastic.CommonSchema.NLog.Tests
 			}
 
 			var logger = logFactory.GetCurrentClassLogger();
-			act(logger, GetAndValidateLogEvents);
+			act(ecsLayout, logger, GetAndValidateLogEvents);
 		}
-
-
 	}
 }
