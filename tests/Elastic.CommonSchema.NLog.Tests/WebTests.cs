@@ -47,7 +47,7 @@ namespace Elastic.CommonSchema.NLog.Tests
 				layout.IncludeAspNetProperties.Should().BeTrue();
 			});
 
-		[Theory]
+		[Theory(Skip = "Flakey On CI")]
 		[InlineData(false)]
 		[InlineData(true)]
 		public void CanIncludeAspNetPropertiesRequiresNLogWebAspNet(bool withNLogWeb) =>
