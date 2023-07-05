@@ -1,21 +1,21 @@
-# Console example with Elasticsearch.Extensions.Logging 
+# Console example with Elastic.Extensions.Logging 
 
-This example uses a stand alone logger provider, [Elasticsearch.Extensions.Logging](../../src/Elasticsearch.Extensions.Logging), that integrates directly with Microsoft.Extensions.Logging, and uses the Elastic Common Schema library.
+This example uses a stand alone logger provider, [Elastic.Extensions.Logging](../../src/Elastic.Extensions.Logging), that integrates directly with Microsoft.Extensions.Logging, and uses the Elastic Common Schema library.
 
 The example also uses LoggerMessage for [high performance logging](https://docs.microsoft.com/en-us/aspnet/core/fundamentals/logging/loggermessage).
 
 ## Usage
 
-Add a reference to the `Elasticsearch.Extensions.Logging` package:
+Add a reference to the `Elastic.Extensions.Logging` package:
 
 ```powershell
-dotnet add package Elasticsearch.Extensions.Logging
+dotnet add package Elastic.Extensions.Logging
 ```
 
 Then, add the provider to the loggingBuilder during host construction, using the namespace and the provided extension method. 
 
 ```c#
-using Elasticsearch.Extensions.Logging;
+using Elastic.Extensions.Logging;
 
 // ...
 
@@ -27,7 +27,7 @@ using Elasticsearch.Extensions.Logging;
 
 The default configuration will write to a local Elasticsearch running at http://localhost:9200/.
 
-For more details on configuration, see [Elasticsearch.Extensions.Logging](../../src/Elasticsearch.Extensions.Logging).
+For more details on configuration, see [Elastic.Extensions.Logging](../../src/Elastic.Extensions.Logging).
 
 ## Running the sample
 
@@ -73,7 +73,7 @@ Document fields follows the Elastic Common Schema standards (using the library),
     ],
     "agent": {
       "version": "1.0.0+bd3ad6",
-      "type": "Elasticsearch.Extensions.Logging.LoggerProvider"
+      "type": "Elastic.Extensions.Logging.LoggerProvider"
     },
     "ecs": {
       "version": "1.5.0"
