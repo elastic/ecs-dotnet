@@ -121,8 +121,15 @@ namespace Elastic.CommonSchema.Serialization
 		protected static bool ReadProp<TValue>(ref Utf8JsonReader reader, string key, JsonTypeInfo<TValue> typeInfo, T b, Action<T, TValue?> set)
 			where TValue : class
 		{
-			var value = JsonSerializer.Deserialize(ref reader, typeInfo);
-			set(b, value);
+			try
+			{
+				var value = JsonSerializer.Deserialize(ref reader, typeInfo);
+				set(b, value);
+			}
+			catch (Exception e)
+			{
+				throw new Exception(key, e);
+			}
 			return true;
 		}
 	}

@@ -90,4 +90,5 @@ public class EcsServiceTests
 		b.Service.Should().NotBeNull();
 		b.Service.Environment.Should().Be("production");
 	}
+
 }

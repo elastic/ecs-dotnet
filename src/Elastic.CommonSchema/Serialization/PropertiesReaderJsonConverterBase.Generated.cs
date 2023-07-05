@@ -34,9 +34,11 @@ internal partial class LogEntityJsonConverter : PropertiesReaderJsonConverterBas
 			"origin.file.name" => ReadPropString(ref reader, "origin.file.name", ecsEvent, (b, v) => b.OriginFileName = v),
 			"origin.function" => ReadPropString(ref reader, "origin.function", ecsEvent, (b, v) => b.OriginFunction = v),
 	"syslog" => ReadProp<LogSyslog>(ref reader, "syslog", ecsEvent, (b, v) => b.Syslog = v),
-			_ => false
+			_ => ReadProperty(ref reader, propertyName, ecsEvent)
 		};
 	}
+
+	private partial bool ReadProperty(ref Utf8JsonReader reader, string propertyName, Log ecsEvent);
 		
 	/// <inheritdoc cref="JsonConverter{T}.Write"/>
 	public override void Write(Utf8JsonWriter writer, Log value, JsonSerializerOptions options)
@@ -70,9 +72,11 @@ internal partial class EcsEntityJsonConverter : PropertiesReaderJsonConverterBas
 		return propertyName switch
 		{
 			"version" => ReadPropString(ref reader, "version", ecsEvent, (b, v) => b.Version = v),
-			_ => false
+			_ => ReadProperty(ref reader, propertyName, ecsEvent)
 		};
 	}
+
+	private partial bool ReadProperty(ref Utf8JsonReader reader, string propertyName, Ecs ecsEvent);
 		
 	/// <inheritdoc cref="JsonConverter{T}.Write"/>
 	public override void Write(Utf8JsonWriter writer, Ecs value, JsonSerializerOptions options)
