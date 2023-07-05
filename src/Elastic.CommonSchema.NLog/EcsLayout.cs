@@ -30,7 +30,6 @@ namespace Elastic.CommonSchema.NLog
 		public const string Name = nameof(EcsLayout);
 
 		private static bool? _nlogApmLoaded;
-		private static bool? _nlogWebLoaded;
 		private static Agent _defaultAgent;
 
 		private static bool NLogApmLoaded()
@@ -38,14 +37,6 @@ namespace Elastic.CommonSchema.NLog
 			if (_nlogApmLoaded.HasValue) return _nlogApmLoaded.Value;
 			_nlogApmLoaded = Type.GetType("Elastic.Apm.NLog.ApmTraceIdLayoutRenderer, Elastic.Apm.NLog") != null;
 			return _nlogApmLoaded.Value;
-		}
-
-		private static bool NLogWeb5Loaded()
-		{
-			if (_nlogWebLoaded.HasValue)
-				return _nlogWebLoaded.Value;
-			_nlogWebLoaded = Type.GetType("NLog.Web.LayoutRenderers.AspNetRequestDurationLayoutRenderer, NLog.Web.AspNetCore") != null;
-			return _nlogWebLoaded.Value;
 		}
 
 		private readonly Layout _disableThreadAgnostic = "${threadid:cached=true}";
@@ -83,11 +74,18 @@ namespace Elastic.CommonSchema.NLog
 				ApmServiceNodeName = "${ElasticApmServiceNodeName}";
 				ApmServiceVersion = "${ElasticApmServiceVersion}";
 			}
+		}
 
-
-			if (NLogWeb5Loaded())
+		/// <remarks>
+		/// Initialize NLog.Web related layout renderers. Initialization is delayed
+		/// to allow consumer to control it via <see cref="IncludeAspNetProperties"/>.
+		/// </remarks>
+		protected override void InitializeLayout()
+		{
+			if (CanIncludeAspNetProperties())
 			{
-				EventDurationMs = "${aspnet-request-duration}";
+				if (NLogWeb5Registered())
+					EventDurationMs = "${aspnet-request-duration}";
 
 				HttpRequestId = "${aspnet-TraceIdentifier}";
 				HttpRequestMethod = "${aspnet-request-method}";
@@ -105,7 +103,15 @@ namespace Elastic.CommonSchema.NLog
 				if (!NLogApmLoaded())
 					ApmTraceId = "${scopeproperty:item=RequestId:whenEmpty=${aspnet-TraceIdentifier}}}";
 			}
+
+			base.InitializeLayout();
 		}
+
+		private static bool NLogWeb5Registered() =>
+			ConfigurationItemFactory.Default.LayoutRenderers.TryGetDefinition("aspnet-request-duration", out _);
+
+		private static bool NLogWeb4Registered() =>
+			ConfigurationItemFactory.Default.LayoutRenderers.TryGetDefinition("aspnet-request-url", out _);
 
 		/// <summary></summary>
 		// ReSharper disable UnusedMember.Global
@@ -122,7 +128,6 @@ namespace Elastic.CommonSchema.NLog
 		/// </summary>
 		public Layout DisableThreadAgnostic => IncludeScopeProperties ? _disableThreadAgnostic : null;
 		// ReSharper restore UnusedMember.Global
-
 
 		/// <summary></summary>
 		public Layout AgentId { get; set; }
@@ -182,6 +187,22 @@ namespace Elastic.CommonSchema.NLog
 
 		/// <summary></summary>
 		public bool IncludeScopeProperties { get; set; }
+
+		/// <summary>
+		/// Set to false to disable rendering of aspnet properties.
+		/// </summary>
+		/// <remarks>
+		/// Default value is true, and actual rendering of aspnet properties
+		/// is not happening unless aspnet laout renderers are registered
+		/// (for example by registering NLog.Web.AspNetCore extension).
+		/// </remarks>
+		/// <seealso cref="CanIncludeAspNetProperties"/>
+		public bool IncludeAspNetProperties { get; set; } = true;
+
+		/// <summary>
+		/// Tests if aspnet properties would be rendered
+		/// </summary>
+		public bool CanIncludeAspNetProperties() => IncludeAspNetProperties && NLogWeb4Registered();
 
 		/// <summary></summary>
 		[ArrayParameter(typeof(TargetPropertyWithContext), "label")]
