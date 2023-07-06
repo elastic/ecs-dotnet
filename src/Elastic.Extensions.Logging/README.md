@@ -10,16 +10,16 @@ manage the network connection to Elasticsearch.
 
 ## Usage
 
-Add a reference to the `Elasticsearch.Extensions.Logging` package:
+Add a reference to the `Elastic.Extensions.Logging` package:
 
 ```powershell
-dotnet add package Elasticsearch.Extensions.Logging
+dotnet add package Elastic.Extensions.Logging
 ```
 
 Then, add the provider to the loggingBuilder during host construction, using the provided extension method. 
 
 ```c#
-using Elasticsearch.Extensions.Logging;
+using Elastic.Extensions.Logging;
 
 // ...
 
@@ -173,7 +173,7 @@ The `_source` field is the message sent from the LoggerProvider, along with the 
     ],
     "agent": {
       "version": "1.0.0+bd3ad6",
-      "type": "Elasticsearch.Extensions.Logging.LoggerProvider"
+      "type": "Elastic.Extensions.Logging.LoggerProvider"
     },
     "ecs": {
       "version": "1.5.0"
@@ -324,7 +324,7 @@ These identify the version of the logger provider being used.
 
 | Field | Type | Description |
 | ----- | ---- | ----------- |
-| agent.type | string | Name of the logger provider assembly, `Elasticsearch.Extensions.Logging.LoggerProvider`. |
+| agent.type | string | Name of the logger provider assembly, `Elastic.Extensions.Logging.LoggerProvider`. |
 | agent.version | string | Informational version number of the logger assembly, e.g. `1.1.1+bd3ad63`. |
 | ecs.version | string | Version of ECS standard used, currently `1.5`. |
 

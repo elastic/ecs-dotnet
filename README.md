@@ -67,7 +67,7 @@ Foundational project that contains a full C# representation of ECS. [Learn more.
 
 ## Logging
 
-### [Elasticsearch.Extensions.Logging](src/Elasticsearch.Extensions.Logging/ReadMe.md)
+### [Elastic.Extensions.Logging](src/Elastic.Extensions.Logging/ReadMe.md)
 
 Elastic Stack (ELK) logger provider for `Microsoft.Extensions.Logging`.
 
@@ -76,7 +76,7 @@ Writes direct to Elasticsearch using the Elastic Common Schema, with semantic lo
 This logger provider can be added directly to Microsoft.Extensions.Logging:
 
 ```csharp
-using Elasticsearch.Extensions.Logging;
+using Elastic.Extensions.Logging;
 
 // ...
 
