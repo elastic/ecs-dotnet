@@ -2,11 +2,14 @@
 // Elasticsearch B.V licenses this file to you under the Apache 2.0 License.
 // See the LICENSE file in the project root for more information
 
+using System.Net.Security;
 using Elastic.Clients.Elasticsearch;
+using Elastic.Elasticsearch.Ephemeral;
 using Elastic.Elasticsearch.Xunit;
 using Elastic.Transport;
 using Xunit;
 using Xunit.Abstractions;
+using static Elastic.Elasticsearch.Managed.DetectedProxySoftware;
 
 [assembly: TestFramework("Elastic.Elasticsearch.Xunit.Sdk.ElasticTestFramework", "Elastic.Elasticsearch.Xunit")]
 
@@ -15,24 +18,19 @@ namespace Elasticsearch.IntegrationDefaults
 	/// <summary> Declare our cluster that we want to inject into our test classes </summary>
 	public abstract class TestClusterBase : XunitClusterBase
 	{
-		protected TestClusterBase(int port = 9200) : base(new XunitClusterConfiguration("8.4.0")
-		{
-			StartingPortNumber = port
-		}) { }
+		protected TestClusterBase(int port = 9200, ClusterFeatures features = ClusterFeatures.None)
+			: base(new XunitClusterConfiguration("8.4.0", features) { StartingPortNumber = port, AutoWireKnownProxies = true }) { }
 
 		public ElasticsearchClient CreateClient(ITestOutputHelper output, Func<ICollection<Uri>, ICollection<Uri>>? alterNodes = null) =>
-			this.GetOrAddClient(_ =>
+			this.GetOrAddClient(cluster =>
 			{
-				var hostName = (System.Diagnostics.Process.GetProcessesByName("mitmproxy").Any()
-					? "ipv4.fiddler"
-					: "localhost");
-				var nodes = NodesUris(hostName);
+				var isCi = !string.IsNullOrEmpty(Environment.GetEnvironmentVariable("CI"));
+				var nodes = NodesUris();
 				if (alterNodes != null) nodes = alterNodes(nodes);
 				var connectionPool = new StaticNodePool(nodes);
-				var isCi = !string.IsNullOrEmpty(Environment.GetEnvironmentVariable("CI"));
 				var settings = new ElasticsearchClientSettings(connectionPool)
-					.Proxy(new Uri("http://ipv4.fiddler:8080"), null!, null!)
 					.RequestTimeout(TimeSpan.FromSeconds(5))
+					.ServerCertificateValidationCallback(CertificateValidations.AllowAll)
 					.OnRequestCompleted(d =>
 					{
 						try
@@ -54,6 +52,12 @@ namespace Elasticsearch.IntegrationDefaults
 					.EnableDebugMode()
 					//do not request server stack traces on CI, too noisy
 					.IncludeServerStackTraceOnError(!isCi);
+				if (cluster.DetectedProxy != None)
+				{
+					var proxyUrl = cluster.DetectedProxy == Fiddler ? "ipv4.fiddler" : "localhost";
+					settings = settings.Proxy(new Uri($"http://{proxyUrl}:8080"), null!, null!);
+				}
+
 				return new ElasticsearchClient(settings);
 			});
 	}
