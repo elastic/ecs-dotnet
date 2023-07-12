@@ -13,52 +13,61 @@ using static Elastic.Elasticsearch.Managed.DetectedProxySoftware;
 
 [assembly: TestFramework("Elastic.Elasticsearch.Xunit.Sdk.ElasticTestFramework", "Elastic.Elasticsearch.Xunit")]
 
-namespace Elasticsearch.IntegrationDefaults
+namespace Elasticsearch.IntegrationDefaults;
+
+public static class TestClusterExtensions
 {
-	/// <summary> Declare our cluster that we want to inject into our test classes </summary>
-	public abstract class TestClusterBase : XunitClusterBase
+	public static ElasticsearchClient CreateElasticsearchClient(
+		this IEphemeralCluster cluster,
+		ITestOutputHelper output,
+		Func<ElasticsearchClientSettings, ElasticsearchClientSettings> updateSettings,
+		Func<ICollection<Uri>, ICollection<Uri>>? alterNodes = null
+	)
 	{
-		protected TestClusterBase(int port = 9200, ClusterFeatures features = ClusterFeatures.None)
-			: base(new XunitClusterConfiguration("8.4.0", features) { StartingPortNumber = port, AutoWireKnownProxies = true }) { }
-
-		public ElasticsearchClient CreateClient(ITestOutputHelper output, Func<ICollection<Uri>, ICollection<Uri>>? alterNodes = null) =>
-			this.GetOrAddClient(cluster =>
+		var isCi = !string.IsNullOrEmpty(Environment.GetEnvironmentVariable("CI"));
+		var nodes = cluster.NodesUris();
+		if (alterNodes != null) nodes = alterNodes(nodes);
+		var connectionPool = new StaticNodePool(nodes);
+		var settings = new ElasticsearchClientSettings(connectionPool)
+			.RequestTimeout(TimeSpan.FromSeconds(5))
+			.ServerCertificateValidationCallback(CertificateValidations.AllowAll)
+			.OnRequestCompleted(d =>
 			{
-				var isCi = !string.IsNullOrEmpty(Environment.GetEnvironmentVariable("CI"));
-				var nodes = NodesUris();
-				if (alterNodes != null) nodes = alterNodes(nodes);
-				var connectionPool = new StaticNodePool(nodes);
-				var settings = new ElasticsearchClientSettings(connectionPool)
-					.RequestTimeout(TimeSpan.FromSeconds(5))
-					.ServerCertificateValidationCallback(CertificateValidations.AllowAll)
-					.OnRequestCompleted(d =>
-					{
-						try
-						{
-							// ON CI only logged failed requests
-							// Locally we just log everything for ease of development
-							if (isCi)
-							{
-								if (!d.HasSuccessfulStatusCode)
-									output.WriteLine(d.DebugInformation);
-							}
-							else output.WriteLine(d.DebugInformation);
-						}
-						catch
-						{
-							// ignored
-						}
-					})
-					.EnableDebugMode()
-					//do not request server stack traces on CI, too noisy
-					.IncludeServerStackTraceOnError(!isCi);
-				if (cluster.DetectedProxy != None)
+				try
 				{
-					var proxyUrl = cluster.DetectedProxy == Fiddler ? "ipv4.fiddler" : "localhost";
-					settings = settings.Proxy(new Uri($"http://{proxyUrl}:8080"), null!, null!);
+					// ON CI only logged failed requests
+					// Locally we just log everything for ease of development
+					if (isCi)
+					{
+						if (!d.HasSuccessfulStatusCode)
+							output.WriteLine(d.DebugInformation);
+					}
+					else output.WriteLine(d.DebugInformation);
 				}
+				catch
+				{
+					// ignored
+				}
+			})
+			.EnableDebugMode();
+		if (cluster.DetectedProxy != None)
+		{
+			var proxyUrl = cluster.DetectedProxy == Fiddler ? "ipv4.fiddler" : "localhost";
+			settings = settings.Proxy(new Uri($"http://{proxyUrl}:8080"), null!, null!);
+		}
 
-				return new ElasticsearchClient(settings);
-			});
+		return new ElasticsearchClient(updateSettings(settings));
 	}
+}
+
+/// <summary> Declare our cluster that we want to inject into our test classes </summary>
+public abstract class TestClusterBase : XunitClusterBase
+{
+	protected TestClusterBase(int port = 9200, ClusterFeatures features = ClusterFeatures.None)
+		: base(new XunitClusterConfiguration("8.4.0", features) { StartingPortNumber = port, AutoWireKnownProxies = true }) { }
+
+	protected virtual ElasticsearchClientSettings UpdateClientSettings(ElasticsearchClientSettings settings) => settings;
+
+	public ElasticsearchClient CreateClient(ITestOutputHelper output, Func<ICollection<Uri>, ICollection<Uri>>? alterNodes = null) =>
+		this.GetOrAddClient(cluster => cluster.CreateElasticsearchClient(output, UpdateClientSettings, alterNodes));
 }

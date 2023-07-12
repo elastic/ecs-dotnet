@@ -132,7 +132,7 @@ namespace Elastic.Extensions.Logging
 			if (loggerOptions.Transport != null) return loggerOptions.Transport;
 
 			var connectionPool = CreateNodePool(loggerOptions);
-			var config = new TransportConfiguration(connectionPool, productRegistration: new ElasticsearchProductRegistration());
+			var config = new TransportConfiguration(connectionPool, productRegistration: ElasticsearchProductRegistration.Default);
 			// Cloud sets authentication as required parameter in the constructor
 			if (loggerOptions.ShipTo.NodePoolType != NodePoolType.Cloud)
 				config = SetAuthenticationOnTransport(loggerOptions, config);

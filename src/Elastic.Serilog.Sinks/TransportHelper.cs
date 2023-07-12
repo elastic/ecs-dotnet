@@ -9,7 +9,7 @@ namespace Elastic.Serilog.Sinks
 {
 	internal static class TransportHelper
 	{
-		private static readonly ProductRegistration DefaultProduct = new ElasticsearchProductRegistration();
+		private static readonly ProductRegistration DefaultProduct = ElasticsearchProductRegistration.Default;
 
 		public static TransportConfiguration Default() =>
 			new TransportConfiguration(new Uri("http://localhost:9200"), DefaultProduct);
