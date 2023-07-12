@@ -12,6 +12,43 @@ sending events (such as logs) to various outputs.
 Currently these shippers support Elastic Cloud & Elasticsearch but
 other outputs are in the works.
 
+=== Elasticsearch Security
+
+If Elasticsearch's security is enabled you will need to ensure you configure a user or API key with enough privileges
+
+==== Bootstrap 
+
+In order for the datashippers to have enough privileges to bootstrap the
+target datastreams with all the ECS mappings, templates and settings the authenticated 
+security principal needs the following minimum privileges:
+
+[options="header"]
+|====
+|Type | Privileges
+
+|Cluster
+|`monitor`, `manage_ilm`, `manage_index_templates`, `manage_pipeline`
+
+|Index
+|`manage`, `create_doc`
+|====
+
+==== No bootstrap
+
+If the datashippers are configured to skip bootstrapping the target destinations all together,
+the security principal requires the following minimum privileges to push data.
+
+[options="header"]
+|====
+|Type | Privileges
+
+|Cluster
+|`monitor` 
+
+|Index
+|`auto_configure` `create_doc`
+|====
+
 include::./ingest-commonschema.asciidoc[Elastic.Ingest.Elasticsearch.CommonSchema]
 include::./serilog.asciidoc[Serilog]
 include::./extensions-logging.asciidoc[Microsoft.Extensions.Logging]
