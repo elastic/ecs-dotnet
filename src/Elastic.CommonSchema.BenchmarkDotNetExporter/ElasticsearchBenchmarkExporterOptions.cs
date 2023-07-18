@@ -7,6 +7,7 @@ using System.Linq;
 using Elastic.Channels.Diagnostics;
 using Elastic.CommonSchema.BenchmarkDotNetExporter.Domain;
 using Elastic.Ingest.Elasticsearch;
+using Elastic.Ingest.Elasticsearch.CommonSchema;
 using Elastic.Ingest.Elasticsearch.DataStreams;
 using Elastic.Transport;
 using Elastic.Transport.Products.Elasticsearch;
@@ -146,7 +147,7 @@ namespace Elastic.CommonSchema.BenchmarkDotNetExporter
 
 		internal TransportConfiguration CreateTransportConfiguration()
 		{
-			var settings = new TransportConfiguration(CreateNodePool(), productRegistration: new ElasticsearchProductRegistration());
+			var settings = new TransportConfiguration(CreateNodePool(), productRegistration: ElasticsearchProductRegistration.Default);
 			if (EnableDebugMode)
 				settings.EnableDebugMode();
 			return settings;
