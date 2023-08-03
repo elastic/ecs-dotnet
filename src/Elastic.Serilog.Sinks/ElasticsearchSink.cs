@@ -99,12 +99,9 @@ namespace Elastic.Serilog.Sinks
 		private readonly EcsTextFormatterConfiguration<TEcsDocument> _formatterConfiguration;
 		private readonly EcsDataStreamChannel<TEcsDocument> _channel;
 
-		private LogEventLevel? MinimumLevel { get; }
-
 		/// <inheritdoc cref="ElasticsearchSink"/>>
 		public ElasticsearchSink(ElasticsearchSinkOptions<TEcsDocument> options)
 		{
-			MinimumLevel = options.MinimumLevel;
 			_formatterConfiguration = options.TextFormatting;
 			var channelOptions = new DataStreamChannelOptions<TEcsDocument>(options.Transport)
 			{
