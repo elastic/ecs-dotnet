@@ -41,6 +41,13 @@ namespace Elastic.Extensions.Logging.Options
 		public BootstrapMethod BootstrapMethod { get; set; } = BootstrapMethod.None;
 
 		/// <summary>
+		/// The ILM Policy to apply, see the following for more details:
+		/// <para>https://www.elastic.co/guide/en/elasticsearch/reference/current/index-lifecycle-management.html</para>
+		/// Defaults to `logs` which is shipped by default with Elasticsearch
+		/// </summary>
+		public string? IlmPolicy { get; set; }
+
+		/// <summary>
 		/// The index to log into, if this is not set the logger integration will assume it will write into datastreams <see cref="DataStream"/>.
 		/// <para>
 		/// If both <see cref="Index"/> and <see cref="DataStream"/> are set <see cref="DataStream"/> takes precedence.
