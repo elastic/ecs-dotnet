@@ -185,7 +185,7 @@ namespace Elastic.Extensions.Logging
 				};
 				SetupChannelOptions(_channelConfigurations, indexChannelOptions);
 				var channel = new EcsDataStreamChannel<LogEvent>(indexChannelOptions);
-				channel.BootstrapElasticsearch(loggerOptions.BootstrapMethod);
+				channel.BootstrapElasticsearch(loggerOptions.BootstrapMethod, loggerOptions.IlmPolicy);
 				return channel;
 			}
 		}

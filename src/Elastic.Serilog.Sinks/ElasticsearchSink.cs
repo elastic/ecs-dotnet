@@ -60,6 +60,13 @@ namespace Elastic.Serilog.Sinks
 		/// <inheritdoc cref="BootstrapMethod"/>
 		public BootstrapMethod BootstrapMethod { get; set; }
 
+		/// <summary>
+		/// The ILM Policy to apply, see the following for more details:
+		/// <para>https://www.elastic.co/guide/en/elasticsearch/reference/current/index-lifecycle-management.html</para>
+		/// Defaults to `logs` which is shipped by default with Elasticsearch
+		/// </summary>
+		public string? IlmPolicy { get; set; }
+
 	}
 
 	/// <summary>
@@ -90,7 +97,7 @@ namespace Elastic.Serilog.Sinks
 			_channel = new EcsDataStreamChannel<TEcsDocument>(channelOptions, new [] { new SelfLogCallbackListener<TEcsDocument>(options)});
 			if (_channel.DiagnosticsListener != null)
 				options.ChannelDiagnosticsCallback?.Invoke(_channel.DiagnosticsListener);
-			_channel.BootstrapElasticsearch(options.BootstrapMethod);
+			_channel.BootstrapElasticsearch(options.BootstrapMethod, options.IlmPolicy);
 		}
 
 		/// <inheritdoc cref="ILogEventSink.Emit"/>
