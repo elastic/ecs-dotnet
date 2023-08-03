@@ -67,6 +67,20 @@ namespace Elastic.Serilog.Sinks
 		/// </summary>
 		public string? IlmPolicy { get; set; }
 
+		/// <summary>
+		/// Provide an explicit minimum <see cref="LogEventLevel"/> for the Elasticsearch sink.
+		/// <para>This allows you to separately configure the sink to filter out messages.</para>
+		/// <para>E.g: Configure default logging at <see cref="LogEventLevel.Verbose"/> but only write <see cref="LogEventLevel.Error"/>
+		/// to Elasticsearch</para>
+		/// </summary>
+		public LogEventLevel? MinimumLevel { get; set; }
+
+		/// <summary>
+		/// A switch allowing the pass-through minimum level to be changed at runtime.
+		/// <para>Takes precedence over <see cref="MinimumLevel"/> if both are configured</para>
+		/// </summary>
+		public LoggingLevelSwitch? LevelSwitch { get; set; }
+
 	}
 
 	/// <summary>

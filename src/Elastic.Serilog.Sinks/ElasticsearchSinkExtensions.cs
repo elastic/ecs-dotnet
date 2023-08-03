@@ -4,6 +4,8 @@ using Elastic.CommonSchema;
 using Elastic.Transport;
 using Serilog;
 using Serilog.Configuration;
+using Serilog.Core;
+using Serilog.Events;
 
 namespace Elastic.Serilog.Sinks
 {
@@ -17,7 +19,11 @@ namespace Elastic.Serilog.Sinks
 		/// <para>Use <paramref name="loggerConfiguration"/> configure where and how data should be written</para>
 		/// </summary>
 		public static LoggerConfiguration Elasticsearch(this LoggerSinkConfiguration loggerConfiguration, ElasticsearchSinkOptions? options = null) =>
-			loggerConfiguration.Sink(new ElasticsearchSink(options ?? new ElasticsearchSinkOptions()));
+			loggerConfiguration.Sink(
+				new ElasticsearchSink(options ?? new ElasticsearchSinkOptions())
+				, restrictedToMinimumLevel: options?.MinimumLevel ?? LevelAlias.Minimum
+				, levelSwitch: options?.LevelSwitch
+			);
 
 		/// <summary>
 		/// Write logs directly to Elasticsearch.
@@ -26,7 +32,11 @@ namespace Elastic.Serilog.Sinks
 		/// </summary>
 		public static LoggerConfiguration Elasticsearch<TEcsDocument>(this LoggerSinkConfiguration loggerConfiguration, ElasticsearchSinkOptions<TEcsDocument>? options = null)
 			where TEcsDocument : EcsDocument, new() =>
-			loggerConfiguration.Sink(new ElasticsearchSink<TEcsDocument>(options ?? new ElasticsearchSinkOptions<TEcsDocument>()));
+			loggerConfiguration.Sink(
+				new ElasticsearchSink<TEcsDocument>(options ?? new ElasticsearchSinkOptions<TEcsDocument>())
+				, restrictedToMinimumLevel: options?.MinimumLevel ?? LevelAlias.Minimum
+				, levelSwitch: options?.LevelSwitch
+			);
 
 		/// <summary>
 		/// Write logs directly to Elasticsearch.
@@ -38,15 +48,18 @@ namespace Elastic.Serilog.Sinks
 			ICollection<Uri> nodes,
 			Action<ElasticsearchSinkOptions>? configureOptions = null,
 			Action<TransportConfiguration>? configureTransport = null,
-			bool useSniffing = true
+			bool useSniffing = true,
+			LoggingLevelSwitch? levelSwitch = null,
+			LogEventLevel restrictedToMinimumLevel = LevelAlias.Minimum
 		)
 		{
 			var transportConfig = useSniffing ? TransportHelper.Static(nodes) : TransportHelper.Sniffing(nodes);
 			configureTransport?.Invoke(transportConfig);
+
 			var sinkOptions = new ElasticsearchSinkOptions(new DefaultHttpTransport(transportConfig));
 			configureOptions?.Invoke(sinkOptions);
 
-			return loggerConfiguration.Sink(new ElasticsearchSink(sinkOptions));
+			return loggerConfiguration.Sink(new ElasticsearchSink(sinkOptions), restrictedToMinimumLevel, levelSwitch);
 		}
 
 		/// <summary>
@@ -60,7 +73,9 @@ namespace Elastic.Serilog.Sinks
 			ICollection<Uri> nodes,
 			Action<ElasticsearchSinkOptions<TEcsDocument>>? configureOptions = null,
 			Action<TransportConfiguration>? configureTransport = null,
-			bool useSniffing = true
+			bool useSniffing = true,
+			LoggingLevelSwitch? levelSwitch = null,
+			LogEventLevel restrictedToMinimumLevel = LevelAlias.Minimum
 		) where TEcsDocument : EcsDocument, new()
 		{
 			var transportConfig = useSniffing ? TransportHelper.Static(nodes) : TransportHelper.Sniffing(nodes);
@@ -68,7 +83,7 @@ namespace Elastic.Serilog.Sinks
 			var sinkOptions = new ElasticsearchSinkOptions<TEcsDocument>(new DefaultHttpTransport(transportConfig));
 			configureOptions?.Invoke(sinkOptions);
 
-			return loggerConfiguration.Sink(new ElasticsearchSink<TEcsDocument>(sinkOptions));
+			return loggerConfiguration.Sink(new ElasticsearchSink<TEcsDocument>(sinkOptions), restrictedToMinimumLevel, levelSwitch);
 		}
 
 		/// <summary>
@@ -82,7 +97,9 @@ namespace Elastic.Serilog.Sinks
 			string cloudId,
 			string apiKey,
 			Action<ElasticsearchSinkOptions>? configureOptions = null,
-			Action<TransportConfiguration>? configureTransport = null
+			Action<TransportConfiguration>? configureTransport = null,
+			LoggingLevelSwitch? levelSwitch = null,
+			LogEventLevel restrictedToMinimumLevel = LevelAlias.Minimum
 		)
 		{
 			var transportConfig = TransportHelper.Cloud(cloudId, apiKey);
@@ -90,7 +107,7 @@ namespace Elastic.Serilog.Sinks
 			var sinkOptions = new ElasticsearchSinkOptions(new DefaultHttpTransport(transportConfig));
 			configureOptions?.Invoke(sinkOptions);
 
-			return loggerConfiguration.Sink(new ElasticsearchSink(sinkOptions));
+			return loggerConfiguration.Sink(new ElasticsearchSink(sinkOptions), restrictedToMinimumLevel, levelSwitch);
 		}
 
 		/// <summary>
@@ -105,7 +122,9 @@ namespace Elastic.Serilog.Sinks
 			string cloudId,
 			string apiKey,
 			Action<ElasticsearchSinkOptions<TEcsDocument>>? configureOptions = null,
-			Action<TransportConfiguration>? configureTransport = null
+			Action<TransportConfiguration>? configureTransport = null,
+			LoggingLevelSwitch? levelSwitch = null,
+			LogEventLevel restrictedToMinimumLevel = LevelAlias.Minimum
 		) where TEcsDocument : EcsDocument, new()
 		{
 			var transportConfig = TransportHelper.Cloud(cloudId, apiKey);
@@ -113,7 +132,7 @@ namespace Elastic.Serilog.Sinks
 			var sinkOptions = new ElasticsearchSinkOptions<TEcsDocument>(new DefaultHttpTransport(transportConfig));
 			configureOptions?.Invoke(sinkOptions);
 
-			return loggerConfiguration.Sink(new ElasticsearchSink<TEcsDocument>(sinkOptions));
+			return loggerConfiguration.Sink(new ElasticsearchSink<TEcsDocument>(sinkOptions), restrictedToMinimumLevel, levelSwitch);
 		}
 
 		/// <summary>
@@ -128,7 +147,9 @@ namespace Elastic.Serilog.Sinks
 			string username,
 			string password,
 			Action<ElasticsearchSinkOptions>? configureOptions = null,
-			Action<TransportConfiguration>? configureTransport = null
+			Action<TransportConfiguration>? configureTransport = null,
+			LoggingLevelSwitch? levelSwitch = null,
+			LogEventLevel restrictedToMinimumLevel = LevelAlias.Minimum
 		)
 		{
 			var transportConfig = TransportHelper.Cloud(cloudId, username, password);
@@ -136,7 +157,7 @@ namespace Elastic.Serilog.Sinks
 			var sinkOptions = new ElasticsearchSinkOptions(new DefaultHttpTransport(transportConfig));
 			configureOptions?.Invoke(sinkOptions);
 
-			return loggerConfiguration.Sink(new ElasticsearchSink(sinkOptions));
+			return loggerConfiguration.Sink(new ElasticsearchSink(sinkOptions), restrictedToMinimumLevel, levelSwitch);
 		}
 
 		/// <summary>
@@ -152,7 +173,9 @@ namespace Elastic.Serilog.Sinks
 			string username,
 			string password,
 			Action<ElasticsearchSinkOptions<TEcsDocument>>? configureOptions = null,
-			Action<TransportConfiguration>? configureTransport = null
+			Action<TransportConfiguration>? configureTransport = null,
+			LoggingLevelSwitch? levelSwitch = null,
+			LogEventLevel restrictedToMinimumLevel = LevelAlias.Minimum
 		) where TEcsDocument : EcsDocument, new()
 		{
 			var transportConfig = TransportHelper.Cloud(cloudId, username, password);
@@ -160,7 +183,7 @@ namespace Elastic.Serilog.Sinks
 			var sinkOptions = new ElasticsearchSinkOptions<TEcsDocument>(new DefaultHttpTransport(transportConfig));
 			configureOptions?.Invoke(sinkOptions);
 
-			return loggerConfiguration.Sink(new ElasticsearchSink<TEcsDocument>(sinkOptions));
+			return loggerConfiguration.Sink(new ElasticsearchSink<TEcsDocument>(sinkOptions), restrictedToMinimumLevel, levelSwitch);
 		}
 	}
 }
