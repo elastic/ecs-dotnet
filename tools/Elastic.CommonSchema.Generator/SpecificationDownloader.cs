@@ -6,27 +6,31 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Net;
-using CsQuery;
+using System.Threading.Tasks;
+using Octokit;
 using ShellProgressBar;
+using static System.Text.Encoding;
 
 namespace Elastic.CommonSchema.Generator
 {
-	public class SpecificationDownloader
+	public static class SpecificationDownloader
 	{
 		private const string Core = "Core";
 		private const string Legacy = "legacy";
 		private const string Composable = "composable";
 		private const string Components = "component";
 
-		private static readonly ProgressBarOptions MainProgressBarOptions = new() { BackgroundColor = ConsoleColor.DarkGray };
+		private static readonly ProgressBarOptions MainProgressBarOptions = new()
+		{
+			BackgroundColor = ConsoleColor.DarkGray, ForegroundColorError = ConsoleColor.Red
+		};
 
 		private static readonly Dictionary<string, string> OnlineSpecifications = new()
 		{
-			{ Core, "https://github.com/elastic/ecs/tree/{version}/generated/ecs" },
-			{ Legacy, "https://github.com/elastic/ecs/tree/{version}/generated/elasticsearch/legacy" },
-			{ Composable, "https://github.com/elastic/ecs/tree/{version}/generated/elasticsearch/composable" },
-			{ Path.Combine(Composable, Components), "https://github.com/elastic/ecs/tree/{version}/generated/elasticsearch/composable/component" }
+			{ Core, "generated/ecs" },
+			{ Legacy, "generated/elasticsearch/legacy" },
+			{ Composable, "generated/elasticsearch/composable" },
+			{ Path.Combine(Composable, Components), "generated/elasticsearch/composable/component" }
 		};
 
 		private static readonly ProgressBarOptions SubProgressBarOptions = new()
@@ -37,54 +41,80 @@ namespace Elastic.CommonSchema.Generator
 			BackgroundColor = ConsoleColor.DarkGray
 		};
 
-		public static void Download(string branch)
+		public static async Task DownloadAsync(string branch, string token)
 		{
-			var specifications =
-				(from kv in OnlineSpecifications
-					let url = kv.Value.Replace("{version}", branch)
-					select new Specification { FolderOnDisk = Path.Combine(branch, kv.Key), Branch = branch, GithubListingUrl = url })
-				.ToList();
+			var client = new GitHubClient(new ProductHeaderValue("ecs-generator"));
+			if (!string.IsNullOrEmpty(token))
+				client.Credentials = new Credentials(token);
+			using var queryProgress = new ProgressBar(OnlineSpecifications.Count, "Listing remote files", MainProgressBarOptions);
+
+			await WaitRateLimit(client, queryProgress);
+			var repo = await client.Repository.Get("elastic", "ecs");
+			var specifications = new List<Specification>();
+			foreach (var (folder, remotePath) in OnlineSpecifications)
+			{
+				await WaitRateLimit(client, queryProgress);
+				var contents = await client.Repository.Content.GetAllContentsByRef(repo.Id, remotePath, branch);
+				var spec = new Specification
+				{
+					FolderOnDisk = Path.Combine(branch, folder),
+					Branch = branch,
+					RemoteFiles = contents.Select(c => new RemoteFile(c.Name, c.Path)).ToArray()
+				};
+				specifications.Add(spec);
+			}
 
 			using var progress = new ProgressBar(specifications.Count, "Downloading specifications", MainProgressBarOptions);
 			foreach (var spec in specifications)
 			{
 				progress.Message = $"Downloading to {spec.FolderOnDisk} for branch {branch}";
-				DownloadDefinitions(spec, progress, ".yml");
-				DownloadDefinitions(spec, progress, ".json");
+				await DownloadDefinitionsAsync(spec, client, progress, ".yml", ".json");
 				progress.Tick($"Downloaded to {spec.FolderOnDisk} for branch {branch}");
 			}
 		}
 
 
-		private static void DownloadDefinitions(Specification spec, IProgressBar progress, string filenameMatch)
+		private static async Task WaitRateLimit(GitHubClient client, ProgressBar progressBar)
 		{
-			//TODO move to HttpClient
-#pragma warning disable SYSLIB0014
-#pragma warning disable CS0618
-			var client = new WebClient();
-#pragma warning restore CS0618
-#pragma warning restore SYSLIB0014
-			var html = client.DownloadString(spec.GithubListingUrl);
+			var apiInfo = client.GetLastApiInfo();
+			var rateLimit = apiInfo?.RateLimit ?? (await client.RateLimit.GetRateLimits()).Rate;
+			if (rateLimit.Remaining > 0) return;
+			var options = new ProgressBarOptions
+			{
+				ForegroundColor = ConsoleColor.Yellow,
+				ForegroundColorDone = ConsoleColor.DarkGreen,
+				BackgroundColor = ConsoleColor.DarkGray,
+				BackgroundCharacter = '\u2593'
+			};
+			var waitTime = rateLimit.Reset - DateTimeOffset.UtcNow;
+			using var indeterminate = progressBar.SpawnIndeterminate($"Github rate limit hit, waiting: {waitTime}", options);
+			await Task.Delay(waitTime);
+			indeterminate.Finished();
+		}
+
+
+		private static async Task DownloadDefinitionsAsync(Specification spec, GitHubClient client, ProgressBar progress,
+			params string[] filenameMatch
+		)
+		{
 			if (!Directory.Exists(CodeConfiguration.SpecificationFolder))
 				Directory.CreateDirectory(CodeConfiguration.SpecificationFolder);
 
-			var dom = CQ.Create(html);
+			var endpoints = spec.RemoteFiles.Where(r => filenameMatch.Any(m => r.FileName.EndsWith(m))).ToArray();
 
-			WriteToFolder(spec.FolderOnDisk, "root.html", html);
-
-			var endpoints = dom[".js-navigation-open"]
-				.Select(s => s.InnerText)
-				.Where(s => !string.IsNullOrEmpty(s) && s.EndsWith(filenameMatch))
-				.ToList();
-
-			using var subBar = progress.Spawn(endpoints.Count, "fetching individual files", SubProgressBarOptions);
-			endpoints.ForEach(s => {
-				var rawFile = spec.GithubDownloadUrl(s);
-				var fileName = rawFile.Split('/').Last();
-				var contents = client.DownloadString(rawFile);
-				WriteToFolder(spec.FolderOnDisk, fileName, contents);
-				subBar.Tick($"Downloading {fileName}");
-			});
+			if (endpoints.Length == 0)
+			{
+				progress.WriteErrorLine($"No remote files found to download to: {spec.FolderOnDisk}");
+				return;
+			}
+			using var subBar = progress.Spawn(endpoints.Length, "fetching individual files", SubProgressBarOptions);
+			foreach (var endpoint in endpoints)
+			{
+				await WaitRateLimit(client, progress);
+				var bytes = await client.Repository.Content.GetRawContentByRef("elastic", "ecs", endpoint.Path, spec.Branch);
+				WriteToFolder(spec.FolderOnDisk, endpoint.FileName, UTF8.GetString(bytes));
+				subBar.Tick($"Downloading {endpoint.FileName}");
+			}
 		}
 
 		private static void WriteToFolder(string folder, string filename, string contents)
@@ -95,15 +125,24 @@ namespace Elastic.CommonSchema.Generator
 			File.WriteAllText(path, contents);
 		}
 
+		private readonly struct RemoteFile
+		{
+			public readonly string FileName;
+			public readonly string Path;
+
+			public RemoteFile(string fileName, string path)
+			{
+				FileName = fileName;
+				Path = path;
+			}
+		}
+
 		private class Specification
 		{
 			// ReSharper disable once UnusedAutoPropertyAccessor.Local
 			public string Branch { get; set; }
 			public string FolderOnDisk { get; set; }
-			public string GithubListingUrl { get; set; }
-
-			public string GithubDownloadUrl(string file) =>
-				$"{GithubListingUrl.Replace("github.com", "raw.githubusercontent.com").Replace("tree/", "")}/{file}";
+			public RemoteFile[] RemoteFiles { get; set; }
 		}
 	}
 }
