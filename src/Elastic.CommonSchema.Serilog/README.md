@@ -21,13 +21,13 @@ In ASP.NET (core) applications
 ```csharp
 .UseSerilog((ctx, config) =>
 {
-	// Ensure HttpContextAccessor is accessible
-	var httpAccessor = ctx.Configuration.Get<HttpContextAccessor>();
+  // Ensure HttpContextAccessor is accessible
+  var httpAccessor = ctx.Configuration.Get<HttpContextAccessor>();
 
-	config
-		.ReadFrom.Configuration(ctx.Configuration)
-		.Enrich.WithEcsHttpContext(httpAccessor)
-		.WriteTo.Async(a => a.Console(new EcsTextFormatter()));
+  config
+    .ReadFrom.Configuration(ctx.Configuration)
+    .Enrich.WithEcsHttpContext(httpAccessor)
+    .WriteTo.Async(a => a.Console(new EcsTextFormatter()));
 })
 ```
 
@@ -39,23 +39,52 @@ An example of the output is given below:
 {
   "@timestamp": "2019-11-22T14:59:02.5903135+11:00",
   "log.level": "Information",
-  "message": "Log message",
-  "ecs": {
-    "version": "1.4.0"
+  "message": "Info \"X\" 2.2",
+  "ecs.version": "8.6.0",
+  "log": { "logger": "Elastic.CommonSchema.Serilog.Tests.MessageTests" },
+  "labels": {
+    "MessageTemplate": "Info {ValueX} {SomeY}",
+    "ValueX": "X",
+    "ThreadName": ".NET Long Running Task"
+  },
+  "agent": {
+    "type": "Elastic.CommonSchema.Serilog",
+    "version": "1.6.0"
   },
   "event": {
-    "severity": 0,
-    "timezone": "AUS Eastern Standard Time",
-    "created": "2019-11-22T14:59:02.5903135+11:00"
+    "created": "2019-11-22T14:59:02.5903135+11:00",
+    "severity": 2,
+    "timezone": "Romance Standard Time"
   },
-  "log": {
-    "logger": "Elastic.CommonSchema.Serilog"
+  "host": {
+    "os": {
+      "full": "Microsoft Windows 10.0.19045",
+      "platform": "Win32NT",
+      "version": "10.0.19045.0"
+    },
+    "architecture": "X64",
+    "hostname": "LOCALHOST",
+    "name": "LOCALHOST"
   },
   "process": {
-    "thread": {
-      "id": 1
-    },
-    "executable": "System.Threading.ExecutionContext"
+    "name": "dotnet",
+    "pid": 1440,
+    "thread.id": 15,
+    "thread.name": ".NET Long Running Task",
+    "title": ""
+  },
+  "server": { "user": { "name": "MyDomain\\MyUserName" } },
+  "service": {
+    "name": "Elastic.CommonSchema",
+    "type": "dotnet",
+    "version": "1.6.0"
+  },
+  "user": {
+    "domain": "MyDomain",
+    "name": "MyUserName"
+  },
+  "metadata": {
+    "SomeY": 2.2
   }
 }
 ```

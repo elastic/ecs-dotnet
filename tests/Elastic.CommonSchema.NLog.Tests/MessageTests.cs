@@ -239,10 +239,9 @@ namespace Elastic.CommonSchema.NLog.Tests
 
 				var (json, info) = ecsEvents.First();
 
-				json.Should().Contain("\"labels\":{\"DupKey\":\"LoggerArg\",\"DupKey_1\":\"Mdlc\"}");
 				info.Message.Should().Be("Info \"LoggerArg\"");
-				info.Labels.Should().ContainKey("DupKey");
-				info.Labels.Should().ContainKey("DupKey_1");
+				info.Labels.Should().Contain("DupKey", "LoggerArg");
+				info.Labels.Should().Contain("DupKey_1", "Mdlc");
 
 				var x = info.Labels["DupKey"];
 				x.Should().NotBeNull().And.Be("LoggerArg");
