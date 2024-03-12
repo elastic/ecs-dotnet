@@ -247,11 +247,10 @@ namespace Elastic.CommonSchema.Serilog
 
 		private static Event GetEvent(LogEvent e)
 		{
-			var elapsedMs = e.TryGetScalarPropertyValue(SpecialKeys.Elapsed, out var elapsed)
-				? elapsed.Value
-				: e.TryGetScalarPropertyValue(SpecialKeys.ElapsedMilliseconds, out elapsed)
-					? elapsed.Value
-					: null;
+			var hasElapsedMs = e.TryGetScalarPropertyValue(SpecialKeys.Elapsed, out var elapsedMsObj)
+				|| e.TryGetScalarPropertyValue(SpecialKeys.ElapsedMilliseconds, out elapsedMsObj);
+
+			var elapsedMs = hasElapsedMs ? (double?)Convert.ToDouble(elapsedMsObj!.Value) : null;
 
 			var evnt = new Event
 			{
@@ -270,7 +269,7 @@ namespace Elastic.CommonSchema.Serilog
 					? long.Parse(actionSev)
 					: (int)e.Level,
 				Timezone = TimeZoneInfo.Local.StandardName,
-				Duration = elapsedMs != null ? (long)((double)elapsedMs * 1000000) : null
+				Duration = elapsedMs != null ? (long)(elapsedMs * 1000000) : null
 			};
 
 			return evnt;

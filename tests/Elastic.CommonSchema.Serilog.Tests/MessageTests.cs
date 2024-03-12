@@ -128,6 +128,23 @@ namespace Elastic.CommonSchema.Serilog.Tests
 		});
 
 		[Theory]
+		[InlineData("Elapsed")]
+		[InlineData("ElapsedMilliseconds")]
+		public void SeesMessageWithElapsedLongProp(string property) => TestLogger((logger, getLogEvents) =>
+		{
+			logger.Information($"Info {{{property}}}", (long)2);
+
+			var logEvents = getLogEvents();
+			logEvents.Should().HaveCount(1);
+
+			var ecsEvents = ToEcsEvents(logEvents);
+
+			var (_, info) = ecsEvents.First();
+			info.Event.Duration.Should().Be(2000000);
+			info.Metadata.Should().BeNull();
+		});
+
+		[Theory]
 		[InlineData("Method")]
 		[InlineData("RequestMethod")]
 		public void SeesMessageWithMethodProp(string property) => TestLogger((logger, getLogEvents) =>
