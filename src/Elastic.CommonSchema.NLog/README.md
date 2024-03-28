@@ -69,8 +69,9 @@ filesystem target and [Elastic Filebeat](https://www.elastic.co/downloads/beats/
   - _ProcessExecutable_ - Default: `${processname:FullName=true}`
   - _ProcessId_ - Default: `${processid}`
   - _ProcessName_ - Default: `${processname:FullName=false}`
-  - _ProcessThreadId_ - Default: `${threadid}`
   - _ProcessTitle_ - Default: `${processinfo:MainWindowTitle}`
+  - _ProcessThreadId_ - Default: `${threadid}`
+  - _ProcessThreadName_ -
 
 * **Server Options**
   -	_ServerAddress_ -
@@ -125,36 +126,46 @@ An example of the output is given below:
 
 ```json
 {
-   "@timestamp":"2020-02-20T16:07:06.7109766+11:00",
-   "log.level":"Info",
-   "message":"Info \"X\" 2.2",
-   "metadata":{
-      "value_x":"X",
-      "some_y":2.2
-   },
-   "ecs":{
-      "version":"1.4.0"
-   },
-   "event":{
-      "severity":6,
-      "timezone":"AUS Eastern Standard Time",
-      "created":"2020-02-20T16:07:06.7109766+11:00"
-   },
-   "host":{
-      "name":"LAPTOP"
-   },
-   "log":{
-      "logger":"Elastic.CommonSchema.NLog",
-      "original":"Info {ValueX} {SomeY}"
-   },
-   "process":{
-      "thread":{
-         "id":17592
-      },
-      "pid":17592,
-      "name":"dotnet",
-      "executable":"C:\\Program Files\\dotnet\\dotnet.exe"
-   }
+  "@timestamp": "2020-02-20T16:07:06.7109766+11:00",
+  "log.level": "Info",
+  "message": "Info \"X\" 2.2",
+  "ecs.version": "8.6.0",
+  "log": {
+    "logger": "Elastic.CommonSchema.NLog.Tests.LogTestsBase",
+  },
+  "labels": {
+    "ValueX": "X",
+    "MessageTemplate": "Info {ValueX} {SomeY} {NotX}"
+  },
+  "agent": {
+    "type": "Elastic.CommonSchema.NLog",
+    "version": "1.6.0"
+  },
+  "event": {
+    "created": "2020-02-20T16:07:06.7109766+11:00",
+    "severity": 6,
+    "timezone": "Romance Standard Time"
+  },
+  "host": {
+    "ip": [ "127.0.0.1" ],
+    "name": "LOCALHOST"
+  },
+  "process": {
+    "executable": "C:\\Program Files\\dotnet\\dotnet.exe",
+    "name": "dotnet",
+    "pid": 17592,
+    "thread.id": 17592,
+    "title": "15.0.0.0"
+  },
+  "server": { "user": { "name": "MyUser" } },
+  "service": {
+    "name": "Elastic.CommonSchema",
+    "type": "dotnet",
+    "version": "1.6.0"
+  },
+  "metadata": {
+    "SomeY": 2.2
+  }
 }
 ```
 

@@ -133,7 +133,7 @@ namespace Elastic.CommonSchema.Serilog
 				dict.Add(logEventPropertyValue.Key, PropertyValueToObject(logEventPropertyValue.Value));
 			}
 
-			return dict.Count == 0 ? new MetadataDictionary() : dict;
+			return dict;
 		}
 
 		private static bool PropertyAlreadyMapped(string property)

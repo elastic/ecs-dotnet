@@ -4,7 +4,10 @@
 
 using System;
 using System.Collections.Generic;
+using System.Runtime.Serialization;
 using System.Text;
+using System.Text.Json.Serialization;
+using Elastic.CommonSchema.Serialization;
 using NLog;
 using NLog.Config;
 using NLog.Layouts;
@@ -45,6 +48,8 @@ namespace Elastic.CommonSchema.NLog
 		public EcsLayout()
 		{
 			IncludeEventProperties = true;
+
+			MessageTemplate = "${onhasproperties:${message:raw=true}}";
 
 			LogOriginCallSiteMethod = "${exception:format=method}";
 			LogOriginCallSiteFile = "${exception:format=source}";
@@ -101,7 +106,7 @@ namespace Elastic.CommonSchema.NLog
 				UrlUserName = "${aspnet-user-identity}";
 
 				if (!NLogApmLoaded())
-					ApmTraceId = "${scopeproperty:item=RequestId:whenEmpty=${aspnet-TraceIdentifier}}}";
+					ApmTraceId = "${scopeproperty:item=RequestId:whenEmpty=${aspnet-TraceIdentifier}}";
 			}
 
 			base.InitializeLayout();
@@ -213,6 +218,8 @@ namespace Elastic.CommonSchema.NLog
 		public IList<TargetPropertyWithContext> Metadata { get; } = new List<TargetPropertyWithContext>();
 
 		/// <summary></summary>
+		public Layout MessageTemplate { get; set; }
+		/// <summary></summary>
 		public Layout ProcessExecutable { get; set; }
 		/// <summary></summary>
 		public Layout ProcessId { get; set; }
@@ -220,6 +227,8 @@ namespace Elastic.CommonSchema.NLog
 		public Layout ProcessName { get; set; }
 		/// <summary></summary>
 		public Layout ProcessThreadId { get; set; }
+		/// <summary></summary>
+		public Layout ProcessThreadName { get; set; }
 		/// <summary></summary>
 		public Layout ProcessTitle { get; set; }
 
@@ -274,7 +283,7 @@ namespace Elastic.CommonSchema.NLog
 		/// <inheritdoc cref="Layout.RenderFormattedMessage"/>
 		protected override void RenderFormattedMessage(LogEventInfo logEvent, StringBuilder target)
 		{
-			var ecsEvent = EcsDocument.CreateNewWithDefaults<EcsDocument>(logEvent.TimeStamp, logEvent.Exception, NlogEcsDocumentCreationOptions.Default);
+			var ecsEvent = EcsDocument.CreateNewWithDefaults<NLogEcsDocument>(logEvent.TimeStamp, logEvent.Exception, NlogEcsDocumentCreationOptions.Default);
 
 			// prefer tracing information set by Elastic APM
 			SetApmTraceId(ecsEvent, logEvent);
@@ -297,16 +306,23 @@ namespace Elastic.CommonSchema.NLog
 			ecsEvent.Http = GetHttp(logEvent);
 			ecsEvent.Url = GetUrl(logEvent);
 
-			var metadata = GetMetadata(logEvent) ?? new MetadataDictionary();
-			foreach(var kv in metadata)
-				ecsEvent.AssignField(kv.Key, kv.Value);
+			var messageTemplate = MessageTemplate?.Render(logEvent);
+			ecsEvent.MessageTemplate = !string.IsNullOrEmpty(messageTemplate) ? messageTemplate : null;
+
+			var metadata = GetMetadata(logEvent);
+			if (metadata?.Count > 0)
+			{
+				foreach (var kv in metadata)
+					ecsEvent.AssignField(kv.Key, kv.Value);
+			}
 
 			//Give any deriving classes a chance to enrich the event
-			EnrichEvent(logEvent, ref ecsEvent);
+			EcsDocument ecsDocument = ecsEvent;
+			EnrichEvent(logEvent, ref ecsDocument);
 			//Allow programmatic actions to enrich before serializing
-			EnrichAction?.Invoke(ecsEvent, logEvent);
+			EnrichAction?.Invoke(ecsDocument, logEvent);
 
-			ecsEvent.Serialize(target);
+			ecsDocument.Serialize(target);
 		}
 
 		private Service GetService(LogEventInfo logEventInfo)
@@ -423,8 +439,8 @@ namespace Elastic.CommonSchema.NLog
 			{
 				Level = logEventInfo.Level.ToString(),
 				Logger = logEventInfo.LoggerName,
-				OriginFunction = logOriginMethod,
-				OriginFileName = logOriginSourceFile,
+				OriginFunction = !string.IsNullOrEmpty(logOriginMethod) ? logOriginMethod : null,
+				OriginFileName = !string.IsNullOrEmpty(logOriginSourceFile) ? logOriginSourceFile : null,
 				OriginFileLine = logOriginSourceLineNo
 			};
 
@@ -444,7 +460,7 @@ namespace Elastic.CommonSchema.NLog
 
 		private string[] GetTags(LogEventInfo e)
 		{
-			if (Tags is null || Tags.Count == 0)
+			if (Tags.Count == 0)
 				return null;
 
 			if (Tags.Count == 1)
@@ -459,7 +475,10 @@ namespace Elastic.CommonSchema.NLog
 				var tag = targetPropertyWithContext.Layout.Render(e);
 				tags.AddRange(GetTagsSplit(tag));
 			}
-			return tags.ToArray();
+
+			return tags.Count > 0
+				? tags.ToArray()
+				: null;
 		}
 
 		private static string[] GetTagsSplit(string tags) =>
@@ -469,11 +488,11 @@ namespace Elastic.CommonSchema.NLog
 
 		private Labels GetLabels(LogEventInfo e)
 		{
-			if (Labels?.Count == 0)
+			if (Labels.Count == 0)
 				return null;
 
 			var labels = new Labels();
-			for (var i = 0; i < Labels?.Count; ++i)
+			for (var i = 0; i < Labels.Count; ++i)
 			{
 				var value = Labels[i].Layout?.Render(e);
 				if (!string.IsNullOrEmpty(value) || Labels[i].IncludeEmptyValue)
@@ -504,7 +523,7 @@ namespace Elastic.CommonSchema.NLog
 				Severity = !string.IsNullOrEmpty(eventSeverity)
 					? long.Parse(eventSeverity)
 					: GetSysLogSeverity(logEventInfo.Level),
-				Timezone = TimeZoneInfo.Local.StandardName
+				Timezone = TimeZoneInfo.Local.StandardName,
 			};
 
 			if (!string.IsNullOrEmpty(eventDurationMs) && double.TryParse(eventDurationMs, System.Globalization.NumberStyles.Any, System.Globalization.CultureInfo.InvariantCulture, out var durationMs))
@@ -544,21 +563,24 @@ namespace Elastic.CommonSchema.NLog
 			var processTitle = ProcessTitle?.Render(logEventInfo);
 			var processExecutable = ProcessExecutable?.Render(logEventInfo);
 			var processThreadId = ProcessThreadId?.Render(logEventInfo);
+			var processThreadName = ProcessThreadName?.Render(logEventInfo);
 
 			if (string.IsNullOrEmpty(processId)
 				&& string.IsNullOrEmpty(processName)
 				&& string.IsNullOrEmpty(processTitle)
 				&& string.IsNullOrEmpty(processExecutable)
-				&& string.IsNullOrEmpty(processThreadId))
+				&& string.IsNullOrEmpty(processThreadId)
+				&& string.IsNullOrEmpty(processThreadName))
 				return null;
 
 			return new Process
 			{
 				Title = processTitle,
 				Name = processName,
-				Pid = !string.IsNullOrEmpty(processId) ? long.Parse(processId) : 0,
+				Pid = !string.IsNullOrEmpty(processId) ? long.Parse(processId) : null,
 				Executable = processExecutable,
-				ThreadId = !string.IsNullOrEmpty(processThreadId) ? long.Parse(processThreadId) : null
+				ThreadId = !string.IsNullOrEmpty(processThreadId) ? long.Parse(processThreadId) : null,
+				ThreadName = !string.IsNullOrEmpty(processThreadName) ? processThreadName : null,
 			};
 		}
 
@@ -725,6 +747,68 @@ namespace Elastic.CommonSchema.NLog
 			}
 
 			propertyBag.Add(usedKey, value);
+		}
+
+		/// <summary>
+		/// A subclass of <see cref="EcsDocument"/> that adds additional properties related to Extensions logging.
+		/// <para>For instance it adds scope information to each logged event</para>
+		/// </summary>
+		[JsonConverter(typeof(EcsDocumentJsonConverterFactory))]
+		public class NLogEcsDocument : EcsDocument
+		{
+			// Custom fields; use capitalisation as per ECS
+			private const string MessageTemplatePropertyName = nameof(MessageTemplate);
+
+			/// <summary>
+			/// Custom field with the original template used to generate the message, with token placeholders
+			/// for inserted label values, e.g. "Unexpected error processing customer {CustomerId}."
+			/// </summary>
+			[JsonPropertyName(MessageTemplatePropertyName), DataMember(Name = MessageTemplatePropertyName)]
+			public string MessageTemplate { get; set; }
+
+			/// <summary>
+			/// If <see cref="TryRead" /> returns <c>true</c> this will be called with the deserialized <paramref name="value" />
+			/// </summary>
+			/// <param name="propertyName">The additional property <see cref="EcsDocumentJsonConverter" /> encountered</param>
+			/// <param name="value">
+			/// The deserialized boxed value you will have to manually unbox to the type that
+			/// <see cref="TryRead" /> set
+			/// </param>
+			/// <returns></returns>
+			protected override bool ReceiveProperty(string propertyName, object value) =>
+				propertyName switch
+				{
+					MessageTemplatePropertyName => null != (MessageTemplate = value as string),
+					_ => false
+				};
+
+			/// <summary>
+			/// If implemented in a subclass, this allows you to hook into <see cref="EcsDocumentJsonConverter" />
+			/// and make it aware of properties on a subclass of <see cref="EcsDocument" />.
+			/// If <paramref name="propertyName" /> is known, set <paramref name="type" /> to the correct type and return true.
+			/// </summary>
+			/// <param name="propertyName">The additional property that <see cref="EcsDocumentJsonConverter" /> encountered</param>
+			/// <param name="type">Set this to the type you wish to deserialize to</param>
+			/// <returns>Return true if <paramref name="propertyName" /> is handled</returns>
+			protected override bool TryRead(string propertyName, out Type type)
+			{
+				type = propertyName switch
+				{
+					MessageTemplatePropertyName => typeof(string),
+					_ => null
+				};
+				return type != null;
+			}
+
+			/// <summary>
+			/// Write any additional properties in your subclass during <see cref="EcsDocumentJsonConverter" /> serialization.
+			/// </summary>
+			/// <param name="write">An action taking a <c>property name</c> and <c>boxed value</c> to write to the output</param>
+			protected override void WriteAdditionalProperties(Action<string, object> write)
+			{
+				if (MessageTemplate != null)
+					write(MessageTemplatePropertyName, MessageTemplate);
+			}
 		}
 	}
 }
