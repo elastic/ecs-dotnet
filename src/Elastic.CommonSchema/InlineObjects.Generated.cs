@@ -94,6 +94,10 @@ namespace Elastic.CommonSchema
 		[JsonPropertyName("type"), DataMember(Name = "type")]
 		public string? Type { get; set; }
 
+		///<summary>elf.sections.var_entropy</summary>
+		[JsonPropertyName("var_entropy"), DataMember(Name = "var_entropy")]
+		public long? VarEntropy { get; set; }
+
 		///<summary>elf.sections.virtual_address</summary>
 		[JsonPropertyName("virtual_address"), DataMember(Name = "virtual_address")]
 		public long? VirtualAddress { get; set; }
@@ -141,20 +145,6 @@ namespace Elastic.CommonSchema
 		///<summary>email.attachments.file.hash</summary>
 		[JsonPropertyName("file.hash"), DataMember(Name = "file.hash")]
 		public Hash? FileHash { get; set; }
-	}
-
-	///<summary>
-	/// Details about the function trigger.
-	///</summary>
-	public class FaasTrigger {
-
-		///<summary>faas.trigger.request_id</summary>
-		[JsonPropertyName("request_id"), DataMember(Name = "request_id")]
-		public string? RequestId { get; set; }
-
-		///<summary>faas.trigger.type</summary>
-		[JsonPropertyName("type"), DataMember(Name = "type")]
-		public string? Type { get; set; }
 	}
 
 	///<summary>
@@ -208,6 +198,32 @@ namespace Elastic.CommonSchema
 	}
 
 	///<summary>
+	/// An array containing an object for each section of the Mach-O file.&#xA;The keys that should be present in these objects are defined by sub-fields underneath `macho.sections.*`.
+	///</summary>
+	public class MachoSections {
+
+		///<summary>macho.sections.entropy</summary>
+		[JsonPropertyName("entropy"), DataMember(Name = "entropy")]
+		public long? Entropy { get; set; }
+
+		///<summary>macho.sections.name</summary>
+		[JsonPropertyName("name"), DataMember(Name = "name")]
+		public string? Name { get; set; }
+
+		///<summary>macho.sections.physical_size</summary>
+		[JsonPropertyName("physical_size"), DataMember(Name = "physical_size")]
+		public long? PhysicalSize { get; set; }
+
+		///<summary>macho.sections.var_entropy</summary>
+		[JsonPropertyName("var_entropy"), DataMember(Name = "var_entropy")]
+		public long? VarEntropy { get; set; }
+
+		///<summary>macho.sections.virtual_size</summary>
+		[JsonPropertyName("virtual_size"), DataMember(Name = "virtual_size")]
+		public long? VirtualSize { get; set; }
+	}
+
+	///<summary>
 	/// Network.inner fields are added in addition to network.vlan fields to describe the innermost VLAN when q-in-q VLAN tagging is present. Allowed fields include vlan.id and vlan.name. Inner vlan fields are typically used when sending traffic with multiple 802.1q encapsulations to a network sensor (e.g. Zeek, Wireshark.)
 	///</summary>
 	public class NetworkInner {
@@ -251,6 +267,32 @@ namespace Elastic.CommonSchema
 		///<summary>observer.ingress.vlan</summary>
 		[JsonPropertyName("vlan"), DataMember(Name = "vlan")]
 		public Vlan? Vlan { get; set; }
+	}
+
+	///<summary>
+	/// An array containing an object for each section of the PE file.&#xA;The keys that should be present in these objects are defined by sub-fields underneath `pe.sections.*`.
+	///</summary>
+	public class PeSections {
+
+		///<summary>pe.sections.entropy</summary>
+		[JsonPropertyName("entropy"), DataMember(Name = "entropy")]
+		public long? Entropy { get; set; }
+
+		///<summary>pe.sections.name</summary>
+		[JsonPropertyName("name"), DataMember(Name = "name")]
+		public string? Name { get; set; }
+
+		///<summary>pe.sections.physical_size</summary>
+		[JsonPropertyName("physical_size"), DataMember(Name = "physical_size")]
+		public long? PhysicalSize { get; set; }
+
+		///<summary>pe.sections.var_entropy</summary>
+		[JsonPropertyName("var_entropy"), DataMember(Name = "var_entropy")]
+		public long? VarEntropy { get; set; }
+
+		///<summary>pe.sections.virtual_size</summary>
+		[JsonPropertyName("virtual_size"), DataMember(Name = "virtual_size")]
+		public long? VirtualSize { get; set; }
 	}
 
 	///<summary>
@@ -346,13 +388,21 @@ namespace Elastic.CommonSchema
 		[JsonPropertyName("indicator.last_seen"), DataMember(Name = "indicator.last_seen")]
 		public DateTimeOffset? IndicatorLastSeen { get; set; }
 
-		///<summary>threat.enrichments.indicator.marking.tlp.version</summary>
-		[JsonPropertyName("indicator.marking.tlp.version"), DataMember(Name = "indicator.marking.tlp.version")]
+		///<summary>threat.enrichments.indicator.marking.tlp</summary>
+		[JsonPropertyName("indicator.marking.tlp"), DataMember(Name = "indicator.marking.tlp")]
+		public string? IndicatorMarkingTlp { get; set; }
+
+		///<summary>threat.enrichments.indicator.marking.tlp_version</summary>
+		[JsonPropertyName("indicator.marking.tlp_version"), DataMember(Name = "indicator.marking.tlp_version")]
 		public string? IndicatorMarkingTlpVersion { get; set; }
 
 		///<summary>threat.enrichments.indicator.modified_at</summary>
 		[JsonPropertyName("indicator.modified_at"), DataMember(Name = "indicator.modified_at")]
 		public DateTimeOffset? IndicatorModifiedAt { get; set; }
+
+		///<summary>threat.enrichments.indicator.name</summary>
+		[JsonPropertyName("indicator.name"), DataMember(Name = "indicator.name")]
+		public string? IndicatorName { get; set; }
 
 		///<summary>threat.enrichments.indicator.port</summary>
 		[JsonPropertyName("indicator.port"), DataMember(Name = "indicator.port")]

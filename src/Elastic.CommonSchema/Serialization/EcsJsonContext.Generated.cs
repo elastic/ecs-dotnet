@@ -39,6 +39,7 @@ namespace Elastic.CommonSchema.Serialization;
 [JsonSerializable(typeof(Http))]
 [JsonSerializable(typeof(Interface))]
 [JsonSerializable(typeof(Log))]
+[JsonSerializable(typeof(Macho))]
 [JsonSerializable(typeof(Network))]
 [JsonSerializable(typeof(Observer))]
 [JsonSerializable(typeof(Orchestrator))]

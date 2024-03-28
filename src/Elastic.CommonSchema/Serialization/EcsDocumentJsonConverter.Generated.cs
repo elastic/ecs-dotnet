@@ -66,6 +66,7 @@ namespace Elastic.CommonSchema.Serialization
 				"http" => ReadProp<Http>(ref reader, "http", EcsJsonContext.Default.Http, ecsEvent, (b, v) => b.Http = v),
 				"interface" => ReadProp<Interface>(ref reader, "interface", EcsJsonContext.Default.Interface, ecsEvent, (b, v) => b.Interface = v),
 				"log" => ReadProp<Log>(ref reader, "log", EcsJsonContext.Default.Log, ecsEvent, (b, v) => b.Log = v),
+				"macho" => ReadProp<Macho>(ref reader, "macho", EcsJsonContext.Default.Macho, ecsEvent, (b, v) => b.Macho = v),
 				"network" => ReadProp<Network>(ref reader, "network", EcsJsonContext.Default.Network, ecsEvent, (b, v) => b.Network = v),
 				"observer" => ReadProp<Observer>(ref reader, "observer", EcsJsonContext.Default.Observer, ecsEvent, (b, v) => b.Observer = v),
 				"orchestrator" => ReadProp<Orchestrator>(ref reader, "orchestrator", EcsJsonContext.Default.Orchestrator, ecsEvent, (b, v) => b.Orchestrator = v),
@@ -145,6 +146,7 @@ namespace Elastic.CommonSchema.Serialization
 			WriteProp(writer, "host", value.Host, EcsJsonContext.Default.Host);
 			WriteProp(writer, "http", value.Http, EcsJsonContext.Default.Http);
 			WriteProp(writer, "interface", value.Interface, EcsJsonContext.Default.Interface);
+			WriteProp(writer, "macho", value.Macho, EcsJsonContext.Default.Macho);
 			WriteProp(writer, "network", value.Network, EcsJsonContext.Default.Network);
 			WriteProp(writer, "observer", value.Observer, EcsJsonContext.Default.Observer);
 			WriteProp(writer, "orchestrator", value.Orchestrator, EcsJsonContext.Default.Orchestrator);

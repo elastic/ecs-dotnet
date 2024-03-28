@@ -116,7 +116,7 @@ namespace Elastic.CommonSchema
 		/// If the event source has no original timestamp, this value is typically populated by the first time the event was received by the pipeline.
 		/// Required field for all events.
 		/// <para><br/>This is a required field</para></para>
-		/// <example>5/23/2016 8:05:34 AM</example>
+		/// <example>5/23/2016 8:05:34AM</example>
 		///</summary>
 		[JsonPropertyName("@timestamp"), DataMember(Name = "@timestamp")]
 		public DateTimeOffset? Timestamp { get; set; }
@@ -448,7 +448,7 @@ namespace Elastic.CommonSchema
 		///<summary>
 		/// <para><c>code_signature.timestamp</c></para>
 		/// <para>Date and time when the code signature was generated and signed.</para>
-		/// <example>1/1/2021 12:10:30 PM</example>
+		/// <example>1/1/2021 12:10:30PM</example>
 		///</summary>
 		[JsonPropertyName("timestamp"), DataMember(Name = "timestamp")]
 		public DateTimeOffset? Timestamp { get; set; }
@@ -572,6 +572,14 @@ namespace Elastic.CommonSchema
 		///</summary>
 		[JsonPropertyName("runtime"), DataMember(Name = "runtime")]
 		public string? Runtime { get; set; }
+
+		///<summary>
+		/// <para><c>container.security_context.privileged</c></para>
+		/// <para>Indicates whether the container is running in privileged mode.</para>
+		/// <example></example>
+		///</summary>
+		[JsonPropertyName("security_context.privileged"), DataMember(Name = "security_context.privileged")]
+		public bool? SecurityContextPrivileged { get; set; }
 
 		///<summary>
 		/// <para><c>container.labels</c></para>
@@ -740,7 +748,7 @@ namespace Elastic.CommonSchema
 
 		///<summary>
 		/// <para><c>device.id</c></para>
-		/// <para>The unique identifier of a device. The identifier must not change across application sessions but stay fixex for an instance of a (mobile) device. 
+		/// <para>The unique identifier of a device. The identifier must not change across application sessions but stay fixed for an instance of a (mobile) device. 
 		/// On iOS, this value must be equal to the vendor identifier (https://developer.apple.com/documentation/uikit/uidevice/1620059-identifierforvendor). On Android, this value must be equal to the Firebase Installation ID or a globally unique UUID which is persisted across sessions in your application.
 		/// For GDPR and data protection law reasons this identifier should not carry information that would allow to identify a user.</para>
 		/// <example>00000000-54b3-e7c7-0000-000046bffd97</example>
@@ -988,6 +996,47 @@ namespace Elastic.CommonSchema
 		public string[]? Exports { get; set; }
 
 		///<summary>
+		/// <para><c>elf.go_import_hash</c></para>
+		/// <para>A hash of the Go language imports in an ELF file excluding standard library imports. An import hash can be used to fingerprint binaries even after recompilation or other code-level transformations have occurred, which would change more traditional hash values.
+		/// The algorithm used to calculate the Go symbol hash and a reference implementation are available [here](https://github.com/elastic/toutoumomoma).</para>
+		/// <example>10bddcb4cee42080f76c88d9ff964491</example>
+		///</summary>
+		[JsonPropertyName("go_import_hash"), DataMember(Name = "go_import_hash")]
+		public string? GoImportHash { get; set; }
+
+		///<summary>
+		/// <para><c>elf.go_imports</c></para>
+		/// <para>List of imported Go language element names and types.</para>
+		/// <example></example>
+		///</summary>
+		[JsonPropertyName("go_imports"), DataMember(Name = "go_imports")]
+		public string? GoImports { get; set; }
+
+		///<summary>
+		/// <para><c>elf.go_imports_names_entropy</c></para>
+		/// <para>Shannon entropy calculation from the list of Go imports.</para>
+		/// <example></example>
+		///</summary>
+		[JsonPropertyName("go_imports_names_entropy"), DataMember(Name = "go_imports_names_entropy")]
+		public long? GoImportsNamesEntropy { get; set; }
+
+		///<summary>
+		/// <para><c>elf.go_imports_names_var_entropy</c></para>
+		/// <para>Variance for Shannon entropy calculation from the list of Go imports.</para>
+		/// <example></example>
+		///</summary>
+		[JsonPropertyName("go_imports_names_var_entropy"), DataMember(Name = "go_imports_names_var_entropy")]
+		public long? GoImportsNamesVarEntropy { get; set; }
+
+		///<summary>
+		/// <para><c>elf.go_stripped</c></para>
+		/// <para>Set to true if the file is a Go executable that has had its symbols stripped or obfuscated and false if an unobfuscated Go executable.</para>
+		/// <example></example>
+		///</summary>
+		[JsonPropertyName("go_stripped"), DataMember(Name = "go_stripped")]
+		public bool? GoStripped { get; set; }
+
+		///<summary>
 		/// <para><c>elf.header.abi_version</c></para>
 		/// <para>Version of the ELF Application Binary Interface (ABI).</para>
 		/// <example></example>
@@ -1052,12 +1101,37 @@ namespace Elastic.CommonSchema
 		public string? HeaderVersion { get; set; }
 
 		///<summary>
+		/// <para><c>elf.import_hash</c></para>
+		/// <para>A hash of the imports in an ELF file. An import hash can be used to fingerprint binaries even after recompilation or other code-level transformations have occurred, which would change more traditional hash values.
+		/// This is an ELF implementation of the Windows PE imphash.</para>
+		/// <example>d41d8cd98f00b204e9800998ecf8427e</example>
+		///</summary>
+		[JsonPropertyName("import_hash"), DataMember(Name = "import_hash")]
+		public string? ImportHash { get; set; }
+
+		///<summary>
 		/// <para><c>elf.imports</c></para>
 		/// <para>List of imported element names and types.</para>
 		/// <example></example>
 		///</summary>
 		[JsonPropertyName("imports"), DataMember(Name = "imports")]
 		public string[]? Imports { get; set; }
+
+		///<summary>
+		/// <para><c>elf.imports_names_entropy</c></para>
+		/// <para>Shannon entropy calculation from the list of imported element names and types.</para>
+		/// <example></example>
+		///</summary>
+		[JsonPropertyName("imports_names_entropy"), DataMember(Name = "imports_names_entropy")]
+		public long? ImportsNamesEntropy { get; set; }
+
+		///<summary>
+		/// <para><c>elf.imports_names_var_entropy</c></para>
+		/// <para>Variance for Shannon entropy calculation from the list of imported element names and types.</para>
+		/// <example></example>
+		///</summary>
+		[JsonPropertyName("imports_names_var_entropy"), DataMember(Name = "imports_names_var_entropy")]
+		public long? ImportsNamesVarEntropy { get; set; }
 
 		///<summary>
 		/// <para><c>elf.shared_libraries</c></para>
@@ -1127,7 +1201,7 @@ namespace Elastic.CommonSchema
 		///<summary>
 		/// <para><c>email.delivery_timestamp</c></para>
 		/// <para>The date and time when the email message was received by the service or client.</para>
-		/// <example>11/10/2020 10:12:34 PM</example>
+		/// <example>11/10/2020 10:12:34PM</example>
 		///</summary>
 		[JsonPropertyName("delivery_timestamp"), DataMember(Name = "delivery_timestamp")]
 		public DateTimeOffset? DeliveryTimestamp { get; set; }
@@ -1168,7 +1242,7 @@ namespace Elastic.CommonSchema
 		///<summary>
 		/// <para><c>email.origination_timestamp</c></para>
 		/// <para>The date and time the email message was composed. Many email clients will fill in this value automatically when the message is sent by a user.</para>
-		/// <example>11/10/2020 10:12:34 PM</example>
+		/// <example>11/10/2020 10:12:34PM</example>
 		///</summary>
 		[JsonPropertyName("origination_timestamp"), DataMember(Name = "origination_timestamp")]
 		public DateTimeOffset? OriginationTimestamp { get; set; }
@@ -1305,6 +1379,7 @@ namespace Elastic.CommonSchema
 		/// <para><br/>Allowed Values:</para>
 		/// <list type="table">
 		/// <listheader><term>Value</term><description>Description</description></listheader>
+		/// <item><term>api</term><description>Events in this category annotate API calls that occured on a system. Typical sources for those events could be from the Operating System level through the native libraries (for example Windows Win32, Linux libc, etc.), or managed sources of events (such as ETW, syslog), but can also include network protocols (such as SOAP, RPC, Websocket, REST, etc.)</description></item>
 		/// <item><term>authentication</term><description>Events in this category are related to the challenge and response process in which credentials are supplied and verified to allow the creation of a session. Common sources for these logs are Windows event logs and ssh logs. Visualize and analyze events in this category to look for failed logins, and other authentication-related activity.</description></item>
 		/// <item><term>configuration</term><description>Events in the configuration category have to deal with creating, modifying, or deleting the settings or parameters of an application, process, or system.
 		/// Example sources include security policy change logs, configuration auditing logging, and system integrity monitoring.</description></item>
@@ -1319,6 +1394,7 @@ namespace Elastic.CommonSchema
 		/// Note that this category is for information about hosts themselves; it is not meant to capture activity "happening on a host".</description></item>
 		/// <item><term>iam</term><description>Identity and access management (IAM) events relating to users, groups, and administration. Use this category to visualize and analyze IAM-related logs and data from active directory, LDAP, Okta, Duo, and other IAM systems.</description></item>
 		/// <item><term>intrusion_detection</term><description>Relating to intrusion detections from IDS/IPS systems and functions, both network and host-based. Use this category to visualize and analyze intrusion detection alerts from systems such as Snort, Suricata, and Palo Alto threat detections.</description></item>
+		/// <item><term>library</term><description>Events in this category refer to the loading of a library, such as (dll / so / dynlib), into a process. Use this category to visualize and analyze library loading related activity on hosts.  Keep in mind that driver related activity will be captured under the "driver" category above.</description></item>
 		/// <item><term>malware</term><description>Malware detection events and alerts. Use this category to visualize and analyze malware detections from EDR/EPP systems such as Elastic Endpoint Security, Symantec Endpoint Protection, Crowdstrike, and network IDS/IPS systems such as Suricata, or other sources of malware-related events such as Palo Alto Networks threat logs and Wildfire logs.</description></item>
 		/// <item><term>network</term><description>Relating to all network activity, including network connection lifecycle, network traffic, and essentially any event that includes an IP address. Many events containing decoded network protocol transactions fit into this category. Use events in this category to visualize or analyze counts of network ports, protocols, addresses, geolocation information, etc.</description></item>
 		/// <item><term>package</term><description>Relating to software packages installed on hosts. Use this category to visualize and analyze inventory of software installed on various hosts, or to determine host vulnerability in the absence of vulnerability scan data.</description></item>
@@ -1345,11 +1421,11 @@ namespace Elastic.CommonSchema
 
 		///<summary>
 		/// <para><c>event.created</c></para>
-		/// <para>event.created contains the date/time when the event was first read by an agent, or by your pipeline.
-		/// This field is distinct from @timestamp in that @timestamp typically contain the time extracted from the original event.
+		/// <para>`event.created` contains the date/time when the event was first read by an agent, or by your pipeline.
+		/// This field is distinct from `@timestamp` in that `@timestamp` typically contain the time extracted from the original event.
 		/// In most situations, these two timestamps will be slightly different. The difference can be used to calculate the delay between your source generating an event, and the time when your agent first processed it. This can be used to monitor your agent's or pipeline's ability to keep up with your event source.
-		/// In case the two timestamps are identical, @timestamp should be used.</para>
-		/// <example>5/23/2016 8:05:34 AM</example>
+		/// In case the two timestamps are identical, `@timestamp` should be used.</para>
+		/// <example>5/23/2016 8:05:34AM</example>
 		///</summary>
 		[JsonPropertyName("created"), DataMember(Name = "created")]
 		public DateTimeOffset? Created { get; set; }
@@ -1367,7 +1443,7 @@ namespace Elastic.CommonSchema
 		///<summary>
 		/// <para><c>event.duration</c></para>
 		/// <para>Duration of the event in nanoseconds.
-		/// If event.start and event.end are known this value should be the difference between the end and start time.</para>
+		/// If `event.start` and `event.end` are known this value should be the difference between the end and start time.</para>
 		/// <example></example>
 		///</summary>
 		[JsonPropertyName("duration"), DataMember(Name = "duration")]
@@ -1375,7 +1451,7 @@ namespace Elastic.CommonSchema
 
 		///<summary>
 		/// <para><c>event.end</c></para>
-		/// <para>event.end contains the date when the event ended or when the activity was last observed.</para>
+		/// <para>`event.end` contains the date when the event ended or when the activity was last observed.</para>
 		/// <example></example>
 		///</summary>
 		[JsonPropertyName("end"), DataMember(Name = "end")]
@@ -1402,7 +1478,7 @@ namespace Elastic.CommonSchema
 		/// <para>Timestamp when an event arrived in the central data store.
 		/// This is different from `@timestamp`, which is when the event originally occurred.  It's also different from `event.created`, which is meant to capture the first time an agent saw the event.
 		/// In normal conditions, assuming no tampering, the timestamps should chronologically look like this: `@timestamp` &lt; `event.created` &lt; `event.ingested`.</para>
-		/// <example>5/23/2016 8:05:35 AM</example>
+		/// <example>5/23/2016 8:05:35AM</example>
 		///</summary>
 		[JsonPropertyName("ingested"), DataMember(Name = "ingested")]
 		public DateTimeOffset? Ingested { get; set; }
@@ -1411,13 +1487,16 @@ namespace Elastic.CommonSchema
 		/// <para><c>event.kind</c></para>
 		/// <para>This is one of four ECS Categorization Fields, and indicates the highest level in the ECS category hierarchy.
 		/// `event.kind` gives high-level information about what type of information the event contains, without being specific to the contents of the event. For example, values of this field distinguish alert events from metric events.
-		/// The value of this field can be used to inform how these kinds of events should be handled. They may warrant different retention, different access control, it may also help understand whether the data coming in at a regular interval or not.
+		/// The value of this field can be used to inform how these kinds of events should be handled. They may warrant different retention, different access control, it may also help understand whether the data is coming in at a regular interval or not.
 		/// <para><br/>Allowed Values:</para>
 		/// <list type="table">
 		/// <listheader><term>Value</term><description>Description</description></listheader>
 		/// <item><term>alert</term><description>This value indicates an event such as an alert or notable event, triggered by a detection rule executing externally to the Elastic Stack.
 		/// `event.kind:alert` is often populated for events coming from firewalls, intrusion detection systems, endpoint detection and response systems, and so on.
 		/// This value is not used by Elastic solutions for alert documents that are created by rules executing within the Kibana alerting framework.</description></item>
+		/// <item><term>asset</term><description>This value indicates events whose primary purpose is to store an inventory of assets/entities and their attributes. Assets/entities are objects (such as users and hosts) that are expected to be subjects of detailed analysis within the system.
+		/// Examples include lists of user identities or accounts ingested from directory services such as Active Directory (AD), inventory of hosts pulled from configuration management databases (CMDB), and lists of cloud storage buckets pulled from cloud provider APIs.
+		/// This value is used by Elastic Security for asset management solutions. `event.kind: asset` is not used for normal system events or logs that are coming from an asset/entity, nor is it used for system events or logs coming from a directory or CMDB system.</description></item>
 		/// <item><term>enrichment</term><description>The `enrichment` value indicates an event collected to provide additional context, often to other events.
 		/// An example is collecting indicators of compromise (IOCs) from a threat intelligence provider with the intent to use those values to enrich other events. The IOC events from the intelligence provider should be categorized as `event.kind:enrichment`.</description></item>
 		/// <item><term>event</term><description>This value is the most general and most common value for this field. It is used to represent events that indicate that something happened.</description></item>
@@ -1540,7 +1619,7 @@ namespace Elastic.CommonSchema
 
 		///<summary>
 		/// <para><c>event.start</c></para>
-		/// <para>event.start contains the date when the event started or when the activity was first observed.</para>
+		/// <para>`event.start` contains the date when the event started or when the activity was first observed.</para>
 		/// <example></example>
 		///</summary>
 		[JsonPropertyName("start"), DataMember(Name = "start")]
@@ -1636,20 +1715,36 @@ namespace Elastic.CommonSchema
 		public string? Name { get; set; }
 
 		///<summary>
+		/// <para><c>faas.trigger.request_id</c></para>
+		/// <para>The ID of the trigger request , message, event, etc.</para>
+		/// <example>123456789</example>
+		///</summary>
+		[JsonPropertyName("trigger.request_id"), DataMember(Name = "trigger.request_id")]
+		public string? TriggerRequestId { get; set; }
+
+		///<summary>
+		/// <para><c>faas.trigger.type</c></para>
+		/// <para>The trigger for the function execution.
+		/// <para><br/>Expected Values:</para>
+		/// <list type="bullet">
+		/// <item>http</item>
+		/// <item>pubsub</item>
+		/// <item>datasource</item>
+		/// <item>timer</item>
+		/// <item>other</item>
+		/// </list></para>
+		/// <example>http</example>
+		///</summary>
+		[JsonPropertyName("trigger.type"), DataMember(Name = "trigger.type")]
+		public string? TriggerType { get; set; }
+
+		///<summary>
 		/// <para><c>faas.version</c></para>
 		/// <para>The version of a serverless function.</para>
 		/// <example>123</example>
 		///</summary>
 		[JsonPropertyName("version"), DataMember(Name = "version")]
 		public string? Version { get; set; }
-
-		///<summary>
-		/// <para><c>faas.trigger</c></para>
-		/// <para>Details about the function trigger.</para>
-		/// <example></example>
-		///</summary>
-		[JsonPropertyName("trigger"), DataMember(Name = "trigger")]
-		public FaasTrigger? Trigger { get; set; }
 	}
 
 	///<summary>
@@ -2130,7 +2225,7 @@ namespace Elastic.CommonSchema
 		///<summary>
 		/// <para><c>host.name</c></para>
 		/// <para>Name of the host.
-		/// It can contain what `hostname` returns on Unix systems, the fully qualified domain name, or a name specified by the user. The sender decides which value to use.</para>
+		/// It can contain what hostname returns on Unix systems, the fully qualified domain name (FQDN), or a name specified by the user. The recommended value is the lowercase FQDN of the host.</para>
 		/// <example></example>
 		///</summary>
 		[JsonPropertyName("name"), DataMember(Name = "name")]
@@ -2403,6 +2498,104 @@ namespace Elastic.CommonSchema
 		///</summary>
 		[JsonPropertyName("syslog"), DataMember(Name = "syslog")]
 		public LogSyslog? Syslog { get; set; }
+	}
+
+	///<summary>
+	/// These fields contain Mac OS Mach Object file format (Mach-O) metadata.
+	///</summary>
+	public abstract class MachoFieldSet {
+
+		///<summary>
+		/// <para><c>macho.go_import_hash</c></para>
+		/// <para>A hash of the Go language imports in a Mach-O file excluding standard library imports. An import hash can be used to fingerprint binaries even after recompilation or other code-level transformations have occurred, which would change more traditional hash values.
+		/// The algorithm used to calculate the Go symbol hash and a reference implementation are available [here](https://github.com/elastic/toutoumomoma).</para>
+		/// <example>10bddcb4cee42080f76c88d9ff964491</example>
+		///</summary>
+		[JsonPropertyName("go_import_hash"), DataMember(Name = "go_import_hash")]
+		public string? GoImportHash { get; set; }
+
+		///<summary>
+		/// <para><c>macho.go_imports</c></para>
+		/// <para>List of imported Go language element names and types.</para>
+		/// <example></example>
+		///</summary>
+		[JsonPropertyName("go_imports"), DataMember(Name = "go_imports")]
+		public string? GoImports { get; set; }
+
+		///<summary>
+		/// <para><c>macho.go_imports_names_entropy</c></para>
+		/// <para>Shannon entropy calculation from the list of Go imports.</para>
+		/// <example></example>
+		///</summary>
+		[JsonPropertyName("go_imports_names_entropy"), DataMember(Name = "go_imports_names_entropy")]
+		public long? GoImportsNamesEntropy { get; set; }
+
+		///<summary>
+		/// <para><c>macho.go_imports_names_var_entropy</c></para>
+		/// <para>Variance for Shannon entropy calculation from the list of Go imports.</para>
+		/// <example></example>
+		///</summary>
+		[JsonPropertyName("go_imports_names_var_entropy"), DataMember(Name = "go_imports_names_var_entropy")]
+		public long? GoImportsNamesVarEntropy { get; set; }
+
+		///<summary>
+		/// <para><c>macho.go_stripped</c></para>
+		/// <para>Set to true if the file is a Go executable that has had its symbols stripped or obfuscated and false if an unobfuscated Go executable.</para>
+		/// <example></example>
+		///</summary>
+		[JsonPropertyName("go_stripped"), DataMember(Name = "go_stripped")]
+		public bool? GoStripped { get; set; }
+
+		///<summary>
+		/// <para><c>macho.import_hash</c></para>
+		/// <para>A hash of the imports in a Mach-O file. An import hash can be used to fingerprint binaries even after recompilation or other code-level transformations have occurred, which would change more traditional hash values.
+		/// This is a synonym for symhash.</para>
+		/// <example>d41d8cd98f00b204e9800998ecf8427e</example>
+		///</summary>
+		[JsonPropertyName("import_hash"), DataMember(Name = "import_hash")]
+		public string? ImportHash { get; set; }
+
+		///<summary>
+		/// <para><c>macho.imports</c></para>
+		/// <para>List of imported element names and types.</para>
+		/// <example></example>
+		///</summary>
+		[JsonPropertyName("imports"), DataMember(Name = "imports")]
+		public string[]? Imports { get; set; }
+
+		///<summary>
+		/// <para><c>macho.imports_names_entropy</c></para>
+		/// <para>Shannon entropy calculation from the list of imported element names and types.</para>
+		/// <example></example>
+		///</summary>
+		[JsonPropertyName("imports_names_entropy"), DataMember(Name = "imports_names_entropy")]
+		public long? ImportsNamesEntropy { get; set; }
+
+		///<summary>
+		/// <para><c>macho.imports_names_var_entropy</c></para>
+		/// <para>Variance for Shannon entropy calculation from the list of imported element names and types.</para>
+		/// <example></example>
+		///</summary>
+		[JsonPropertyName("imports_names_var_entropy"), DataMember(Name = "imports_names_var_entropy")]
+		public long? ImportsNamesVarEntropy { get; set; }
+
+		///<summary>
+		/// <para><c>macho.symhash</c></para>
+		/// <para>A hash of the imports in a Mach-O file. An import hash can be used to fingerprint binaries even after recompilation or other code-level transformations have occurred, which would change more traditional hash values.
+		/// This is a Mach-O implementation of the Windows PE imphash</para>
+		/// <example>d3ccf195b62a9279c3c19af1080497ec</example>
+		///</summary>
+		[JsonPropertyName("symhash"), DataMember(Name = "symhash")]
+		public string? Symhash { get; set; }
+
+		///<summary>
+		/// <para><c>macho.sections</c></para>
+		/// <para>An array containing an object for each section of the Mach-O file.
+		/// The keys that should be present in these objects are defined by sub-fields underneath `macho.sections.*`.</para>
+		/// <example></example>
+		///</summary>
+		[JsonPropertyName("sections"), DataMember(Name = "sections")]
+		public MachoSections[]? Sections { get; set; }
 	}
 
 	///<summary>
@@ -2689,6 +2882,14 @@ namespace Elastic.CommonSchema
 		public string? Organization { get; set; }
 
 		///<summary>
+		/// <para><c>orchestrator.resource.annotation</c></para>
+		/// <para>The list of annotations added to the resource.</para>
+		/// <example>['key1:value1', 'key2:value2', 'key3:value3']</example>
+		///</summary>
+		[JsonPropertyName("resource.annotation"), DataMember(Name = "resource.annotation")]
+		public string[]? ResourceAnnotation { get; set; }
+
+		///<summary>
 		/// <para><c>orchestrator.resource.id</c></para>
 		/// <para>Unique ID of the resource being acted upon.</para>
 		/// <example></example>
@@ -2703,6 +2904,14 @@ namespace Elastic.CommonSchema
 		///</summary>
 		[JsonPropertyName("resource.ip"), DataMember(Name = "resource.ip")]
 		public string[]? ResourceIp { get; set; }
+
+		///<summary>
+		/// <para><c>orchestrator.resource.label</c></para>
+		/// <para>The list of labels added to the resource.</para>
+		/// <example>['key1:value1', 'key2:value2', 'key3:value3']</example>
+		///</summary>
+		[JsonPropertyName("resource.label"), DataMember(Name = "resource.label")]
+		public string[]? ResourceLabel { get; set; }
 
 		///<summary>
 		/// <para><c>orchestrator.resource.name</c></para>
@@ -2982,6 +3191,47 @@ namespace Elastic.CommonSchema
 		public string? FileVersion { get; set; }
 
 		///<summary>
+		/// <para><c>pe.go_import_hash</c></para>
+		/// <para>A hash of the Go language imports in a PE file excluding standard library imports. An import hash can be used to fingerprint binaries even after recompilation or other code-level transformations have occurred, which would change more traditional hash values.
+		/// The algorithm used to calculate the Go symbol hash and a reference implementation are available [here](https://github.com/elastic/toutoumomoma).</para>
+		/// <example>10bddcb4cee42080f76c88d9ff964491</example>
+		///</summary>
+		[JsonPropertyName("go_import_hash"), DataMember(Name = "go_import_hash")]
+		public string? GoImportHash { get; set; }
+
+		///<summary>
+		/// <para><c>pe.go_imports</c></para>
+		/// <para>List of imported Go language element names and types.</para>
+		/// <example></example>
+		///</summary>
+		[JsonPropertyName("go_imports"), DataMember(Name = "go_imports")]
+		public string? GoImports { get; set; }
+
+		///<summary>
+		/// <para><c>pe.go_imports_names_entropy</c></para>
+		/// <para>Shannon entropy calculation from the list of Go imports.</para>
+		/// <example></example>
+		///</summary>
+		[JsonPropertyName("go_imports_names_entropy"), DataMember(Name = "go_imports_names_entropy")]
+		public long? GoImportsNamesEntropy { get; set; }
+
+		///<summary>
+		/// <para><c>pe.go_imports_names_var_entropy</c></para>
+		/// <para>Variance for Shannon entropy calculation from the list of Go imports.</para>
+		/// <example></example>
+		///</summary>
+		[JsonPropertyName("go_imports_names_var_entropy"), DataMember(Name = "go_imports_names_var_entropy")]
+		public long? GoImportsNamesVarEntropy { get; set; }
+
+		///<summary>
+		/// <para><c>pe.go_stripped</c></para>
+		/// <para>Set to true if the file is a Go executable that has had its symbols stripped or obfuscated and false if an unobfuscated Go executable.</para>
+		/// <example></example>
+		///</summary>
+		[JsonPropertyName("go_stripped"), DataMember(Name = "go_stripped")]
+		public bool? GoStripped { get; set; }
+
+		///<summary>
 		/// <para><c>pe.imphash</c></para>
 		/// <para>A hash of the imports in a PE file. An imphash -- or import hash -- can be used to fingerprint binaries even after recompilation or other code-level transformations have occurred, which would change more traditional hash values.
 		/// Learn more at https://www.fireeye.com/blog/threat-research/2014/01/tracking-malware-import-hashing.html.</para>
@@ -2989,6 +3239,39 @@ namespace Elastic.CommonSchema
 		///</summary>
 		[JsonPropertyName("imphash"), DataMember(Name = "imphash")]
 		public string? Imphash { get; set; }
+
+		///<summary>
+		/// <para><c>pe.import_hash</c></para>
+		/// <para>A hash of the imports in a PE file. An import hash can be used to fingerprint binaries even after recompilation or other code-level transformations have occurred, which would change more traditional hash values.
+		/// This is a synonym for imphash.</para>
+		/// <example>d41d8cd98f00b204e9800998ecf8427e</example>
+		///</summary>
+		[JsonPropertyName("import_hash"), DataMember(Name = "import_hash")]
+		public string? ImportHash { get; set; }
+
+		///<summary>
+		/// <para><c>pe.imports</c></para>
+		/// <para>List of imported element names and types.</para>
+		/// <example></example>
+		///</summary>
+		[JsonPropertyName("imports"), DataMember(Name = "imports")]
+		public string[]? Imports { get; set; }
+
+		///<summary>
+		/// <para><c>pe.imports_names_entropy</c></para>
+		/// <para>Shannon entropy calculation from the list of imported element names and types.</para>
+		/// <example></example>
+		///</summary>
+		[JsonPropertyName("imports_names_entropy"), DataMember(Name = "imports_names_entropy")]
+		public long? ImportsNamesEntropy { get; set; }
+
+		///<summary>
+		/// <para><c>pe.imports_names_var_entropy</c></para>
+		/// <para>Variance for Shannon entropy calculation from the list of imported element names and types.</para>
+		/// <example></example>
+		///</summary>
+		[JsonPropertyName("imports_names_var_entropy"), DataMember(Name = "imports_names_var_entropy")]
+		public long? ImportsNamesVarEntropy { get; set; }
 
 		///<summary>
 		/// <para><c>pe.original_file_name</c></para>
@@ -3014,6 +3297,15 @@ namespace Elastic.CommonSchema
 		///</summary>
 		[JsonPropertyName("product"), DataMember(Name = "product")]
 		public string? Product { get; set; }
+
+		///<summary>
+		/// <para><c>pe.sections</c></para>
+		/// <para>An array containing an object for each section of the PE file.
+		/// The keys that should be present in these objects are defined by sub-fields underneath `pe.sections.*`.</para>
+		/// <example></example>
+		///</summary>
+		[JsonPropertyName("sections"), DataMember(Name = "sections")]
+		public PeSections[]? Sections { get; set; }
 	}
 
 	///<summary>
@@ -3051,7 +3343,7 @@ namespace Elastic.CommonSchema
 		///<summary>
 		/// <para><c>process.end</c></para>
 		/// <para>The time the process ended.</para>
-		/// <example>5/23/2016 8:05:34 AM</example>
+		/// <example>5/23/2016 8:05:34AM</example>
 		///</summary>
 		[JsonPropertyName("end"), DataMember(Name = "end")]
 		public DateTimeOffset? End { get; set; }
@@ -3132,10 +3424,28 @@ namespace Elastic.CommonSchema
 		///<summary>
 		/// <para><c>process.start</c></para>
 		/// <para>The time the process started.</para>
-		/// <example>5/23/2016 8:05:34 AM</example>
+		/// <example>5/23/2016 8:05:34AM</example>
 		///</summary>
 		[JsonPropertyName("start"), DataMember(Name = "start")]
 		public DateTimeOffset? Start { get; set; }
+
+		///<summary>
+		/// <para><c>process.thread.capabilities.effective</c></para>
+		/// <para>This is the set of capabilities used by the kernel to perform permission checks for the thread.
+		/// <para>pattern: </para></para>
+		/// <example>["CAP_BPF", "CAP_SYS_ADMIN"]</example>
+		///</summary>
+		[JsonPropertyName("thread.capabilities.effective"), DataMember(Name = "thread.capabilities.effective")]
+		public string[]? ThreadCapabilitiesEffective { get; set; }
+
+		///<summary>
+		/// <para><c>process.thread.capabilities.permitted</c></para>
+		/// <para>This is a limiting superset for the effective capabilities that the thread may assume.
+		/// <para>pattern: </para></para>
+		/// <example>["CAP_BPF", "CAP_SYS_ADMIN"]</example>
+		///</summary>
+		[JsonPropertyName("thread.capabilities.permitted"), DataMember(Name = "thread.capabilities.permitted")]
+		public string[]? ThreadCapabilitiesPermitted { get; set; }
 
 		///<summary>
 		/// <para><c>process.thread.id</c></para>
@@ -3169,6 +3479,15 @@ namespace Elastic.CommonSchema
 		///</summary>
 		[JsonPropertyName("uptime"), DataMember(Name = "uptime")]
 		public long? Uptime { get; set; }
+
+		///<summary>
+		/// <para><c>process.vpid</c></para>
+		/// <para>Virtual process id.
+		/// The process id within a pid namespace. This is not necessarily unique across all processes on the host but it is unique within the process namespace that the process exists within.</para>
+		/// <example>4242</example>
+		///</summary>
+		[JsonPropertyName("vpid"), DataMember(Name = "vpid")]
+		public long? Vpid { get; set; }
 
 		///<summary>
 		/// <para><c>process.working_directory</c></para>
@@ -3896,7 +4215,7 @@ namespace Elastic.CommonSchema
 		///<summary>
 		/// <para><c>threat.indicator.first_seen</c></para>
 		/// <para>The date and time when intelligence source first reported sighting this indicator.</para>
-		/// <example>11/5/2020 5:25:47 PM</example>
+		/// <example>11/5/2020 5:25:47PM</example>
 		///</summary>
 		[JsonPropertyName("indicator.first_seen"), DataMember(Name = "indicator.first_seen")]
 		public DateTimeOffset? IndicatorFirstSeen { get; set; }
@@ -3912,7 +4231,7 @@ namespace Elastic.CommonSchema
 		///<summary>
 		/// <para><c>threat.indicator.last_seen</c></para>
 		/// <para>The date and time when intelligence source last reported sighting this indicator.</para>
-		/// <example>11/5/2020 5:25:47 PM</example>
+		/// <example>11/5/2020 5:25:47PM</example>
 		///</summary>
 		[JsonPropertyName("indicator.last_seen"), DataMember(Name = "indicator.last_seen")]
 		public DateTimeOffset? IndicatorLastSeen { get; set; }
@@ -3935,12 +4254,29 @@ namespace Elastic.CommonSchema
 		public string? IndicatorMarkingTlp { get; set; }
 
 		///<summary>
+		/// <para><c>threat.indicator.marking.tlp_version</c></para>
+		/// <para>Traffic Light Protocol version.</para>
+		/// <example>2.0</example>
+		///</summary>
+		[JsonPropertyName("indicator.marking.tlp_version"), DataMember(Name = "indicator.marking.tlp_version")]
+		public string? IndicatorMarkingTlpVersion { get; set; }
+
+		///<summary>
 		/// <para><c>threat.indicator.modified_at</c></para>
 		/// <para>The date and time when intelligence source last modified information for this indicator.</para>
-		/// <example>11/5/2020 5:25:47 PM</example>
+		/// <example>11/5/2020 5:25:47PM</example>
 		///</summary>
 		[JsonPropertyName("indicator.modified_at"), DataMember(Name = "indicator.modified_at")]
 		public DateTimeOffset? IndicatorModifiedAt { get; set; }
+
+		///<summary>
+		/// <para><c>threat.indicator.name</c></para>
+		/// <para>The display name indicator in an UI friendly format
+		/// URL, IP address, email address, registry key, port number, hash value, or other relevant name can serve as the display name.</para>
+		/// <example>5.2.75.227</example>
+		///</summary>
+		[JsonPropertyName("indicator.name"), DataMember(Name = "indicator.name")]
+		public string? IndicatorName { get; set; }
 
 		///<summary>
 		/// <para><c>threat.indicator.port</c></para>
@@ -4155,14 +4491,6 @@ namespace Elastic.CommonSchema
 		public string[]? TechniqueSubtechniqueReference { get; set; }
 
 		///<summary>
-		/// <para><c>threat.threat.indicator.marking.tlp.version</c></para>
-		/// <para>Traffic Light Protocol version.</para>
-		/// <example>2.0</example>
-		///</summary>
-		[JsonPropertyName("threat.indicator.marking.tlp.version"), DataMember(Name = "threat.indicator.marking.tlp.version")]
-		public string? ThreatIndicatorMarkingTlpVersion { get; set; }
-
-		///<summary>
 		/// <para><c>threat.enrichments</c></para>
 		/// <para>A list of associated indicators objects enriching the event, and the context of that association/enrichment.</para>
 		/// <example></example>
@@ -4243,7 +4571,7 @@ namespace Elastic.CommonSchema
 		///<summary>
 		/// <para><c>tls.client.not_after</c></para>
 		/// <para>Date/Time indicating when client certificate is no longer considered valid.</para>
-		/// <example>1/1/2021 12:00:00 AM</example>
+		/// <example>1/1/2021 12:00:00AM</example>
 		///</summary>
 		[JsonPropertyName("client.not_after"), DataMember(Name = "client.not_after")]
 		public DateTimeOffset? ClientNotAfter { get; set; }
@@ -4251,7 +4579,7 @@ namespace Elastic.CommonSchema
 		///<summary>
 		/// <para><c>tls.client.not_before</c></para>
 		/// <para>Date/Time indicating when client certificate is first considered valid.</para>
-		/// <example>1/1/1970 12:00:00 AM</example>
+		/// <example>1/1/1970 12:00:00AM</example>
 		///</summary>
 		[JsonPropertyName("client.not_before"), DataMember(Name = "client.not_before")]
 		public DateTimeOffset? ClientNotBefore { get; set; }
@@ -4371,7 +4699,7 @@ namespace Elastic.CommonSchema
 		///<summary>
 		/// <para><c>tls.server.not_after</c></para>
 		/// <para>Timestamp indicating when server certificate is no longer considered valid.</para>
-		/// <example>1/1/2021 12:00:00 AM</example>
+		/// <example>1/1/2021 12:00:00AM</example>
 		///</summary>
 		[JsonPropertyName("server.not_after"), DataMember(Name = "server.not_after")]
 		public DateTimeOffset? ServerNotAfter { get; set; }
@@ -4379,7 +4707,7 @@ namespace Elastic.CommonSchema
 		///<summary>
 		/// <para><c>tls.server.not_before</c></para>
 		/// <para>Timestamp indicating when server certificate is first considered valid.</para>
-		/// <example>1/1/1970 12:00:00 AM</example>
+		/// <example>1/1/1970 12:00:00AM</example>
 		///</summary>
 		[JsonPropertyName("server.not_before"), DataMember(Name = "server.not_before")]
 		public DateTimeOffset? ServerNotBefore { get; set; }
@@ -4852,7 +5180,7 @@ namespace Elastic.CommonSchema
 		///<summary>
 		/// <para><c>x509.not_after</c></para>
 		/// <para>Time at which the certificate is no longer considered valid.</para>
-		/// <example>7/16/2020 3:15:39 AM</example>
+		/// <example>7/16/2020 3:15:39AM</example>
 		///</summary>
 		[JsonPropertyName("not_after"), DataMember(Name = "not_after")]
 		public DateTimeOffset? NotAfter { get; set; }
@@ -4860,7 +5188,7 @@ namespace Elastic.CommonSchema
 		///<summary>
 		/// <para><c>x509.not_before</c></para>
 		/// <para>Time at which the certificate is first considered valid.</para>
-		/// <example>8/16/2019 1:40:25 AM</example>
+		/// <example>8/16/2019 1:40:25AM</example>
 		///</summary>
 		[JsonPropertyName("not_before"), DataMember(Name = "not_before")]
 		public DateTimeOffset? NotBefore { get; set; }

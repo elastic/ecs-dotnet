@@ -308,6 +308,13 @@ namespace Elastic.CommonSchema
 		///</summary>
 		[JsonPropertyName("elf"), DataMember(Name = "elf")]
 		public Elf? Elf { get; set; }
+
+		///<summary>
+		/// <para><c>file.macho</c></para>
+		/// <example></example>
+		///</summary>
+		[JsonPropertyName("macho"), DataMember(Name = "macho")]
+		public Macho? Macho { get; set; }
 	}
 
 	///<inheritdoc cref="GeoFieldSet"/>
@@ -357,6 +364,10 @@ namespace Elastic.CommonSchema
 
 	///<inheritdoc cref="LogFieldSet"/>
 	public partial class Log : LogFieldSet {
+	}
+
+	///<inheritdoc cref="MachoFieldSet"/>
+	public class Macho : MachoFieldSet {
 	}
 
 	///<inheritdoc cref="NetworkFieldSet"/>
@@ -473,6 +484,13 @@ namespace Elastic.CommonSchema
 		///</summary>
 		[JsonPropertyName("elf"), DataMember(Name = "elf")]
 		public Elf? Elf { get; set; }
+
+		///<summary>
+		/// <para><c>process.macho</c></para>
+		/// <example></example>
+		///</summary>
+		[JsonPropertyName("macho"), DataMember(Name = "macho")]
+		public Macho? Macho { get; set; }
 
 		///<summary>
 		/// <para><c>process.entry_meta.source</c></para>

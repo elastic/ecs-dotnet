@@ -169,6 +169,8 @@ namespace Elastic.CommonSchema
 				case "ContainerNetworkIngressBytes":
 				case "container.runtime":
 				case "ContainerRuntime":
+				case "container.security_context.privileged":
+				case "ContainerSecurityContextPrivileged":
 					return TrySetContainer(document, path, value);
 				case "data_stream.dataset":
 				case "DataStreamDataset":
@@ -248,6 +250,16 @@ namespace Elastic.CommonSchema
 				case "ElfCpuType":
 				case "elf.creation_date":
 				case "ElfCreationDate":
+				case "elf.go_import_hash":
+				case "ElfGoImportHash":
+				case "elf.go_imports":
+				case "ElfGoImports":
+				case "elf.go_imports_names_entropy":
+				case "ElfGoImportsNamesEntropy":
+				case "elf.go_imports_names_var_entropy":
+				case "ElfGoImportsNamesVarEntropy":
+				case "elf.go_stripped":
+				case "ElfGoStripped":
 				case "elf.header.abi_version":
 				case "ElfHeaderAbiVersion":
 				case "elf.header.class":
@@ -264,6 +276,12 @@ namespace Elastic.CommonSchema
 				case "ElfHeaderType":
 				case "elf.header.version":
 				case "ElfHeaderVersion":
+				case "elf.import_hash":
+				case "ElfImportHash":
+				case "elf.imports_names_entropy":
+				case "ElfImportsNamesEntropy":
+				case "elf.imports_names_var_entropy":
+				case "ElfImportsNamesVarEntropy":
 				case "elf.telfhash":
 				case "ElfTelfhash":
 					return TrySetElf(document, path, value);
@@ -354,6 +372,10 @@ namespace Elastic.CommonSchema
 				case "FaasId":
 				case "faas.name":
 				case "FaasName":
+				case "faas.trigger.request_id":
+				case "FaasTriggerRequestId":
+				case "faas.trigger.type":
+				case "FaasTriggerType":
 				case "faas.version":
 				case "FaasVersion":
 					return TrySetFaas(document, path, value);
@@ -523,6 +545,25 @@ namespace Elastic.CommonSchema
 				case "log.origin.function":
 				case "LogOriginFunction":
 					return TrySetLog(document, path, value);
+				case "macho.go_import_hash":
+				case "MachoGoImportHash":
+				case "macho.go_imports":
+				case "MachoGoImports":
+				case "macho.go_imports_names_entropy":
+				case "MachoGoImportsNamesEntropy":
+				case "macho.go_imports_names_var_entropy":
+				case "MachoGoImportsNamesVarEntropy":
+				case "macho.go_stripped":
+				case "MachoGoStripped":
+				case "macho.import_hash":
+				case "MachoImportHash":
+				case "macho.imports_names_entropy":
+				case "MachoImportsNamesEntropy":
+				case "macho.imports_names_var_entropy":
+				case "MachoImportsNamesVarEntropy":
+				case "macho.symhash":
+				case "MachoSymhash":
+					return TrySetMacho(document, path, value);
 				case "network.application":
 				case "NetworkApplication":
 				case "network.bytes":
@@ -641,8 +682,24 @@ namespace Elastic.CommonSchema
 				case "PeDescription":
 				case "pe.file_version":
 				case "PeFileVersion":
+				case "pe.go_import_hash":
+				case "PeGoImportHash":
+				case "pe.go_imports":
+				case "PeGoImports":
+				case "pe.go_imports_names_entropy":
+				case "PeGoImportsNamesEntropy":
+				case "pe.go_imports_names_var_entropy":
+				case "PeGoImportsNamesVarEntropy":
+				case "pe.go_stripped":
+				case "PeGoStripped":
 				case "pe.imphash":
 				case "PeImphash":
+				case "pe.import_hash":
+				case "PeImportHash":
+				case "pe.imports_names_entropy":
+				case "PeImportsNamesEntropy":
+				case "pe.imports_names_var_entropy":
+				case "PeImportsNamesVarEntropy":
 				case "pe.original_file_name":
 				case "PeOriginalFileName":
 				case "pe.pehash":
@@ -680,6 +737,8 @@ namespace Elastic.CommonSchema
 				case "ProcessTitle":
 				case "process.uptime":
 				case "ProcessUptime":
+				case "process.vpid":
+				case "ProcessVpid":
 				case "process.working_directory":
 				case "ProcessWorkingDirectory":
 					return TrySetProcess(document, path, value);
@@ -829,8 +888,12 @@ namespace Elastic.CommonSchema
 				case "ThreatIndicatorLastSeen":
 				case "threat.indicator.marking.tlp":
 				case "ThreatIndicatorMarkingTlp":
+				case "threat.indicator.marking.tlp_version":
+				case "ThreatIndicatorMarkingTlpVersion":
 				case "threat.indicator.modified_at":
 				case "ThreatIndicatorModifiedAt":
+				case "threat.indicator.name":
+				case "ThreatIndicatorName":
 				case "threat.indicator.port":
 				case "ThreatIndicatorPort":
 				case "threat.indicator.provider":
@@ -851,8 +914,6 @@ namespace Elastic.CommonSchema
 				case "ThreatSoftwareReference":
 				case "threat.software.type":
 				case "ThreatSoftwareType":
-				case "threat.threat.indicator.marking.tlp.version":
-				case "ThreatThreatIndicatorMarkingTlpVersion":
 					return TrySetThreat(document, path, value);
 				case "tls.cipher":
 				case "TlsCipher":
@@ -1210,6 +1271,8 @@ namespace Elastic.CommonSchema
 				"ContainerNetworkIngressBytes" => static (e, v) => TrySetLong(e, v, static (ee, p) => ee.NetworkIngressBytes = p),
 				"container.runtime" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Runtime = p),
 				"ContainerRuntime" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Runtime = p),
+				"container.security_context.privileged" => static (e, v) => TrySetBool(e, v, static (ee, p) => ee.SecurityContextPrivileged = p),
+				"ContainerSecurityContextPrivileged" => static (e, v) => TrySetBool(e, v, static (ee, p) => ee.SecurityContextPrivileged = p),
 				_ => null
 			};
 			if (assign == null) return false;
@@ -1380,6 +1443,16 @@ namespace Elastic.CommonSchema
 				"ElfCpuType" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.CpuType = p),
 				"elf.creation_date" => static (e, v) => TrySetDateTimeOffset(e, v, static (ee, p) => ee.CreationDate = p),
 				"ElfCreationDate" => static (e, v) => TrySetDateTimeOffset(e, v, static (ee, p) => ee.CreationDate = p),
+				"elf.go_import_hash" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.GoImportHash = p),
+				"ElfGoImportHash" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.GoImportHash = p),
+				"elf.go_imports" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.GoImports = p),
+				"ElfGoImports" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.GoImports = p),
+				"elf.go_imports_names_entropy" => static (e, v) => TrySetLong(e, v, static (ee, p) => ee.GoImportsNamesEntropy = p),
+				"ElfGoImportsNamesEntropy" => static (e, v) => TrySetLong(e, v, static (ee, p) => ee.GoImportsNamesEntropy = p),
+				"elf.go_imports_names_var_entropy" => static (e, v) => TrySetLong(e, v, static (ee, p) => ee.GoImportsNamesVarEntropy = p),
+				"ElfGoImportsNamesVarEntropy" => static (e, v) => TrySetLong(e, v, static (ee, p) => ee.GoImportsNamesVarEntropy = p),
+				"elf.go_stripped" => static (e, v) => TrySetBool(e, v, static (ee, p) => ee.GoStripped = p),
+				"ElfGoStripped" => static (e, v) => TrySetBool(e, v, static (ee, p) => ee.GoStripped = p),
 				"elf.header.abi_version" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.HeaderAbiVersion = p),
 				"ElfHeaderAbiVersion" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.HeaderAbiVersion = p),
 				"elf.header.class" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.HeaderClass = p),
@@ -1396,6 +1469,12 @@ namespace Elastic.CommonSchema
 				"ElfHeaderType" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.HeaderType = p),
 				"elf.header.version" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.HeaderVersion = p),
 				"ElfHeaderVersion" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.HeaderVersion = p),
+				"elf.import_hash" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.ImportHash = p),
+				"ElfImportHash" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.ImportHash = p),
+				"elf.imports_names_entropy" => static (e, v) => TrySetLong(e, v, static (ee, p) => ee.ImportsNamesEntropy = p),
+				"ElfImportsNamesEntropy" => static (e, v) => TrySetLong(e, v, static (ee, p) => ee.ImportsNamesEntropy = p),
+				"elf.imports_names_var_entropy" => static (e, v) => TrySetLong(e, v, static (ee, p) => ee.ImportsNamesVarEntropy = p),
+				"ElfImportsNamesVarEntropy" => static (e, v) => TrySetLong(e, v, static (ee, p) => ee.ImportsNamesVarEntropy = p),
 				"elf.telfhash" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Telfhash = p),
 				"ElfTelfhash" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Telfhash = p),
 				_ => null
@@ -1538,6 +1617,10 @@ namespace Elastic.CommonSchema
 				"FaasId" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Id = p),
 				"faas.name" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Name = p),
 				"FaasName" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Name = p),
+				"faas.trigger.request_id" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.TriggerRequestId = p),
+				"FaasTriggerRequestId" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.TriggerRequestId = p),
+				"faas.trigger.type" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.TriggerType = p),
+				"FaasTriggerType" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.TriggerType = p),
 				"faas.version" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Version = p),
 				"FaasVersion" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Version = p),
 				_ => null
@@ -1820,6 +1903,38 @@ namespace Elastic.CommonSchema
 			return assigned;
 		}
 
+		public static bool TrySetMacho(EcsDocument document, string path, object value)
+		{
+			Func<Macho, object, bool> assign = path switch
+			{
+				"macho.go_import_hash" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.GoImportHash = p),
+				"MachoGoImportHash" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.GoImportHash = p),
+				"macho.go_imports" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.GoImports = p),
+				"MachoGoImports" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.GoImports = p),
+				"macho.go_imports_names_entropy" => static (e, v) => TrySetLong(e, v, static (ee, p) => ee.GoImportsNamesEntropy = p),
+				"MachoGoImportsNamesEntropy" => static (e, v) => TrySetLong(e, v, static (ee, p) => ee.GoImportsNamesEntropy = p),
+				"macho.go_imports_names_var_entropy" => static (e, v) => TrySetLong(e, v, static (ee, p) => ee.GoImportsNamesVarEntropy = p),
+				"MachoGoImportsNamesVarEntropy" => static (e, v) => TrySetLong(e, v, static (ee, p) => ee.GoImportsNamesVarEntropy = p),
+				"macho.go_stripped" => static (e, v) => TrySetBool(e, v, static (ee, p) => ee.GoStripped = p),
+				"MachoGoStripped" => static (e, v) => TrySetBool(e, v, static (ee, p) => ee.GoStripped = p),
+				"macho.import_hash" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.ImportHash = p),
+				"MachoImportHash" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.ImportHash = p),
+				"macho.imports_names_entropy" => static (e, v) => TrySetLong(e, v, static (ee, p) => ee.ImportsNamesEntropy = p),
+				"MachoImportsNamesEntropy" => static (e, v) => TrySetLong(e, v, static (ee, p) => ee.ImportsNamesEntropy = p),
+				"macho.imports_names_var_entropy" => static (e, v) => TrySetLong(e, v, static (ee, p) => ee.ImportsNamesVarEntropy = p),
+				"MachoImportsNamesVarEntropy" => static (e, v) => TrySetLong(e, v, static (ee, p) => ee.ImportsNamesVarEntropy = p),
+				"macho.symhash" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Symhash = p),
+				"MachoSymhash" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Symhash = p),
+				_ => null
+			};
+			if (assign == null) return false;
+
+			var entity = document.Macho ?? new Macho();
+			var assigned = assign(entity, value);
+			if (assigned) document.Macho = entity;
+			return assigned;
+		}
+
 		public static bool TrySetNetwork(EcsDocument document, string path, object value)
 		{
 			Func<Network, object, bool> assign = path switch
@@ -2020,8 +2135,24 @@ namespace Elastic.CommonSchema
 				"PeDescription" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Description = p),
 				"pe.file_version" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.FileVersion = p),
 				"PeFileVersion" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.FileVersion = p),
+				"pe.go_import_hash" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.GoImportHash = p),
+				"PeGoImportHash" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.GoImportHash = p),
+				"pe.go_imports" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.GoImports = p),
+				"PeGoImports" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.GoImports = p),
+				"pe.go_imports_names_entropy" => static (e, v) => TrySetLong(e, v, static (ee, p) => ee.GoImportsNamesEntropy = p),
+				"PeGoImportsNamesEntropy" => static (e, v) => TrySetLong(e, v, static (ee, p) => ee.GoImportsNamesEntropy = p),
+				"pe.go_imports_names_var_entropy" => static (e, v) => TrySetLong(e, v, static (ee, p) => ee.GoImportsNamesVarEntropy = p),
+				"PeGoImportsNamesVarEntropy" => static (e, v) => TrySetLong(e, v, static (ee, p) => ee.GoImportsNamesVarEntropy = p),
+				"pe.go_stripped" => static (e, v) => TrySetBool(e, v, static (ee, p) => ee.GoStripped = p),
+				"PeGoStripped" => static (e, v) => TrySetBool(e, v, static (ee, p) => ee.GoStripped = p),
 				"pe.imphash" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Imphash = p),
 				"PeImphash" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Imphash = p),
+				"pe.import_hash" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.ImportHash = p),
+				"PeImportHash" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.ImportHash = p),
+				"pe.imports_names_entropy" => static (e, v) => TrySetLong(e, v, static (ee, p) => ee.ImportsNamesEntropy = p),
+				"PeImportsNamesEntropy" => static (e, v) => TrySetLong(e, v, static (ee, p) => ee.ImportsNamesEntropy = p),
+				"pe.imports_names_var_entropy" => static (e, v) => TrySetLong(e, v, static (ee, p) => ee.ImportsNamesVarEntropy = p),
+				"PeImportsNamesVarEntropy" => static (e, v) => TrySetLong(e, v, static (ee, p) => ee.ImportsNamesVarEntropy = p),
 				"pe.original_file_name" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.OriginalFileName = p),
 				"PeOriginalFileName" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.OriginalFileName = p),
 				"pe.pehash" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Pehash = p),
@@ -2072,6 +2203,8 @@ namespace Elastic.CommonSchema
 				"ProcessTitle" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Title = p),
 				"process.uptime" => static (e, v) => TrySetLong(e, v, static (ee, p) => ee.Uptime = p),
 				"ProcessUptime" => static (e, v) => TrySetLong(e, v, static (ee, p) => ee.Uptime = p),
+				"process.vpid" => static (e, v) => TrySetLong(e, v, static (ee, p) => ee.Vpid = p),
+				"ProcessVpid" => static (e, v) => TrySetLong(e, v, static (ee, p) => ee.Vpid = p),
 				"process.working_directory" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.WorkingDirectory = p),
 				"ProcessWorkingDirectory" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.WorkingDirectory = p),
 				_ => null
@@ -2326,8 +2459,12 @@ namespace Elastic.CommonSchema
 				"ThreatIndicatorLastSeen" => static (e, v) => TrySetDateTimeOffset(e, v, static (ee, p) => ee.IndicatorLastSeen = p),
 				"threat.indicator.marking.tlp" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.IndicatorMarkingTlp = p),
 				"ThreatIndicatorMarkingTlp" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.IndicatorMarkingTlp = p),
+				"threat.indicator.marking.tlp_version" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.IndicatorMarkingTlpVersion = p),
+				"ThreatIndicatorMarkingTlpVersion" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.IndicatorMarkingTlpVersion = p),
 				"threat.indicator.modified_at" => static (e, v) => TrySetDateTimeOffset(e, v, static (ee, p) => ee.IndicatorModifiedAt = p),
 				"ThreatIndicatorModifiedAt" => static (e, v) => TrySetDateTimeOffset(e, v, static (ee, p) => ee.IndicatorModifiedAt = p),
+				"threat.indicator.name" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.IndicatorName = p),
+				"ThreatIndicatorName" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.IndicatorName = p),
 				"threat.indicator.port" => static (e, v) => TrySetLong(e, v, static (ee, p) => ee.IndicatorPort = p),
 				"ThreatIndicatorPort" => static (e, v) => TrySetLong(e, v, static (ee, p) => ee.IndicatorPort = p),
 				"threat.indicator.provider" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.IndicatorProvider = p),
@@ -2348,8 +2485,6 @@ namespace Elastic.CommonSchema
 				"ThreatSoftwareReference" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.SoftwareReference = p),
 				"threat.software.type" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.SoftwareType = p),
 				"ThreatSoftwareType" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.SoftwareType = p),
-				"threat.threat.indicator.marking.tlp.version" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.ThreatIndicatorMarkingTlpVersion = p),
-				"ThreatThreatIndicatorMarkingTlpVersion" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.ThreatIndicatorMarkingTlpVersion = p),
 				_ => null
 			};
 			if (assign == null) return false;
