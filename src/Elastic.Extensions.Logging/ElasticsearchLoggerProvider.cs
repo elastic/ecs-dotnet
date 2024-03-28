@@ -125,7 +125,7 @@ namespace Elastic.Extensions.Logging
 			}
 		}
 
-		private static HttpTransport CreateTransport(ElasticsearchLoggerOptions loggerOptions)
+		private static ITransport CreateTransport(ElasticsearchLoggerOptions loggerOptions)
 		{
 			// TODO: Check if Uri has changed before recreating
 			// TODO: Injectable factory? Or some way of testing.
@@ -137,7 +137,7 @@ namespace Elastic.Extensions.Logging
 			if (loggerOptions.ShipTo.NodePoolType != NodePoolType.Cloud)
 				config = SetAuthenticationOnTransport(loggerOptions, config);
 
-			var transport = new DefaultHttpTransport<TransportConfiguration>(config);
+			var transport = new DistributedTransport<TransportConfiguration>(config);
 			return transport;
 		}
 
