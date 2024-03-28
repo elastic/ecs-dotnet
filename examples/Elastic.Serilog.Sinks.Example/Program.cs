@@ -9,6 +9,7 @@ using Elastic.Serilog.Sinks;
 using Elastic.Serilog.Sinks.Example;
 using Elastic.Elasticsearch.Ephemeral;
 using Elastic.Ingest.Elasticsearch;
+using Elastic.Transport;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;

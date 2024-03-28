@@ -81,9 +81,9 @@ namespace Elastic.Extensions.Logging.Options
 		public string[]? Tags { get; set; }
 
 		/// <summary>
-		/// Allows the direct setting of a <see cref="HttpTransport{TConfiguration}"/> to be used to communicate with Elasticsearch.
+		/// Allows the direct setting of a <see cref="ITransport{TConfiguration}"/> to be used to communicate with Elasticsearch.
 		/// <para>If set takes precedence over <see cref="ShipTo"/> </para>
 		/// </summary>
-		public HttpTransport? Transport { get; set; }
+		public ITransport? Transport { get; set; }
 	}
 }
