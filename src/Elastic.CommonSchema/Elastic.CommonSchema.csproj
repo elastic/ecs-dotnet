@@ -1,7 +1,7 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFrameworks>netstandard2.0;netstandard2.1;net461</TargetFrameworks>
+    <TargetFrameworks>netstandard2.0;netstandard2.1;net461;net6.0</TargetFrameworks>
     <Title>Elastic Common Schema (ECS) Types</Title>
     <Description>Maps Elastic Common Schema (ECS) to .NET types including (de)serialization using System.Text.Json</Description>
     <LangVersion>latest</LangVersion>
@@ -10,11 +10,14 @@
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Ben.Demystifier" Version="0.4.1" />
-    <PackageReference Include="System.Diagnostics.DiagnosticSource" Version="5.0.0" />
-    <PackageReference Include="System.Text.Json" Version="6.0.1" />
     <PackageReference Include="PolySharp" Version="1.13.2" PrivateAssets="all">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+  </ItemGroup>
+  <ItemGroup Condition="$(TargetFramework) == 'net461' OR $(TargetFramework) == 'netstandard2.0' OR $(TargetFramework) == 'netstandard2.1'">
+    <PackageReference Include="System.Diagnostics.DiagnosticSource" Version="5.0.0" />
+    <PackageReference Include="System.Text.Json" Version="6.0.1" />
+
   </ItemGroup>
   <ItemGroup>
     <Compile Include="..\NullableExtensions.cs" />
