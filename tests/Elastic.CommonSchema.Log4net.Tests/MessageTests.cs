@@ -3,6 +3,7 @@
 // See the LICENSE file in the project root for more information
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using FluentAssertions;
 using log4net;
@@ -309,5 +310,67 @@ public class MessageTests : LogTestsBase
 
 		info.Labels.Should().ContainKey(property);
 		info.Labels[property].Should().Be(propertyValue);
+	});
+
+	[Fact]
+	public void ToEcs_EventsInMultipleThreadContextStacks_PopulatesLabelsFieldWithLatestValue() => TestLogger((log, getLogEvents) =>
+	{
+		const string property = "thread-context-stack-prop";
+		const string propertyValue = "thread-context-stack-value";
+		const string latestPropertyValue = "latest-thread-context-stack-value";
+		using (ThreadContext.Stacks[property].Push(propertyValue))
+		{
+			TestStackValue(log, getLogEvents, property, propertyValue);
+
+			using (ThreadContext.Stacks[property].Push(latestPropertyValue))
+			{
+				TestStackValue(log, getLogEvents, property, latestPropertyValue);
+			}
+
+			TestStackValue(log, getLogEvents, property, propertyValue);
+		}
+
+		void TestStackValue(ILog log, Func<List<string>> getLogEvents, string property, string expectedPropertyValue)
+		{
+			log.Info("DummyText");
+
+			var logEvents = getLogEvents();
+
+			var (_, info) = ToEcsEvents(logEvents).Last();
+
+			info.Labels.Should().ContainKey(property);
+			info.Labels[property].Should().Be(expectedPropertyValue);
+		}
+	});
+
+	[Fact]
+	public void ToEcs_EventsInLogicalThreadContextStacks_PopulatesLabelsFieldWithLatestValue() => TestLogger((log, getLogEvents) =>
+	{
+		const string property = "logical-thread-context-stack-prop";
+		const string propertyValue = "logical-thread-context-stack-value";
+		const string latestPropertyValue = "latest-logical-thread-context-stack-value";
+		using (LogicalThreadContext.Stacks[property].Push(propertyValue))
+		{
+			TestStackValue(log, getLogEvents, property, propertyValue);
+
+			using (LogicalThreadContext.Stacks[property].Push(latestPropertyValue))
+			{
+				TestStackValue(log, getLogEvents, property, latestPropertyValue);
+			}
+
+			TestStackValue(log, getLogEvents, property, propertyValue);
+		}
+
+		void TestStackValue(ILog log, Func<List<string>> getLogEvents, string property, string expectedPropertyValue)
+		{
+			log.Info("DummyText");
+
+			var logEvents = getLogEvents();
+
+			var (_, info) = ToEcsEvents(logEvents).Last();
+
+			info.Labels.Should().ContainKey(property);
+			info.Labels[property].Should().Be(expectedPropertyValue);
+		}
 	});
 }
