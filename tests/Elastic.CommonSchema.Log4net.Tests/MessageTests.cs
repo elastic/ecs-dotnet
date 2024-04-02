@@ -134,7 +134,7 @@ public class MessageTests : LogTestsBase
 	});
 
 	[Fact]
-	public void ToEcs_EventWithFormat_MetadataContainsTemplateAndArgs() => TestLogger((log, getLogEvents) =>
+	public void ToEcs_EventWithFormat_LabelsContainTemplateAndArgs() => TestLogger((log, getLogEvents) =>
 	{
 		log.InfoFormat("Log with {0}", "format");
 
@@ -151,7 +151,7 @@ public class MessageTests : LogTestsBase
 	});
 
 	[Fact]
-	public void ToEcs_AnyEvent_PopulatesMetadataFieldWithoutLog4netProperties() => TestLogger((log, getLogEvents) =>
+	public void ToEcs_AnyEvent_PopulatesMetadataAndLabelsFieldsWithoutLog4netProperties() => TestLogger((log, getLogEvents) =>
 	{
 		log.Info("DummyText");
 
@@ -175,7 +175,7 @@ public class MessageTests : LogTestsBase
 	});
 
 	[Fact]
-	public void ToEcs_EventWithGlobalContextProperty_PopulatesMetadataField() => TestLogger((log, getLogEvents) =>
+	public void ToEcs_EventWithGlobalContextProperty_PopulatesLabelsField() => TestLogger((log, getLogEvents) =>
 	{
 		const string property = "global-prop";
 		const string propertyValue = "global-value";
@@ -200,7 +200,7 @@ public class MessageTests : LogTestsBase
 	});
 
 	[Fact]
-	public void ToEcs_EventWithThreadContextStack_PopulatesMetadataField() => TestLogger((log, getLogEvents) =>
+	public void ToEcs_EventWithThreadContextStack_PopulatesLabelsField() => TestLogger((log, getLogEvents) =>
 	{
 		const string property = "thread-context-stack-prop";
 		const string propertyValue = "thread-context-stack-value";
@@ -218,7 +218,7 @@ public class MessageTests : LogTestsBase
 	});
 
 	[Fact]
-	public void ToEcs_EventWithThreadContextProperty_PopulatesMetadataField() => TestLogger((log, getLogEvents) =>
+	public void ToEcs_EventWithThreadContextProperty_PopulatesLabelsField() => TestLogger((log, getLogEvents) =>
 	{
 		const string property = "thread-context-prop";
 		const string propertyValue = "thread-context-value";
@@ -243,7 +243,7 @@ public class MessageTests : LogTestsBase
 	});
 
 	[Fact]
-	public void ToEcs_EventInLogicalThreadContextStack_PopulatesMetadataField() => TestLogger((log, getLogEvents) =>
+	public void ToEcs_EventInLogicalThreadContextStack_PopulatesLabelsField() => TestLogger((log, getLogEvents) =>
 	{
 		const string property = "logical-thread-context-stack-prop";
 		const string propertyValue = "logical-thread-context-stack-value";
@@ -264,7 +264,7 @@ public class MessageTests : LogTestsBase
 	});
 
 	[Fact]
-	public void ToEcs_EventWithLogicalThreadContextProperty_PopulatesMetadataField() => TestLogger((log, getLogEvents) =>
+	public void ToEcs_EventWithLogicalThreadContextProperty_PopulatesLabelsAndMetadataFields() => TestLogger((log, getLogEvents) =>
 	{
 		const string property = "logical-thread-context-prop";
 		const string propertyValue = "logical-thread-context-value";
@@ -293,7 +293,7 @@ public class MessageTests : LogTestsBase
 	});
 
 	[Fact]
-	public void ToEcs_EventWithProperties_PopulatesMetadataField() => TestLogger((log, getLogEvents) =>
+	public void ToEcs_EventWithProperties_PopulatesLabelsField() => TestLogger((log, getLogEvents) =>
 	{
 		const string property = "additional-prop";
 		const string propertyValue = "additional-value";
