@@ -100,11 +100,13 @@ public partial class EcsDocument
 		return ParseOTelResourceAttributes(resourceAttributes);
 	}
 
-	private static IDictionary<string, string> ParseOTelResourceAttributes(string resourceAttributes)
+	private static IDictionary<string, string> ParseOTelResourceAttributes(string? resourceAttributes)
 	{
 		if (string.IsNullOrEmpty(resourceAttributes)) return new Dictionary<string, string>();
 
-		var keyValues = resourceAttributes
+		// Needed to satisfy all TFM's sadly.
+		// ReSharper disable once RedundantSuppressNullableWarningExpression
+		var keyValues = resourceAttributes!
 			.Split(new[] { ',' }, RemoveEmptyEntries)
 			.Select(k => k.Split(new[] { '=' }, 2, RemoveEmptyEntries))
 			.Where(kv => kv.Length == 2)
@@ -125,14 +127,14 @@ public partial class EcsDocument
 		return new Agent { Type = type, Version = version };
 	}
 
-	private static (string, string) GetAssemblyVersion(Assembly assembly)
+	private static (string?, string?) GetAssemblyVersion(Assembly assembly)
 	{
 		var name = assembly.GetName();
 		var type = name.Name;
 		var versionAttribute = assembly.GetCustomAttributes(false)
 			.OfType<AssemblyInformationalVersionAttribute>()
 			.FirstOrDefault();
-		var version = versionAttribute?.InformationalVersion ?? name.Version.ToString();
+		var version = versionAttribute?.InformationalVersion ?? name?.Version?.ToString();
 		return (type, version);
 	}
 
@@ -209,7 +211,7 @@ public partial class EcsDocument
 	private static readonly string UserDomainName = Environment.UserDomainName;
 
 	//Can not cache current thread's identity as it's used for role based security, different threads can have different identities
-	private static User GetUser() => new () { Id = Thread.CurrentPrincipal?.Identity.Name, Name = UserName, Domain = UserDomainName };
+	private static User GetUser() => new () { Id = Thread.CurrentPrincipal?.Identity?.Name, Name = UserName, Domain = UserDomainName };
 
 	private static Error? GetError(Exception? exception)
 	{

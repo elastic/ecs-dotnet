@@ -55,7 +55,7 @@ namespace Elastic.CommonSchema
 			Longitude.ToString("#0.0#######", CultureInfo.InvariantCulture);
 
 		/// <inheritdoc cref="object.Equals(object)"/>>
-		public override bool Equals(object obj)
+		public override bool Equals(object? obj)
 		{
 			if (ReferenceEquals(null, obj))
 				return false;
