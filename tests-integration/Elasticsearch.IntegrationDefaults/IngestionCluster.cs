@@ -64,7 +64,7 @@ public static class TestClusterExtensions
 public abstract class TestClusterBase : XunitClusterBase
 {
 	protected TestClusterBase(int port = 9200, ClusterFeatures features = ClusterFeatures.None)
-		: base(new XunitClusterConfiguration("8.4.0", features) { StartingPortNumber = port, AutoWireKnownProxies = true }) { }
+		: base(new XunitClusterConfiguration("8.11.0", features) { StartingPortNumber = port, AutoWireKnownProxies = true }) { }
 
 	protected virtual ElasticsearchClientSettings UpdateClientSettings(ElasticsearchClientSettings settings) => settings;
 

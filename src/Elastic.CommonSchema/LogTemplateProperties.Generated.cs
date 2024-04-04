@@ -33,7 +33,7 @@ namespace Elastic.CommonSchema
 		/// If the event source has no original timestamp, this value is typically populated by the first time the event was received by the pipeline.
 		/// Required field for all events.
 		/// <para><br/>This is a required field</para></para>
-		/// <example>5/23/2016 8:05:34 AM</example>
+		/// <example>5/23/2016 8:05:34AM</example>
 		///</summary>
 		public static string Timestamp = nameof(Timestamp);
 		///<summary>
@@ -314,7 +314,7 @@ namespace Elastic.CommonSchema
 		///<summary>
 		/// <para><c>code_signature.timestamp</c></para>
 		/// <para>Date and time when the code signature was generated and signed.</para>
-		/// <example>1/1/2021 12:10:30 PM</example>
+		/// <example>1/1/2021 12:10:30PM</example>
 		///</summary>
 		public static string CodeSignatureTimestamp = nameof(CodeSignatureTimestamp);
 		///<summary>
@@ -391,6 +391,12 @@ namespace Elastic.CommonSchema
 		/// <example>docker</example>
 		///</summary>
 		public static string ContainerRuntime = nameof(ContainerRuntime);
+		///<summary>
+		/// <para><c>container.security_context.privileged</c></para>
+		/// <para>Indicates whether the container is running in privileged mode.</para>
+		/// <example></example>
+		///</summary>
+		public static string ContainerSecurityContextPrivileged = nameof(ContainerSecurityContextPrivileged);
 		///<summary>
 		/// <para><c>data_stream.dataset</c></para>
 		/// <para>The field can contain anything that makes sense to signify the source of the data.
@@ -502,7 +508,7 @@ namespace Elastic.CommonSchema
 		public static string DestinationTopLevelDomain = nameof(DestinationTopLevelDomain);
 		///<summary>
 		/// <para><c>device.id</c></para>
-		/// <para>The unique identifier of a device. The identifier must not change across application sessions but stay fixex for an instance of a (mobile) device. 
+		/// <para>The unique identifier of a device. The identifier must not change across application sessions but stay fixed for an instance of a (mobile) device. 
 		/// On iOS, this value must be equal to the vendor identifier (https://developer.apple.com/documentation/uikit/uidevice/1620059-identifierforvendor). On Android, this value must be equal to the Firebase Installation ID or a globally unique UUID which is persisted across sessions in your application.
 		/// For GDPR and data protection law reasons this identifier should not carry information that would allow to identify a user.</para>
 		/// <example>00000000-54b3-e7c7-0000-000046bffd97</example>
@@ -639,6 +645,37 @@ namespace Elastic.CommonSchema
 		///</summary>
 		public static string ElfCreationDate = nameof(ElfCreationDate);
 		///<summary>
+		/// <para><c>elf.go_import_hash</c></para>
+		/// <para>A hash of the Go language imports in an ELF file excluding standard library imports. An import hash can be used to fingerprint binaries even after recompilation or other code-level transformations have occurred, which would change more traditional hash values.
+		/// The algorithm used to calculate the Go symbol hash and a reference implementation are available [here](https://github.com/elastic/toutoumomoma).</para>
+		/// <example>10bddcb4cee42080f76c88d9ff964491</example>
+		///</summary>
+		public static string ElfGoImportHash = nameof(ElfGoImportHash);
+		///<summary>
+		/// <para><c>elf.go_imports</c></para>
+		/// <para>List of imported Go language element names and types.</para>
+		/// <example></example>
+		///</summary>
+		public static string ElfGoImports = nameof(ElfGoImports);
+		///<summary>
+		/// <para><c>elf.go_imports_names_entropy</c></para>
+		/// <para>Shannon entropy calculation from the list of Go imports.</para>
+		/// <example></example>
+		///</summary>
+		public static string ElfGoImportsNamesEntropy = nameof(ElfGoImportsNamesEntropy);
+		///<summary>
+		/// <para><c>elf.go_imports_names_var_entropy</c></para>
+		/// <para>Variance for Shannon entropy calculation from the list of Go imports.</para>
+		/// <example></example>
+		///</summary>
+		public static string ElfGoImportsNamesVarEntropy = nameof(ElfGoImportsNamesVarEntropy);
+		///<summary>
+		/// <para><c>elf.go_stripped</c></para>
+		/// <para>Set to true if the file is a Go executable that has had its symbols stripped or obfuscated and false if an unobfuscated Go executable.</para>
+		/// <example></example>
+		///</summary>
+		public static string ElfGoStripped = nameof(ElfGoStripped);
+		///<summary>
 		/// <para><c>elf.header.abi_version</c></para>
 		/// <para>Version of the ELF Application Binary Interface (ABI).</para>
 		/// <example></example>
@@ -687,6 +724,25 @@ namespace Elastic.CommonSchema
 		///</summary>
 		public static string ElfHeaderVersion = nameof(ElfHeaderVersion);
 		///<summary>
+		/// <para><c>elf.import_hash</c></para>
+		/// <para>A hash of the imports in an ELF file. An import hash can be used to fingerprint binaries even after recompilation or other code-level transformations have occurred, which would change more traditional hash values.
+		/// This is an ELF implementation of the Windows PE imphash.</para>
+		/// <example>d41d8cd98f00b204e9800998ecf8427e</example>
+		///</summary>
+		public static string ElfImportHash = nameof(ElfImportHash);
+		///<summary>
+		/// <para><c>elf.imports_names_entropy</c></para>
+		/// <para>Shannon entropy calculation from the list of imported element names and types.</para>
+		/// <example></example>
+		///</summary>
+		public static string ElfImportsNamesEntropy = nameof(ElfImportsNamesEntropy);
+		///<summary>
+		/// <para><c>elf.imports_names_var_entropy</c></para>
+		/// <para>Variance for Shannon entropy calculation from the list of imported element names and types.</para>
+		/// <example></example>
+		///</summary>
+		public static string ElfImportsNamesVarEntropy = nameof(ElfImportsNamesVarEntropy);
+		///<summary>
 		/// <para><c>elf.telfhash</c></para>
 		/// <para>telfhash symbol hash for ELF file.</para>
 		/// <example></example>
@@ -702,7 +758,7 @@ namespace Elastic.CommonSchema
 		///<summary>
 		/// <para><c>email.delivery_timestamp</c></para>
 		/// <para>The date and time when the email message was received by the service or client.</para>
-		/// <example>11/10/2020 10:12:34 PM</example>
+		/// <example>11/10/2020 10:12:34PM</example>
 		///</summary>
 		public static string EmailDeliveryTimestamp = nameof(EmailDeliveryTimestamp);
 		///<summary>
@@ -727,7 +783,7 @@ namespace Elastic.CommonSchema
 		///<summary>
 		/// <para><c>email.origination_timestamp</c></para>
 		/// <para>The date and time the email message was composed. Many email clients will fill in this value automatically when the message is sent by a user.</para>
-		/// <example>11/10/2020 10:12:34 PM</example>
+		/// <example>11/10/2020 10:12:34PM</example>
 		///</summary>
 		public static string EmailOriginationTimestamp = nameof(EmailOriginationTimestamp);
 		///<summary>
@@ -807,11 +863,11 @@ namespace Elastic.CommonSchema
 		public static string EventCode = nameof(EventCode);
 		///<summary>
 		/// <para><c>event.created</c></para>
-		/// <para>event.created contains the date/time when the event was first read by an agent, or by your pipeline.
-		/// This field is distinct from @timestamp in that @timestamp typically contain the time extracted from the original event.
+		/// <para>`event.created` contains the date/time when the event was first read by an agent, or by your pipeline.
+		/// This field is distinct from `@timestamp` in that `@timestamp` typically contain the time extracted from the original event.
 		/// In most situations, these two timestamps will be slightly different. The difference can be used to calculate the delay between your source generating an event, and the time when your agent first processed it. This can be used to monitor your agent's or pipeline's ability to keep up with your event source.
-		/// In case the two timestamps are identical, @timestamp should be used.</para>
-		/// <example>5/23/2016 8:05:34 AM</example>
+		/// In case the two timestamps are identical, `@timestamp` should be used.</para>
+		/// <example>5/23/2016 8:05:34AM</example>
 		///</summary>
 		public static string EventCreated = nameof(EventCreated);
 		///<summary>
@@ -825,13 +881,13 @@ namespace Elastic.CommonSchema
 		///<summary>
 		/// <para><c>event.duration</c></para>
 		/// <para>Duration of the event in nanoseconds.
-		/// If event.start and event.end are known this value should be the difference between the end and start time.</para>
+		/// If `event.start` and `event.end` are known this value should be the difference between the end and start time.</para>
 		/// <example></example>
 		///</summary>
 		public static string EventDuration = nameof(EventDuration);
 		///<summary>
 		/// <para><c>event.end</c></para>
-		/// <para>event.end contains the date when the event ended or when the activity was last observed.</para>
+		/// <para>`event.end` contains the date when the event ended or when the activity was last observed.</para>
 		/// <example></example>
 		///</summary>
 		public static string EventEnd = nameof(EventEnd);
@@ -852,20 +908,23 @@ namespace Elastic.CommonSchema
 		/// <para>Timestamp when an event arrived in the central data store.
 		/// This is different from `@timestamp`, which is when the event originally occurred.  It's also different from `event.created`, which is meant to capture the first time an agent saw the event.
 		/// In normal conditions, assuming no tampering, the timestamps should chronologically look like this: `@timestamp` &lt; `event.created` &lt; `event.ingested`.</para>
-		/// <example>5/23/2016 8:05:35 AM</example>
+		/// <example>5/23/2016 8:05:35AM</example>
 		///</summary>
 		public static string EventIngested = nameof(EventIngested);
 		///<summary>
 		/// <para><c>event.kind</c></para>
 		/// <para>This is one of four ECS Categorization Fields, and indicates the highest level in the ECS category hierarchy.
 		/// `event.kind` gives high-level information about what type of information the event contains, without being specific to the contents of the event. For example, values of this field distinguish alert events from metric events.
-		/// The value of this field can be used to inform how these kinds of events should be handled. They may warrant different retention, different access control, it may also help understand whether the data coming in at a regular interval or not.
+		/// The value of this field can be used to inform how these kinds of events should be handled. They may warrant different retention, different access control, it may also help understand whether the data is coming in at a regular interval or not.
 		/// <para><br/>Allowed Values:</para>
 		/// <list type="table">
 		/// <listheader><term>Value</term><description>Description</description></listheader>
 		/// <item><term>alert</term><description>This value indicates an event such as an alert or notable event, triggered by a detection rule executing externally to the Elastic Stack.
 		/// `event.kind:alert` is often populated for events coming from firewalls, intrusion detection systems, endpoint detection and response systems, and so on.
 		/// This value is not used by Elastic solutions for alert documents that are created by rules executing within the Kibana alerting framework.</description></item>
+		/// <item><term>asset</term><description>This value indicates events whose primary purpose is to store an inventory of assets/entities and their attributes. Assets/entities are objects (such as users and hosts) that are expected to be subjects of detailed analysis within the system.
+		/// Examples include lists of user identities or accounts ingested from directory services such as Active Directory (AD), inventory of hosts pulled from configuration management databases (CMDB), and lists of cloud storage buckets pulled from cloud provider APIs.
+		/// This value is used by Elastic Security for asset management solutions. `event.kind: asset` is not used for normal system events or logs that are coming from an asset/entity, nor is it used for system events or logs coming from a directory or CMDB system.</description></item>
 		/// <item><term>enrichment</term><description>The `enrichment` value indicates an event collected to provide additional context, often to other events.
 		/// An example is collecting indicators of compromise (IOCs) from a threat intelligence provider with the intent to use those values to enrich other events. The IOC events from the intelligence provider should be categorized as `event.kind:enrichment`.</description></item>
 		/// <item><term>event</term><description>This value is the most general and most common value for this field. It is used to represent events that indicate that something happened.</description></item>
@@ -966,7 +1025,7 @@ namespace Elastic.CommonSchema
 		public static string EventSeverity = nameof(EventSeverity);
 		///<summary>
 		/// <para><c>event.start</c></para>
-		/// <para>event.start contains the date when the event started or when the activity was first observed.</para>
+		/// <para>`event.start` contains the date when the event started or when the activity was first observed.</para>
 		/// <example></example>
 		///</summary>
 		public static string EventStart = nameof(EventStart);
@@ -1009,6 +1068,26 @@ namespace Elastic.CommonSchema
 		/// <example>my-function</example>
 		///</summary>
 		public static string FaasName = nameof(FaasName);
+		///<summary>
+		/// <para><c>faas.trigger.request_id</c></para>
+		/// <para>The ID of the trigger request , message, event, etc.</para>
+		/// <example>123456789</example>
+		///</summary>
+		public static string FaasTriggerRequestId = nameof(FaasTriggerRequestId);
+		///<summary>
+		/// <para><c>faas.trigger.type</c></para>
+		/// <para>The trigger for the function execution.
+		/// <para><br/>Expected Values:</para>
+		/// <list type="bullet">
+		/// <item>http</item>
+		/// <item>pubsub</item>
+		/// <item>datasource</item>
+		/// <item>timer</item>
+		/// <item>other</item>
+		/// </list></para>
+		/// <example>http</example>
+		///</summary>
+		public static string FaasTriggerType = nameof(FaasTriggerType);
 		///<summary>
 		/// <para><c>faas.version</c></para>
 		/// <para>The version of a serverless function.</para>
@@ -1331,7 +1410,7 @@ namespace Elastic.CommonSchema
 		///<summary>
 		/// <para><c>host.name</c></para>
 		/// <para>Name of the host.
-		/// It can contain what `hostname` returns on Unix systems, the fully qualified domain name, or a name specified by the user. The sender decides which value to use.</para>
+		/// It can contain what hostname returns on Unix systems, the fully qualified domain name (FQDN), or a name specified by the user. The recommended value is the lowercase FQDN of the host.</para>
 		/// <example></example>
 		///</summary>
 		public static string HostName = nameof(HostName);
@@ -1519,6 +1598,63 @@ namespace Elastic.CommonSchema
 		/// <example>init</example>
 		///</summary>
 		public static string LogOriginFunction = nameof(LogOriginFunction);
+		///<summary>
+		/// <para><c>macho.go_import_hash</c></para>
+		/// <para>A hash of the Go language imports in a Mach-O file excluding standard library imports. An import hash can be used to fingerprint binaries even after recompilation or other code-level transformations have occurred, which would change more traditional hash values.
+		/// The algorithm used to calculate the Go symbol hash and a reference implementation are available [here](https://github.com/elastic/toutoumomoma).</para>
+		/// <example>10bddcb4cee42080f76c88d9ff964491</example>
+		///</summary>
+		public static string MachoGoImportHash = nameof(MachoGoImportHash);
+		///<summary>
+		/// <para><c>macho.go_imports</c></para>
+		/// <para>List of imported Go language element names and types.</para>
+		/// <example></example>
+		///</summary>
+		public static string MachoGoImports = nameof(MachoGoImports);
+		///<summary>
+		/// <para><c>macho.go_imports_names_entropy</c></para>
+		/// <para>Shannon entropy calculation from the list of Go imports.</para>
+		/// <example></example>
+		///</summary>
+		public static string MachoGoImportsNamesEntropy = nameof(MachoGoImportsNamesEntropy);
+		///<summary>
+		/// <para><c>macho.go_imports_names_var_entropy</c></para>
+		/// <para>Variance for Shannon entropy calculation from the list of Go imports.</para>
+		/// <example></example>
+		///</summary>
+		public static string MachoGoImportsNamesVarEntropy = nameof(MachoGoImportsNamesVarEntropy);
+		///<summary>
+		/// <para><c>macho.go_stripped</c></para>
+		/// <para>Set to true if the file is a Go executable that has had its symbols stripped or obfuscated and false if an unobfuscated Go executable.</para>
+		/// <example></example>
+		///</summary>
+		public static string MachoGoStripped = nameof(MachoGoStripped);
+		///<summary>
+		/// <para><c>macho.import_hash</c></para>
+		/// <para>A hash of the imports in a Mach-O file. An import hash can be used to fingerprint binaries even after recompilation or other code-level transformations have occurred, which would change more traditional hash values.
+		/// This is a synonym for symhash.</para>
+		/// <example>d41d8cd98f00b204e9800998ecf8427e</example>
+		///</summary>
+		public static string MachoImportHash = nameof(MachoImportHash);
+		///<summary>
+		/// <para><c>macho.imports_names_entropy</c></para>
+		/// <para>Shannon entropy calculation from the list of imported element names and types.</para>
+		/// <example></example>
+		///</summary>
+		public static string MachoImportsNamesEntropy = nameof(MachoImportsNamesEntropy);
+		///<summary>
+		/// <para><c>macho.imports_names_var_entropy</c></para>
+		/// <para>Variance for Shannon entropy calculation from the list of imported element names and types.</para>
+		/// <example></example>
+		///</summary>
+		public static string MachoImportsNamesVarEntropy = nameof(MachoImportsNamesVarEntropy);
+		///<summary>
+		/// <para><c>macho.symhash</c></para>
+		/// <para>A hash of the imports in a Mach-O file. An import hash can be used to fingerprint binaries even after recompilation or other code-level transformations have occurred, which would change more traditional hash values.
+		/// This is a Mach-O implementation of the Windows PE imphash</para>
+		/// <example>d3ccf195b62a9279c3c19af1080497ec</example>
+		///</summary>
+		public static string MachoSymhash = nameof(MachoSymhash);
 		///<summary>
 		/// <para><c>network.application</c></para>
 		/// <para>When a specific application or service is identified from network connection details (source/dest IPs, ports, certificates, or wire format), this field captures the application's or service's name.
@@ -1893,12 +2029,62 @@ namespace Elastic.CommonSchema
 		///</summary>
 		public static string PeFileVersion = nameof(PeFileVersion);
 		///<summary>
+		/// <para><c>pe.go_import_hash</c></para>
+		/// <para>A hash of the Go language imports in a PE file excluding standard library imports. An import hash can be used to fingerprint binaries even after recompilation or other code-level transformations have occurred, which would change more traditional hash values.
+		/// The algorithm used to calculate the Go symbol hash and a reference implementation are available [here](https://github.com/elastic/toutoumomoma).</para>
+		/// <example>10bddcb4cee42080f76c88d9ff964491</example>
+		///</summary>
+		public static string PeGoImportHash = nameof(PeGoImportHash);
+		///<summary>
+		/// <para><c>pe.go_imports</c></para>
+		/// <para>List of imported Go language element names and types.</para>
+		/// <example></example>
+		///</summary>
+		public static string PeGoImports = nameof(PeGoImports);
+		///<summary>
+		/// <para><c>pe.go_imports_names_entropy</c></para>
+		/// <para>Shannon entropy calculation from the list of Go imports.</para>
+		/// <example></example>
+		///</summary>
+		public static string PeGoImportsNamesEntropy = nameof(PeGoImportsNamesEntropy);
+		///<summary>
+		/// <para><c>pe.go_imports_names_var_entropy</c></para>
+		/// <para>Variance for Shannon entropy calculation from the list of Go imports.</para>
+		/// <example></example>
+		///</summary>
+		public static string PeGoImportsNamesVarEntropy = nameof(PeGoImportsNamesVarEntropy);
+		///<summary>
+		/// <para><c>pe.go_stripped</c></para>
+		/// <para>Set to true if the file is a Go executable that has had its symbols stripped or obfuscated and false if an unobfuscated Go executable.</para>
+		/// <example></example>
+		///</summary>
+		public static string PeGoStripped = nameof(PeGoStripped);
+		///<summary>
 		/// <para><c>pe.imphash</c></para>
 		/// <para>A hash of the imports in a PE file. An imphash -- or import hash -- can be used to fingerprint binaries even after recompilation or other code-level transformations have occurred, which would change more traditional hash values.
 		/// Learn more at https://www.fireeye.com/blog/threat-research/2014/01/tracking-malware-import-hashing.html.</para>
 		/// <example>0c6803c4e922103c4dca5963aad36ddf</example>
 		///</summary>
 		public static string PeImphash = nameof(PeImphash);
+		///<summary>
+		/// <para><c>pe.import_hash</c></para>
+		/// <para>A hash of the imports in a PE file. An import hash can be used to fingerprint binaries even after recompilation or other code-level transformations have occurred, which would change more traditional hash values.
+		/// This is a synonym for imphash.</para>
+		/// <example>d41d8cd98f00b204e9800998ecf8427e</example>
+		///</summary>
+		public static string PeImportHash = nameof(PeImportHash);
+		///<summary>
+		/// <para><c>pe.imports_names_entropy</c></para>
+		/// <para>Shannon entropy calculation from the list of imported element names and types.</para>
+		/// <example></example>
+		///</summary>
+		public static string PeImportsNamesEntropy = nameof(PeImportsNamesEntropy);
+		///<summary>
+		/// <para><c>pe.imports_names_var_entropy</c></para>
+		/// <para>Variance for Shannon entropy calculation from the list of imported element names and types.</para>
+		/// <example></example>
+		///</summary>
+		public static string PeImportsNamesVarEntropy = nameof(PeImportsNamesVarEntropy);
 		///<summary>
 		/// <para><c>pe.original_file_name</c></para>
 		/// <para>Internal name of the file, provided at compile-time.</para>
@@ -1935,7 +2121,7 @@ namespace Elastic.CommonSchema
 		///<summary>
 		/// <para><c>process.end</c></para>
 		/// <para>The time the process ended.</para>
-		/// <example>5/23/2016 8:05:34 AM</example>
+		/// <example>5/23/2016 8:05:34AM</example>
 		///</summary>
 		public static string ProcessEnd = nameof(ProcessEnd);
 		///<summary>
@@ -1990,7 +2176,7 @@ namespace Elastic.CommonSchema
 		///<summary>
 		/// <para><c>process.start</c></para>
 		/// <para>The time the process started.</para>
-		/// <example>5/23/2016 8:05:34 AM</example>
+		/// <example>5/23/2016 8:05:34AM</example>
 		///</summary>
 		public static string ProcessStart = nameof(ProcessStart);
 		///<summary>
@@ -2018,6 +2204,13 @@ namespace Elastic.CommonSchema
 		/// <example>1325</example>
 		///</summary>
 		public static string ProcessUptime = nameof(ProcessUptime);
+		///<summary>
+		/// <para><c>process.vpid</c></para>
+		/// <para>Virtual process id.
+		/// The process id within a pid namespace. This is not necessarily unique across all processes on the host but it is unique within the process namespace that the process exists within.</para>
+		/// <example>4242</example>
+		///</summary>
+		public static string ProcessVpid = nameof(ProcessVpid);
 		///<summary>
 		/// <para><c>process.working_directory</c></para>
 		/// <para>The working directory of the process.</para>
@@ -2474,7 +2667,7 @@ namespace Elastic.CommonSchema
 		///<summary>
 		/// <para><c>threat.indicator.first_seen</c></para>
 		/// <para>The date and time when intelligence source first reported sighting this indicator.</para>
-		/// <example>11/5/2020 5:25:47 PM</example>
+		/// <example>11/5/2020 5:25:47PM</example>
 		///</summary>
 		public static string ThreatIndicatorFirstSeen = nameof(ThreatIndicatorFirstSeen);
 		///<summary>
@@ -2486,7 +2679,7 @@ namespace Elastic.CommonSchema
 		///<summary>
 		/// <para><c>threat.indicator.last_seen</c></para>
 		/// <para>The date and time when intelligence source last reported sighting this indicator.</para>
-		/// <example>11/5/2020 5:25:47 PM</example>
+		/// <example>11/5/2020 5:25:47PM</example>
 		///</summary>
 		public static string ThreatIndicatorLastSeen = nameof(ThreatIndicatorLastSeen);
 		///<summary>
@@ -2505,11 +2698,24 @@ namespace Elastic.CommonSchema
 		///</summary>
 		public static string ThreatIndicatorMarkingTlp = nameof(ThreatIndicatorMarkingTlp);
 		///<summary>
+		/// <para><c>threat.indicator.marking.tlp_version</c></para>
+		/// <para>Traffic Light Protocol version.</para>
+		/// <example>2.0</example>
+		///</summary>
+		public static string ThreatIndicatorMarkingTlpVersion = nameof(ThreatIndicatorMarkingTlpVersion);
+		///<summary>
 		/// <para><c>threat.indicator.modified_at</c></para>
 		/// <para>The date and time when intelligence source last modified information for this indicator.</para>
-		/// <example>11/5/2020 5:25:47 PM</example>
+		/// <example>11/5/2020 5:25:47PM</example>
 		///</summary>
 		public static string ThreatIndicatorModifiedAt = nameof(ThreatIndicatorModifiedAt);
+		///<summary>
+		/// <para><c>threat.indicator.name</c></para>
+		/// <para>The display name indicator in an UI friendly format
+		/// URL, IP address, email address, registry key, port number, hash value, or other relevant name can serve as the display name.</para>
+		/// <example>5.2.75.227</example>
+		///</summary>
+		public static string ThreatIndicatorName = nameof(ThreatIndicatorName);
 		///<summary>
 		/// <para><c>threat.indicator.port</c></para>
 		/// <para>Identifies a threat indicator as a port number (irrespective of direction).</para>
@@ -2600,12 +2806,6 @@ namespace Elastic.CommonSchema
 		///</summary>
 		public static string ThreatSoftwareType = nameof(ThreatSoftwareType);
 		///<summary>
-		/// <para><c>threat.threat.indicator.marking.tlp.version</c></para>
-		/// <para>Traffic Light Protocol version.</para>
-		/// <example>2.0</example>
-		///</summary>
-		public static string ThreatThreatIndicatorMarkingTlpVersion = nameof(ThreatThreatIndicatorMarkingTlpVersion);
-		///<summary>
 		/// <para><c>tls.cipher</c></para>
 		/// <para>String indicating the cipher used during the current connection.</para>
 		/// <example>TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256</example>
@@ -2650,13 +2850,13 @@ namespace Elastic.CommonSchema
 		///<summary>
 		/// <para><c>tls.client.not_after</c></para>
 		/// <para>Date/Time indicating when client certificate is no longer considered valid.</para>
-		/// <example>1/1/2021 12:00:00 AM</example>
+		/// <example>1/1/2021 12:00:00AM</example>
 		///</summary>
 		public static string TlsClientNotAfter = nameof(TlsClientNotAfter);
 		///<summary>
 		/// <para><c>tls.client.not_before</c></para>
 		/// <para>Date/Time indicating when client certificate is first considered valid.</para>
-		/// <example>1/1/1970 12:00:00 AM</example>
+		/// <example>1/1/1970 12:00:00AM</example>
 		///</summary>
 		public static string TlsClientNotBefore = nameof(TlsClientNotBefore);
 		///<summary>
@@ -2734,13 +2934,13 @@ namespace Elastic.CommonSchema
 		///<summary>
 		/// <para><c>tls.server.not_after</c></para>
 		/// <para>Timestamp indicating when server certificate is no longer considered valid.</para>
-		/// <example>1/1/2021 12:00:00 AM</example>
+		/// <example>1/1/2021 12:00:00AM</example>
 		///</summary>
 		public static string TlsServerNotAfter = nameof(TlsServerNotAfter);
 		///<summary>
 		/// <para><c>tls.server.not_before</c></para>
 		/// <para>Timestamp indicating when server certificate is first considered valid.</para>
-		/// <example>1/1/1970 12:00:00 AM</example>
+		/// <example>1/1/1970 12:00:00AM</example>
 		///</summary>
 		public static string TlsServerNotBefore = nameof(TlsServerNotBefore);
 		///<summary>
@@ -3018,13 +3218,13 @@ namespace Elastic.CommonSchema
 		///<summary>
 		/// <para><c>x509.not_after</c></para>
 		/// <para>Time at which the certificate is no longer considered valid.</para>
-		/// <example>7/16/2020 3:15:39 AM</example>
+		/// <example>7/16/2020 3:15:39AM</example>
 		///</summary>
 		public static string X509NotAfter = nameof(X509NotAfter);
 		///<summary>
 		/// <para><c>x509.not_before</c></para>
 		/// <para>Time at which the certificate is first considered valid.</para>
-		/// <example>8/16/2019 1:40:25 AM</example>
+		/// <example>8/16/2019 1:40:25AM</example>
 		///</summary>
 		public static string X509NotBefore = nameof(X509NotBefore);
 		///<summary>
@@ -3135,6 +3335,7 @@ namespace Elastic.CommonSchema
 			"container.network.egress.bytes", ContainerNetworkEgressBytes,
 			"container.network.ingress.bytes", ContainerNetworkIngressBytes,
 			"container.runtime", ContainerRuntime,
+			"container.security_context.privileged", ContainerSecurityContextPrivileged,
 			"data_stream.dataset", DataStreamDataset,
 			"data_stream.namespace", DataStreamNamespace,
 			"data_stream.type", DataStreamType,
@@ -3171,6 +3372,11 @@ namespace Elastic.CommonSchema
 			"elf.byte_order", ElfByteOrder,
 			"elf.cpu_type", ElfCpuType,
 			"elf.creation_date", ElfCreationDate,
+			"elf.go_import_hash", ElfGoImportHash,
+			"elf.go_imports", ElfGoImports,
+			"elf.go_imports_names_entropy", ElfGoImportsNamesEntropy,
+			"elf.go_imports_names_var_entropy", ElfGoImportsNamesVarEntropy,
+			"elf.go_stripped", ElfGoStripped,
 			"elf.header.abi_version", ElfHeaderAbiVersion,
 			"elf.header.class", ElfHeaderClass,
 			"elf.header.data", ElfHeaderData,
@@ -3179,6 +3385,9 @@ namespace Elastic.CommonSchema
 			"elf.header.os_abi", ElfHeaderOsAbi,
 			"elf.header.type", ElfHeaderType,
 			"elf.header.version", ElfHeaderVersion,
+			"elf.import_hash", ElfImportHash,
+			"elf.imports_names_entropy", ElfImportsNamesEntropy,
+			"elf.imports_names_var_entropy", ElfImportsNamesVarEntropy,
 			"elf.telfhash", ElfTelfhash,
 			"email.content_type", EmailContentType,
 			"email.delivery_timestamp", EmailDeliveryTimestamp,
@@ -3222,6 +3431,8 @@ namespace Elastic.CommonSchema
 			"faas.execution", FaasExecution,
 			"faas.id", FaasId,
 			"faas.name", FaasName,
+			"faas.trigger.request_id", FaasTriggerRequestId,
+			"faas.trigger.type", FaasTriggerType,
 			"faas.version", FaasVersion,
 			"file.accessed", FileAccessed,
 			"file.created", FileCreated,
@@ -3302,6 +3513,15 @@ namespace Elastic.CommonSchema
 			"log.origin.file.line", LogOriginFileLine,
 			"log.origin.file.name", LogOriginFileName,
 			"log.origin.function", LogOriginFunction,
+			"macho.go_import_hash", MachoGoImportHash,
+			"macho.go_imports", MachoGoImports,
+			"macho.go_imports_names_entropy", MachoGoImportsNamesEntropy,
+			"macho.go_imports_names_var_entropy", MachoGoImportsNamesVarEntropy,
+			"macho.go_stripped", MachoGoStripped,
+			"macho.import_hash", MachoImportHash,
+			"macho.imports_names_entropy", MachoImportsNamesEntropy,
+			"macho.imports_names_var_entropy", MachoImportsNamesVarEntropy,
+			"macho.symhash", MachoSymhash,
 			"network.application", NetworkApplication,
 			"network.bytes", NetworkBytes,
 			"network.community_id", NetworkCommunityId,
@@ -3358,7 +3578,15 @@ namespace Elastic.CommonSchema
 			"pe.company", PeCompany,
 			"pe.description", PeDescription,
 			"pe.file_version", PeFileVersion,
+			"pe.go_import_hash", PeGoImportHash,
+			"pe.go_imports", PeGoImports,
+			"pe.go_imports_names_entropy", PeGoImportsNamesEntropy,
+			"pe.go_imports_names_var_entropy", PeGoImportsNamesVarEntropy,
+			"pe.go_stripped", PeGoStripped,
 			"pe.imphash", PeImphash,
+			"pe.import_hash", PeImportHash,
+			"pe.imports_names_entropy", PeImportsNamesEntropy,
+			"pe.imports_names_var_entropy", PeImportsNamesVarEntropy,
 			"pe.original_file_name", PeOriginalFileName,
 			"pe.pehash", PePehash,
 			"pe.product", PeProduct,
@@ -3377,6 +3605,7 @@ namespace Elastic.CommonSchema
 			"process.thread.name", ProcessThreadName,
 			"process.title", ProcessTitle,
 			"process.uptime", ProcessUptime,
+			"process.vpid", ProcessVpid,
 			"process.working_directory", ProcessWorkingDirectory,
 			"registry.data.bytes", RegistryDataBytes,
 			"registry.data.type", RegistryDataType,
@@ -3448,7 +3677,9 @@ namespace Elastic.CommonSchema
 			"threat.indicator.ip", ThreatIndicatorIp,
 			"threat.indicator.last_seen", ThreatIndicatorLastSeen,
 			"threat.indicator.marking.tlp", ThreatIndicatorMarkingTlp,
+			"threat.indicator.marking.tlp_version", ThreatIndicatorMarkingTlpVersion,
 			"threat.indicator.modified_at", ThreatIndicatorModifiedAt,
+			"threat.indicator.name", ThreatIndicatorName,
 			"threat.indicator.port", ThreatIndicatorPort,
 			"threat.indicator.provider", ThreatIndicatorProvider,
 			"threat.indicator.reference", ThreatIndicatorReference,
@@ -3459,7 +3690,6 @@ namespace Elastic.CommonSchema
 			"threat.software.name", ThreatSoftwareName,
 			"threat.software.reference", ThreatSoftwareReference,
 			"threat.software.type", ThreatSoftwareType,
-			"threat.threat.indicator.marking.tlp.version", ThreatThreatIndicatorMarkingTlpVersion,
 			"tls.cipher", TlsCipher,
 			"tls.client.certificate", TlsClientCertificate,
 			"tls.client.hash.md5", TlsClientHashMd5,

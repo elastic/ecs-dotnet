@@ -10,6 +10,6 @@
     <ProjectReference Include="..\Elastic.CommonSchema\Elastic.CommonSchema.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="log4net" Version="2.0.15" />
+    <PackageReference Include="log4net" Version="2.0.17" />
   </ItemGroup>
 </Project>

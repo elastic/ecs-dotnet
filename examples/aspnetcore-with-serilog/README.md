@@ -33,19 +33,13 @@ public static IWebHost BuildWebHost(string[] args) =>
 		.UseStartup<Startup>()
 		.UseSerilog((ctx, config) =>
 		{
-			config.ReadFrom.Configuration(ctx.Configuration);
-
-			// Ensure HttpContextAccessor is accessible
+      // Ensure HttpContextAccessor is accessible
 			var httpAccessor = ctx.Configuration.Get<HttpContextAccessor>();
-			
-			// Create a formatter configuration to se this accessor
-			var formatterConfig = new EcsTextFormatterConfiguration();
-			formatterConfig.MapHttpContext(httpAccessor);
-			
-			// Write events to the console using this configration
-			var formatter = new EcsTextFormatter(formatterConfig);
 
-			config.WriteTo.Console(formatter);
+			config
+        .ReadFrom.Configuration(ctx.Configuration)
+        .Enrich.WithEcsHttpContext(httpAccessor)
+        .WriteTo.Async(a => a.Console(new EcsTextFormatter()));
 		})
 		.UseKestrel()
 		.Build();

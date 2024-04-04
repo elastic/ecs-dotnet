@@ -129,13 +129,13 @@ namespace Elastic.Extensions.Logging
 
 		/// <summary>
 		/// Log to Elasticsearch
-		/// <para>This overload also allows you to reuse an instance of <see cref="HttpTransport"/></para>
+		/// <para>This overload also allows you to reuse an instance of <see cref="ITransport"/></para>
 		/// <para>Further configuration can be provided through the <paramref name="configure"/> parameter</para>
 		/// <para>Expert channel configuration can be provided to the <paramref name="configureChannel"/> parameter</para>
 		/// </summary>
 		public static ILoggingBuilder AddElasticsearch(
 			this ILoggingBuilder builder,
-			HttpTransport transport,
+			ITransport transport,
 			Action<ElasticsearchLoggerOptions>? configure = null,
 			Action<ElasticsearchChannelOptionsBase<LogEvent>>? configureChannel = null
 		)

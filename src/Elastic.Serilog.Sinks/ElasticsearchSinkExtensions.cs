@@ -56,7 +56,7 @@ namespace Elastic.Serilog.Sinks
 			var transportConfig = useSniffing ? TransportHelper.Static(nodes) : TransportHelper.Sniffing(nodes);
 			configureTransport?.Invoke(transportConfig);
 
-			var sinkOptions = new ElasticsearchSinkOptions(new DefaultHttpTransport(transportConfig));
+			var sinkOptions = new ElasticsearchSinkOptions(new DistributedTransport(transportConfig));
 			configureOptions?.Invoke(sinkOptions);
 
 			return loggerConfiguration.Sink(new ElasticsearchSink(sinkOptions), restrictedToMinimumLevel, levelSwitch);
@@ -80,7 +80,7 @@ namespace Elastic.Serilog.Sinks
 		{
 			var transportConfig = useSniffing ? TransportHelper.Static(nodes) : TransportHelper.Sniffing(nodes);
 			configureTransport?.Invoke(transportConfig);
-			var sinkOptions = new ElasticsearchSinkOptions<TEcsDocument>(new DefaultHttpTransport(transportConfig));
+			var sinkOptions = new ElasticsearchSinkOptions<TEcsDocument>(new DistributedTransport(transportConfig));
 			configureOptions?.Invoke(sinkOptions);
 
 			return loggerConfiguration.Sink(new ElasticsearchSink<TEcsDocument>(sinkOptions), restrictedToMinimumLevel, levelSwitch);
@@ -104,7 +104,7 @@ namespace Elastic.Serilog.Sinks
 		{
 			var transportConfig = TransportHelper.Cloud(cloudId, apiKey);
 			configureTransport?.Invoke(transportConfig);
-			var sinkOptions = new ElasticsearchSinkOptions(new DefaultHttpTransport(transportConfig));
+			var sinkOptions = new ElasticsearchSinkOptions(new DistributedTransport(transportConfig));
 			configureOptions?.Invoke(sinkOptions);
 
 			return loggerConfiguration.Sink(new ElasticsearchSink(sinkOptions), restrictedToMinimumLevel, levelSwitch);
@@ -129,7 +129,7 @@ namespace Elastic.Serilog.Sinks
 		{
 			var transportConfig = TransportHelper.Cloud(cloudId, apiKey);
 			configureTransport?.Invoke(transportConfig);
-			var sinkOptions = new ElasticsearchSinkOptions<TEcsDocument>(new DefaultHttpTransport(transportConfig));
+			var sinkOptions = new ElasticsearchSinkOptions<TEcsDocument>(new DistributedTransport(transportConfig));
 			configureOptions?.Invoke(sinkOptions);
 
 			return loggerConfiguration.Sink(new ElasticsearchSink<TEcsDocument>(sinkOptions), restrictedToMinimumLevel, levelSwitch);
@@ -154,7 +154,7 @@ namespace Elastic.Serilog.Sinks
 		{
 			var transportConfig = TransportHelper.Cloud(cloudId, username, password);
 			configureTransport?.Invoke(transportConfig);
-			var sinkOptions = new ElasticsearchSinkOptions(new DefaultHttpTransport(transportConfig));
+			var sinkOptions = new ElasticsearchSinkOptions(new DistributedTransport(transportConfig));
 			configureOptions?.Invoke(sinkOptions);
 
 			return loggerConfiguration.Sink(new ElasticsearchSink(sinkOptions), restrictedToMinimumLevel, levelSwitch);
@@ -180,7 +180,7 @@ namespace Elastic.Serilog.Sinks
 		{
 			var transportConfig = TransportHelper.Cloud(cloudId, username, password);
 			configureTransport?.Invoke(transportConfig);
-			var sinkOptions = new ElasticsearchSinkOptions<TEcsDocument>(new DefaultHttpTransport(transportConfig));
+			var sinkOptions = new ElasticsearchSinkOptions<TEcsDocument>(new DistributedTransport(transportConfig));
 			configureOptions?.Invoke(sinkOptions);
 
 			return loggerConfiguration.Sink(new ElasticsearchSink<TEcsDocument>(sinkOptions), restrictedToMinimumLevel, levelSwitch);

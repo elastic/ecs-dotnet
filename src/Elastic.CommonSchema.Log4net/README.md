@@ -45,6 +45,7 @@ is supported and will directly set the appropriate ECS field.
 
 Apart from [mandatory fields](https://www.elastic.co/guide/en/ecs/current/ecs-guidelines.html#_general_guidelines), the output contains additional data:
 
+- `labels` is taken from `metadata` (string and boolean properties)
 - `log.origin.file.name` is taken from `LocationInformation`
 - `log.origin.file.line` is taken from `LocationInformation`
 - `log.origin.function` is taken from `LocationInformation`
@@ -67,21 +68,7 @@ Sample log event output (formatted for readability):
     "@timestamp": "2022-08-28T14:06:28.5121651+02:00",
     "log.level": "INFO",
     "message": "Hi! Welcome to example!",
-    "metadata": {
-        "global_property": "Example",
-        "message_template": "{0}! Welcome to example!"
-        "0": "Hi"
-    },
-    "ecs": {
-        "version": "8.3.1"
-    },
-    "event": {
-        "timezone": "Central European Time",
-        "created": "2022-08-28T14:06:28.5121651+02:00"
-    },
-    "host": {
-        "hostname": "HGU780D3"
-    },
+    "ecs.version": "8.6.0",
     "log": {
         "logger": "Elastic.CommonSchema.Log4net.Example.Program",
         "original": null,
@@ -93,14 +80,46 @@ Sample log event output (formatted for readability):
             "function": "Main"
         }
     },
+    "labels": {
+        "MessageTemplate": "{0}! Welcome to example!"
+        "0": "Hi"
+    },
+    "agent": {
+        "type": "Elastic.CommonSchema.Log4net.Example",
+        "version": "1.0.0.0"
+    },
+    "event": {
+        "created": "2024-04-02T17:43:55.3829964+02:00",
+        "timezone": "W. Europe Standard Time"
+    },
+    "host": {
+        "os": {
+            "full": "Microsoft Windows 10.0.22631",
+            "platform": "Win32NT",
+            "version": "10.0.22631.0"
+        },
+        "architecture": "X64",
+        "hostname": "HGU780D3",
+        "name": "HGU780D3"
+    },
     "process": {
-        "thread": {
-            "id": 1
-        }
+        "name": "Elastic.CommonSchema.Log4net.Example",
+        "pid": 39652,
+        "thread.id": 17,
+        "thread.name": ".NET Long Running Task",
+        "title": ""
     },
     "service": {
         "name": "Elastic.CommonSchema.Log4net.Example",
+        "type": "dotnet",
         "version": "1.0.0.0"
+    },
+    "user": {
+        "domain": "company",
+        "name": "user"
+    },
+    "metadata": {
+        "GlobalAmountProperty": 3.14
     }
 }
 ```

@@ -26,20 +26,20 @@ namespace Elastic.Serilog.Sinks
 		public ElasticsearchSinkOptions() { }
 
 		/// <inheritdoc cref="ElasticsearchSinkOptions"/>
-		public ElasticsearchSinkOptions(HttpTransport transport) : base(transport) { }
+		public ElasticsearchSinkOptions(ITransport transport) : base(transport) { }
 	}
 
 	/// <inheritdoc cref="ElasticsearchSinkOptions{TEcsDocument}"/>
 	public class ElasticsearchSinkOptions<TEcsDocument> where TEcsDocument : EcsDocument, new()
 	{
 		/// <inheritdoc cref="ElasticsearchSinkOptions"/>
-		public ElasticsearchSinkOptions() : this(new DefaultHttpTransport(TransportHelper.Default())) { }
+		public ElasticsearchSinkOptions() : this(new DistributedTransport(TransportHelper.Default())) { }
 
 		/// <inheritdoc cref="ElasticsearchSinkOptions"/>
-		public ElasticsearchSinkOptions(HttpTransport transport) => Transport = transport;
+		public ElasticsearchSinkOptions(ITransport transport) => Transport = transport;
 
-		/// <inheritdoc cref="HttpTransport{TConfiguration}"/>
-		internal HttpTransport Transport { get; }
+		/// <inheritdoc cref="ITransport{TConfiguration}"/>
+		internal ITransport Transport { get; }
 
 		/// <inheritdoc cref="EcsTextFormatterConfiguration{TEcsDocument}"/>
 		public EcsTextFormatterConfiguration<TEcsDocument> TextFormatting { get; set; } = new();
