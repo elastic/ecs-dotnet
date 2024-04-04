@@ -32,9 +32,11 @@ namespace Elastic.CommonSchema.Generator.Projection
 					.Replace("\"priority\": 1,", $"\"priority\": {Priority},\r\n  \"data_stream\": {{}},")
 					.Replace("Sample composable template that includes all ECS fields",
 						$"Template installed by ECS.NET {schemaVersion} (https://github.com/elastic/ecs-dotnet)")
+					.Replace("\"limit\": 2000", "\"limit\": 2500")
 					.Replace("\"", "\"\"")
 					.Replace("_vulnerability\"\"", "_vulnerability\"\"\" + userComponents + @\"")
-					.Replace("try-ecs-*", "\" + indexPattern + @\"");
+					.Replace("try-ecs-*", "\" + indexPattern + @\"")
+					;
 		}
 	}
 }

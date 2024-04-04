@@ -107,7 +107,7 @@ public static class IndexTemplates
         ""codec"": ""best_compression"",
         ""mapping"": {
           ""total_fields"": {
-            ""limit"": 2000
+            ""limit"": 2500
           }
         }
       }
