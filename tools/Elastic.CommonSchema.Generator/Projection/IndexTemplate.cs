@@ -35,8 +35,7 @@ namespace Elastic.CommonSchema.Generator.Projection
 					.Replace("\"limit\": 2000", "\"limit\": 2500")
 					.Replace("\"", "\"\"")
 					.Replace("_vulnerability\"\"", "_vulnerability\"\"\" + userComponents + @\"")
-					.Replace("try-ecs-*", "\" + indexPattern + @\"")
-					;
+					.Replace("try-ecs-*", "\" + indexPattern + @\"");
 		}
 	}
 }
