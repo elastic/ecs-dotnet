@@ -89,8 +89,10 @@ public partial class EcsDocument
 	}
 
 
-	internal static bool IsMsOrElastic(byte[] array)
+	internal static bool IsMsOrElastic(byte[]? array)
 	{
+		if (array == null) return false;
+
 		var elasticApmToken = new byte[] { 174, 116, 0, 210, 193, 137, 207, 34 };
 		var mscorlibToken = new byte[] { 183, 122, 92, 86, 25, 52, 224, 137 };
 		var systemWebToken = new byte[] { 176, 63, 95, 127, 17, 213, 10, 58 };

@@ -14,10 +14,13 @@ namespace Elastic.CommonSchema.Serialization
 		public override bool CanConvert(Type typeToConvert) => typeof(EcsDocument).IsAssignableFrom(typeToConvert);
 
 		/// <inheritdoc cref="JsonConverterFactory.CreateConverter"/>
-		public override JsonConverter CreateConverter(Type typeToConvert, JsonSerializerOptions options) =>
-			typeToConvert == typeof(EcsDocument)
-				? EcsJsonConfiguration.DefaultEcsDocumentJsonConverter
-				// TODO validate this is only called once
-				: (JsonConverter)Activator.CreateInstance(typeof(EcsDocumentJsonConverter<>).MakeGenericType(typeToConvert));
+		public override JsonConverter CreateConverter(Type typeToConvert, JsonSerializerOptions options)
+		{
+			if (typeToConvert == typeof(EcsDocument))
+				return EcsJsonConfiguration.DefaultEcsDocumentJsonConverter;
+
+			var instance = Activator.CreateInstance(typeof(EcsDocumentJsonConverter<>).MakeGenericType(typeToConvert));
+			return (JsonConverter)instance!;
+		}
 	}
 }
