@@ -106,7 +106,7 @@ https://messagetemplates.org/ format.
 
 The available ECS message template properties are listed under `LogTemplateProperties.*` e.g `LogTemplateProperties.TraceId`
 
-```chsarp
+```csharp
 Log.Information("The time is {TraceId}", "my-trace-id");
 ```
 
