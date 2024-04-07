@@ -283,6 +283,15 @@ namespace Elastic.CommonSchema.NLog
 		/// <inheritdoc cref="Layout.RenderFormattedMessage"/>
 		protected override void RenderFormattedMessage(LogEventInfo logEvent, StringBuilder target)
 		{
+			var ecsDocument = RenderEcsDocument(logEvent);
+			ecsDocument.Serialize(target);
+		}
+
+		/// <summary>
+		/// Create an instance of <see cref="NLogEcsDocument"/> and enrich it with as many fields as possible.
+		/// </summary>
+		public NLogEcsDocument RenderEcsDocument(LogEventInfo logEvent)
+		{
 			var ecsEvent = EcsDocument.CreateNewWithDefaults<NLogEcsDocument>(logEvent.TimeStamp, logEvent.Exception, NlogEcsDocumentCreationOptions.Default);
 
 			// prefer tracing information set by Elastic APM
@@ -292,7 +301,8 @@ namespace Elastic.CommonSchema.NLog
 
 			// prefer setting service information set by Elastic APM
 			var service = GetService(logEvent);
-			if (service != null) ecsEvent.Service = service;
+			if (service != null)
+				ecsEvent.Service = service;
 
 			ecsEvent.Message = logEvent.FormattedMessage;
 			ecsEvent.Log = GetLog(logEvent);
@@ -321,8 +331,7 @@ namespace Elastic.CommonSchema.NLog
 			EnrichEvent(logEvent, ref ecsDocument);
 			//Allow programmatic actions to enrich before serializing
 			EnrichAction?.Invoke(ecsDocument, logEvent);
-
-			ecsDocument.Serialize(target);
+			return ecsEvent;
 		}
 
 		private Service GetService(LogEventInfo logEventInfo)

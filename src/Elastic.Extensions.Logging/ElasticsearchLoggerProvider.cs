@@ -99,7 +99,7 @@ namespace Elastic.Extensions.Logging
 				case NodePoolType.Static:
 					return new StaticNodePool(nodeUris);
 				case NodePoolType.Sticky:
-					return new StaticNodePool(nodeUris);
+					return new StickyNodePool(nodeUris);
 				// case NodePoolType.StickySniffing:
 				case NodePoolType.Cloud:
 					if (shipTo.CloudId.IsNullOrEmpty())

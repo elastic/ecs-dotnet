@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFrameworks>netstandard2.0</TargetFrameworks>
+    <Title>Elasticsearch NLog Target</Title>
+    <Description>NLog Target that exports directly to Elastic Cloud or single Elasticsearch node</Description>
+    <IsPackable>True</IsPackable>
+    <Nullable>enable</Nullable>
+    <IsPackable>True</IsPackable>
+    <RootNamespace>NLog.Targets</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Elastic.CommonSchema.NLog\Elastic.CommonSchema.NLog.csproj"/>
+    <ProjectReference Include="..\Elastic.Ingest.Elasticsearch.CommonSchema\Elastic.Ingest.Elasticsearch.CommonSchema.csproj"/>
+  </ItemGroup>
+
+</Project>
