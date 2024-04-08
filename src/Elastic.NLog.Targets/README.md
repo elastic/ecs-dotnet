@@ -71,3 +71,46 @@ var logger = LogManager.GetCurrentClassLogger();
   - _DataStreamType_ - Generic type describing the data. Defaults = 'logs'
   - _DataStreamSet_ - Describes the data ingested and its structure. Default = 'dotnet'
   - _DataStreamNamespace_ - User-configurable arbitrary grouping. Default = 'default'
+
+## ElasticsearchTarget Layout Configuration
+
+NLog Layout allows one to configure NLog Target options from environment.
+
+**Lookup NodeUris from appsettings.json**
+```xml
+    <target name="elastic" type="ElasticSearch">
+      <NodeUris>${configsetting:ConnectionStrings.ElasticSearch}</NodeUris>
+    </target>
+```
+
+Example appsettings.json on .NET Core:
+```json
+  {
+    "ConnectionStrings": {
+      "ElasticSearch": "http://localhost:9200"
+    }
+  }
+```
+
+**Lookup NodeUris from app.config**
+```xml
+    <target name="elastic" type="ElasticSearch">
+      <NodeUris>${appsetting:ConnectionStrings.ElasticSearch}</NodeUris>
+    </target>
+```
+
+Example app.config on .NET Framework:
+```xml
+  <configuration>
+    <connectionStrings>
+      <add name="ElasticSearch" connectionString="http://localhost:9200"/>
+    </connectionStrings>
+  </configuration>
+```
+
+**Lookup ConnectionString from environment-variable**
+```xml
+    <target name="elastic" type="ElasticSearch">
+      <NodeUris>${environment:ELASTIC_SERVER_URL}</NodeUris>
+    </target>
+```
