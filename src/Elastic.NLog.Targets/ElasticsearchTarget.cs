@@ -254,15 +254,22 @@ namespace NLog.Targets
 		{
 			ExportExceptionCallback = ex =>
 			{
-				NLog.Common.InternalLogger.Error(ex, "ElasticSearch - Exception during export");
+				NLog.Common.InternalLogger.Error(ex, "ElasticSearch - Export Exception");
 			};
 			ExportResponseCallback = (response, _) =>
 			{
+				if (response is null)
+					return;
+
 				if (response.TryGetElasticsearchServerError(out var error))
-					NLog.Common.InternalLogger.Error("ElasticSearch - Server Response Error - {0}", error);
-				foreach (var itemResult in response.Items)
-					if (itemResult.Status >= 300)
-						NLog.Common.InternalLogger.Error("ElasticSearch - Failed to {0} document status {1} - {2}", itemResult.Action, itemResult.Status, itemResult.Error);
+					NLog.Common.InternalLogger.Error("ElasticSearch - Export Response Server Error - {0}", error);
+
+				if (response.Items?.Count > 0)
+				{
+					foreach (var itemResult in response.Items)
+						if (itemResult?.Status >= 300)
+							NLog.Common.InternalLogger.Error("ElasticSearch - Export Item failed to {0} document status {1} - {2}", itemResult.Action, itemResult.Status, itemResult.Error);
+				}
 			};
 		}
 	}
