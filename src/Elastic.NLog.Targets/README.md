@@ -26,8 +26,7 @@ var logger = LogManager.GetCurrentClassLogger();
     <add assembly="Elastic.NLog.Targets"/>
   </extensions>
   <targets>
-    <target name="elastic" type="ElasticSearch">
-      <NodeUris>http://localhost:9200</NodeUris>
+    <target name="elastic" type="ElasticSearch" nodeUris="http://localhost:9200">
       <layout xsi:type="EcsLayout">
         <metadata name="MyProperty" layout="MyPropertyValue" /> <!-- repeated, optional -->
         <label name="MyLabel" layout="MyLabelValue" />          <!-- repeated, optional -->
@@ -78,9 +77,7 @@ NLog Layout allows one to configure NLog Target options from environment.
 
 **Lookup NodeUris from appsettings.json**
 ```xml
-    <target name="elastic" type="ElasticSearch">
-      <NodeUris>${configsetting:ConnectionStrings.ElasticSearch}</NodeUris>
-    </target>
+  <target name="elastic" type="ElasticSearch" nodeUris="${configsetting:ConnectionStrings.ElasticSearch}">
 ```
 
 Example appsettings.json on .NET Core:
@@ -94,9 +91,7 @@ Example appsettings.json on .NET Core:
 
 **Lookup NodeUris from app.config**
 ```xml
-    <target name="elastic" type="ElasticSearch">
-      <NodeUris>${appsetting:ConnectionStrings.ElasticSearch}</NodeUris>
-    </target>
+  <target name="elastic" type="ElasticSearch" nodeUris="${appsetting:ConnectionStrings.ElasticSearch}">
 ```
 
 Example app.config on .NET Framework:
@@ -110,7 +105,5 @@ Example app.config on .NET Framework:
 
 **Lookup ConnectionString from environment-variable**
 ```xml
-    <target name="elastic" type="ElasticSearch">
-      <NodeUris>${environment:ELASTIC_SERVER_URL}</NodeUris>
-    </target>
+  <target name="elastic" type="ElasticSearch" nodeUris="${environment:ELASTIC_SERVER_URL}">
 ```
