@@ -94,7 +94,17 @@ namespace NLog.Targets
 		/// <summary>
 		/// Gets or sets the cloud ID, where connection pool type is Cloud.
 		/// </summary>
-		public Layout? CloudId { get; set; }
+		public Layout? CloudId
+		{
+			get => _cloudId;
+			set
+			{
+				_cloudId = value;
+				if (NodePoolType == NodePoolType.Unknown && value != null)
+					NodePoolType = NodePoolType.Cloud;
+			}
+		}
+		private Layout? _cloudId;
 
 		/// <summary>
 		/// Gets or sets the API Key, where connection pool type is Cloud, and authenticating via API Key.
