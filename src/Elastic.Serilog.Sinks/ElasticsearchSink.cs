@@ -152,9 +152,12 @@ namespace Elastic.Serilog.Sinks
 			};
 			ExportResponseCallback = (response, _) =>
 			{
-				var errorItems = response.Items.Where(i => i.Status >= 300).ToList();
+				if (response == null) return;
+
 				if (response.TryGetElasticsearchServerError(out var error))
 					SelfLog.WriteLine("{0}", error);
+				// ReSharper disable once ConditionalAccessQualifierIsNonNullableAccordingToAPIContract
+				var errorItems = response.Items?.Where(i => i.Status >= 300).ToArray() ?? Array.Empty<BulkResponseItem>();
 				foreach (var errorItem in errorItems)
 					SelfLog.WriteLine("{0}", $"Failed to {errorItem.Action} document status: ${errorItem.Status}, error: ${errorItem.Error}");
 
