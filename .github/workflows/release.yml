@@ -13,9 +13,10 @@ permissions:
 jobs:
   release:
     runs-on: ubuntu-latest
-
+    permissions:
+      id-token: write
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
     - name: Bootstrap Action Workspace
       uses: ./.github/workflows/bootstrap
         
@@ -34,8 +35,13 @@ jobs:
     - name: Create or update release for tag on github
       run: ./build.sh createreleaseongithub -s true --token ${{ secrets.GITHUB_TOKEN }}
 
+    - name: generate build provenance
+      uses: github-early-access/generate-build-provenance@main
+      with:
+        subject-path: "${{ github.workspace }}/build/output/*.nupkg"
+
     - name: Prepare Nuget
-      uses: hashicorp/vault-action@v2.4.2
+      uses: hashicorp/vault-action@v3.0.0
       with:
         url: ${{ secrets.VAULT_ADDR }}
         method: approle
@@ -47,6 +53,13 @@ jobs:
 
     - name: Release to Nuget
       run: dotnet nuget push 'build/output/*.nupkg' -k ${REPO_API_KEY} -s ${REPO_API_URL} --skip-duplicate --no-symbols
+
+    - name: Store artifacts
+      if: success()
+      uses: actions/upload-artifact@v4
+      with:
+        name: nupkg
+        path: build/output/*.nupkg
 
     - if: ${{ success() }}
       uses: elastic/apm-pipeline-library/.github/actions/slack-message@current
