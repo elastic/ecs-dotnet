@@ -31,18 +31,18 @@ jobs:
     runs-on: windows-latest
     
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
     - name: Bootstrap Action Workspace
       uses: ./.github/workflows/bootstrap
             
-    - uses: actions/cache@v3
+    - uses: actions/cache@v4
       with:
         path: ~/.nuget/packages
         key: ${{ runner.os }}-nuget-${{ hashFiles('**/packages.lock.json') }}
         restore-keys: |
           ${{ runner.os }}-nuget-
             
-    - uses: actions/cache@v3
+    - uses: actions/cache@v4
       with:
         path: ~\AppData\Local\ElasticManaged\elasticsearch-${{ env.ELASTIC_STACK_VERSION }}
         key: ${{ runner.os }}-elastic-managed-${{ env.ELASTIC_STACK_VERSION }}
@@ -61,7 +61,7 @@ jobs:
       
     - name: Store test results
       if: success() || failure()
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: test-results
         path: build/output/junit-*.xml
@@ -70,7 +70,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
     - name: Bootstrap Action Workspace
       uses: ./.github/workflows/bootstrap
 
@@ -79,7 +79,7 @@ jobs:
 
     - name: Store test results
       if: success() || failure()
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: test-results
         path: build/output/junit-*.xml
