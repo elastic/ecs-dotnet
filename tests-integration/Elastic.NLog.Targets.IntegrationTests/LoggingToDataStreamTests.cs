@@ -40,7 +40,7 @@ namespace NLog.Targets.Elastic.IntegrationTests
 			using var _ = CreateLogger(out var logger, out var provider, out var @namespace, out var waitHandle, out var listener);
 			var dataStream = $"x-dotnet-{@namespace}";
 
-			logger.Error("an error occurred {Status}", MyEnum.Failure);
+			logger.Error("an error occurred {Status}", nameof(MyEnum.Failure));
 
 			if (!waitHandle.WaitOne(TimeSpan.FromSeconds(10)))
 				throw new Exception($"No flush occurred in 10 seconds: {listener}", listener.ObservedException);
