@@ -66,6 +66,7 @@ namespace Elastic.CommonSchema.NLog
 			ServerUser = "${environment-user}"; // NLog 4.6.4
 
 			EventCode = "${event-properties:EventId}";
+			EventAction = "${event-properties:EventName}";
 			_defaultAgent = EcsDocument.CreateAgent(typeof(EcsLayout));
 
 			// These values are set by the Elastic.Apm.NLog package
@@ -165,19 +166,19 @@ namespace Elastic.CommonSchema.NLog
 		/// <summary></summary>
 		public Layout LogOriginCallSiteLine { get; set; }
 
-		/// <summary></summary>
+		/// <inheritdoc cref="EventFieldSet.Action"/>
 		public Layout EventAction { get; set; }
-		/// <summary></summary>
+		/// <inheritdoc cref="EventFieldSet.Category"/>
 		public Layout EventCategory { get; set; }
-		/// <summary></summary>
+		/// <inheritdoc cref="EventFieldSet.Id"/>
 		public Layout EventId { get; set; }
-		/// <summary></summary>
+		/// <inheritdoc cref="EventFieldSet.Code"/>
 		public Layout EventCode { get; set; }
-		/// <summary></summary>
+		/// <inheritdoc cref="EventFieldSet.Kind"/>
 		public Layout EventKind { get; set; }
-		/// <summary></summary>
+		/// <inheritdoc cref="EventFieldSet.Severity"/>
 		public Layout EventSeverity { get; set; }
-		/// <summary></summary>
+		/// <inheritdoc cref="EventFieldSet.Duration"/>
 		public Layout EventDurationMs { get; set; }
 
 		/// <summary></summary>
@@ -511,15 +512,17 @@ namespace Elastic.CommonSchema.NLog
 			var eventCode = EventCode?.Render(logEventInfo);
 			if (string.IsNullOrEmpty(eventCode) || eventCode == "0")
 				eventCode = null;
+			var eventAction = EventAction?.Render(logEventInfo);
+			var eventKind = EventKind?.Render(logEventInfo);
 
 			var evnt = new Event
 			{
 				Created = logEventInfo.TimeStamp,
 				Category = !string.IsNullOrEmpty(eventCategory) ? new[] { eventCategory } : null,
-				Action = EventAction?.Render(logEventInfo),
+				Action = !string.IsNullOrEmpty(eventAction) ? eventAction : null,
 				Id = EventId?.Render(logEventInfo),
 				Code = eventCode,
-				Kind = EventKind?.Render(logEventInfo),
+				Kind = !string.IsNullOrEmpty(eventKind) ? eventKind : null,
 				Severity = !string.IsNullOrEmpty(eventSeverity)
 					? long.Parse(eventSeverity)
 					: GetSysLogSeverity(logEventInfo.Level),
