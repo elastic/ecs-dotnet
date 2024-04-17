@@ -16,7 +16,7 @@ using static Elastic.CommonSchema.NLog.EcsLayout;
 namespace NLog.Targets
 {
 	/// <summary>
-	/// This sink allows you to write serilog logs directly to Elasticsearch or Elastic Cloud
+	/// NLog target for writing logs directly to Elasticsearch or Elastic Cloud
 	/// </summary>
 	[Target("Elasticsearch")]
 	public class ElasticsearchTarget : TargetWithLayout

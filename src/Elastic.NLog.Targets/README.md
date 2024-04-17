@@ -46,10 +46,10 @@ var logger = LogManager.GetCurrentClassLogger();
 * **Export Destination**
   - _NodePoolType_ - Connection pool type
     - SingleNode - Pool with single node or endpoint
-    - Sniffing - Pool with SupportsReseeding
-    - Static - Pool without SupportsReseeding
-    - Sticky - Pool without SupportsReseeding and stays on the first node.
-    - StickySniffing - Pool with SupportsReseeding and stays on the first node.
+    - Sniffing - Pool with Supports-Reseeding
+    - Static - Pool without Supports-Reseeding
+    - Sticky - Pool without Supports-Reseeding and stays on the first node.
+    - StickySniffing - Pool with Supports-Reseeding and stays on the first node.
     - Cloud - Pool seeded with CloudId
   - _NodeUris_ - URIs of the Elasticsearch nodes in the connection pool (comma delimited)
   - _CloudId_ - When using NodePoolType = Cloud
