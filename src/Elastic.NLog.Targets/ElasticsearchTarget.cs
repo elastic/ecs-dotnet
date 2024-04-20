@@ -30,7 +30,7 @@ namespace NLog.Targets
 		/// Gets or sets the connection pool type. Default for multiple nodes is <c>Sniffing</c>; other supported values are
 		/// <c>Static</c>, <c>Sticky</c>, or force to <c>SingleNode</c>.
 		/// </summary>
-		public NodePoolType NodePoolType { get; set; }
+		public ElasticPoolType NodePoolType { get; set; }
 
 		/// <summary>
 		/// Gets or sets the URIs of the Elasticsearch nodes in the connection pool. If not specified the default single node
@@ -100,8 +100,8 @@ namespace NLog.Targets
 			set
 			{
 				_cloudId = value;
-				if (NodePoolType == NodePoolType.Unknown && value != null)
-					NodePoolType = NodePoolType.Cloud;
+				if (NodePoolType == ElasticPoolType.Unknown && value != null)
+					NodePoolType = ElasticPoolType.Cloud;
 			}
 		}
 		private Layout? _cloudId;
@@ -140,7 +140,7 @@ namespace NLog.Targets
 			var connectionPool = CreateNodePool();
 			var config = new TransportConfiguration(connectionPool, productRegistration: ElasticsearchProductRegistration.Default);
 			// Cloud sets authentication as required parameter in the constructor
-			if (NodePoolType != NodePoolType.Cloud)
+			if (NodePoolType != ElasticPoolType.Cloud)
 				config = SetAuthenticationOnTransport(config);
 
 			var transport = new DistributedTransport<TransportConfiguration>(config);
@@ -183,22 +183,21 @@ namespace NLog.Targets
 		private NodePool CreateNodePool()
 		{
 			var nodeUris = NodeUris?.Render(LogEventInfo.CreateNullEvent()).Split(new[] { ',' }).Select(uri => uri.Trim()).Where(uri => !string.IsNullOrEmpty(uri)).Select(uri => new Uri(uri)).ToArray() ?? Array.Empty<Uri>();
-			if (nodeUris.Length == 0 && NodePoolType != NodePoolType.Cloud)
+			if (nodeUris.Length == 0 && NodePoolType != ElasticPoolType.Cloud)
 				return new SingleNodePool(new Uri("http://localhost:9200"));
-			if (NodePoolType == NodePoolType.SingleNode || NodePoolType == NodePoolType.Unknown && nodeUris.Length == 1)
+			if (NodePoolType == ElasticPoolType.SingleNode || NodePoolType == ElasticPoolType.Unknown && nodeUris.Length == 1)
 				return new SingleNodePool(nodeUris[0]);
 
 			switch (NodePoolType)
 			{
-				case NodePoolType.Unknown:
-				case NodePoolType.Sniffing:
+				case ElasticPoolType.Unknown:
+				case ElasticPoolType.Sniffing:
 					return new SniffingNodePool(nodeUris);
-				case NodePoolType.Static:
+				case ElasticPoolType.Static:
 					return new StaticNodePool(nodeUris);
-				case NodePoolType.Sticky:
+				case ElasticPoolType.Sticky:
 					return new StickyNodePool(nodeUris);
-				// case NodePoolType.StickySniffing:
-				case NodePoolType.Cloud:
+				case ElasticPoolType.Cloud:
 					var cloudId = CloudId?.Render(LogEventInfo.CreateNullEvent()) ?? string.Empty;
 					if (string.IsNullOrEmpty(cloudId))
 						throw new NLogConfigurationException($"ElasticSearch Cloud {nameof(CloudNodePool)} requires '{nameof(CloudId)}' to be provided as well");
@@ -220,7 +219,7 @@ namespace NLog.Targets
 
 					throw new NLogConfigurationException($"ElasticSearch Cloud requires either '{nameof(ApiKey)}' or"
 						+ $"'{nameof(Username)}' and '{nameof(Password)}");
-
+				//case ElasticPoolType.StickySniffing:
 				default:
 					throw new NLogConfigurationException($"Unrecognised ElasticSearch connection pool type '{NodePoolType}' specified in the configuration.",
 						nameof(NodePoolType));

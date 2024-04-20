@@ -3,9 +3,9 @@ using Elastic.Transport;
 namespace NLog.Targets
 {
 	/// <summary>
-	/// The type of connection pool to use
+	/// The type of connection pool for Elasticsearch
 	/// </summary>
-	public enum NodePoolType
+	public enum ElasticPoolType
 	{
 		/// <summary> Not configured </summary>
 		Unknown = 0,

@@ -28,7 +28,7 @@ namespace NLog.Targets.Elastic.IntegrationTests
 				cfg.DataStreamSet = "dotnet";
 				var nodesUris = string.Join(",", Client.ElasticsearchClientSettings.NodePool.Nodes.Select(n => n.Uri.ToString()).ToArray());
 				cfg.NodeUris = nodesUris;
-				cfg.NodePoolType = NodePoolType.Static;
+				cfg.NodePoolType = ElasticPoolType.Static;
 			});
 
 		// ReSharper disable once UnusedMember.Local
