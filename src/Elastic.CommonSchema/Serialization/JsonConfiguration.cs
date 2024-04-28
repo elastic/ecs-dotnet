@@ -21,6 +21,7 @@ namespace Elastic.CommonSchema.Serialization
 			PropertyNamingPolicy = new SnakeCaseJsonNamingPolicy(),
 			Converters =
 			{
+				new JsonStringEnumConverter(),
 				new EcsDocumentJsonConverterFactory(),
 				new LogEntityJsonConverter(),
 				new EcsEntityJsonConverter(),
