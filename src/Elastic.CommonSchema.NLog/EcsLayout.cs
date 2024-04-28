@@ -383,9 +383,7 @@ namespace Elastic.CommonSchema.NLog
 						continue;
 
 					var propertyValue = prop.Value;
-					if (propertyValue is null or IConvertible || propertyValue.GetType().IsValueType)
-						Populate(metadata, propertyName, propertyValue);
-					else
+					if (!TryPopulateWhenSafe(metadata, propertyName, propertyValue))
 					{
 						templateParameters ??= e.MessageTemplateParameters;
 						var value = AllowSerializePropertyValue(propertyName, templateParameters) ? propertyValue : propertyValue.ToString();
@@ -402,7 +400,10 @@ namespace Elastic.CommonSchema.NLog
 						continue;
 
 					var propertyValue = MappedDiagnosticsLogicalContext.GetObject(key);
-					Populate(metadata, key, propertyValue);
+					if (!TryPopulateWhenSafe(metadata, key, propertyValue))
+					{
+						Populate(metadata, key, propertyValue.ToString());
+					}
 				}
 			}
 
@@ -720,6 +721,19 @@ namespace Elastic.CommonSchema.NLog
 				return 3;
 
 			return 2; // LogLevel.Fatal
+		}
+
+		private static bool TryPopulateWhenSafe(IDictionary<string, object> propertyBag, string key, object value)
+		{
+			if (value is null or IConvertible || value.GetType().IsValueType)
+			{
+				if (value is Enum)
+					value = value.ToString();
+				Populate(propertyBag, key, value);
+				return true;
+			}
+
+			return false;
 		}
 
 		private static void Populate(IDictionary<string, object> propertyBag, string key, object value)

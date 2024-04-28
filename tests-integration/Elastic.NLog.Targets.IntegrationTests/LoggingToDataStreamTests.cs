@@ -62,8 +62,8 @@ namespace NLog.Targets.Elastic.IntegrationTests
 			loggedError.Ecs.Version.Should().Be(EcsDocument.Version);
 			loggedError.Ecs.Version.Should().NotStartWith("v");
 
-			loggedError.Metadata.Should().ContainKey("Status");
-			loggedError.Metadata["Status"].Should().Be((int)MyEnum.Failure);
+			loggedError.Labels.Should().ContainKey("Status");
+			loggedError.Labels["Status"].Should().Be("Failure");
 		}
 	}
 }
