@@ -33,17 +33,17 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{7610B796-BB3
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{3582B07D-C2B0-49CC-B676-EAF806EB010E}"
 	ProjectSection(SolutionItems) = preProject
-		tests\Directory.Build.props = tests\Directory.Build.props
 		tests\.runsettings = tests\.runsettings
+		tests\Directory.Build.props = tests\Directory.Build.props
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "build", "build", "{441B3323-3651-4B6E-95B3-7CD43E5E223A}"
 	ProjectSection(SolutionItems) = preProject
+		.ci.runsettings = .ci.runsettings
 		build.bat = build.bat
 		build.sh = build.sh
 		Directory.Build.props = Directory.Build.props
 		global.json = global.json
-		.ci.runsettings = .ci.runsettings
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Elastic.CommonSchema.Tests", "tests\Elastic.CommonSchema.Tests\Elastic.CommonSchema.Tests.csproj", "{EE4EA2DE-411D-400C-9BF6-8F6AFC17697C}"
@@ -76,54 +76,58 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Elastic.CommonSchema.Genera
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Elastic.Ingest.Elasticsearch.CommonSchema", "src\Elastic.Ingest.Elasticsearch.CommonSchema\Elastic.Ingest.Elasticsearch.CommonSchema.csproj", "{68128AE4-350C-4FB2-A971-C9272A1F3829}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Elastic.Serilog.Sinks", "src\Elastic.Serilog.Sinks\Elastic.Serilog.Sinks.csproj", "{30080079-D3EE-4BDC-9BE9-9D1B3B2BEF8D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Elastic.Serilog.Sinks", "src\Elastic.Serilog.Sinks\Elastic.Serilog.Sinks.csproj", "{30080079-D3EE-4BDC-9BE9-9D1B3B2BEF8D}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Elastic.CommonSchema.Log4net", "src\Elastic.CommonSchema.Log4net\Elastic.CommonSchema.Log4net.csproj", "{DD7D6E56-58DB-4E13-9DFC-AE031F1C31B3}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Elastic.CommonSchema.Log4net.Tests", "tests\Elastic.CommonSchema.Log4net.Tests\Elastic.CommonSchema.Log4net.Tests.csproj", "{14BFAF67-8DB6-48D0-B57E-84767BA2A239}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Elastic.Serilog.Sinks.IntegrationTests", "tests-integration\Elastic.Serilog.Sinks.IntegrationTests\Elastic.Serilog.Sinks.IntegrationTests.csproj", "{622CC10E-B475-4649-8411-CABC31E7C252}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Elastic.Serilog.Sinks.IntegrationTests", "tests-integration\Elastic.Serilog.Sinks.IntegrationTests\Elastic.Serilog.Sinks.IntegrationTests.csproj", "{622CC10E-B475-4649-8411-CABC31E7C252}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Elastic.Apm.Disabled.Serilog.Tests", "tests\Elastic.Apm.Disabled.Serilog.Tests\Elastic.Apm.Disabled.Serilog.Tests.csproj", "{73829D36-DB98-4D8F-8741-F167A787BF7B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Elastic.Apm.Disabled.Serilog.Tests", "tests\Elastic.Apm.Disabled.Serilog.Tests\Elastic.Apm.Disabled.Serilog.Tests.csproj", "{73829D36-DB98-4D8F-8741-F167A787BF7B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Elastic.Ingest.Elasticsearch.CommonSchema.IntegrationTests", "tests-integration\Elastic.Ingest.Elasticsearch.CommonSchema.IntegrationTests\Elastic.Ingest.Elasticsearch.CommonSchema.IntegrationTests.csproj", "{1AF36656-7950-42D1-996D-DF5985298926}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Elastic.Ingest.Elasticsearch.CommonSchema.IntegrationTests", "tests-integration\Elastic.Ingest.Elasticsearch.CommonSchema.IntegrationTests\Elastic.Ingest.Elasticsearch.CommonSchema.IntegrationTests.csproj", "{1AF36656-7950-42D1-996D-DF5985298926}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_solution", "_solution", "{BAF28E09-EAAE-400D-8E0D-6E7C3000997A}"
 	ProjectSection(SolutionItems) = preProject
-		global.json = global.json
 		.editorconfig = .editorconfig
-		ecs-dotnet.sln = ecs-dotnet.sln
-		dotnet-tools.json = dotnet-tools.json
-		ecs-dotnet.sln.DotSettings = ecs-dotnet.sln.DotSettings
-		Directory.Build.props = Directory.Build.props
-		build.sh = build.sh
-		.pre-commit-config.yaml = .pre-commit-config.yaml
 		.gitattributes = .gitattributes
-		license.txt = license.txt
-		build.bat = build.bat
-		issue_template.md = issue_template.md
 		.gitignore = .gitignore
-		README.md = README.md
+		.pre-commit-config.yaml = .pre-commit-config.yaml
+		build.bat = build.bat
+		build.sh = build.sh
 		contributing.md = contributing.md
-		nuget.config = nuget.config
+		Directory.Build.props = Directory.Build.props
+		dotnet-tools.json = dotnet-tools.json
+		ecs-dotnet.sln = ecs-dotnet.sln
+		ecs-dotnet.sln.DotSettings = ecs-dotnet.sln.DotSettings
+		global.json = global.json
+		issue_template.md = issue_template.md
+		license.txt = license.txt
 		nuget-icon.png = nuget-icon.png
+		nuget.config = nuget.config
+		README.md = README.md
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests-integration", "tests-integration", "{947B298F-9139-4868-B337-729541932E4D}"
 	ProjectSection(SolutionItems) = preProject
-		tests-integration\Directory.Build.props = tests-integration\Directory.Build.props
 		tests-integration\.runsettings = tests-integration\.runsettings
+		tests-integration\Directory.Build.props = tests-integration\Directory.Build.props
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Elasticsearch.IntegrationDefaults", "tests-integration\Elasticsearch.IntegrationDefaults\Elasticsearch.IntegrationDefaults.csproj", "{AB197BBD-D90D-4ACB-AD09-C59913FA109F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Elasticsearch.IntegrationDefaults", "tests-integration\Elasticsearch.IntegrationDefaults\Elasticsearch.IntegrationDefaults.csproj", "{AB197BBD-D90D-4ACB-AD09-C59913FA109F}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tools", "tools", "{B268060B-83ED-4944-B135-C362DFCBFC0C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Elastic.Serilog.Sinks.Example", "examples\Elastic.Serilog.Sinks.Example\Elastic.Serilog.Sinks.Example.csproj", "{1CAEFBD7-B800-41C4-81D3-CB6839FA563D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Elastic.Serilog.Sinks.Example", "examples\Elastic.Serilog.Sinks.Example\Elastic.Serilog.Sinks.Example.csproj", "{1CAEFBD7-B800-41C4-81D3-CB6839FA563D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "docs", "docs\docs.csproj", "{7FDB3B31-020A-40E3-B564-F06476320C40}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "docs", "docs\docs.csproj", "{7FDB3B31-020A-40E3-B564-F06476320C40}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "aspnetcore-with-extensions-logging", "examples\aspnetcore-with-extensions-logging\aspnetcore-with-extensions-logging.csproj", "{D866F335-BC19-49A8-AF72-4BA66CC7AFFB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "aspnetcore-with-extensions-logging", "examples\aspnetcore-with-extensions-logging\aspnetcore-with-extensions-logging.csproj", "{D866F335-BC19-49A8-AF72-4BA66CC7AFFB}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Elastic.NLog.Targets", "src\Elastic.NLog.Targets\Elastic.NLog.Targets.csproj", "{692F8035-F3F9-4714-8C9D-D54AF4CEB0E0}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Elastic.NLog.Targets.IntegrationTests", "tests-integration\Elastic.NLog.Targets.IntegrationTests\Elastic.NLog.Targets.IntegrationTests.csproj", "{D1C3CAFB-A59D-4E3F-ADD1-4CB281E5349D}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "playground", "examples\playground\playground.csproj", "{86AEB76A-C210-4250-8541-B349C26C1683}"
 EndProject
@@ -133,6 +137,10 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{80D7CE12-D0C9-44E2-9BF9-5762D52ADA05}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{80D7CE12-D0C9-44E2-9BF9-5762D52ADA05}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{80D7CE12-D0C9-44E2-9BF9-5762D52ADA05}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{80D7CE12-D0C9-44E2-9BF9-5762D52ADA05}.Release|Any CPU.Build.0 = Release|Any CPU
 		{70072EAB-C5DF-4100-B594-B9DC3169D604}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{70072EAB-C5DF-4100-B594-B9DC3169D604}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{70072EAB-C5DF-4100-B594-B9DC3169D604}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -227,10 +235,6 @@ Global
 		{30080079-D3EE-4BDC-9BE9-9D1B3B2BEF8D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{30080079-D3EE-4BDC-9BE9-9D1B3B2BEF8D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{30080079-D3EE-4BDC-9BE9-9D1B3B2BEF8D}.Release|Any CPU.Build.0 = Release|Any CPU
-		{622CC10E-B475-4649-8411-CABC31E7C252}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{622CC10E-B475-4649-8411-CABC31E7C252}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{622CC10E-B475-4649-8411-CABC31E7C252}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{622CC10E-B475-4649-8411-CABC31E7C252}.Release|Any CPU.Build.0 = Release|Any CPU
 		{DD7D6E56-58DB-4E13-9DFC-AE031F1C31B3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{DD7D6E56-58DB-4E13-9DFC-AE031F1C31B3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DD7D6E56-58DB-4E13-9DFC-AE031F1C31B3}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -239,6 +243,10 @@ Global
 		{14BFAF67-8DB6-48D0-B57E-84767BA2A239}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{14BFAF67-8DB6-48D0-B57E-84767BA2A239}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{14BFAF67-8DB6-48D0-B57E-84767BA2A239}.Release|Any CPU.Build.0 = Release|Any CPU
+		{622CC10E-B475-4649-8411-CABC31E7C252}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{622CC10E-B475-4649-8411-CABC31E7C252}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{622CC10E-B475-4649-8411-CABC31E7C252}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{622CC10E-B475-4649-8411-CABC31E7C252}.Release|Any CPU.Build.0 = Release|Any CPU
 		{73829D36-DB98-4D8F-8741-F167A787BF7B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{73829D36-DB98-4D8F-8741-F167A787BF7B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{73829D36-DB98-4D8F-8741-F167A787BF7B}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -261,6 +269,14 @@ Global
 		{D866F335-BC19-49A8-AF72-4BA66CC7AFFB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D866F335-BC19-49A8-AF72-4BA66CC7AFFB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D866F335-BC19-49A8-AF72-4BA66CC7AFFB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{692F8035-F3F9-4714-8C9D-D54AF4CEB0E0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{692F8035-F3F9-4714-8C9D-D54AF4CEB0E0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{692F8035-F3F9-4714-8C9D-D54AF4CEB0E0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{692F8035-F3F9-4714-8C9D-D54AF4CEB0E0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D1C3CAFB-A59D-4E3F-ADD1-4CB281E5349D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D1C3CAFB-A59D-4E3F-ADD1-4CB281E5349D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D1C3CAFB-A59D-4E3F-ADD1-4CB281E5349D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D1C3CAFB-A59D-4E3F-ADD1-4CB281E5349D}.Release|Any CPU.Build.0 = Release|Any CPU
 		{86AEB76A-C210-4250-8541-B349C26C1683}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{86AEB76A-C210-4250-8541-B349C26C1683}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{86AEB76A-C210-4250-8541-B349C26C1683}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -270,6 +286,7 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
+		{80D7CE12-D0C9-44E2-9BF9-5762D52ADA05} = {441B3323-3651-4B6E-95B3-7CD43E5E223A}
 		{70072EAB-C5DF-4100-B594-B9DC3169D604} = {7610B796-BB3E-4CB2-8296-79BBFF6D23FC}
 		{45BC8315-6AD6-4F3C-B590-7B52D19ED401} = {7610B796-BB3E-4CB2-8296-79BBFF6D23FC}
 		{D7BA6070-909F-402E-A6F4-1CE54A7BE0B7} = {3582B07D-C2B0-49CC-B676-EAF806EB010E}
@@ -282,28 +299,29 @@ Global
 		{4E0D951B-FEC5-4043-913A-BED795892405} = {3582B07D-C2B0-49CC-B676-EAF806EB010E}
 		{EE4EA2DE-411D-400C-9BF6-8F6AFC17697C} = {3582B07D-C2B0-49CC-B676-EAF806EB010E}
 		{6BE3084A-D84D-4782-9915-6E41575712C7} = {7610B796-BB3E-4CB2-8296-79BBFF6D23FC}
+		{4138E98A-4714-4139-BD89-D9FF4F2A3A73} = {947B298F-9139-4868-B337-729541932E4D}
 		{0881CC2E-BFBB-40DB-BA5B-B3D23A985F73} = {7610B796-BB3E-4CB2-8296-79BBFF6D23FC}
 		{89ADA999-1A1D-4B51-8CEE-39A553F669D1} = {3582B07D-C2B0-49CC-B676-EAF806EB010E}
 		{03FD4BFA-F9A5-4C16-ACA1-30FD060DFAEA} = {9F103D76-F7FA-4D10-8214-6E79C28D5AEC}
 		{9F103D76-F7FA-4D10-8214-6E79C28D5AEC} = {05075402-8669-45BD-913A-BD40A29BBEAB}
+		{EC19A9E1-79CC-46A8-94D7-EE66ED22D3BD} = {B268060B-83ED-4944-B135-C362DFCBFC0C}
 		{D88AAA7D-1AEE-4B4C-BE37-69BA85DA07DA} = {7610B796-BB3E-4CB2-8296-79BBFF6D23FC}
+		{0E7008E1-B215-4B9B-BC28-DC9D31415FB9} = {947B298F-9139-4868-B337-729541932E4D}
 		{F319AD28-A0A4-4012-8480-E2A4CFA755C2} = {05075402-8669-45BD-913A-BD40A29BBEAB}
 		{D87AE73E-8112-444C-8F2F-CFBC4F738026} = {05075402-8669-45BD-913A-BD40A29BBEAB}
-		{80D7CE12-D0C9-44E2-9BF9-5762D52ADA05} = {441B3323-3651-4B6E-95B3-7CD43E5E223A}
+		{D6F0D170-39D7-4868-86EE-990B6B05C14D} = {B268060B-83ED-4944-B135-C362DFCBFC0C}
 		{68128AE4-350C-4FB2-A971-C9272A1F3829} = {7610B796-BB3E-4CB2-8296-79BBFF6D23FC}
 		{30080079-D3EE-4BDC-9BE9-9D1B3B2BEF8D} = {7610B796-BB3E-4CB2-8296-79BBFF6D23FC}
 		{DD7D6E56-58DB-4E13-9DFC-AE031F1C31B3} = {7610B796-BB3E-4CB2-8296-79BBFF6D23FC}
 		{14BFAF67-8DB6-48D0-B57E-84767BA2A239} = {3582B07D-C2B0-49CC-B676-EAF806EB010E}
-		{73829D36-DB98-4D8F-8741-F167A787BF7B} = {3582B07D-C2B0-49CC-B676-EAF806EB010E}
-		{0E7008E1-B215-4B9B-BC28-DC9D31415FB9} = {947B298F-9139-4868-B337-729541932E4D}
-		{1AF36656-7950-42D1-996D-DF5985298926} = {947B298F-9139-4868-B337-729541932E4D}
 		{622CC10E-B475-4649-8411-CABC31E7C252} = {947B298F-9139-4868-B337-729541932E4D}
-		{4138E98A-4714-4139-BD89-D9FF4F2A3A73} = {947B298F-9139-4868-B337-729541932E4D}
+		{73829D36-DB98-4D8F-8741-F167A787BF7B} = {3582B07D-C2B0-49CC-B676-EAF806EB010E}
+		{1AF36656-7950-42D1-996D-DF5985298926} = {947B298F-9139-4868-B337-729541932E4D}
 		{AB197BBD-D90D-4ACB-AD09-C59913FA109F} = {947B298F-9139-4868-B337-729541932E4D}
-		{D6F0D170-39D7-4868-86EE-990B6B05C14D} = {B268060B-83ED-4944-B135-C362DFCBFC0C}
-		{EC19A9E1-79CC-46A8-94D7-EE66ED22D3BD} = {B268060B-83ED-4944-B135-C362DFCBFC0C}
 		{1CAEFBD7-B800-41C4-81D3-CB6839FA563D} = {05075402-8669-45BD-913A-BD40A29BBEAB}
 		{D866F335-BC19-49A8-AF72-4BA66CC7AFFB} = {05075402-8669-45BD-913A-BD40A29BBEAB}
+		{692F8035-F3F9-4714-8C9D-D54AF4CEB0E0} = {7610B796-BB3E-4CB2-8296-79BBFF6D23FC}
+		{D1C3CAFB-A59D-4E3F-ADD1-4CB281E5349D} = {947B298F-9139-4868-B337-729541932E4D}
 		{86AEB76A-C210-4250-8541-B349C26C1683} = {05075402-8669-45BD-913A-BD40A29BBEAB}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution

@@ -131,11 +131,10 @@ An example of the output is given below:
   "message": "Info \"X\" 2.2",
   "ecs.version": "8.6.0",
   "log": {
-    "logger": "Elastic.CommonSchema.NLog.Tests.LogTestsBase",
+    "logger": "Elastic.CommonSchema.NLog.Tests.LogTestsBase"
   },
   "labels": {
-    "ValueX": "X",
-    "MessageTemplate": "Info {ValueX} {SomeY} {NotX}"
+    "ValueX": "X"
   },
   "agent": {
     "type": "Elastic.CommonSchema.NLog",
@@ -165,7 +164,8 @@ An example of the output is given below:
   },
   "metadata": {
     "SomeY": 2.2
-  }
+  },
+  "MessageTemplate": "Info {ValueX} {SomeY} {NotX}"
 }
 ```
 

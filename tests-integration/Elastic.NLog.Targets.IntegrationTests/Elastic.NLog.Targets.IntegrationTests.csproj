@@ -1,0 +1,14 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <IsPackable>false</IsPackable>
+    <RootNamespace>NLog.Targets.Elastic.IntegrationTests</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\Elastic.NLog.Targets\Elastic.NLog.Targets.csproj" />
+    <ProjectReference Include="..\Elasticsearch.IntegrationDefaults\Elasticsearch.IntegrationDefaults.csproj" />
+  </ItemGroup>
+
+</Project>

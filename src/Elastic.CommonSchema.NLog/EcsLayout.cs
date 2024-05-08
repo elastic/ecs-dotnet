@@ -135,35 +135,35 @@ namespace Elastic.CommonSchema.NLog
 		public Layout DisableThreadAgnostic => IncludeScopeProperties ? _disableThreadAgnostic : null;
 		// ReSharper restore UnusedMember.Global
 
-		/// <summary></summary>
+		/// <inheritdoc cref="AgentFieldSet.Id"/>
 		public Layout AgentId { get; set; }
-		/// <summary></summary>
+		/// <inheritdoc cref="AgentFieldSet.Name"/>
 		public Layout AgentName { get; set; }
-		/// <summary></summary>
+		/// <inheritdoc cref="AgentFieldSet.Type"/>
 		public Layout AgentType { get; set; }
-		/// <summary></summary>
+		/// <inheritdoc cref="AgentFieldSet.Version"/>
 		public Layout AgentVersion { get; set; }
 
 		// ReSharper disable AutoPropertyCanBeMadeGetOnly.Global
-		/// <summary></summary>
+		/// <inheritdoc cref="BaseFieldSet.TraceId"/>
 		public Layout ApmTraceId { get; set; }
-		/// <summary></summary>
+		/// <inheritdoc cref="BaseFieldSet.TransactionId"/>
 		public Layout ApmTransactionId { get; set; }
-		/// <summary></summary>
+		/// <inheritdoc cref="BaseFieldSet.SpanId"/>
 		public Layout ApmSpanId { get; set; }
 
-		/// <summary></summary>
+		/// <inheritdoc cref="ServiceFieldSet.Name"/>
 		public Layout ApmServiceName { get; set; }
-		/// <summary></summary>
+		/// <inheritdoc cref="ServiceFieldSet.NodeName"/>
 		public Layout ApmServiceNodeName { get; set; }
-		/// <summary></summary>
+		/// <inheritdoc cref="ServiceFieldSet.Version"/>
 		public Layout ApmServiceVersion { get; set; }
 
-		/// <summary></summary>
+		/// <inheritdoc cref="LogFieldSet.OriginFunction"/>
 		public Layout LogOriginCallSiteMethod { get; set; }
-		/// <summary></summary>
+		/// <inheritdoc cref="LogFieldSet.OriginFileName"/>
 		public Layout LogOriginCallSiteFile { get; set; }
-		/// <summary></summary>
+		/// <inheritdoc cref="LogFieldSet.OriginFileLine"/>
 		public Layout LogOriginCallSiteLine { get; set; }
 
 		/// <inheritdoc cref="EventFieldSet.Action"/>
@@ -181,11 +181,11 @@ namespace Elastic.CommonSchema.NLog
 		/// <inheritdoc cref="EventFieldSet.Duration"/>
 		public Layout EventDurationMs { get; set; }
 
-		/// <summary></summary>
+		/// <inheritdoc cref="HostFieldSet.Id"/>
 		public Layout HostId { get; set; }
-		/// <summary></summary>
+		/// <inheritdoc cref="HostFieldSet.Ip"/>
 		public Layout HostIp { get; set; }
-		/// <summary></summary>
+		/// <inheritdoc cref="HostFieldSet.Hostname"/>
 		public Layout HostName { get; set; }
 
 		/// <summary></summary>
@@ -220,48 +220,48 @@ namespace Elastic.CommonSchema.NLog
 
 		/// <summary></summary>
 		public Layout MessageTemplate { get; set; }
-		/// <summary></summary>
+		/// <inheritdoc cref="ProcessFieldSet.Executable"/>
 		public Layout ProcessExecutable { get; set; }
-		/// <summary></summary>
+		/// <inheritdoc cref="ProcessFieldSet.Pid"/>
 		public Layout ProcessId { get; set; }
-		/// <summary></summary>
+		/// <inheritdoc cref="ProcessFieldSet.Name"/>
 		public Layout ProcessName { get; set; }
-		/// <summary></summary>
+		/// <inheritdoc cref="ProcessFieldSet.ThreadId"/>
 		public Layout ProcessThreadId { get; set; }
-		/// <summary></summary>
+		/// <inheritdoc cref="ProcessFieldSet.ThreadName"/>
 		public Layout ProcessThreadName { get; set; }
-		/// <summary></summary>
+		/// <inheritdoc cref="ProcessFieldSet.Title"/>
 		public Layout ProcessTitle { get; set; }
 
-		/// <summary></summary>
+		/// <inheritdoc cref="ServerFieldSet.Address"/>
 		public Layout ServerAddress { get; set; }
-		/// <summary></summary>
+		/// <inheritdoc cref="ServerFieldSet.Ip"/>
 		public Layout ServerIp { get; set; }
-		/// <summary></summary>
+		/// <inheritdoc cref="UserFieldSet.Name"/>
 		public Layout ServerUser { get; set; }
 
-		/// <summary></summary>
+		/// <inheritdoc cref="HttpFieldSet.RequestId"/>
 		public Layout HttpRequestId { get; set; }
-		/// <summary></summary>
+		/// <inheritdoc cref="HttpFieldSet.RequestMethod"/>
 		public Layout HttpRequestMethod { get; set; }
-		/// <summary></summary>
+		/// <inheritdoc cref="HttpFieldSet.RequestBodyBytes"/>
 		public Layout RequestBodyBytes { get; set; }
-		/// <summary></summary>
+		/// <inheritdoc cref="HttpFieldSet.RequestReferrer"/>
 		public Layout HttpRequestReferrer { get; set; }
-		/// <summary></summary>
+		/// <inheritdoc cref="HttpFieldSet.ResponseStatusCode"/>
 		public Layout HttpResponseStatusCode { get; set; }
 
-		/// <summary></summary>
+		/// <inheritdoc cref="UrlFieldSet.Scheme"/>
 		public Layout UrlScheme { get; set; }
-		/// <summary></summary>
+		/// <inheritdoc cref="UrlFieldSet.Domain"/>
 		public Layout UrlDomain { get; set; }
-		/// <summary></summary>
+		/// <inheritdoc cref="UrlFieldSet.Port"/>
 		public Layout UrlPort { get; set; }
-		/// <summary></summary>
+		/// <inheritdoc cref="UrlFieldSet.Path"/>
 		public Layout UrlPath { get; set; }
-		/// <summary></summary>
+		/// <inheritdoc cref="UrlFieldSet.Query"/>
 		public Layout UrlQuery { get; set; }
-		/// <summary></summary>
+		/// <inheritdoc cref="UrlFieldSet.Username"/>
 		public Layout UrlUserName { get; set; }
 
 		/// <summary>
@@ -284,6 +284,15 @@ namespace Elastic.CommonSchema.NLog
 		/// <inheritdoc cref="Layout.RenderFormattedMessage"/>
 		protected override void RenderFormattedMessage(LogEventInfo logEvent, StringBuilder target)
 		{
+			var ecsDocument = RenderEcsDocument(logEvent);
+			ecsDocument.Serialize(target);
+		}
+
+		/// <summary>
+		/// Create an instance of <see cref="NLogEcsDocument"/> and enrich it with as many fields as possible.
+		/// </summary>
+		public NLogEcsDocument RenderEcsDocument(LogEventInfo logEvent)
+		{
 			var ecsEvent = EcsDocument.CreateNewWithDefaults<NLogEcsDocument>(logEvent.TimeStamp, logEvent.Exception, NlogEcsDocumentCreationOptions.Default);
 
 			// prefer tracing information set by Elastic APM
@@ -293,7 +302,8 @@ namespace Elastic.CommonSchema.NLog
 
 			// prefer setting service information set by Elastic APM
 			var service = GetService(logEvent);
-			if (service != null) ecsEvent.Service = service;
+			if (service != null)
+				ecsEvent.Service = service;
 
 			ecsEvent.Message = logEvent.FormattedMessage;
 			ecsEvent.Log = GetLog(logEvent);
@@ -322,8 +332,7 @@ namespace Elastic.CommonSchema.NLog
 			EnrichEvent(logEvent, ref ecsDocument);
 			//Allow programmatic actions to enrich before serializing
 			EnrichAction?.Invoke(ecsDocument, logEvent);
-
-			ecsDocument.Serialize(target);
+			return ecsEvent;
 		}
 
 		private Service GetService(LogEventInfo logEventInfo)
@@ -375,9 +384,7 @@ namespace Elastic.CommonSchema.NLog
 						continue;
 
 					var propertyValue = prop.Value;
-					if (propertyValue is null or IConvertible || propertyValue.GetType().IsValueType)
-						Populate(metadata, propertyName, propertyValue);
-					else
+					if (!TryPopulateWhenSafe(metadata, propertyName, propertyValue))
 					{
 						templateParameters ??= e.MessageTemplateParameters;
 						var value = AllowSerializePropertyValue(propertyName, templateParameters) ? propertyValue : propertyValue.ToString();
@@ -394,7 +401,10 @@ namespace Elastic.CommonSchema.NLog
 						continue;
 
 					var propertyValue = MappedDiagnosticsLogicalContext.GetObject(key);
-					Populate(metadata, key, propertyValue);
+					if (!TryPopulateWhenSafe(metadata, key, propertyValue))
+					{
+						Populate(metadata, key, propertyValue.ToString());
+					}
 				}
 			}
 
@@ -714,6 +724,19 @@ namespace Elastic.CommonSchema.NLog
 				return 3;
 
 			return 2; // LogLevel.Fatal
+		}
+
+		private static bool TryPopulateWhenSafe(IDictionary<string, object> propertyBag, string key, object value)
+		{
+			if (value is null or IConvertible || value.GetType().IsValueType)
+			{
+				if (value is Enum)
+					value = value.ToString();
+				Populate(propertyBag, key, value);
+				return true;
+			}
+
+			return false;
 		}
 
 		private static void Populate(IDictionary<string, object> propertyBag, string key, object value)
