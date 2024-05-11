@@ -21,6 +21,7 @@ namespace Elastic.CommonSchema.NLog
 		public bool IncludeHost { get; set; } = false;
 		public bool IncludeProcess { get; set; } = false;
 		public bool IncludeUser { get; set; } = false;
+		public bool IncludeTraceId { get; set; } = false;
 	}
 
 	/// <summary> An NLOG layout implementation that renders logs as ECS json</summary>
@@ -146,11 +147,11 @@ namespace Elastic.CommonSchema.NLog
 
 		// ReSharper disable AutoPropertyCanBeMadeGetOnly.Global
 		/// <inheritdoc cref="BaseFieldSet.TraceId"/>
-		public Layout ApmTraceId { get; set; }
+		public Layout ApmTraceId { get; set; } = Layout.FromMethod(() => ResolveTraceId());
 		/// <inheritdoc cref="BaseFieldSet.TransactionId"/>
 		public Layout ApmTransactionId { get; set; }
 		/// <inheritdoc cref="BaseFieldSet.SpanId"/>
-		public Layout ApmSpanId { get; set; }
+		public Layout ApmSpanId { get; set; } = Layout.FromMethod(() => ResolveSpanId());
 
 		/// <inheritdoc cref="ServiceFieldSet.Name"/>
 		public Layout ApmServiceName { get; set; }
@@ -773,6 +774,16 @@ namespace Elastic.CommonSchema.NLog
 			}
 
 			propertyBag.Add(usedKey, value);
+		}
+
+		private static string ResolveTraceId()
+		{
+			return System.Diagnostics.Activity.Current?.GetTraceId();
+		}
+
+		private static string ResolveSpanId()
+		{
+			return System.Diagnostics.Activity.Current?.GetSpanId();
 		}
 
 		/// <summary>
