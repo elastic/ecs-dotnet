@@ -27,7 +27,8 @@ namespace Elastic.CommonSchema.Serialization
 			TBase ecsEvent, 
 			ref DateTimeOffset? timestamp, 
 			ref string loglevel,
-			ref string ecsVersion
+			ref string ecsVersion,
+			JsonSerializerOptions options
 		)
 		{
 			var propertyName = reader.GetString();
@@ -36,21 +37,21 @@ namespace Elastic.CommonSchema.Serialization
 			{
 				"log.level" => ReadString(ref reader, ref loglevel),
 				"ecs.version" => ReadString(ref reader, ref ecsVersion),
-				"metadata" => ReadProp@(Raw("<MetadataDictionary>"))(ref reader, "metadata", ecsEvent, (b, v) => b.Metadata = v),
+				"metadata" => ReadProp@(Raw("<MetadataDictionary>"))(ref reader, "metadata", ecsEvent, (b, v) => b.Metadata = v, options),
 @foreach (var property in Model.Base.BaseFieldSet.ValueProperties)
 {
 	var name = property.JsonProperty;
 	if (name == "@timestamp")
-{<text>				"@(name)" => ReadDateTime(ref reader, ref @(name)),
+{<text>				"@(name)" => ReadDateTime(ref reader, ref @(name), options),
 </text>}
 	else
-{<text>				"@(name)" => ReadProp<@(Raw(property.ClrType))>(ref reader, "@name", ecsEvent, (b, v) => b.@(property.Name) = v),
+{<text>				"@(name)" => ReadProp<@(Raw(property.ClrType))>(ref reader, "@name", ecsEvent, (b, v) => b.@(property.Name) = v, options),
 </text>}
 }
 @foreach (var property in Model.Base.BaseFieldSet.InlineObjectProperties)
 {
 	var name = property.JsonProperty;
-<text>				"@(name)" => ReadProp<@(Raw(property.InlineObject.Name))>(ref reader, "@name", ecsEvent, (b, v) => b.@(property.Name) = v),
+<text>				"@(name)" => ReadProp<@(Raw(property.InlineObject.Name))>(ref reader, "@name", ecsEvent, (b, v) => b.@(property.Name) = v, options),
 </text>
 }
 @foreach (var entity in Model.EntityClasses)
@@ -62,7 +63,7 @@ namespace Elastic.CommonSchema.Serialization
 					typeof(@(Model.Base.Name)) == ecsEvent.GetType()
 						? false
 						: ecsEvent.TryRead(propertyName, out var t)
-							? ecsEvent.ReceiveProperty(propertyName, ReadPropDeserialize(ref reader, t))
+							? ecsEvent.ReceiveProperty(propertyName, ReadPropDeserialize(ref reader, t, options))
 							: false
 			};
 		}
@@ -77,12 +78,12 @@ namespace Elastic.CommonSchema.Serialization
 			}
 			writer.WriteStartObject();
 
-			WriteTimestamp(writer, value);
+			WriteTimestamp(writer, value, options);
 			WriteLogLevel(writer, value);
 			WriteMessage(writer, value);
 			WriteEcsVersion(writer, value);
-			WriteLogEntity(writer, value.Log);
-			WriteEcsEntity(writer, value.Ecs);
+			WriteLogEntity(writer, value.Log, options);
+			WriteEcsEntity(writer, value.Ecs, options);
 
 			// Base fields
 @{
@@ -94,15 +95,16 @@ namespace Elastic.CommonSchema.Serialization
 	{
 		continue;
 	}
-	<text>			WriteProp(writer, "@field.JsonProperty", value.@field.Name);
-	</text>
+<text>			WriteProp(writer, "@field.JsonProperty", value.@field.Name, options);
+</text>
 }
 @foreach (var property in Model.Base.BaseFieldSet.InlineObjectProperties)
 {
 	var name = property.JsonProperty;
-<text>		WriteProp(writer, "@(name)", value.@(property.InlineObject.Name));
+<text>			WriteProp(writer, "@(name)", value.@(property.InlineObject.Name), options);
 </text>
 }
+
 			// Complex types
 @foreach (var entity in Model.EntityClasses)
 {
@@ -111,13 +113,13 @@ namespace Elastic.CommonSchema.Serialization
 	{
 		continue;
 	}
-<text>			WriteProp(writer, "@(entityName)", value.@(entity.Name), EcsJsonContext.Default.@(entity.Name));
+<text>			WriteProp(writer, "@(entityName)", value.@(entity.Name), EcsJsonContext.Default.@(entity.Name), options);
 </text>
 }
-			WriteProp(writer, "metadata", value.Metadata);
+			WriteProp(writer, "metadata", value.Metadata, options);
 
 			if (typeof(@Model.Base.Name) != value.GetType())
-				value.WriteAdditionalProperties((k, v) => WriteProp(writer, k, v));
+				value.WriteAdditionalProperties((k, v) => WriteProp(writer, k, v, options));
 			writer.WriteEndObject();
 		}
 	}

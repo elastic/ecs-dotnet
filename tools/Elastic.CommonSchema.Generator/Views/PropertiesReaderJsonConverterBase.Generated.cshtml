@@ -27,7 +27,7 @@ namespace Elastic.CommonSchema.Serialization;
 internal partial class @(entity.Name)EntityJsonConverter : PropertiesReaderJsonConverterBase@(Raw("<"))@(entity.Name)@Raw(">")
 {
 	/// <inheritdoc cref="PropertiesReaderJsonConverterBase{T}.ReadProperties"/>
-	protected override bool ReadProperties(ref Utf8JsonReader reader, @entity.Name ecsEvent)
+	protected override bool ReadProperties(ref Utf8JsonReader reader, @entity.Name ecsEvent, JsonSerializerOptions options)
 	{
 		var propertyName = reader.GetString();
 		reader.Read();
@@ -42,14 +42,14 @@ internal partial class @(entity.Name)EntityJsonConverter : PropertiesReaderJsonC
 		@foreach (var property in entity.BaseFieldSet.InlineObjectProperties)
 		{
 			var name = property.JsonProperty;
-<text>	"@(name)" => ReadProp<@(Raw(property.InlineObject.Name))>(ref reader, "@name", ecsEvent, (b, v) => b.@(property.Name) = v),
+<text>			"@(name)" => ReadProp<@(Raw(property.InlineObject.Name))>(ref reader, "@name", ecsEvent, (b, v) => b.@(property.Name) = v, options),
 </text>
 		}
-			_ => ReadProperty(ref reader, propertyName, ecsEvent)
+			_ => ReadProperty(ref reader, propertyName, ecsEvent, options)
 		};
 	}
 
-	private partial bool ReadProperty(ref Utf8JsonReader reader, string propertyName, @entity.Name ecsEvent);
+	private partial bool ReadProperty(ref Utf8JsonReader reader, string propertyName, @entity.Name ecsEvent, JsonSerializerOptions options);
 		
 	/// <inheritdoc cref="JsonConverter{T}.Write"/>
 	public override void Write(Utf8JsonWriter writer, @entity.Name value, JsonSerializerOptions options)
@@ -67,13 +67,13 @@ internal partial class @(entity.Name)EntityJsonConverter : PropertiesReaderJsonC
 			{
 				continue;
 			}
-<text>		WriteProp(writer, "@field.JsonProperty", value.@field.Name);
+<text>		WriteProp(writer, "@field.JsonProperty", value.@field.Name, options);
 </text>
 		}
 		@foreach (var property in entity.BaseFieldSet.InlineObjectProperties)
 		{
 			var name = property.JsonProperty;
-<text>		WriteProp(writer, "@(name)", value.@(property.Name));
+<text>		WriteProp(writer, "@(name)", value.@(property.Name), options);
 </text>
 		}
 

@@ -5,7 +5,7 @@
 /*
 IMPORTANT NOTE
 ==============
-This file has been generated.
+This file has been generated. 
 If you wish to submit a PR please modify the original csharp file and submit the PR with that change. Thanks!
 */
 
@@ -20,9 +20,9 @@ namespace Elastic.CommonSchema.Serialization
 		where TBase : EcsDocument, new()
 	{
 		private static bool ReadProperties(
-			ref Utf8JsonReader reader,
-			TBase ecsEvent,
-			ref DateTimeOffset? timestamp,
+			ref Utf8JsonReader reader, 
+			TBase ecsEvent, 
+			ref DateTimeOffset? timestamp, 
 			ref string loglevel,
 			ref string ecsVersion,
 			JsonSerializerOptions options
@@ -119,10 +119,11 @@ namespace Elastic.CommonSchema.Serialization
 
 			// Base fields
 			WriteProp(writer, "tags", value.Tags, options);
-				WriteProp(writer, "span.id", value.SpanId, options);
-				WriteProp(writer, "trace.id", value.TraceId, options);
-				WriteProp(writer, "transaction.id", value.TransactionId, options);
+			WriteProp(writer, "span.id", value.SpanId, options);
+			WriteProp(writer, "trace.id", value.TraceId, options);
+			WriteProp(writer, "transaction.id", value.TransactionId, options);
 			WriteProp(writer, "labels", value.Labels, options);
+
 			// Complex types
 			WriteProp(writer, "agent", value.Agent, EcsJsonContext.Default.Agent, options);
 			WriteProp(writer, "as", value.As, EcsJsonContext.Default.As, options);
@@ -174,7 +175,7 @@ namespace Elastic.CommonSchema.Serialization
 			WriteProp(writer, "metadata", value.Metadata, options);
 
 			if (typeof(EcsDocument) != value.GetType())
-				value.WriteAdditionalProperties((k, v) => WriteProp(writer, k, v,options));
+				value.WriteAdditionalProperties((k, v) => WriteProp(writer, k, v, options));
 			writer.WriteEndObject();
 		}
 	}

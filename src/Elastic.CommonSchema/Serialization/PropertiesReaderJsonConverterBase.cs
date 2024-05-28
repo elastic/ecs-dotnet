@@ -54,7 +54,7 @@ public abstract class PropertiesReaderJsonConverterBase<T> : EcsJsonConverterBas
 
 internal partial class EcsEntityJsonConverter
 {
-	private partial bool ReadProperty(ref Utf8JsonReader reader, string propertyName, Ecs ecsEvent) => false;
+	private partial bool ReadProperty(ref Utf8JsonReader reader, string propertyName, Ecs ecsEvent, JsonSerializerOptions options) => false;
 }
 
 internal partial class LogEntityJsonConverter
