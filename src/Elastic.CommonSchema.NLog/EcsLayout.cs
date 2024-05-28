@@ -539,6 +539,7 @@ namespace Elastic.CommonSchema.NLog
 					? long.Parse(eventSeverity)
 					: GetSysLogSeverity(logEventInfo.Level),
 				Timezone = TimeZoneInfo.Local.StandardName,
+				Sequence = logEventInfo.SequenceID
 			};
 
 			if (!string.IsNullOrEmpty(eventDurationMs) && double.TryParse(eventDurationMs, System.Globalization.NumberStyles.Any, System.Globalization.CultureInfo.InvariantCulture, out var durationMs))
