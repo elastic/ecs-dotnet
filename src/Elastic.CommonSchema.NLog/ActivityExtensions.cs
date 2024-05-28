@@ -7,29 +7,23 @@ namespace Elastic.CommonSchema.NLog
 	/// </summary>
 	internal static class ActivityExtensions
 	{
-		private static readonly System.Diagnostics.ActivitySpanId EmptySpanId = default(System.Diagnostics.ActivitySpanId);
-		private static readonly System.Diagnostics.ActivityTraceId EmptyTraceId = default(System.Diagnostics.ActivityTraceId);
+		private static readonly ActivitySpanId EmptySpanId = default;
+		private static readonly ActivityTraceId EmptyTraceId = default;
 
-		public static string GetSpanId(this Activity activity)
-		{
-			return activity.IdFormat == ActivityIdFormat.W3C ?
+		public static string GetSpanId(this Activity activity) =>
+			activity.IdFormat == ActivityIdFormat.W3C ?
 				SpanIdToHexString(activity.SpanId) :
 				activity.Id;
-		}
 
-		public static string GetTraceId(this Activity activity)
-		{
-			return activity.IdFormat == ActivityIdFormat.W3C ?
+		public static string GetTraceId(this Activity activity) =>
+			activity.IdFormat == ActivityIdFormat.W3C ?
 				TraceIdToHexString(activity.TraceId) :
 				activity.RootId;
-		}
 
-		public static string GetParentId(this Activity activity)
-		{
-			return activity.IdFormat == ActivityIdFormat.W3C ?
+		public static string GetParentId(this Activity activity) =>
+			activity.IdFormat == ActivityIdFormat.W3C ?
 				SpanIdToHexString(activity.ParentSpanId) :
 				activity.ParentId;
-		}
 
 		private static string SpanIdToHexString(ActivitySpanId spanId)
 		{
@@ -49,10 +43,9 @@ namespace Elastic.CommonSchema.NLog
 				return string.Empty;
 
 			var traceHexString = traceId.ToHexString();
-			if (ReferenceEquals(traceHexString, EmptyTraceId.ToHexString()))
-				return string.Empty;
-
-			return traceHexString;
+			return ReferenceEquals(traceHexString, EmptyTraceId.ToHexString())
+				? string.Empty
+				: traceHexString;
 		}
 	}
 }

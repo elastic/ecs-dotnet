@@ -95,9 +95,7 @@ public partial class EcsDocument
 		if (options?.IncludeProcess is null or true) doc.Process = GetProcess(initialCache);
 		if (options?.IncludeUser is null or true) doc.User = GetUser();
 		if (options?.IncludeTraceId is null or true)
-		{
 			SetActivityData(doc);
-		}
 
 		return doc;
 	}

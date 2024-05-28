@@ -4,6 +4,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Runtime.Serialization;
 using System.Text;
 using System.Text.Json.Serialization;
@@ -147,11 +148,11 @@ namespace Elastic.CommonSchema.NLog
 
 		// ReSharper disable AutoPropertyCanBeMadeGetOnly.Global
 		/// <inheritdoc cref="BaseFieldSet.TraceId"/>
-		public Layout ApmTraceId { get; set; } = Layout.FromMethod(() => ResolveTraceId());
+		public Layout ApmTraceId { get; set; } = FromMethod(_ => ResolveTraceId());
 		/// <inheritdoc cref="BaseFieldSet.TransactionId"/>
 		public Layout ApmTransactionId { get; set; }
 		/// <inheritdoc cref="BaseFieldSet.SpanId"/>
-		public Layout ApmSpanId { get; set; } = Layout.FromMethod(() => ResolveSpanId());
+		public Layout ApmSpanId { get; set; } = FromMethod(_ => ResolveSpanId());
 
 		/// <inheritdoc cref="ServiceFieldSet.Name"/>
 		public Layout ApmServiceName { get; set; }
@@ -776,15 +777,9 @@ namespace Elastic.CommonSchema.NLog
 			propertyBag.Add(usedKey, value);
 		}
 
-		private static string ResolveTraceId()
-		{
-			return System.Diagnostics.Activity.Current?.GetTraceId();
-		}
+		private static string ResolveTraceId() => Activity.Current?.GetTraceId();
 
-		private static string ResolveSpanId()
-		{
-			return System.Diagnostics.Activity.Current?.GetSpanId();
-		}
+		private static string ResolveSpanId() => Activity.Current?.GetSpanId();
 
 		/// <summary>
 		/// A subclass of <see cref="EcsDocument"/> that adds additional properties related to Extensions logging.
