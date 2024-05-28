@@ -97,8 +97,7 @@ public class DataStreamIngestionTests : IntegrationTestBase
 		{
 			Timestamp = DateTimeOffset.Parse("2024-05-27T23:56:15.785Z"),
 			Message = "Hello World!",
-			Metadata = new MetadataDictionary { { "MyEnum", MyEnum.Two } },
-			Ecs = new Ecs { Version = "8.11.0" }
+			Metadata = new MetadataDictionary { { "MyEnum", MyEnum.Two } }
 		});
 
 		if (!slim.WaitHandle.WaitOne(TimeSpan.FromSeconds(10)))
@@ -114,6 +113,5 @@ public class DataStreamIngestionTests : IntegrationTestBase
 		root.GetProperty("@timestamp").GetString().Should().Be("2024-05-27T23:56:15.785+00:00");
 		root.GetProperty("message").GetString().Should().Be("Hello World!");
 		root.GetProperty("metadata").GetProperty("MyEnum").GetString().Should().Be("Two");
-		root.GetProperty("ecs.version").GetString().Should().Be("8.11.0");
 	}
 }

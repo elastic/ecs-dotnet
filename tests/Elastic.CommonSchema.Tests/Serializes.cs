@@ -247,8 +247,10 @@ namespace Elastic.CommonSchema.Tests
 				Ecs = new Ecs { Version = "8.11.0" }
 			};
 
-			var options = EcsJsonConfiguration.SerializerOptions;
-			options.Converters.Add(new JsonStringEnumConverter());
+			var options = new JsonSerializerOptions
+			{
+				Converters = { new JsonStringEnumConverter() }
+			};
 
 			var json = JsonSerializer.Serialize(ecsDocument, options);
 
