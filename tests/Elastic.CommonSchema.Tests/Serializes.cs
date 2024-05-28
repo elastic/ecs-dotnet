@@ -247,12 +247,8 @@ namespace Elastic.CommonSchema.Tests
 				Ecs = new Ecs { Version = "8.11.0" }
 			};
 
-			var options = new JsonSerializerOptions
-			{
-				Converters = { new JsonStringEnumConverter() }
-			};
-
-			var json = JsonSerializer.Serialize(ecsDocument, options);
+			var serializerOptions = new JsonSerializerOptions { Converters = { new JsonStringEnumConverter() } };
+			var json = JsonSerializer.Serialize(ecsDocument, serializerOptions);
 
 			json.Should().Be("{\"@timestamp\":\"2024-05-27T23:56:15.785+00:00\",\"message\":\"Hello World!\",\"ecs.version\":\"8.11.0\",\"metadata\":{\"MyEnum\":\"Two\"}}");
 		}
