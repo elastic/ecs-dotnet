@@ -16,6 +16,7 @@ internal static class SpecialKeys
 	public const string ActionId = nameof(ActionId);
 	public const string ActionKind = nameof(ActionKind);
 	public const string ActionSeverity = nameof(ActionSeverity);
+	public const string EventId = nameof(EventId);
 	public const string ApplicationId = nameof(ApplicationId);
 	public const string ApplicationName = nameof(ApplicationName);
 	public const string ApplicationType = nameof(ApplicationType);
