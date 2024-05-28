@@ -42,14 +42,14 @@ public abstract class PropertiesReaderJsonConverterBase<T> : EcsJsonConverterBas
 			if (reader.TokenType != JsonTokenType.PropertyName)
 				throw new JsonException();
 
-			var _ = ReadProperties(ref reader, ecsEvent);
+			var _ = ReadProperties(ref reader, ecsEvent, options);
 		}
 
 		return ecsEvent;
 	}
 
 	/// <summary> Handle reading the current property</summary>
-	protected abstract bool ReadProperties(ref Utf8JsonReader reader, T ecsEvent);
+	protected abstract bool ReadProperties(ref Utf8JsonReader reader, T ecsEvent, JsonSerializerOptions options);
 }
 
 internal partial class EcsEntityJsonConverter
@@ -76,7 +76,7 @@ internal partial class LogEntityJsonConverter
 		public LogFileOriginInvalid? File { get; set; }
 	}
 
-	private partial bool ReadProperty(ref Utf8JsonReader reader, string propertyName, Log ecsEvent) =>
+	private partial bool ReadProperty(ref Utf8JsonReader reader, string propertyName, Log ecsEvent, JsonSerializerOptions options) =>
 		propertyName switch
 		{
 			"origin" => ReadProp<LogOriginInvalid>(ref reader, "origin", ecsEvent, (b, v) =>
@@ -86,7 +86,7 @@ internal partial class LogEntityJsonConverter
 				if (v.File == null) return;
 				b.OriginFileLine = v.File.Line;
 				b.OriginFileName = v.File.Name;
-			}),
+			}, options),
 			_ => false
 		};
 }

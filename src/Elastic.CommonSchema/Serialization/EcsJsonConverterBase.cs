@@ -13,7 +13,7 @@ namespace Elastic.CommonSchema.Serialization
 	public abstract class EcsJsonConverterBase<T> : JsonConverter<T>
 	{
 		/// <summary></summary>
-		protected static bool ReadDateTime(ref Utf8JsonReader reader, ref DateTimeOffset? dateTime)
+		protected static bool ReadDateTime(ref Utf8JsonReader reader, ref DateTimeOffset? dateTime, JsonSerializerOptions options)
 		{
 			if (reader.TokenType == JsonTokenType.Null)
 			{
@@ -21,7 +21,8 @@ namespace Elastic.CommonSchema.Serialization
 				return true;
 			}
 
-			dateTime = EcsJsonConfiguration.DateTimeOffsetConverter.Read(ref reader, typeof(DateTimeOffset), EcsJsonConfiguration.SerializerOptions);
+			var converter = (JsonConverter<DateTimeOffset>)options.GetConverter(typeof(DateTimeOffset));
+			dateTime = converter.Read(ref reader, typeof(DateTimeOffset), options);
 			return true;
 		}
 
@@ -34,11 +35,9 @@ namespace Elastic.CommonSchema.Serialization
 		}
 
 		/// <summary></summary>
-		protected static void WriteProp<TValue>(Utf8JsonWriter writer, string key, TValue value)
+		protected static void WriteProp<TValue>(Utf8JsonWriter writer, string key, TValue value, JsonSerializerOptions options)
 		{
 			if (value == null) return;
-
-			var options = EcsJsonConfiguration.SerializerOptions;
 
 			writer.WritePropertyName(key);
 			// Attempt to use existing converter first before re-entering through JsonSerializer.Serialize().
@@ -47,7 +46,8 @@ namespace Elastic.CommonSchema.Serialization
 		}
 
 		/// <summary></summary>
-		protected static void WriteProp<TValue>(Utf8JsonWriter writer, string key, TValue value, JsonTypeInfo<TValue> typeInfo)
+		protected static void WriteProp<TValue>(Utf8JsonWriter writer, string key, TValue value, JsonTypeInfo<TValue> typeInfo,
+			JsonSerializerOptions options)
 		{
 			if (value == null) return;
 
@@ -56,15 +56,13 @@ namespace Elastic.CommonSchema.Serialization
 
 			//To support user supplied subtypes
 			if (type != typeof(TValue))
-				JsonSerializer.Serialize(writer, value, type, EcsJsonConfiguration.SerializerOptions);
+				JsonSerializer.Serialize(writer, value, type, options);
 			else JsonSerializer.Serialize(writer, value, typeInfo);
 		}
 
-		internal static object? ReadPropDeserialize(ref Utf8JsonReader reader, Type type)
+		internal static object? ReadPropDeserialize(ref Utf8JsonReader reader, Type type, JsonSerializerOptions options)
 		{
 			if (reader.TokenType == JsonTokenType.Null) return null;
-
-			var options = EcsJsonConfiguration.SerializerOptions;
 
 			return JsonSerializer.Deserialize(ref reader, type, options);
 		}
@@ -100,19 +98,18 @@ namespace Elastic.CommonSchema.Serialization
 
 		/// <summary></summary>
 		// ReSharper disable once UnusedParameter.Local (key is used for readability)
-		private static TValue? ReadProp<TValue>(ref Utf8JsonReader reader, string key)  where TValue : class
+		private static TValue? ReadProp<TValue>(ref Utf8JsonReader reader, string key, JsonSerializerOptions options)  where TValue : class
 		{
 			if (reader.TokenType == JsonTokenType.Null) return null;
 
-			var options = EcsJsonConfiguration.SerializerOptions;
 			return JsonSerializer.Deserialize<TValue>(ref reader, options);
 		}
 
 		/// <summary></summary>
-		protected static bool ReadProp<TValue>(ref Utf8JsonReader reader, string key, T b, Action<T, TValue?> set)
+		protected static bool ReadProp<TValue>(ref Utf8JsonReader reader, string key, T b, Action<T, TValue?> set, JsonSerializerOptions options)
 			where TValue : class
 		{
-			set(b, ReadProp<TValue>(ref reader, key));
+			set(b, ReadProp<TValue>(ref reader, key, options));
 			return true;
 		}
 
