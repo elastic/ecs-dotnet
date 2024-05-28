@@ -30,6 +30,11 @@ namespace Elastic.Extensions.Logging.Options
 		public bool IncludeUser { get; set; } = true;
 
 		/// <summary>
+		/// Gets or sets a flag indicating whether TraceId/SpanId should be included in the message. Defaults to <c>true</c>.
+		/// </summary>
+		public bool IncludeTraceId { get; set; } = true;
+
+		/// <summary>
 		/// The data stream to log into, defaults to <c>logs-generic-default</c> if neither <see cref="DataStream"/> or <see cref="Index"/> is set.
 		/// </summary>
 		public DataStreamNameOptions? DataStream { get; set; }

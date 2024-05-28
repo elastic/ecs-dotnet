@@ -34,6 +34,11 @@ public interface IEcsDocumentCreationOptions
 	/// Gets or sets a flag indicating whether user details should be included in the message. Defaults to <c>true</c>.
 	/// </summary>
 	bool IncludeUser { get; set; }
+
+	/// <summary>
+	/// Gets or sets a flag indicating whether TraceId/SpanId should be included in the message. Defaults to <c>true</c>.
+	/// </summary>
+	bool IncludeTraceId { get; set; }
 }
 
 /// <summary>
@@ -85,11 +90,12 @@ public partial class EcsDocument
 			Error = GetError(exception),
 			Service = GetService(initialCache)
 		};
-		SetActivityData(doc);
 
 		if (options?.IncludeHost is null or true) doc.Host = GetHost(initialCache);
 		if (options?.IncludeProcess is null or true) doc.Process = GetProcess(initialCache);
 		if (options?.IncludeUser is null or true) doc.User = GetUser();
+		if (options?.IncludeTraceId is null or true)
+			SetActivityData(doc);
 
 		return doc;
 	}
