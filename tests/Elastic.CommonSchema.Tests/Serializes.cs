@@ -3,6 +3,7 @@
 // See the LICENSE file in the project root for more information
 
 using System;
+using System.Text.Json;
 using System.Text.Json.Serialization;
 using Elastic.CommonSchema.Serialization;
 using FluentAssertions;
@@ -231,6 +232,27 @@ namespace Elastic.CommonSchema.Tests
 			deserialized.Dns.Answers[0].Name.Should().NotBeNull().And.Be("www.example.com");
 			deserialized.Dns.Answers[1].Data.Should().NotBeNull().And.EndWith(".117");
 			deserialized.Metadata.Should().NotBeNull().And.HaveCount(1);
+		}
+
+		private enum MyEnum { One, Two, Three }
+
+		[Fact]
+		public void UseCustomSerializer()
+		{
+			var ecsDocument = new EcsDocument
+			{
+				Timestamp = DateTimeOffset.Parse("2024-05-27T23:56:15.785Z"),
+				Message = "Hello World!",
+				Metadata = new MetadataDictionary { { "MyEnum", MyEnum.Two } },
+				Ecs = new Ecs { Version = "8.11.0" }
+			};
+
+			var options = EcsJsonConfiguration.SerializerOptions;
+			options.Converters.Add(new JsonStringEnumConverter());
+
+			var json = JsonSerializer.Serialize(ecsDocument, options);
+
+			json.Should().Be("{\"@timestamp\":\"2024-05-27T23:56:15.785+00:00\",\"message\":\"Hello World!\",\"ecs.version\":\"8.11.0\",\"metadata\":{\"MyEnum\":\"Two\"}}");
 		}
 	}
 }
