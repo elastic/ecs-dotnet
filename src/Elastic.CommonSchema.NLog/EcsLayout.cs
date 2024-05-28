@@ -22,7 +22,7 @@ namespace Elastic.CommonSchema.NLog
 		public bool IncludeHost { get; set; } = false;
 		public bool IncludeProcess { get; set; } = false;
 		public bool IncludeUser { get; set; } = false;
-		public bool IncludeTraceId { get; set; } = false;
+		public bool IncludeActivityData { get; set; } = false;
 	}
 
 	/// <summary> An NLOG layout implementation that renders logs as ECS json</summary>

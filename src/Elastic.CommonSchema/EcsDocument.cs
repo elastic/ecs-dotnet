@@ -38,7 +38,7 @@ public interface IEcsDocumentCreationOptions
 	/// <summary>
 	/// Gets or sets a flag indicating whether TraceId/SpanId should be included in the message. Defaults to <c>true</c>.
 	/// </summary>
-	bool IncludeTraceId { get; set; }
+	bool IncludeActivityData { get; set; }
 }
 
 /// <summary>
@@ -94,7 +94,7 @@ public partial class EcsDocument
 		if (options?.IncludeHost is null or true) doc.Host = GetHost(initialCache);
 		if (options?.IncludeProcess is null or true) doc.Process = GetProcess(initialCache);
 		if (options?.IncludeUser is null or true) doc.User = GetUser();
-		if (options?.IncludeTraceId is null or true)
+		if (options?.IncludeActivityData is null or true)
 			SetActivityData(doc);
 
 		return doc;
