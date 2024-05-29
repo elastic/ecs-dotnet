@@ -67,7 +67,7 @@ internal partial class @(entity.Name)EntityJsonConverter : PropertiesReaderJsonC
 			{
 				continue;
 			}
-<text>		WriteProp(writer, "@field.JsonProperty", value.@field.Name, options);
+<text>		WriteProp@(Raw(field.ReadJsonType))(writer, "@field.JsonProperty", value.@field.Name);
 </text>
 		}
 		@foreach (var property in entity.BaseFieldSet.InlineObjectProperties)

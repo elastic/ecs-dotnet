@@ -35,6 +35,24 @@ namespace Elastic.CommonSchema.Serialization
 		}
 
 		/// <summary></summary>
+		protected static void WritePropLong(Utf8JsonWriter writer, string key, long? value)
+		{
+			if (value == null) return;
+
+			writer.WritePropertyName(key);
+			writer.WriteNumberValue(value.Value);
+		}
+
+		/// <summary></summary>
+		protected static void WritePropString(Utf8JsonWriter writer, string key, string? value)
+		{
+			if (value == null) return;
+
+			writer.WritePropertyName(key);
+			writer.WriteStringValue(value);
+		}
+
+		/// <summary></summary>
 		protected static void WriteProp<TValue>(Utf8JsonWriter writer, string key, TValue value, JsonSerializerOptions options)
 		{
 			if (value == null) return;

@@ -50,11 +50,11 @@ internal partial class LogEntityJsonConverter : PropertiesReaderJsonConverterBas
 		}
 		writer.WriteStartObject();
 
-		WriteProp(writer, "file.path", value.FilePath, options);
-		WriteProp(writer, "logger", value.Logger, options);
-		WriteProp(writer, "origin.file.line", value.OriginFileLine, options);
-		WriteProp(writer, "origin.file.name", value.OriginFileName, options);
-		WriteProp(writer, "origin.function", value.OriginFunction, options);
+		WritePropString(writer, "file.path", value.FilePath);
+		WritePropString(writer, "logger", value.Logger);
+		WritePropLong(writer, "origin.file.line", value.OriginFileLine);
+		WritePropString(writer, "origin.file.name", value.OriginFileName);
+		WritePropString(writer, "origin.function", value.OriginFunction);
 		WriteProp(writer, "syslog", value.Syslog, options);
 
 		writer.WriteEndObject();
