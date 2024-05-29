@@ -13,6 +13,12 @@ namespace Elastic.CommonSchema.Serialization
 	public abstract class EcsJsonConverterBase<T> : JsonConverter<T>
 	{
 		/// <summary></summary>
+		protected static JsonConverter<DateTimeOffset> GetDateTimeOffsetConverter(JsonSerializerOptions options) =>
+			options == EcsJsonConfiguration.SerializerOptions
+				? EcsJsonConfiguration.DateTimeOffsetConverter
+				: (JsonConverter<DateTimeOffset>)options.GetConverter(typeof(DateTimeOffset));
+
+		/// <summary></summary>
 		protected static bool ReadDateTime(ref Utf8JsonReader reader, ref DateTimeOffset? dateTime, JsonSerializerOptions options)
 		{
 			if (reader.TokenType == JsonTokenType.Null)
@@ -21,10 +27,7 @@ namespace Elastic.CommonSchema.Serialization
 				return true;
 			}
 
-			var converter = options == EcsJsonConfiguration.SerializerOptions
-				? EcsJsonConfiguration.DateTimeOffsetConverter
-				: (JsonConverter<DateTimeOffset>)options.GetConverter(typeof(DateTimeOffset));
-
+			var converter = GetDateTimeOffsetConverter(options);
 			dateTime = converter.Read(ref reader, typeof(DateTimeOffset), options);
 			return true;
 		}
