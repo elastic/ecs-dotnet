@@ -36,6 +36,9 @@ namespace Elastic.CommonSchema.Serialization
 			}
 		};
 
+		internal static readonly JsonConverter<DateTimeOffset> DateTimeOffsetConverter =
+			(JsonConverter<DateTimeOffset>)SerializerOptions.GetConverter(typeof(DateTimeOffset));
+
 		/// <summary>Default <see cref="JsonConverter{T}"/> for <see cref="EcsDocument"/></summary>
 		public static readonly EcsDocumentJsonConverter DefaultEcsDocumentJsonConverter = new();
 

@@ -21,7 +21,10 @@ namespace Elastic.CommonSchema.Serialization
 				return true;
 			}
 
-			var converter = (JsonConverter<DateTimeOffset>)options.GetConverter(typeof(DateTimeOffset));
+			var converter = options == EcsJsonConfiguration.SerializerOptions
+				? EcsJsonConfiguration.DateTimeOffsetConverter
+				: (JsonConverter<DateTimeOffset>)options.GetConverter(typeof(DateTimeOffset));
+
 			dateTime = converter.Read(ref reader, typeof(DateTimeOffset), options);
 			return true;
 		}
