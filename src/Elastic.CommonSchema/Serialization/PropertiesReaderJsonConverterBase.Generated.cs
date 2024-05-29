@@ -21,7 +21,7 @@ namespace Elastic.CommonSchema.Serialization;
 internal partial class LogEntityJsonConverter : PropertiesReaderJsonConverterBase<Log>
 {
 	/// <inheritdoc cref="PropertiesReaderJsonConverterBase{T}.ReadProperties"/>
-	protected override bool ReadProperties(ref Utf8JsonReader reader, Log ecsEvent)
+	protected override bool ReadProperties(ref Utf8JsonReader reader, Log ecsEvent, JsonSerializerOptions options)
 	{
 		var propertyName = reader.GetString();
 		reader.Read();
@@ -33,12 +33,12 @@ internal partial class LogEntityJsonConverter : PropertiesReaderJsonConverterBas
 			"origin.file.line" => ReadPropLong(ref reader, "origin.file.line", ecsEvent, (b, v) => b.OriginFileLine = v),
 			"origin.file.name" => ReadPropString(ref reader, "origin.file.name", ecsEvent, (b, v) => b.OriginFileName = v),
 			"origin.function" => ReadPropString(ref reader, "origin.function", ecsEvent, (b, v) => b.OriginFunction = v),
-	"syslog" => ReadProp<LogSyslog>(ref reader, "syslog", ecsEvent, (b, v) => b.Syslog = v),
-			_ => ReadProperty(ref reader, propertyName, ecsEvent)
+			"syslog" => ReadProp<LogSyslog>(ref reader, "syslog", ecsEvent, (b, v) => b.Syslog = v, options),
+			_ => ReadProperty(ref reader, propertyName, ecsEvent, options)
 		};
 	}
 
-	private partial bool ReadProperty(ref Utf8JsonReader reader, string propertyName, Log ecsEvent);
+	private partial bool ReadProperty(ref Utf8JsonReader reader, string propertyName, Log ecsEvent, JsonSerializerOptions options);
 		
 	/// <inheritdoc cref="JsonConverter{T}.Write"/>
 	public override void Write(Utf8JsonWriter writer, Log value, JsonSerializerOptions options)
@@ -50,12 +50,12 @@ internal partial class LogEntityJsonConverter : PropertiesReaderJsonConverterBas
 		}
 		writer.WriteStartObject();
 
-		WriteProp(writer, "file.path", value.FilePath);
-		WriteProp(writer, "logger", value.Logger);
-		WriteProp(writer, "origin.file.line", value.OriginFileLine);
-		WriteProp(writer, "origin.file.name", value.OriginFileName);
-		WriteProp(writer, "origin.function", value.OriginFunction);
-		WriteProp(writer, "syslog", value.Syslog);
+		WritePropString(writer, "file.path", value.FilePath);
+		WritePropString(writer, "logger", value.Logger);
+		WritePropLong(writer, "origin.file.line", value.OriginFileLine);
+		WritePropString(writer, "origin.file.name", value.OriginFileName);
+		WritePropString(writer, "origin.function", value.OriginFunction);
+		WriteProp(writer, "syslog", value.Syslog, options);
 
 		writer.WriteEndObject();
 	}
@@ -65,18 +65,18 @@ internal partial class LogEntityJsonConverter : PropertiesReaderJsonConverterBas
 internal partial class EcsEntityJsonConverter : PropertiesReaderJsonConverterBase<Ecs>
 {
 	/// <inheritdoc cref="PropertiesReaderJsonConverterBase{T}.ReadProperties"/>
-	protected override bool ReadProperties(ref Utf8JsonReader reader, Ecs ecsEvent)
+	protected override bool ReadProperties(ref Utf8JsonReader reader, Ecs ecsEvent, JsonSerializerOptions options)
 	{
 		var propertyName = reader.GetString();
 		reader.Read();
 		return propertyName switch
 		{
 			"version" => ReadPropString(ref reader, "version", ecsEvent, (b, v) => b.Version = v),
-			_ => ReadProperty(ref reader, propertyName, ecsEvent)
+			_ => ReadProperty(ref reader, propertyName, ecsEvent, options)
 		};
 	}
 
-	private partial bool ReadProperty(ref Utf8JsonReader reader, string propertyName, Ecs ecsEvent);
+	private partial bool ReadProperty(ref Utf8JsonReader reader, string propertyName, Ecs ecsEvent, JsonSerializerOptions options);
 		
 	/// <inheritdoc cref="JsonConverter{T}.Write"/>
 	public override void Write(Utf8JsonWriter writer, Ecs value, JsonSerializerOptions options)

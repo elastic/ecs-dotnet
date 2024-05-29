@@ -42,7 +42,7 @@ namespace Elastic.CommonSchema.Serialization
 				if (reader.TokenType != JsonTokenType.PropertyName)
 					throw new JsonException();
 
-				var _ = ReadProperties(ref reader, ecsEvent, ref timestamp, ref loglevel, ref ecsVersion);
+				var _ = ReadProperties(ref reader, ecsEvent, ref timestamp, ref loglevel, ref ecsVersion, options);
 			}
 			if (!string.IsNullOrEmpty(loglevel))
 			{
@@ -65,11 +65,11 @@ namespace Elastic.CommonSchema.Serialization
 				writer.WriteString("message", value.Message);
 		}
 
-		private static void WriteLogEntity(Utf8JsonWriter writer, Log? value) {
+		private static void WriteLogEntity(Utf8JsonWriter writer, Log? value, JsonSerializerOptions options) {
 			if (value == null) return;
 			if (!value.ShouldSerialize) return;
 
-			WriteProp(writer, "log", value, EcsJsonContext.Default.Log);
+			WriteProp(writer, "log", value, EcsJsonContext.Default.Log, options);
 		}
 
 		private static void WriteLogLevel(Utf8JsonWriter writer, EcsDocument value)
@@ -78,23 +78,24 @@ namespace Elastic.CommonSchema.Serialization
 				writer.WriteString("log.level", value.Log?.Level);
 		}
 
-		private static void WriteEcsEntity(Utf8JsonWriter writer, Ecs? value)
+		private static void WriteEcsEntity(Utf8JsonWriter writer, Ecs? value, JsonSerializerOptions options)
 		{
 			if (value == null) return;
 			if (!value.ShouldSerialize) return;
 
-			WriteProp(writer, "ecs", value, EcsJsonContext.Default.Ecs);
+			WriteProp(writer, "ecs", value, EcsJsonContext.Default.Ecs, options);
 		}
 
 		private static void WriteEcsVersion(Utf8JsonWriter writer, EcsDocument value) =>
 			writer.WriteString("ecs.version", value.Ecs?.Version ?? EcsDocument.Version);
 
-		private static void WriteTimestamp(Utf8JsonWriter writer, BaseFieldSet value)
+		private static void WriteTimestamp(Utf8JsonWriter writer, BaseFieldSet value, JsonSerializerOptions options)
 		{
 			if (!value.Timestamp.HasValue) return;
 
 			writer.WritePropertyName("@timestamp");
-			EcsJsonConfiguration.DateTimeOffsetConverter.Write(writer, value.Timestamp.Value, EcsJsonConfiguration.SerializerOptions);
+			var converter = GetDateTimeOffsetConverter(options);
+			converter.Write(writer, value.Timestamp.Value, options);
 		}
 	}
 
