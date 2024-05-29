@@ -149,6 +149,7 @@ namespace Elastic.CommonSchema.Serilog
 				case SpecialKeys.ActionId:
 				case SpecialKeys.ActionKind:
 				case SpecialKeys.ActionSeverity:
+				case SpecialKeys.EventId:
 				case SpecialKeys.ApplicationId:
 				case SpecialKeys.ApplicationName:
 				case SpecialKeys.ApplicationType:
@@ -271,6 +272,19 @@ namespace Elastic.CommonSchema.Serilog
 				Timezone = TimeZoneInfo.Local.StandardName,
 				Duration = elapsedMs != null ? (long)(elapsedMs * 1000000) : null
 			};
+
+			if (e.Properties.TryGetValue(SpecialKeys.EventId, out var eventData) && eventData is StructureValue dv)
+			{
+				var idProp = dv.Properties.FirstOrDefault(p => p.Name == "Id");
+				var eventId = idProp?.Value is ScalarValue i ? i.Value as int? : null;
+				if (eventId != null)
+					evnt.Code = eventId.ToString();
+
+				var nameProp = dv.Properties.FirstOrDefault(p => p.Name == "Name");
+				var eventAction = nameProp?.Value is ScalarValue n ? n.Value as string : null;
+				if (eventAction != null)
+					evnt.Action = eventAction;
+			}
 
 			return evnt;
 		}

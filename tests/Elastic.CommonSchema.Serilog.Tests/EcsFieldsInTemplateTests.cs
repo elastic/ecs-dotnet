@@ -11,8 +11,7 @@ namespace Elastic.CommonSchema.Serilog.Tests
 {
 	public class EcsFieldsInTemplateTests : LogTestsBase
 	{
-		public EcsFieldsInTemplateTests(ITestOutputHelper output) : base(output) =>
-			LoggerConfiguration = LoggerConfiguration;
+		public EcsFieldsInTemplateTests(ITestOutputHelper output) : base(output) { }
 
 		[Fact]
 		public void EcsFieldsDoNotEndUpAsLabelsOrMetadata() => TestLogger((logger, getLogEvents) =>
@@ -81,6 +80,7 @@ namespace Elastic.CommonSchema.Serilog.Tests
 			structured.Should().NotBeNull();
 			structured!["y"].Should().Be(2);
 		});
+
 
 	}
 }
