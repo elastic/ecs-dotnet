@@ -57,8 +57,8 @@ namespace Elastic.CommonSchema.Serilog
 		/// <inheritdoc cref="IEcsDocumentCreationOptions.IncludeUser"/>
 		public bool IncludeUser { get; set; } = true;
 
-		/// <inheritdoc cref="IEcsDocumentCreationOptions.IncludeTraceId"/>
-		public bool IncludeTraceId { get; set; } = true;
+		/// <inheritdoc cref="IEcsDocumentCreationOptions.IncludeActivityData"/>
+		public bool IncludeActivityData { get; set; } = true;
 
 		/// <inheritdoc cref="IEcsTextFormatterConfiguration.MapHttpAdapter"/>
 		public IHttpAdapter? MapHttpAdapter { get; set; }

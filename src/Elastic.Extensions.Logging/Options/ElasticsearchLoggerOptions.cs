@@ -32,7 +32,7 @@ namespace Elastic.Extensions.Logging.Options
 		/// <summary>
 		/// Gets or sets a flag indicating whether TraceId/SpanId should be included in the message. Defaults to <c>true</c>.
 		/// </summary>
-		public bool IncludeTraceId { get; set; } = true;
+		public bool IncludeActivityData { get; set; } = true;
 
 		/// <summary>
 		/// The data stream to log into, defaults to <c>logs-generic-default</c> if neither <see cref="DataStream"/> or <see cref="Index"/> is set.
