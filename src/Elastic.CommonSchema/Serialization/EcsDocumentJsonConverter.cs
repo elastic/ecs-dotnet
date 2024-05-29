@@ -94,7 +94,11 @@ namespace Elastic.CommonSchema.Serialization
 			if (!value.Timestamp.HasValue) return;
 
 			writer.WritePropertyName("@timestamp");
-			var converter = (JsonConverter<DateTimeOffset>)options.GetConverter(typeof(DateTimeOffset));
+
+			var converter = options == EcsJsonConfiguration.SerializerOptions
+				? EcsJsonConfiguration.DateTimeOffsetConverter
+				: (JsonConverter<DateTimeOffset>)options.GetConverter(typeof(DateTimeOffset));
+
 			converter.Write(writer, value.Timestamp.Value, options);
 		}
 	}
