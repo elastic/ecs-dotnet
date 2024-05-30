@@ -25,7 +25,7 @@ namespace Elastic.Extensions.Logging
 	/// instances to <see cref="LoggerFactory"/>
 	/// </summary>
 	[ProviderAlias("Elasticsearch")]
-	public class ElasticsearchLoggerProvider : ILoggerProvider, ISupportExternalScope
+	public class ElasticsearchLoggerProvider : ILoggerProvider, ISupportExternalScope, IChannelProvider
 	{
 		private readonly IChannelSetup[] _channelConfigurations;
 		private readonly IOptionsMonitor<ElasticsearchLoggerOptions> _options;
@@ -59,7 +59,7 @@ namespace Elastic.Extensions.Logging
 
 		/// <inheritdoc cref="ILoggerProvider.CreateLogger"/>
 		public ILogger CreateLogger(string name) =>
-			new ElasticsearchLogger(name, _shipper, _options.CurrentValue, _scopeProvider);
+			new ElasticsearchLogger(name, this, _options.CurrentValue, _scopeProvider);
 
 		/// <inheritdoc cref="IDisposable.Dispose"/>
 		public void Dispose()
@@ -189,5 +189,8 @@ namespace Elastic.Extensions.Logging
 				return channel;
 			}
 		}
+
+		/// <inheritdoc cref="IChannelProvider.GetChannel"/>
+		public IBufferedChannel<LogEvent> GetChannel() => _shipper;
 	}
 }
