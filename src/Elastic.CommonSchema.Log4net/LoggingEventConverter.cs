@@ -78,14 +78,17 @@ internal static class LoggingEventConverter
 
 			var value = properties[property];
 
-			// use string representation of stacks because:
-			// - if stack is empty then null is returned
-			// - if stack contains one item log4net anyway supports only string values
-			// - if stack contains several items then we need all of them
+			// use latest string representation of the value in the stack
 			if (value is ThreadContextStack tcs)
-				value = tcs.ToString();
+			{
+				var stackValue = tcs.Peek();
+				value = !string.IsNullOrEmpty(stackValue) ? stackValue : null;
+			}
 			else if (value is LogicalThreadContextStack ltcs)
-				value = ltcs.ToString();
+			{
+				var stackValue = ltcs.Peek();
+				value = !string.IsNullOrEmpty(stackValue) ? stackValue : null;
+			}
 
 			if (value != null)
 				metadata[property] = value;

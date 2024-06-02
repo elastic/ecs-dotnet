@@ -22,12 +22,12 @@ using System.Text.Json.Serialization;
 namespace Elastic.CommonSchema.Elasticsearch
 {
 /// <summary>
-/// Elastic Common Schema version v8.6.0 index templates to be used with Elasticsearch.
+/// Elastic Common Schema version v8.11.0 index templates to be used with Elasticsearch.
 /// </summary>
 public static class IndexTemplates
 {
 	/// <summary>
-	 /// Elastic Common Schema version v8.6.0 Composable index template  
+	 /// Elastic Common Schema version v8.11.0 Composable index template  
 	 /// See the Put Index Template API documentation: https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-templates.html
 	 /// </summary>
 	 /// <returns>Index template string that can be used with the Put Index Template API.</returns>
@@ -38,54 +38,54 @@ public static class IndexTemplates
 		 		 
 		return @"{
   ""_meta"": {
-    ""description"": ""Template installed by ECS.NET 8.6.0 (https://github.com/elastic/ecs-dotnet)"",
-    ""ecs_version"": ""8.6.0""
+    ""description"": ""Template installed by ECS.NET 8.11.0 (https://github.com/elastic/ecs-dotnet)"",
+    ""ecs_version"": ""8.11.0""
   },
   ""composed_of"": [
-    ""ecs_8.6.0_base"",
-    ""ecs_8.6.0_agent"",
-    ""ecs_8.6.0_client"",
-    ""ecs_8.6.0_cloud"",
-    ""ecs_8.6.0_container"",
-    ""ecs_8.6.0_data_stream"",
-    ""ecs_8.6.0_destination"",
-    ""ecs_8.6.0_device"",
-    ""ecs_8.6.0_dll"",
-    ""ecs_8.6.0_dns"",
-    ""ecs_8.6.0_ecs"",
-    ""ecs_8.6.0_email"",
-    ""ecs_8.6.0_error"",
-    ""ecs_8.6.0_event"",
-    ""ecs_8.6.0_faas"",
-    ""ecs_8.6.0_file"",
-    ""ecs_8.6.0_group"",
-    ""ecs_8.6.0_host"",
-    ""ecs_8.6.0_http"",
-    ""ecs_8.6.0_log"",
-    ""ecs_8.6.0_network"",
-    ""ecs_8.6.0_observer"",
-    ""ecs_8.6.0_orchestrator"",
-    ""ecs_8.6.0_organization"",
-    ""ecs_8.6.0_package"",
-    ""ecs_8.6.0_process"",
-    ""ecs_8.6.0_registry"",
-    ""ecs_8.6.0_related"",
-    ""ecs_8.6.0_rule"",
-    ""ecs_8.6.0_server"",
-    ""ecs_8.6.0_service"",
-    ""ecs_8.6.0_source"",
-    ""ecs_8.6.0_threat"",
-    ""ecs_8.6.0_tls"",
-    ""ecs_8.6.0_tracing"",
-    ""ecs_8.6.0_url"",
-    ""ecs_8.6.0_user_agent"",
-    ""ecs_8.6.0_user"",
-    ""ecs_8.6.0_vulnerability""" + userComponents + @"
+    ""ecs_8.11.0_base"",
+    ""ecs_8.11.0_agent"",
+    ""ecs_8.11.0_client"",
+    ""ecs_8.11.0_cloud"",
+    ""ecs_8.11.0_container"",
+    ""ecs_8.11.0_data_stream"",
+    ""ecs_8.11.0_destination"",
+    ""ecs_8.11.0_device"",
+    ""ecs_8.11.0_dll"",
+    ""ecs_8.11.0_dns"",
+    ""ecs_8.11.0_ecs"",
+    ""ecs_8.11.0_email"",
+    ""ecs_8.11.0_error"",
+    ""ecs_8.11.0_event"",
+    ""ecs_8.11.0_faas"",
+    ""ecs_8.11.0_file"",
+    ""ecs_8.11.0_group"",
+    ""ecs_8.11.0_host"",
+    ""ecs_8.11.0_http"",
+    ""ecs_8.11.0_log"",
+    ""ecs_8.11.0_network"",
+    ""ecs_8.11.0_observer"",
+    ""ecs_8.11.0_orchestrator"",
+    ""ecs_8.11.0_organization"",
+    ""ecs_8.11.0_package"",
+    ""ecs_8.11.0_process"",
+    ""ecs_8.11.0_registry"",
+    ""ecs_8.11.0_related"",
+    ""ecs_8.11.0_rule"",
+    ""ecs_8.11.0_server"",
+    ""ecs_8.11.0_service"",
+    ""ecs_8.11.0_source"",
+    ""ecs_8.11.0_threat"",
+    ""ecs_8.11.0_tls"",
+    ""ecs_8.11.0_tracing"",
+    ""ecs_8.11.0_url"",
+    ""ecs_8.11.0_user_agent"",
+    ""ecs_8.11.0_user"",
+    ""ecs_8.11.0_vulnerability""" + userComponents + @"
   ],
   ""index_patterns"": [
     """ + indexPattern + @"""
   ],
-  ""priority"": 525824,
+  ""priority"": 527104,
   ""data_stream"": {},
   ""template"": {
     ""mappings"": {
@@ -107,7 +107,7 @@ public static class IndexTemplates
         ""codec"": ""best_compression"",
         ""mapping"": {
           ""total_fields"": {
-            ""limit"": 2000
+            ""limit"": 2500
           }
         }
       }
@@ -118,7 +118,7 @@ public static class IndexTemplates
 	 }
 
  	/// <summary>
-	 /// Elastic Common Schema version v8.6.0 Legacy index template  
+	 /// Elastic Common Schema version v8.11.0 Legacy index template  
 	 /// See the Put Index Template API documentation: https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-templates.html
 	 /// </summary>
 	 /// <returns>Index template string that can be used with the Put Index Template API.</returns>
@@ -131,7 +131,7 @@ public static class IndexTemplates
   ],
   ""mappings"": {
     ""_meta"": {
-      ""version"": ""8.6.0""
+      ""version"": ""8.11.0""
     },
     ""date_detection"": false,
     ""dynamic_templates"": [
@@ -648,6 +648,13 @@ public static class IndexTemplates
           ""runtime"": {
             ""ignore_above"": 1024,
             ""type"": ""keyword""
+          },
+          ""security_context"": {
+            ""properties"": {
+              ""privileged"": {
+                ""type"": ""boolean""
+              }
+            }
           }
         }
       },
@@ -959,9 +966,38 @@ public static class IndexTemplates
                 ""ignore_above"": 1024,
                 ""type"": ""keyword""
               },
+              ""go_import_hash"": {
+                ""ignore_above"": 1024,
+                ""type"": ""keyword""
+              },
+              ""go_imports"": {
+                ""type"": ""flattened""
+              },
+              ""go_imports_names_entropy"": {
+                ""type"": ""long""
+              },
+              ""go_imports_names_var_entropy"": {
+                ""type"": ""long""
+              },
+              ""go_stripped"": {
+                ""type"": ""boolean""
+              },
               ""imphash"": {
                 ""ignore_above"": 1024,
                 ""type"": ""keyword""
+              },
+              ""import_hash"": {
+                ""ignore_above"": 1024,
+                ""type"": ""keyword""
+              },
+              ""imports"": {
+                ""type"": ""flattened""
+              },
+              ""imports_names_entropy"": {
+                ""type"": ""long""
+              },
+              ""imports_names_var_entropy"": {
+                ""type"": ""long""
               },
               ""original_file_name"": {
                 ""ignore_above"": 1024,
@@ -974,6 +1010,27 @@ public static class IndexTemplates
               ""product"": {
                 ""ignore_above"": 1024,
                 ""type"": ""keyword""
+              },
+              ""sections"": {
+                ""properties"": {
+                  ""entropy"": {
+                    ""type"": ""long""
+                  },
+                  ""name"": {
+                    ""ignore_above"": 1024,
+                    ""type"": ""keyword""
+                  },
+                  ""physical_size"": {
+                    ""type"": ""long""
+                  },
+                  ""var_entropy"": {
+                    ""type"": ""long""
+                  },
+                  ""virtual_size"": {
+                    ""type"": ""long""
+                  }
+                },
+                ""type"": ""nested""
               }
             }
           }
@@ -1362,8 +1419,7 @@ public static class IndexTemplates
                 ""ignore_above"": 1024,
                 ""type"": ""keyword""
               }
-            },
-            ""type"": ""nested""
+            }
           },
           ""version"": {
             ""ignore_above"": 1024,
@@ -1454,6 +1510,22 @@ public static class IndexTemplates
               ""exports"": {
                 ""type"": ""flattened""
               },
+              ""go_import_hash"": {
+                ""ignore_above"": 1024,
+                ""type"": ""keyword""
+              },
+              ""go_imports"": {
+                ""type"": ""flattened""
+              },
+              ""go_imports_names_entropy"": {
+                ""type"": ""long""
+              },
+              ""go_imports_names_var_entropy"": {
+                ""type"": ""long""
+              },
+              ""go_stripped"": {
+                ""type"": ""boolean""
+              },
               ""header"": {
                 ""properties"": {
                   ""abi_version"": {
@@ -1489,8 +1561,18 @@ public static class IndexTemplates
                   }
                 }
               },
+              ""import_hash"": {
+                ""ignore_above"": 1024,
+                ""type"": ""keyword""
+              },
               ""imports"": {
                 ""type"": ""flattened""
+              },
+              ""imports_names_entropy"": {
+                ""type"": ""long""
+              },
+              ""imports_names_var_entropy"": {
+                ""type"": ""long""
               },
               ""sections"": {
                 ""properties"": {
@@ -1518,6 +1600,9 @@ public static class IndexTemplates
                   ""type"": {
                     ""ignore_above"": 1024,
                     ""type"": ""keyword""
+                  },
+                  ""var_entropy"": {
+                    ""type"": ""long""
                   },
                   ""virtual_address"": {
                     ""type"": ""long""
@@ -1603,6 +1688,64 @@ public static class IndexTemplates
             ""ignore_above"": 1024,
             ""type"": ""keyword""
           },
+          ""macho"": {
+            ""properties"": {
+              ""go_import_hash"": {
+                ""ignore_above"": 1024,
+                ""type"": ""keyword""
+              },
+              ""go_imports"": {
+                ""type"": ""flattened""
+              },
+              ""go_imports_names_entropy"": {
+                ""type"": ""long""
+              },
+              ""go_imports_names_var_entropy"": {
+                ""type"": ""long""
+              },
+              ""go_stripped"": {
+                ""type"": ""boolean""
+              },
+              ""import_hash"": {
+                ""ignore_above"": 1024,
+                ""type"": ""keyword""
+              },
+              ""imports"": {
+                ""type"": ""flattened""
+              },
+              ""imports_names_entropy"": {
+                ""type"": ""long""
+              },
+              ""imports_names_var_entropy"": {
+                ""type"": ""long""
+              },
+              ""sections"": {
+                ""properties"": {
+                  ""entropy"": {
+                    ""type"": ""long""
+                  },
+                  ""name"": {
+                    ""ignore_above"": 1024,
+                    ""type"": ""keyword""
+                  },
+                  ""physical_size"": {
+                    ""type"": ""long""
+                  },
+                  ""var_entropy"": {
+                    ""type"": ""long""
+                  },
+                  ""virtual_size"": {
+                    ""type"": ""long""
+                  }
+                },
+                ""type"": ""nested""
+              },
+              ""symhash"": {
+                ""ignore_above"": 1024,
+                ""type"": ""keyword""
+              }
+            }
+          },
           ""mime_type"": {
             ""ignore_above"": 1024,
             ""type"": ""keyword""
@@ -1649,9 +1792,38 @@ public static class IndexTemplates
                 ""ignore_above"": 1024,
                 ""type"": ""keyword""
               },
+              ""go_import_hash"": {
+                ""ignore_above"": 1024,
+                ""type"": ""keyword""
+              },
+              ""go_imports"": {
+                ""type"": ""flattened""
+              },
+              ""go_imports_names_entropy"": {
+                ""type"": ""long""
+              },
+              ""go_imports_names_var_entropy"": {
+                ""type"": ""long""
+              },
+              ""go_stripped"": {
+                ""type"": ""boolean""
+              },
               ""imphash"": {
                 ""ignore_above"": 1024,
                 ""type"": ""keyword""
+              },
+              ""import_hash"": {
+                ""ignore_above"": 1024,
+                ""type"": ""keyword""
+              },
+              ""imports"": {
+                ""type"": ""flattened""
+              },
+              ""imports_names_entropy"": {
+                ""type"": ""long""
+              },
+              ""imports_names_var_entropy"": {
+                ""type"": ""long""
               },
               ""original_file_name"": {
                 ""ignore_above"": 1024,
@@ -1664,6 +1836,27 @@ public static class IndexTemplates
               ""product"": {
                 ""ignore_above"": 1024,
                 ""type"": ""keyword""
+              },
+              ""sections"": {
+                ""properties"": {
+                  ""entropy"": {
+                    ""type"": ""long""
+                  },
+                  ""name"": {
+                    ""ignore_above"": 1024,
+                    ""type"": ""keyword""
+                  },
+                  ""physical_size"": {
+                    ""type"": ""long""
+                  },
+                  ""var_entropy"": {
+                    ""type"": ""long""
+                  },
+                  ""virtual_size"": {
+                    ""type"": ""long""
+                  }
+                },
+                ""type"": ""nested""
               }
             }
           },
@@ -2509,12 +2702,20 @@ public static class IndexTemplates
           },
           ""resource"": {
             ""properties"": {
+              ""annotation"": {
+                ""ignore_above"": 1024,
+                ""type"": ""keyword""
+              },
               ""id"": {
                 ""ignore_above"": 1024,
                 ""type"": ""keyword""
               },
               ""ip"": {
                 ""type"": ""ip""
+              },
+              ""label"": {
+                ""ignore_above"": 1024,
+                ""type"": ""keyword""
               },
               ""name"": {
                 ""ignore_above"": 1024,
@@ -2684,6 +2885,22 @@ public static class IndexTemplates
               ""exports"": {
                 ""type"": ""flattened""
               },
+              ""go_import_hash"": {
+                ""ignore_above"": 1024,
+                ""type"": ""keyword""
+              },
+              ""go_imports"": {
+                ""type"": ""flattened""
+              },
+              ""go_imports_names_entropy"": {
+                ""type"": ""long""
+              },
+              ""go_imports_names_var_entropy"": {
+                ""type"": ""long""
+              },
+              ""go_stripped"": {
+                ""type"": ""boolean""
+              },
               ""header"": {
                 ""properties"": {
                   ""abi_version"": {
@@ -2719,8 +2936,18 @@ public static class IndexTemplates
                   }
                 }
               },
+              ""import_hash"": {
+                ""ignore_above"": 1024,
+                ""type"": ""keyword""
+              },
               ""imports"": {
                 ""type"": ""flattened""
+              },
+              ""imports_names_entropy"": {
+                ""type"": ""long""
+              },
+              ""imports_names_var_entropy"": {
+                ""type"": ""long""
               },
               ""sections"": {
                 ""properties"": {
@@ -2748,6 +2975,9 @@ public static class IndexTemplates
                   ""type"": {
                     ""ignore_above"": 1024,
                     ""type"": ""keyword""
+                  },
+                  ""var_entropy"": {
+                    ""type"": ""long""
                   },
                   ""virtual_address"": {
                     ""type"": ""long""
@@ -2902,11 +3132,17 @@ public static class IndexTemplates
                       },
                       ""start"": {
                         ""type"": ""date""
+                      },
+                      ""vpid"": {
+                        ""type"": ""long""
                       }
                     }
                   },
                   ""start"": {
                     ""type"": ""date""
+                  },
+                  ""vpid"": {
+                    ""type"": ""long""
                   }
                 }
               },
@@ -3020,6 +3256,9 @@ public static class IndexTemplates
                     ""type"": ""keyword""
                   }
                 }
+              },
+              ""vpid"": {
+                ""type"": ""long""
               },
               ""working_directory"": {
                 ""fields"": {
@@ -3213,6 +3452,9 @@ public static class IndexTemplates
                   }
                 }
               },
+              ""vpid"": {
+                ""type"": ""long""
+              },
               ""working_directory"": {
                 ""fields"": {
                   ""text"": {
@@ -3290,6 +3532,64 @@ public static class IndexTemplates
               }
             },
             ""type"": ""object""
+          },
+          ""macho"": {
+            ""properties"": {
+              ""go_import_hash"": {
+                ""ignore_above"": 1024,
+                ""type"": ""keyword""
+              },
+              ""go_imports"": {
+                ""type"": ""flattened""
+              },
+              ""go_imports_names_entropy"": {
+                ""type"": ""long""
+              },
+              ""go_imports_names_var_entropy"": {
+                ""type"": ""long""
+              },
+              ""go_stripped"": {
+                ""type"": ""boolean""
+              },
+              ""import_hash"": {
+                ""ignore_above"": 1024,
+                ""type"": ""keyword""
+              },
+              ""imports"": {
+                ""type"": ""flattened""
+              },
+              ""imports_names_entropy"": {
+                ""type"": ""long""
+              },
+              ""imports_names_var_entropy"": {
+                ""type"": ""long""
+              },
+              ""sections"": {
+                ""properties"": {
+                  ""entropy"": {
+                    ""type"": ""long""
+                  },
+                  ""name"": {
+                    ""ignore_above"": 1024,
+                    ""type"": ""keyword""
+                  },
+                  ""physical_size"": {
+                    ""type"": ""long""
+                  },
+                  ""var_entropy"": {
+                    ""type"": ""long""
+                  },
+                  ""virtual_size"": {
+                    ""type"": ""long""
+                  }
+                },
+                ""type"": ""nested""
+              },
+              ""symhash"": {
+                ""ignore_above"": 1024,
+                ""type"": ""keyword""
+              }
+            }
           },
           ""name"": {
             ""fields"": {
@@ -3373,6 +3673,22 @@ public static class IndexTemplates
                   ""exports"": {
                     ""type"": ""flattened""
                   },
+                  ""go_import_hash"": {
+                    ""ignore_above"": 1024,
+                    ""type"": ""keyword""
+                  },
+                  ""go_imports"": {
+                    ""type"": ""flattened""
+                  },
+                  ""go_imports_names_entropy"": {
+                    ""type"": ""long""
+                  },
+                  ""go_imports_names_var_entropy"": {
+                    ""type"": ""long""
+                  },
+                  ""go_stripped"": {
+                    ""type"": ""boolean""
+                  },
                   ""header"": {
                     ""properties"": {
                       ""abi_version"": {
@@ -3408,8 +3724,18 @@ public static class IndexTemplates
                       }
                     }
                   },
+                  ""import_hash"": {
+                    ""ignore_above"": 1024,
+                    ""type"": ""keyword""
+                  },
                   ""imports"": {
                     ""type"": ""flattened""
+                  },
+                  ""imports_names_entropy"": {
+                    ""type"": ""long""
+                  },
+                  ""imports_names_var_entropy"": {
+                    ""type"": ""long""
                   },
                   ""sections"": {
                     ""properties"": {
@@ -3437,6 +3763,9 @@ public static class IndexTemplates
                       ""type"": {
                         ""ignore_above"": 1024,
                         ""type"": ""keyword""
+                      },
+                      ""var_entropy"": {
+                        ""type"": ""long""
                       },
                       ""virtual_address"": {
                         ""type"": ""long""
@@ -3512,6 +3841,9 @@ public static class IndexTemplates
                   },
                   ""start"": {
                     ""type"": ""date""
+                  },
+                  ""vpid"": {
+                    ""type"": ""long""
                   }
                 }
               },
@@ -3550,6 +3882,64 @@ public static class IndexTemplates
               ""interactive"": {
                 ""type"": ""boolean""
               },
+              ""macho"": {
+                ""properties"": {
+                  ""go_import_hash"": {
+                    ""ignore_above"": 1024,
+                    ""type"": ""keyword""
+                  },
+                  ""go_imports"": {
+                    ""type"": ""flattened""
+                  },
+                  ""go_imports_names_entropy"": {
+                    ""type"": ""long""
+                  },
+                  ""go_imports_names_var_entropy"": {
+                    ""type"": ""long""
+                  },
+                  ""go_stripped"": {
+                    ""type"": ""boolean""
+                  },
+                  ""import_hash"": {
+                    ""ignore_above"": 1024,
+                    ""type"": ""keyword""
+                  },
+                  ""imports"": {
+                    ""type"": ""flattened""
+                  },
+                  ""imports_names_entropy"": {
+                    ""type"": ""long""
+                  },
+                  ""imports_names_var_entropy"": {
+                    ""type"": ""long""
+                  },
+                  ""sections"": {
+                    ""properties"": {
+                      ""entropy"": {
+                        ""type"": ""long""
+                      },
+                      ""name"": {
+                        ""ignore_above"": 1024,
+                        ""type"": ""keyword""
+                      },
+                      ""physical_size"": {
+                        ""type"": ""long""
+                      },
+                      ""var_entropy"": {
+                        ""type"": ""long""
+                      },
+                      ""virtual_size"": {
+                        ""type"": ""long""
+                      }
+                    },
+                    ""type"": ""nested""
+                  },
+                  ""symhash"": {
+                    ""ignore_above"": 1024,
+                    ""type"": ""keyword""
+                  }
+                }
+              },
               ""name"": {
                 ""fields"": {
                   ""text"": {
@@ -3577,9 +3967,38 @@ public static class IndexTemplates
                     ""ignore_above"": 1024,
                     ""type"": ""keyword""
                   },
+                  ""go_import_hash"": {
+                    ""ignore_above"": 1024,
+                    ""type"": ""keyword""
+                  },
+                  ""go_imports"": {
+                    ""type"": ""flattened""
+                  },
+                  ""go_imports_names_entropy"": {
+                    ""type"": ""long""
+                  },
+                  ""go_imports_names_var_entropy"": {
+                    ""type"": ""long""
+                  },
+                  ""go_stripped"": {
+                    ""type"": ""boolean""
+                  },
                   ""imphash"": {
                     ""ignore_above"": 1024,
                     ""type"": ""keyword""
+                  },
+                  ""import_hash"": {
+                    ""ignore_above"": 1024,
+                    ""type"": ""keyword""
+                  },
+                  ""imports"": {
+                    ""type"": ""flattened""
+                  },
+                  ""imports_names_entropy"": {
+                    ""type"": ""long""
+                  },
+                  ""imports_names_var_entropy"": {
+                    ""type"": ""long""
                   },
                   ""original_file_name"": {
                     ""ignore_above"": 1024,
@@ -3592,6 +4011,27 @@ public static class IndexTemplates
                   ""product"": {
                     ""ignore_above"": 1024,
                     ""type"": ""keyword""
+                  },
+                  ""sections"": {
+                    ""properties"": {
+                      ""entropy"": {
+                        ""type"": ""long""
+                      },
+                      ""name"": {
+                        ""ignore_above"": 1024,
+                        ""type"": ""keyword""
+                      },
+                      ""physical_size"": {
+                        ""type"": ""long""
+                      },
+                      ""var_entropy"": {
+                        ""type"": ""long""
+                      },
+                      ""virtual_size"": {
+                        ""type"": ""long""
+                      }
+                    },
+                    ""type"": ""nested""
                   }
                 }
               },
@@ -3676,6 +4116,18 @@ public static class IndexTemplates
               },
               ""thread"": {
                 ""properties"": {
+                  ""capabilities"": {
+                    ""properties"": {
+                      ""effective"": {
+                        ""ignore_above"": 1024,
+                        ""type"": ""keyword""
+                      },
+                      ""permitted"": {
+                        ""ignore_above"": 1024,
+                        ""type"": ""keyword""
+                      }
+                    }
+                  },
                   ""id"": {
                     ""type"": ""long""
                   },
@@ -3729,6 +4181,9 @@ public static class IndexTemplates
                   }
                 }
               },
+              ""vpid"": {
+                ""type"": ""long""
+              },
               ""working_directory"": {
                 ""fields"": {
                   ""text"": {
@@ -3758,9 +4213,38 @@ public static class IndexTemplates
                 ""ignore_above"": 1024,
                 ""type"": ""keyword""
               },
+              ""go_import_hash"": {
+                ""ignore_above"": 1024,
+                ""type"": ""keyword""
+              },
+              ""go_imports"": {
+                ""type"": ""flattened""
+              },
+              ""go_imports_names_entropy"": {
+                ""type"": ""long""
+              },
+              ""go_imports_names_var_entropy"": {
+                ""type"": ""long""
+              },
+              ""go_stripped"": {
+                ""type"": ""boolean""
+              },
               ""imphash"": {
                 ""ignore_above"": 1024,
                 ""type"": ""keyword""
+              },
+              ""import_hash"": {
+                ""ignore_above"": 1024,
+                ""type"": ""keyword""
+              },
+              ""imports"": {
+                ""type"": ""flattened""
+              },
+              ""imports_names_entropy"": {
+                ""type"": ""long""
+              },
+              ""imports_names_var_entropy"": {
+                ""type"": ""long""
               },
               ""original_file_name"": {
                 ""ignore_above"": 1024,
@@ -3773,6 +4257,27 @@ public static class IndexTemplates
               ""product"": {
                 ""ignore_above"": 1024,
                 ""type"": ""keyword""
+              },
+              ""sections"": {
+                ""properties"": {
+                  ""entropy"": {
+                    ""type"": ""long""
+                  },
+                  ""name"": {
+                    ""ignore_above"": 1024,
+                    ""type"": ""keyword""
+                  },
+                  ""physical_size"": {
+                    ""type"": ""long""
+                  },
+                  ""var_entropy"": {
+                    ""type"": ""long""
+                  },
+                  ""virtual_size"": {
+                    ""type"": ""long""
+                  }
+                },
+                ""type"": ""nested""
               }
             }
           },
@@ -3934,11 +4439,17 @@ public static class IndexTemplates
                       },
                       ""start"": {
                         ""type"": ""date""
+                      },
+                      ""vpid"": {
+                        ""type"": ""long""
                       }
                     }
                   },
                   ""start"": {
                     ""type"": ""date""
+                  },
+                  ""vpid"": {
+                    ""type"": ""long""
                   }
                 }
               },
@@ -4053,6 +4564,9 @@ public static class IndexTemplates
                   }
                 }
               },
+              ""vpid"": {
+                ""type"": ""long""
+              },
               ""working_directory"": {
                 ""fields"": {
                   ""text"": {
@@ -4081,6 +4595,18 @@ public static class IndexTemplates
           },
           ""thread"": {
             ""properties"": {
+              ""capabilities"": {
+                ""properties"": {
+                  ""effective"": {
+                    ""ignore_above"": 1024,
+                    ""type"": ""keyword""
+                  },
+                  ""permitted"": {
+                    ""ignore_above"": 1024,
+                    ""type"": ""keyword""
+                  }
+                }
+              },
               ""id"": {
                 ""type"": ""long""
               },
@@ -4139,6 +4665,9 @@ public static class IndexTemplates
                 ""type"": ""keyword""
               }
             }
+          },
+          ""vpid"": {
+            ""type"": ""long""
           },
           ""working_directory"": {
             ""fields"": {
@@ -4892,6 +5421,22 @@ public static class IndexTemplates
                           ""exports"": {
                             ""type"": ""flattened""
                           },
+                          ""go_import_hash"": {
+                            ""ignore_above"": 1024,
+                            ""type"": ""keyword""
+                          },
+                          ""go_imports"": {
+                            ""type"": ""flattened""
+                          },
+                          ""go_imports_names_entropy"": {
+                            ""type"": ""long""
+                          },
+                          ""go_imports_names_var_entropy"": {
+                            ""type"": ""long""
+                          },
+                          ""go_stripped"": {
+                            ""type"": ""boolean""
+                          },
                           ""header"": {
                             ""properties"": {
                               ""abi_version"": {
@@ -4927,8 +5472,18 @@ public static class IndexTemplates
                               }
                             }
                           },
+                          ""import_hash"": {
+                            ""ignore_above"": 1024,
+                            ""type"": ""keyword""
+                          },
                           ""imports"": {
                             ""type"": ""flattened""
+                          },
+                          ""imports_names_entropy"": {
+                            ""type"": ""long""
+                          },
+                          ""imports_names_var_entropy"": {
+                            ""type"": ""long""
                           },
                           ""sections"": {
                             ""properties"": {
@@ -4956,6 +5511,9 @@ public static class IndexTemplates
                               ""type"": {
                                 ""ignore_above"": 1024,
                                 ""type"": ""keyword""
+                              },
+                              ""var_entropy"": {
+                                ""type"": ""long""
                               },
                               ""virtual_address"": {
                                 ""type"": ""long""
@@ -5087,9 +5645,38 @@ public static class IndexTemplates
                             ""ignore_above"": 1024,
                             ""type"": ""keyword""
                           },
+                          ""go_import_hash"": {
+                            ""ignore_above"": 1024,
+                            ""type"": ""keyword""
+                          },
+                          ""go_imports"": {
+                            ""type"": ""flattened""
+                          },
+                          ""go_imports_names_entropy"": {
+                            ""type"": ""long""
+                          },
+                          ""go_imports_names_var_entropy"": {
+                            ""type"": ""long""
+                          },
+                          ""go_stripped"": {
+                            ""type"": ""boolean""
+                          },
                           ""imphash"": {
                             ""ignore_above"": 1024,
                             ""type"": ""keyword""
+                          },
+                          ""import_hash"": {
+                            ""ignore_above"": 1024,
+                            ""type"": ""keyword""
+                          },
+                          ""imports"": {
+                            ""type"": ""flattened""
+                          },
+                          ""imports_names_entropy"": {
+                            ""type"": ""long""
+                          },
+                          ""imports_names_var_entropy"": {
+                            ""type"": ""long""
                           },
                           ""original_file_name"": {
                             ""ignore_above"": 1024,
@@ -5102,6 +5689,27 @@ public static class IndexTemplates
                           ""product"": {
                             ""ignore_above"": 1024,
                             ""type"": ""keyword""
+                          },
+                          ""sections"": {
+                            ""properties"": {
+                              ""entropy"": {
+                                ""type"": ""long""
+                              },
+                              ""name"": {
+                                ""ignore_above"": 1024,
+                                ""type"": ""keyword""
+                              },
+                              ""physical_size"": {
+                                ""type"": ""long""
+                              },
+                              ""var_entropy"": {
+                                ""type"": ""long""
+                              },
+                              ""virtual_size"": {
+                                ""type"": ""long""
+                              }
+                            },
+                            ""type"": ""nested""
                           }
                         }
                       },
@@ -5292,17 +5900,21 @@ public static class IndexTemplates
                   ""marking"": {
                     ""properties"": {
                       ""tlp"": {
-                        ""properties"": {
-                          ""version"": {
-                            ""ignore_above"": 1024,
-                            ""type"": ""keyword""
-                          }
-                        }
+                        ""ignore_above"": 1024,
+                        ""type"": ""keyword""
+                      },
+                      ""tlp_version"": {
+                        ""ignore_above"": 1024,
+                        ""type"": ""keyword""
                       }
                     }
                   },
                   ""modified_at"": {
                     ""type"": ""date""
+                  },
+                  ""name"": {
+                    ""ignore_above"": 1024,
+                    ""type"": ""keyword""
                   },
                   ""port"": {
                     ""type"": ""long""
@@ -5730,6 +6342,22 @@ public static class IndexTemplates
                       ""exports"": {
                         ""type"": ""flattened""
                       },
+                      ""go_import_hash"": {
+                        ""ignore_above"": 1024,
+                        ""type"": ""keyword""
+                      },
+                      ""go_imports"": {
+                        ""type"": ""flattened""
+                      },
+                      ""go_imports_names_entropy"": {
+                        ""type"": ""long""
+                      },
+                      ""go_imports_names_var_entropy"": {
+                        ""type"": ""long""
+                      },
+                      ""go_stripped"": {
+                        ""type"": ""boolean""
+                      },
                       ""header"": {
                         ""properties"": {
                           ""abi_version"": {
@@ -5765,8 +6393,18 @@ public static class IndexTemplates
                           }
                         }
                       },
+                      ""import_hash"": {
+                        ""ignore_above"": 1024,
+                        ""type"": ""keyword""
+                      },
                       ""imports"": {
                         ""type"": ""flattened""
+                      },
+                      ""imports_names_entropy"": {
+                        ""type"": ""long""
+                      },
+                      ""imports_names_var_entropy"": {
+                        ""type"": ""long""
                       },
                       ""sections"": {
                         ""properties"": {
@@ -5794,6 +6432,9 @@ public static class IndexTemplates
                           ""type"": {
                             ""ignore_above"": 1024,
                             ""type"": ""keyword""
+                          },
+                          ""var_entropy"": {
+                            ""type"": ""long""
                           },
                           ""virtual_address"": {
                             ""type"": ""long""
@@ -5925,9 +6566,38 @@ public static class IndexTemplates
                         ""ignore_above"": 1024,
                         ""type"": ""keyword""
                       },
+                      ""go_import_hash"": {
+                        ""ignore_above"": 1024,
+                        ""type"": ""keyword""
+                      },
+                      ""go_imports"": {
+                        ""type"": ""flattened""
+                      },
+                      ""go_imports_names_entropy"": {
+                        ""type"": ""long""
+                      },
+                      ""go_imports_names_var_entropy"": {
+                        ""type"": ""long""
+                      },
+                      ""go_stripped"": {
+                        ""type"": ""boolean""
+                      },
                       ""imphash"": {
                         ""ignore_above"": 1024,
                         ""type"": ""keyword""
+                      },
+                      ""import_hash"": {
+                        ""ignore_above"": 1024,
+                        ""type"": ""keyword""
+                      },
+                      ""imports"": {
+                        ""type"": ""flattened""
+                      },
+                      ""imports_names_entropy"": {
+                        ""type"": ""long""
+                      },
+                      ""imports_names_var_entropy"": {
+                        ""type"": ""long""
                       },
                       ""original_file_name"": {
                         ""ignore_above"": 1024,
@@ -5940,6 +6610,27 @@ public static class IndexTemplates
                       ""product"": {
                         ""ignore_above"": 1024,
                         ""type"": ""keyword""
+                      },
+                      ""sections"": {
+                        ""properties"": {
+                          ""entropy"": {
+                            ""type"": ""long""
+                          },
+                          ""name"": {
+                            ""ignore_above"": 1024,
+                            ""type"": ""keyword""
+                          },
+                          ""physical_size"": {
+                            ""type"": ""long""
+                          },
+                          ""var_entropy"": {
+                            ""type"": ""long""
+                          },
+                          ""virtual_size"": {
+                            ""type"": ""long""
+                          }
+                        },
+                        ""type"": ""nested""
                       }
                     }
                   },
@@ -6132,11 +6823,19 @@ public static class IndexTemplates
                   ""tlp"": {
                     ""ignore_above"": 1024,
                     ""type"": ""keyword""
+                  },
+                  ""tlp_version"": {
+                    ""ignore_above"": 1024,
+                    ""type"": ""keyword""
                   }
                 }
               },
               ""modified_at"": {
                 ""type"": ""date""
+              },
+              ""name"": {
+                ""ignore_above"": 1024,
+                ""type"": ""keyword""
               },
               ""port"": {
                 ""type"": ""long""
@@ -6449,26 +7148,6 @@ public static class IndexTemplates
                   ""reference"": {
                     ""ignore_above"": 1024,
                     ""type"": ""keyword""
-                  }
-                }
-              }
-            }
-          },
-          ""threat"": {
-            ""properties"": {
-              ""indicator"": {
-                ""properties"": {
-                  ""marking"": {
-                    ""properties"": {
-                      ""tlp"": {
-                        ""properties"": {
-                          ""version"": {
-                            ""ignore_above"": 1024,
-                            ""type"": ""keyword""
-                          }
-                        }
-                      }
-                    }
                   }
                 }
               }

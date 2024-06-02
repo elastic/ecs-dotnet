@@ -6,7 +6,6 @@ on:
 
 permissions:
   contents: read
-  packages: write
 
 env:
   DOTNET_VERSION: '6.0.400'
@@ -14,9 +13,12 @@ env:
 jobs:
   release:
     runs-on: ubuntu-latest
-
+    permissions:
+      contents: write
+      id-token: write
+      packages: write
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
     - name: Bootstrap Action Workspace
       uses: ./.github/workflows/bootstrap
       
@@ -29,8 +31,13 @@ jobs:
     - name: Inspect public API change
       run: ./build.sh generateapichanges -s true
 
+    - name: generate build provenance
+      uses: actions/attest-build-provenance@173725a1209d09b31f9d30a3890cf2757ebbff0d  # v1.1.2
+      with:
+        subject-path: "${{ github.workspace }}/build/output/*.nupkg"
+
     - name: Prepare feedz.io
-      uses: hashicorp/vault-action@v2.4.2
+      uses: hashicorp/vault-action@v3.0.0
       with:
         url: ${{ secrets.VAULT_ADDR }}
         method: approle
@@ -49,6 +56,13 @@ jobs:
       continue-on-error: true
       run: |
           until dotnet nuget push 'build/output/*.nupkg' -k ${{secrets.GITHUB_TOKEN}} --skip-duplicate --no-symbols -s https://nuget.pkg.github.com/elastic/index.json; do echo "Retrying"; sleep 1; done;
+
+    - name: Store artifacts
+      if: success()
+      uses: actions/upload-artifact@v4
+      with:
+        name: nupkg
+        path: build/output/*.nupkg
 
     - if: ${{ failure() }}
       uses: elastic/apm-pipeline-library/.github/actions/slack-message@current

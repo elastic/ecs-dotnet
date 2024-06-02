@@ -4,7 +4,11 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.Runtime.Serialization;
 using System.Text;
+using System.Text.Json.Serialization;
+using Elastic.CommonSchema.Serialization;
 using NLog;
 using NLog.Config;
 using NLog.Layouts;
@@ -18,6 +22,7 @@ namespace Elastic.CommonSchema.NLog
 		public bool IncludeHost { get; set; } = false;
 		public bool IncludeProcess { get; set; } = false;
 		public bool IncludeUser { get; set; } = false;
+		public bool IncludeActivityData { get; set; } = false;
 	}
 
 	/// <summary> An NLOG layout implementation that renders logs as ECS json</summary>
@@ -46,6 +51,8 @@ namespace Elastic.CommonSchema.NLog
 		{
 			IncludeEventProperties = true;
 
+			MessageTemplate = "${onhasproperties:${message:raw=true}}";
+
 			LogOriginCallSiteMethod = "${exception:format=method}";
 			LogOriginCallSiteFile = "${exception:format=source}";
 
@@ -61,6 +68,7 @@ namespace Elastic.CommonSchema.NLog
 			ServerUser = "${environment-user}"; // NLog 4.6.4
 
 			EventCode = "${event-properties:EventId}";
+			EventAction = "${event-properties:EventName}";
 			_defaultAgent = EcsDocument.CreateAgent(typeof(EcsLayout));
 
 			// These values are set by the Elastic.Apm.NLog package
@@ -101,7 +109,7 @@ namespace Elastic.CommonSchema.NLog
 				UrlUserName = "${aspnet-user-identity}";
 
 				if (!NLogApmLoaded())
-					ApmTraceId = "${scopeproperty:item=RequestId:whenEmpty=${aspnet-TraceIdentifier}}}";
+					ApmTraceId = "${scopeproperty:item=RequestId:whenEmpty=${aspnet-TraceIdentifier}}";
 			}
 
 			base.InitializeLayout();
@@ -129,57 +137,57 @@ namespace Elastic.CommonSchema.NLog
 		public Layout DisableThreadAgnostic => IncludeScopeProperties ? _disableThreadAgnostic : null;
 		// ReSharper restore UnusedMember.Global
 
-		/// <summary></summary>
+		/// <inheritdoc cref="AgentFieldSet.Id"/>
 		public Layout AgentId { get; set; }
-		/// <summary></summary>
+		/// <inheritdoc cref="AgentFieldSet.Name"/>
 		public Layout AgentName { get; set; }
-		/// <summary></summary>
+		/// <inheritdoc cref="AgentFieldSet.Type"/>
 		public Layout AgentType { get; set; }
-		/// <summary></summary>
+		/// <inheritdoc cref="AgentFieldSet.Version"/>
 		public Layout AgentVersion { get; set; }
 
 		// ReSharper disable AutoPropertyCanBeMadeGetOnly.Global
-		/// <summary></summary>
-		public Layout ApmTraceId { get; set; }
-		/// <summary></summary>
+		/// <inheritdoc cref="BaseFieldSet.TraceId"/>
+		public Layout ApmTraceId { get; set; } = FromMethod(_ => ResolveTraceId());
+		/// <inheritdoc cref="BaseFieldSet.TransactionId"/>
 		public Layout ApmTransactionId { get; set; }
-		/// <summary></summary>
-		public Layout ApmSpanId { get; set; }
+		/// <inheritdoc cref="BaseFieldSet.SpanId"/>
+		public Layout ApmSpanId { get; set; } = FromMethod(_ => ResolveSpanId());
 
-		/// <summary></summary>
+		/// <inheritdoc cref="ServiceFieldSet.Name"/>
 		public Layout ApmServiceName { get; set; }
-		/// <summary></summary>
+		/// <inheritdoc cref="ServiceFieldSet.NodeName"/>
 		public Layout ApmServiceNodeName { get; set; }
-		/// <summary></summary>
+		/// <inheritdoc cref="ServiceFieldSet.Version"/>
 		public Layout ApmServiceVersion { get; set; }
 
-		/// <summary></summary>
+		/// <inheritdoc cref="LogFieldSet.OriginFunction"/>
 		public Layout LogOriginCallSiteMethod { get; set; }
-		/// <summary></summary>
+		/// <inheritdoc cref="LogFieldSet.OriginFileName"/>
 		public Layout LogOriginCallSiteFile { get; set; }
-		/// <summary></summary>
+		/// <inheritdoc cref="LogFieldSet.OriginFileLine"/>
 		public Layout LogOriginCallSiteLine { get; set; }
 
-		/// <summary></summary>
+		/// <inheritdoc cref="EventFieldSet.Action"/>
 		public Layout EventAction { get; set; }
-		/// <summary></summary>
+		/// <inheritdoc cref="EventFieldSet.Category"/>
 		public Layout EventCategory { get; set; }
-		/// <summary></summary>
+		/// <inheritdoc cref="EventFieldSet.Id"/>
 		public Layout EventId { get; set; }
-		/// <summary></summary>
+		/// <inheritdoc cref="EventFieldSet.Code"/>
 		public Layout EventCode { get; set; }
-		/// <summary></summary>
+		/// <inheritdoc cref="EventFieldSet.Kind"/>
 		public Layout EventKind { get; set; }
-		/// <summary></summary>
+		/// <inheritdoc cref="EventFieldSet.Severity"/>
 		public Layout EventSeverity { get; set; }
-		/// <summary></summary>
+		/// <inheritdoc cref="EventFieldSet.Duration"/>
 		public Layout EventDurationMs { get; set; }
 
-		/// <summary></summary>
+		/// <inheritdoc cref="HostFieldSet.Id"/>
 		public Layout HostId { get; set; }
-		/// <summary></summary>
+		/// <inheritdoc cref="HostFieldSet.Ip"/>
 		public Layout HostIp { get; set; }
-		/// <summary></summary>
+		/// <inheritdoc cref="HostFieldSet.Hostname"/>
 		public Layout HostName { get; set; }
 
 		/// <summary></summary>
@@ -213,45 +221,49 @@ namespace Elastic.CommonSchema.NLog
 		public IList<TargetPropertyWithContext> Metadata { get; } = new List<TargetPropertyWithContext>();
 
 		/// <summary></summary>
+		public Layout MessageTemplate { get; set; }
+		/// <inheritdoc cref="ProcessFieldSet.Executable"/>
 		public Layout ProcessExecutable { get; set; }
-		/// <summary></summary>
+		/// <inheritdoc cref="ProcessFieldSet.Pid"/>
 		public Layout ProcessId { get; set; }
-		/// <summary></summary>
+		/// <inheritdoc cref="ProcessFieldSet.Name"/>
 		public Layout ProcessName { get; set; }
-		/// <summary></summary>
+		/// <inheritdoc cref="ProcessFieldSet.ThreadId"/>
 		public Layout ProcessThreadId { get; set; }
-		/// <summary></summary>
+		/// <inheritdoc cref="ProcessFieldSet.ThreadName"/>
+		public Layout ProcessThreadName { get; set; }
+		/// <inheritdoc cref="ProcessFieldSet.Title"/>
 		public Layout ProcessTitle { get; set; }
 
-		/// <summary></summary>
+		/// <inheritdoc cref="ServerFieldSet.Address"/>
 		public Layout ServerAddress { get; set; }
-		/// <summary></summary>
+		/// <inheritdoc cref="ServerFieldSet.Ip"/>
 		public Layout ServerIp { get; set; }
-		/// <summary></summary>
+		/// <inheritdoc cref="UserFieldSet.Name"/>
 		public Layout ServerUser { get; set; }
 
-		/// <summary></summary>
+		/// <inheritdoc cref="HttpFieldSet.RequestId"/>
 		public Layout HttpRequestId { get; set; }
-		/// <summary></summary>
+		/// <inheritdoc cref="HttpFieldSet.RequestMethod"/>
 		public Layout HttpRequestMethod { get; set; }
-		/// <summary></summary>
+		/// <inheritdoc cref="HttpFieldSet.RequestBodyBytes"/>
 		public Layout RequestBodyBytes { get; set; }
-		/// <summary></summary>
+		/// <inheritdoc cref="HttpFieldSet.RequestReferrer"/>
 		public Layout HttpRequestReferrer { get; set; }
-		/// <summary></summary>
+		/// <inheritdoc cref="HttpFieldSet.ResponseStatusCode"/>
 		public Layout HttpResponseStatusCode { get; set; }
 
-		/// <summary></summary>
+		/// <inheritdoc cref="UrlFieldSet.Scheme"/>
 		public Layout UrlScheme { get; set; }
-		/// <summary></summary>
+		/// <inheritdoc cref="UrlFieldSet.Domain"/>
 		public Layout UrlDomain { get; set; }
-		/// <summary></summary>
+		/// <inheritdoc cref="UrlFieldSet.Port"/>
 		public Layout UrlPort { get; set; }
-		/// <summary></summary>
+		/// <inheritdoc cref="UrlFieldSet.Path"/>
 		public Layout UrlPath { get; set; }
-		/// <summary></summary>
+		/// <inheritdoc cref="UrlFieldSet.Query"/>
 		public Layout UrlQuery { get; set; }
-		/// <summary></summary>
+		/// <inheritdoc cref="UrlFieldSet.Username"/>
 		public Layout UrlUserName { get; set; }
 
 		/// <summary>
@@ -274,7 +286,16 @@ namespace Elastic.CommonSchema.NLog
 		/// <inheritdoc cref="Layout.RenderFormattedMessage"/>
 		protected override void RenderFormattedMessage(LogEventInfo logEvent, StringBuilder target)
 		{
-			var ecsEvent = EcsDocument.CreateNewWithDefaults<EcsDocument>(logEvent.TimeStamp, logEvent.Exception, NlogEcsDocumentCreationOptions.Default);
+			var ecsDocument = RenderEcsDocument(logEvent);
+			ecsDocument.Serialize(target);
+		}
+
+		/// <summary>
+		/// Create an instance of <see cref="NLogEcsDocument"/> and enrich it with as many fields as possible.
+		/// </summary>
+		public NLogEcsDocument RenderEcsDocument(LogEventInfo logEvent)
+		{
+			var ecsEvent = EcsDocument.CreateNewWithDefaults<NLogEcsDocument>(logEvent.TimeStamp, logEvent.Exception, NlogEcsDocumentCreationOptions.Default);
 
 			// prefer tracing information set by Elastic APM
 			SetApmTraceId(ecsEvent, logEvent);
@@ -283,7 +304,8 @@ namespace Elastic.CommonSchema.NLog
 
 			// prefer setting service information set by Elastic APM
 			var service = GetService(logEvent);
-			if (service != null) ecsEvent.Service = service;
+			if (service != null)
+				ecsEvent.Service = service;
 
 			ecsEvent.Message = logEvent.FormattedMessage;
 			ecsEvent.Log = GetLog(logEvent);
@@ -297,16 +319,22 @@ namespace Elastic.CommonSchema.NLog
 			ecsEvent.Http = GetHttp(logEvent);
 			ecsEvent.Url = GetUrl(logEvent);
 
-			var metadata = GetMetadata(logEvent) ?? new MetadataDictionary();
-			foreach(var kv in metadata)
-				ecsEvent.AssignField(kv.Key, kv.Value);
+			var messageTemplate = MessageTemplate?.Render(logEvent);
+			ecsEvent.MessageTemplate = !string.IsNullOrEmpty(messageTemplate) ? messageTemplate : null;
+
+			var metadata = GetMetadata(logEvent);
+			if (metadata?.Count > 0)
+			{
+				foreach (var kv in metadata)
+					ecsEvent.AssignField(kv.Key, kv.Value);
+			}
 
 			//Give any deriving classes a chance to enrich the event
-			EnrichEvent(logEvent, ref ecsEvent);
+			EcsDocument ecsDocument = ecsEvent;
+			EnrichEvent(logEvent, ref ecsDocument);
 			//Allow programmatic actions to enrich before serializing
-			EnrichAction?.Invoke(ecsEvent, logEvent);
-
-			ecsEvent.Serialize(target);
+			EnrichAction?.Invoke(ecsDocument, logEvent);
+			return ecsEvent;
 		}
 
 		private Service GetService(LogEventInfo logEventInfo)
@@ -358,9 +386,7 @@ namespace Elastic.CommonSchema.NLog
 						continue;
 
 					var propertyValue = prop.Value;
-					if (propertyValue is null or IConvertible || propertyValue.GetType().IsValueType)
-						Populate(metadata, propertyName, propertyValue);
-					else
+					if (!TryPopulateWhenSafe(metadata, propertyName, propertyValue))
 					{
 						templateParameters ??= e.MessageTemplateParameters;
 						var value = AllowSerializePropertyValue(propertyName, templateParameters) ? propertyValue : propertyValue.ToString();
@@ -377,7 +403,10 @@ namespace Elastic.CommonSchema.NLog
 						continue;
 
 					var propertyValue = MappedDiagnosticsLogicalContext.GetObject(key);
-					Populate(metadata, key, propertyValue);
+					if (!TryPopulateWhenSafe(metadata, key, propertyValue))
+					{
+						Populate(metadata, key, propertyValue.ToString());
+					}
 				}
 			}
 
@@ -423,8 +452,8 @@ namespace Elastic.CommonSchema.NLog
 			{
 				Level = logEventInfo.Level.ToString(),
 				Logger = logEventInfo.LoggerName,
-				OriginFunction = logOriginMethod,
-				OriginFileName = logOriginSourceFile,
+				OriginFunction = !string.IsNullOrEmpty(logOriginMethod) ? logOriginMethod : null,
+				OriginFileName = !string.IsNullOrEmpty(logOriginSourceFile) ? logOriginSourceFile : null,
 				OriginFileLine = logOriginSourceLineNo
 			};
 
@@ -444,7 +473,7 @@ namespace Elastic.CommonSchema.NLog
 
 		private string[] GetTags(LogEventInfo e)
 		{
-			if (Tags is null || Tags.Count == 0)
+			if (Tags.Count == 0)
 				return null;
 
 			if (Tags.Count == 1)
@@ -459,7 +488,10 @@ namespace Elastic.CommonSchema.NLog
 				var tag = targetPropertyWithContext.Layout.Render(e);
 				tags.AddRange(GetTagsSplit(tag));
 			}
-			return tags.ToArray();
+
+			return tags.Count > 0
+				? tags.ToArray()
+				: null;
 		}
 
 		private static string[] GetTagsSplit(string tags) =>
@@ -469,11 +501,11 @@ namespace Elastic.CommonSchema.NLog
 
 		private Labels GetLabels(LogEventInfo e)
 		{
-			if (Labels?.Count == 0)
+			if (Labels.Count == 0)
 				return null;
 
 			var labels = new Labels();
-			for (var i = 0; i < Labels?.Count; ++i)
+			for (var i = 0; i < Labels.Count; ++i)
 			{
 				var value = Labels[i].Layout?.Render(e);
 				if (!string.IsNullOrEmpty(value) || Labels[i].IncludeEmptyValue)
@@ -492,19 +524,21 @@ namespace Elastic.CommonSchema.NLog
 			var eventCode = EventCode?.Render(logEventInfo);
 			if (string.IsNullOrEmpty(eventCode) || eventCode == "0")
 				eventCode = null;
+			var eventAction = EventAction?.Render(logEventInfo);
+			var eventKind = EventKind?.Render(logEventInfo);
 
 			var evnt = new Event
 			{
 				Created = logEventInfo.TimeStamp,
 				Category = !string.IsNullOrEmpty(eventCategory) ? new[] { eventCategory } : null,
-				Action = EventAction?.Render(logEventInfo),
+				Action = !string.IsNullOrEmpty(eventAction) ? eventAction : null,
 				Id = EventId?.Render(logEventInfo),
 				Code = eventCode,
-				Kind = EventKind?.Render(logEventInfo) ?? "event",
+				Kind = !string.IsNullOrEmpty(eventKind) ? eventKind : "event",
 				Severity = !string.IsNullOrEmpty(eventSeverity)
 					? long.Parse(eventSeverity)
 					: GetSysLogSeverity(logEventInfo.Level),
-				Timezone = TimeZoneInfo.Local.StandardName
+				Timezone = TimeZoneInfo.Local.StandardName,
 			};
 
 			if (!string.IsNullOrEmpty(eventDurationMs) && double.TryParse(eventDurationMs, System.Globalization.NumberStyles.Any, System.Globalization.CultureInfo.InvariantCulture, out var durationMs))
@@ -544,21 +578,24 @@ namespace Elastic.CommonSchema.NLog
 			var processTitle = ProcessTitle?.Render(logEventInfo);
 			var processExecutable = ProcessExecutable?.Render(logEventInfo);
 			var processThreadId = ProcessThreadId?.Render(logEventInfo);
+			var processThreadName = ProcessThreadName?.Render(logEventInfo);
 
 			if (string.IsNullOrEmpty(processId)
 				&& string.IsNullOrEmpty(processName)
 				&& string.IsNullOrEmpty(processTitle)
 				&& string.IsNullOrEmpty(processExecutable)
-				&& string.IsNullOrEmpty(processThreadId))
+				&& string.IsNullOrEmpty(processThreadId)
+				&& string.IsNullOrEmpty(processThreadName))
 				return null;
 
 			return new Process
 			{
 				Title = processTitle,
 				Name = processName,
-				Pid = !string.IsNullOrEmpty(processId) ? long.Parse(processId) : 0,
+				Pid = !string.IsNullOrEmpty(processId) ? long.Parse(processId) : null,
 				Executable = processExecutable,
-				ThreadId = !string.IsNullOrEmpty(processThreadId) ? long.Parse(processThreadId) : null
+				ThreadId = !string.IsNullOrEmpty(processThreadId) ? long.Parse(processThreadId) : null,
+				ThreadName = !string.IsNullOrEmpty(processThreadName) ? processThreadName : null,
 			};
 		}
 
@@ -691,6 +728,19 @@ namespace Elastic.CommonSchema.NLog
 			return 2; // LogLevel.Fatal
 		}
 
+		private static bool TryPopulateWhenSafe(IDictionary<string, object> propertyBag, string key, object value)
+		{
+			if (value is null or IConvertible || value.GetType().IsValueType)
+			{
+				if (value is Enum)
+					value = value.ToString();
+				Populate(propertyBag, key, value);
+				return true;
+			}
+
+			return false;
+		}
+
 		private static void Populate(IDictionary<string, object> propertyBag, string key, object value)
 		{
 			if (string.IsNullOrEmpty(key))
@@ -725,6 +775,72 @@ namespace Elastic.CommonSchema.NLog
 			}
 
 			propertyBag.Add(usedKey, value);
+		}
+
+		private static string ResolveTraceId() => Activity.Current?.GetTraceId();
+
+		private static string ResolveSpanId() => Activity.Current?.GetSpanId();
+
+		/// <summary>
+		/// A subclass of <see cref="EcsDocument"/> that adds additional properties related to Extensions logging.
+		/// <para>For instance it adds scope information to each logged event</para>
+		/// </summary>
+		[JsonConverter(typeof(EcsDocumentJsonConverterFactory))]
+		public class NLogEcsDocument : EcsDocument
+		{
+			// Custom fields; use capitalisation as per ECS
+			private const string MessageTemplatePropertyName = nameof(MessageTemplate);
+
+			/// <summary>
+			/// Custom field with the original template used to generate the message, with token placeholders
+			/// for inserted label values, e.g. "Unexpected error processing customer {CustomerId}."
+			/// </summary>
+			[JsonPropertyName(MessageTemplatePropertyName), DataMember(Name = MessageTemplatePropertyName)]
+			public string MessageTemplate { get; set; }
+
+			/// <summary>
+			/// If <see cref="TryRead" /> returns <c>true</c> this will be called with the deserialized <paramref name="value" />
+			/// </summary>
+			/// <param name="propertyName">The additional property <see cref="EcsDocumentJsonConverter" /> encountered</param>
+			/// <param name="value">
+			/// The deserialized boxed value you will have to manually unbox to the type that
+			/// <see cref="TryRead" /> set
+			/// </param>
+			/// <returns></returns>
+			protected override bool ReceiveProperty(string propertyName, object value) =>
+				propertyName switch
+				{
+					MessageTemplatePropertyName => null != (MessageTemplate = value as string),
+					_ => false
+				};
+
+			/// <summary>
+			/// If implemented in a subclass, this allows you to hook into <see cref="EcsDocumentJsonConverter" />
+			/// and make it aware of properties on a subclass of <see cref="EcsDocument" />.
+			/// If <paramref name="propertyName" /> is known, set <paramref name="type" /> to the correct type and return true.
+			/// </summary>
+			/// <param name="propertyName">The additional property that <see cref="EcsDocumentJsonConverter" /> encountered</param>
+			/// <param name="type">Set this to the type you wish to deserialize to</param>
+			/// <returns>Return true if <paramref name="propertyName" /> is handled</returns>
+			protected override bool TryRead(string propertyName, out Type type)
+			{
+				type = propertyName switch
+				{
+					MessageTemplatePropertyName => typeof(string),
+					_ => null
+				};
+				return type != null;
+			}
+
+			/// <summary>
+			/// Write any additional properties in your subclass during <see cref="EcsDocumentJsonConverter" /> serialization.
+			/// </summary>
+			/// <param name="write">An action taking a <c>property name</c> and <c>boxed value</c> to write to the output</param>
+			protected override void WriteAdditionalProperties(Action<string, object> write)
+			{
+				if (MessageTemplate != null)
+					write(MessageTemplatePropertyName, MessageTemplate);
+			}
 		}
 	}
 }

@@ -26,20 +26,20 @@ namespace Elastic.Serilog.Sinks
 		public ElasticsearchSinkOptions() { }
 
 		/// <inheritdoc cref="ElasticsearchSinkOptions"/>
-		public ElasticsearchSinkOptions(HttpTransport transport) : base(transport) { }
+		public ElasticsearchSinkOptions(ITransport transport) : base(transport) { }
 	}
 
 	/// <inheritdoc cref="ElasticsearchSinkOptions{TEcsDocument}"/>
 	public class ElasticsearchSinkOptions<TEcsDocument> where TEcsDocument : EcsDocument, new()
 	{
 		/// <inheritdoc cref="ElasticsearchSinkOptions"/>
-		public ElasticsearchSinkOptions() : this(new DefaultHttpTransport(TransportHelper.Default())) { }
+		public ElasticsearchSinkOptions() : this(new DistributedTransport(TransportHelper.Default())) { }
 
 		/// <inheritdoc cref="ElasticsearchSinkOptions"/>
-		public ElasticsearchSinkOptions(HttpTransport transport) => Transport = transport;
+		public ElasticsearchSinkOptions(ITransport transport) => Transport = transport;
 
-		/// <inheritdoc cref="HttpTransport{TConfiguration}"/>
-		internal HttpTransport Transport { get; }
+		/// <inheritdoc cref="ITransport{TConfiguration}"/>
+		internal ITransport Transport { get; }
 
 		/// <inheritdoc cref="EcsTextFormatterConfiguration{TEcsDocument}"/>
 		public EcsTextFormatterConfiguration<TEcsDocument> TextFormatting { get; set; } = new();
@@ -152,9 +152,12 @@ namespace Elastic.Serilog.Sinks
 			};
 			ExportResponseCallback = (response, _) =>
 			{
-				var errorItems = response.Items.Where(i => i.Status >= 300).ToList();
+				if (response == null) return;
+
 				if (response.TryGetElasticsearchServerError(out var error))
 					SelfLog.WriteLine("{0}", error);
+				// ReSharper disable once ConditionalAccessQualifierIsNonNullableAccordingToAPIContract
+				var errorItems = response.Items?.Where(i => i.Status >= 300).ToArray() ?? Array.Empty<BulkResponseItem>();
 				foreach (var errorItem in errorItems)
 					SelfLog.WriteLine("{0}", $"Failed to {errorItem.Action} document status: ${errorItem.Status}, error: ${errorItem.Error}");
 

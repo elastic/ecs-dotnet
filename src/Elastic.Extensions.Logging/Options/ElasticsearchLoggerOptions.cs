@@ -30,6 +30,11 @@ namespace Elastic.Extensions.Logging.Options
 		public bool IncludeUser { get; set; } = true;
 
 		/// <summary>
+		/// Gets or sets a flag indicating whether TraceId/SpanId should be included in the message. Defaults to <c>true</c>.
+		/// </summary>
+		public bool IncludeActivityData { get; set; } = true;
+
+		/// <summary>
 		/// The data stream to log into, defaults to <c>logs-generic-default</c> if neither <see cref="DataStream"/> or <see cref="Index"/> is set.
 		/// </summary>
 		public DataStreamNameOptions? DataStream { get; set; }
@@ -81,9 +86,9 @@ namespace Elastic.Extensions.Logging.Options
 		public string[]? Tags { get; set; }
 
 		/// <summary>
-		/// Allows the direct setting of a <see cref="HttpTransport{TConfiguration}"/> to be used to communicate with Elasticsearch.
+		/// Allows the direct setting of a <see cref="ITransport{TConfiguration}"/> to be used to communicate with Elasticsearch.
 		/// <para>If set takes precedence over <see cref="ShipTo"/> </para>
 		/// </summary>
-		public HttpTransport? Transport { get; set; }
+		public ITransport? Transport { get; set; }
 	}
 }

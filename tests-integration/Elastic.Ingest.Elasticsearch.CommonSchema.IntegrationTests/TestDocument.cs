@@ -7,6 +7,8 @@ using Elastic.CommonSchema;
 
 namespace Elastic.Ingest.Elasticsearch.CommonSchema.IntegrationTests;
 
+public enum MyEnum { One, Two, Three }
+
 public class TimeSeriesDocument : EcsDocument
 {
 }

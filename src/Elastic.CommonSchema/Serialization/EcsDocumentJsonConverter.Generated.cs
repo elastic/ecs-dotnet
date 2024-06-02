@@ -24,7 +24,8 @@ namespace Elastic.CommonSchema.Serialization
 			TBase ecsEvent, 
 			ref DateTimeOffset? timestamp, 
 			ref string loglevel,
-			ref string ecsVersion
+			ref string ecsVersion,
+			JsonSerializerOptions options
 		)
 		{
 			var propertyName = reader.GetString();
@@ -33,14 +34,14 @@ namespace Elastic.CommonSchema.Serialization
 			{
 				"log.level" => ReadString(ref reader, ref loglevel),
 				"ecs.version" => ReadString(ref reader, ref ecsVersion),
-				"metadata" => ReadProp<MetadataDictionary>(ref reader, "metadata", ecsEvent, (b, v) => b.Metadata = v),
-				"@timestamp" => ReadDateTime(ref reader, ref @timestamp),
-				"message" => ReadProp<string>(ref reader, "message", ecsEvent, (b, v) => b.Message = v),
-				"tags" => ReadProp<string[]>(ref reader, "tags", ecsEvent, (b, v) => b.Tags = v),
-				"span.id" => ReadProp<string>(ref reader, "span.id", ecsEvent, (b, v) => b.SpanId = v),
-				"trace.id" => ReadProp<string>(ref reader, "trace.id", ecsEvent, (b, v) => b.TraceId = v),
-				"transaction.id" => ReadProp<string>(ref reader, "transaction.id", ecsEvent, (b, v) => b.TransactionId = v),
-				"labels" => ReadProp<Labels>(ref reader, "labels", ecsEvent, (b, v) => b.Labels = v),
+				"metadata" => ReadProp<MetadataDictionary>(ref reader, "metadata", ecsEvent, (b, v) => b.Metadata = v, options),
+				"@timestamp" => ReadDateTime(ref reader, ref @timestamp, options),
+				"message" => ReadProp<string>(ref reader, "message", ecsEvent, (b, v) => b.Message = v, options),
+				"tags" => ReadProp<string[]>(ref reader, "tags", ecsEvent, (b, v) => b.Tags = v, options),
+				"span.id" => ReadProp<string>(ref reader, "span.id", ecsEvent, (b, v) => b.SpanId = v, options),
+				"trace.id" => ReadProp<string>(ref reader, "trace.id", ecsEvent, (b, v) => b.TraceId = v, options),
+				"transaction.id" => ReadProp<string>(ref reader, "transaction.id", ecsEvent, (b, v) => b.TransactionId = v, options),
+				"labels" => ReadProp<Labels>(ref reader, "labels", ecsEvent, (b, v) => b.Labels = v, options),
 				"agent" => ReadProp<Agent>(ref reader, "agent", EcsJsonContext.Default.Agent, ecsEvent, (b, v) => b.Agent = v),
 				"as" => ReadProp<As>(ref reader, "as", EcsJsonContext.Default.As, ecsEvent, (b, v) => b.As = v),
 				"client" => ReadProp<Client>(ref reader, "client", EcsJsonContext.Default.Client, ecsEvent, (b, v) => b.Client = v),
@@ -66,6 +67,7 @@ namespace Elastic.CommonSchema.Serialization
 				"http" => ReadProp<Http>(ref reader, "http", EcsJsonContext.Default.Http, ecsEvent, (b, v) => b.Http = v),
 				"interface" => ReadProp<Interface>(ref reader, "interface", EcsJsonContext.Default.Interface, ecsEvent, (b, v) => b.Interface = v),
 				"log" => ReadProp<Log>(ref reader, "log", EcsJsonContext.Default.Log, ecsEvent, (b, v) => b.Log = v),
+				"macho" => ReadProp<Macho>(ref reader, "macho", EcsJsonContext.Default.Macho, ecsEvent, (b, v) => b.Macho = v),
 				"network" => ReadProp<Network>(ref reader, "network", EcsJsonContext.Default.Network, ecsEvent, (b, v) => b.Network = v),
 				"observer" => ReadProp<Observer>(ref reader, "observer", EcsJsonContext.Default.Observer, ecsEvent, (b, v) => b.Observer = v),
 				"orchestrator" => ReadProp<Orchestrator>(ref reader, "orchestrator", EcsJsonContext.Default.Orchestrator, ecsEvent, (b, v) => b.Orchestrator = v),
@@ -93,7 +95,7 @@ namespace Elastic.CommonSchema.Serialization
 					typeof(EcsDocument) == ecsEvent.GetType()
 						? false
 						: ecsEvent.TryRead(propertyName, out var t)
-							? ecsEvent.ReceiveProperty(propertyName, ReadPropDeserialize(ref reader, t))
+							? ecsEvent.ReceiveProperty(propertyName, ReadPropDeserialize(ref reader, t, options))
 							: false
 			};
 		}
@@ -108,70 +110,72 @@ namespace Elastic.CommonSchema.Serialization
 			}
 			writer.WriteStartObject();
 
-			WriteTimestamp(writer, value);
+			WriteTimestamp(writer, value, options);
 			WriteLogLevel(writer, value);
 			WriteMessage(writer, value);
 			WriteEcsVersion(writer, value);
-			WriteLogEntity(writer, value.Log);
-			WriteEcsEntity(writer, value.Ecs);
+			WriteLogEntity(writer, value.Log, options);
+			WriteEcsEntity(writer, value.Ecs, options);
 
 			// Base fields
-			WriteProp(writer, "tags", value.Tags);
-				WriteProp(writer, "span.id", value.SpanId);
-				WriteProp(writer, "trace.id", value.TraceId);
-				WriteProp(writer, "transaction.id", value.TransactionId);
-			WriteProp(writer, "labels", value.Labels);
+			WriteProp(writer, "tags", value.Tags, options);
+			WriteProp(writer, "span.id", value.SpanId, options);
+			WriteProp(writer, "trace.id", value.TraceId, options);
+			WriteProp(writer, "transaction.id", value.TransactionId, options);
+			WriteProp(writer, "labels", value.Labels, options);
+
 			// Complex types
-			WriteProp(writer, "agent", value.Agent, EcsJsonContext.Default.Agent);
-			WriteProp(writer, "as", value.As, EcsJsonContext.Default.As);
-			WriteProp(writer, "client", value.Client, EcsJsonContext.Default.Client);
-			WriteProp(writer, "cloud", value.Cloud, EcsJsonContext.Default.Cloud);
-			WriteProp(writer, "code_signature", value.CodeSignature, EcsJsonContext.Default.CodeSignature);
-			WriteProp(writer, "container", value.Container, EcsJsonContext.Default.Container);
-			WriteProp(writer, "data_stream", value.DataStream, EcsJsonContext.Default.DataStream);
-			WriteProp(writer, "destination", value.Destination, EcsJsonContext.Default.Destination);
-			WriteProp(writer, "device", value.Device, EcsJsonContext.Default.Device);
-			WriteProp(writer, "dll", value.Dll, EcsJsonContext.Default.Dll);
-			WriteProp(writer, "dns", value.Dns, EcsJsonContext.Default.Dns);
-			WriteProp(writer, "elf", value.Elf, EcsJsonContext.Default.Elf);
-			WriteProp(writer, "email", value.Email, EcsJsonContext.Default.Email);
-			WriteProp(writer, "error", value.Error, EcsJsonContext.Default.Error);
-			WriteProp(writer, "event", value.Event, EcsJsonContext.Default.Event);
-			WriteProp(writer, "faas", value.Faas, EcsJsonContext.Default.Faas);
-			WriteProp(writer, "file", value.File, EcsJsonContext.Default.File);
-			WriteProp(writer, "geo", value.Geo, EcsJsonContext.Default.Geo);
-			WriteProp(writer, "group", value.Group, EcsJsonContext.Default.Group);
-			WriteProp(writer, "hash", value.Hash, EcsJsonContext.Default.Hash);
-			WriteProp(writer, "host", value.Host, EcsJsonContext.Default.Host);
-			WriteProp(writer, "http", value.Http, EcsJsonContext.Default.Http);
-			WriteProp(writer, "interface", value.Interface, EcsJsonContext.Default.Interface);
-			WriteProp(writer, "network", value.Network, EcsJsonContext.Default.Network);
-			WriteProp(writer, "observer", value.Observer, EcsJsonContext.Default.Observer);
-			WriteProp(writer, "orchestrator", value.Orchestrator, EcsJsonContext.Default.Orchestrator);
-			WriteProp(writer, "organization", value.Organization, EcsJsonContext.Default.Organization);
-			WriteProp(writer, "os", value.Os, EcsJsonContext.Default.Os);
-			WriteProp(writer, "package", value.Package, EcsJsonContext.Default.Package);
-			WriteProp(writer, "pe", value.Pe, EcsJsonContext.Default.Pe);
-			WriteProp(writer, "process", value.Process, EcsJsonContext.Default.Process);
-			WriteProp(writer, "registry", value.Registry, EcsJsonContext.Default.Registry);
-			WriteProp(writer, "related", value.Related, EcsJsonContext.Default.Related);
-			WriteProp(writer, "risk", value.Risk, EcsJsonContext.Default.Risk);
-			WriteProp(writer, "rule", value.Rule, EcsJsonContext.Default.Rule);
-			WriteProp(writer, "server", value.Server, EcsJsonContext.Default.Server);
-			WriteProp(writer, "service", value.Service, EcsJsonContext.Default.Service);
-			WriteProp(writer, "source", value.Source, EcsJsonContext.Default.Source);
-			WriteProp(writer, "threat", value.Threat, EcsJsonContext.Default.Threat);
-			WriteProp(writer, "tls", value.Tls, EcsJsonContext.Default.Tls);
-			WriteProp(writer, "url", value.Url, EcsJsonContext.Default.Url);
-			WriteProp(writer, "user", value.User, EcsJsonContext.Default.User);
-			WriteProp(writer, "user_agent", value.UserAgent, EcsJsonContext.Default.UserAgent);
-			WriteProp(writer, "vlan", value.Vlan, EcsJsonContext.Default.Vlan);
-			WriteProp(writer, "vulnerability", value.Vulnerability, EcsJsonContext.Default.Vulnerability);
-			WriteProp(writer, "x509", value.X509, EcsJsonContext.Default.X509);
-			WriteProp(writer, "metadata", value.Metadata);
+			WriteProp(writer, "agent", value.Agent, EcsJsonContext.Default.Agent, options);
+			WriteProp(writer, "as", value.As, EcsJsonContext.Default.As, options);
+			WriteProp(writer, "client", value.Client, EcsJsonContext.Default.Client, options);
+			WriteProp(writer, "cloud", value.Cloud, EcsJsonContext.Default.Cloud, options);
+			WriteProp(writer, "code_signature", value.CodeSignature, EcsJsonContext.Default.CodeSignature, options);
+			WriteProp(writer, "container", value.Container, EcsJsonContext.Default.Container, options);
+			WriteProp(writer, "data_stream", value.DataStream, EcsJsonContext.Default.DataStream, options);
+			WriteProp(writer, "destination", value.Destination, EcsJsonContext.Default.Destination, options);
+			WriteProp(writer, "device", value.Device, EcsJsonContext.Default.Device, options);
+			WriteProp(writer, "dll", value.Dll, EcsJsonContext.Default.Dll, options);
+			WriteProp(writer, "dns", value.Dns, EcsJsonContext.Default.Dns, options);
+			WriteProp(writer, "elf", value.Elf, EcsJsonContext.Default.Elf, options);
+			WriteProp(writer, "email", value.Email, EcsJsonContext.Default.Email, options);
+			WriteProp(writer, "error", value.Error, EcsJsonContext.Default.Error, options);
+			WriteProp(writer, "event", value.Event, EcsJsonContext.Default.Event, options);
+			WriteProp(writer, "faas", value.Faas, EcsJsonContext.Default.Faas, options);
+			WriteProp(writer, "file", value.File, EcsJsonContext.Default.File, options);
+			WriteProp(writer, "geo", value.Geo, EcsJsonContext.Default.Geo, options);
+			WriteProp(writer, "group", value.Group, EcsJsonContext.Default.Group, options);
+			WriteProp(writer, "hash", value.Hash, EcsJsonContext.Default.Hash, options);
+			WriteProp(writer, "host", value.Host, EcsJsonContext.Default.Host, options);
+			WriteProp(writer, "http", value.Http, EcsJsonContext.Default.Http, options);
+			WriteProp(writer, "interface", value.Interface, EcsJsonContext.Default.Interface, options);
+			WriteProp(writer, "macho", value.Macho, EcsJsonContext.Default.Macho, options);
+			WriteProp(writer, "network", value.Network, EcsJsonContext.Default.Network, options);
+			WriteProp(writer, "observer", value.Observer, EcsJsonContext.Default.Observer, options);
+			WriteProp(writer, "orchestrator", value.Orchestrator, EcsJsonContext.Default.Orchestrator, options);
+			WriteProp(writer, "organization", value.Organization, EcsJsonContext.Default.Organization, options);
+			WriteProp(writer, "os", value.Os, EcsJsonContext.Default.Os, options);
+			WriteProp(writer, "package", value.Package, EcsJsonContext.Default.Package, options);
+			WriteProp(writer, "pe", value.Pe, EcsJsonContext.Default.Pe, options);
+			WriteProp(writer, "process", value.Process, EcsJsonContext.Default.Process, options);
+			WriteProp(writer, "registry", value.Registry, EcsJsonContext.Default.Registry, options);
+			WriteProp(writer, "related", value.Related, EcsJsonContext.Default.Related, options);
+			WriteProp(writer, "risk", value.Risk, EcsJsonContext.Default.Risk, options);
+			WriteProp(writer, "rule", value.Rule, EcsJsonContext.Default.Rule, options);
+			WriteProp(writer, "server", value.Server, EcsJsonContext.Default.Server, options);
+			WriteProp(writer, "service", value.Service, EcsJsonContext.Default.Service, options);
+			WriteProp(writer, "source", value.Source, EcsJsonContext.Default.Source, options);
+			WriteProp(writer, "threat", value.Threat, EcsJsonContext.Default.Threat, options);
+			WriteProp(writer, "tls", value.Tls, EcsJsonContext.Default.Tls, options);
+			WriteProp(writer, "url", value.Url, EcsJsonContext.Default.Url, options);
+			WriteProp(writer, "user", value.User, EcsJsonContext.Default.User, options);
+			WriteProp(writer, "user_agent", value.UserAgent, EcsJsonContext.Default.UserAgent, options);
+			WriteProp(writer, "vlan", value.Vlan, EcsJsonContext.Default.Vlan, options);
+			WriteProp(writer, "vulnerability", value.Vulnerability, EcsJsonContext.Default.Vulnerability, options);
+			WriteProp(writer, "x509", value.X509, EcsJsonContext.Default.X509, options);
+			WriteProp(writer, "metadata", value.Metadata, options);
 
 			if (typeof(EcsDocument) != value.GetType())
-				value.WriteAdditionalProperties((k, v) => WriteProp(writer, k, v));
+				value.WriteAdditionalProperties((k, v) => WriteProp(writer, k, v, options));
 			writer.WriteEndObject();
 		}
 	}
