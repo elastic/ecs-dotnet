@@ -265,7 +265,7 @@ namespace Elastic.CommonSchema.Serilog
 				Id = e.TryGetScalarString(SpecialKeys.ActionId, out var actionId)
 					? actionId
 					: null,
-				Kind = e.TryGetScalarString(SpecialKeys.ActionKind, out var actionKind) ? actionKind : null,
+				Kind = e.TryGetScalarString(SpecialKeys.ActionKind, out var actionKind) ? actionKind : "event",
 				Severity = e.TryGetScalarString(SpecialKeys.ActionSeverity, out var actionSev)
 					? long.Parse(actionSev)
 					: (int)e.Level,

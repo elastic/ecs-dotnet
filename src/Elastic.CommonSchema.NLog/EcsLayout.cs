@@ -500,7 +500,7 @@ namespace Elastic.CommonSchema.NLog
 				Action = EventAction?.Render(logEventInfo),
 				Id = EventId?.Render(logEventInfo),
 				Code = eventCode,
-				Kind = EventKind?.Render(logEventInfo),
+				Kind = EventKind?.Render(logEventInfo) ?? "event",
 				Severity = !string.IsNullOrEmpty(eventSeverity)
 					? long.Parse(eventSeverity)
 					: GetSysLogSeverity(logEventInfo.Level),
