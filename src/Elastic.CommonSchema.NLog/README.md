@@ -56,7 +56,7 @@ filesystem target and [Elastic Filebeat](https://www.elastic.co/downloads/beats/
   - _EventAction_ - 
   -	_EventCategory_ - 
   -	_EventId_ - 
-  -	_EventKind_ - 
+  -	_EventKind_ - Default: `Event`
   -	_EventSeverity_ - 
 
 * **Agent Options**
