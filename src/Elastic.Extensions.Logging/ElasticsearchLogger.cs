@@ -21,25 +21,25 @@ namespace Elastic.Extensions.Logging
 	public class ElasticsearchLogger : ILogger
 	{
 		private readonly string _categoryName;
-		private readonly IBufferedChannel<LogEvent> _channel;
+		private IBufferedChannel<LogEvent> _channel => _channelProvider.GetChannel();
+		private readonly IChannelProvider _channelProvider;
 		private readonly ElasticsearchLoggerOptions _options;
 		private readonly IExternalScopeProvider? _scopeProvider;
 
 		/// <inheritdoc cref="IChannelDiagnosticsListener"/>
-		public IChannelDiagnosticsListener? DiagnosticsListener { get; }
+		public IChannelDiagnosticsListener? DiagnosticsListener => _channel.DiagnosticsListener;
 
 		internal ElasticsearchLogger(
 			string categoryName,
-			IBufferedChannel<LogEvent> channel,
+			IChannelProvider channelProvider,
 			ElasticsearchLoggerOptions options,
 			IExternalScopeProvider? scopeProvider
 		)
 		{
 			_categoryName = categoryName;
-			_channel = channel;
 			_options = options;
+			_channelProvider = channelProvider;
 			_scopeProvider = scopeProvider;
-			DiagnosticsListener = channel.DiagnosticsListener;
 		}
 
 		/// <inheritdoc cref="ILogger.BeginScope{TState}"/>
