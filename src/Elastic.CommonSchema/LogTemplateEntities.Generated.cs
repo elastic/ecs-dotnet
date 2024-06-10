@@ -126,7 +126,7 @@ namespace Elastic.CommonSchema
 		///<summary>Static field name to supply an instance of <see cref="Elastic.CommonSchema.X509"/> </summary>
 		public static string X509 = nameof(X509);
 
-		///<summary>All properties that <see cref="EcsDocument.AssignField" /> supports </summary>
+		///<summary>All entities that <see cref="EcsDocument.AssignField" /> supports </summary>
 		public static readonly HashSet<string> All = new()
 		{
 
