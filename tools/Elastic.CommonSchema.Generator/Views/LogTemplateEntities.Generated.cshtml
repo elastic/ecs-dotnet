@@ -1,0 +1,63 @@
+@* ReSharper disable once RedundantUsingDirective *@
+@using System
+@inherits Elastic.CommonSchema.Generator.Views.CodeTemplatePage<Elastic.CommonSchema.Generator.Projection.CommonSchemaTypesProjection>
+// Licensed to Elasticsearch B.V under one or more agreements.
+// Elasticsearch B.V licenses this file to you under the Apache 2.0 License.
+// See the LICENSE file in the project root for more information
+
+/*
+IMPORTANT NOTE
+==============
+This file has been generated. 
+If you wish to submit a PR please modify the original csharp file and submit the PR with that change. Thanks!
+*/
+
+// ReSharper disable RedundantUsingDirective
+using System;
+using System.Collections.Generic;
+using System.Threading;
+using System.Threading.Tasks;
+using System.Linq;
+using System.Net;
+using System.Runtime.Serialization;
+using System.Text.Json.Serialization;
+using Elastic.CommonSchema.Serialization;
+using static Elastic.CommonSchema.PropDispatch;
+
+namespace Elastic.CommonSchema
+{
+	///<summary>All properties that <see cref="EcsDocument.AssignField" /> supports </summary>
+	public static class LogTemplateEntities
+	{
+
+@foreach (var property in Model.Base.EntityProperties)
+{
+	<text>		///<summary>Static field name to supply an instance of <see cref="Elastic.CommonSchema.@property.Entity.Name"/> </summary>
+		public static string @property.Entity.Name = nameof(@property.Entity.Name);
+</text>
+}
+@foreach (var entity in Model.EntityClasses)
+{
+<text>		///<summary>Static field name to supply an instance of <see cref="Elastic.CommonSchema.@entity.Name"/> </summary>
+		public static string @entity.Name = nameof(@entity.Name);
+</text>
+}
+
+		///<summary>All properties that <see cref="EcsDocument.AssignField" /> supports </summary>
+		public static readonly HashSet@(Raw("<string>")) All = new()
+		{
+
+@foreach (var property in Model.Base.EntityProperties)
+{ 
+<text>			"@(property.Entity.Name.ToLowerInvariant())", "@property.Entity.Name",
+</text>
+}
+@foreach (var entity in Model.EntityClasses)
+{
+<text>			"@(entity.Name.ToLowerInvariant())", "@entity.Name",
+</text>
+}
+		};
+	}
+
+}

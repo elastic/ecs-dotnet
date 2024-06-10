@@ -30,6 +30,7 @@ namespace Elastic.CommonSchema.Generator
 				{ m => Generate(m, "EcsJsonContext", "Serialization"), "Ecs System Text Json Source Generators" },
 
 				{ m => Generate(m, "LogTemplateProperties"), "Strongly types ECS fields supported in log templates" },
+				{ m => Generate(m, "LogTemplateEntities"), "Strongly types ECS entities supported in log templates" },
 				{ m => Generate(m, "PropDispatch"), "ECS key value setter generation" },
 				{ m => Generate(m, "FieldSets"), "Field Sets" },
 				{ m => Generate(m, "Entities"), "Entities" },
