@@ -41,19 +41,8 @@ jobs:
       with:
         subject-path: "${{ github.workspace }}/build/output/*.nupkg"
 
-    - name: Prepare Nuget
-      uses: hashicorp/vault-action@v3.0.0
-      with:
-        url: ${{ secrets.VAULT_ADDR }}
-        method: approle
-        roleId: ${{ secrets.VAULT_ROLE_ID }}
-        secretId: ${{ secrets.VAULT_SECRET_ID }}
-        secrets: |
-          secret/apm-team/ci/elastic-observability-nuget apiKey | REPO_API_KEY ;
-          secret/apm-team/ci/elastic-observability-nuget url | REPO_API_URL
-
     - name: Release to Nuget
-      run: dotnet nuget push 'build/output/*.nupkg' -k ${REPO_API_KEY} -s ${REPO_API_URL} --skip-duplicate --no-symbols
+      run: dotnet nuget push 'build/output/*.nupkg' -k ${{ secrets.NUGET_API_KEY }} -s ${{ secrets.NUGET_API_URL }}  --skip-duplicate --no-symbols
 
     - name: Store artifacts
       if: success()
@@ -63,23 +52,19 @@ jobs:
         path: build/output/*.nupkg
 
     - if: ${{ success() }}
-      uses: elastic/apm-pipeline-library/.github/actions/slack-message@current
+      uses: elastic/oblt-actions/slack/send@v1
       with:
-        url: ${{ secrets.VAULT_ADDR }}
-        roleId: ${{ secrets.VAULT_ROLE_ID }}
-        secretId: ${{ secrets.VAULT_SECRET_ID }}
-        channel: "#apm-agent-dotnet"
+        bot-token: ${{ secrets.SLACK_BOT_TOKEN }}
+        channel-id: "#apm-agent-dotnet"
         message: |
           :large_green_circle: [${{ github.repository }}] Release *${{ github.ref_name }}* published.
           Build: (<${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}|here>)
 
     - if: ${{ failure() }}
-      uses: elastic/apm-pipeline-library/.github/actions/slack-message@current
+      uses: elastic/oblt-actions/slack/send@v1
       with:
-        url: ${{ secrets.VAULT_ADDR }}
-        roleId: ${{ secrets.VAULT_ROLE_ID }}
-        secretId: ${{ secrets.VAULT_SECRET_ID }}
-        channel: "#apm-agent-dotnet"
+        bot-token: ${{ secrets.SLACK_BOT_TOKEN }}
+        channel-id: "#apm-agent-dotnet"
         message: |
           :large_yellow_circle: [${{ github.repository }}] Release *${{ github.ref_name }}* could not be published.
           Build: (<${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}|here>)
