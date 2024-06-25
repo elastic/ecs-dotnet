@@ -9,7 +9,6 @@ The .NET assemblies are published to NuGet under the package name [Elastic.Commo
 ## How to use from API
 
 ```csharp
-Layout.Register<EcsLayout>("EcsLayout"); // Register the ECS layout.
 var config = new LoggingConfiguration();
 var consoleTarget = new ConsoleTarget("console") { Layout = new EcsLayout() };  // Use the ECS layout.
 config.AddRule(LogLevel.Debug, LogLevel.Fatal, consoleTarget);
@@ -17,21 +16,18 @@ LogManager.Configuration = config;
 var logger = LogManager.GetCurrentClassLogger();
 ```
 
-In the code snippet above `Layout.Register<EcsLayout>("EcsLayout")` registers the `EcsLayout` with NLog.
-The `Layout = new EcsLayout()` line then instructs NLog to use the registered layout.
-The sample above uses the console target, but you are free to use any target of your choice, perhaps consider using a
-filesystem target and [Elastic Filebeat](https://www.elastic.co/downloads/beats/filebeat) for durable and reliable ingestion.
+The sample above uses `EcsLayout`  with the NLog console target, but you are free to use any target of your choice, perhaps consider
+the NLog FileTarget and [Elastic Filebeat](https://www.elastic.co/downloads/beats/filebeat) for durable and reliable ingestion.
 
 ## How to use from NLog.config
 
 ```xml
 <nlog>
   <extensions>
-    <add assembly="Elastic.Apm.NLog"/>
     <add assembly="Elastic.CommonSchema.NLog"/>
   </extensions>
   <targets>
-    <target name="console" type="console">
+    <target name="console" xsi:type="console">
       <layout xsi:type="EcsLayout">
         <metadata name="MyProperty" layout="MyPropertyValue" /> <!-- repeated, optional -->
         <label name="MyLabel" layout="MyLabelValue" />          <!-- repeated, optional -->
