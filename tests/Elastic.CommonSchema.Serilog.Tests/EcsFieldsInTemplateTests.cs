@@ -29,6 +29,49 @@ namespace Elastic.CommonSchema.Serilog.Tests
 		});
 
 		[Fact]
+		public void CanSpecifyEntityDirectly() => TestLogger((logger, getLogEvents) =>
+		{
+			logger.Information("Info {@Event} {@As}",
+				new Event { Kind = "something"},
+				new As { Number = 1337 }
+			);
+
+			var logEvents = getLogEvents();
+			logEvents.Should().HaveCount(1);
+
+			var ecsEvents = ToEcsEvents(logEvents);
+
+			var (_, info) = ecsEvents.First();
+			info.Event.Should().NotBeNull();
+			info.Event.Kind.Should().Be("something");
+			info.As.Should().NotBeNull();
+			info.As.Number.Should().Be(1337);
+			info.Metadata.Should().BeNull();
+		});
+
+		[Fact]
+		public void EntityFieldsShouldBeTypedOrTheyGoInMetaData() => TestLogger((logger, getLogEvents) =>
+		{
+			logger.Information("Info {@Event} {@As}",
+				new { Kind = "something"},
+				new { Number = 1337 }
+			);
+
+			var logEvents = getLogEvents();
+			logEvents.Should().HaveCount(1);
+
+			var ecsEvents = ToEcsEvents(logEvents);
+
+			var (_, info) = ecsEvents.First();
+			info.Event.Should().NotBeNull();
+			info.Event.Kind.Should().NotBe("something");
+			info.As.Should().BeNull();
+
+			info.Metadata.Should().NotBeEmpty().And.ContainKey("Event").And.ContainKey("As");
+		});
+
+
+		[Fact]
 		public void EcsFieldsRequireType() => TestLogger((logger, getLogEvents) =>
 		{
 			logger.Information("Info {TraceId} {FaasColdstart}", 1, "NotABoolean");

@@ -43,13 +43,616 @@ namespace Elastic.CommonSchema
 		public void AssignField(string path, object value)
 		{
 			var assigned = LogTemplateProperties.All.Contains(path) && TrySet(this, path, value);
+			if (!assigned && LogTemplateEntities.All.Contains(path)) 
+				assigned = TrySetEntity(this, path, value);
 			if (!assigned) 
 				SetMetaOrLabel(this, path, value);
 		}
 	}
 	internal static partial class PropDispatch
 	{
-		public static bool TrySet(EcsDocument document, string path, object value) 
+
+		internal static bool TrySetEntity(EcsDocument document, string path, object value)
+		{
+			bool TypeCheck(Dictionary<string, object> templatedObject, string typeName) =>
+				templatedObject.TryGetValue("$type", out var t) && t is string s && s == typeName;
+			switch (path.ToLowerInvariant())
+			{
+
+				case "agent" when value is Agent @agent:
+					document.Agent = @agent;
+					return true;
+				case "agent" when value is Dictionary<string, object> @agent:
+					if (!TypeCheck(@agent, LogTemplateEntities.Agent)) return false;
+					foreach (var kvp in @agent)
+					{
+						if (kvp.Value == null || kvp.Key == "$type") continue;
+						if (!TrySetAgent(document, $"Agent{kvp.Key}", kvp.Value))
+							SetMetaOrLabel(document, $"Agent{kvp.Key}", kvp.Value);
+					}
+					return true;
+				case "as" when value is As @as:
+					document.As = @as;
+					return true;
+				case "as" when value is Dictionary<string, object> @as:
+					if (!TypeCheck(@as, LogTemplateEntities.As)) return false;
+					foreach (var kvp in @as)
+					{
+						if (kvp.Value == null || kvp.Key == "$type") continue;
+						if (!TrySetAs(document, $"As{kvp.Key}", kvp.Value))
+							SetMetaOrLabel(document, $"As{kvp.Key}", kvp.Value);
+					}
+					return true;
+				case "client" when value is Client @client:
+					document.Client = @client;
+					return true;
+				case "client" when value is Dictionary<string, object> @client:
+					if (!TypeCheck(@client, LogTemplateEntities.Client)) return false;
+					foreach (var kvp in @client)
+					{
+						if (kvp.Value == null || kvp.Key == "$type") continue;
+						if (!TrySetClient(document, $"Client{kvp.Key}", kvp.Value))
+							SetMetaOrLabel(document, $"Client{kvp.Key}", kvp.Value);
+					}
+					return true;
+				case "cloud" when value is Cloud @cloud:
+					document.Cloud = @cloud;
+					return true;
+				case "cloud" when value is Dictionary<string, object> @cloud:
+					if (!TypeCheck(@cloud, LogTemplateEntities.Cloud)) return false;
+					foreach (var kvp in @cloud)
+					{
+						if (kvp.Value == null || kvp.Key == "$type") continue;
+						if (!TrySetCloud(document, $"Cloud{kvp.Key}", kvp.Value))
+							SetMetaOrLabel(document, $"Cloud{kvp.Key}", kvp.Value);
+					}
+					return true;
+				case "codesignature" when value is CodeSignature @codesignature:
+					document.CodeSignature = @codesignature;
+					return true;
+				case "codesignature" when value is Dictionary<string, object> @codesignature:
+					if (!TypeCheck(@codesignature, LogTemplateEntities.CodeSignature)) return false;
+					foreach (var kvp in @codesignature)
+					{
+						if (kvp.Value == null || kvp.Key == "$type") continue;
+						if (!TrySetCodeSignature(document, $"CodeSignature{kvp.Key}", kvp.Value))
+							SetMetaOrLabel(document, $"CodeSignature{kvp.Key}", kvp.Value);
+					}
+					return true;
+				case "container" when value is Container @container:
+					document.Container = @container;
+					return true;
+				case "container" when value is Dictionary<string, object> @container:
+					if (!TypeCheck(@container, LogTemplateEntities.Container)) return false;
+					foreach (var kvp in @container)
+					{
+						if (kvp.Value == null || kvp.Key == "$type") continue;
+						if (!TrySetContainer(document, $"Container{kvp.Key}", kvp.Value))
+							SetMetaOrLabel(document, $"Container{kvp.Key}", kvp.Value);
+					}
+					return true;
+				case "datastream" when value is DataStream @datastream:
+					document.DataStream = @datastream;
+					return true;
+				case "datastream" when value is Dictionary<string, object> @datastream:
+					if (!TypeCheck(@datastream, LogTemplateEntities.DataStream)) return false;
+					foreach (var kvp in @datastream)
+					{
+						if (kvp.Value == null || kvp.Key == "$type") continue;
+						if (!TrySetDataStream(document, $"DataStream{kvp.Key}", kvp.Value))
+							SetMetaOrLabel(document, $"DataStream{kvp.Key}", kvp.Value);
+					}
+					return true;
+				case "destination" when value is Destination @destination:
+					document.Destination = @destination;
+					return true;
+				case "destination" when value is Dictionary<string, object> @destination:
+					if (!TypeCheck(@destination, LogTemplateEntities.Destination)) return false;
+					foreach (var kvp in @destination)
+					{
+						if (kvp.Value == null || kvp.Key == "$type") continue;
+						if (!TrySetDestination(document, $"Destination{kvp.Key}", kvp.Value))
+							SetMetaOrLabel(document, $"Destination{kvp.Key}", kvp.Value);
+					}
+					return true;
+				case "device" when value is Device @device:
+					document.Device = @device;
+					return true;
+				case "device" when value is Dictionary<string, object> @device:
+					if (!TypeCheck(@device, LogTemplateEntities.Device)) return false;
+					foreach (var kvp in @device)
+					{
+						if (kvp.Value == null || kvp.Key == "$type") continue;
+						if (!TrySetDevice(document, $"Device{kvp.Key}", kvp.Value))
+							SetMetaOrLabel(document, $"Device{kvp.Key}", kvp.Value);
+					}
+					return true;
+				case "dll" when value is Dll @dll:
+					document.Dll = @dll;
+					return true;
+				case "dll" when value is Dictionary<string, object> @dll:
+					if (!TypeCheck(@dll, LogTemplateEntities.Dll)) return false;
+					foreach (var kvp in @dll)
+					{
+						if (kvp.Value == null || kvp.Key == "$type") continue;
+						if (!TrySetDll(document, $"Dll{kvp.Key}", kvp.Value))
+							SetMetaOrLabel(document, $"Dll{kvp.Key}", kvp.Value);
+					}
+					return true;
+				case "dns" when value is Dns @dns:
+					document.Dns = @dns;
+					return true;
+				case "dns" when value is Dictionary<string, object> @dns:
+					if (!TypeCheck(@dns, LogTemplateEntities.Dns)) return false;
+					foreach (var kvp in @dns)
+					{
+						if (kvp.Value == null || kvp.Key == "$type") continue;
+						if (!TrySetDns(document, $"Dns{kvp.Key}", kvp.Value))
+							SetMetaOrLabel(document, $"Dns{kvp.Key}", kvp.Value);
+					}
+					return true;
+				case "ecs" when value is Ecs @ecs:
+					document.Ecs = @ecs;
+					return true;
+				case "ecs" when value is Dictionary<string, object> @ecs:
+					if (!TypeCheck(@ecs, LogTemplateEntities.Ecs)) return false;
+					foreach (var kvp in @ecs)
+					{
+						if (kvp.Value == null || kvp.Key == "$type") continue;
+						if (!TrySetEcs(document, $"Ecs{kvp.Key}", kvp.Value))
+							SetMetaOrLabel(document, $"Ecs{kvp.Key}", kvp.Value);
+					}
+					return true;
+				case "elf" when value is Elf @elf:
+					document.Elf = @elf;
+					return true;
+				case "elf" when value is Dictionary<string, object> @elf:
+					if (!TypeCheck(@elf, LogTemplateEntities.Elf)) return false;
+					foreach (var kvp in @elf)
+					{
+						if (kvp.Value == null || kvp.Key == "$type") continue;
+						if (!TrySetElf(document, $"Elf{kvp.Key}", kvp.Value))
+							SetMetaOrLabel(document, $"Elf{kvp.Key}", kvp.Value);
+					}
+					return true;
+				case "email" when value is Email @email:
+					document.Email = @email;
+					return true;
+				case "email" when value is Dictionary<string, object> @email:
+					if (!TypeCheck(@email, LogTemplateEntities.Email)) return false;
+					foreach (var kvp in @email)
+					{
+						if (kvp.Value == null || kvp.Key == "$type") continue;
+						if (!TrySetEmail(document, $"Email{kvp.Key}", kvp.Value))
+							SetMetaOrLabel(document, $"Email{kvp.Key}", kvp.Value);
+					}
+					return true;
+				case "error" when value is Error @error:
+					document.Error = @error;
+					return true;
+				case "error" when value is Dictionary<string, object> @error:
+					if (!TypeCheck(@error, LogTemplateEntities.Error)) return false;
+					foreach (var kvp in @error)
+					{
+						if (kvp.Value == null || kvp.Key == "$type") continue;
+						if (!TrySetError(document, $"Error{kvp.Key}", kvp.Value))
+							SetMetaOrLabel(document, $"Error{kvp.Key}", kvp.Value);
+					}
+					return true;
+				case "event" when value is Event @event:
+					document.Event = @event;
+					return true;
+				case "event" when value is Dictionary<string, object> @event:
+					if (!TypeCheck(@event, LogTemplateEntities.Event)) return false;
+					foreach (var kvp in @event)
+					{
+						if (kvp.Value == null || kvp.Key == "$type") continue;
+						if (!TrySetEvent(document, $"Event{kvp.Key}", kvp.Value))
+							SetMetaOrLabel(document, $"Event{kvp.Key}", kvp.Value);
+					}
+					return true;
+				case "faas" when value is Faas @faas:
+					document.Faas = @faas;
+					return true;
+				case "faas" when value is Dictionary<string, object> @faas:
+					if (!TypeCheck(@faas, LogTemplateEntities.Faas)) return false;
+					foreach (var kvp in @faas)
+					{
+						if (kvp.Value == null || kvp.Key == "$type") continue;
+						if (!TrySetFaas(document, $"Faas{kvp.Key}", kvp.Value))
+							SetMetaOrLabel(document, $"Faas{kvp.Key}", kvp.Value);
+					}
+					return true;
+				case "file" when value is File @file:
+					document.File = @file;
+					return true;
+				case "file" when value is Dictionary<string, object> @file:
+					if (!TypeCheck(@file, LogTemplateEntities.File)) return false;
+					foreach (var kvp in @file)
+					{
+						if (kvp.Value == null || kvp.Key == "$type") continue;
+						if (!TrySetFile(document, $"File{kvp.Key}", kvp.Value))
+							SetMetaOrLabel(document, $"File{kvp.Key}", kvp.Value);
+					}
+					return true;
+				case "geo" when value is Geo @geo:
+					document.Geo = @geo;
+					return true;
+				case "geo" when value is Dictionary<string, object> @geo:
+					if (!TypeCheck(@geo, LogTemplateEntities.Geo)) return false;
+					foreach (var kvp in @geo)
+					{
+						if (kvp.Value == null || kvp.Key == "$type") continue;
+						if (!TrySetGeo(document, $"Geo{kvp.Key}", kvp.Value))
+							SetMetaOrLabel(document, $"Geo{kvp.Key}", kvp.Value);
+					}
+					return true;
+				case "group" when value is Group @group:
+					document.Group = @group;
+					return true;
+				case "group" when value is Dictionary<string, object> @group:
+					if (!TypeCheck(@group, LogTemplateEntities.Group)) return false;
+					foreach (var kvp in @group)
+					{
+						if (kvp.Value == null || kvp.Key == "$type") continue;
+						if (!TrySetGroup(document, $"Group{kvp.Key}", kvp.Value))
+							SetMetaOrLabel(document, $"Group{kvp.Key}", kvp.Value);
+					}
+					return true;
+				case "hash" when value is Hash @hash:
+					document.Hash = @hash;
+					return true;
+				case "hash" when value is Dictionary<string, object> @hash:
+					if (!TypeCheck(@hash, LogTemplateEntities.Hash)) return false;
+					foreach (var kvp in @hash)
+					{
+						if (kvp.Value == null || kvp.Key == "$type") continue;
+						if (!TrySetHash(document, $"Hash{kvp.Key}", kvp.Value))
+							SetMetaOrLabel(document, $"Hash{kvp.Key}", kvp.Value);
+					}
+					return true;
+				case "host" when value is Host @host:
+					document.Host = @host;
+					return true;
+				case "host" when value is Dictionary<string, object> @host:
+					if (!TypeCheck(@host, LogTemplateEntities.Host)) return false;
+					foreach (var kvp in @host)
+					{
+						if (kvp.Value == null || kvp.Key == "$type") continue;
+						if (!TrySetHost(document, $"Host{kvp.Key}", kvp.Value))
+							SetMetaOrLabel(document, $"Host{kvp.Key}", kvp.Value);
+					}
+					return true;
+				case "http" when value is Http @http:
+					document.Http = @http;
+					return true;
+				case "http" when value is Dictionary<string, object> @http:
+					if (!TypeCheck(@http, LogTemplateEntities.Http)) return false;
+					foreach (var kvp in @http)
+					{
+						if (kvp.Value == null || kvp.Key == "$type") continue;
+						if (!TrySetHttp(document, $"Http{kvp.Key}", kvp.Value))
+							SetMetaOrLabel(document, $"Http{kvp.Key}", kvp.Value);
+					}
+					return true;
+				case "interface" when value is Interface @interface:
+					document.Interface = @interface;
+					return true;
+				case "interface" when value is Dictionary<string, object> @interface:
+					if (!TypeCheck(@interface, LogTemplateEntities.Interface)) return false;
+					foreach (var kvp in @interface)
+					{
+						if (kvp.Value == null || kvp.Key == "$type") continue;
+						if (!TrySetInterface(document, $"Interface{kvp.Key}", kvp.Value))
+							SetMetaOrLabel(document, $"Interface{kvp.Key}", kvp.Value);
+					}
+					return true;
+				case "log" when value is Log @log:
+					document.Log = @log;
+					return true;
+				case "log" when value is Dictionary<string, object> @log:
+					if (!TypeCheck(@log, LogTemplateEntities.Log)) return false;
+					foreach (var kvp in @log)
+					{
+						if (kvp.Value == null || kvp.Key == "$type") continue;
+						if (!TrySetLog(document, $"Log{kvp.Key}", kvp.Value))
+							SetMetaOrLabel(document, $"Log{kvp.Key}", kvp.Value);
+					}
+					return true;
+				case "macho" when value is Macho @macho:
+					document.Macho = @macho;
+					return true;
+				case "macho" when value is Dictionary<string, object> @macho:
+					if (!TypeCheck(@macho, LogTemplateEntities.Macho)) return false;
+					foreach (var kvp in @macho)
+					{
+						if (kvp.Value == null || kvp.Key == "$type") continue;
+						if (!TrySetMacho(document, $"Macho{kvp.Key}", kvp.Value))
+							SetMetaOrLabel(document, $"Macho{kvp.Key}", kvp.Value);
+					}
+					return true;
+				case "network" when value is Network @network:
+					document.Network = @network;
+					return true;
+				case "network" when value is Dictionary<string, object> @network:
+					if (!TypeCheck(@network, LogTemplateEntities.Network)) return false;
+					foreach (var kvp in @network)
+					{
+						if (kvp.Value == null || kvp.Key == "$type") continue;
+						if (!TrySetNetwork(document, $"Network{kvp.Key}", kvp.Value))
+							SetMetaOrLabel(document, $"Network{kvp.Key}", kvp.Value);
+					}
+					return true;
+				case "observer" when value is Observer @observer:
+					document.Observer = @observer;
+					return true;
+				case "observer" when value is Dictionary<string, object> @observer:
+					if (!TypeCheck(@observer, LogTemplateEntities.Observer)) return false;
+					foreach (var kvp in @observer)
+					{
+						if (kvp.Value == null || kvp.Key == "$type") continue;
+						if (!TrySetObserver(document, $"Observer{kvp.Key}", kvp.Value))
+							SetMetaOrLabel(document, $"Observer{kvp.Key}", kvp.Value);
+					}
+					return true;
+				case "orchestrator" when value is Orchestrator @orchestrator:
+					document.Orchestrator = @orchestrator;
+					return true;
+				case "orchestrator" when value is Dictionary<string, object> @orchestrator:
+					if (!TypeCheck(@orchestrator, LogTemplateEntities.Orchestrator)) return false;
+					foreach (var kvp in @orchestrator)
+					{
+						if (kvp.Value == null || kvp.Key == "$type") continue;
+						if (!TrySetOrchestrator(document, $"Orchestrator{kvp.Key}", kvp.Value))
+							SetMetaOrLabel(document, $"Orchestrator{kvp.Key}", kvp.Value);
+					}
+					return true;
+				case "organization" when value is Organization @organization:
+					document.Organization = @organization;
+					return true;
+				case "organization" when value is Dictionary<string, object> @organization:
+					if (!TypeCheck(@organization, LogTemplateEntities.Organization)) return false;
+					foreach (var kvp in @organization)
+					{
+						if (kvp.Value == null || kvp.Key == "$type") continue;
+						if (!TrySetOrganization(document, $"Organization{kvp.Key}", kvp.Value))
+							SetMetaOrLabel(document, $"Organization{kvp.Key}", kvp.Value);
+					}
+					return true;
+				case "os" when value is Os @os:
+					document.Os = @os;
+					return true;
+				case "os" when value is Dictionary<string, object> @os:
+					if (!TypeCheck(@os, LogTemplateEntities.Os)) return false;
+					foreach (var kvp in @os)
+					{
+						if (kvp.Value == null || kvp.Key == "$type") continue;
+						if (!TrySetOs(document, $"Os{kvp.Key}", kvp.Value))
+							SetMetaOrLabel(document, $"Os{kvp.Key}", kvp.Value);
+					}
+					return true;
+				case "package" when value is Package @package:
+					document.Package = @package;
+					return true;
+				case "package" when value is Dictionary<string, object> @package:
+					if (!TypeCheck(@package, LogTemplateEntities.Package)) return false;
+					foreach (var kvp in @package)
+					{
+						if (kvp.Value == null || kvp.Key == "$type") continue;
+						if (!TrySetPackage(document, $"Package{kvp.Key}", kvp.Value))
+							SetMetaOrLabel(document, $"Package{kvp.Key}", kvp.Value);
+					}
+					return true;
+				case "pe" when value is Pe @pe:
+					document.Pe = @pe;
+					return true;
+				case "pe" when value is Dictionary<string, object> @pe:
+					if (!TypeCheck(@pe, LogTemplateEntities.Pe)) return false;
+					foreach (var kvp in @pe)
+					{
+						if (kvp.Value == null || kvp.Key == "$type") continue;
+						if (!TrySetPe(document, $"Pe{kvp.Key}", kvp.Value))
+							SetMetaOrLabel(document, $"Pe{kvp.Key}", kvp.Value);
+					}
+					return true;
+				case "process" when value is Process @process:
+					document.Process = @process;
+					return true;
+				case "process" when value is Dictionary<string, object> @process:
+					if (!TypeCheck(@process, LogTemplateEntities.Process)) return false;
+					foreach (var kvp in @process)
+					{
+						if (kvp.Value == null || kvp.Key == "$type") continue;
+						if (!TrySetProcess(document, $"Process{kvp.Key}", kvp.Value))
+							SetMetaOrLabel(document, $"Process{kvp.Key}", kvp.Value);
+					}
+					return true;
+				case "registry" when value is Registry @registry:
+					document.Registry = @registry;
+					return true;
+				case "registry" when value is Dictionary<string, object> @registry:
+					if (!TypeCheck(@registry, LogTemplateEntities.Registry)) return false;
+					foreach (var kvp in @registry)
+					{
+						if (kvp.Value == null || kvp.Key == "$type") continue;
+						if (!TrySetRegistry(document, $"Registry{kvp.Key}", kvp.Value))
+							SetMetaOrLabel(document, $"Registry{kvp.Key}", kvp.Value);
+					}
+					return true;
+				case "related" when value is Related @related:
+					document.Related = @related;
+					return true;
+				case "related" when value is Dictionary<string, object> @related:
+					if (!TypeCheck(@related, LogTemplateEntities.Related)) return false;
+					foreach (var kvp in @related)
+					{
+						if (kvp.Value == null || kvp.Key == "$type") continue;
+						if (!TrySetRelated(document, $"Related{kvp.Key}", kvp.Value))
+							SetMetaOrLabel(document, $"Related{kvp.Key}", kvp.Value);
+					}
+					return true;
+				case "risk" when value is Risk @risk:
+					document.Risk = @risk;
+					return true;
+				case "risk" when value is Dictionary<string, object> @risk:
+					if (!TypeCheck(@risk, LogTemplateEntities.Risk)) return false;
+					foreach (var kvp in @risk)
+					{
+						if (kvp.Value == null || kvp.Key == "$type") continue;
+						if (!TrySetRisk(document, $"Risk{kvp.Key}", kvp.Value))
+							SetMetaOrLabel(document, $"Risk{kvp.Key}", kvp.Value);
+					}
+					return true;
+				case "rule" when value is Rule @rule:
+					document.Rule = @rule;
+					return true;
+				case "rule" when value is Dictionary<string, object> @rule:
+					if (!TypeCheck(@rule, LogTemplateEntities.Rule)) return false;
+					foreach (var kvp in @rule)
+					{
+						if (kvp.Value == null || kvp.Key == "$type") continue;
+						if (!TrySetRule(document, $"Rule{kvp.Key}", kvp.Value))
+							SetMetaOrLabel(document, $"Rule{kvp.Key}", kvp.Value);
+					}
+					return true;
+				case "server" when value is Server @server:
+					document.Server = @server;
+					return true;
+				case "server" when value is Dictionary<string, object> @server:
+					if (!TypeCheck(@server, LogTemplateEntities.Server)) return false;
+					foreach (var kvp in @server)
+					{
+						if (kvp.Value == null || kvp.Key == "$type") continue;
+						if (!TrySetServer(document, $"Server{kvp.Key}", kvp.Value))
+							SetMetaOrLabel(document, $"Server{kvp.Key}", kvp.Value);
+					}
+					return true;
+				case "service" when value is Service @service:
+					document.Service = @service;
+					return true;
+				case "service" when value is Dictionary<string, object> @service:
+					if (!TypeCheck(@service, LogTemplateEntities.Service)) return false;
+					foreach (var kvp in @service)
+					{
+						if (kvp.Value == null || kvp.Key == "$type") continue;
+						if (!TrySetService(document, $"Service{kvp.Key}", kvp.Value))
+							SetMetaOrLabel(document, $"Service{kvp.Key}", kvp.Value);
+					}
+					return true;
+				case "source" when value is Source @source:
+					document.Source = @source;
+					return true;
+				case "source" when value is Dictionary<string, object> @source:
+					if (!TypeCheck(@source, LogTemplateEntities.Source)) return false;
+					foreach (var kvp in @source)
+					{
+						if (kvp.Value == null || kvp.Key == "$type") continue;
+						if (!TrySetSource(document, $"Source{kvp.Key}", kvp.Value))
+							SetMetaOrLabel(document, $"Source{kvp.Key}", kvp.Value);
+					}
+					return true;
+				case "threat" when value is Threat @threat:
+					document.Threat = @threat;
+					return true;
+				case "threat" when value is Dictionary<string, object> @threat:
+					if (!TypeCheck(@threat, LogTemplateEntities.Threat)) return false;
+					foreach (var kvp in @threat)
+					{
+						if (kvp.Value == null || kvp.Key == "$type") continue;
+						if (!TrySetThreat(document, $"Threat{kvp.Key}", kvp.Value))
+							SetMetaOrLabel(document, $"Threat{kvp.Key}", kvp.Value);
+					}
+					return true;
+				case "tls" when value is Tls @tls:
+					document.Tls = @tls;
+					return true;
+				case "tls" when value is Dictionary<string, object> @tls:
+					if (!TypeCheck(@tls, LogTemplateEntities.Tls)) return false;
+					foreach (var kvp in @tls)
+					{
+						if (kvp.Value == null || kvp.Key == "$type") continue;
+						if (!TrySetTls(document, $"Tls{kvp.Key}", kvp.Value))
+							SetMetaOrLabel(document, $"Tls{kvp.Key}", kvp.Value);
+					}
+					return true;
+				case "url" when value is Url @url:
+					document.Url = @url;
+					return true;
+				case "url" when value is Dictionary<string, object> @url:
+					if (!TypeCheck(@url, LogTemplateEntities.Url)) return false;
+					foreach (var kvp in @url)
+					{
+						if (kvp.Value == null || kvp.Key == "$type") continue;
+						if (!TrySetUrl(document, $"Url{kvp.Key}", kvp.Value))
+							SetMetaOrLabel(document, $"Url{kvp.Key}", kvp.Value);
+					}
+					return true;
+				case "user" when value is User @user:
+					document.User = @user;
+					return true;
+				case "user" when value is Dictionary<string, object> @user:
+					if (!TypeCheck(@user, LogTemplateEntities.User)) return false;
+					foreach (var kvp in @user)
+					{
+						if (kvp.Value == null || kvp.Key == "$type") continue;
+						if (!TrySetUser(document, $"User{kvp.Key}", kvp.Value))
+							SetMetaOrLabel(document, $"User{kvp.Key}", kvp.Value);
+					}
+					return true;
+				case "useragent" when value is UserAgent @useragent:
+					document.UserAgent = @useragent;
+					return true;
+				case "useragent" when value is Dictionary<string, object> @useragent:
+					if (!TypeCheck(@useragent, LogTemplateEntities.UserAgent)) return false;
+					foreach (var kvp in @useragent)
+					{
+						if (kvp.Value == null || kvp.Key == "$type") continue;
+						if (!TrySetUserAgent(document, $"UserAgent{kvp.Key}", kvp.Value))
+							SetMetaOrLabel(document, $"UserAgent{kvp.Key}", kvp.Value);
+					}
+					return true;
+				case "vlan" when value is Vlan @vlan:
+					document.Vlan = @vlan;
+					return true;
+				case "vlan" when value is Dictionary<string, object> @vlan:
+					if (!TypeCheck(@vlan, LogTemplateEntities.Vlan)) return false;
+					foreach (var kvp in @vlan)
+					{
+						if (kvp.Value == null || kvp.Key == "$type") continue;
+						if (!TrySetVlan(document, $"Vlan{kvp.Key}", kvp.Value))
+							SetMetaOrLabel(document, $"Vlan{kvp.Key}", kvp.Value);
+					}
+					return true;
+				case "vulnerability" when value is Vulnerability @vulnerability:
+					document.Vulnerability = @vulnerability;
+					return true;
+				case "vulnerability" when value is Dictionary<string, object> @vulnerability:
+					if (!TypeCheck(@vulnerability, LogTemplateEntities.Vulnerability)) return false;
+					foreach (var kvp in @vulnerability)
+					{
+						if (kvp.Value == null || kvp.Key == "$type") continue;
+						if (!TrySetVulnerability(document, $"Vulnerability{kvp.Key}", kvp.Value))
+							SetMetaOrLabel(document, $"Vulnerability{kvp.Key}", kvp.Value);
+					}
+					return true;
+				case "x509" when value is X509 @x509:
+					document.X509 = @x509;
+					return true;
+				case "x509" when value is Dictionary<string, object> @x509:
+					if (!TypeCheck(@x509, LogTemplateEntities.X509)) return false;
+					foreach (var kvp in @x509)
+					{
+						if (kvp.Value == null || kvp.Key == "$type") continue;
+						if (!TrySetX509(document, $"X509{kvp.Key}", kvp.Value))
+							SetMetaOrLabel(document, $"X509{kvp.Key}", kvp.Value);
+					}
+					return true;
+				default:
+					return false;
+			}
+		}
+
+		internal static bool TrySet(EcsDocument document, string path, object value) 
 		{
 			switch (path) 
 			{
@@ -1073,8 +1676,7 @@ namespace Elastic.CommonSchema
 				case "X509VersionNumber":
 					return TrySetX509(document, path, value);
 				default:
-					SetMetaOrLabel(document, path, value);
-					return true;
+					return false;
 			}
 		}
 

@@ -47,13 +47,62 @@ namespace Elastic.CommonSchema
 		public void AssignField(string path, object value)
 		{
 			var assigned = LogTemplateProperties.All.Contains(path) && TrySet(this, path, value);
+			if (!assigned && LogTemplateEntities.All.Contains(path)) 
+				assigned = TrySetEntity(this, path, value);
 			if (!assigned) 
 				SetMetaOrLabel(this, path, value);
 		}
 	}
 	internal static partial class PropDispatch
 	{
-		public static bool TrySet(EcsDocument document, string path, object value) 
+
+		internal static bool TrySetEntity(EcsDocument document, string path, object value)
+		{
+			bool TypeCheck(@Raw("Dictionary<string, object>") templatedObject, string typeName) =>
+				templatedObject.TryGetValue("$type", out var t) && t is string s && s == typeName;
+			switch (path.ToLowerInvariant())
+			{
+
+@foreach (var property in Model.Base.EntityProperties)
+{
+	var variableName = $"@{property.Entity.Name.ToLowerInvariant()}";
+<text>				case "@(property.Entity.Name.ToLowerInvariant())" when value is @(property.Entity.Name) @variableName:
+					document.@property.Name = @variableName;
+					return true;
+				case "@(property.Entity.Name.ToLowerInvariant())" when value is @Raw("Dictionary<string, object>") @variableName:
+					if (!TypeCheck(@variableName, LogTemplateEntities.@property.Entity.Name)) return false;
+					foreach (var kvp in @variableName)
+					{
+						if (kvp.Value == null || kvp.Key == "$type") continue;
+						if (!TrySet@(property.Entity.Name)(document, $"@(property.Entity.Name){kvp.Key}", kvp.Value))
+							SetMetaOrLabel(document, $"@(property.Entity.Name){kvp.Key}", kvp.Value);
+					}
+					return true;
+</text>
+}
+@foreach (var entity in Model.EntityClasses)
+{
+	var variableName = $"@{entity.Name.ToLowerInvariant()}";
+<text>				case "@(entity.Name.ToLowerInvariant())" when value is @(entity.Name) @variableName:
+					document.@entity.Name = @variableName;
+					return true;
+				case "@(entity.Name.ToLowerInvariant())" when value is @Raw("Dictionary<string, object>") @variableName:
+					if (!TypeCheck(@variableName, LogTemplateEntities.@entity.Name)) return false;
+					foreach (var kvp in @variableName)
+					{
+						if (kvp.Value == null || kvp.Key == "$type") continue;
+						if (!TrySet@(entity.Name)(document, $"@(entity.Name){kvp.Key}", kvp.Value))
+							SetMetaOrLabel(document, $"@(entity.Name){kvp.Key}", kvp.Value);
+					}
+					return true;
+</text>
+}
+				default:
+					return false;
+			}
+		}
+
+		internal static bool TrySet(EcsDocument document, string path, object value) 
 		{
 			switch (path) 
 			{
@@ -80,8 +129,7 @@ namespace Elastic.CommonSchema
 </text>
 }
 				default:
-					SetMetaOrLabel(document, path, value);
-					return true;
+					return false;
 			}
 		}
 
