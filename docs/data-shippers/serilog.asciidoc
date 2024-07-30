@@ -42,6 +42,10 @@ Writing to `Elasticsearch`
 			ConcurrentConsumers = 10 
 		};
 	};
+}, transport =>
+{
+	// transport.Authentication(new BasicAuthentication(username, password)); // Basic Auth
+	// transport.Authentication(new ApiKey(base64EncodedApiKey)); // ApiKey
 })
 
 ----
@@ -90,6 +94,10 @@ Log.Information("The time is {TraceId}", "my-trace-id");
 ----
 
 Will override `trace.id` on the resulting ECS json document.
+
+==== Troubleshooting
+
+In case of issues, you can enable the [Serilog Self-Log feature](https://github.com/serilog/serilog/wiki/Debugging-and-Diagnostics#selflog) to expose any error you might have encountered.
 
 ==== Comparison with https://github.com/serilog-contrib/serilog-sinks-elasticsearch[`Serilog.Sinks.Elasticsearch`]
 
