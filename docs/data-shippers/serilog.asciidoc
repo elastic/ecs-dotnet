@@ -13,7 +13,6 @@ Add a reference to the `Elastic.Serilog.Sinks` package:
 <PackageReference Include="Elastic.Serilog.Sinks" Version="{ecs-logging-dotnet-version}" />
 ----
 
-[[usage]]
 ==== Usage 
 
 There's a few ways that you can extend a `Serilog` `LoggerConfiguration`:
@@ -82,7 +81,7 @@ Note that you can also pass `ElasticsearchSinkOptions` directly
 
 This allows you to reuse the `Transport` used by the Elasticsearch Client for instance.
 
-==== Aauthentication
+==== Authentication
 
 When {es} security features are enabled, requests without a valid authentication header will be rejected.
 You can enable authentication via one of the methods below:
