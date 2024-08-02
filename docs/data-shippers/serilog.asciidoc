@@ -42,6 +42,10 @@ Writing to `Elasticsearch`
 			ConcurrentConsumers = 10 
 		};
 	};
+}, transport =>
+{
+	// transport.Authentication(new BasicAuthentication(username, password)); // Basic Auth
+	// transport.Authentication(new ApiKey(base64EncodedApiKey)); // ApiKey
 })
 
 ----
@@ -77,6 +81,43 @@ Note that you can also pass `ElasticsearchSinkOptions` directly
 
 This allows you to reuse the `Transport` used by the Elasticsearch Client for instance.
 
+==== Authentication
+
+When {es} security features are enabled, requests without a valid authentication header will be rejected.
+You can enable authentication via one of the methods below:
+
+**Basic Auth**
+
+[source,csharp]
+----
+.WriteTo.Elasticsearch(new [] { new Uri("http://localhost:9200" )}, opts =>
+{
+	...
+}, transport =>
+{
+	transport.Authentication(new BasicAuthentication(username, password)); <1>
+})
+
+----
+<1> Basic authentication
+
+**API Key**
+
+[source,csharp]
+----
+.WriteTo.Elasticsearch(new [] { new Uri("http://localhost:9200" )}, opts =>
+{
+	...
+}, transport =>
+{
+	transport.Authentication(new ApiKey(base64EncodedApiKey)); <1>
+})
+
+----
+<1> API Key
+
+To learn more about authentication with the {stack}, see {ref}/setting-up-authentication.html[User Authentication].
+
 ==== ECS Aware Message Templates
 
 This sink by proxy of its formatter allows you to set ECS fields directly from the message template using properties that adhere to the
@@ -90,6 +131,10 @@ Log.Information("The time is {TraceId}", "my-trace-id");
 ----
 
 Will override `trace.id` on the resulting ECS json document.
+
+==== Troubleshooting
+
+In case of issues, you can enable the [Serilog Self-Log feature](https://github.com/serilog/serilog/wiki/Debugging-and-Diagnostics#selflog) to expose any error you might have encountered.
 
 ==== Comparison with https://github.com/serilog-contrib/serilog-sinks-elasticsearch[`Serilog.Sinks.Elasticsearch`]
 
@@ -107,6 +152,6 @@ Will override `trace.id` on the resulting ECS json document.
 * That doesn't mean you can not introduce your own additional properties though.
 * `Elastic.Serilog.Sinks` has no durable mode.
 * If you need higher guarantees on log delivery use https://github.com/serilog/serilog-sinks-file[`Serilog.Sinks.File`] with our https://www.nuget.org/packages/Elastic.CommonSchema.Serilog/[ECS log formatter] for Serilog and use https://www.elastic.co/beats/filebeat[filebeat] to ship these logs.
-* Check out {fleet-ref}/fleet-overview.html[Elastic Agent and Fleet] to simplify collecting logs and metrics on the edge.
+* Check out {fleet-guide}/fleet-overview.html[Elastic Agent and Fleet] to simplify collecting logs and metrics on the edge.
 
 If you miss a particular feature from `Serilog.Sinks.Elasticsearch` in `Elastic.Serilog.Sinks` please open a https://github.com/elastic/ecs-dotnet/issues/new?assignees=&labels=enhancement&template=feature_request.md&title=%5BFEATURE%5D[feature request]! We'd love to grow this sink organically moving forward.
