@@ -34,6 +34,9 @@ Official NuGet packages can be referenced from [NuGet.org](https://www.nuget.org
 | `Elastic.CommonSchema.Serilog`  |  Formats a Serilog log message into a JSON representation that can be indexed into Elasticsearch. | [![NuGet Release][ElasticCommonSchemaSerilog-image]][ElasticCommonSchemaSerilog-nuget-url]  |
 | `Elastic.CommonSchema.NLog`  |  Formats an NLog message into a JSON representation that can be indexed into Elasticsearch. | [![NuGet Release][ElasticCommonSchemaNLog-image]][ElasticCommonSchemaNLog-nuget-url]  |
 | `Elastic.CommonSchema.Log4net`  |  Formats a log4net message into a JSON representation that can be indexed into Elasticsearch. | [![NuGet Release][ElasticCommonSchemaLog4net-image]][ElasticCommonSchemaLog4net-nuget-url]  |
+| `Elastic.Extensions.Logging`  | Microsoft Extension Logging provider that writes directly to ElasticSearch or ElasticCloud. | [![NuGet Release][ElasticIngestLogging-image]][ElasticIngestLogging-nuget-url]  |
+| `Elastic.NLog.Targets`  | NLog target that writes directly to ElasticSearch or ElasticCloud. | [![NuGet Release][ElasticIngestNLog-image]][ElasticIngestNLog-nuget-url]  |
+| `Elastic.Serilog.Sinks`  | Serilog sink that writes directly to ElasticSearch or ElasticCloud. | [![NuGet Release][ElasticIngestSerilog-image]][ElasticIngestSerilog-nuget-url]  |
 | `Elastic.Apm.SerilogEnricher`   |  Adds transaction id and trace id to every Serilog log message that is created during a transaction. This works in conjunction with the Elastic.CommonSchema.Serilog package and forms a solution to distributed tracing with Serilog. | [![NuGet Release][ElasticApmSerilogEnricher-image]][ElasticApmSerilogEnricher-nuget-url]  |
 | `Elastic.Apm.NLog`              |  Introduces two special placeholder variables (ElasticApmTraceId and ElasticApmTransactionId) for use within your NLog templates. | [![NuGet Release][ElasticApmNLog-image]][ElasticApmNLog-nuget-url]  |
 | `Elastic.CommonSchema.BenchmarkDotNetExporter`  |  An exporter for BenchmarkDotnet that can index benchmarking results directly into Elasticsearch, which can be helpful for detecting code-related performance problems over time. | [![NuGet Release][ElasticBenchmarkDotNetExporter-image]][ElasticBenchmarkDotNetExporter-nuget-url]  |
@@ -49,6 +52,15 @@ Official NuGet packages can be referenced from [NuGet.org](https://www.nuget.org
 
 [ElasticCommonSchemaLog4net-nuget-url]:https://www.nuget.org/packages/Elastic.CommonSchema.Log4net/
 [ElasticCommonSchemaLog4net-image]:https://img.shields.io/nuget/v/Elastic.CommonSchema.Log4net.svg
+
+[ElasticIngestLogging-nuget-url]:https://www.nuget.org/packages/Elastic.Extensions.Logging/
+[ElasticIngestLogging-image]:https://img.shields.io/nuget/v/Elastic.Extensions.Logging.svg
+
+[ElasticIngestNLog-nuget-url]:https://www.nuget.org/packages/Elastic.NLog.Targets/
+[ElasticIngestNLog-image]:https://img.shields.io/nuget/v/Elastic.NLog.Targets.svg
+
+[ElasticIngestSerilog-nuget-url]:https://www.nuget.org/packages/Elastic.Serilog.Sinks/
+[ElasticIngestSerilog-image]:https://img.shields.io/nuget/v/Elastic.Serilog.Sinks.svg
 
 [ElasticApmSerilogEnricher-nuget-url]:https://www.nuget.org/packages/Elastic.Apm.SerilogEnricher/
 [ElasticApmSerilogEnricher-image]:https://img.shields.io/nuget/v/Elastic.Apm.SerilogEnricher.svg
@@ -96,18 +108,21 @@ var logger = new LoggerConfiguration()
     .CreateLogger();
 ```
 
+Serilog Sink [Elastic.Serilog.Sinks](https://github.com/elastic/ecs-dotnet/tree/main/src/Elastic.Serilog.Sinks) is also available, which writes directly to Elasticsearch using the Elastic Common Schema.
+
 ### [Elastic.CommonSchema.NLog](https://github.com/elastic/ecs-dotnet/tree/main/src/Elastic.CommonSchema.NLog)
 
 Formats an NLog event into a JSON representation that adheres to the Elastic Common Schema. [Learn more...](https://github.com/elastic/ecs-dotnet/tree/main/src/Elastic.CommonSchema.NLog)
 
 ```csharp
-Layout.Register<EcsLayout>("EcsLayout"); // Register the ECS layout.
 var config = new LoggingConfiguration();
 var consoleTarget = new ConsoleTarget("console") { Layout = new EcsLayout() };  // Use the ECS layout.
 config.AddRule(LogLevel.Debug, LogLevel.Fatal, consoleTarget);
 LogManager.Configuration = config;
 var logger = LogManager.GetCurrentClassLogger();
 ```
+
+NLog Target [Elastic.NLog.Targets](https://github.com/elastic/ecs-dotnet/tree/main/src/Elastic.NLog.Targets) is also available, which writes directly to Elasticsearch using the Elastic Common Schema.
 
 ### [Elastic.CommonSchema.Log4net](https://github.com/elastic/ecs-dotnet/tree/main/src/Elastic.CommonSchema.Log4net)
 
