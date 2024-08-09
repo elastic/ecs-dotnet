@@ -19,7 +19,7 @@ namespace Elastic.CommonSchema.NLog
 	internal class NlogEcsDocumentCreationOptions : IEcsDocumentCreationOptions
 	{
 		public static NlogEcsDocumentCreationOptions Default { get; } = new();
-		public bool IncludeHost { get; set; } = false;
+		public bool IncludeHost { get; set; } = true;
 		public bool IncludeProcess { get; set; } = false;
 		public bool IncludeUser { get; set; } = false;
 		public bool IncludeActivityData { get; set; } = false;
@@ -33,9 +33,13 @@ namespace Elastic.CommonSchema.NLog
 	{
 		/// <summary> An NLOG layout implementation that renders logs as ECS json</summary>
 		public const string Name = nameof(EcsLayout);
-
 		private static bool? _nlogApmLoaded;
 		private static Agent _defaultAgent;
+		private Agent _previousAgent;
+		private Service _previousService;
+		private Host _previousHost;
+		private Server _previousServer;
+		private Process _previousProcess;
 
 		private static bool NLogApmLoaded()
 		{
@@ -160,6 +164,8 @@ namespace Elastic.CommonSchema.NLog
 		public Layout ApmServiceNodeName { get; set; }
 		/// <inheritdoc cref="ServiceFieldSet.Version"/>
 		public Layout ApmServiceVersion { get; set; }
+		/// <inheritdoc cref="ServiceFieldSet.Environment"/>
+		public Layout ServiceEnvironment { get; set; }
 
 		/// <inheritdoc cref="LogFieldSet.OriginFunction"/>
 		public Layout LogOriginCallSiteMethod { get; set; }
@@ -237,6 +243,8 @@ namespace Elastic.CommonSchema.NLog
 
 		/// <inheritdoc cref="ServerFieldSet.Address"/>
 		public Layout ServerAddress { get; set; }
+		/// <inheritdoc cref="ServerFieldSet.Domain"/>
+		public Layout ServerDomain { get; set; }
 		/// <inheritdoc cref="ServerFieldSet.Ip"/>
 		public Layout ServerIp { get; set; }
 		/// <inheritdoc cref="UserFieldSet.Name"/>
@@ -302,10 +310,10 @@ namespace Elastic.CommonSchema.NLog
 			SetApmTransactionId(ecsEvent, logEvent);
 			SetApmSpanId(ecsEvent, logEvent);
 
-			// prefer setting service information set by Elastic APM
-			var service = GetService(logEvent);
-			if (service != null)
-				ecsEvent.Service = service;
+			ecsEvent.Agent = GetAgent(logEvent, _defaultAgent);
+			ecsEvent.Service = GetService(logEvent, ecsEvent.Service);
+			ecsEvent.Host = GetHost(logEvent, ecsEvent.Host);
+			ecsEvent.Server = GetServer(logEvent, ecsEvent.Server);
 
 			ecsEvent.Message = logEvent.FormattedMessage;
 			ecsEvent.Log = GetLog(logEvent);
@@ -313,9 +321,6 @@ namespace Elastic.CommonSchema.NLog
 			ecsEvent.Process = GetProcess(logEvent);
 			ecsEvent.Tags = GetTags(logEvent);
 			ecsEvent.Labels = GetLabels(logEvent);
-			ecsEvent.Agent = GetAgent(logEvent) ?? _defaultAgent;
-			ecsEvent.Server = GetServer(logEvent);
-			ecsEvent.Host = GetHost(logEvent);
 			ecsEvent.Http = GetHttp(logEvent);
 			ecsEvent.Url = GetUrl(logEvent);
 
@@ -335,16 +340,6 @@ namespace Elastic.CommonSchema.NLog
 			//Allow programmatic actions to enrich before serializing
 			EnrichAction?.Invoke(ecsDocument, logEvent);
 			return ecsEvent;
-		}
-
-		private Service GetService(LogEventInfo logEventInfo)
-		{
-			var serviceName = ApmServiceName?.Render(logEventInfo);
-			if (string.IsNullOrEmpty(serviceName)) return null;
-
-			var serviceNodeName = ApmServiceNodeName?.Render(logEventInfo);
-			var serviceVersion = ApmServiceVersion?.Render(logEventInfo);
-			return new Service { Name = serviceName, Version = serviceVersion, NodeName = serviceNodeName };
 		}
 
 		/// <summary>
@@ -547,27 +542,28 @@ namespace Elastic.CommonSchema.NLog
 			return evnt;
 		}
 
-		private Agent GetAgent(LogEventInfo logEventInfo)
+		private Agent GetAgent(LogEventInfo logEventInfo, Agent defaultAgent)
 		{
 			var agentId = AgentId?.Render(logEventInfo);
 			var agentName = AgentName?.Render(logEventInfo);
 			var agentType = AgentType?.Render(logEventInfo);
 			var agentVersion = AgentVersion?.Render(logEventInfo);
 
-			if (string.IsNullOrEmpty(agentId)
-				&& string.IsNullOrEmpty(agentName)
-				&& string.IsNullOrEmpty(agentType)
-				&& string.IsNullOrEmpty(agentVersion))
-				return null;
+			var previousAgent = _previousAgent ?? defaultAgent;
+			if ((string.IsNullOrEmpty(agentId) || agentId == previousAgent?.Id)
+			  && (string.IsNullOrEmpty(agentName) || agentName == previousAgent?.Name)
+			  && (string.IsNullOrEmpty(agentType) || agentType == previousAgent?.Type)
+			  && (string.IsNullOrEmpty(agentVersion) || agentVersion == previousAgent?.Version))
+				return previousAgent;
 
 			var agent = new Agent
 			{
-				Id = agentId,
-				Name = agentName,
-				Type = agentType,
-				Version = agentVersion
+				Id = string.IsNullOrEmpty(agentId) ? previousAgent?.Id : agentId,
+				Name = string.IsNullOrEmpty(agentName) ? previousAgent?.Name : agentName,
+				Type = string.IsNullOrEmpty(agentType) ? previousAgent?.Type : agentType,
+				Version = string.IsNullOrEmpty(agentVersion) ? previousAgent?.Version : agentVersion,
 			};
-
+			_previousAgent = agent;
 			return agent;
 		}
 
@@ -579,42 +575,113 @@ namespace Elastic.CommonSchema.NLog
 			var processExecutable = ProcessExecutable?.Render(logEventInfo);
 			var processThreadId = ProcessThreadId?.Render(logEventInfo);
 			var processThreadName = ProcessThreadName?.Render(logEventInfo);
-
-			if (string.IsNullOrEmpty(processId)
-				&& string.IsNullOrEmpty(processName)
-				&& string.IsNullOrEmpty(processTitle)
-				&& string.IsNullOrEmpty(processExecutable)
-				&& string.IsNullOrEmpty(processThreadId)
-				&& string.IsNullOrEmpty(processThreadName))
-				return null;
-
-			return new Process
+			
+			var previousProcess = _previousProcess;
+			if (string.IsNullOrEmpty(processThreadId) && string.IsNullOrEmpty(processThreadName))
 			{
-				Title = processTitle,
-				Name = processName,
-				Pid = !string.IsNullOrEmpty(processId) ? long.Parse(processId) : null,
-				Executable = processExecutable,
-				ThreadId = !string.IsNullOrEmpty(processThreadId) ? long.Parse(processThreadId) : null,
-				ThreadName = !string.IsNullOrEmpty(processThreadName) ? processThreadName : null,
+				// Only attempt to reuse Process-object when not including Thread-details
+				if ((string.IsNullOrEmpty(processTitle) || processTitle == previousProcess?.Title)
+				  && (string.IsNullOrEmpty(processName) || processName == previousProcess?.Name)
+				  && (string.IsNullOrEmpty(processId) || long.Parse(processId) == previousProcess?.Pid)
+				  && (string.IsNullOrEmpty(processExecutable) || processExecutable == previousProcess?.Executable))
+					return previousProcess;
+			}
+
+			var process = new Process
+			{
+				Title = string.IsNullOrEmpty(processTitle) ? previousProcess?.Title : processTitle,
+				Name = string.IsNullOrEmpty(processName) ? previousProcess?.Name : processName,
+				Executable = string.IsNullOrEmpty(processExecutable) ? previousProcess?.Executable : processExecutable,
+				Pid = string.IsNullOrEmpty(processId) ? previousProcess?.Pid : long.Parse(processId),
+				ThreadId = string.IsNullOrEmpty(processThreadId) ? null : long.Parse(processThreadId),
+				ThreadName = string.IsNullOrEmpty(processThreadName) ? null : processThreadName,
 			};
+
+			if (!process.ThreadId.HasValue && string.IsNullOrEmpty(process.ThreadName))
+			{
+				_previousProcess = process;
+			}
+
+			return process;
 		}
 
-		private Server GetServer(LogEventInfo logEventInfo)
+		private Server GetServer(LogEventInfo logEventInfo, Server defaultServer)
 		{
 			var serverUser = ServerUser?.Render(logEventInfo);
 			var serverAddress = ServerAddress?.Render(logEventInfo);
+			var serverDomain = ServerDomain?.Render(logEventInfo);
 			var serverIp = ServerIp?.Render(logEventInfo);
-			if (string.IsNullOrEmpty(serverUser) && string.IsNullOrEmpty(serverAddress) && string.IsNullOrEmpty(serverIp))
-				return null;
 
-			return new Server
+			var previousServer = _previousServer ?? defaultServer;
+			if ((string.IsNullOrEmpty(serverUser) || serverUser == previousServer?.User?.Name)
+			  && (string.IsNullOrEmpty(serverAddress) || serverAddress == previousServer?.Address)
+			  && (string.IsNullOrEmpty(serverDomain) || serverDomain == previousServer?.Domain)
+			  && (string.IsNullOrEmpty(serverIp) || serverIp == previousServer?.Ip))
+				return previousServer;
+
+			var server = new Server
 			{
-				User = !string.IsNullOrEmpty(serverUser)
-					? new User { Name = serverUser }
-					: null,
-				Address = serverAddress,
-				Ip = serverIp
+				User = string.IsNullOrEmpty(serverUser) ? previousServer?.User : new User() { Name = serverUser },
+				Address = string.IsNullOrEmpty(serverAddress) ? previousServer?.Address : serverAddress,
+				Domain = string.IsNullOrEmpty(serverDomain) ? previousServer?.Domain : serverDomain,
+				Ip = string.IsNullOrEmpty(serverIp) ? previousServer?.Ip : serverIp,
 			};
+			_previousServer = server;
+			return server;
+		}
+
+		private Service GetService(LogEventInfo logEventInfo, Service defaultService)
+		{
+			var serviceName = ApmServiceName?.Render(logEventInfo);
+			if (string.IsNullOrEmpty(serviceName))
+				return defaultService;
+
+			var serviceNodeName = ApmServiceNodeName?.Render(logEventInfo);
+			var serviceVersion = ApmServiceVersion?.Render(logEventInfo);
+			var serviceEnvironment = ServiceEnvironment?.Render(logEventInfo);
+
+			var previousService = _previousService ?? defaultService;
+			if ( (string.IsNullOrEmpty(serviceName) || serviceName == previousService?.Name)
+			  && (string.IsNullOrEmpty(serviceNodeName) || serviceNodeName == previousService?.NodeName)
+			  && (string.IsNullOrEmpty(serviceVersion) || serviceVersion == previousService?.Version)
+			  && (string.IsNullOrEmpty(serviceEnvironment) || serviceEnvironment == previousService?.Environment))
+				return previousService;
+
+			var service = new Service
+			{
+				Name = string.IsNullOrEmpty(serviceName) ? previousService?.Name : serviceName,
+				NodeName = string.IsNullOrEmpty(serviceNodeName) ? previousService?.NodeName : serviceNodeName,
+				Version = string.IsNullOrEmpty(serviceVersion) ? previousService?.Version : serviceVersion,
+				Environment = string.IsNullOrEmpty(serviceEnvironment) ? previousService?.Environment : serviceEnvironment,
+				Type = previousService?.Type,
+			};
+			_previousService = service;
+			return service;
+		}
+
+		private Host GetHost(LogEventInfo logEventInfo, Host defaultHost)
+		{
+			var hostId = HostId?.Render(logEventInfo);
+			var hostName = HostName?.Render(logEventInfo);
+			var hostIp = HostIp?.Render(logEventInfo);
+
+			var previousHost = _previousHost ?? defaultHost;
+			if ((string.IsNullOrEmpty(hostId) || hostId == previousHost?.Id)
+			  && (string.IsNullOrEmpty(hostName) || hostName == previousHost?.Hostname)
+			  && (string.IsNullOrEmpty(hostIp) || (previousHost?.Ip?.Length == 1 && hostIp == previousHost.Ip[0])))
+				return previousHost;
+
+			var host = new Host
+			{
+				Id = string.IsNullOrEmpty(hostId) ? previousHost?.Id : hostId,
+				Hostname = string.IsNullOrEmpty(hostName) ? previousHost?.Hostname : hostName,
+				Ip = string.IsNullOrEmpty(hostIp) ? previousHost?.Ip : new[] { hostIp },
+				Type = previousHost?.Type,
+				Architecture = previousHost?.Architecture,
+				Os = previousHost?.Os,
+			};
+			_previousHost = host;
+			return host;
 		}
 
 		private void SetApmTraceId(EcsDocument ecsDocument, LogEventInfo logEventInfo)
@@ -688,27 +755,6 @@ namespace Elastic.CommonSchema.NLog
 				url.Port = portNumber;
 
 			return url;
-		}
-
-		private Host GetHost(LogEventInfo logEventInfo)
-		{
-			var hostId = HostId?.Render(logEventInfo);
-			var hostName = HostName?.Render(logEventInfo);
-			var hostIp = HostIp?.Render(logEventInfo);
-
-			if (string.IsNullOrEmpty(hostId)
-				&& string.IsNullOrEmpty(hostName)
-				&& string.IsNullOrEmpty(hostIp))
-				return null;
-
-			var host = new Host
-			{
-				Id = string.IsNullOrEmpty(hostId) ? null : hostId,
-				Name = string.IsNullOrEmpty(hostName) ? null : hostName,
-				Ip = string.IsNullOrEmpty(hostIp) ? null : new[] { hostIp }
-			};
-
-			return host;
 		}
 
 		private static long GetSysLogSeverity(LogLevel logLevel)
