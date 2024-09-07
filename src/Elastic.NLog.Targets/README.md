@@ -76,6 +76,7 @@ var logger = LogManager.GetCurrentClassLogger();
   - _IndexFormat_ - Format string for the Elastic search index (Ex. `dotnet-{0:yyyy.MM.dd}` or blank means disabled). Default = ''
   - _IndexOffsetHours_ - Time offset to use for the index (Ex. `0` for UTC or blank means system local). Default = ''
   - _IndexOperation_ - Operation header for each bulk operation (Auto, Index, Create). Default = Auto
+  - _IndexEventId_ - Optional override of the per document `_id`
 
 Notice that export depends on in-memory queue, that is lost on application-crash / -exit.
 If higher gurantee of delivery is required, then consider using [Elastic.CommonSchema.NLog](https://www.nuget.org/packages/Elastic.CommonSchema.NLog)

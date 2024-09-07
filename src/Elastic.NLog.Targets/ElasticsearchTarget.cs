@@ -4,6 +4,7 @@ using System.Linq;
 using Elastic.Channels;
 using Elastic.Channels.Buffers;
 using Elastic.Channels.Diagnostics;
+using Elastic.CommonSchema.NLog;
 using Elastic.Ingest.Elasticsearch;
 using Elastic.Ingest.Elasticsearch.CommonSchema;
 using Elastic.Ingest.Elasticsearch.DataStreams;
@@ -72,6 +73,20 @@ namespace NLog.Targets
 		/// <para> Can explicit specify Auto, Index or Create</para>
 		/// </summary>
 		public OperationMode IndexOperation { get; set; }
+
+		/// <summary>
+		/// Gets or sets the optional override of the per document `_id`.
+		/// </summary>
+		public Layout? IndexEventId
+		{
+			get => _layout.EventId;
+			set
+			{
+				_layout.EventId = value;
+				_hasIndexEventId = value is not null;
+			}
+		}
+		private bool _hasIndexEventId;
 
 		/// <summary>
 		/// The maximum number of in flight instances that can be queued in memory. If this threshold is reached, events will be dropped
@@ -217,6 +232,12 @@ namespace NLog.Targets
 				TimestampLookup = l => l.Timestamp,
 				OperationMode = indexOperation,
 			};
+
+			if (_hasIndexEventId)
+			{
+				indexChannelOptions.BulkOperationIdLookup = (logEvent) => (logEvent.Event?.Id)!;
+			}
+
 			SetupChannelOptions(indexChannelOptions);
 			return new EcsIndexChannel<NLogEcsDocument>(indexChannelOptions);
 		}
