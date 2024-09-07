@@ -53,6 +53,7 @@ var logger = LogManager.GetCurrentClassLogger();
     - Cloud - Pool seeded with CloudId
   - _NodeUris_ - URIs of the Elasticsearch nodes in the connection pool (comma delimited)
   - _CloudId_ - When using NodePoolType = Cloud
+  - _BootstrapMethod_ - Whether to configure / bootstrap the destination, which requires user has management capabilities (None, Silent, Failure). Default = None
 
 * **Export Authentication**
   - _ApiKey_ - When using NodePoolType = Cloud and authentication via API key.
