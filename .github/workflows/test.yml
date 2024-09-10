@@ -61,9 +61,9 @@ jobs:
       
     - name: Store test results
       if: success() || failure()
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
-        name: test-results
+        name: test-results-windows
         path: build/output/junit-*.xml
    
   test-linux:
@@ -79,7 +79,7 @@ jobs:
 
     - name: Store test results
       if: success() || failure()
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
-        name: test-results
+        name: test-results-linux
         path: build/output/junit-*.xml
