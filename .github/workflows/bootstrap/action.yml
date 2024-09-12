@@ -17,4 +17,4 @@ runs:
           global-json-file: global.json
       
     # Setup git config
-    - uses: elastic/apm-pipeline-library/.github/actions/setup-git@current
+    - uses: elastic/oblt-actions/git/setup@v1
