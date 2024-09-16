@@ -14,7 +14,10 @@ public class ExampleService : BackgroundService
 	{
 		for (var i = 0; i < 100; i++)
 		{
-			_logger.LogWarning("We are logging way too much: {CustomData}", i);
+			if (i % 10 == 0)
+				_logger.LogWarning("We are logging way too much: {CustomData}", i);
+			else
+				_logger.LogInformation("We are logging way too much: {CustomData}", i);
 			if (i % 100 == 0)
 				await Task.Delay(1, ctx);
 		}

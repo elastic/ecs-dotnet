@@ -11,13 +11,9 @@ public static class LoggingBuilderExtensions
 		builder.AddConsole(c=>
 		{
 			c.FormatterName = "ecs";
-			c.LogToStandardErrorThreshold = LogLevel.Warning;
+			c.LogToStandardErrorThreshold = stdErrorThreshold;
 		});
 		builder.AddConsoleFormatter<EcsConsoleFormatter, EcsConsoleFormatterOptions>(configure ?? (_ => { }));
 		return builder;
 	}
-
-	/// <summary> Adds ECS output to console output</summary>
-	public static ILoggingBuilder AddEcsConsole(this ILoggingBuilder builder, Action<EcsConsoleFormatterOptions>? configure = null) =>
-		builder.AddEcsConsole(LogLevel.Warning, configure);
 }

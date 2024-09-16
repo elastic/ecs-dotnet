@@ -13,11 +13,7 @@ await Host.CreateDefaultBuilder(args)
 	{
 		configurationBuilder.SetBasePath(AppDomain.CurrentDomain.BaseDirectory);
 	})
-	.ConfigureLogging((_, loggingBuilder) =>
-	{
-		loggingBuilder.AddConsole(c=> c.FormatterName = "ecs");
-		loggingBuilder.AddConsoleFormatter<EcsConsoleFormatter, EcsConsoleFormatterOptions>();
-	})
+	.ConfigureLogging((_, loggingBuilder) => loggingBuilder.AddEcsConsole())
 	.ConfigureServices((_, services) =>
 	{
 		services.AddHostedService<ExampleService>();
