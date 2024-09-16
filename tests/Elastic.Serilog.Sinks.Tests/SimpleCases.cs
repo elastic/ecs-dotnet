@@ -34,6 +34,7 @@ public class SimpleCases : JsonConfigTestBase
 					{
 						"bootstrapMethod": "Silent",
 						"nodes": [ "http://elastichost:9200" ],
+						"useSniffing": false,
 						"ilmPolicy" : "my-policy",
 						"dataStream" : "logs-myapplication-default",
 						"includeHost" : false,
@@ -49,7 +50,7 @@ public class SimpleCases : JsonConfigTestBase
 
 						"apiKey": "api-key",
 
-						"maxRetries": 2,
+						"maxRetries": 3,
 						"maxConcurrency": 20,
 						"maxInflight": 1000000,
 						"maxExportSize": 10000,

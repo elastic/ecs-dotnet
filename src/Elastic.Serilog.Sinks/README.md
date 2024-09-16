@@ -67,6 +67,107 @@ Log.Information("The time is {TraceId}", "my-trace-id");
 
 Will override `trace.id` on the resulting ECS json document.
 
+### Application Settings Configuration
+
+This sink can be configured through `appsettings.json` when used in combination with [`Serilog.Settings.Configuration`](https://github.com/serilog/serilog-settings-configuration).
+
+#### Elasticsearch appsettings configuration
+
+When configuring through `appsettings` only the `bootstrapMethod` configuration is **required**
+
+```json5
+{
+  "Serilog": {
+    "Using": [ "Elastic.Serilog.Sinks" ],
+    "MinimumLevel": { "Default": "Information" },
+    "WriteTo": [
+      {
+        "Name": "Elasticsearch",
+        "Args": {
+          "bootstrapMethod": "Silent",
+          "nodes": [ "http://elastichost:9200" ],
+          "useSniffing": true,
+          "apiKey": "<apiKey>",
+          "username": "<username>",
+          "password": "<password>",
+
+          "ilmPolicy" : "my-policy",
+          "dataStream" : "logs-dotnet-default",
+          "includeHost" : true,
+          "includeUser" : true,
+          "includeProcess" : true,
+          "includeActivity" : true,
+          "filterProperties" : [ "prop1", "prop2" ],
+          "proxy": "http://localhost:8200",
+          "proxyUsername": "x",
+          "proxyPassword": "y",
+          "debugMode": false,
+
+          //EXPERT settings, do not set unless you need to 
+          "maxRetries": 3,
+          "maxConcurrency": 20,
+          "maxInflight": 100000,
+          "maxExportSize": 1000,
+          "maxLifeTime": "00:00:05",
+          "fullMode": "Wait"
+        }
+      }
+    ]
+  }
+}
+```
+
+#### Elastic Cloud appsettings configuration
+
+When configuring through `appsettings` only the `bootstrapMethod` configuration is **required**
+
+You can specify either `endpoint` or `cloudId`, `cloudId` will take precedence.
+
+You'll need to specify either `apiKey` or `username` and `password`.
+
+```json5
+{
+  "Serilog": {
+    "Using": [ "Elastic.Serilog.Sinks" ],
+    "MinimumLevel": { "Default": "Information" },
+    "WriteTo": [
+      {
+        "Name": "ElasticCloud",
+        "Args": {
+          "bootstrapMethod": "Silent",
+          "endpoint": "https://<redacted>.es.us-central1.gcp.cloud.es.io",
+          "cloudId": "<cloudId>",
+          "apiKey": "<apiKey>",
+          "username": "<username>",
+          "password": "<password>",
+          
+          "ilmPolicy" : "my-policy",
+          "dataStream" : "logs-dotnet-default",
+          "includeHost" : true,
+          "includeUser" : true,
+          "includeProcess" : true,
+          "includeActivity" : true,
+          "filterProperties" : [ "prop1", "prop2" ],
+          "proxy": "http://localhost:8200",
+          "proxyUsername": "x",
+          "proxyPassword": "y",
+          "debugMode": false,
+
+          //EXPERT settings, do not set unless you need to 
+          "maxRetries": 3,
+          "maxConcurrency": 20,
+          "maxInflight": 100000,
+          "maxExportSize": 1000,
+          "maxLifeTime": "00:00:05",
+          "fullMode": "Wait"
+        }
+      }
+    ]
+  }
+}
+```
+
+
 ### Comparison with [`Serilog.Sinks.Elasticsearch`](https://github.com/serilog-contrib/serilog-sinks-elasticsearch)
 
 * `Serilog.Sinks.Elasticsearch` is an amazing community led sink that has a ton of options and works against older Elasticsearch versions `< 8.0`.

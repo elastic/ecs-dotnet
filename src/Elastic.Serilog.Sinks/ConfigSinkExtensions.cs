@@ -58,7 +58,7 @@ namespace Elastic.Serilog.Sinks
 			LogEventLevel restrictedToMinimumLevel = LevelAlias.Minimum
 		)
 		{
-			var transportConfig = useSniffing ? TransportHelper.Static(nodes) : TransportHelper.Sniffing(nodes);
+			var transportConfig = !useSniffing ? TransportHelper.Static(nodes) : TransportHelper.Sniffing(nodes);
 			SetTransportConfig(transportConfig, apiKey, username, password, proxy, proxyUsername, proxyPassword, fingerprint, debugMode
 			);
 
