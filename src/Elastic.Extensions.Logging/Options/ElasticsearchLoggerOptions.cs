@@ -1,4 +1,5 @@
 using Elastic.CommonSchema;
+using Elastic.Extensions.Logging.Common;
 using Elastic.Ingest.Elasticsearch;
 using Elastic.Transport;
 
@@ -7,7 +8,7 @@ namespace Elastic.Extensions.Logging.Options
 	/// <summary>
 	/// Provide options to <see cref="ElasticsearchLogger"/> to control how data gets written to Elasticsearch
 	/// </summary>
-	public class ElasticsearchLoggerOptions : IEcsDocumentCreationOptions
+	public class ElasticsearchLoggerOptions : ILogEventCreationOptions
 	{
 		/// <summary>
 		/// Gets or sets a flag indicating whether host details should be included in the message. Defaults to <c>true</c>.
