@@ -169,7 +169,8 @@ internal static partial class PropDispatch
 				var formats = new[]
 				{
 					"yyyy-MM-ddTHH:mm:ss.FFFK",
-					"yyyy-MM-dd'T'HH:mm:ss.FFFK"
+					"yyyy-MM-dd'T'HH:mm:ss.FFFK",
+					"yyyy-MM-dd'T'HH:mm:ss.ffffffK"
 				};
 				d = DateTimeOffset.ParseExact(s, formats, CultureInfo.InvariantCulture, DateTimeStyles.None);
 				return true;
