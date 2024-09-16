@@ -1,6 +1,6 @@
 # Elastic.NLog.Targets
 
-A [NLog](https://nlog-project.org/) target that writes logs directly to [Elasticsearch](https://www.elastic.co/elasticsearch/) or [Elastic Cloud](https://www.elastic.co/cloud/)
+A [NLog](https://nlog-project.org/) target that writes logs directly to [Elasticsearch](https://www.elastic.co/elasticsearch/) or [Elastic Cloud](https://www.elastic.co/cloud/) using the Elastic Common Schema.
 
 ## Packages
 
@@ -21,7 +21,6 @@ var logger = LogManager.GetCurrentClassLogger();
 ```xml
 <nlog>
   <extensions>
-    <add assembly="Elastic.Apm.NLog"/>
     <add assembly="Elastic.CommonSchema.NLog"/>
     <add assembly="Elastic.NLog.Targets"/>
   </extensions>
@@ -120,3 +119,9 @@ Example app.config on .NET Framework:
 ```xml
   <target name="elastic" type="ElasticSearch" nodeUris="${environment:ELASTIC_SERVER_URL}">
 ```
+
+## Copyright and License
+
+This software is Copyright (c) 2014-2020 by Elasticsearch BV.
+
+This is free software, licensed under: [The Apache License Version 2.0](https://github.com/elastic/ecs-dotnet/blob/main/license.txt).
