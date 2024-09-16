@@ -5,7 +5,7 @@ using Xunit;
 
 namespace Elastic.Serilog.Sinks.Tests;
 
-public class SimpleCases : JsonConfigTestBase
+public class AppSettingsConfigTests : JsonConfigTestBase
 {
 	[Fact]
 	public void SimpleConfiguration()
