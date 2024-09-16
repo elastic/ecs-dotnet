@@ -50,7 +50,7 @@ public class AppSettingsConfigTests : JsonConfigTestBase
 
 						"apiKey": "api-key",
 
-						"maxRetries": 3,
+						"maxRetries": 2,
 						"maxConcurrency": 20,
 						"maxInflight": 1000000,
 						"maxExportSize": 10000,
