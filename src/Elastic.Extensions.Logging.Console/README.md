@@ -7,7 +7,7 @@ May be used with `Elastic.Extensions.Logging` to write ECS documents directly to
 
 ## Usage
 
-The console logging provider and formatter can be setup using a simple extension method.
+The console logging provider and formatter can be set up using a simple extension method.
 
 ```csharp
 .ConfigureLogging((_, loggingBuilder) => loggingBuilder.AddEcsConsole())
