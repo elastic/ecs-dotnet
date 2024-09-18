@@ -93,7 +93,7 @@ namespace Elastic.Serilog.Sinks
 	}
 
 	/// <inheritdoc cref="ElasticsearchSink"/>>
-	public class ElasticsearchSink<TEcsDocument> : ILogEventSink
+	public class ElasticsearchSink<TEcsDocument> : ILogEventSink, IDisposable
 		where TEcsDocument : EcsDocument, new()
 	{
 		private readonly EcsTextFormatterConfiguration<TEcsDocument> _formatterConfiguration;
@@ -121,6 +121,8 @@ namespace Elastic.Serilog.Sinks
 			_channel.TryWrite(ecsDoc);
 		}
 
+		/// <summary> Disposes and flushed <see cref="EcsDataStreamChannel{TEcsDocument}"/> </summary>
+		public void Dispose() => _channel.Dispose();
 	}
 
 	internal class SelfLogCallbackListener<TEcsDocument> : IChannelCallbacks<TEcsDocument, BulkResponse> where TEcsDocument : EcsDocument, new()
