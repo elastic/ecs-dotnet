@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Serilog.Events;
+using static Elastic.CommonSchema.Serilog.SpecialProperties;
 
 namespace Elastic.CommonSchema.Serilog
 {
@@ -312,7 +313,7 @@ namespace Elastic.CommonSchema.Serilog
 		private static Http? GetHttp(LogEvent e, IEcsTextFormatterConfiguration configuration)
 		{
 			if (e.TryGetScalarPropertyValue(SpecialKeys.HttpContext, out var httpContext)
-			    && httpContext.Value is HttpContextEnricher.HttpContextEnrichments enriched)
+			    && httpContext.Value is HttpContextEnrichments enriched)
 				return enriched.Http;
 
 			var http = configuration.MapHttpAdapter?.Http;
@@ -346,7 +347,7 @@ namespace Elastic.CommonSchema.Serilog
 		private static Url? GetUrl(LogEvent e, IEcsTextFormatterConfiguration configuration)
 		{
 			if (e.TryGetScalarPropertyValue(SpecialKeys.HttpContext, out var httpContext)
-			    && httpContext.Value is HttpContextEnricher.HttpContextEnrichments enriched)
+			    && httpContext.Value is HttpContextEnrichments enriched)
 				return enriched.Url;
 
 			var url = configuration.MapHttpAdapter?.Url;
@@ -375,7 +376,7 @@ namespace Elastic.CommonSchema.Serilog
 		private static UserAgent? GetUserAgent(LogEvent e, IEcsTextFormatterConfiguration configuration)
 		{
 			if (e.TryGetScalarPropertyValue(SpecialKeys.HttpContext, out var httpContext)
-			    && httpContext.Value is HttpContextEnricher.HttpContextEnrichments enriched)
+			    && httpContext.Value is HttpContextEnrichments enriched)
 				return enriched.UserAgent;
 
 			return configuration.MapHttpAdapter?.UserAgent;
@@ -384,7 +385,7 @@ namespace Elastic.CommonSchema.Serilog
 		private static User? GetUser(LogEvent e, IEcsTextFormatterConfiguration configuration)
 		{
 			if (e.TryGetScalarPropertyValue(SpecialKeys.HttpContext, out var httpContext)
-			    && httpContext.Value is HttpContextEnricher.HttpContextEnrichments enriched)
+			    && httpContext.Value is HttpContextEnrichments enriched)
 				return enriched.User;
 
 			return configuration.MapHttpAdapter?.User;
@@ -393,7 +394,7 @@ namespace Elastic.CommonSchema.Serilog
 		private static Client? GetClient(LogEvent e, IEcsTextFormatterConfiguration configuration)
 		{
 			if (e.TryGetScalarPropertyValue(SpecialKeys.HttpContext, out var httpContext)
-			    && httpContext.Value is HttpContextEnricher.HttpContextEnrichments enriched)
+			    && httpContext.Value is HttpContextEnrichments enriched)
 				return enriched.Client;
 
 			return configuration.MapHttpAdapter?.Client;

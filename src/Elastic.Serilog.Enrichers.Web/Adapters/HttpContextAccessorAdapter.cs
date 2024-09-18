@@ -2,15 +2,17 @@
 // Elasticsearch B.V licenses this file to you under the Apache 2.0 License.
 // See the LICENSE file in the project root for more information
 
-#if NETSTANDARD
-using System.Linq;
+#if NETCOREAPP
 using System.Security.Claims;
+using Elastic.CommonSchema;
+using Elastic.CommonSchema.Serilog.Adapters;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Http.Features;
 using UAParser;
+using UserAgent = Elastic.CommonSchema.UserAgent;
 
-namespace Elastic.CommonSchema.Serilog.Adapters
+namespace Elastic.Serilog.Enrichers.Web.Adapters
 {
 	/// <inheritdoc cref="IHttpAdapter"/>
 	public class HttpAdapter : IHttpAdapter
@@ -112,7 +114,7 @@ namespace Elastic.CommonSchema.Serilog.Adapters
 					Original = request.GetDisplayUrl(),
 					Full = request.GetDisplayUrl(),
 					Scheme = request.Scheme,
-					Query = request.QueryString.HasValue ? request.QueryString.Value.TrimStart('?') : null,
+					Query = request.QueryString.HasValue ? request.QueryString.Value?.TrimStart('?') : null,
 					Domain = request.Host.HasValue ? request.Host.Host : null,
 					Port = request.Host.HasValue ? request.Host.Port : null
 				};
@@ -127,14 +129,14 @@ namespace Elastic.CommonSchema.Serilog.Adapters
 				if (_httpContextAccessor?.HttpContext == null)
 					return null;
 
-				var ip4 = _httpContextAccessor.HttpContext.Connection.LocalIpAddress.MapToIPv4();
+				var ip4 = _httpContextAccessor.HttpContext.Connection.LocalIpAddress?.MapToIPv4();
 
 				var request = _httpContextAccessor.HttpContext.Request;
 
 				return new Server
 				{
-					Address = ip4.ToString(),
-					Ip = ip4.ToString(),
+					Address = ip4?.ToString(),
+					Ip = ip4?.ToString(),
 					Domain = request.Host.HasValue ? request.Host.Host : null
 				};
 			}
@@ -148,7 +150,7 @@ namespace Elastic.CommonSchema.Serilog.Adapters
 				if (_httpContextAccessor?.HttpContext == null)
 					return null;
 
-				var ip4 = _httpContextAccessor.HttpContext.Features.Get<IHttpConnectionFeature>()?.RemoteIpAddress.MapToIPv4();
+				var ip4 = _httpContextAccessor.HttpContext.Features.Get<IHttpConnectionFeature>()?.RemoteIpAddress?.MapToIPv4();
 
 				return new Client
 				{

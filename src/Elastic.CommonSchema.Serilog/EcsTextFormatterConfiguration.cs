@@ -13,7 +13,7 @@ namespace Elastic.CommonSchema.Serilog
 	public interface IEcsTextFormatterConfiguration : IEcsDocumentCreationOptions
 	{
 		/// <summary>
-		/// Expert option, its recommended to use <see cref="EnricherExtensions.WithEcsHttpContext"/> to ensure HttpContext gets mapped
+		/// Expert option, It's recommended to use install <c>Elastic.Serilog.Enrichers.Web</c> to ensure HttpContext gets mapped
 		/// to the appropriate ECS fields.
 		/// <para> Example: </para>
 		/// <code>
