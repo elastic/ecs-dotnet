@@ -3,7 +3,6 @@
     <PropertyGroup>
         <TargetFrameworks>net8.0;net6.0</TargetFrameworks>
         <IsPackable>false</IsPackable>
-        <LangVersion>preview</LangVersion>
     </PropertyGroup>
 
     <ItemGroup>
