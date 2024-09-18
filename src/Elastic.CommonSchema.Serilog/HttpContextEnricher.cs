@@ -46,7 +46,7 @@ public class HttpContextEnricher : ILogEventEnricher
 			r.User = Adapter.User;
 		}
 
-		logEvent.AddPropertyIfAbsent(propertyFactory.CreateProperty(PropertyName, r));
+		logEvent.AddPropertyIfAbsent(new LogEventProperty(PropertyName, new ScalarValue(r)));
 	}
 
 	internal class HttpContextEnrichments
