@@ -99,6 +99,8 @@ namespace Elastic.Extensions.Logging
 			// These will overwrite any scope values with the same name
 			logEvent.AddStateValues(state, _options);
 
+			_options.MapCustom?.Invoke(logEvent);
+
 			return logEvent;
 		}
 

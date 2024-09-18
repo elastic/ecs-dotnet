@@ -6,7 +6,7 @@ namespace Elastic.Extensions.Logging.Console;
 public static class LoggingBuilderExtensions
 {
 	/// <summary> Adds ECS output to console output</summary>
-	public static ILoggingBuilder AddEcsConsole(this ILoggingBuilder builder, LogLevel stdErrorThreshold = LogLevel.Warning, Action<EcsConsoleFormatterOptions>? configure = null)
+	public static ILoggingBuilder AddEcsConsole(this ILoggingBuilder builder, Action<EcsConsoleFormatterOptions>? configure = null, LogLevel stdErrorThreshold = LogLevel.Warning)
 	{
 		builder.AddConsole(c=>
 		{
