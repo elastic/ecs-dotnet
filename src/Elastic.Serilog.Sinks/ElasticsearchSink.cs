@@ -17,6 +17,30 @@ using Serilog.Events;
 
 namespace Elastic.Serilog.Sinks
 {
+
+	/// <summary>
+	/// A read only view of the options provided to <see cref="ElasticsearchSink"/>
+	/// </summary>
+	public interface IElasticsearchSinkOptions
+	{
+		/// <inheritdoc cref="BootstrapMethod"/>
+		BootstrapMethod BootstrapMethod { get; }
+
+		/// <inheritdoc cref="IEcsTextFormatterConfiguration"/>
+		IEcsTextFormatterConfiguration EcsTextFormatterConfiguration { get; }
+
+		/// <inheritdoc cref="DataStreamName"/>
+		public DataStreamName DataStream { get; }
+
+		/// <summary>
+		/// The ILM Policy to apply, see the following for more details:
+		/// <para>https://www.elastic.co/guide/en/elasticsearch/reference/current/index-lifecycle-management.html</para>
+		/// Defaults to `logs` which is shipped by default with Elasticsearch
+		/// </summary>
+		public string? IlmPolicy { get; }
+
+	}
+
 	/// <summary>
 	/// Provides configuration options to <see cref="ElasticsearchSink"/> to control how and where data gets written
 	/// </summary>
@@ -30,7 +54,9 @@ namespace Elastic.Serilog.Sinks
 	}
 
 	/// <inheritdoc cref="ElasticsearchSinkOptions{TEcsDocument}"/>
-	public class ElasticsearchSinkOptions<TEcsDocument> where TEcsDocument : EcsDocument, new()
+	public class ElasticsearchSinkOptions<TEcsDocument>
+		: IElasticsearchSinkOptions
+		where TEcsDocument : EcsDocument, new()
 	{
 		/// <inheritdoc cref="ElasticsearchSinkOptions"/>
 		public ElasticsearchSinkOptions() : this(new DistributedTransport(TransportHelper.Default())) { }
@@ -40,6 +66,8 @@ namespace Elastic.Serilog.Sinks
 
 		/// <inheritdoc cref="ITransport{TConfiguration}"/>
 		internal ITransport Transport { get; }
+
+		IEcsTextFormatterConfiguration IElasticsearchSinkOptions.EcsTextFormatterConfiguration => TextFormatting;
 
 		/// <inheritdoc cref="EcsTextFormatterConfiguration{TEcsDocument}"/>
 		public EcsTextFormatterConfiguration<TEcsDocument> TextFormatting { get; set; } = new();
@@ -60,11 +88,7 @@ namespace Elastic.Serilog.Sinks
 		/// <inheritdoc cref="BootstrapMethod"/>
 		public BootstrapMethod BootstrapMethod { get; set; }
 
-		/// <summary>
-		/// The ILM Policy to apply, see the following for more details:
-		/// <para>https://www.elastic.co/guide/en/elasticsearch/reference/current/index-lifecycle-management.html</para>
-		/// Defaults to `logs` which is shipped by default with Elasticsearch
-		/// </summary>
+		/// <inheritdoc cref="IElasticsearchSinkOptions.IlmPolicy"/>
 		public string? IlmPolicy { get; set; }
 
 		/// <summary>
@@ -99,9 +123,13 @@ namespace Elastic.Serilog.Sinks
 		private readonly EcsTextFormatterConfiguration<TEcsDocument> _formatterConfiguration;
 		private readonly EcsDataStreamChannel<TEcsDocument> _channel;
 
+		/// <inheritdoc cref="IElasticsearchSinkOptions"/>
+		public IElasticsearchSinkOptions Options { get; }
+
 		/// <inheritdoc cref="ElasticsearchSink"/>>
 		public ElasticsearchSink(ElasticsearchSinkOptions<TEcsDocument> options)
 		{
+			Options = options;
 			_formatterConfiguration = options.TextFormatting;
 			var channelOptions = new DataStreamChannelOptions<TEcsDocument>(options.Transport)
 			{
