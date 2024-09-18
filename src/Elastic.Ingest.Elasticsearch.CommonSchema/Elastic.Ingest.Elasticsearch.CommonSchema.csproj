@@ -10,7 +10,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Elastic.Ingest.Elasticsearch" Version="0.7.1" />
+    <PackageReference Include="Elastic.Ingest.Elasticsearch" Version="0.7.2" />
   </ItemGroup>
 
 </Project>
