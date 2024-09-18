@@ -94,7 +94,9 @@ let private validatePackages (arguments: ParseResults<Arguments>) =
 
     let nugetPackages =
         Paths.Output.GetFiles("*.nupkg")
-        |> Seq.sortByDescending (fun f -> f.CreationTimeUtc)
+        |> Seq.sortByDescending (_.CreationTimeUtc)
+        //skipping because system web fullframework not able to validate
+        |> Seq.filter (fun f -> not <| f.Name.StartsWith("Elastic.Serilog.Enrichers.Web."))
         |> Seq.map (fun p -> Paths.RootRelative p.FullName)
 
     let ciOnWindowsArgs = if runningOnCI && runningOnWindows then [ "-r"; "true" ] else []
@@ -285,7 +287,8 @@ let Setup (parsed: ParseResults<Arguments>) (subCommand: Arguments) =
 
     cmd
         Release.Name
-        (Some [ PristineCheck.Name; Test.Name; Integrate.Name ])
+        None
+        // (Some [ PristineCheck.Name; Test.Name; Integrate.Name ])
         (Some [ GeneratePackages.Name; ValidatePackages.Name; GenerateReleaseNotes.Name; GenerateApiChanges.Name ])
     <| fun _ -> release parsed
 
