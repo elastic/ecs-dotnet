@@ -1,0 +1,20 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <LangVersion>preview</LangVersion>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\Elastic.Serilog.Sinks\Elastic.Serilog.Sinks.csproj"/>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.Configuration" Version="7.0.0"/>
+    <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="7.0.0"/>
+    <PackageReference Include="Serilog.Settings.Configuration" Version="8.0.2"/>
+  </ItemGroup>
+
+</Project>

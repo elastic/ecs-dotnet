@@ -17,16 +17,13 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 
-builder.Host.ConfigureLogging((_, loggingBuilder) =>
-{
-	loggingBuilder.AddElasticsearch(client.Transport, log =>
+builder.Logging.AddElasticsearch(client.Transport, log =>
 	{
 		log.Tags = new[] { "debug" };
 	}, channel =>
 	{
 		channel.ExportResponseCallback = (response, buffer) => Console.WriteLine($"Written  {buffer.Count} logs to Elasticsearch: {response.ApiCallDetails.HttpStatusCode}");
 	});
-});
 var app = builder.Build();
 
 app.UseAuthorization();

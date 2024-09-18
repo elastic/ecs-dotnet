@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net6.0</TargetFramework>
+    <TargetFramework>net8.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <OutputType>Library</OutputType>
@@ -11,7 +11,7 @@
   <ItemGroup>
     <PackageReference Include="Elastic.Clients.Elasticsearch" Version="8.12.1" />
     <PackageReference Include="Elastic.Elasticsearch.Xunit" Version="0.4.3" />
-    <PackageReference Include="Elastic.Ingest.Elasticsearch" Version="0.7.0" />
+    <PackageReference Include="Elastic.Ingest.Elasticsearch" Version="0.7.1" />
 
   </ItemGroup>
 

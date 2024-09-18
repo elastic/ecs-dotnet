@@ -28,18 +28,18 @@ type Arguments =
     interface IArgParserTemplate with
         member this.Usage =
             match this with
-            | Clean _ -> "clean known output locations"
-            | Build _ -> "Run build"
-            | Test _ -> "Run all the unit tests"
-            | Integrate _ -> "Run all the integration tests "
-            | Release _ -> "runs build, tests, and create and validates the packages shy of publishing them"
-            | Publish _ -> "Runs the full release"
+            | Clean -> "clean known output locations"
+            | Build -> "Run build"
+            | Test -> "Run all the unit tests"
+            | Integrate -> "Run all the integration tests "
+            | Release -> "runs build, tests, and create and validates the packages shy of publishing them"
+            | Publish -> "Runs the full release"
 
             | SingleTarget _ -> "Runs the provided sub command without running their dependencies"
             | Token _ -> "Token to be used to authenticate with github"
             | Commit _ -> "Commit hash to be used to fetch the logging spec"
             | CleanCheckout _ -> "Skip the clean checkout check that guards the release/publish targets"
-            | UpdateSpec _ -> "Updates the logging spec"
+            | UpdateSpec -> "Updates the logging spec"
             | PristineCheck
             | GeneratePackages
             | ValidatePackages
