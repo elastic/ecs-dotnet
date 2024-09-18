@@ -53,7 +53,7 @@ namespace Elastic.Serilog.Sinks
 			LogEventLevel restrictedToMinimumLevel = LevelAlias.Minimum
 		)
 		{
-			var transportConfig = useSniffing ? TransportHelper.Static(nodes) : TransportHelper.Sniffing(nodes);
+			var transportConfig = !useSniffing ? TransportHelper.Static(nodes) : TransportHelper.Sniffing(nodes);
 			configureTransport?.Invoke(transportConfig);
 
 			var sinkOptions = new ElasticsearchSinkOptions(new DistributedTransport(transportConfig));
@@ -78,7 +78,7 @@ namespace Elastic.Serilog.Sinks
 			LogEventLevel restrictedToMinimumLevel = LevelAlias.Minimum
 		) where TEcsDocument : EcsDocument, new()
 		{
-			var transportConfig = useSniffing ? TransportHelper.Static(nodes) : TransportHelper.Sniffing(nodes);
+			var transportConfig = !useSniffing ? TransportHelper.Static(nodes) : TransportHelper.Sniffing(nodes);
 			configureTransport?.Invoke(transportConfig);
 			var sinkOptions = new ElasticsearchSinkOptions<TEcsDocument>(new DistributedTransport(transportConfig));
 			configureOptions?.Invoke(sinkOptions);
