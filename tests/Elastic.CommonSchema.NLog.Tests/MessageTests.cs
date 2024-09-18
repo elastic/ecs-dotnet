@@ -149,7 +149,7 @@ namespace Elastic.CommonSchema.NLog.Tests
 			var ecsEvents = ToEcsEvents(logEvents);
 
 			var (_, info) = ecsEvents.First();
-			info.Message.Should().StartWith("Info {\"MethodInfoProperty");
+			info.Message.Should().StartWith("Info {\"TypeProperty");
 			info.Metadata.Should().ContainKey("EvilValue");
 
 			var x = info.Metadata["EvilValue"] as Dictionary<string, object>;
@@ -167,7 +167,7 @@ namespace Elastic.CommonSchema.NLog.Tests
 			var ecsEvents = ToEcsEvents(logEvents);
 
 			var (_, info) = ecsEvents.First();
-			info.Message.Should().StartWith("Info {\"MethodInfoProperty");
+			info.Message.Should().StartWith("Info {\"TypeProperty");
 			info.Metadata.Should().NotContainKey("EvilValue");
 			info.Metadata.Should().ContainKey("__failures__");
 
