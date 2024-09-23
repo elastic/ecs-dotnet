@@ -14,7 +14,7 @@ await Host.CreateDefaultBuilder(args)
 	{
 		configurationBuilder.SetBasePath(AppDomain.CurrentDomain.BaseDirectory);
 	})
-	.ConfigureLogging((_, loggingBuilder) => loggingBuilder.AddEcsConsole(c =>
+	.ConfigureLogging((_, loggingBuilder) => loggingBuilder.AddEcsConsole(configure: c =>
 	{
 		c.MapCustom = l => l.Organization = new Organization { Name = "my-organization" };
 	}))
