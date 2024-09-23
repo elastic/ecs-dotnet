@@ -1,6 +1,6 @@
 # Elastic.Serilog.Enrichers.Web
 
-Adds extension methods for aspnet (core and fullframework) to enrich emitted ECS data with important HTTP information.
+Adds extension methods for ASP.NET (Core and Full Framework) to enrich emitted ECS data with important HTTP information.
 
 ```csharp
 .UseSerilog((ctx, config) =>
