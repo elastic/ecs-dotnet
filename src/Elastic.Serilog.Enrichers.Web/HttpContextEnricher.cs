@@ -6,7 +6,7 @@ using Elastic.CommonSchema.Serilog.Adapters;
 using Elastic.Serilog.Enrichers.Web.Adapters;
 using Serilog.Core;
 using Serilog.Events;
-#if NETCOREAPP
+#if NET
 using Microsoft.AspNetCore.Http;
 #else
 using System.Web;
@@ -18,7 +18,7 @@ namespace Elastic.Serilog.Enrichers.Web;
 /// <summary>Include current HTTP context data on any ECS document created</summary>
 public class HttpContextEnricher : ILogEventEnricher
 {
-#if NETCOREAPP
+#if NET
 	private readonly IHttpContextAccessor _httpContextAccessor;
 
 	/// <summary>Include current HTTP context data on any ECS document created</summary>

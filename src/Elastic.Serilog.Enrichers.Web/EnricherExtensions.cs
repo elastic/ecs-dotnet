@@ -4,7 +4,7 @@
 
 using Serilog;
 using Serilog.Configuration;
-#if NETCOREAPP
+#if NET
 using Microsoft.AspNetCore.Http;
 #endif
 
@@ -15,7 +15,7 @@ namespace Elastic.Serilog.Enrichers.Web;
 /// </summary>
 public static class EnricherExtensions
 {
-#if NETCOREAPP
+#if NET
 	/// <summary>Include current HTTP context data on any ECS document created</summary>
 	/// <param name="enrichmentConfiguration">Logger enrichment configuration.</param>
 	/// <param name="httpContextAccessor"></param>
