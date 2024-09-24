@@ -4,11 +4,9 @@ using Elastic.CommonSchema.Generator.Schema.DTO;
 
 namespace Elastic.CommonSchema.Generator.Projection
 {
-	public class FieldSetBaseClass
+	public class FieldSetBaseClass(FieldSet fieldSet)
 	{
-		public FieldSetBaseClass(FieldSet fieldSet) => FieldSet = fieldSet;
-
-		public FieldSet FieldSet { get; }
+		public FieldSet FieldSet { get; } = fieldSet;
 		public string Name => $"{FieldSet.Name.PascalCase()}FieldSet";
 
 		public Dictionary<string, PropertyReference> Properties { get; } = new();
@@ -23,16 +21,10 @@ namespace Elastic.CommonSchema.Generator.Projection
 			Properties.Values.OfType<InlineObjectPropertyReference>();
 	}
 
-	public class InlineObject
+	public class InlineObject(string name, Field field)
 	{
-		public string Name { get; }
-		public Field Field { get; }
-
-		public InlineObject(string name, Field field)
-		{
-			Name = name.PascalCase();
-			Field = field;
-		}
+		public string Name { get; } = name.PascalCase();
+		public Field Field { get; } = field;
 
 		public Dictionary<string, PropertyReference> Properties { get; } = new();
 
@@ -41,25 +33,17 @@ namespace Elastic.CommonSchema.Generator.Projection
 		public IEnumerable<ValueTypePropertyReference> ValueProperties =>
 			Properties.Values.OfType<ValueTypePropertyReference>();
 
-		public IEnumerable<InlineObjectPropertyReference> InlineObjectProperties =>
-			Properties.Values.OfType<InlineObjectPropertyReference>();
-
 		public IEnumerable<EntityPropertyReference> EntityProperties => EntityReferences.Values;
 
 		public bool IsDictionary => ValueProperties.Count() + EntityProperties.Count() == 0;
 	}
 
-	public class SelfReferentialReusedEntityClass : EntityClass
+	public class SelfReferentialReusedEntityClass
+		(string name, FieldSetBaseClass baseFieldSet, string reuseDescription, bool isArray)
+		: EntityClass(name, baseFieldSet)
 	{
-		public SelfReferentialReusedEntityClass(string name, FieldSetBaseClass baseFieldSet, string reuseDescription, bool isArray)
-			: base(name, baseFieldSet)
-		{
-			ReuseDescription = reuseDescription;
-			IsArray = isArray;
-		}
-
-		public string ReuseDescription { get; }
-		public bool IsArray { get; }
+		public string ReuseDescription { get; } = reuseDescription;
+		public bool IsArray { get; } = isArray;
 	}
 
 
@@ -79,7 +63,32 @@ namespace Elastic.CommonSchema.Generator.Projection
 		public Dictionary<string, EntityPropertyReference> EntityReferences { get; } = new();
 
 		public IEnumerable<EntityPropertyReference> EntityProperties => EntityReferences.Values;
+		//provided later
+		public List<AssignableEntityInterface> AssignableInterfaces { get; set; } = new();
+
+		public string AssignableInterfacesAsString
+		{
+			get
+			{
+				if (!AssignableInterfaces.Any()) return string.Empty;
+				return $", {string.Join(", ", AssignableInterfaces.Select(i => i.Name))}";
+			}
+		}
 	}
 
+
+	public class AssignableEntityInterface
+	{
+		public AssignableEntityInterface(string name, EntityPropertyReference property, List<EntityClass> entities)
+		{
+			Name = $"I{name}";
+			Property = property;
+			Entities = entities;
+		}
+
+		public EntityPropertyReference Property { get; }
+		public List<EntityClass> Entities { get; }
+		public string Name { get; }
+	}
 
 }

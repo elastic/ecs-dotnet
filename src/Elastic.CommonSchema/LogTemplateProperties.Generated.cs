@@ -33,7 +33,7 @@ namespace Elastic.CommonSchema
 		/// If the event source has no original timestamp, this value is typically populated by the first time the event was received by the pipeline.
 		/// Required field for all events.
 		/// <para><br/>This is a required field</para></para>
-		/// <example>5/23/2016 8:05:34AM</example>
+		/// <example>5/23/2016 8:05:34 AM</example>
 		///</summary>
 		public static string Timestamp = nameof(Timestamp);
 		///<summary>
@@ -314,7 +314,7 @@ namespace Elastic.CommonSchema
 		///<summary>
 		/// <para><c>code_signature.timestamp</c></para>
 		/// <para>Date and time when the code signature was generated and signed.</para>
-		/// <example>1/1/2021 12:10:30PM</example>
+		/// <example>1/1/2021 12:10:30 PM</example>
 		///</summary>
 		public static string CodeSignatureTimestamp = nameof(CodeSignatureTimestamp);
 		///<summary>
@@ -758,7 +758,7 @@ namespace Elastic.CommonSchema
 		///<summary>
 		/// <para><c>email.delivery_timestamp</c></para>
 		/// <para>The date and time when the email message was received by the service or client.</para>
-		/// <example>11/10/2020 10:12:34PM</example>
+		/// <example>11/10/2020 10:12:34 PM</example>
 		///</summary>
 		public static string EmailDeliveryTimestamp = nameof(EmailDeliveryTimestamp);
 		///<summary>
@@ -783,7 +783,7 @@ namespace Elastic.CommonSchema
 		///<summary>
 		/// <para><c>email.origination_timestamp</c></para>
 		/// <para>The date and time the email message was composed. Many email clients will fill in this value automatically when the message is sent by a user.</para>
-		/// <example>11/10/2020 10:12:34PM</example>
+		/// <example>11/10/2020 10:12:34 PM</example>
 		///</summary>
 		public static string EmailOriginationTimestamp = nameof(EmailOriginationTimestamp);
 		///<summary>
@@ -867,7 +867,7 @@ namespace Elastic.CommonSchema
 		/// This field is distinct from `@timestamp` in that `@timestamp` typically contain the time extracted from the original event.
 		/// In most situations, these two timestamps will be slightly different. The difference can be used to calculate the delay between your source generating an event, and the time when your agent first processed it. This can be used to monitor your agent's or pipeline's ability to keep up with your event source.
 		/// In case the two timestamps are identical, `@timestamp` should be used.</para>
-		/// <example>5/23/2016 8:05:34AM</example>
+		/// <example>5/23/2016 8:05:34 AM</example>
 		///</summary>
 		public static string EventCreated = nameof(EventCreated);
 		///<summary>
@@ -908,7 +908,7 @@ namespace Elastic.CommonSchema
 		/// <para>Timestamp when an event arrived in the central data store.
 		/// This is different from `@timestamp`, which is when the event originally occurred.  It's also different from `event.created`, which is meant to capture the first time an agent saw the event.
 		/// In normal conditions, assuming no tampering, the timestamps should chronologically look like this: `@timestamp` &lt; `event.created` &lt; `event.ingested`.</para>
-		/// <example>5/23/2016 8:05:35AM</example>
+		/// <example>5/23/2016 8:05:35 AM</example>
 		///</summary>
 		public static string EventIngested = nameof(EventIngested);
 		///<summary>
@@ -2121,7 +2121,7 @@ namespace Elastic.CommonSchema
 		///<summary>
 		/// <para><c>process.end</c></para>
 		/// <para>The time the process ended.</para>
-		/// <example>5/23/2016 8:05:34AM</example>
+		/// <example>5/23/2016 8:05:34 AM</example>
 		///</summary>
 		public static string ProcessEnd = nameof(ProcessEnd);
 		///<summary>
@@ -2176,7 +2176,7 @@ namespace Elastic.CommonSchema
 		///<summary>
 		/// <para><c>process.start</c></para>
 		/// <para>The time the process started.</para>
-		/// <example>5/23/2016 8:05:34AM</example>
+		/// <example>5/23/2016 8:05:34 AM</example>
 		///</summary>
 		public static string ProcessStart = nameof(ProcessStart);
 		///<summary>
@@ -2667,7 +2667,7 @@ namespace Elastic.CommonSchema
 		///<summary>
 		/// <para><c>threat.indicator.first_seen</c></para>
 		/// <para>The date and time when intelligence source first reported sighting this indicator.</para>
-		/// <example>11/5/2020 5:25:47PM</example>
+		/// <example>11/5/2020 5:25:47 PM</example>
 		///</summary>
 		public static string ThreatIndicatorFirstSeen = nameof(ThreatIndicatorFirstSeen);
 		///<summary>
@@ -2679,7 +2679,7 @@ namespace Elastic.CommonSchema
 		///<summary>
 		/// <para><c>threat.indicator.last_seen</c></para>
 		/// <para>The date and time when intelligence source last reported sighting this indicator.</para>
-		/// <example>11/5/2020 5:25:47PM</example>
+		/// <example>11/5/2020 5:25:47 PM</example>
 		///</summary>
 		public static string ThreatIndicatorLastSeen = nameof(ThreatIndicatorLastSeen);
 		///<summary>
@@ -2706,7 +2706,7 @@ namespace Elastic.CommonSchema
 		///<summary>
 		/// <para><c>threat.indicator.modified_at</c></para>
 		/// <para>The date and time when intelligence source last modified information for this indicator.</para>
-		/// <example>11/5/2020 5:25:47PM</example>
+		/// <example>11/5/2020 5:25:47 PM</example>
 		///</summary>
 		public static string ThreatIndicatorModifiedAt = nameof(ThreatIndicatorModifiedAt);
 		///<summary>
@@ -2850,13 +2850,13 @@ namespace Elastic.CommonSchema
 		///<summary>
 		/// <para><c>tls.client.not_after</c></para>
 		/// <para>Date/Time indicating when client certificate is no longer considered valid.</para>
-		/// <example>1/1/2021 12:00:00AM</example>
+		/// <example>1/1/2021 12:00:00 AM</example>
 		///</summary>
 		public static string TlsClientNotAfter = nameof(TlsClientNotAfter);
 		///<summary>
 		/// <para><c>tls.client.not_before</c></para>
 		/// <para>Date/Time indicating when client certificate is first considered valid.</para>
-		/// <example>1/1/1970 12:00:00AM</example>
+		/// <example>1/1/1970 12:00:00 AM</example>
 		///</summary>
 		public static string TlsClientNotBefore = nameof(TlsClientNotBefore);
 		///<summary>
@@ -2934,13 +2934,13 @@ namespace Elastic.CommonSchema
 		///<summary>
 		/// <para><c>tls.server.not_after</c></para>
 		/// <para>Timestamp indicating when server certificate is no longer considered valid.</para>
-		/// <example>1/1/2021 12:00:00AM</example>
+		/// <example>1/1/2021 12:00:00 AM</example>
 		///</summary>
 		public static string TlsServerNotAfter = nameof(TlsServerNotAfter);
 		///<summary>
 		/// <para><c>tls.server.not_before</c></para>
 		/// <para>Timestamp indicating when server certificate is first considered valid.</para>
-		/// <example>1/1/1970 12:00:00AM</example>
+		/// <example>1/1/1970 12:00:00 AM</example>
 		///</summary>
 		public static string TlsServerNotBefore = nameof(TlsServerNotBefore);
 		///<summary>
@@ -3218,13 +3218,13 @@ namespace Elastic.CommonSchema
 		///<summary>
 		/// <para><c>x509.not_after</c></para>
 		/// <para>Time at which the certificate is no longer considered valid.</para>
-		/// <example>7/16/2020 3:15:39AM</example>
+		/// <example>7/16/2020 3:15:39 AM</example>
 		///</summary>
 		public static string X509NotAfter = nameof(X509NotAfter);
 		///<summary>
 		/// <para><c>x509.not_before</c></para>
 		/// <para>Time at which the certificate is first considered valid.</para>
-		/// <example>8/16/2019 1:40:25AM</example>
+		/// <example>8/16/2019 1:40:25 AM</example>
 		///</summary>
 		public static string X509NotBefore = nameof(X509NotBefore);
 		///<summary>

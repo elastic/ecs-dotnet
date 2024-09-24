@@ -6,7 +6,7 @@
 /*
 IMPORTANT NOTE
 ==============
-This file has been generated.
+This file has been generated. 
 If you wish to submit a PR please modify the original csharp file and submit the PR with that change. Thanks!
 */
 
@@ -63,7 +63,5 @@ namespace Elastic.CommonSchema.Serialization;
 [JsonSerializable(typeof(Vlan))]
 [JsonSerializable(typeof(Vulnerability))]
 [JsonSerializable(typeof(X509))]
-[JsonSerializable(typeof(LogEntityJsonConverter.LogOriginInvalid))]
-[JsonSerializable(typeof(LogEntityJsonConverter.LogFileOriginInvalid))]
 [JsonSourceGenerationOptions(DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull)]
 internal partial class EcsJsonContext : JsonSerializerContext { }

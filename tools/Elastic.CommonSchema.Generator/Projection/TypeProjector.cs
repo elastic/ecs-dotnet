@@ -1,8 +1,11 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using CsQuery.Engine.PseudoClassSelectors;
 using Elastic.CommonSchema.Generator.Schema;
 using Elastic.CommonSchema.Generator.Schema.DTO;
+using Microsoft.CodeAnalysis;
+using YamlDotNet.Core.Tokens;
 
 namespace Elastic.CommonSchema.Generator.Projection
 {
@@ -25,6 +28,8 @@ namespace Elastic.CommonSchema.Generator.Projection
 		public ReadOnlyCollection<string> Warnings { get; set; }
 		public IReadOnlyCollection<IndexTemplate> IndexTemplates { get; set; }
 		public IReadOnlyCollection<IndexComponent> IndexComponents { get; set; }
+
+		public List<AssignableEntityInterface> AssignableInterfaces { get; set; }
 		// ReSharper restore PropertyCanBeMadeInitOnly.Global
 	}
 
@@ -97,12 +102,40 @@ namespace Elastic.CommonSchema.Generator.Projection
 
 			var nestedEntityTypes = CreateEntityTypes();
 
+			var entities = EntityClasses.Values.Where(e => e.Name != "EcsDocument" && e.BaseFieldSet.FieldSet.Root != true).ToList();
+			var assignables = entities
+				.Where(e => e.EntityReferences.Count > 0)
+				.SelectMany(e => e.EntityReferences.Select(r => (EntityClass: e, EntityPropertyReference: r)).ToList())
+				.Select(r =>
+				{
+					var prop = r.EntityPropertyReference;
+					var sharedKey = prop.Key.Split('.') switch
+					{
+						[.. { Length: > 1 } ] a => string.Join('.', a[1..]).PascalCase(),
+						_ => prop.Key.PascalCase()
+					};
+					if (r.EntityPropertyReference.Value.Entity is SelfReferentialReusedEntityClass s)
+						sharedKey = s.Name;
+					return (Key: sharedKey, r.EntityClass, r.EntityPropertyReference);
+				})
+				.GroupBy(e => e.Key)
+				.SelectMany(g =>
+					g.Select(r => r.EntityPropertyReference.Value).DistinctBy(r=>r.ClrType)
+						.Select(r => new AssignableEntityInterface(g.Key, r, g.Select(r=>r.EntityClass).ToList()))
+					)
+				//.DistinctBy(g=>g.Name)
+				.ToList();
+			foreach (var entity in entities)
+			{
+				entity.AssignableInterfaces = assignables.Where(a => a.Entities.Contains(entity)).DistinctBy(a=>a.Name).ToList();
+			}
+
 			Projection = new CommonSchemaTypesProjection
 			{
 				Version = Schema.Version,
 				GitRef = Schema.GitRef,
 				FieldSets = FieldSetsBaseClasses.Values.Where(e=>e.FieldSet.Root != true || e.FieldSet.Name == "base" ).ToList(),
-				EntityClasses = EntityClasses.Values.Where(e=>e.Name != "EcsDocument" && e.BaseFieldSet.FieldSet.Root != true).ToList(),
+				EntityClasses = entities,
 				EntitiesWithPropertiesAtRoot = new Dictionary<EntityClass, string[]>
 				{
 					{ EntityClasses.Values.First(e=>e.Name == "Log"), new []{"level"}},
@@ -114,8 +147,9 @@ namespace Elastic.CommonSchema.Generator.Projection
 				Warnings = Warnings.AsReadOnly(),
 				IndexTemplates = Schema.Templates.Select(kv=>new IndexTemplate(kv.Key, kv.Value, Schema.Version)).OrderBy(t=>t.Name).ToList(),
 				IndexComponents = Schema.Components.Select(kv=>new IndexComponent(kv.Key, kv.Value, Schema.Version)).OrderBy(t=>t.Name).ToList(),
-
+				AssignableInterfaces = assignables
 			};
+
 			return Projection;
 		}
 
@@ -177,7 +211,7 @@ namespace Elastic.CommonSchema.Generator.Projection
 				var nestedPath = parentPaths.FirstOrDefault(p => nestedEntityClasses.ContainsKey(p));
 				var entityPath = parentPaths.FirstOrDefault(p => EntityClasses.ContainsKey(p));
 				var description = entity is SelfReferentialReusedEntityClass s ? s.ReuseDescription : entity.BaseFieldSet.FieldSet.Description;
-				var isArray = entity is SelfReferentialReusedEntityClass ss && ss.IsArray;
+				var isArray = entity is SelfReferentialReusedEntityClass { IsArray: true };
 				if (!string.IsNullOrEmpty(nestedPath))
 				{
 					var nestedEntityClassRef = new EntityPropertyReference(nestedPath, fullName, entity, description, isArray);

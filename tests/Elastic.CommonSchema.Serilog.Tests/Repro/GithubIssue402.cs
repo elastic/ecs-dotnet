@@ -24,6 +24,8 @@ public class GithubIssue402 : LogTestsBase
 		var (_, info) = ecsEvents.First();
 		info.Message.Should().Be("Logging something with log context");
 
+		info.Client.Should().NotBeNull();
+
 		info.Client.User.Id.Should().Be("regis");
 		//info.Labels.Should().NotBeNull().And.ContainKey("client.user.id");
 		//info.Labels["ShipmentId"].Should().Be("my-shipment-id");

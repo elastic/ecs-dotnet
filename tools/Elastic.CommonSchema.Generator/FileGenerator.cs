@@ -36,6 +36,7 @@ namespace Elastic.CommonSchema.Generator
 				{ m => Generate(m, "Entities"), "Entities" },
 				{ m => Generate(m, "Entities.ShouldSerialize"), "Generate ShouldSerialize special handling for Log and ECS" },
 				{ m => Generate(m, "InlineObjects"), "Inline Objects" },
+				{ m => Generate(m, "AssignableInterfaces"), "Assignable Interfaces" },
 				{ m => Generate(m, "IndexTemplates"), "Elasticsearch index templates" },
 				{ m => Generate(m, "IndexComponents"), "Elasticsearch index components" },
 			};
