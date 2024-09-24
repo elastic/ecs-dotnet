@@ -1,0 +1,31 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFrameworks>net6.0;net8.0;net461</TargetFrameworks>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <Title>Elastic Common Schema (ECS) Serilog Enricher for Web proeprties</Title>
+    <Description>Serilog enricher for ASP.NET (Core) to inject more data in emitted Elastic Common Schema (ECS) documents.</Description>
+    <IsPackable>True</IsPackable>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Elastic.CommonSchema.Serilog\Elastic.CommonSchema.Serilog.csproj" />
+    <ProjectReference Include="..\Elastic.CommonSchema\Elastic.CommonSchema.csproj"/>
+  </ItemGroup>
+  <ItemGroup>
+    <FrameworkReference Condition="$(DefineConstants.Contains(NETCOREAPP))" Include="Microsoft.AspNetCore.App"/>
+    <Reference Condition="$(DefineConstants.Contains(FULLFRAMEWORK))" Include="System.Web" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Serilog" Version="2.9.0.0"/>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="Lib\UAParser.regexes.yaml" />
+    <EmbeddedResource Include="Lib\UAParser.regexes.yaml" />
+  </ItemGroup>
+
+</Project>
