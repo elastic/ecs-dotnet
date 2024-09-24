@@ -6,7 +6,7 @@ using Microsoft.Extensions.Logging.Console;
 namespace Elastic.Extensions.Logging.Console;
 
 /// <summary>  </summary>
-public class EcsConsoleFormatterOptions : ConsoleFormatterOptions, ILogEventCreationOptions
+public class EcsConsoleFormatterOptions : ConsoleFormatterOptions, ILogEventCreationOptions<LogEvent>
 {
 	/// <inheritdoc cref="IEcsDocumentCreationOptions.IncludeHost"/>
 	public bool IncludeHost { get; set; } = true;
@@ -25,4 +25,7 @@ public class EcsConsoleFormatterOptions : ConsoleFormatterOptions, ILogEventCrea
 
 	/// <inheritdoc cref="ILogEventCreationOptions.ListSeparator"/>
 	public string ListSeparator { get; set; } = ", ";
+
+	/// <inheritdoc cref="ILogEventCreationOptions{TEcsDocument}.MapCustom"/>
+	public Action<LogEvent>? MapCustom { get; set; }
 }

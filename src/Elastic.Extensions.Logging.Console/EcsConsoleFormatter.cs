@@ -34,10 +34,10 @@ public sealed class EcsConsoleFormatter : ConsoleFormatter, IDisposable
 		var logLevel = logEntry.LogLevel;
 		var categoryName = logEntry.Category;
 		var eventId = logEntry.EventId;
+
+		logEvent.Message = message;
 		logEvent.Log = new Log { Level = logLevel.ToEcsLogLevelString(), Logger = categoryName };
 		logEvent.Event = new Event { Action = eventId.Name, Code = eventId.Id.ToString(), Severity = logLevel.ToEcsSeverity() };
-		logEvent.Message = message;
-
 		logEvent.Agent = DefaultAgent;
 
 		if (_options.Tags is { Length: > 0 }) logEvent.Tags = _options.Tags;
@@ -47,6 +47,8 @@ public sealed class EcsConsoleFormatter : ConsoleFormatter, IDisposable
 
 		// These will overwrite any scope values with the same name
 		logEvent.AddStateValues(logEntry.State, _options);
+
+		_options.MapCustom?.Invoke(logEvent);
 
 		textWriter.WriteLine(logEvent.Serialize());
 	}

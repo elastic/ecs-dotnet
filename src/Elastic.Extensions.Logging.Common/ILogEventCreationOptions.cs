@@ -18,3 +18,13 @@ public interface ILogEventCreationOptions : IEcsDocumentCreationOptions
 	/// </summary>
 	string ListSeparator { get; set; }
 }
+
+/// <inheritdoc cref="ILogEventCreationOptions"/>
+public interface ILogEventCreationOptions<TEcsDocument> : ILogEventCreationOptions
+	where TEcsDocument : EcsDocument, new()
+{
+	/// <summary>
+	/// Allows you to enrich <typeparamref name="TEcsDocument"/> using <see cref="LogEvent"/> before its being formatted
+	/// </summary>
+	Action<TEcsDocument>? MapCustom { get; set; }
+}
