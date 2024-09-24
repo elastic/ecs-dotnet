@@ -1,6 +1,7 @@
 using System.Linq;
 using System.Text.RegularExpressions;
 using Elastic.CommonSchema.Generator.Schema.DTO;
+using YamlDotNet.Core.Tokens;
 
 namespace Elastic.CommonSchema.Generator.Projection
 {
@@ -80,6 +81,8 @@ namespace Elastic.CommonSchema.Generator.Projection
 	{
 		public ValueTypePropertyReference(string parentPath, string fullPath, Field field) : base(parentPath, fullPath)
 		{
+			ParentPath = parentPath;
+			Field = field;
 			ClrType = field.GetClrType();
 			ReadJsonType = ClrType.PascalCase();
 			CastFromObject = field.GetCastFromObject();
@@ -87,11 +90,26 @@ namespace Elastic.CommonSchema.Generator.Projection
 			Example = NormalizeDescription(field.Example?.ToString() ?? string.Empty);
 		}
 
+		internal ValueTypePropertyReference(string parentPath, string prefix, string fullPath, Field field, EntityClass entity)
+			: this(parentPath, $"{prefix}.{fullPath}", field)
+		{
+			OriginalFullPath = fullPath;
+			IsEntityDispatch = true;
+			CastFromObject = $"TrySet{entity.Name}";
+		}
+		public bool IsEntityDispatch { get; }
+		public string OriginalFullPath { get; }
+		internal string ParentPath { get; }
+		internal Field Field { get; }
+
 		public string CastFromObject { get; }
 		public string ReadJsonType { get; }
 		public string ClrType { get; }
 		public override string Description { get; }
 		public override string Example { get; }
+
+		public ValueTypePropertyReference CreateSettableTypePropertyReference(string prefix, EntityClass entity) =>
+			new(ParentPath, prefix, FullPath, Field, entity);
 	}
 
 	public class InlineObjectPropertyReference : PropertyReference

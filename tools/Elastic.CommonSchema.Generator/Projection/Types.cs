@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Elastic.CommonSchema.Generator.Schema.DTO;
@@ -11,14 +12,14 @@ namespace Elastic.CommonSchema.Generator.Projection
 
 		public Dictionary<string, PropertyReference> Properties { get; } = new();
 
-		public IEnumerable<ValueTypePropertyReference> SettableProperties =>
-			ValueProperties.Where(p => !string.IsNullOrEmpty(p.CastFromObject));
-
 		public IEnumerable<ValueTypePropertyReference> ValueProperties =>
 			Properties.Values.OfType<ValueTypePropertyReference>();
 
 		public IEnumerable<InlineObjectPropertyReference> InlineObjectProperties =>
 			Properties.Values.OfType<InlineObjectPropertyReference>();
+
+		public IEnumerable<ValueTypePropertyReference> SettableProperties => ValueProperties.Where(p => !string.IsNullOrEmpty(p.CastFromObject));
+
 	}
 
 	public class InlineObject(string name, Field field)
@@ -51,11 +52,13 @@ namespace Elastic.CommonSchema.Generator.Projection
 	{
 		public EntityClass(string name, FieldSetBaseClass baseFieldSet)
 		{
+			OriginalName = name;
 			Name = name.PascalCase();
 			if (Name == "Base") Name = "EcsDocument";
 			BaseFieldSet = baseFieldSet;
 		}
 
+		internal string OriginalName { get; }
 		public string Name { get; }
 		public FieldSetBaseClass BaseFieldSet { get; }
 		public bool Partial => Name is "EcsDocument" or "Log" or "Ecs";
@@ -63,6 +66,13 @@ namespace Elastic.CommonSchema.Generator.Projection
 		public Dictionary<string, EntityPropertyReference> EntityReferences { get; } = new();
 
 		public IEnumerable<EntityPropertyReference> EntityProperties => EntityReferences.Values;
+
+		public IEnumerable<ValueTypePropertyReference> SettableProperties =>
+			BaseFieldSet.ValueProperties.Where(p => !string.IsNullOrEmpty(p.CastFromObject))
+				.Concat(EntityProperties.SelectMany(e=>e.Entity.SettableProperties.Select(s=>s.CreateSettableTypePropertyReference(OriginalName, e.Entity))))
+				.DistinctBy(e=>e.Name);
+
+
 		//provided later
 		public List<AssignableEntityInterface> AssignableInterfaces { get; set; } = new();
 
@@ -91,4 +101,30 @@ namespace Elastic.CommonSchema.Generator.Projection
 		public string Name { get; }
 	}
 
+	public class PropDispatch
+	{
+		public string Name { get; }
+		public string FuncTarget { get; }
+		public string AssignTarget { get; }
+		public EntityClass Entity { get; }
+		public string Target { get; }
+
+		public PropDispatch(string name, EntityClass entity, string target)
+		{
+			Name = name;
+			FuncTarget = entity.Name;
+			AssignTarget = entity.Name;
+			Entity = entity;
+			Target = target;
+		}
+
+		public PropDispatch(EntityPropertyReference property)
+		{
+			Name = property.Name;
+			Entity = property.Entity;
+			Target = $"I{Name}";
+			FuncTarget = property.Entity.Name;
+			AssignTarget = property.Name;
+		}
+	}
 }

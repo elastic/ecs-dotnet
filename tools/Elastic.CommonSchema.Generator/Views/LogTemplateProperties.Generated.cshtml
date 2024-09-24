@@ -41,7 +41,7 @@ namespace Elastic.CommonSchema
 }
 @foreach (var entity in Model.EntityClasses)
 {
-	@foreach (var prop in entity.BaseFieldSet.SettableProperties)
+	@foreach (var prop in entity.SettableProperties)
 	{
 <text>		///<summary>
 		/// <para><c>@prop.FullPath</c></para>
@@ -65,7 +65,7 @@ namespace Elastic.CommonSchema
 }
 @foreach (var entity in Model.EntityClasses)
 {
-	@foreach (var prop in entity.BaseFieldSet.SettableProperties)
+	@foreach (var prop in entity.SettableProperties)
 	{
 <text>			"@prop.FullPath", @prop.LogTemplateAlternative,
 </text>

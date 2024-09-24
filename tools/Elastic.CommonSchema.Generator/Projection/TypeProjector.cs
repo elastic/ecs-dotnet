@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -30,6 +31,8 @@ namespace Elastic.CommonSchema.Generator.Projection
 		public IReadOnlyCollection<IndexComponent> IndexComponents { get; set; }
 
 		public List<AssignableEntityInterface> AssignableInterfaces { get; set; }
+
+		public List<PropDispatch> AssignablePropDispatches { get; set; }
 		// ReSharper restore PropertyCanBeMadeInitOnly.Global
 	}
 
@@ -102,7 +105,7 @@ namespace Elastic.CommonSchema.Generator.Projection
 
 			var nestedEntityTypes = CreateEntityTypes();
 
-			var entities = EntityClasses.Values.Where(e => e.Name != "EcsDocument" && e.BaseFieldSet.FieldSet.Root != true).ToList();
+			var entities = EntityClasses.Values;
 			var assignables = entities
 				.Where(e => e.EntityReferences.Count > 0)
 				.SelectMany(e => e.EntityReferences.Select(r => (EntityClass: e, EntityPropertyReference: r)).ToList())
@@ -135,7 +138,7 @@ namespace Elastic.CommonSchema.Generator.Projection
 				Version = Schema.Version,
 				GitRef = Schema.GitRef,
 				FieldSets = FieldSetsBaseClasses.Values.Where(e=>e.FieldSet.Root != true || e.FieldSet.Name == "base" ).ToList(),
-				EntityClasses = entities,
+				EntityClasses = EntityClasses.Values.Where(e => e.Name != "EcsDocument" && e.BaseFieldSet.FieldSet.Root != true).ToList(),
 				EntitiesWithPropertiesAtRoot = new Dictionary<EntityClass, string[]>
 				{
 					{ EntityClasses.Values.First(e=>e.Name == "Log"), new []{"level"}},
@@ -145,10 +148,40 @@ namespace Elastic.CommonSchema.Generator.Projection
 				InlineObjects = InlineObjects.Values.ToList(),
 				NestedEntityClasses = nestedEntityTypes.Values.ToList(),
 				Warnings = Warnings.AsReadOnly(),
-				IndexTemplates = Schema.Templates.Select(kv=>new IndexTemplate(kv.Key, kv.Value, Schema.Version)).OrderBy(t=>t.Name).ToList(),
-				IndexComponents = Schema.Components.Select(kv=>new IndexComponent(kv.Key, kv.Value, Schema.Version)).OrderBy(t=>t.Name).ToList(),
+				IndexTemplates = Schema.Templates.Select(kv => new IndexTemplate(kv.Key, kv.Value, Schema.Version)).OrderBy(t=>t.Name).ToList(),
+				IndexComponents = Schema.Components.Select(kv => new IndexComponent(kv.Key, kv.Value, Schema.Version)).OrderBy(t=>t.Name).ToList(),
 				AssignableInterfaces = assignables
 			};
+
+			var assignableToEcsDocument = Projection.EntityClasses.Select(e=> assignables.FirstOrDefault(a=>a.Property.Entity == e && a.Property.Name == e.Name)).Where(a => a != null).ToList();
+			Projection.Base.AssignableInterfaces = assignableToEcsDocument;
+
+			var eHashs = new HashSet<string>(Projection.EntityClasses.Select(e => e.Name));
+			var aHashs = new HashSet<string>(Projection.AssignableInterfaces.Select(e => e.Name.Substring(1, e.Name.Length - 1)));
+			eHashs.ExceptWith(aHashs);
+			var hashes = new HashSet<string>(eHashs.Concat(aHashs));
+			var propDispatches = new List<PropDispatch>();
+			foreach (var dispatch in hashes)
+			{
+				if (eHashs.Contains(dispatch))
+				{
+					var entityClass = Projection.EntityClasses.First(e => e.Name == dispatch);
+					propDispatches.Add(new PropDispatch(dispatch, entityClass, Projection.Base.Name));
+				}
+				else if (aHashs.Contains(dispatch))
+				{
+					var entityClass = Projection.AssignableInterfaces.FirstOrDefault(e => e.Name == $"I{dispatch}");
+					if (entityClass == null)
+					{
+						continue;
+					}
+					propDispatches.Add(new PropDispatch(entityClass.Property));
+				}
+			}
+			Projection.AssignablePropDispatches = propDispatches;
+
+			Console.WriteLine(string.Join(", ", eHashs));
+
 
 			return Projection;
 		}

@@ -119,7 +119,7 @@ namespace Elastic.CommonSchema
 	{
 		continue;
 	}
-	@foreach (var prop in entity.BaseFieldSet.SettableProperties) 
+	@foreach (var prop in entity.SettableProperties) 
 	{
 <text>				case "@prop.FullPath":
 				case "@prop.LogTemplateAlternative":
@@ -147,26 +147,37 @@ namespace Elastic.CommonSchema
 			};
 			return assign != null && assign(document, value);
 		}
-@foreach (var entity in Model.EntityClasses)
+@foreach (var dispatch in Model.AssignablePropDispatches)
 {
+	var entity = dispatch.Entity;
 <text>
-		public static bool TrySet@(entity.Name)(EcsDocument document, string path, object value)
+		public static bool TrySet@(dispatch.Name)(@dispatch.Target document, string path, object value)
 		{
-			Func@(Raw("<"))@(entity.Name), object, bool@(Raw(">")) assign = path switch
+			Func@(Raw("<"))@(dispatch.FuncTarget), object, bool@(Raw(">")) assign = path switch
 			{
-		@foreach (var prop in entity.BaseFieldSet.SettableProperties)
+		@foreach (var prop in entity.SettableProperties)
 		{
+			if (!prop.IsEntityDispatch)
+			{
+			//				"client.as.number" => static (e, v) => TrySetAs(e, "as.number", v),
 <text>				"@prop.FullPath" => static (e, v) => @(prop.CastFromObject)(e, v, static (ee, p) => ee.@(prop.Name) = p),
 				"@prop.LogTemplateAlternative" => static (e, v) => @(prop.CastFromObject)(e, v, static (ee, p) => ee.@(prop.Name) = p),
 </text>
+			}
+			else
+			{
+<text>				"@prop.FullPath" => static (e, v) => @(prop.CastFromObject)(e, "@(prop.OriginalFullPath)", v),
+				"@prop.LogTemplateAlternative" => static (e, v) => @(prop.CastFromObject)(e, "@(prop.OriginalFullPath)", v),
+</text>
+			}
 		}
 				_ => null
 			};
 			if (assign == null) return false;
 
-			var entity = document.@(entity.Name) ?? new @(entity.Name)();
+			var entity = document.@(dispatch.AssignTarget) ?? new @(entity.Name)();
 			var assigned = assign(entity, value);
-			if (assigned) document.@(entity.Name) = entity;
+			if (assigned) document.@(dispatch.AssignTarget) = entity;
 			return assigned;
 		}
 </text>
