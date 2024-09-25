@@ -5,7 +5,7 @@
 /*
 IMPORTANT NOTE
 ==============
-This file has been generated.
+This file has been generated. 
 If you wish to submit a PR please modify the original csharp file and submit the PR with that change. Thanks!
 */
 
@@ -24,7 +24,7 @@ using static Elastic.CommonSchema.PropDispatch;
 namespace Elastic.CommonSchema
 {
 	///<inheritdoc cref="BaseFieldSet"/>
-	public partial class EcsDocument : BaseFieldSet
+	public partial class EcsDocument : BaseFieldSet 
 	{
 		/// <summary>
 		/// Set ECS fields by name on <see cref="EcsDocument"/>.
@@ -43,9 +43,9 @@ namespace Elastic.CommonSchema
 		public void AssignField(string path, object value)
 		{
 			var assigned = LogTemplateProperties.All.Contains(path) && TrySet(this, path, value);
-			if (!assigned && LogTemplateEntities.All.Contains(path))
+			if (!assigned && LogTemplateEntities.All.Contains(path)) 
 				assigned = TrySetEntity(this, path, value);
-			if (!assigned)
+			if (!assigned) 
 				SetMetaOrLabel(this, path, value);
 		}
 	}
@@ -652,9 +652,9 @@ namespace Elastic.CommonSchema
 			}
 		}
 
-		internal static bool TrySet(EcsDocument document, string path, object value)
+		internal static bool TrySet(EcsDocument document, string path, object value) 
 		{
-			switch (path)
+			switch (path) 
 			{
 				case "@timestamp":
 				case "Timestamp":
@@ -3129,7 +3129,7 @@ namespace Elastic.CommonSchema
 		{
 			var assign = TryAssignAgent(path);
 			if (assign == null) return false;
-
+		
 			var entity = document.Agent ?? new Agent();
 			var assigned = assign(entity, value);
 			if (assigned) document.Agent = entity;
@@ -3152,7 +3152,7 @@ namespace Elastic.CommonSchema
 		{
 			var assign = TryAssignAs(path);
 			if (assign == null) return false;
-
+		
 			var entity = document.As ?? new As();
 			var assigned = assign(entity, value);
 			if (assigned) document.As = entity;
@@ -3261,7 +3261,7 @@ namespace Elastic.CommonSchema
 		{
 			var assign = TryAssignClient(path);
 			if (assign == null) return false;
-
+		
 			var entity = document.Client ?? new Client();
 			var assigned = assign(entity, value);
 			if (assigned) document.Client = entity;
@@ -3324,7 +3324,7 @@ namespace Elastic.CommonSchema
 		{
 			var assign = TryAssignCloud(path);
 			if (assign == null) return false;
-
+		
 			var entity = document.Cloud ?? new Cloud();
 			var assigned = assign(entity, value);
 			if (assigned) document.Cloud = entity;
@@ -3361,7 +3361,7 @@ namespace Elastic.CommonSchema
 		{
 			var assign = TryAssignCodeSignature(path);
 			if (assign == null) return false;
-
+		
 			var entity = document.CodeSignature ?? new CodeSignature();
 			var assigned = assign(entity, value);
 			if (assigned) document.CodeSignature = entity;
@@ -3402,7 +3402,7 @@ namespace Elastic.CommonSchema
 		{
 			var assign = TryAssignContainer(path);
 			if (assign == null) return false;
-
+		
 			var entity = document.Container ?? new Container();
 			var assigned = assign(entity, value);
 			if (assigned) document.Container = entity;
@@ -3427,7 +3427,7 @@ namespace Elastic.CommonSchema
 		{
 			var assign = TryAssignDataStream(path);
 			if (assign == null) return false;
-
+		
 			var entity = document.DataStream ?? new DataStream();
 			var assigned = assign(entity, value);
 			if (assigned) document.DataStream = entity;
@@ -3536,7 +3536,7 @@ namespace Elastic.CommonSchema
 		{
 			var assign = TryAssignDestination(path);
 			if (assign == null) return false;
-
+		
 			var entity = document.Destination ?? new Destination();
 			var assigned = assign(entity, value);
 			if (assigned) document.Destination = entity;
@@ -3563,7 +3563,7 @@ namespace Elastic.CommonSchema
 		{
 			var assign = TryAssignDevice(path);
 			if (assign == null) return false;
-
+		
 			var entity = document.Device ?? new Device();
 			var assigned = assign(entity, value);
 			if (assigned) document.Device = entity;
@@ -3650,7 +3650,7 @@ namespace Elastic.CommonSchema
 		{
 			var assign = TryAssignDll(path);
 			if (assign == null) return false;
-
+		
 			var entity = document.Dll ?? new Dll();
 			var assigned = assign(entity, value);
 			if (assigned) document.Dll = entity;
@@ -3689,7 +3689,7 @@ namespace Elastic.CommonSchema
 		{
 			var assign = TryAssignDns(path);
 			if (assign == null) return false;
-
+		
 			var entity = document.Dns ?? new Dns();
 			var assigned = assign(entity, value);
 			if (assigned) document.Dns = entity;
@@ -3710,7 +3710,7 @@ namespace Elastic.CommonSchema
 		{
 			var assign = TryAssignEcs(path);
 			if (assign == null) return false;
-
+		
 			var entity = document.Ecs ?? new Ecs();
 			var assigned = assign(entity, value);
 			if (assigned) document.Ecs = entity;
@@ -3771,7 +3771,7 @@ namespace Elastic.CommonSchema
 		{
 			var assign = TryAssignElf(path);
 			if (assign == null) return false;
-
+		
 			var entity = document.Elf ?? new Elf();
 			var assigned = assign(entity, value);
 			if (assigned) document.Elf = entity;
@@ -3808,7 +3808,7 @@ namespace Elastic.CommonSchema
 		{
 			var assign = TryAssignEmail(path);
 			if (assign == null) return false;
-
+		
 			var entity = document.Email ?? new Email();
 			var assigned = assign(entity, value);
 			if (assigned) document.Email = entity;
@@ -3837,7 +3837,7 @@ namespace Elastic.CommonSchema
 		{
 			var assign = TryAssignError(path);
 			if (assign == null) return false;
-
+		
 			var entity = document.Error ?? new Error();
 			var assigned = assign(entity, value);
 			if (assigned) document.Error = entity;
@@ -3904,7 +3904,7 @@ namespace Elastic.CommonSchema
 		{
 			var assign = TryAssignEvent(path);
 			if (assign == null) return false;
-
+		
 			var entity = document.Event ?? new Event();
 			var assigned = assign(entity, value);
 			if (assigned) document.Event = entity;
@@ -3937,7 +3937,7 @@ namespace Elastic.CommonSchema
 		{
 			var assign = TryAssignFaas(path);
 			if (assign == null) return false;
-
+		
 			var entity = document.Faas ?? new Faas();
 			var assigned = assign(entity, value);
 			if (assigned) document.Faas = entity;
@@ -4144,7 +4144,7 @@ namespace Elastic.CommonSchema
 		{
 			var assign = TryAssignFile(path);
 			if (assign == null) return false;
-
+		
 			var entity = document.File ?? new File();
 			var assigned = assign(entity, value);
 			if (assigned) document.File = entity;
@@ -4183,7 +4183,7 @@ namespace Elastic.CommonSchema
 		{
 			var assign = TryAssignGeo(path);
 			if (assign == null) return false;
-
+		
 			var entity = document.Geo ?? new Geo();
 			var assigned = assign(entity, value);
 			if (assigned) document.Geo = entity;
@@ -4208,7 +4208,7 @@ namespace Elastic.CommonSchema
 		{
 			var assign = TryAssignGroup(path);
 			if (assign == null) return false;
-
+		
 			var entity = document.Group ?? new Group();
 			var assigned = assign(entity, value);
 			if (assigned) document.Group = entity;
@@ -4241,7 +4241,7 @@ namespace Elastic.CommonSchema
 		{
 			var assign = TryAssignHash(path);
 			if (assign == null) return false;
-
+		
 			var entity = document.Hash ?? new Hash();
 			var assigned = assign(entity, value);
 			if (assigned) document.Hash = entity;
@@ -4338,7 +4338,7 @@ namespace Elastic.CommonSchema
 		{
 			var assign = TryAssignHost(path);
 			if (assign == null) return false;
-
+		
 			var entity = document.Host ?? new Host();
 			var assigned = assign(entity, value);
 			if (assigned) document.Host = entity;
@@ -4383,7 +4383,7 @@ namespace Elastic.CommonSchema
 		{
 			var assign = TryAssignHttp(path);
 			if (assign == null) return false;
-
+		
 			var entity = document.Http ?? new Http();
 			var assigned = assign(entity, value);
 			if (assigned) document.Http = entity;
@@ -4408,7 +4408,7 @@ namespace Elastic.CommonSchema
 		{
 			var assign = TryAssignInterface(path);
 			if (assign == null) return false;
-
+		
 			var entity = document.Interface ?? new Interface();
 			var assigned = assign(entity, value);
 			if (assigned) document.Interface = entity;
@@ -4439,7 +4439,7 @@ namespace Elastic.CommonSchema
 		{
 			var assign = TryAssignLog(path);
 			if (assign == null) return false;
-
+		
 			var entity = document.Log ?? new Log();
 			var assigned = assign(entity, value);
 			if (assigned) document.Log = entity;
@@ -4476,7 +4476,7 @@ namespace Elastic.CommonSchema
 		{
 			var assign = TryAssignMacho(path);
 			if (assign == null) return false;
-
+		
 			var entity = document.Macho ?? new Macho();
 			var assigned = assign(entity, value);
 			if (assigned) document.Macho = entity;
@@ -4521,7 +4521,7 @@ namespace Elastic.CommonSchema
 		{
 			var assign = TryAssignNetwork(path);
 			if (assign == null) return false;
-
+		
 			var entity = document.Network ?? new Network();
 			var assigned = assign(entity, value);
 			if (assigned) document.Network = entity;
@@ -4588,7 +4588,7 @@ namespace Elastic.CommonSchema
 		{
 			var assign = TryAssignObserver(path);
 			if (assign == null) return false;
-
+		
 			var entity = document.Observer ?? new Observer();
 			var assigned = assign(entity, value);
 			if (assigned) document.Observer = entity;
@@ -4631,7 +4631,7 @@ namespace Elastic.CommonSchema
 		{
 			var assign = TryAssignOrchestrator(path);
 			if (assign == null) return false;
-
+		
 			var entity = document.Orchestrator ?? new Orchestrator();
 			var assigned = assign(entity, value);
 			if (assigned) document.Orchestrator = entity;
@@ -4654,7 +4654,7 @@ namespace Elastic.CommonSchema
 		{
 			var assign = TryAssignOrganization(path);
 			if (assign == null) return false;
-
+		
 			var entity = document.Organization ?? new Organization();
 			var assigned = assign(entity, value);
 			if (assigned) document.Organization = entity;
@@ -4687,7 +4687,7 @@ namespace Elastic.CommonSchema
 		{
 			var assign = TryAssignOs(path);
 			if (assign == null) return false;
-
+		
 			var entity = document.Os ?? new Os();
 			var assigned = assign(entity, value);
 			if (assigned) document.Os = entity;
@@ -4732,7 +4732,7 @@ namespace Elastic.CommonSchema
 		{
 			var assign = TryAssignPackage(path);
 			if (assign == null) return false;
-
+		
 			var entity = document.Package ?? new Package();
 			var assigned = assign(entity, value);
 			if (assigned) document.Package = entity;
@@ -4783,7 +4783,7 @@ namespace Elastic.CommonSchema
 		{
 			var assign = TryAssignPe(path);
 			if (assign == null) return false;
-
+		
 			var entity = document.Pe ?? new Pe();
 			var assigned = assign(entity, value);
 			if (assigned) document.Pe = entity;
@@ -5302,7 +5302,7 @@ namespace Elastic.CommonSchema
 		{
 			var assign = TryAssignProcess(path);
 			if (assign == null) return false;
-
+		
 			var entity = document.Process ?? new Process();
 			var assigned = assign(entity, value);
 			if (assigned) document.Process = entity;
@@ -5333,7 +5333,7 @@ namespace Elastic.CommonSchema
 		{
 			var assign = TryAssignRegistry(path);
 			if (assign == null) return false;
-
+		
 			var entity = document.Registry ?? new Registry();
 			var assigned = assign(entity, value);
 			if (assigned) document.Registry = entity;
@@ -5352,7 +5352,7 @@ namespace Elastic.CommonSchema
 		{
 			var assign = TryAssignRelated(path);
 			if (assign == null) return false;
-
+		
 			var entity = document.Related ?? new Related();
 			var assigned = assign(entity, value);
 			if (assigned) document.Related = entity;
@@ -5383,7 +5383,7 @@ namespace Elastic.CommonSchema
 		{
 			var assign = TryAssignRisk(path);
 			if (assign == null) return false;
-
+		
 			var entity = document.Risk ?? new Risk();
 			var assigned = assign(entity, value);
 			if (assigned) document.Risk = entity;
@@ -5420,7 +5420,7 @@ namespace Elastic.CommonSchema
 		{
 			var assign = TryAssignRule(path);
 			if (assign == null) return false;
-
+		
 			var entity = document.Rule ?? new Rule();
 			var assigned = assign(entity, value);
 			if (assigned) document.Rule = entity;
@@ -5529,7 +5529,7 @@ namespace Elastic.CommonSchema
 		{
 			var assign = TryAssignServer(path);
 			if (assign == null) return false;
-
+		
 			var entity = document.Server ?? new Server();
 			var assigned = assign(entity, value);
 			if (assigned) document.Server = entity;
@@ -5588,7 +5588,7 @@ namespace Elastic.CommonSchema
 		{
 			var assign = TryAssignService(path);
 			if (assign == null) return false;
-
+		
 			var entity = document.Service ?? new Service();
 			var assigned = assign(entity, value);
 			if (assigned) document.Service = entity;
@@ -5697,7 +5697,7 @@ namespace Elastic.CommonSchema
 		{
 			var assign = TryAssignSource(path);
 			if (assign == null) return false;
-
+		
 			var entity = document.Source ?? new Source();
 			var assigned = assign(entity, value);
 			if (assigned) document.Source = entity;
@@ -6046,7 +6046,7 @@ namespace Elastic.CommonSchema
 		{
 			var assign = TryAssignThreat(path);
 			if (assign == null) return false;
-
+		
 			var entity = document.Threat ?? new Threat();
 			var assigned = assign(entity, value);
 			if (assigned) document.Threat = entity;
@@ -6139,7 +6139,7 @@ namespace Elastic.CommonSchema
 		{
 			var assign = TryAssignTls(path);
 			if (assign == null) return false;
-
+		
 			var entity = document.Tls ?? new Tls();
 			var assigned = assign(entity, value);
 			if (assigned) document.Tls = entity;
@@ -6186,7 +6186,7 @@ namespace Elastic.CommonSchema
 		{
 			var assign = TryAssignUrl(path);
 			if (assign == null) return false;
-
+		
 			var entity = document.Url ?? new Url();
 			var assigned = assign(entity, value);
 			if (assigned) document.Url = entity;
@@ -6247,7 +6247,7 @@ namespace Elastic.CommonSchema
 		{
 			var assign = TryAssignUser(path);
 			if (assign == null) return false;
-
+		
 			var entity = document.User ?? new User();
 			var assigned = assign(entity, value);
 			if (assigned) document.User = entity;
@@ -6288,7 +6288,7 @@ namespace Elastic.CommonSchema
 		{
 			var assign = TryAssignUserAgent(path);
 			if (assign == null) return false;
-
+		
 			var entity = document.UserAgent ?? new UserAgent();
 			var assigned = assign(entity, value);
 			if (assigned) document.UserAgent = entity;
@@ -6311,7 +6311,7 @@ namespace Elastic.CommonSchema
 		{
 			var assign = TryAssignVlan(path);
 			if (assign == null) return false;
-
+		
 			var entity = document.Vlan ?? new Vlan();
 			var assigned = assign(entity, value);
 			if (assigned) document.Vlan = entity;
@@ -6354,7 +6354,7 @@ namespace Elastic.CommonSchema
 		{
 			var assign = TryAssignVulnerability(path);
 			if (assign == null) return false;
-
+		
 			var entity = document.Vulnerability ?? new Vulnerability();
 			var assigned = assign(entity, value);
 			if (assigned) document.Vulnerability = entity;
@@ -6395,7 +6395,7 @@ namespace Elastic.CommonSchema
 		{
 			var assign = TryAssignX509(path);
 			if (assign == null) return false;
-
+		
 			var entity = document.X509 ?? new X509();
 			var assigned = assign(entity, value);
 			if (assigned) document.X509 = entity;
@@ -6436,7 +6436,7 @@ namespace Elastic.CommonSchema
 		{
 			var assign = TryAssignCloudOrigin(path);
 			if (assign == null) return false;
-
+		
 			var entity = document.Origin ?? new CloudOrigin();
 			var assigned = assign(entity, value);
 			if (assigned) document.Origin = entity;
@@ -6477,7 +6477,7 @@ namespace Elastic.CommonSchema
 		{
 			var assign = TryAssignCloudTarget(path);
 			if (assign == null) return false;
-
+		
 			var entity = document.Target ?? new CloudTarget();
 			var assigned = assign(entity, value);
 			if (assigned) document.Target = entity;
@@ -6564,7 +6564,7 @@ namespace Elastic.CommonSchema
 		{
 			var assign = TryAssignProcessParent(path);
 			if (assign == null) return false;
-
+		
 			var entity = document.Parent ?? new ProcessParent();
 			var assigned = assign(entity, value);
 			if (assigned) document.Parent = entity;
@@ -6685,7 +6685,7 @@ namespace Elastic.CommonSchema
 		{
 			var assign = TryAssignProcessEntryLeader(path);
 			if (assign == null) return false;
-
+		
 			var entity = document.EntryLeader ?? new ProcessEntryLeader();
 			var assigned = assign(entity, value);
 			if (assigned) document.EntryLeader = entity;
@@ -6806,7 +6806,7 @@ namespace Elastic.CommonSchema
 		{
 			var assign = TryAssignProcessSessionLeader(path);
 			if (assign == null) return false;
-
+		
 			var entity = document.SessionLeader ?? new ProcessSessionLeader();
 			var assigned = assign(entity, value);
 			if (assigned) document.SessionLeader = entity;
@@ -6859,7 +6859,7 @@ namespace Elastic.CommonSchema
 		{
 			var assign = TryAssignProcessGroupLeader(path);
 			if (assign == null) return false;
-
+		
 			var entity = document.GroupLeader ?? new ProcessGroupLeader();
 			var assigned = assign(entity, value);
 			if (assigned) document.GroupLeader = entity;
@@ -6912,7 +6912,7 @@ namespace Elastic.CommonSchema
 		{
 			var assign = TryAssignProcessParentGroupLeader(path);
 			if (assign == null) return false;
-
+		
 			var entity = document.GroupLeader ?? new ProcessParentGroupLeader();
 			var assigned = assign(entity, value);
 			if (assigned) document.GroupLeader = entity;
@@ -6999,7 +6999,7 @@ namespace Elastic.CommonSchema
 		{
 			var assign = TryAssignProcessEntryLeaderParent(path);
 			if (assign == null) return false;
-
+		
 			var entity = document.Parent ?? new ProcessEntryLeaderParent();
 			var assigned = assign(entity, value);
 			if (assigned) document.Parent = entity;
@@ -7086,7 +7086,7 @@ namespace Elastic.CommonSchema
 		{
 			var assign = TryAssignProcessSessionLeaderParent(path);
 			if (assign == null) return false;
-
+		
 			var entity = document.Parent ?? new ProcessSessionLeaderParent();
 			var assigned = assign(entity, value);
 			if (assigned) document.Parent = entity;
@@ -7139,7 +7139,7 @@ namespace Elastic.CommonSchema
 		{
 			var assign = TryAssignProcessEntryLeaderParentSessionLeader(path);
 			if (assign == null) return false;
-
+		
 			var entity = document.SessionLeader ?? new ProcessEntryLeaderParentSessionLeader();
 			var assigned = assign(entity, value);
 			if (assigned) document.SessionLeader = entity;
@@ -7192,54 +7192,11 @@ namespace Elastic.CommonSchema
 		{
 			var assign = TryAssignProcessSessionLeaderParentSessionLeader(path);
 			if (assign == null) return false;
-
+		
 			var entity = document.SessionLeader ?? new ProcessSessionLeaderParentSessionLeader();
 			var assigned = assign(entity, value);
 			if (assigned) document.SessionLeader = entity;
 			return assigned;
-		}
-
-		public static Func<ProcessPrevious, object, bool> TryAssignProcessPrevious(string path)
-		{
-			Func<ProcessPrevious, object, bool> assign = path switch
-			{
-				"process.args_count" => static (e, v) => TrySetLong(e, v, static (ee, p) => ee.ArgsCount = p),
-				"ProcessArgsCount" => static (e, v) => TrySetLong(e, v, static (ee, p) => ee.ArgsCount = p),
-				"process.command_line" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.CommandLine = p),
-				"ProcessCommandLine" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.CommandLine = p),
-				"process.end" => static (e, v) => TrySetDateTimeOffset(e, v, static (ee, p) => ee.End = p),
-				"ProcessEnd" => static (e, v) => TrySetDateTimeOffset(e, v, static (ee, p) => ee.End = p),
-				"process.entity_id" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.EntityId = p),
-				"ProcessEntityId" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.EntityId = p),
-				"process.executable" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Executable = p),
-				"ProcessExecutable" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Executable = p),
-				"process.exit_code" => static (e, v) => TrySetLong(e, v, static (ee, p) => ee.ExitCode = p),
-				"ProcessExitCode" => static (e, v) => TrySetLong(e, v, static (ee, p) => ee.ExitCode = p),
-				"process.interactive" => static (e, v) => TrySetBool(e, v, static (ee, p) => ee.Interactive = p),
-				"ProcessInteractive" => static (e, v) => TrySetBool(e, v, static (ee, p) => ee.Interactive = p),
-				"process.name" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Name = p),
-				"ProcessName" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Name = p),
-				"process.pgid" => static (e, v) => TrySetLong(e, v, static (ee, p) => ee.Pgid = p),
-				"ProcessPgid" => static (e, v) => TrySetLong(e, v, static (ee, p) => ee.Pgid = p),
-				"process.pid" => static (e, v) => TrySetLong(e, v, static (ee, p) => ee.Pid = p),
-				"ProcessPid" => static (e, v) => TrySetLong(e, v, static (ee, p) => ee.Pid = p),
-				"process.start" => static (e, v) => TrySetDateTimeOffset(e, v, static (ee, p) => ee.Start = p),
-				"ProcessStart" => static (e, v) => TrySetDateTimeOffset(e, v, static (ee, p) => ee.Start = p),
-				"process.thread.id" => static (e, v) => TrySetLong(e, v, static (ee, p) => ee.ThreadId = p),
-				"ProcessThreadId" => static (e, v) => TrySetLong(e, v, static (ee, p) => ee.ThreadId = p),
-				"process.thread.name" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.ThreadName = p),
-				"ProcessThreadName" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.ThreadName = p),
-				"process.title" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Title = p),
-				"ProcessTitle" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Title = p),
-				"process.uptime" => static (e, v) => TrySetLong(e, v, static (ee, p) => ee.Uptime = p),
-				"ProcessUptime" => static (e, v) => TrySetLong(e, v, static (ee, p) => ee.Uptime = p),
-				"process.vpid" => static (e, v) => TrySetLong(e, v, static (ee, p) => ee.Vpid = p),
-				"ProcessVpid" => static (e, v) => TrySetLong(e, v, static (ee, p) => ee.Vpid = p),
-				"process.working_directory" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.WorkingDirectory = p),
-				"ProcessWorkingDirectory" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.WorkingDirectory = p),
-				_ => null
-			};
-			return assign;
 		}
 
 		public static Func<ServiceOrigin, object, bool> TryAssignServiceOrigin(string path)
@@ -7274,7 +7231,7 @@ namespace Elastic.CommonSchema
 		{
 			var assign = TryAssignServiceOrigin(path);
 			if (assign == null) return false;
-
+		
 			var entity = document.Origin ?? new ServiceOrigin();
 			var assigned = assign(entity, value);
 			if (assigned) document.Origin = entity;
@@ -7313,7 +7270,7 @@ namespace Elastic.CommonSchema
 		{
 			var assign = TryAssignServiceTarget(path);
 			if (assign == null) return false;
-
+		
 			var entity = document.Target ?? new ServiceTarget();
 			var assigned = assign(entity, value);
 			if (assigned) document.Target = entity;
@@ -7344,7 +7301,7 @@ namespace Elastic.CommonSchema
 		{
 			var assign = TryAssignUserTarget(path);
 			if (assign == null) return false;
-
+		
 			var entity = document.Target ?? new UserTarget();
 			var assigned = assign(entity, value);
 			if (assigned) document.Target = entity;
@@ -7375,7 +7332,7 @@ namespace Elastic.CommonSchema
 		{
 			var assign = TryAssignUserEffective(path);
 			if (assign == null) return false;
-
+		
 			var entity = document.Effective ?? new UserEffective();
 			var assigned = assign(entity, value);
 			if (assigned) document.Effective = entity;
@@ -7406,7 +7363,7 @@ namespace Elastic.CommonSchema
 		{
 			var assign = TryAssignUserChanges(path);
 			if (assign == null) return false;
-
+		
 			var entity = document.Changes ?? new UserChanges();
 			var assigned = assign(entity, value);
 			if (assigned) document.Changes = entity;

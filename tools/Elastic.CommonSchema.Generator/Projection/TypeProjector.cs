@@ -163,6 +163,8 @@ namespace Elastic.CommonSchema.Generator.Projection
 			foreach (var (name, entity) in allEntities)
 			{
 				var found = assignable.TryGetValue(name, out var a);
+				if (found && a.Property.IsArray)
+					continue;
 				propDispatches.Add(new PropDispatch(entity, a));
 			}
 			Projection.AssignablePropDispatches = propDispatches;

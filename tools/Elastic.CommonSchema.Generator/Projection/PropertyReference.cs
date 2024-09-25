@@ -160,11 +160,12 @@ namespace Elastic.CommonSchema.Generator.Projection
 			Description = multiLineDescription;
 			Example = "";
 			ClrType = Entity.Name;
+			IsArray = isArray;
 			if (isArray) ClrType += "[]";
-
 		}
 
 		public EntityClass Entity { get; }
+		public bool IsArray { get; }
 
 		public string ClrType { get; }
 		public override string Description { get; }
