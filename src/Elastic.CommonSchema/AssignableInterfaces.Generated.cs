@@ -268,4 +268,34 @@ namespace Elastic.CommonSchema
 		///<summary>changes</summary>
 		public UserChanges? Changes { get; set; }
 	}
+
+	///<summary> Interface for entities that can assign an IProcessParentGroupLeader: ProcessParent</summary>
+	public interface IProcessParentGroupLeader {
+		///<summary>group_leader</summary>
+		public ProcessParentGroupLeader? GroupLeader { get; set; }
+	}
+
+	///<summary> Interface for entities that can assign an IProcessEntryLeaderParent: ProcessEntryLeader</summary>
+	public interface IProcessEntryLeaderParent {
+		///<summary>parent</summary>
+		public ProcessEntryLeaderParent? Parent { get; set; }
+	}
+
+	///<summary> Interface for entities that can assign an IProcessSessionLeaderParent: ProcessSessionLeader</summary>
+	public interface IProcessSessionLeaderParent {
+		///<summary>parent</summary>
+		public ProcessSessionLeaderParent? Parent { get; set; }
+	}
+
+	///<summary> Interface for entities that can assign an IProcessEntryLeaderParentSessionLeader: ProcessEntryLeaderParent</summary>
+	public interface IProcessEntryLeaderParentSessionLeader {
+		///<summary>session_leader</summary>
+		public ProcessEntryLeaderParentSessionLeader? SessionLeader { get; set; }
+	}
+
+	///<summary> Interface for entities that can assign an IProcessSessionLeaderParentSessionLeader: ProcessSessionLeaderParent</summary>
+	public interface IProcessSessionLeaderParentSessionLeader {
+		///<summary>session_leader</summary>
+		public ProcessSessionLeaderParentSessionLeader? SessionLeader { get; set; }
+	}
 }

@@ -69,7 +69,7 @@ namespace Elastic.CommonSchema.Generator.Projection
 
 		public IEnumerable<ValueTypePropertyReference> SettableProperties =>
 			BaseFieldSet.ValueProperties.Where(p => !string.IsNullOrEmpty(p.CastFromObject))
-				.Concat(EntityProperties.SelectMany(e=>e.Entity.SettableProperties.Select(s=>s.CreateSettableTypePropertyReference(OriginalName, e.Entity))))
+				.Concat(EntityProperties.SelectMany(e=>e.Entity.SettableProperties.Select(s=>s.CreateSettableTypePropertyReference(e))))
 				.DistinctBy(e=>e.Name);
 
 
@@ -107,24 +107,26 @@ namespace Elastic.CommonSchema.Generator.Projection
 		public string FuncTarget { get; }
 		public string AssignTarget { get; }
 		public EntityClass Entity { get; }
-		public string Target { get; }
+		public string AssignParameter { get; }
+		public string AssignEntity { get; set; }
 
-		public PropDispatch(string name, EntityClass entity, string target)
+		public PropDispatch(EntityClass entity, AssignableEntityInterface assignable)
 		{
-			Name = name;
+
+			Name = entity.Name;
 			FuncTarget = entity.Name;
-			AssignTarget = entity.Name;
+			AssignEntity = entity.Name;
 			Entity = entity;
-			Target = target;
+			AssignTarget = entity.Name;
+			SettableProperties = Entity.SettableProperties.ToList();
+			AssignParameter = "EcsDocument";
+			if (assignable is { } a)
+			{
+				AssignParameter = $"I{Name}";
+				AssignTarget = assignable.Property.Name;
+			}
 		}
 
-		public PropDispatch(EntityPropertyReference property)
-		{
-			Name = property.Name;
-			Entity = property.Entity;
-			Target = $"I{Name}";
-			FuncTarget = property.Entity.Name;
-			AssignTarget = property.Name;
-		}
+		public List<ValueTypePropertyReference> SettableProperties { get; set; }
 	}
 }

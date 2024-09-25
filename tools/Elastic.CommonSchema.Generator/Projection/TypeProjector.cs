@@ -107,6 +107,7 @@ namespace Elastic.CommonSchema.Generator.Projection
 
 			var entities = EntityClasses.Values;
 			var assignables = entities
+				.Concat(nestedEntityTypes.Values)
 				.Where(e => e.EntityReferences.Count > 0)
 				.SelectMany(e => e.EntityReferences.Select(r => (EntityClass: e, EntityPropertyReference: r)).ToList())
 				.Select(r =>
@@ -156,33 +157,15 @@ namespace Elastic.CommonSchema.Generator.Projection
 			var assignableToEcsDocument = Projection.EntityClasses.Select(e=> assignables.FirstOrDefault(a=>a.Property.Entity == e && a.Property.Name == e.Name)).Where(a => a != null).ToList();
 			Projection.Base.AssignableInterfaces = assignableToEcsDocument;
 
-			var eHashs = new HashSet<string>(Projection.EntityClasses.Select(e => e.Name));
-			var aHashs = new HashSet<string>(Projection.AssignableInterfaces.Select(e => e.Name.Substring(1, e.Name.Length - 1)));
-			eHashs.ExceptWith(aHashs);
-			var hashes = new HashSet<string>(eHashs.Concat(aHashs));
+			var allEntities = Projection.EntityClasses.Concat(Projection.NestedEntityClasses).ToDictionary(kv=>kv.Name);
+			var assignable = Projection.AssignableInterfaces.ToDictionary(e => e.Name.Substring(1, e.Name.Length - 1));
 			var propDispatches = new List<PropDispatch>();
-			foreach (var dispatch in hashes)
+			foreach (var (name, entity) in allEntities)
 			{
-				if (eHashs.Contains(dispatch))
-				{
-					var entityClass = Projection.EntityClasses.First(e => e.Name == dispatch);
-					propDispatches.Add(new PropDispatch(dispatch, entityClass, Projection.Base.Name));
-				}
-				else if (aHashs.Contains(dispatch))
-				{
-					var entityClass = Projection.AssignableInterfaces.FirstOrDefault(e => e.Name == $"I{dispatch}");
-					if (entityClass == null)
-					{
-						continue;
-					}
-					propDispatches.Add(new PropDispatch(entityClass.Property));
-				}
+				var found = assignable.TryGetValue(name, out var a);
+				propDispatches.Add(new PropDispatch(entity, a));
 			}
 			Projection.AssignablePropDispatches = propDispatches;
-
-			Console.WriteLine(string.Join(", ", eHashs));
-
-
 			return Projection;
 		}
 

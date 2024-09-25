@@ -369,43 +369,43 @@ namespace Elastic.CommonSchema
 		///</summary>
 		public static string ClientUserRiskStaticScoreNorm = nameof(ClientUserRiskStaticScoreNorm);
 		///<summary>
-		/// <para><c>client.user.user.domain</c></para>
+		/// <para><c>client.user.target.user.domain</c></para>
 		/// <para>Name of the directory the user is a member of.
 		/// For example, an LDAP or Active Directory domain name.</para>
 		/// <example></example>
 		///</summary>
-		public static string ClientUserUserDomain = nameof(ClientUserUserDomain);
+		public static string ClientUserTargetUserDomain = nameof(ClientUserTargetUserDomain);
 		///<summary>
-		/// <para><c>client.user.user.email</c></para>
+		/// <para><c>client.user.target.user.email</c></para>
 		/// <para>User email address.</para>
 		/// <example></example>
 		///</summary>
-		public static string ClientUserUserEmail = nameof(ClientUserUserEmail);
+		public static string ClientUserTargetUserEmail = nameof(ClientUserTargetUserEmail);
 		///<summary>
-		/// <para><c>client.user.user.full_name</c></para>
+		/// <para><c>client.user.target.user.full_name</c></para>
 		/// <para>User's full name, if available.</para>
 		/// <example>Albert Einstein</example>
 		///</summary>
-		public static string ClientUserUserFullName = nameof(ClientUserUserFullName);
+		public static string ClientUserTargetUserFullName = nameof(ClientUserTargetUserFullName);
 		///<summary>
-		/// <para><c>client.user.user.hash</c></para>
+		/// <para><c>client.user.target.user.hash</c></para>
 		/// <para>Unique user hash to correlate information for a user in anonymized form.
 		/// Useful if `user.id` or `user.name` contain confidential information and cannot be used.</para>
 		/// <example></example>
 		///</summary>
-		public static string ClientUserUserHash = nameof(ClientUserUserHash);
+		public static string ClientUserTargetUserHash = nameof(ClientUserTargetUserHash);
 		///<summary>
-		/// <para><c>client.user.user.id</c></para>
+		/// <para><c>client.user.target.user.id</c></para>
 		/// <para>Unique identifier of the user.</para>
 		/// <example>S-1-5-21-202424912787-2692429404-2351956786-1000</example>
 		///</summary>
-		public static string ClientUserUserId = nameof(ClientUserUserId);
+		public static string ClientUserTargetUserId = nameof(ClientUserTargetUserId);
 		///<summary>
-		/// <para><c>client.user.user.name</c></para>
+		/// <para><c>client.user.target.user.name</c></para>
 		/// <para>Short name or login of the user.</para>
 		/// <example>a.einstein</example>
 		///</summary>
-		public static string ClientUserUserName = nameof(ClientUserUserName);
+		public static string ClientUserTargetUserName = nameof(ClientUserTargetUserName);
 		///<summary>
 		/// <para><c>cloud.account.id</c></para>
 		/// <para>The cloud account or organization id used to identify different entities in a multi-tenant environment.
@@ -478,76 +478,76 @@ namespace Elastic.CommonSchema
 		///</summary>
 		public static string CloudServiceName = nameof(CloudServiceName);
 		///<summary>
-		/// <para><c>cloud.cloud.account.id</c></para>
+		/// <para><c>origin.cloud.account.id</c></para>
 		/// <para>The cloud account or organization id used to identify different entities in a multi-tenant environment.
 		/// Examples: AWS account id, Google Cloud ORG Id, or other unique identifier.</para>
 		/// <example>666777888999</example>
 		///</summary>
-		public static string CloudCloudAccountId = nameof(CloudCloudAccountId);
+		public static string OriginCloudAccountId = nameof(OriginCloudAccountId);
 		///<summary>
-		/// <para><c>cloud.cloud.account.name</c></para>
+		/// <para><c>origin.cloud.account.name</c></para>
 		/// <para>The cloud account name or alias used to identify different entities in a multi-tenant environment.
 		/// Examples: AWS account name, Google Cloud ORG display name.</para>
 		/// <example>elastic-dev</example>
 		///</summary>
-		public static string CloudCloudAccountName = nameof(CloudCloudAccountName);
+		public static string OriginCloudAccountName = nameof(OriginCloudAccountName);
 		///<summary>
-		/// <para><c>cloud.cloud.availability_zone</c></para>
+		/// <para><c>origin.cloud.availability_zone</c></para>
 		/// <para>Availability zone in which this host, resource, or service is located.</para>
 		/// <example>us-east-1c</example>
 		///</summary>
-		public static string CloudCloudAvailabilityZone = nameof(CloudCloudAvailabilityZone);
+		public static string OriginCloudAvailabilityZone = nameof(OriginCloudAvailabilityZone);
 		///<summary>
-		/// <para><c>cloud.cloud.instance.id</c></para>
+		/// <para><c>origin.cloud.instance.id</c></para>
 		/// <para>Instance ID of the host machine.</para>
 		/// <example>i-1234567890abcdef0</example>
 		///</summary>
-		public static string CloudCloudInstanceId = nameof(CloudCloudInstanceId);
+		public static string OriginCloudInstanceId = nameof(OriginCloudInstanceId);
 		///<summary>
-		/// <para><c>cloud.cloud.instance.name</c></para>
+		/// <para><c>origin.cloud.instance.name</c></para>
 		/// <para>Instance name of the host machine.</para>
 		/// <example></example>
 		///</summary>
-		public static string CloudCloudInstanceName = nameof(CloudCloudInstanceName);
+		public static string OriginCloudInstanceName = nameof(OriginCloudInstanceName);
 		///<summary>
-		/// <para><c>cloud.cloud.machine.type</c></para>
+		/// <para><c>origin.cloud.machine.type</c></para>
 		/// <para>Machine type of the host machine.</para>
 		/// <example>t2.medium</example>
 		///</summary>
-		public static string CloudCloudMachineType = nameof(CloudCloudMachineType);
+		public static string OriginCloudMachineType = nameof(OriginCloudMachineType);
 		///<summary>
-		/// <para><c>cloud.cloud.project.id</c></para>
+		/// <para><c>origin.cloud.project.id</c></para>
 		/// <para>The cloud project identifier.
 		/// Examples: Google Cloud Project id, Azure Project id.</para>
 		/// <example>my-project</example>
 		///</summary>
-		public static string CloudCloudProjectId = nameof(CloudCloudProjectId);
+		public static string OriginCloudProjectId = nameof(OriginCloudProjectId);
 		///<summary>
-		/// <para><c>cloud.cloud.project.name</c></para>
+		/// <para><c>origin.cloud.project.name</c></para>
 		/// <para>The cloud project name.
 		/// Examples: Google Cloud Project name, Azure Project name.</para>
 		/// <example>my project</example>
 		///</summary>
-		public static string CloudCloudProjectName = nameof(CloudCloudProjectName);
+		public static string OriginCloudProjectName = nameof(OriginCloudProjectName);
 		///<summary>
-		/// <para><c>cloud.cloud.provider</c></para>
+		/// <para><c>origin.cloud.provider</c></para>
 		/// <para>Name of the cloud provider. Example values are aws, azure, gcp, or digitalocean.</para>
 		/// <example>aws</example>
 		///</summary>
-		public static string CloudCloudProvider = nameof(CloudCloudProvider);
+		public static string OriginCloudProvider = nameof(OriginCloudProvider);
 		///<summary>
-		/// <para><c>cloud.cloud.region</c></para>
+		/// <para><c>origin.cloud.region</c></para>
 		/// <para>Region in which this host, resource, or service is located.</para>
 		/// <example>us-east-1</example>
 		///</summary>
-		public static string CloudCloudRegion = nameof(CloudCloudRegion);
+		public static string OriginCloudRegion = nameof(OriginCloudRegion);
 		///<summary>
-		/// <para><c>cloud.cloud.service.name</c></para>
+		/// <para><c>origin.cloud.service.name</c></para>
 		/// <para>The cloud service name is intended to distinguish services running on different platforms within a provider, eg AWS EC2 vs Lambda, GCP GCE vs App Engine, Azure VM vs App Server.
 		/// Examples: app engine, app service, cloud run, fargate, lambda.</para>
 		/// <example>lambda</example>
 		///</summary>
-		public static string CloudCloudServiceName = nameof(CloudCloudServiceName);
+		public static string OriginCloudServiceName = nameof(OriginCloudServiceName);
 		///<summary>
 		/// <para><c>code_signature.digest_algorithm</c></para>
 		/// <para>The hashing algorithm used to sign the process.
@@ -952,43 +952,43 @@ namespace Elastic.CommonSchema
 		///</summary>
 		public static string DestinationUserRiskStaticScoreNorm = nameof(DestinationUserRiskStaticScoreNorm);
 		///<summary>
-		/// <para><c>destination.user.user.domain</c></para>
+		/// <para><c>destination.user.target.user.domain</c></para>
 		/// <para>Name of the directory the user is a member of.
 		/// For example, an LDAP or Active Directory domain name.</para>
 		/// <example></example>
 		///</summary>
-		public static string DestinationUserUserDomain = nameof(DestinationUserUserDomain);
+		public static string DestinationUserTargetUserDomain = nameof(DestinationUserTargetUserDomain);
 		///<summary>
-		/// <para><c>destination.user.user.email</c></para>
+		/// <para><c>destination.user.target.user.email</c></para>
 		/// <para>User email address.</para>
 		/// <example></example>
 		///</summary>
-		public static string DestinationUserUserEmail = nameof(DestinationUserUserEmail);
+		public static string DestinationUserTargetUserEmail = nameof(DestinationUserTargetUserEmail);
 		///<summary>
-		/// <para><c>destination.user.user.full_name</c></para>
+		/// <para><c>destination.user.target.user.full_name</c></para>
 		/// <para>User's full name, if available.</para>
 		/// <example>Albert Einstein</example>
 		///</summary>
-		public static string DestinationUserUserFullName = nameof(DestinationUserUserFullName);
+		public static string DestinationUserTargetUserFullName = nameof(DestinationUserTargetUserFullName);
 		///<summary>
-		/// <para><c>destination.user.user.hash</c></para>
+		/// <para><c>destination.user.target.user.hash</c></para>
 		/// <para>Unique user hash to correlate information for a user in anonymized form.
 		/// Useful if `user.id` or `user.name` contain confidential information and cannot be used.</para>
 		/// <example></example>
 		///</summary>
-		public static string DestinationUserUserHash = nameof(DestinationUserUserHash);
+		public static string DestinationUserTargetUserHash = nameof(DestinationUserTargetUserHash);
 		///<summary>
-		/// <para><c>destination.user.user.id</c></para>
+		/// <para><c>destination.user.target.user.id</c></para>
 		/// <para>Unique identifier of the user.</para>
 		/// <example>S-1-5-21-202424912787-2692429404-2351956786-1000</example>
 		///</summary>
-		public static string DestinationUserUserId = nameof(DestinationUserUserId);
+		public static string DestinationUserTargetUserId = nameof(DestinationUserTargetUserId);
 		///<summary>
-		/// <para><c>destination.user.user.name</c></para>
+		/// <para><c>destination.user.target.user.name</c></para>
 		/// <para>Short name or login of the user.</para>
 		/// <example>a.einstein</example>
 		///</summary>
-		public static string DestinationUserUserName = nameof(DestinationUserUserName);
+		public static string DestinationUserTargetUserName = nameof(DestinationUserTargetUserName);
 		///<summary>
 		/// <para><c>device.id</c></para>
 		/// <para>The unique identifier of a device. The identifier must not change across application sessions but stay fixed for an instance of a (mobile) device. 
@@ -4041,293 +4041,293 @@ namespace Elastic.CommonSchema
 		///</summary>
 		public static string ProcessMachoSymhash = nameof(ProcessMachoSymhash);
 		///<summary>
-		/// <para><c>process.source.address</c></para>
+		/// <para><c>process.entry_meta.source.address</c></para>
 		/// <para>Some event source addresses are defined ambiguously. The event will sometimes list an IP, a domain or a unix socket.  You should always store the raw address in the `.address` field.
 		/// Then it should be duplicated to `.ip` or `.domain`, depending on which one it is.</para>
 		/// <example></example>
 		///</summary>
-		public static string ProcessSourceAddress = nameof(ProcessSourceAddress);
+		public static string ProcessEntryMetaSourceAddress = nameof(ProcessEntryMetaSourceAddress);
 		///<summary>
-		/// <para><c>process.source.bytes</c></para>
+		/// <para><c>process.entry_meta.source.bytes</c></para>
 		/// <para>Bytes sent from the source to the destination.</para>
 		/// <example>184</example>
 		///</summary>
-		public static string ProcessSourceBytes = nameof(ProcessSourceBytes);
+		public static string ProcessEntryMetaSourceBytes = nameof(ProcessEntryMetaSourceBytes);
 		///<summary>
-		/// <para><c>process.source.domain</c></para>
+		/// <para><c>process.entry_meta.source.domain</c></para>
 		/// <para>The domain name of the source system.
 		/// This value may be a host name, a fully qualified domain name, or another host naming format. The value may derive from the original event or be added from enrichment.</para>
 		/// <example>foo.example.com</example>
 		///</summary>
-		public static string ProcessSourceDomain = nameof(ProcessSourceDomain);
+		public static string ProcessEntryMetaSourceDomain = nameof(ProcessEntryMetaSourceDomain);
 		///<summary>
-		/// <para><c>process.source.ip</c></para>
+		/// <para><c>process.entry_meta.source.ip</c></para>
 		/// <para>IP address of the source (IPv4 or IPv6).</para>
 		/// <example></example>
 		///</summary>
-		public static string ProcessSourceIp = nameof(ProcessSourceIp);
+		public static string ProcessEntryMetaSourceIp = nameof(ProcessEntryMetaSourceIp);
 		///<summary>
-		/// <para><c>process.source.mac</c></para>
+		/// <para><c>process.entry_meta.source.mac</c></para>
 		/// <para>MAC address of the source.
 		/// The notation format from RFC 7042 is suggested: Each octet (that is, 8-bit byte) is represented by two [uppercase] hexadecimal digits giving the value of the octet as an unsigned integer. Successive octets are separated by a hyphen.
 		/// <para>pattern: </para></para>
 		/// <example>00-00-5E-00-53-23</example>
 		///</summary>
-		public static string ProcessSourceMac = nameof(ProcessSourceMac);
+		public static string ProcessEntryMetaSourceMac = nameof(ProcessEntryMetaSourceMac);
 		///<summary>
-		/// <para><c>process.source.nat.ip</c></para>
+		/// <para><c>process.entry_meta.source.nat.ip</c></para>
 		/// <para>Translated ip of source based NAT sessions (e.g. internal client to internet)
 		/// Typically connections traversing load balancers, firewalls, or routers.</para>
 		/// <example></example>
 		///</summary>
-		public static string ProcessSourceNatIp = nameof(ProcessSourceNatIp);
+		public static string ProcessEntryMetaSourceNatIp = nameof(ProcessEntryMetaSourceNatIp);
 		///<summary>
-		/// <para><c>process.source.nat.port</c></para>
+		/// <para><c>process.entry_meta.source.nat.port</c></para>
 		/// <para>Translated port of source based NAT sessions. (e.g. internal client to internet)
 		/// Typically used with load balancers, firewalls, or routers.</para>
 		/// <example></example>
 		///</summary>
-		public static string ProcessSourceNatPort = nameof(ProcessSourceNatPort);
+		public static string ProcessEntryMetaSourceNatPort = nameof(ProcessEntryMetaSourceNatPort);
 		///<summary>
-		/// <para><c>process.source.packets</c></para>
+		/// <para><c>process.entry_meta.source.packets</c></para>
 		/// <para>Packets sent from the source to the destination.</para>
 		/// <example>12</example>
 		///</summary>
-		public static string ProcessSourcePackets = nameof(ProcessSourcePackets);
+		public static string ProcessEntryMetaSourcePackets = nameof(ProcessEntryMetaSourcePackets);
 		///<summary>
-		/// <para><c>process.source.port</c></para>
+		/// <para><c>process.entry_meta.source.port</c></para>
 		/// <para>Port of the source.</para>
 		/// <example></example>
 		///</summary>
-		public static string ProcessSourcePort = nameof(ProcessSourcePort);
+		public static string ProcessEntryMetaSourcePort = nameof(ProcessEntryMetaSourcePort);
 		///<summary>
-		/// <para><c>process.source.registered_domain</c></para>
+		/// <para><c>process.entry_meta.source.registered_domain</c></para>
 		/// <para>The highest registered source domain, stripped of the subdomain.
 		/// For example, the registered domain for "foo.example.com" is "example.com".
 		/// This value can be determined precisely with a list like the public suffix list (http://publicsuffix.org). Trying to approximate this by simply taking the last two labels will not work well for TLDs such as "co.uk".</para>
 		/// <example>example.com</example>
 		///</summary>
-		public static string ProcessSourceRegisteredDomain = nameof(ProcessSourceRegisteredDomain);
+		public static string ProcessEntryMetaSourceRegisteredDomain = nameof(ProcessEntryMetaSourceRegisteredDomain);
 		///<summary>
-		/// <para><c>process.source.subdomain</c></para>
+		/// <para><c>process.entry_meta.source.subdomain</c></para>
 		/// <para>The subdomain portion of a fully qualified domain name includes all of the names except the host name under the registered_domain.  In a partially qualified domain, or if the the qualification level of the full name cannot be determined, subdomain contains all of the names below the registered domain.
 		/// For example the subdomain portion of "www.east.mydomain.co.uk" is "east". If the domain has multiple levels of subdomain, such as "sub2.sub1.example.com", the subdomain field should contain "sub2.sub1", with no trailing period.</para>
 		/// <example>east</example>
 		///</summary>
-		public static string ProcessSourceSubdomain = nameof(ProcessSourceSubdomain);
+		public static string ProcessEntryMetaSourceSubdomain = nameof(ProcessEntryMetaSourceSubdomain);
 		///<summary>
-		/// <para><c>process.source.top_level_domain</c></para>
+		/// <para><c>process.entry_meta.source.top_level_domain</c></para>
 		/// <para>The effective top level domain (eTLD), also known as the domain suffix, is the last part of the domain name. For example, the top level domain for example.com is "com".
 		/// This value can be determined precisely with a list like the public suffix list (http://publicsuffix.org). Trying to approximate this by simply taking the last label will not work well for effective TLDs such as "co.uk".</para>
 		/// <example>co.uk</example>
 		///</summary>
-		public static string ProcessSourceTopLevelDomain = nameof(ProcessSourceTopLevelDomain);
+		public static string ProcessEntryMetaSourceTopLevelDomain = nameof(ProcessEntryMetaSourceTopLevelDomain);
 		///<summary>
-		/// <para><c>process.source.as.number</c></para>
+		/// <para><c>process.entry_meta.source.as.number</c></para>
 		/// <para>Unique number allocated to the autonomous system. The autonomous system number (ASN) uniquely identifies each network on the Internet.</para>
 		/// <example>15169</example>
 		///</summary>
-		public static string ProcessSourceAsNumber = nameof(ProcessSourceAsNumber);
+		public static string ProcessEntryMetaSourceAsNumber = nameof(ProcessEntryMetaSourceAsNumber);
 		///<summary>
-		/// <para><c>process.source.as.organization.name</c></para>
+		/// <para><c>process.entry_meta.source.as.organization.name</c></para>
 		/// <para>Organization name.</para>
 		/// <example>Google LLC</example>
 		///</summary>
-		public static string ProcessSourceAsOrganizationName = nameof(ProcessSourceAsOrganizationName);
+		public static string ProcessEntryMetaSourceAsOrganizationName = nameof(ProcessEntryMetaSourceAsOrganizationName);
 		///<summary>
-		/// <para><c>process.source.geo.city_name</c></para>
+		/// <para><c>process.entry_meta.source.geo.city_name</c></para>
 		/// <para>City name.</para>
 		/// <example>Montreal</example>
 		///</summary>
-		public static string ProcessSourceGeoCityName = nameof(ProcessSourceGeoCityName);
+		public static string ProcessEntryMetaSourceGeoCityName = nameof(ProcessEntryMetaSourceGeoCityName);
 		///<summary>
-		/// <para><c>process.source.geo.continent_code</c></para>
+		/// <para><c>process.entry_meta.source.geo.continent_code</c></para>
 		/// <para>Two-letter code representing continent's name.</para>
 		/// <example>NA</example>
 		///</summary>
-		public static string ProcessSourceGeoContinentCode = nameof(ProcessSourceGeoContinentCode);
+		public static string ProcessEntryMetaSourceGeoContinentCode = nameof(ProcessEntryMetaSourceGeoContinentCode);
 		///<summary>
-		/// <para><c>process.source.geo.continent_name</c></para>
+		/// <para><c>process.entry_meta.source.geo.continent_name</c></para>
 		/// <para>Name of the continent.</para>
 		/// <example>North America</example>
 		///</summary>
-		public static string ProcessSourceGeoContinentName = nameof(ProcessSourceGeoContinentName);
+		public static string ProcessEntryMetaSourceGeoContinentName = nameof(ProcessEntryMetaSourceGeoContinentName);
 		///<summary>
-		/// <para><c>process.source.geo.country_iso_code</c></para>
+		/// <para><c>process.entry_meta.source.geo.country_iso_code</c></para>
 		/// <para>Country ISO code.</para>
 		/// <example>CA</example>
 		///</summary>
-		public static string ProcessSourceGeoCountryIsoCode = nameof(ProcessSourceGeoCountryIsoCode);
+		public static string ProcessEntryMetaSourceGeoCountryIsoCode = nameof(ProcessEntryMetaSourceGeoCountryIsoCode);
 		///<summary>
-		/// <para><c>process.source.geo.country_name</c></para>
+		/// <para><c>process.entry_meta.source.geo.country_name</c></para>
 		/// <para>Country name.</para>
 		/// <example>Canada</example>
 		///</summary>
-		public static string ProcessSourceGeoCountryName = nameof(ProcessSourceGeoCountryName);
+		public static string ProcessEntryMetaSourceGeoCountryName = nameof(ProcessEntryMetaSourceGeoCountryName);
 		///<summary>
-		/// <para><c>process.source.geo.name</c></para>
+		/// <para><c>process.entry_meta.source.geo.name</c></para>
 		/// <para>User-defined description of a location, at the level of granularity they care about.
 		/// Could be the name of their data centers, the floor number, if this describes a local physical entity, city names.
 		/// Not typically used in automated geolocation.</para>
 		/// <example>boston-dc</example>
 		///</summary>
-		public static string ProcessSourceGeoName = nameof(ProcessSourceGeoName);
+		public static string ProcessEntryMetaSourceGeoName = nameof(ProcessEntryMetaSourceGeoName);
 		///<summary>
-		/// <para><c>process.source.geo.postal_code</c></para>
+		/// <para><c>process.entry_meta.source.geo.postal_code</c></para>
 		/// <para>Postal code associated with the location.
 		/// Values appropriate for this field may also be known as a postcode or ZIP code and will vary widely from country to country.</para>
 		/// <example>94040</example>
 		///</summary>
-		public static string ProcessSourceGeoPostalCode = nameof(ProcessSourceGeoPostalCode);
+		public static string ProcessEntryMetaSourceGeoPostalCode = nameof(ProcessEntryMetaSourceGeoPostalCode);
 		///<summary>
-		/// <para><c>process.source.geo.region_iso_code</c></para>
+		/// <para><c>process.entry_meta.source.geo.region_iso_code</c></para>
 		/// <para>Region ISO code.</para>
 		/// <example>CA-QC</example>
 		///</summary>
-		public static string ProcessSourceGeoRegionIsoCode = nameof(ProcessSourceGeoRegionIsoCode);
+		public static string ProcessEntryMetaSourceGeoRegionIsoCode = nameof(ProcessEntryMetaSourceGeoRegionIsoCode);
 		///<summary>
-		/// <para><c>process.source.geo.region_name</c></para>
+		/// <para><c>process.entry_meta.source.geo.region_name</c></para>
 		/// <para>Region name.</para>
 		/// <example>Quebec</example>
 		///</summary>
-		public static string ProcessSourceGeoRegionName = nameof(ProcessSourceGeoRegionName);
+		public static string ProcessEntryMetaSourceGeoRegionName = nameof(ProcessEntryMetaSourceGeoRegionName);
 		///<summary>
-		/// <para><c>process.source.geo.timezone</c></para>
+		/// <para><c>process.entry_meta.source.geo.timezone</c></para>
 		/// <para>The time zone of the location, such as IANA time zone name.</para>
 		/// <example>America/Argentina/Buenos_Aires</example>
 		///</summary>
-		public static string ProcessSourceGeoTimezone = nameof(ProcessSourceGeoTimezone);
+		public static string ProcessEntryMetaSourceGeoTimezone = nameof(ProcessEntryMetaSourceGeoTimezone);
 		///<summary>
-		/// <para><c>process.source.user.domain</c></para>
+		/// <para><c>process.entry_meta.source.user.domain</c></para>
 		/// <para>Name of the directory the user is a member of.
 		/// For example, an LDAP or Active Directory domain name.</para>
 		/// <example></example>
 		///</summary>
-		public static string ProcessSourceUserDomain = nameof(ProcessSourceUserDomain);
+		public static string ProcessEntryMetaSourceUserDomain = nameof(ProcessEntryMetaSourceUserDomain);
 		///<summary>
-		/// <para><c>process.source.user.email</c></para>
+		/// <para><c>process.entry_meta.source.user.email</c></para>
 		/// <para>User email address.</para>
 		/// <example></example>
 		///</summary>
-		public static string ProcessSourceUserEmail = nameof(ProcessSourceUserEmail);
+		public static string ProcessEntryMetaSourceUserEmail = nameof(ProcessEntryMetaSourceUserEmail);
 		///<summary>
-		/// <para><c>process.source.user.full_name</c></para>
+		/// <para><c>process.entry_meta.source.user.full_name</c></para>
 		/// <para>User's full name, if available.</para>
 		/// <example>Albert Einstein</example>
 		///</summary>
-		public static string ProcessSourceUserFullName = nameof(ProcessSourceUserFullName);
+		public static string ProcessEntryMetaSourceUserFullName = nameof(ProcessEntryMetaSourceUserFullName);
 		///<summary>
-		/// <para><c>process.source.user.hash</c></para>
+		/// <para><c>process.entry_meta.source.user.hash</c></para>
 		/// <para>Unique user hash to correlate information for a user in anonymized form.
 		/// Useful if `user.id` or `user.name` contain confidential information and cannot be used.</para>
 		/// <example></example>
 		///</summary>
-		public static string ProcessSourceUserHash = nameof(ProcessSourceUserHash);
+		public static string ProcessEntryMetaSourceUserHash = nameof(ProcessEntryMetaSourceUserHash);
 		///<summary>
-		/// <para><c>process.source.user.id</c></para>
+		/// <para><c>process.entry_meta.source.user.id</c></para>
 		/// <para>Unique identifier of the user.</para>
 		/// <example>S-1-5-21-202424912787-2692429404-2351956786-1000</example>
 		///</summary>
-		public static string ProcessSourceUserId = nameof(ProcessSourceUserId);
+		public static string ProcessEntryMetaSourceUserId = nameof(ProcessEntryMetaSourceUserId);
 		///<summary>
-		/// <para><c>process.source.user.name</c></para>
+		/// <para><c>process.entry_meta.source.user.name</c></para>
 		/// <para>Short name or login of the user.</para>
 		/// <example>a.einstein</example>
 		///</summary>
-		public static string ProcessSourceUserName = nameof(ProcessSourceUserName);
+		public static string ProcessEntryMetaSourceUserName = nameof(ProcessEntryMetaSourceUserName);
 		///<summary>
-		/// <para><c>process.source.user.group.domain</c></para>
+		/// <para><c>process.entry_meta.source.user.group.domain</c></para>
 		/// <para>Name of the directory the group is a member of.
 		/// For example, an LDAP or Active Directory domain name.</para>
 		/// <example></example>
 		///</summary>
-		public static string ProcessSourceUserGroupDomain = nameof(ProcessSourceUserGroupDomain);
+		public static string ProcessEntryMetaSourceUserGroupDomain = nameof(ProcessEntryMetaSourceUserGroupDomain);
 		///<summary>
-		/// <para><c>process.source.user.group.id</c></para>
+		/// <para><c>process.entry_meta.source.user.group.id</c></para>
 		/// <para>Unique identifier for the group on the system/platform.</para>
 		/// <example></example>
 		///</summary>
-		public static string ProcessSourceUserGroupId = nameof(ProcessSourceUserGroupId);
+		public static string ProcessEntryMetaSourceUserGroupId = nameof(ProcessEntryMetaSourceUserGroupId);
 		///<summary>
-		/// <para><c>process.source.user.group.name</c></para>
+		/// <para><c>process.entry_meta.source.user.group.name</c></para>
 		/// <para>Name of the group.</para>
 		/// <example></example>
 		///</summary>
-		public static string ProcessSourceUserGroupName = nameof(ProcessSourceUserGroupName);
+		public static string ProcessEntryMetaSourceUserGroupName = nameof(ProcessEntryMetaSourceUserGroupName);
 		///<summary>
-		/// <para><c>process.source.user.risk.calculated_level</c></para>
+		/// <para><c>process.entry_meta.source.user.risk.calculated_level</c></para>
 		/// <para>A risk classification level calculated by an internal system as part of entity analytics and entity risk scoring.</para>
 		/// <example>High</example>
 		///</summary>
-		public static string ProcessSourceUserRiskCalculatedLevel = nameof(ProcessSourceUserRiskCalculatedLevel);
+		public static string ProcessEntryMetaSourceUserRiskCalculatedLevel = nameof(ProcessEntryMetaSourceUserRiskCalculatedLevel);
 		///<summary>
-		/// <para><c>process.source.user.risk.calculated_score</c></para>
+		/// <para><c>process.entry_meta.source.user.risk.calculated_score</c></para>
 		/// <para>A risk classification score calculated by an internal system as part of entity analytics and entity risk scoring.</para>
 		/// <example>880.73</example>
 		///</summary>
-		public static string ProcessSourceUserRiskCalculatedScore = nameof(ProcessSourceUserRiskCalculatedScore);
+		public static string ProcessEntryMetaSourceUserRiskCalculatedScore = nameof(ProcessEntryMetaSourceUserRiskCalculatedScore);
 		///<summary>
-		/// <para><c>process.source.user.risk.calculated_score_norm</c></para>
+		/// <para><c>process.entry_meta.source.user.risk.calculated_score_norm</c></para>
 		/// <para>A risk classification score calculated by an internal system as part of entity analytics and entity risk scoring, and normalized to a range of 0 to 100.</para>
 		/// <example>88.73</example>
 		///</summary>
-		public static string ProcessSourceUserRiskCalculatedScoreNorm = nameof(ProcessSourceUserRiskCalculatedScoreNorm);
+		public static string ProcessEntryMetaSourceUserRiskCalculatedScoreNorm = nameof(ProcessEntryMetaSourceUserRiskCalculatedScoreNorm);
 		///<summary>
-		/// <para><c>process.source.user.risk.static_level</c></para>
+		/// <para><c>process.entry_meta.source.user.risk.static_level</c></para>
 		/// <para>A risk classification level obtained from outside the system, such as from some external Threat Intelligence Platform.</para>
 		/// <example>High</example>
 		///</summary>
-		public static string ProcessSourceUserRiskStaticLevel = nameof(ProcessSourceUserRiskStaticLevel);
+		public static string ProcessEntryMetaSourceUserRiskStaticLevel = nameof(ProcessEntryMetaSourceUserRiskStaticLevel);
 		///<summary>
-		/// <para><c>process.source.user.risk.static_score</c></para>
+		/// <para><c>process.entry_meta.source.user.risk.static_score</c></para>
 		/// <para>A risk classification score obtained from outside the system, such as from some external Threat Intelligence Platform.</para>
 		/// <example>830.0</example>
 		///</summary>
-		public static string ProcessSourceUserRiskStaticScore = nameof(ProcessSourceUserRiskStaticScore);
+		public static string ProcessEntryMetaSourceUserRiskStaticScore = nameof(ProcessEntryMetaSourceUserRiskStaticScore);
 		///<summary>
-		/// <para><c>process.source.user.risk.static_score_norm</c></para>
+		/// <para><c>process.entry_meta.source.user.risk.static_score_norm</c></para>
 		/// <para>A risk classification score obtained from outside the system, such as from some external Threat Intelligence Platform, and normalized to a range of 0 to 100.</para>
 		/// <example>83.0</example>
 		///</summary>
-		public static string ProcessSourceUserRiskStaticScoreNorm = nameof(ProcessSourceUserRiskStaticScoreNorm);
+		public static string ProcessEntryMetaSourceUserRiskStaticScoreNorm = nameof(ProcessEntryMetaSourceUserRiskStaticScoreNorm);
 		///<summary>
-		/// <para><c>process.source.user.user.domain</c></para>
+		/// <para><c>process.entry_meta.source.user.target.user.domain</c></para>
 		/// <para>Name of the directory the user is a member of.
 		/// For example, an LDAP or Active Directory domain name.</para>
 		/// <example></example>
 		///</summary>
-		public static string ProcessSourceUserUserDomain = nameof(ProcessSourceUserUserDomain);
+		public static string ProcessEntryMetaSourceUserTargetUserDomain = nameof(ProcessEntryMetaSourceUserTargetUserDomain);
 		///<summary>
-		/// <para><c>process.source.user.user.email</c></para>
+		/// <para><c>process.entry_meta.source.user.target.user.email</c></para>
 		/// <para>User email address.</para>
 		/// <example></example>
 		///</summary>
-		public static string ProcessSourceUserUserEmail = nameof(ProcessSourceUserUserEmail);
+		public static string ProcessEntryMetaSourceUserTargetUserEmail = nameof(ProcessEntryMetaSourceUserTargetUserEmail);
 		///<summary>
-		/// <para><c>process.source.user.user.full_name</c></para>
+		/// <para><c>process.entry_meta.source.user.target.user.full_name</c></para>
 		/// <para>User's full name, if available.</para>
 		/// <example>Albert Einstein</example>
 		///</summary>
-		public static string ProcessSourceUserUserFullName = nameof(ProcessSourceUserUserFullName);
+		public static string ProcessEntryMetaSourceUserTargetUserFullName = nameof(ProcessEntryMetaSourceUserTargetUserFullName);
 		///<summary>
-		/// <para><c>process.source.user.user.hash</c></para>
+		/// <para><c>process.entry_meta.source.user.target.user.hash</c></para>
 		/// <para>Unique user hash to correlate information for a user in anonymized form.
 		/// Useful if `user.id` or `user.name` contain confidential information and cannot be used.</para>
 		/// <example></example>
 		///</summary>
-		public static string ProcessSourceUserUserHash = nameof(ProcessSourceUserUserHash);
+		public static string ProcessEntryMetaSourceUserTargetUserHash = nameof(ProcessEntryMetaSourceUserTargetUserHash);
 		///<summary>
-		/// <para><c>process.source.user.user.id</c></para>
+		/// <para><c>process.entry_meta.source.user.target.user.id</c></para>
 		/// <para>Unique identifier of the user.</para>
 		/// <example>S-1-5-21-202424912787-2692429404-2351956786-1000</example>
 		///</summary>
-		public static string ProcessSourceUserUserId = nameof(ProcessSourceUserUserId);
+		public static string ProcessEntryMetaSourceUserTargetUserId = nameof(ProcessEntryMetaSourceUserTargetUserId);
 		///<summary>
-		/// <para><c>process.source.user.user.name</c></para>
+		/// <para><c>process.entry_meta.source.user.target.user.name</c></para>
 		/// <para>Short name or login of the user.</para>
 		/// <example>a.einstein</example>
 		///</summary>
-		public static string ProcessSourceUserUserName = nameof(ProcessSourceUserUserName);
+		public static string ProcessEntryMetaSourceUserTargetUserName = nameof(ProcessEntryMetaSourceUserTargetUserName);
 		///<summary>
 		/// <para><c>process.user.domain</c></para>
 		/// <para>Name of the directory the user is a member of.
@@ -4422,721 +4422,721 @@ namespace Elastic.CommonSchema
 		///</summary>
 		public static string ProcessUserRiskStaticScoreNorm = nameof(ProcessUserRiskStaticScoreNorm);
 		///<summary>
-		/// <para><c>process.user.user.domain</c></para>
+		/// <para><c>process.user.target.user.domain</c></para>
 		/// <para>Name of the directory the user is a member of.
 		/// For example, an LDAP or Active Directory domain name.</para>
 		/// <example></example>
 		///</summary>
-		public static string ProcessUserUserDomain = nameof(ProcessUserUserDomain);
+		public static string ProcessUserTargetUserDomain = nameof(ProcessUserTargetUserDomain);
 		///<summary>
-		/// <para><c>process.user.user.email</c></para>
+		/// <para><c>process.user.target.user.email</c></para>
 		/// <para>User email address.</para>
 		/// <example></example>
 		///</summary>
-		public static string ProcessUserUserEmail = nameof(ProcessUserUserEmail);
+		public static string ProcessUserTargetUserEmail = nameof(ProcessUserTargetUserEmail);
 		///<summary>
-		/// <para><c>process.user.user.full_name</c></para>
+		/// <para><c>process.user.target.user.full_name</c></para>
 		/// <para>User's full name, if available.</para>
 		/// <example>Albert Einstein</example>
 		///</summary>
-		public static string ProcessUserUserFullName = nameof(ProcessUserUserFullName);
+		public static string ProcessUserTargetUserFullName = nameof(ProcessUserTargetUserFullName);
 		///<summary>
-		/// <para><c>process.user.user.hash</c></para>
+		/// <para><c>process.user.target.user.hash</c></para>
 		/// <para>Unique user hash to correlate information for a user in anonymized form.
 		/// Useful if `user.id` or `user.name` contain confidential information and cannot be used.</para>
 		/// <example></example>
 		///</summary>
-		public static string ProcessUserUserHash = nameof(ProcessUserUserHash);
+		public static string ProcessUserTargetUserHash = nameof(ProcessUserTargetUserHash);
 		///<summary>
-		/// <para><c>process.user.user.id</c></para>
+		/// <para><c>process.user.target.user.id</c></para>
 		/// <para>Unique identifier of the user.</para>
 		/// <example>S-1-5-21-202424912787-2692429404-2351956786-1000</example>
 		///</summary>
-		public static string ProcessUserUserId = nameof(ProcessUserUserId);
+		public static string ProcessUserTargetUserId = nameof(ProcessUserTargetUserId);
 		///<summary>
-		/// <para><c>process.user.user.name</c></para>
+		/// <para><c>process.user.target.user.name</c></para>
 		/// <para>Short name or login of the user.</para>
 		/// <example>a.einstein</example>
 		///</summary>
-		public static string ProcessUserUserName = nameof(ProcessUserUserName);
+		public static string ProcessUserTargetUserName = nameof(ProcessUserTargetUserName);
 		///<summary>
-		/// <para><c>process.process.args_count</c></para>
+		/// <para><c>parent.process.args_count</c></para>
 		/// <para>Length of the process.args array.
 		/// This field can be useful for querying or performing bucket analysis on how many arguments were provided to start a process. More arguments may be an indication of suspicious activity.</para>
 		/// <example>4</example>
 		///</summary>
-		public static string ProcessProcessArgsCount = nameof(ProcessProcessArgsCount);
+		public static string ParentProcessArgsCount = nameof(ParentProcessArgsCount);
 		///<summary>
-		/// <para><c>process.process.command_line</c></para>
+		/// <para><c>parent.process.command_line</c></para>
 		/// <para>Full command line that started the process, including the absolute path to the executable, and all arguments.
 		/// Some arguments may be filtered to protect sensitive information.</para>
 		/// <example>/usr/bin/ssh -l user 10.0.0.16</example>
 		///</summary>
-		public static string ProcessProcessCommandLine = nameof(ProcessProcessCommandLine);
+		public static string ParentProcessCommandLine = nameof(ParentProcessCommandLine);
 		///<summary>
-		/// <para><c>process.process.end</c></para>
+		/// <para><c>parent.process.end</c></para>
 		/// <para>The time the process ended.</para>
 		/// <example>5/23/2016 8:05:34 AM</example>
 		///</summary>
-		public static string ProcessProcessEnd = nameof(ProcessProcessEnd);
+		public static string ParentProcessEnd = nameof(ParentProcessEnd);
 		///<summary>
-		/// <para><c>process.process.entity_id</c></para>
+		/// <para><c>parent.process.entity_id</c></para>
 		/// <para>Unique identifier for the process.
 		/// The implementation of this is specified by the data source, but some examples of what could be used here are a process-generated UUID, Sysmon Process GUIDs, or a hash of some uniquely identifying components of a process.
 		/// Constructing a globally unique identifier is a common practice to mitigate PID reuse as well as to identify a specific process over time, across multiple monitored hosts.</para>
 		/// <example>c2c455d9f99375d</example>
 		///</summary>
-		public static string ProcessProcessEntityId = nameof(ProcessProcessEntityId);
+		public static string ParentProcessEntityId = nameof(ParentProcessEntityId);
 		///<summary>
-		/// <para><c>process.process.executable</c></para>
+		/// <para><c>parent.process.executable</c></para>
 		/// <para>Absolute path to the process executable.</para>
 		/// <example>/usr/bin/ssh</example>
 		///</summary>
-		public static string ProcessProcessExecutable = nameof(ProcessProcessExecutable);
+		public static string ParentProcessExecutable = nameof(ParentProcessExecutable);
 		///<summary>
-		/// <para><c>process.process.exit_code</c></para>
+		/// <para><c>parent.process.exit_code</c></para>
 		/// <para>The exit code of the process, if this is a termination event.
 		/// The field should be absent if there is no exit code for the event (e.g. process start).</para>
 		/// <example>137</example>
 		///</summary>
-		public static string ProcessProcessExitCode = nameof(ProcessProcessExitCode);
+		public static string ParentProcessExitCode = nameof(ParentProcessExitCode);
 		///<summary>
-		/// <para><c>process.process.interactive</c></para>
+		/// <para><c>parent.process.interactive</c></para>
 		/// <para>Whether the process is connected to an interactive shell.
 		/// Process interactivity is inferred from the processes file descriptors. If the character device for the controlling tty is the same as stdin and stderr for the process, the process is considered interactive.
 		/// Note: A non-interactive process can belong to an interactive session and is simply one that does not have open file descriptors reading the controlling TTY on FD 0 (stdin) or writing to the controlling TTY on FD 2 (stderr). A backgrounded process is still considered interactive if stdin and stderr are connected to the controlling TTY.</para>
 		/// <example>true</example>
 		///</summary>
-		public static string ProcessProcessInteractive = nameof(ProcessProcessInteractive);
+		public static string ParentProcessInteractive = nameof(ParentProcessInteractive);
 		///<summary>
-		/// <para><c>process.process.name</c></para>
+		/// <para><c>parent.process.name</c></para>
 		/// <para>Process name.
 		/// Sometimes called program name or similar.</para>
 		/// <example>ssh</example>
 		///</summary>
-		public static string ProcessProcessName = nameof(ProcessProcessName);
+		public static string ParentProcessName = nameof(ParentProcessName);
 		///<summary>
-		/// <para><c>process.process.pgid</c></para>
+		/// <para><c>parent.process.pgid</c></para>
 		/// <para>Deprecated for removal in next major version release. This field is superseded by `process.group_leader.pid`.
 		/// Identifier of the group of processes the process belongs to.</para>
 		/// <example></example>
 		///</summary>
-		public static string ProcessProcessPgid = nameof(ProcessProcessPgid);
+		public static string ParentProcessPgid = nameof(ParentProcessPgid);
 		///<summary>
-		/// <para><c>process.process.pid</c></para>
+		/// <para><c>parent.process.pid</c></para>
 		/// <para>Process id.</para>
 		/// <example>4242</example>
 		///</summary>
-		public static string ProcessProcessPid = nameof(ProcessProcessPid);
+		public static string ParentProcessPid = nameof(ParentProcessPid);
 		///<summary>
-		/// <para><c>process.process.start</c></para>
+		/// <para><c>parent.process.start</c></para>
 		/// <para>The time the process started.</para>
 		/// <example>5/23/2016 8:05:34 AM</example>
 		///</summary>
-		public static string ProcessProcessStart = nameof(ProcessProcessStart);
+		public static string ParentProcessStart = nameof(ParentProcessStart);
 		///<summary>
-		/// <para><c>process.process.thread.id</c></para>
+		/// <para><c>parent.process.thread.id</c></para>
 		/// <para>Thread ID.</para>
 		/// <example>4242</example>
 		///</summary>
-		public static string ProcessProcessThreadId = nameof(ProcessProcessThreadId);
+		public static string ParentProcessThreadId = nameof(ParentProcessThreadId);
 		///<summary>
-		/// <para><c>process.process.thread.name</c></para>
+		/// <para><c>parent.process.thread.name</c></para>
 		/// <para>Thread name.</para>
 		/// <example>thread-0</example>
 		///</summary>
-		public static string ProcessProcessThreadName = nameof(ProcessProcessThreadName);
+		public static string ParentProcessThreadName = nameof(ParentProcessThreadName);
 		///<summary>
-		/// <para><c>process.process.title</c></para>
+		/// <para><c>parent.process.title</c></para>
 		/// <para>Process title.
 		/// The proctitle, some times the same as process name. Can also be different: for example a browser setting its title to the web page currently opened.</para>
 		/// <example></example>
 		///</summary>
-		public static string ProcessProcessTitle = nameof(ProcessProcessTitle);
+		public static string ParentProcessTitle = nameof(ParentProcessTitle);
 		///<summary>
-		/// <para><c>process.process.uptime</c></para>
+		/// <para><c>parent.process.uptime</c></para>
 		/// <para>Seconds the process has been up.</para>
 		/// <example>1325</example>
 		///</summary>
-		public static string ProcessProcessUptime = nameof(ProcessProcessUptime);
+		public static string ParentProcessUptime = nameof(ParentProcessUptime);
 		///<summary>
-		/// <para><c>process.process.vpid</c></para>
+		/// <para><c>parent.process.vpid</c></para>
 		/// <para>Virtual process id.
 		/// The process id within a pid namespace. This is not necessarily unique across all processes on the host but it is unique within the process namespace that the process exists within.</para>
 		/// <example>4242</example>
 		///</summary>
-		public static string ProcessProcessVpid = nameof(ProcessProcessVpid);
+		public static string ParentProcessVpid = nameof(ParentProcessVpid);
 		///<summary>
-		/// <para><c>process.process.working_directory</c></para>
+		/// <para><c>parent.process.working_directory</c></para>
 		/// <para>The working directory of the process.</para>
 		/// <example>/home/alice</example>
 		///</summary>
-		public static string ProcessProcessWorkingDirectory = nameof(ProcessProcessWorkingDirectory);
+		public static string ParentProcessWorkingDirectory = nameof(ParentProcessWorkingDirectory);
 		///<summary>
-		/// <para><c>process.process.parent.process.args_count</c></para>
+		/// <para><c>process.parent.group_leader.process.args_count</c></para>
 		/// <para>Length of the process.args array.
 		/// This field can be useful for querying or performing bucket analysis on how many arguments were provided to start a process. More arguments may be an indication of suspicious activity.</para>
 		/// <example>4</example>
 		///</summary>
-		public static string ProcessProcessParentProcessArgsCount = nameof(ProcessProcessParentProcessArgsCount);
+		public static string ProcessParentGroupLeaderProcessArgsCount = nameof(ProcessParentGroupLeaderProcessArgsCount);
 		///<summary>
-		/// <para><c>process.process.parent.process.command_line</c></para>
+		/// <para><c>process.parent.group_leader.process.command_line</c></para>
 		/// <para>Full command line that started the process, including the absolute path to the executable, and all arguments.
 		/// Some arguments may be filtered to protect sensitive information.</para>
 		/// <example>/usr/bin/ssh -l user 10.0.0.16</example>
 		///</summary>
-		public static string ProcessProcessParentProcessCommandLine = nameof(ProcessProcessParentProcessCommandLine);
+		public static string ProcessParentGroupLeaderProcessCommandLine = nameof(ProcessParentGroupLeaderProcessCommandLine);
 		///<summary>
-		/// <para><c>process.process.parent.process.end</c></para>
+		/// <para><c>process.parent.group_leader.process.end</c></para>
 		/// <para>The time the process ended.</para>
 		/// <example>5/23/2016 8:05:34 AM</example>
 		///</summary>
-		public static string ProcessProcessParentProcessEnd = nameof(ProcessProcessParentProcessEnd);
+		public static string ProcessParentGroupLeaderProcessEnd = nameof(ProcessParentGroupLeaderProcessEnd);
 		///<summary>
-		/// <para><c>process.process.parent.process.entity_id</c></para>
+		/// <para><c>process.parent.group_leader.process.entity_id</c></para>
 		/// <para>Unique identifier for the process.
 		/// The implementation of this is specified by the data source, but some examples of what could be used here are a process-generated UUID, Sysmon Process GUIDs, or a hash of some uniquely identifying components of a process.
 		/// Constructing a globally unique identifier is a common practice to mitigate PID reuse as well as to identify a specific process over time, across multiple monitored hosts.</para>
 		/// <example>c2c455d9f99375d</example>
 		///</summary>
-		public static string ProcessProcessParentProcessEntityId = nameof(ProcessProcessParentProcessEntityId);
+		public static string ProcessParentGroupLeaderProcessEntityId = nameof(ProcessParentGroupLeaderProcessEntityId);
 		///<summary>
-		/// <para><c>process.process.parent.process.executable</c></para>
+		/// <para><c>process.parent.group_leader.process.executable</c></para>
 		/// <para>Absolute path to the process executable.</para>
 		/// <example>/usr/bin/ssh</example>
 		///</summary>
-		public static string ProcessProcessParentProcessExecutable = nameof(ProcessProcessParentProcessExecutable);
+		public static string ProcessParentGroupLeaderProcessExecutable = nameof(ProcessParentGroupLeaderProcessExecutable);
 		///<summary>
-		/// <para><c>process.process.parent.process.exit_code</c></para>
+		/// <para><c>process.parent.group_leader.process.exit_code</c></para>
 		/// <para>The exit code of the process, if this is a termination event.
 		/// The field should be absent if there is no exit code for the event (e.g. process start).</para>
 		/// <example>137</example>
 		///</summary>
-		public static string ProcessProcessParentProcessExitCode = nameof(ProcessProcessParentProcessExitCode);
+		public static string ProcessParentGroupLeaderProcessExitCode = nameof(ProcessParentGroupLeaderProcessExitCode);
 		///<summary>
-		/// <para><c>process.process.parent.process.interactive</c></para>
+		/// <para><c>process.parent.group_leader.process.interactive</c></para>
 		/// <para>Whether the process is connected to an interactive shell.
 		/// Process interactivity is inferred from the processes file descriptors. If the character device for the controlling tty is the same as stdin and stderr for the process, the process is considered interactive.
 		/// Note: A non-interactive process can belong to an interactive session and is simply one that does not have open file descriptors reading the controlling TTY on FD 0 (stdin) or writing to the controlling TTY on FD 2 (stderr). A backgrounded process is still considered interactive if stdin and stderr are connected to the controlling TTY.</para>
 		/// <example>true</example>
 		///</summary>
-		public static string ProcessProcessParentProcessInteractive = nameof(ProcessProcessParentProcessInteractive);
+		public static string ProcessParentGroupLeaderProcessInteractive = nameof(ProcessParentGroupLeaderProcessInteractive);
 		///<summary>
-		/// <para><c>process.process.parent.process.name</c></para>
+		/// <para><c>process.parent.group_leader.process.name</c></para>
 		/// <para>Process name.
 		/// Sometimes called program name or similar.</para>
 		/// <example>ssh</example>
 		///</summary>
-		public static string ProcessProcessParentProcessName = nameof(ProcessProcessParentProcessName);
+		public static string ProcessParentGroupLeaderProcessName = nameof(ProcessParentGroupLeaderProcessName);
 		///<summary>
-		/// <para><c>process.process.parent.process.pgid</c></para>
+		/// <para><c>process.parent.group_leader.process.pgid</c></para>
 		/// <para>Deprecated for removal in next major version release. This field is superseded by `process.group_leader.pid`.
 		/// Identifier of the group of processes the process belongs to.</para>
 		/// <example></example>
 		///</summary>
-		public static string ProcessProcessParentProcessPgid = nameof(ProcessProcessParentProcessPgid);
+		public static string ProcessParentGroupLeaderProcessPgid = nameof(ProcessParentGroupLeaderProcessPgid);
 		///<summary>
-		/// <para><c>process.process.parent.process.pid</c></para>
+		/// <para><c>process.parent.group_leader.process.pid</c></para>
 		/// <para>Process id.</para>
 		/// <example>4242</example>
 		///</summary>
-		public static string ProcessProcessParentProcessPid = nameof(ProcessProcessParentProcessPid);
+		public static string ProcessParentGroupLeaderProcessPid = nameof(ProcessParentGroupLeaderProcessPid);
 		///<summary>
-		/// <para><c>process.process.parent.process.start</c></para>
+		/// <para><c>process.parent.group_leader.process.start</c></para>
 		/// <para>The time the process started.</para>
 		/// <example>5/23/2016 8:05:34 AM</example>
 		///</summary>
-		public static string ProcessProcessParentProcessStart = nameof(ProcessProcessParentProcessStart);
+		public static string ProcessParentGroupLeaderProcessStart = nameof(ProcessParentGroupLeaderProcessStart);
 		///<summary>
-		/// <para><c>process.process.parent.process.thread.id</c></para>
+		/// <para><c>process.parent.group_leader.process.thread.id</c></para>
 		/// <para>Thread ID.</para>
 		/// <example>4242</example>
 		///</summary>
-		public static string ProcessProcessParentProcessThreadId = nameof(ProcessProcessParentProcessThreadId);
+		public static string ProcessParentGroupLeaderProcessThreadId = nameof(ProcessParentGroupLeaderProcessThreadId);
 		///<summary>
-		/// <para><c>process.process.parent.process.thread.name</c></para>
+		/// <para><c>process.parent.group_leader.process.thread.name</c></para>
 		/// <para>Thread name.</para>
 		/// <example>thread-0</example>
 		///</summary>
-		public static string ProcessProcessParentProcessThreadName = nameof(ProcessProcessParentProcessThreadName);
+		public static string ProcessParentGroupLeaderProcessThreadName = nameof(ProcessParentGroupLeaderProcessThreadName);
 		///<summary>
-		/// <para><c>process.process.parent.process.title</c></para>
+		/// <para><c>process.parent.group_leader.process.title</c></para>
 		/// <para>Process title.
 		/// The proctitle, some times the same as process name. Can also be different: for example a browser setting its title to the web page currently opened.</para>
 		/// <example></example>
 		///</summary>
-		public static string ProcessProcessParentProcessTitle = nameof(ProcessProcessParentProcessTitle);
+		public static string ProcessParentGroupLeaderProcessTitle = nameof(ProcessParentGroupLeaderProcessTitle);
 		///<summary>
-		/// <para><c>process.process.parent.process.uptime</c></para>
+		/// <para><c>process.parent.group_leader.process.uptime</c></para>
 		/// <para>Seconds the process has been up.</para>
 		/// <example>1325</example>
 		///</summary>
-		public static string ProcessProcessParentProcessUptime = nameof(ProcessProcessParentProcessUptime);
+		public static string ProcessParentGroupLeaderProcessUptime = nameof(ProcessParentGroupLeaderProcessUptime);
 		///<summary>
-		/// <para><c>process.process.parent.process.vpid</c></para>
+		/// <para><c>process.parent.group_leader.process.vpid</c></para>
 		/// <para>Virtual process id.
 		/// The process id within a pid namespace. This is not necessarily unique across all processes on the host but it is unique within the process namespace that the process exists within.</para>
 		/// <example>4242</example>
 		///</summary>
-		public static string ProcessProcessParentProcessVpid = nameof(ProcessProcessParentProcessVpid);
+		public static string ProcessParentGroupLeaderProcessVpid = nameof(ProcessParentGroupLeaderProcessVpid);
 		///<summary>
-		/// <para><c>process.process.parent.process.working_directory</c></para>
+		/// <para><c>process.parent.group_leader.process.working_directory</c></para>
 		/// <para>The working directory of the process.</para>
 		/// <example>/home/alice</example>
 		///</summary>
-		public static string ProcessProcessParentProcessWorkingDirectory = nameof(ProcessProcessParentProcessWorkingDirectory);
+		public static string ProcessParentGroupLeaderProcessWorkingDirectory = nameof(ProcessParentGroupLeaderProcessWorkingDirectory);
 		///<summary>
-		/// <para><c>process.process.entry_leader.process.args_count</c></para>
+		/// <para><c>process.entry_leader.parent.process.args_count</c></para>
 		/// <para>Length of the process.args array.
 		/// This field can be useful for querying or performing bucket analysis on how many arguments were provided to start a process. More arguments may be an indication of suspicious activity.</para>
 		/// <example>4</example>
 		///</summary>
-		public static string ProcessProcessEntryLeaderProcessArgsCount = nameof(ProcessProcessEntryLeaderProcessArgsCount);
+		public static string ProcessEntryLeaderParentProcessArgsCount = nameof(ProcessEntryLeaderParentProcessArgsCount);
 		///<summary>
-		/// <para><c>process.process.entry_leader.process.command_line</c></para>
+		/// <para><c>process.entry_leader.parent.process.command_line</c></para>
 		/// <para>Full command line that started the process, including the absolute path to the executable, and all arguments.
 		/// Some arguments may be filtered to protect sensitive information.</para>
 		/// <example>/usr/bin/ssh -l user 10.0.0.16</example>
 		///</summary>
-		public static string ProcessProcessEntryLeaderProcessCommandLine = nameof(ProcessProcessEntryLeaderProcessCommandLine);
+		public static string ProcessEntryLeaderParentProcessCommandLine = nameof(ProcessEntryLeaderParentProcessCommandLine);
 		///<summary>
-		/// <para><c>process.process.entry_leader.process.end</c></para>
+		/// <para><c>process.entry_leader.parent.process.end</c></para>
 		/// <para>The time the process ended.</para>
 		/// <example>5/23/2016 8:05:34 AM</example>
 		///</summary>
-		public static string ProcessProcessEntryLeaderProcessEnd = nameof(ProcessProcessEntryLeaderProcessEnd);
+		public static string ProcessEntryLeaderParentProcessEnd = nameof(ProcessEntryLeaderParentProcessEnd);
 		///<summary>
-		/// <para><c>process.process.entry_leader.process.entity_id</c></para>
+		/// <para><c>process.entry_leader.parent.process.entity_id</c></para>
 		/// <para>Unique identifier for the process.
 		/// The implementation of this is specified by the data source, but some examples of what could be used here are a process-generated UUID, Sysmon Process GUIDs, or a hash of some uniquely identifying components of a process.
 		/// Constructing a globally unique identifier is a common practice to mitigate PID reuse as well as to identify a specific process over time, across multiple monitored hosts.</para>
 		/// <example>c2c455d9f99375d</example>
 		///</summary>
-		public static string ProcessProcessEntryLeaderProcessEntityId = nameof(ProcessProcessEntryLeaderProcessEntityId);
+		public static string ProcessEntryLeaderParentProcessEntityId = nameof(ProcessEntryLeaderParentProcessEntityId);
 		///<summary>
-		/// <para><c>process.process.entry_leader.process.executable</c></para>
+		/// <para><c>process.entry_leader.parent.process.executable</c></para>
 		/// <para>Absolute path to the process executable.</para>
 		/// <example>/usr/bin/ssh</example>
 		///</summary>
-		public static string ProcessProcessEntryLeaderProcessExecutable = nameof(ProcessProcessEntryLeaderProcessExecutable);
+		public static string ProcessEntryLeaderParentProcessExecutable = nameof(ProcessEntryLeaderParentProcessExecutable);
 		///<summary>
-		/// <para><c>process.process.entry_leader.process.exit_code</c></para>
+		/// <para><c>process.entry_leader.parent.process.exit_code</c></para>
 		/// <para>The exit code of the process, if this is a termination event.
 		/// The field should be absent if there is no exit code for the event (e.g. process start).</para>
 		/// <example>137</example>
 		///</summary>
-		public static string ProcessProcessEntryLeaderProcessExitCode = nameof(ProcessProcessEntryLeaderProcessExitCode);
+		public static string ProcessEntryLeaderParentProcessExitCode = nameof(ProcessEntryLeaderParentProcessExitCode);
 		///<summary>
-		/// <para><c>process.process.entry_leader.process.interactive</c></para>
+		/// <para><c>process.entry_leader.parent.process.interactive</c></para>
 		/// <para>Whether the process is connected to an interactive shell.
 		/// Process interactivity is inferred from the processes file descriptors. If the character device for the controlling tty is the same as stdin and stderr for the process, the process is considered interactive.
 		/// Note: A non-interactive process can belong to an interactive session and is simply one that does not have open file descriptors reading the controlling TTY on FD 0 (stdin) or writing to the controlling TTY on FD 2 (stderr). A backgrounded process is still considered interactive if stdin and stderr are connected to the controlling TTY.</para>
 		/// <example>true</example>
 		///</summary>
-		public static string ProcessProcessEntryLeaderProcessInteractive = nameof(ProcessProcessEntryLeaderProcessInteractive);
+		public static string ProcessEntryLeaderParentProcessInteractive = nameof(ProcessEntryLeaderParentProcessInteractive);
 		///<summary>
-		/// <para><c>process.process.entry_leader.process.name</c></para>
+		/// <para><c>process.entry_leader.parent.process.name</c></para>
 		/// <para>Process name.
 		/// Sometimes called program name or similar.</para>
 		/// <example>ssh</example>
 		///</summary>
-		public static string ProcessProcessEntryLeaderProcessName = nameof(ProcessProcessEntryLeaderProcessName);
+		public static string ProcessEntryLeaderParentProcessName = nameof(ProcessEntryLeaderParentProcessName);
 		///<summary>
-		/// <para><c>process.process.entry_leader.process.pgid</c></para>
+		/// <para><c>process.entry_leader.parent.process.pgid</c></para>
 		/// <para>Deprecated for removal in next major version release. This field is superseded by `process.group_leader.pid`.
 		/// Identifier of the group of processes the process belongs to.</para>
 		/// <example></example>
 		///</summary>
-		public static string ProcessProcessEntryLeaderProcessPgid = nameof(ProcessProcessEntryLeaderProcessPgid);
+		public static string ProcessEntryLeaderParentProcessPgid = nameof(ProcessEntryLeaderParentProcessPgid);
 		///<summary>
-		/// <para><c>process.process.entry_leader.process.pid</c></para>
+		/// <para><c>process.entry_leader.parent.process.pid</c></para>
 		/// <para>Process id.</para>
 		/// <example>4242</example>
 		///</summary>
-		public static string ProcessProcessEntryLeaderProcessPid = nameof(ProcessProcessEntryLeaderProcessPid);
+		public static string ProcessEntryLeaderParentProcessPid = nameof(ProcessEntryLeaderParentProcessPid);
 		///<summary>
-		/// <para><c>process.process.entry_leader.process.start</c></para>
+		/// <para><c>process.entry_leader.parent.process.start</c></para>
 		/// <para>The time the process started.</para>
 		/// <example>5/23/2016 8:05:34 AM</example>
 		///</summary>
-		public static string ProcessProcessEntryLeaderProcessStart = nameof(ProcessProcessEntryLeaderProcessStart);
+		public static string ProcessEntryLeaderParentProcessStart = nameof(ProcessEntryLeaderParentProcessStart);
 		///<summary>
-		/// <para><c>process.process.entry_leader.process.thread.id</c></para>
+		/// <para><c>process.entry_leader.parent.process.thread.id</c></para>
 		/// <para>Thread ID.</para>
 		/// <example>4242</example>
 		///</summary>
-		public static string ProcessProcessEntryLeaderProcessThreadId = nameof(ProcessProcessEntryLeaderProcessThreadId);
+		public static string ProcessEntryLeaderParentProcessThreadId = nameof(ProcessEntryLeaderParentProcessThreadId);
 		///<summary>
-		/// <para><c>process.process.entry_leader.process.thread.name</c></para>
+		/// <para><c>process.entry_leader.parent.process.thread.name</c></para>
 		/// <para>Thread name.</para>
 		/// <example>thread-0</example>
 		///</summary>
-		public static string ProcessProcessEntryLeaderProcessThreadName = nameof(ProcessProcessEntryLeaderProcessThreadName);
+		public static string ProcessEntryLeaderParentProcessThreadName = nameof(ProcessEntryLeaderParentProcessThreadName);
 		///<summary>
-		/// <para><c>process.process.entry_leader.process.title</c></para>
+		/// <para><c>process.entry_leader.parent.process.title</c></para>
 		/// <para>Process title.
 		/// The proctitle, some times the same as process name. Can also be different: for example a browser setting its title to the web page currently opened.</para>
 		/// <example></example>
 		///</summary>
-		public static string ProcessProcessEntryLeaderProcessTitle = nameof(ProcessProcessEntryLeaderProcessTitle);
+		public static string ProcessEntryLeaderParentProcessTitle = nameof(ProcessEntryLeaderParentProcessTitle);
 		///<summary>
-		/// <para><c>process.process.entry_leader.process.uptime</c></para>
+		/// <para><c>process.entry_leader.parent.process.uptime</c></para>
 		/// <para>Seconds the process has been up.</para>
 		/// <example>1325</example>
 		///</summary>
-		public static string ProcessProcessEntryLeaderProcessUptime = nameof(ProcessProcessEntryLeaderProcessUptime);
+		public static string ProcessEntryLeaderParentProcessUptime = nameof(ProcessEntryLeaderParentProcessUptime);
 		///<summary>
-		/// <para><c>process.process.entry_leader.process.vpid</c></para>
+		/// <para><c>process.entry_leader.parent.process.vpid</c></para>
 		/// <para>Virtual process id.
 		/// The process id within a pid namespace. This is not necessarily unique across all processes on the host but it is unique within the process namespace that the process exists within.</para>
 		/// <example>4242</example>
 		///</summary>
-		public static string ProcessProcessEntryLeaderProcessVpid = nameof(ProcessProcessEntryLeaderProcessVpid);
+		public static string ProcessEntryLeaderParentProcessVpid = nameof(ProcessEntryLeaderParentProcessVpid);
 		///<summary>
-		/// <para><c>process.process.entry_leader.process.working_directory</c></para>
+		/// <para><c>process.entry_leader.parent.process.working_directory</c></para>
 		/// <para>The working directory of the process.</para>
 		/// <example>/home/alice</example>
 		///</summary>
-		public static string ProcessProcessEntryLeaderProcessWorkingDirectory = nameof(ProcessProcessEntryLeaderProcessWorkingDirectory);
+		public static string ProcessEntryLeaderParentProcessWorkingDirectory = nameof(ProcessEntryLeaderParentProcessWorkingDirectory);
 		///<summary>
-		/// <para><c>process.process.entry_leader.process.entry_leader.parent.process.args_count</c></para>
+		/// <para><c>entry_leader.process.parent.entry_leader.parent.session_leader.process.args_count</c></para>
 		/// <para>Length of the process.args array.
 		/// This field can be useful for querying or performing bucket analysis on how many arguments were provided to start a process. More arguments may be an indication of suspicious activity.</para>
 		/// <example>4</example>
 		///</summary>
-		public static string ProcessProcessEntryLeaderProcessEntryLeaderParentProcessArgsCount = nameof(ProcessProcessEntryLeaderProcessEntryLeaderParentProcessArgsCount);
+		public static string EntryLeaderProcessParentEntryLeaderParentSessionLeaderProcessArgsCount = nameof(EntryLeaderProcessParentEntryLeaderParentSessionLeaderProcessArgsCount);
 		///<summary>
-		/// <para><c>process.process.entry_leader.process.entry_leader.parent.process.command_line</c></para>
+		/// <para><c>entry_leader.process.parent.entry_leader.parent.session_leader.process.command_line</c></para>
 		/// <para>Full command line that started the process, including the absolute path to the executable, and all arguments.
 		/// Some arguments may be filtered to protect sensitive information.</para>
 		/// <example>/usr/bin/ssh -l user 10.0.0.16</example>
 		///</summary>
-		public static string ProcessProcessEntryLeaderProcessEntryLeaderParentProcessCommandLine = nameof(ProcessProcessEntryLeaderProcessEntryLeaderParentProcessCommandLine);
+		public static string EntryLeaderProcessParentEntryLeaderParentSessionLeaderProcessCommandLine = nameof(EntryLeaderProcessParentEntryLeaderParentSessionLeaderProcessCommandLine);
 		///<summary>
-		/// <para><c>process.process.entry_leader.process.entry_leader.parent.process.end</c></para>
+		/// <para><c>entry_leader.process.parent.entry_leader.parent.session_leader.process.end</c></para>
 		/// <para>The time the process ended.</para>
 		/// <example>5/23/2016 8:05:34 AM</example>
 		///</summary>
-		public static string ProcessProcessEntryLeaderProcessEntryLeaderParentProcessEnd = nameof(ProcessProcessEntryLeaderProcessEntryLeaderParentProcessEnd);
+		public static string EntryLeaderProcessParentEntryLeaderParentSessionLeaderProcessEnd = nameof(EntryLeaderProcessParentEntryLeaderParentSessionLeaderProcessEnd);
 		///<summary>
-		/// <para><c>process.process.entry_leader.process.entry_leader.parent.process.entity_id</c></para>
+		/// <para><c>entry_leader.process.parent.entry_leader.parent.session_leader.process.entity_id</c></para>
 		/// <para>Unique identifier for the process.
 		/// The implementation of this is specified by the data source, but some examples of what could be used here are a process-generated UUID, Sysmon Process GUIDs, or a hash of some uniquely identifying components of a process.
 		/// Constructing a globally unique identifier is a common practice to mitigate PID reuse as well as to identify a specific process over time, across multiple monitored hosts.</para>
 		/// <example>c2c455d9f99375d</example>
 		///</summary>
-		public static string ProcessProcessEntryLeaderProcessEntryLeaderParentProcessEntityId = nameof(ProcessProcessEntryLeaderProcessEntryLeaderParentProcessEntityId);
+		public static string EntryLeaderProcessParentEntryLeaderParentSessionLeaderProcessEntityId = nameof(EntryLeaderProcessParentEntryLeaderParentSessionLeaderProcessEntityId);
 		///<summary>
-		/// <para><c>process.process.entry_leader.process.entry_leader.parent.process.executable</c></para>
+		/// <para><c>entry_leader.process.parent.entry_leader.parent.session_leader.process.executable</c></para>
 		/// <para>Absolute path to the process executable.</para>
 		/// <example>/usr/bin/ssh</example>
 		///</summary>
-		public static string ProcessProcessEntryLeaderProcessEntryLeaderParentProcessExecutable = nameof(ProcessProcessEntryLeaderProcessEntryLeaderParentProcessExecutable);
+		public static string EntryLeaderProcessParentEntryLeaderParentSessionLeaderProcessExecutable = nameof(EntryLeaderProcessParentEntryLeaderParentSessionLeaderProcessExecutable);
 		///<summary>
-		/// <para><c>process.process.entry_leader.process.entry_leader.parent.process.exit_code</c></para>
+		/// <para><c>entry_leader.process.parent.entry_leader.parent.session_leader.process.exit_code</c></para>
 		/// <para>The exit code of the process, if this is a termination event.
 		/// The field should be absent if there is no exit code for the event (e.g. process start).</para>
 		/// <example>137</example>
 		///</summary>
-		public static string ProcessProcessEntryLeaderProcessEntryLeaderParentProcessExitCode = nameof(ProcessProcessEntryLeaderProcessEntryLeaderParentProcessExitCode);
+		public static string EntryLeaderProcessParentEntryLeaderParentSessionLeaderProcessExitCode = nameof(EntryLeaderProcessParentEntryLeaderParentSessionLeaderProcessExitCode);
 		///<summary>
-		/// <para><c>process.process.entry_leader.process.entry_leader.parent.process.interactive</c></para>
+		/// <para><c>entry_leader.process.parent.entry_leader.parent.session_leader.process.interactive</c></para>
 		/// <para>Whether the process is connected to an interactive shell.
 		/// Process interactivity is inferred from the processes file descriptors. If the character device for the controlling tty is the same as stdin and stderr for the process, the process is considered interactive.
 		/// Note: A non-interactive process can belong to an interactive session and is simply one that does not have open file descriptors reading the controlling TTY on FD 0 (stdin) or writing to the controlling TTY on FD 2 (stderr). A backgrounded process is still considered interactive if stdin and stderr are connected to the controlling TTY.</para>
 		/// <example>true</example>
 		///</summary>
-		public static string ProcessProcessEntryLeaderProcessEntryLeaderParentProcessInteractive = nameof(ProcessProcessEntryLeaderProcessEntryLeaderParentProcessInteractive);
+		public static string EntryLeaderProcessParentEntryLeaderParentSessionLeaderProcessInteractive = nameof(EntryLeaderProcessParentEntryLeaderParentSessionLeaderProcessInteractive);
 		///<summary>
-		/// <para><c>process.process.entry_leader.process.entry_leader.parent.process.name</c></para>
+		/// <para><c>entry_leader.process.parent.entry_leader.parent.session_leader.process.name</c></para>
 		/// <para>Process name.
 		/// Sometimes called program name or similar.</para>
 		/// <example>ssh</example>
 		///</summary>
-		public static string ProcessProcessEntryLeaderProcessEntryLeaderParentProcessName = nameof(ProcessProcessEntryLeaderProcessEntryLeaderParentProcessName);
+		public static string EntryLeaderProcessParentEntryLeaderParentSessionLeaderProcessName = nameof(EntryLeaderProcessParentEntryLeaderParentSessionLeaderProcessName);
 		///<summary>
-		/// <para><c>process.process.entry_leader.process.entry_leader.parent.process.pgid</c></para>
+		/// <para><c>entry_leader.process.parent.entry_leader.parent.session_leader.process.pgid</c></para>
 		/// <para>Deprecated for removal in next major version release. This field is superseded by `process.group_leader.pid`.
 		/// Identifier of the group of processes the process belongs to.</para>
 		/// <example></example>
 		///</summary>
-		public static string ProcessProcessEntryLeaderProcessEntryLeaderParentProcessPgid = nameof(ProcessProcessEntryLeaderProcessEntryLeaderParentProcessPgid);
+		public static string EntryLeaderProcessParentEntryLeaderParentSessionLeaderProcessPgid = nameof(EntryLeaderProcessParentEntryLeaderParentSessionLeaderProcessPgid);
 		///<summary>
-		/// <para><c>process.process.entry_leader.process.entry_leader.parent.process.pid</c></para>
+		/// <para><c>entry_leader.process.parent.entry_leader.parent.session_leader.process.pid</c></para>
 		/// <para>Process id.</para>
 		/// <example>4242</example>
 		///</summary>
-		public static string ProcessProcessEntryLeaderProcessEntryLeaderParentProcessPid = nameof(ProcessProcessEntryLeaderProcessEntryLeaderParentProcessPid);
+		public static string EntryLeaderProcessParentEntryLeaderParentSessionLeaderProcessPid = nameof(EntryLeaderProcessParentEntryLeaderParentSessionLeaderProcessPid);
 		///<summary>
-		/// <para><c>process.process.entry_leader.process.entry_leader.parent.process.start</c></para>
+		/// <para><c>entry_leader.process.parent.entry_leader.parent.session_leader.process.start</c></para>
 		/// <para>The time the process started.</para>
 		/// <example>5/23/2016 8:05:34 AM</example>
 		///</summary>
-		public static string ProcessProcessEntryLeaderProcessEntryLeaderParentProcessStart = nameof(ProcessProcessEntryLeaderProcessEntryLeaderParentProcessStart);
+		public static string EntryLeaderProcessParentEntryLeaderParentSessionLeaderProcessStart = nameof(EntryLeaderProcessParentEntryLeaderParentSessionLeaderProcessStart);
 		///<summary>
-		/// <para><c>process.process.entry_leader.process.entry_leader.parent.process.thread.id</c></para>
+		/// <para><c>entry_leader.process.parent.entry_leader.parent.session_leader.process.thread.id</c></para>
 		/// <para>Thread ID.</para>
 		/// <example>4242</example>
 		///</summary>
-		public static string ProcessProcessEntryLeaderProcessEntryLeaderParentProcessThreadId = nameof(ProcessProcessEntryLeaderProcessEntryLeaderParentProcessThreadId);
+		public static string EntryLeaderProcessParentEntryLeaderParentSessionLeaderProcessThreadId = nameof(EntryLeaderProcessParentEntryLeaderParentSessionLeaderProcessThreadId);
 		///<summary>
-		/// <para><c>process.process.entry_leader.process.entry_leader.parent.process.thread.name</c></para>
+		/// <para><c>entry_leader.process.parent.entry_leader.parent.session_leader.process.thread.name</c></para>
 		/// <para>Thread name.</para>
 		/// <example>thread-0</example>
 		///</summary>
-		public static string ProcessProcessEntryLeaderProcessEntryLeaderParentProcessThreadName = nameof(ProcessProcessEntryLeaderProcessEntryLeaderParentProcessThreadName);
+		public static string EntryLeaderProcessParentEntryLeaderParentSessionLeaderProcessThreadName = nameof(EntryLeaderProcessParentEntryLeaderParentSessionLeaderProcessThreadName);
 		///<summary>
-		/// <para><c>process.process.entry_leader.process.entry_leader.parent.process.title</c></para>
+		/// <para><c>entry_leader.process.parent.entry_leader.parent.session_leader.process.title</c></para>
 		/// <para>Process title.
 		/// The proctitle, some times the same as process name. Can also be different: for example a browser setting its title to the web page currently opened.</para>
 		/// <example></example>
 		///</summary>
-		public static string ProcessProcessEntryLeaderProcessEntryLeaderParentProcessTitle = nameof(ProcessProcessEntryLeaderProcessEntryLeaderParentProcessTitle);
+		public static string EntryLeaderProcessParentEntryLeaderParentSessionLeaderProcessTitle = nameof(EntryLeaderProcessParentEntryLeaderParentSessionLeaderProcessTitle);
 		///<summary>
-		/// <para><c>process.process.entry_leader.process.entry_leader.parent.process.uptime</c></para>
+		/// <para><c>entry_leader.process.parent.entry_leader.parent.session_leader.process.uptime</c></para>
 		/// <para>Seconds the process has been up.</para>
 		/// <example>1325</example>
 		///</summary>
-		public static string ProcessProcessEntryLeaderProcessEntryLeaderParentProcessUptime = nameof(ProcessProcessEntryLeaderProcessEntryLeaderParentProcessUptime);
+		public static string EntryLeaderProcessParentEntryLeaderParentSessionLeaderProcessUptime = nameof(EntryLeaderProcessParentEntryLeaderParentSessionLeaderProcessUptime);
 		///<summary>
-		/// <para><c>process.process.entry_leader.process.entry_leader.parent.process.vpid</c></para>
+		/// <para><c>entry_leader.process.parent.entry_leader.parent.session_leader.process.vpid</c></para>
 		/// <para>Virtual process id.
 		/// The process id within a pid namespace. This is not necessarily unique across all processes on the host but it is unique within the process namespace that the process exists within.</para>
 		/// <example>4242</example>
 		///</summary>
-		public static string ProcessProcessEntryLeaderProcessEntryLeaderParentProcessVpid = nameof(ProcessProcessEntryLeaderProcessEntryLeaderParentProcessVpid);
+		public static string EntryLeaderProcessParentEntryLeaderParentSessionLeaderProcessVpid = nameof(EntryLeaderProcessParentEntryLeaderParentSessionLeaderProcessVpid);
 		///<summary>
-		/// <para><c>process.process.entry_leader.process.entry_leader.parent.process.working_directory</c></para>
+		/// <para><c>entry_leader.process.parent.entry_leader.parent.session_leader.process.working_directory</c></para>
 		/// <para>The working directory of the process.</para>
 		/// <example>/home/alice</example>
 		///</summary>
-		public static string ProcessProcessEntryLeaderProcessEntryLeaderParentProcessWorkingDirectory = nameof(ProcessProcessEntryLeaderProcessEntryLeaderParentProcessWorkingDirectory);
+		public static string EntryLeaderProcessParentEntryLeaderParentSessionLeaderProcessWorkingDirectory = nameof(EntryLeaderProcessParentEntryLeaderParentSessionLeaderProcessWorkingDirectory);
 		///<summary>
-		/// <para><c>process.process.session_leader.process.args_count</c></para>
+		/// <para><c>process.session_leader.parent.process.args_count</c></para>
 		/// <para>Length of the process.args array.
 		/// This field can be useful for querying or performing bucket analysis on how many arguments were provided to start a process. More arguments may be an indication of suspicious activity.</para>
 		/// <example>4</example>
 		///</summary>
-		public static string ProcessProcessSessionLeaderProcessArgsCount = nameof(ProcessProcessSessionLeaderProcessArgsCount);
+		public static string ProcessSessionLeaderParentProcessArgsCount = nameof(ProcessSessionLeaderParentProcessArgsCount);
 		///<summary>
-		/// <para><c>process.process.session_leader.process.command_line</c></para>
+		/// <para><c>process.session_leader.parent.process.command_line</c></para>
 		/// <para>Full command line that started the process, including the absolute path to the executable, and all arguments.
 		/// Some arguments may be filtered to protect sensitive information.</para>
 		/// <example>/usr/bin/ssh -l user 10.0.0.16</example>
 		///</summary>
-		public static string ProcessProcessSessionLeaderProcessCommandLine = nameof(ProcessProcessSessionLeaderProcessCommandLine);
+		public static string ProcessSessionLeaderParentProcessCommandLine = nameof(ProcessSessionLeaderParentProcessCommandLine);
 		///<summary>
-		/// <para><c>process.process.session_leader.process.end</c></para>
+		/// <para><c>process.session_leader.parent.process.end</c></para>
 		/// <para>The time the process ended.</para>
 		/// <example>5/23/2016 8:05:34 AM</example>
 		///</summary>
-		public static string ProcessProcessSessionLeaderProcessEnd = nameof(ProcessProcessSessionLeaderProcessEnd);
+		public static string ProcessSessionLeaderParentProcessEnd = nameof(ProcessSessionLeaderParentProcessEnd);
 		///<summary>
-		/// <para><c>process.process.session_leader.process.entity_id</c></para>
+		/// <para><c>process.session_leader.parent.process.entity_id</c></para>
 		/// <para>Unique identifier for the process.
 		/// The implementation of this is specified by the data source, but some examples of what could be used here are a process-generated UUID, Sysmon Process GUIDs, or a hash of some uniquely identifying components of a process.
 		/// Constructing a globally unique identifier is a common practice to mitigate PID reuse as well as to identify a specific process over time, across multiple monitored hosts.</para>
 		/// <example>c2c455d9f99375d</example>
 		///</summary>
-		public static string ProcessProcessSessionLeaderProcessEntityId = nameof(ProcessProcessSessionLeaderProcessEntityId);
+		public static string ProcessSessionLeaderParentProcessEntityId = nameof(ProcessSessionLeaderParentProcessEntityId);
 		///<summary>
-		/// <para><c>process.process.session_leader.process.executable</c></para>
+		/// <para><c>process.session_leader.parent.process.executable</c></para>
 		/// <para>Absolute path to the process executable.</para>
 		/// <example>/usr/bin/ssh</example>
 		///</summary>
-		public static string ProcessProcessSessionLeaderProcessExecutable = nameof(ProcessProcessSessionLeaderProcessExecutable);
+		public static string ProcessSessionLeaderParentProcessExecutable = nameof(ProcessSessionLeaderParentProcessExecutable);
 		///<summary>
-		/// <para><c>process.process.session_leader.process.exit_code</c></para>
+		/// <para><c>process.session_leader.parent.process.exit_code</c></para>
 		/// <para>The exit code of the process, if this is a termination event.
 		/// The field should be absent if there is no exit code for the event (e.g. process start).</para>
 		/// <example>137</example>
 		///</summary>
-		public static string ProcessProcessSessionLeaderProcessExitCode = nameof(ProcessProcessSessionLeaderProcessExitCode);
+		public static string ProcessSessionLeaderParentProcessExitCode = nameof(ProcessSessionLeaderParentProcessExitCode);
 		///<summary>
-		/// <para><c>process.process.session_leader.process.interactive</c></para>
+		/// <para><c>process.session_leader.parent.process.interactive</c></para>
 		/// <para>Whether the process is connected to an interactive shell.
 		/// Process interactivity is inferred from the processes file descriptors. If the character device for the controlling tty is the same as stdin and stderr for the process, the process is considered interactive.
 		/// Note: A non-interactive process can belong to an interactive session and is simply one that does not have open file descriptors reading the controlling TTY on FD 0 (stdin) or writing to the controlling TTY on FD 2 (stderr). A backgrounded process is still considered interactive if stdin and stderr are connected to the controlling TTY.</para>
 		/// <example>true</example>
 		///</summary>
-		public static string ProcessProcessSessionLeaderProcessInteractive = nameof(ProcessProcessSessionLeaderProcessInteractive);
+		public static string ProcessSessionLeaderParentProcessInteractive = nameof(ProcessSessionLeaderParentProcessInteractive);
 		///<summary>
-		/// <para><c>process.process.session_leader.process.name</c></para>
+		/// <para><c>process.session_leader.parent.process.name</c></para>
 		/// <para>Process name.
 		/// Sometimes called program name or similar.</para>
 		/// <example>ssh</example>
 		///</summary>
-		public static string ProcessProcessSessionLeaderProcessName = nameof(ProcessProcessSessionLeaderProcessName);
+		public static string ProcessSessionLeaderParentProcessName = nameof(ProcessSessionLeaderParentProcessName);
 		///<summary>
-		/// <para><c>process.process.session_leader.process.pgid</c></para>
+		/// <para><c>process.session_leader.parent.process.pgid</c></para>
 		/// <para>Deprecated for removal in next major version release. This field is superseded by `process.group_leader.pid`.
 		/// Identifier of the group of processes the process belongs to.</para>
 		/// <example></example>
 		///</summary>
-		public static string ProcessProcessSessionLeaderProcessPgid = nameof(ProcessProcessSessionLeaderProcessPgid);
+		public static string ProcessSessionLeaderParentProcessPgid = nameof(ProcessSessionLeaderParentProcessPgid);
 		///<summary>
-		/// <para><c>process.process.session_leader.process.pid</c></para>
+		/// <para><c>process.session_leader.parent.process.pid</c></para>
 		/// <para>Process id.</para>
 		/// <example>4242</example>
 		///</summary>
-		public static string ProcessProcessSessionLeaderProcessPid = nameof(ProcessProcessSessionLeaderProcessPid);
+		public static string ProcessSessionLeaderParentProcessPid = nameof(ProcessSessionLeaderParentProcessPid);
 		///<summary>
-		/// <para><c>process.process.session_leader.process.start</c></para>
+		/// <para><c>process.session_leader.parent.process.start</c></para>
 		/// <para>The time the process started.</para>
 		/// <example>5/23/2016 8:05:34 AM</example>
 		///</summary>
-		public static string ProcessProcessSessionLeaderProcessStart = nameof(ProcessProcessSessionLeaderProcessStart);
+		public static string ProcessSessionLeaderParentProcessStart = nameof(ProcessSessionLeaderParentProcessStart);
 		///<summary>
-		/// <para><c>process.process.session_leader.process.thread.id</c></para>
+		/// <para><c>process.session_leader.parent.process.thread.id</c></para>
 		/// <para>Thread ID.</para>
 		/// <example>4242</example>
 		///</summary>
-		public static string ProcessProcessSessionLeaderProcessThreadId = nameof(ProcessProcessSessionLeaderProcessThreadId);
+		public static string ProcessSessionLeaderParentProcessThreadId = nameof(ProcessSessionLeaderParentProcessThreadId);
 		///<summary>
-		/// <para><c>process.process.session_leader.process.thread.name</c></para>
+		/// <para><c>process.session_leader.parent.process.thread.name</c></para>
 		/// <para>Thread name.</para>
 		/// <example>thread-0</example>
 		///</summary>
-		public static string ProcessProcessSessionLeaderProcessThreadName = nameof(ProcessProcessSessionLeaderProcessThreadName);
+		public static string ProcessSessionLeaderParentProcessThreadName = nameof(ProcessSessionLeaderParentProcessThreadName);
 		///<summary>
-		/// <para><c>process.process.session_leader.process.title</c></para>
+		/// <para><c>process.session_leader.parent.process.title</c></para>
 		/// <para>Process title.
 		/// The proctitle, some times the same as process name. Can also be different: for example a browser setting its title to the web page currently opened.</para>
 		/// <example></example>
 		///</summary>
-		public static string ProcessProcessSessionLeaderProcessTitle = nameof(ProcessProcessSessionLeaderProcessTitle);
+		public static string ProcessSessionLeaderParentProcessTitle = nameof(ProcessSessionLeaderParentProcessTitle);
 		///<summary>
-		/// <para><c>process.process.session_leader.process.uptime</c></para>
+		/// <para><c>process.session_leader.parent.process.uptime</c></para>
 		/// <para>Seconds the process has been up.</para>
 		/// <example>1325</example>
 		///</summary>
-		public static string ProcessProcessSessionLeaderProcessUptime = nameof(ProcessProcessSessionLeaderProcessUptime);
+		public static string ProcessSessionLeaderParentProcessUptime = nameof(ProcessSessionLeaderParentProcessUptime);
 		///<summary>
-		/// <para><c>process.process.session_leader.process.vpid</c></para>
+		/// <para><c>process.session_leader.parent.process.vpid</c></para>
 		/// <para>Virtual process id.
 		/// The process id within a pid namespace. This is not necessarily unique across all processes on the host but it is unique within the process namespace that the process exists within.</para>
 		/// <example>4242</example>
 		///</summary>
-		public static string ProcessProcessSessionLeaderProcessVpid = nameof(ProcessProcessSessionLeaderProcessVpid);
+		public static string ProcessSessionLeaderParentProcessVpid = nameof(ProcessSessionLeaderParentProcessVpid);
 		///<summary>
-		/// <para><c>process.process.session_leader.process.working_directory</c></para>
+		/// <para><c>process.session_leader.parent.process.working_directory</c></para>
 		/// <para>The working directory of the process.</para>
 		/// <example>/home/alice</example>
 		///</summary>
-		public static string ProcessProcessSessionLeaderProcessWorkingDirectory = nameof(ProcessProcessSessionLeaderProcessWorkingDirectory);
+		public static string ProcessSessionLeaderParentProcessWorkingDirectory = nameof(ProcessSessionLeaderParentProcessWorkingDirectory);
 		///<summary>
-		/// <para><c>process.process.session_leader.process.session_leader.parent.process.args_count</c></para>
+		/// <para><c>session_leader.process.parent.session_leader.parent.session_leader.process.args_count</c></para>
 		/// <para>Length of the process.args array.
 		/// This field can be useful for querying or performing bucket analysis on how many arguments were provided to start a process. More arguments may be an indication of suspicious activity.</para>
 		/// <example>4</example>
 		///</summary>
-		public static string ProcessProcessSessionLeaderProcessSessionLeaderParentProcessArgsCount = nameof(ProcessProcessSessionLeaderProcessSessionLeaderParentProcessArgsCount);
+		public static string SessionLeaderProcessParentSessionLeaderParentSessionLeaderProcessArgsCount = nameof(SessionLeaderProcessParentSessionLeaderParentSessionLeaderProcessArgsCount);
 		///<summary>
-		/// <para><c>process.process.session_leader.process.session_leader.parent.process.command_line</c></para>
+		/// <para><c>session_leader.process.parent.session_leader.parent.session_leader.process.command_line</c></para>
 		/// <para>Full command line that started the process, including the absolute path to the executable, and all arguments.
 		/// Some arguments may be filtered to protect sensitive information.</para>
 		/// <example>/usr/bin/ssh -l user 10.0.0.16</example>
 		///</summary>
-		public static string ProcessProcessSessionLeaderProcessSessionLeaderParentProcessCommandLine = nameof(ProcessProcessSessionLeaderProcessSessionLeaderParentProcessCommandLine);
+		public static string SessionLeaderProcessParentSessionLeaderParentSessionLeaderProcessCommandLine = nameof(SessionLeaderProcessParentSessionLeaderParentSessionLeaderProcessCommandLine);
 		///<summary>
-		/// <para><c>process.process.session_leader.process.session_leader.parent.process.end</c></para>
+		/// <para><c>session_leader.process.parent.session_leader.parent.session_leader.process.end</c></para>
 		/// <para>The time the process ended.</para>
 		/// <example>5/23/2016 8:05:34 AM</example>
 		///</summary>
-		public static string ProcessProcessSessionLeaderProcessSessionLeaderParentProcessEnd = nameof(ProcessProcessSessionLeaderProcessSessionLeaderParentProcessEnd);
+		public static string SessionLeaderProcessParentSessionLeaderParentSessionLeaderProcessEnd = nameof(SessionLeaderProcessParentSessionLeaderParentSessionLeaderProcessEnd);
 		///<summary>
-		/// <para><c>process.process.session_leader.process.session_leader.parent.process.entity_id</c></para>
+		/// <para><c>session_leader.process.parent.session_leader.parent.session_leader.process.entity_id</c></para>
 		/// <para>Unique identifier for the process.
 		/// The implementation of this is specified by the data source, but some examples of what could be used here are a process-generated UUID, Sysmon Process GUIDs, or a hash of some uniquely identifying components of a process.
 		/// Constructing a globally unique identifier is a common practice to mitigate PID reuse as well as to identify a specific process over time, across multiple monitored hosts.</para>
 		/// <example>c2c455d9f99375d</example>
 		///</summary>
-		public static string ProcessProcessSessionLeaderProcessSessionLeaderParentProcessEntityId = nameof(ProcessProcessSessionLeaderProcessSessionLeaderParentProcessEntityId);
+		public static string SessionLeaderProcessParentSessionLeaderParentSessionLeaderProcessEntityId = nameof(SessionLeaderProcessParentSessionLeaderParentSessionLeaderProcessEntityId);
 		///<summary>
-		/// <para><c>process.process.session_leader.process.session_leader.parent.process.executable</c></para>
+		/// <para><c>session_leader.process.parent.session_leader.parent.session_leader.process.executable</c></para>
 		/// <para>Absolute path to the process executable.</para>
 		/// <example>/usr/bin/ssh</example>
 		///</summary>
-		public static string ProcessProcessSessionLeaderProcessSessionLeaderParentProcessExecutable = nameof(ProcessProcessSessionLeaderProcessSessionLeaderParentProcessExecutable);
+		public static string SessionLeaderProcessParentSessionLeaderParentSessionLeaderProcessExecutable = nameof(SessionLeaderProcessParentSessionLeaderParentSessionLeaderProcessExecutable);
 		///<summary>
-		/// <para><c>process.process.session_leader.process.session_leader.parent.process.exit_code</c></para>
+		/// <para><c>session_leader.process.parent.session_leader.parent.session_leader.process.exit_code</c></para>
 		/// <para>The exit code of the process, if this is a termination event.
 		/// The field should be absent if there is no exit code for the event (e.g. process start).</para>
 		/// <example>137</example>
 		///</summary>
-		public static string ProcessProcessSessionLeaderProcessSessionLeaderParentProcessExitCode = nameof(ProcessProcessSessionLeaderProcessSessionLeaderParentProcessExitCode);
+		public static string SessionLeaderProcessParentSessionLeaderParentSessionLeaderProcessExitCode = nameof(SessionLeaderProcessParentSessionLeaderParentSessionLeaderProcessExitCode);
 		///<summary>
-		/// <para><c>process.process.session_leader.process.session_leader.parent.process.interactive</c></para>
+		/// <para><c>session_leader.process.parent.session_leader.parent.session_leader.process.interactive</c></para>
 		/// <para>Whether the process is connected to an interactive shell.
 		/// Process interactivity is inferred from the processes file descriptors. If the character device for the controlling tty is the same as stdin and stderr for the process, the process is considered interactive.
 		/// Note: A non-interactive process can belong to an interactive session and is simply one that does not have open file descriptors reading the controlling TTY on FD 0 (stdin) or writing to the controlling TTY on FD 2 (stderr). A backgrounded process is still considered interactive if stdin and stderr are connected to the controlling TTY.</para>
 		/// <example>true</example>
 		///</summary>
-		public static string ProcessProcessSessionLeaderProcessSessionLeaderParentProcessInteractive = nameof(ProcessProcessSessionLeaderProcessSessionLeaderParentProcessInteractive);
+		public static string SessionLeaderProcessParentSessionLeaderParentSessionLeaderProcessInteractive = nameof(SessionLeaderProcessParentSessionLeaderParentSessionLeaderProcessInteractive);
 		///<summary>
-		/// <para><c>process.process.session_leader.process.session_leader.parent.process.name</c></para>
+		/// <para><c>session_leader.process.parent.session_leader.parent.session_leader.process.name</c></para>
 		/// <para>Process name.
 		/// Sometimes called program name or similar.</para>
 		/// <example>ssh</example>
 		///</summary>
-		public static string ProcessProcessSessionLeaderProcessSessionLeaderParentProcessName = nameof(ProcessProcessSessionLeaderProcessSessionLeaderParentProcessName);
+		public static string SessionLeaderProcessParentSessionLeaderParentSessionLeaderProcessName = nameof(SessionLeaderProcessParentSessionLeaderParentSessionLeaderProcessName);
 		///<summary>
-		/// <para><c>process.process.session_leader.process.session_leader.parent.process.pgid</c></para>
+		/// <para><c>session_leader.process.parent.session_leader.parent.session_leader.process.pgid</c></para>
 		/// <para>Deprecated for removal in next major version release. This field is superseded by `process.group_leader.pid`.
 		/// Identifier of the group of processes the process belongs to.</para>
 		/// <example></example>
 		///</summary>
-		public static string ProcessProcessSessionLeaderProcessSessionLeaderParentProcessPgid = nameof(ProcessProcessSessionLeaderProcessSessionLeaderParentProcessPgid);
+		public static string SessionLeaderProcessParentSessionLeaderParentSessionLeaderProcessPgid = nameof(SessionLeaderProcessParentSessionLeaderParentSessionLeaderProcessPgid);
 		///<summary>
-		/// <para><c>process.process.session_leader.process.session_leader.parent.process.pid</c></para>
+		/// <para><c>session_leader.process.parent.session_leader.parent.session_leader.process.pid</c></para>
 		/// <para>Process id.</para>
 		/// <example>4242</example>
 		///</summary>
-		public static string ProcessProcessSessionLeaderProcessSessionLeaderParentProcessPid = nameof(ProcessProcessSessionLeaderProcessSessionLeaderParentProcessPid);
+		public static string SessionLeaderProcessParentSessionLeaderParentSessionLeaderProcessPid = nameof(SessionLeaderProcessParentSessionLeaderParentSessionLeaderProcessPid);
 		///<summary>
-		/// <para><c>process.process.session_leader.process.session_leader.parent.process.start</c></para>
+		/// <para><c>session_leader.process.parent.session_leader.parent.session_leader.process.start</c></para>
 		/// <para>The time the process started.</para>
 		/// <example>5/23/2016 8:05:34 AM</example>
 		///</summary>
-		public static string ProcessProcessSessionLeaderProcessSessionLeaderParentProcessStart = nameof(ProcessProcessSessionLeaderProcessSessionLeaderParentProcessStart);
+		public static string SessionLeaderProcessParentSessionLeaderParentSessionLeaderProcessStart = nameof(SessionLeaderProcessParentSessionLeaderParentSessionLeaderProcessStart);
 		///<summary>
-		/// <para><c>process.process.session_leader.process.session_leader.parent.process.thread.id</c></para>
+		/// <para><c>session_leader.process.parent.session_leader.parent.session_leader.process.thread.id</c></para>
 		/// <para>Thread ID.</para>
 		/// <example>4242</example>
 		///</summary>
-		public static string ProcessProcessSessionLeaderProcessSessionLeaderParentProcessThreadId = nameof(ProcessProcessSessionLeaderProcessSessionLeaderParentProcessThreadId);
+		public static string SessionLeaderProcessParentSessionLeaderParentSessionLeaderProcessThreadId = nameof(SessionLeaderProcessParentSessionLeaderParentSessionLeaderProcessThreadId);
 		///<summary>
-		/// <para><c>process.process.session_leader.process.session_leader.parent.process.thread.name</c></para>
+		/// <para><c>session_leader.process.parent.session_leader.parent.session_leader.process.thread.name</c></para>
 		/// <para>Thread name.</para>
 		/// <example>thread-0</example>
 		///</summary>
-		public static string ProcessProcessSessionLeaderProcessSessionLeaderParentProcessThreadName = nameof(ProcessProcessSessionLeaderProcessSessionLeaderParentProcessThreadName);
+		public static string SessionLeaderProcessParentSessionLeaderParentSessionLeaderProcessThreadName = nameof(SessionLeaderProcessParentSessionLeaderParentSessionLeaderProcessThreadName);
 		///<summary>
-		/// <para><c>process.process.session_leader.process.session_leader.parent.process.title</c></para>
+		/// <para><c>session_leader.process.parent.session_leader.parent.session_leader.process.title</c></para>
 		/// <para>Process title.
 		/// The proctitle, some times the same as process name. Can also be different: for example a browser setting its title to the web page currently opened.</para>
 		/// <example></example>
 		///</summary>
-		public static string ProcessProcessSessionLeaderProcessSessionLeaderParentProcessTitle = nameof(ProcessProcessSessionLeaderProcessSessionLeaderParentProcessTitle);
+		public static string SessionLeaderProcessParentSessionLeaderParentSessionLeaderProcessTitle = nameof(SessionLeaderProcessParentSessionLeaderParentSessionLeaderProcessTitle);
 		///<summary>
-		/// <para><c>process.process.session_leader.process.session_leader.parent.process.uptime</c></para>
+		/// <para><c>session_leader.process.parent.session_leader.parent.session_leader.process.uptime</c></para>
 		/// <para>Seconds the process has been up.</para>
 		/// <example>1325</example>
 		///</summary>
-		public static string ProcessProcessSessionLeaderProcessSessionLeaderParentProcessUptime = nameof(ProcessProcessSessionLeaderProcessSessionLeaderParentProcessUptime);
+		public static string SessionLeaderProcessParentSessionLeaderParentSessionLeaderProcessUptime = nameof(SessionLeaderProcessParentSessionLeaderParentSessionLeaderProcessUptime);
 		///<summary>
-		/// <para><c>process.process.session_leader.process.session_leader.parent.process.vpid</c></para>
+		/// <para><c>session_leader.process.parent.session_leader.parent.session_leader.process.vpid</c></para>
 		/// <para>Virtual process id.
 		/// The process id within a pid namespace. This is not necessarily unique across all processes on the host but it is unique within the process namespace that the process exists within.</para>
 		/// <example>4242</example>
 		///</summary>
-		public static string ProcessProcessSessionLeaderProcessSessionLeaderParentProcessVpid = nameof(ProcessProcessSessionLeaderProcessSessionLeaderParentProcessVpid);
+		public static string SessionLeaderProcessParentSessionLeaderParentSessionLeaderProcessVpid = nameof(SessionLeaderProcessParentSessionLeaderParentSessionLeaderProcessVpid);
 		///<summary>
-		/// <para><c>process.process.session_leader.process.session_leader.parent.process.working_directory</c></para>
+		/// <para><c>session_leader.process.parent.session_leader.parent.session_leader.process.working_directory</c></para>
 		/// <para>The working directory of the process.</para>
 		/// <example>/home/alice</example>
 		///</summary>
-		public static string ProcessProcessSessionLeaderProcessSessionLeaderParentProcessWorkingDirectory = nameof(ProcessProcessSessionLeaderProcessSessionLeaderParentProcessWorkingDirectory);
+		public static string SessionLeaderProcessParentSessionLeaderParentSessionLeaderProcessWorkingDirectory = nameof(SessionLeaderProcessParentSessionLeaderParentSessionLeaderProcessWorkingDirectory);
 		///<summary>
 		/// <para><c>registry.data.bytes</c></para>
 		/// <para>Original bytes written with base64 encoding.
@@ -5516,43 +5516,43 @@ namespace Elastic.CommonSchema
 		///</summary>
 		public static string ServerUserRiskStaticScoreNorm = nameof(ServerUserRiskStaticScoreNorm);
 		///<summary>
-		/// <para><c>server.user.user.domain</c></para>
+		/// <para><c>server.user.target.user.domain</c></para>
 		/// <para>Name of the directory the user is a member of.
 		/// For example, an LDAP or Active Directory domain name.</para>
 		/// <example></example>
 		///</summary>
-		public static string ServerUserUserDomain = nameof(ServerUserUserDomain);
+		public static string ServerUserTargetUserDomain = nameof(ServerUserTargetUserDomain);
 		///<summary>
-		/// <para><c>server.user.user.email</c></para>
+		/// <para><c>server.user.target.user.email</c></para>
 		/// <para>User email address.</para>
 		/// <example></example>
 		///</summary>
-		public static string ServerUserUserEmail = nameof(ServerUserUserEmail);
+		public static string ServerUserTargetUserEmail = nameof(ServerUserTargetUserEmail);
 		///<summary>
-		/// <para><c>server.user.user.full_name</c></para>
+		/// <para><c>server.user.target.user.full_name</c></para>
 		/// <para>User's full name, if available.</para>
 		/// <example>Albert Einstein</example>
 		///</summary>
-		public static string ServerUserUserFullName = nameof(ServerUserUserFullName);
+		public static string ServerUserTargetUserFullName = nameof(ServerUserTargetUserFullName);
 		///<summary>
-		/// <para><c>server.user.user.hash</c></para>
+		/// <para><c>server.user.target.user.hash</c></para>
 		/// <para>Unique user hash to correlate information for a user in anonymized form.
 		/// Useful if `user.id` or `user.name` contain confidential information and cannot be used.</para>
 		/// <example></example>
 		///</summary>
-		public static string ServerUserUserHash = nameof(ServerUserUserHash);
+		public static string ServerUserTargetUserHash = nameof(ServerUserTargetUserHash);
 		///<summary>
-		/// <para><c>server.user.user.id</c></para>
+		/// <para><c>server.user.target.user.id</c></para>
 		/// <para>Unique identifier of the user.</para>
 		/// <example>S-1-5-21-202424912787-2692429404-2351956786-1000</example>
 		///</summary>
-		public static string ServerUserUserId = nameof(ServerUserUserId);
+		public static string ServerUserTargetUserId = nameof(ServerUserTargetUserId);
 		///<summary>
-		/// <para><c>server.user.user.name</c></para>
+		/// <para><c>server.user.target.user.name</c></para>
 		/// <para>Short name or login of the user.</para>
 		/// <example>a.einstein</example>
 		///</summary>
-		public static string ServerUserUserName = nameof(ServerUserUserName);
+		public static string ServerUserTargetUserName = nameof(ServerUserTargetUserName);
 		///<summary>
 		/// <para><c>service.address</c></para>
 		/// <para>Address where data about this service was collected from.
@@ -5632,53 +5632,53 @@ namespace Elastic.CommonSchema
 		///</summary>
 		public static string ServiceVersion = nameof(ServiceVersion);
 		///<summary>
-		/// <para><c>service.service.address</c></para>
+		/// <para><c>origin.service.address</c></para>
 		/// <para>Address where data about this service was collected from.
 		/// This should be a URI, network address (ipv4:port or [ipv6]:port) or a resource path (sockets).</para>
 		/// <example>172.26.0.2:5432</example>
 		///</summary>
-		public static string ServiceServiceAddress = nameof(ServiceServiceAddress);
+		public static string OriginServiceAddress = nameof(OriginServiceAddress);
 		///<summary>
-		/// <para><c>service.service.environment</c></para>
+		/// <para><c>origin.service.environment</c></para>
 		/// <para>Identifies the environment where the service is running.
 		/// If the same service runs in different environments (production, staging, QA, development, etc.), the environment can identify other instances of the same service. Can also group services and applications from the same environment.
 		/// <para><br/>This field is beta and subject to change.</para></para>
 		/// <example>production</example>
 		///</summary>
-		public static string ServiceServiceEnvironment = nameof(ServiceServiceEnvironment);
+		public static string OriginServiceEnvironment = nameof(OriginServiceEnvironment);
 		///<summary>
-		/// <para><c>service.service.ephemeral_id</c></para>
+		/// <para><c>origin.service.ephemeral_id</c></para>
 		/// <para>Ephemeral identifier of this service (if one exists).
 		/// This id normally changes across restarts, but `service.id` does not.</para>
 		/// <example>8a4f500f</example>
 		///</summary>
-		public static string ServiceServiceEphemeralId = nameof(ServiceServiceEphemeralId);
+		public static string OriginServiceEphemeralId = nameof(OriginServiceEphemeralId);
 		///<summary>
-		/// <para><c>service.service.id</c></para>
+		/// <para><c>origin.service.id</c></para>
 		/// <para>Unique identifier of the running service. If the service is comprised of many nodes, the `service.id` should be the same for all nodes.
 		/// This id should uniquely identify the service. This makes it possible to correlate logs and metrics for one specific service, no matter which particular node emitted the event.
 		/// Note that if you need to see the events from one specific host of the service, you should filter on that `host.name` or `host.id` instead.</para>
 		/// <example>d37e5ebfe0ae6c4972dbe9f0174a1637bb8247f6</example>
 		///</summary>
-		public static string ServiceServiceId = nameof(ServiceServiceId);
+		public static string OriginServiceId = nameof(OriginServiceId);
 		///<summary>
-		/// <para><c>service.service.name</c></para>
+		/// <para><c>origin.service.name</c></para>
 		/// <para>Name of the service data is collected from.
 		/// The name of the service is normally user given. This allows for distributed services that run on multiple hosts to correlate the related instances based on the name.
 		/// In the case of Elasticsearch the `service.name` could contain the cluster name. For Beats the `service.name` is by default a copy of the `service.type` field if no name is specified.</para>
 		/// <example>elasticsearch-metrics</example>
 		///</summary>
-		public static string ServiceServiceName = nameof(ServiceServiceName);
+		public static string OriginServiceName = nameof(OriginServiceName);
 		///<summary>
-		/// <para><c>service.service.node.name</c></para>
+		/// <para><c>origin.service.node.name</c></para>
 		/// <para>Name of a service node.
 		/// This allows for two nodes of the same service running on the same host to be differentiated. Therefore, `service.node.name` should typically be unique across nodes of a given service.
 		/// In the case of Elasticsearch, the `service.node.name` could contain the unique node name within the Elasticsearch cluster. In cases where the service doesn't have the concept of a node name, the host name or container name can be used to distinguish running instances that make up this service. If those do not provide uniqueness (e.g. multiple instances of the service running on the same host) - the node name can be manually set.</para>
 		/// <example>instance-0000000016</example>
 		///</summary>
-		public static string ServiceServiceNodeName = nameof(ServiceServiceNodeName);
+		public static string OriginServiceNodeName = nameof(OriginServiceNodeName);
 		///<summary>
-		/// <para><c>service.service.node.role</c></para>
+		/// <para><c>origin.service.node.role</c></para>
 		/// <para>Deprecated for removal in next major version release. This field will be superseded by `node.roles`.
 		/// Role of a service node.
 		/// This allows for distinction between different running roles of the same service.
@@ -5687,28 +5687,28 @@ namespace Elastic.CommonSchema
 		/// Other services could use this to distinguish between a `web` and `worker` role running as part of the service.</para>
 		/// <example>background_tasks</example>
 		///</summary>
-		public static string ServiceServiceNodeRole = nameof(ServiceServiceNodeRole);
+		public static string OriginServiceNodeRole = nameof(OriginServiceNodeRole);
 		///<summary>
-		/// <para><c>service.service.state</c></para>
+		/// <para><c>origin.service.state</c></para>
 		/// <para>Current state of the service.</para>
 		/// <example></example>
 		///</summary>
-		public static string ServiceServiceState = nameof(ServiceServiceState);
+		public static string OriginServiceState = nameof(OriginServiceState);
 		///<summary>
-		/// <para><c>service.service.type</c></para>
+		/// <para><c>origin.service.type</c></para>
 		/// <para>The type of the service data is collected from.
 		/// The type can be used to group and correlate logs and metrics from one service type.
 		/// Example: If logs or metrics are collected from Elasticsearch, `service.type` would be `elasticsearch`.</para>
 		/// <example>elasticsearch</example>
 		///</summary>
-		public static string ServiceServiceType = nameof(ServiceServiceType);
+		public static string OriginServiceType = nameof(OriginServiceType);
 		///<summary>
-		/// <para><c>service.service.version</c></para>
+		/// <para><c>origin.service.version</c></para>
 		/// <para>Version of the service the data was collected from.
 		/// This allows to look at a data set only for a specific version of a service.</para>
 		/// <example>3.2.4</example>
 		///</summary>
-		public static string ServiceServiceVersion = nameof(ServiceServiceVersion);
+		public static string OriginServiceVersion = nameof(OriginServiceVersion);
 		///<summary>
 		/// <para><c>source.address</c></para>
 		/// <para>Some event source addresses are defined ambiguously. The event will sometimes list an IP, a domain or a unix socket.  You should always store the raw address in the `.address` field.
@@ -5960,43 +5960,43 @@ namespace Elastic.CommonSchema
 		///</summary>
 		public static string SourceUserRiskStaticScoreNorm = nameof(SourceUserRiskStaticScoreNorm);
 		///<summary>
-		/// <para><c>source.user.user.domain</c></para>
+		/// <para><c>source.user.target.user.domain</c></para>
 		/// <para>Name of the directory the user is a member of.
 		/// For example, an LDAP or Active Directory domain name.</para>
 		/// <example></example>
 		///</summary>
-		public static string SourceUserUserDomain = nameof(SourceUserUserDomain);
+		public static string SourceUserTargetUserDomain = nameof(SourceUserTargetUserDomain);
 		///<summary>
-		/// <para><c>source.user.user.email</c></para>
+		/// <para><c>source.user.target.user.email</c></para>
 		/// <para>User email address.</para>
 		/// <example></example>
 		///</summary>
-		public static string SourceUserUserEmail = nameof(SourceUserUserEmail);
+		public static string SourceUserTargetUserEmail = nameof(SourceUserTargetUserEmail);
 		///<summary>
-		/// <para><c>source.user.user.full_name</c></para>
+		/// <para><c>source.user.target.user.full_name</c></para>
 		/// <para>User's full name, if available.</para>
 		/// <example>Albert Einstein</example>
 		///</summary>
-		public static string SourceUserUserFullName = nameof(SourceUserUserFullName);
+		public static string SourceUserTargetUserFullName = nameof(SourceUserTargetUserFullName);
 		///<summary>
-		/// <para><c>source.user.user.hash</c></para>
+		/// <para><c>source.user.target.user.hash</c></para>
 		/// <para>Unique user hash to correlate information for a user in anonymized form.
 		/// Useful if `user.id` or `user.name` contain confidential information and cannot be used.</para>
 		/// <example></example>
 		///</summary>
-		public static string SourceUserUserHash = nameof(SourceUserUserHash);
+		public static string SourceUserTargetUserHash = nameof(SourceUserTargetUserHash);
 		///<summary>
-		/// <para><c>source.user.user.id</c></para>
+		/// <para><c>source.user.target.user.id</c></para>
 		/// <para>Unique identifier of the user.</para>
 		/// <example>S-1-5-21-202424912787-2692429404-2351956786-1000</example>
 		///</summary>
-		public static string SourceUserUserId = nameof(SourceUserUserId);
+		public static string SourceUserTargetUserId = nameof(SourceUserTargetUserId);
 		///<summary>
-		/// <para><c>source.user.user.name</c></para>
+		/// <para><c>source.user.target.user.name</c></para>
 		/// <para>Short name or login of the user.</para>
 		/// <example>a.einstein</example>
 		///</summary>
-		public static string SourceUserUserName = nameof(SourceUserUserName);
+		public static string SourceUserTargetUserName = nameof(SourceUserTargetUserName);
 		///<summary>
 		/// <para><c>threat.feed.dashboard_id</c></para>
 		/// <para>The saved object ID of the dashboard belonging to the threat feed for displaying dashboard links to threat feeds in Kibana.</para>
@@ -6216,870 +6216,870 @@ namespace Elastic.CommonSchema
 		///</summary>
 		public static string ThreatSoftwareType = nameof(ThreatSoftwareType);
 		///<summary>
-		/// <para><c>threat.x509.issuer.distinguished_name</c></para>
+		/// <para><c>threat.indicator.x509.issuer.distinguished_name</c></para>
 		/// <para>Distinguished name (DN) of issuing certificate authority.</para>
 		/// <example>C=US, O=Example Inc, OU=www.example.com, CN=Example SHA2 High Assurance Server CA</example>
 		///</summary>
-		public static string ThreatX509IssuerDistinguishedName = nameof(ThreatX509IssuerDistinguishedName);
+		public static string ThreatIndicatorX509IssuerDistinguishedName = nameof(ThreatIndicatorX509IssuerDistinguishedName);
 		///<summary>
-		/// <para><c>threat.x509.not_after</c></para>
+		/// <para><c>threat.indicator.x509.not_after</c></para>
 		/// <para>Time at which the certificate is no longer considered valid.</para>
 		/// <example>7/16/2020 3:15:39 AM</example>
 		///</summary>
-		public static string ThreatX509NotAfter = nameof(ThreatX509NotAfter);
+		public static string ThreatIndicatorX509NotAfter = nameof(ThreatIndicatorX509NotAfter);
 		///<summary>
-		/// <para><c>threat.x509.not_before</c></para>
+		/// <para><c>threat.indicator.x509.not_before</c></para>
 		/// <para>Time at which the certificate is first considered valid.</para>
 		/// <example>8/16/2019 1:40:25 AM</example>
 		///</summary>
-		public static string ThreatX509NotBefore = nameof(ThreatX509NotBefore);
+		public static string ThreatIndicatorX509NotBefore = nameof(ThreatIndicatorX509NotBefore);
 		///<summary>
-		/// <para><c>threat.x509.public_key_algorithm</c></para>
+		/// <para><c>threat.indicator.x509.public_key_algorithm</c></para>
 		/// <para>Algorithm used to generate the public key.</para>
 		/// <example>RSA</example>
 		///</summary>
-		public static string ThreatX509PublicKeyAlgorithm = nameof(ThreatX509PublicKeyAlgorithm);
+		public static string ThreatIndicatorX509PublicKeyAlgorithm = nameof(ThreatIndicatorX509PublicKeyAlgorithm);
 		///<summary>
-		/// <para><c>threat.x509.public_key_curve</c></para>
+		/// <para><c>threat.indicator.x509.public_key_curve</c></para>
 		/// <para>The curve used by the elliptic curve public key algorithm. This is algorithm specific.</para>
 		/// <example>nistp521</example>
 		///</summary>
-		public static string ThreatX509PublicKeyCurve = nameof(ThreatX509PublicKeyCurve);
+		public static string ThreatIndicatorX509PublicKeyCurve = nameof(ThreatIndicatorX509PublicKeyCurve);
 		///<summary>
-		/// <para><c>threat.x509.public_key_exponent</c></para>
+		/// <para><c>threat.indicator.x509.public_key_exponent</c></para>
 		/// <para>Exponent used to derive the public key. This is algorithm specific.
 		/// <para><br/>Stored but not available for search in Elasticsearch by default</para></para>
 		/// <example>65537</example>
 		///</summary>
-		public static string ThreatX509PublicKeyExponent = nameof(ThreatX509PublicKeyExponent);
+		public static string ThreatIndicatorX509PublicKeyExponent = nameof(ThreatIndicatorX509PublicKeyExponent);
 		///<summary>
-		/// <para><c>threat.x509.public_key_size</c></para>
+		/// <para><c>threat.indicator.x509.public_key_size</c></para>
 		/// <para>The size of the public key space in bits.</para>
 		/// <example>2048</example>
 		///</summary>
-		public static string ThreatX509PublicKeySize = nameof(ThreatX509PublicKeySize);
+		public static string ThreatIndicatorX509PublicKeySize = nameof(ThreatIndicatorX509PublicKeySize);
 		///<summary>
-		/// <para><c>threat.x509.serial_number</c></para>
+		/// <para><c>threat.indicator.x509.serial_number</c></para>
 		/// <para>Unique serial number issued by the certificate authority. For consistency, if this value is alphanumeric, it should be formatted without colons and uppercase characters.</para>
 		/// <example>55FBB9C7DEBF09809D12CCAA</example>
 		///</summary>
-		public static string ThreatX509SerialNumber = nameof(ThreatX509SerialNumber);
+		public static string ThreatIndicatorX509SerialNumber = nameof(ThreatIndicatorX509SerialNumber);
 		///<summary>
-		/// <para><c>threat.x509.signature_algorithm</c></para>
+		/// <para><c>threat.indicator.x509.signature_algorithm</c></para>
 		/// <para>Identifier for certificate signature algorithm. We recommend using names found in Go Lang Crypto library. See https://github.com/golang/go/blob/go1.14/src/crypto/x509/x509.go#L337-L353.</para>
 		/// <example>SHA256-RSA</example>
 		///</summary>
-		public static string ThreatX509SignatureAlgorithm = nameof(ThreatX509SignatureAlgorithm);
+		public static string ThreatIndicatorX509SignatureAlgorithm = nameof(ThreatIndicatorX509SignatureAlgorithm);
 		///<summary>
-		/// <para><c>threat.x509.subject.distinguished_name</c></para>
+		/// <para><c>threat.indicator.x509.subject.distinguished_name</c></para>
 		/// <para>Distinguished name (DN) of the certificate subject entity.</para>
 		/// <example>C=US, ST=California, L=San Francisco, O=Example, Inc., CN=shared.global.example.net</example>
 		///</summary>
-		public static string ThreatX509SubjectDistinguishedName = nameof(ThreatX509SubjectDistinguishedName);
+		public static string ThreatIndicatorX509SubjectDistinguishedName = nameof(ThreatIndicatorX509SubjectDistinguishedName);
 		///<summary>
-		/// <para><c>threat.x509.version_number</c></para>
+		/// <para><c>threat.indicator.x509.version_number</c></para>
 		/// <para>Version of x509 format.</para>
 		/// <example>3</example>
 		///</summary>
-		public static string ThreatX509VersionNumber = nameof(ThreatX509VersionNumber);
+		public static string ThreatIndicatorX509VersionNumber = nameof(ThreatIndicatorX509VersionNumber);
 		///<summary>
-		/// <para><c>threat.as.number</c></para>
+		/// <para><c>threat.indicator.as.number</c></para>
 		/// <para>Unique number allocated to the autonomous system. The autonomous system number (ASN) uniquely identifies each network on the Internet.</para>
 		/// <example>15169</example>
 		///</summary>
-		public static string ThreatAsNumber = nameof(ThreatAsNumber);
+		public static string ThreatIndicatorAsNumber = nameof(ThreatIndicatorAsNumber);
 		///<summary>
-		/// <para><c>threat.as.organization.name</c></para>
+		/// <para><c>threat.indicator.as.organization.name</c></para>
 		/// <para>Organization name.</para>
 		/// <example>Google LLC</example>
 		///</summary>
-		public static string ThreatAsOrganizationName = nameof(ThreatAsOrganizationName);
+		public static string ThreatIndicatorAsOrganizationName = nameof(ThreatIndicatorAsOrganizationName);
 		///<summary>
-		/// <para><c>threat.file.accessed</c></para>
+		/// <para><c>threat.indicator.file.accessed</c></para>
 		/// <para>Last time the file was accessed.
 		/// Note that not all filesystems keep track of access time.</para>
 		/// <example></example>
 		///</summary>
-		public static string ThreatFileAccessed = nameof(ThreatFileAccessed);
+		public static string ThreatIndicatorFileAccessed = nameof(ThreatIndicatorFileAccessed);
 		///<summary>
-		/// <para><c>threat.file.created</c></para>
+		/// <para><c>threat.indicator.file.created</c></para>
 		/// <para>File creation time.
 		/// Note that not all filesystems store the creation time.</para>
 		/// <example></example>
 		///</summary>
-		public static string ThreatFileCreated = nameof(ThreatFileCreated);
+		public static string ThreatIndicatorFileCreated = nameof(ThreatIndicatorFileCreated);
 		///<summary>
-		/// <para><c>threat.file.ctime</c></para>
+		/// <para><c>threat.indicator.file.ctime</c></para>
 		/// <para>Last time the file attributes or metadata changed.
 		/// Note that changes to the file content will update `mtime`. This implies `ctime` will be adjusted at the same time, since `mtime` is an attribute of the file.</para>
 		/// <example></example>
 		///</summary>
-		public static string ThreatFileCtime = nameof(ThreatFileCtime);
+		public static string ThreatIndicatorFileCtime = nameof(ThreatIndicatorFileCtime);
 		///<summary>
-		/// <para><c>threat.file.device</c></para>
+		/// <para><c>threat.indicator.file.device</c></para>
 		/// <para>Device that is the source of the file.</para>
 		/// <example>sda</example>
 		///</summary>
-		public static string ThreatFileDevice = nameof(ThreatFileDevice);
+		public static string ThreatIndicatorFileDevice = nameof(ThreatIndicatorFileDevice);
 		///<summary>
-		/// <para><c>threat.file.directory</c></para>
+		/// <para><c>threat.indicator.file.directory</c></para>
 		/// <para>Directory where the file is located. It should include the drive letter, when appropriate.</para>
 		/// <example>/home/alice</example>
 		///</summary>
-		public static string ThreatFileDirectory = nameof(ThreatFileDirectory);
+		public static string ThreatIndicatorFileDirectory = nameof(ThreatIndicatorFileDirectory);
 		///<summary>
-		/// <para><c>threat.file.drive_letter</c></para>
+		/// <para><c>threat.indicator.file.drive_letter</c></para>
 		/// <para>Drive letter where the file is located. This field is only relevant on Windows.
 		/// The value should be uppercase, and not include the colon.</para>
 		/// <example>C</example>
 		///</summary>
-		public static string ThreatFileDriveLetter = nameof(ThreatFileDriveLetter);
+		public static string ThreatIndicatorFileDriveLetter = nameof(ThreatIndicatorFileDriveLetter);
 		///<summary>
-		/// <para><c>threat.file.extension</c></para>
+		/// <para><c>threat.indicator.file.extension</c></para>
 		/// <para>File extension, excluding the leading dot.
 		/// Note that when the file name has multiple extensions (example.tar.gz), only the last one should be captured ("gz", not "tar.gz").</para>
 		/// <example>png</example>
 		///</summary>
-		public static string ThreatFileExtension = nameof(ThreatFileExtension);
+		public static string ThreatIndicatorFileExtension = nameof(ThreatIndicatorFileExtension);
 		///<summary>
-		/// <para><c>threat.file.fork_name</c></para>
+		/// <para><c>threat.indicator.file.fork_name</c></para>
 		/// <para>A fork is additional data associated with a filesystem object.
 		/// On Linux, a resource fork is used to store additional data with a filesystem object. A file always has at least one fork for the data portion, and additional forks may exist.
 		/// On NTFS, this is analogous to an Alternate Data Stream (ADS), and the default data stream for a file is just called $DATA. Zone.Identifier is commonly used by Windows to track contents downloaded from the Internet. An ADS is typically of the form: `C:\path\to\filename.extension:some_fork_name`, and `some_fork_name` is the value that should populate `fork_name`. `filename.extension` should populate `file.name`, and `extension` should populate `file.extension`. The full path, `file.path`, will include the fork name.</para>
 		/// <example>Zone.Identifer</example>
 		///</summary>
-		public static string ThreatFileForkName = nameof(ThreatFileForkName);
+		public static string ThreatIndicatorFileForkName = nameof(ThreatIndicatorFileForkName);
 		///<summary>
-		/// <para><c>threat.file.gid</c></para>
+		/// <para><c>threat.indicator.file.gid</c></para>
 		/// <para>Primary group ID (GID) of the file.</para>
 		/// <example>1001</example>
 		///</summary>
-		public static string ThreatFileGid = nameof(ThreatFileGid);
+		public static string ThreatIndicatorFileGid = nameof(ThreatIndicatorFileGid);
 		///<summary>
-		/// <para><c>threat.file.group</c></para>
+		/// <para><c>threat.indicator.file.group</c></para>
 		/// <para>Primary group name of the file.</para>
 		/// <example>alice</example>
 		///</summary>
-		public static string ThreatFileGroup = nameof(ThreatFileGroup);
+		public static string ThreatIndicatorFileGroup = nameof(ThreatIndicatorFileGroup);
 		///<summary>
-		/// <para><c>threat.file.inode</c></para>
+		/// <para><c>threat.indicator.file.inode</c></para>
 		/// <para>Inode representing the file in the filesystem.</para>
 		/// <example>256383</example>
 		///</summary>
-		public static string ThreatFileInode = nameof(ThreatFileInode);
+		public static string ThreatIndicatorFileInode = nameof(ThreatIndicatorFileInode);
 		///<summary>
-		/// <para><c>threat.file.mime_type</c></para>
+		/// <para><c>threat.indicator.file.mime_type</c></para>
 		/// <para>MIME type should identify the format of the file or stream of bytes using https://www.iana.org/assignments/media-types/media-types.xhtml[IANA official types], where possible. When more than one type is applicable, the most specific type should be used.</para>
 		/// <example></example>
 		///</summary>
-		public static string ThreatFileMimeType = nameof(ThreatFileMimeType);
+		public static string ThreatIndicatorFileMimeType = nameof(ThreatIndicatorFileMimeType);
 		///<summary>
-		/// <para><c>threat.file.mode</c></para>
+		/// <para><c>threat.indicator.file.mode</c></para>
 		/// <para>Mode of the file in octal representation.</para>
 		/// <example>0640</example>
 		///</summary>
-		public static string ThreatFileMode = nameof(ThreatFileMode);
+		public static string ThreatIndicatorFileMode = nameof(ThreatIndicatorFileMode);
 		///<summary>
-		/// <para><c>threat.file.mtime</c></para>
+		/// <para><c>threat.indicator.file.mtime</c></para>
 		/// <para>Last time the file content was modified.</para>
 		/// <example></example>
 		///</summary>
-		public static string ThreatFileMtime = nameof(ThreatFileMtime);
+		public static string ThreatIndicatorFileMtime = nameof(ThreatIndicatorFileMtime);
 		///<summary>
-		/// <para><c>threat.file.name</c></para>
+		/// <para><c>threat.indicator.file.name</c></para>
 		/// <para>Name of the file including the extension, without the directory.</para>
 		/// <example>example.png</example>
 		///</summary>
-		public static string ThreatFileName = nameof(ThreatFileName);
+		public static string ThreatIndicatorFileName = nameof(ThreatIndicatorFileName);
 		///<summary>
-		/// <para><c>threat.file.owner</c></para>
+		/// <para><c>threat.indicator.file.owner</c></para>
 		/// <para>File owner's username.</para>
 		/// <example>alice</example>
 		///</summary>
-		public static string ThreatFileOwner = nameof(ThreatFileOwner);
+		public static string ThreatIndicatorFileOwner = nameof(ThreatIndicatorFileOwner);
 		///<summary>
-		/// <para><c>threat.file.path</c></para>
+		/// <para><c>threat.indicator.file.path</c></para>
 		/// <para>Full path to the file, including the file name. It should include the drive letter, when appropriate.</para>
 		/// <example>/home/alice/example.png</example>
 		///</summary>
-		public static string ThreatFilePath = nameof(ThreatFilePath);
+		public static string ThreatIndicatorFilePath = nameof(ThreatIndicatorFilePath);
 		///<summary>
-		/// <para><c>threat.file.size</c></para>
+		/// <para><c>threat.indicator.file.size</c></para>
 		/// <para>File size in bytes.
 		/// Only relevant when `file.type` is "file".</para>
 		/// <example>16384</example>
 		///</summary>
-		public static string ThreatFileSize = nameof(ThreatFileSize);
+		public static string ThreatIndicatorFileSize = nameof(ThreatIndicatorFileSize);
 		///<summary>
-		/// <para><c>threat.file.target_path</c></para>
+		/// <para><c>threat.indicator.file.target_path</c></para>
 		/// <para>Target path for symlinks.</para>
 		/// <example></example>
 		///</summary>
-		public static string ThreatFileTargetPath = nameof(ThreatFileTargetPath);
+		public static string ThreatIndicatorFileTargetPath = nameof(ThreatIndicatorFileTargetPath);
 		///<summary>
-		/// <para><c>threat.file.type</c></para>
+		/// <para><c>threat.indicator.file.type</c></para>
 		/// <para>File type (file, dir, or symlink).</para>
 		/// <example>file</example>
 		///</summary>
-		public static string ThreatFileType = nameof(ThreatFileType);
+		public static string ThreatIndicatorFileType = nameof(ThreatIndicatorFileType);
 		///<summary>
-		/// <para><c>threat.file.uid</c></para>
+		/// <para><c>threat.indicator.file.uid</c></para>
 		/// <para>The user ID (UID) or security identifier (SID) of the file owner.</para>
 		/// <example>1001</example>
 		///</summary>
-		public static string ThreatFileUid = nameof(ThreatFileUid);
+		public static string ThreatIndicatorFileUid = nameof(ThreatIndicatorFileUid);
 		///<summary>
-		/// <para><c>threat.file.hash.md5</c></para>
+		/// <para><c>threat.indicator.file.hash.md5</c></para>
 		/// <para>MD5 hash.</para>
 		/// <example></example>
 		///</summary>
-		public static string ThreatFileHashMd5 = nameof(ThreatFileHashMd5);
+		public static string ThreatIndicatorFileHashMd5 = nameof(ThreatIndicatorFileHashMd5);
 		///<summary>
-		/// <para><c>threat.file.hash.sha1</c></para>
+		/// <para><c>threat.indicator.file.hash.sha1</c></para>
 		/// <para>SHA1 hash.</para>
 		/// <example></example>
 		///</summary>
-		public static string ThreatFileHashSha1 = nameof(ThreatFileHashSha1);
+		public static string ThreatIndicatorFileHashSha1 = nameof(ThreatIndicatorFileHashSha1);
 		///<summary>
-		/// <para><c>threat.file.hash.sha256</c></para>
+		/// <para><c>threat.indicator.file.hash.sha256</c></para>
 		/// <para>SHA256 hash.</para>
 		/// <example></example>
 		///</summary>
-		public static string ThreatFileHashSha256 = nameof(ThreatFileHashSha256);
+		public static string ThreatIndicatorFileHashSha256 = nameof(ThreatIndicatorFileHashSha256);
 		///<summary>
-		/// <para><c>threat.file.hash.sha384</c></para>
+		/// <para><c>threat.indicator.file.hash.sha384</c></para>
 		/// <para>SHA384 hash.</para>
 		/// <example></example>
 		///</summary>
-		public static string ThreatFileHashSha384 = nameof(ThreatFileHashSha384);
+		public static string ThreatIndicatorFileHashSha384 = nameof(ThreatIndicatorFileHashSha384);
 		///<summary>
-		/// <para><c>threat.file.hash.sha512</c></para>
+		/// <para><c>threat.indicator.file.hash.sha512</c></para>
 		/// <para>SHA512 hash.</para>
 		/// <example></example>
 		///</summary>
-		public static string ThreatFileHashSha512 = nameof(ThreatFileHashSha512);
+		public static string ThreatIndicatorFileHashSha512 = nameof(ThreatIndicatorFileHashSha512);
 		///<summary>
-		/// <para><c>threat.file.hash.ssdeep</c></para>
+		/// <para><c>threat.indicator.file.hash.ssdeep</c></para>
 		/// <para>SSDEEP hash.</para>
 		/// <example></example>
 		///</summary>
-		public static string ThreatFileHashSsdeep = nameof(ThreatFileHashSsdeep);
+		public static string ThreatIndicatorFileHashSsdeep = nameof(ThreatIndicatorFileHashSsdeep);
 		///<summary>
-		/// <para><c>threat.file.hash.tlsh</c></para>
+		/// <para><c>threat.indicator.file.hash.tlsh</c></para>
 		/// <para>TLSH hash.</para>
 		/// <example></example>
 		///</summary>
-		public static string ThreatFileHashTlsh = nameof(ThreatFileHashTlsh);
+		public static string ThreatIndicatorFileHashTlsh = nameof(ThreatIndicatorFileHashTlsh);
 		///<summary>
-		/// <para><c>threat.file.pe.architecture</c></para>
+		/// <para><c>threat.indicator.file.pe.architecture</c></para>
 		/// <para>CPU architecture target for the file.</para>
 		/// <example>x64</example>
 		///</summary>
-		public static string ThreatFilePeArchitecture = nameof(ThreatFilePeArchitecture);
+		public static string ThreatIndicatorFilePeArchitecture = nameof(ThreatIndicatorFilePeArchitecture);
 		///<summary>
-		/// <para><c>threat.file.pe.company</c></para>
+		/// <para><c>threat.indicator.file.pe.company</c></para>
 		/// <para>Internal company name of the file, provided at compile-time.</para>
 		/// <example>Microsoft Corporation</example>
 		///</summary>
-		public static string ThreatFilePeCompany = nameof(ThreatFilePeCompany);
+		public static string ThreatIndicatorFilePeCompany = nameof(ThreatIndicatorFilePeCompany);
 		///<summary>
-		/// <para><c>threat.file.pe.description</c></para>
+		/// <para><c>threat.indicator.file.pe.description</c></para>
 		/// <para>Internal description of the file, provided at compile-time.</para>
 		/// <example>Paint</example>
 		///</summary>
-		public static string ThreatFilePeDescription = nameof(ThreatFilePeDescription);
+		public static string ThreatIndicatorFilePeDescription = nameof(ThreatIndicatorFilePeDescription);
 		///<summary>
-		/// <para><c>threat.file.pe.file_version</c></para>
+		/// <para><c>threat.indicator.file.pe.file_version</c></para>
 		/// <para>Internal version of the file, provided at compile-time.</para>
 		/// <example>6.3.9600.17415</example>
 		///</summary>
-		public static string ThreatFilePeFileVersion = nameof(ThreatFilePeFileVersion);
+		public static string ThreatIndicatorFilePeFileVersion = nameof(ThreatIndicatorFilePeFileVersion);
 		///<summary>
-		/// <para><c>threat.file.pe.go_import_hash</c></para>
+		/// <para><c>threat.indicator.file.pe.go_import_hash</c></para>
 		/// <para>A hash of the Go language imports in a PE file excluding standard library imports. An import hash can be used to fingerprint binaries even after recompilation or other code-level transformations have occurred, which would change more traditional hash values.
 		/// The algorithm used to calculate the Go symbol hash and a reference implementation are available [here](https://github.com/elastic/toutoumomoma).</para>
 		/// <example>10bddcb4cee42080f76c88d9ff964491</example>
 		///</summary>
-		public static string ThreatFilePeGoImportHash = nameof(ThreatFilePeGoImportHash);
+		public static string ThreatIndicatorFilePeGoImportHash = nameof(ThreatIndicatorFilePeGoImportHash);
 		///<summary>
-		/// <para><c>threat.file.pe.go_imports</c></para>
+		/// <para><c>threat.indicator.file.pe.go_imports</c></para>
 		/// <para>List of imported Go language element names and types.</para>
 		/// <example></example>
 		///</summary>
-		public static string ThreatFilePeGoImports = nameof(ThreatFilePeGoImports);
+		public static string ThreatIndicatorFilePeGoImports = nameof(ThreatIndicatorFilePeGoImports);
 		///<summary>
-		/// <para><c>threat.file.pe.go_imports_names_entropy</c></para>
+		/// <para><c>threat.indicator.file.pe.go_imports_names_entropy</c></para>
 		/// <para>Shannon entropy calculation from the list of Go imports.</para>
 		/// <example></example>
 		///</summary>
-		public static string ThreatFilePeGoImportsNamesEntropy = nameof(ThreatFilePeGoImportsNamesEntropy);
+		public static string ThreatIndicatorFilePeGoImportsNamesEntropy = nameof(ThreatIndicatorFilePeGoImportsNamesEntropy);
 		///<summary>
-		/// <para><c>threat.file.pe.go_imports_names_var_entropy</c></para>
+		/// <para><c>threat.indicator.file.pe.go_imports_names_var_entropy</c></para>
 		/// <para>Variance for Shannon entropy calculation from the list of Go imports.</para>
 		/// <example></example>
 		///</summary>
-		public static string ThreatFilePeGoImportsNamesVarEntropy = nameof(ThreatFilePeGoImportsNamesVarEntropy);
+		public static string ThreatIndicatorFilePeGoImportsNamesVarEntropy = nameof(ThreatIndicatorFilePeGoImportsNamesVarEntropy);
 		///<summary>
-		/// <para><c>threat.file.pe.go_stripped</c></para>
+		/// <para><c>threat.indicator.file.pe.go_stripped</c></para>
 		/// <para>Set to true if the file is a Go executable that has had its symbols stripped or obfuscated and false if an unobfuscated Go executable.</para>
 		/// <example></example>
 		///</summary>
-		public static string ThreatFilePeGoStripped = nameof(ThreatFilePeGoStripped);
+		public static string ThreatIndicatorFilePeGoStripped = nameof(ThreatIndicatorFilePeGoStripped);
 		///<summary>
-		/// <para><c>threat.file.pe.imphash</c></para>
+		/// <para><c>threat.indicator.file.pe.imphash</c></para>
 		/// <para>A hash of the imports in a PE file. An imphash -- or import hash -- can be used to fingerprint binaries even after recompilation or other code-level transformations have occurred, which would change more traditional hash values.
 		/// Learn more at https://www.fireeye.com/blog/threat-research/2014/01/tracking-malware-import-hashing.html.</para>
 		/// <example>0c6803c4e922103c4dca5963aad36ddf</example>
 		///</summary>
-		public static string ThreatFilePeImphash = nameof(ThreatFilePeImphash);
+		public static string ThreatIndicatorFilePeImphash = nameof(ThreatIndicatorFilePeImphash);
 		///<summary>
-		/// <para><c>threat.file.pe.import_hash</c></para>
+		/// <para><c>threat.indicator.file.pe.import_hash</c></para>
 		/// <para>A hash of the imports in a PE file. An import hash can be used to fingerprint binaries even after recompilation or other code-level transformations have occurred, which would change more traditional hash values.
 		/// This is a synonym for imphash.</para>
 		/// <example>d41d8cd98f00b204e9800998ecf8427e</example>
 		///</summary>
-		public static string ThreatFilePeImportHash = nameof(ThreatFilePeImportHash);
+		public static string ThreatIndicatorFilePeImportHash = nameof(ThreatIndicatorFilePeImportHash);
 		///<summary>
-		/// <para><c>threat.file.pe.imports_names_entropy</c></para>
+		/// <para><c>threat.indicator.file.pe.imports_names_entropy</c></para>
 		/// <para>Shannon entropy calculation from the list of imported element names and types.</para>
 		/// <example></example>
 		///</summary>
-		public static string ThreatFilePeImportsNamesEntropy = nameof(ThreatFilePeImportsNamesEntropy);
+		public static string ThreatIndicatorFilePeImportsNamesEntropy = nameof(ThreatIndicatorFilePeImportsNamesEntropy);
 		///<summary>
-		/// <para><c>threat.file.pe.imports_names_var_entropy</c></para>
+		/// <para><c>threat.indicator.file.pe.imports_names_var_entropy</c></para>
 		/// <para>Variance for Shannon entropy calculation from the list of imported element names and types.</para>
 		/// <example></example>
 		///</summary>
-		public static string ThreatFilePeImportsNamesVarEntropy = nameof(ThreatFilePeImportsNamesVarEntropy);
+		public static string ThreatIndicatorFilePeImportsNamesVarEntropy = nameof(ThreatIndicatorFilePeImportsNamesVarEntropy);
 		///<summary>
-		/// <para><c>threat.file.pe.original_file_name</c></para>
+		/// <para><c>threat.indicator.file.pe.original_file_name</c></para>
 		/// <para>Internal name of the file, provided at compile-time.</para>
 		/// <example>MSPAINT.EXE</example>
 		///</summary>
-		public static string ThreatFilePeOriginalFileName = nameof(ThreatFilePeOriginalFileName);
+		public static string ThreatIndicatorFilePeOriginalFileName = nameof(ThreatIndicatorFilePeOriginalFileName);
 		///<summary>
-		/// <para><c>threat.file.pe.pehash</c></para>
+		/// <para><c>threat.indicator.file.pe.pehash</c></para>
 		/// <para>A hash of the PE header and data from one or more PE sections. An pehash can be used to cluster files by transforming structural information about a file into a hash value.
 		/// Learn more at https://www.usenix.org/legacy/events/leet09/tech/full_papers/wicherski/wicherski_html/index.html.</para>
 		/// <example>73ff189b63cd6be375a7ff25179a38d347651975</example>
 		///</summary>
-		public static string ThreatFilePePehash = nameof(ThreatFilePePehash);
+		public static string ThreatIndicatorFilePePehash = nameof(ThreatIndicatorFilePePehash);
 		///<summary>
-		/// <para><c>threat.file.pe.product</c></para>
+		/// <para><c>threat.indicator.file.pe.product</c></para>
 		/// <para>Internal product name of the file, provided at compile-time.</para>
 		/// <example>Microsoft® Windows® Operating System</example>
 		///</summary>
-		public static string ThreatFilePeProduct = nameof(ThreatFilePeProduct);
+		public static string ThreatIndicatorFilePeProduct = nameof(ThreatIndicatorFilePeProduct);
 		///<summary>
-		/// <para><c>threat.file.x509.issuer.distinguished_name</c></para>
+		/// <para><c>threat.indicator.file.x509.issuer.distinguished_name</c></para>
 		/// <para>Distinguished name (DN) of issuing certificate authority.</para>
 		/// <example>C=US, O=Example Inc, OU=www.example.com, CN=Example SHA2 High Assurance Server CA</example>
 		///</summary>
-		public static string ThreatFileX509IssuerDistinguishedName = nameof(ThreatFileX509IssuerDistinguishedName);
+		public static string ThreatIndicatorFileX509IssuerDistinguishedName = nameof(ThreatIndicatorFileX509IssuerDistinguishedName);
 		///<summary>
-		/// <para><c>threat.file.x509.not_after</c></para>
+		/// <para><c>threat.indicator.file.x509.not_after</c></para>
 		/// <para>Time at which the certificate is no longer considered valid.</para>
 		/// <example>7/16/2020 3:15:39 AM</example>
 		///</summary>
-		public static string ThreatFileX509NotAfter = nameof(ThreatFileX509NotAfter);
+		public static string ThreatIndicatorFileX509NotAfter = nameof(ThreatIndicatorFileX509NotAfter);
 		///<summary>
-		/// <para><c>threat.file.x509.not_before</c></para>
+		/// <para><c>threat.indicator.file.x509.not_before</c></para>
 		/// <para>Time at which the certificate is first considered valid.</para>
 		/// <example>8/16/2019 1:40:25 AM</example>
 		///</summary>
-		public static string ThreatFileX509NotBefore = nameof(ThreatFileX509NotBefore);
+		public static string ThreatIndicatorFileX509NotBefore = nameof(ThreatIndicatorFileX509NotBefore);
 		///<summary>
-		/// <para><c>threat.file.x509.public_key_algorithm</c></para>
+		/// <para><c>threat.indicator.file.x509.public_key_algorithm</c></para>
 		/// <para>Algorithm used to generate the public key.</para>
 		/// <example>RSA</example>
 		///</summary>
-		public static string ThreatFileX509PublicKeyAlgorithm = nameof(ThreatFileX509PublicKeyAlgorithm);
+		public static string ThreatIndicatorFileX509PublicKeyAlgorithm = nameof(ThreatIndicatorFileX509PublicKeyAlgorithm);
 		///<summary>
-		/// <para><c>threat.file.x509.public_key_curve</c></para>
+		/// <para><c>threat.indicator.file.x509.public_key_curve</c></para>
 		/// <para>The curve used by the elliptic curve public key algorithm. This is algorithm specific.</para>
 		/// <example>nistp521</example>
 		///</summary>
-		public static string ThreatFileX509PublicKeyCurve = nameof(ThreatFileX509PublicKeyCurve);
+		public static string ThreatIndicatorFileX509PublicKeyCurve = nameof(ThreatIndicatorFileX509PublicKeyCurve);
 		///<summary>
-		/// <para><c>threat.file.x509.public_key_exponent</c></para>
+		/// <para><c>threat.indicator.file.x509.public_key_exponent</c></para>
 		/// <para>Exponent used to derive the public key. This is algorithm specific.
 		/// <para><br/>Stored but not available for search in Elasticsearch by default</para></para>
 		/// <example>65537</example>
 		///</summary>
-		public static string ThreatFileX509PublicKeyExponent = nameof(ThreatFileX509PublicKeyExponent);
+		public static string ThreatIndicatorFileX509PublicKeyExponent = nameof(ThreatIndicatorFileX509PublicKeyExponent);
 		///<summary>
-		/// <para><c>threat.file.x509.public_key_size</c></para>
+		/// <para><c>threat.indicator.file.x509.public_key_size</c></para>
 		/// <para>The size of the public key space in bits.</para>
 		/// <example>2048</example>
 		///</summary>
-		public static string ThreatFileX509PublicKeySize = nameof(ThreatFileX509PublicKeySize);
+		public static string ThreatIndicatorFileX509PublicKeySize = nameof(ThreatIndicatorFileX509PublicKeySize);
 		///<summary>
-		/// <para><c>threat.file.x509.serial_number</c></para>
+		/// <para><c>threat.indicator.file.x509.serial_number</c></para>
 		/// <para>Unique serial number issued by the certificate authority. For consistency, if this value is alphanumeric, it should be formatted without colons and uppercase characters.</para>
 		/// <example>55FBB9C7DEBF09809D12CCAA</example>
 		///</summary>
-		public static string ThreatFileX509SerialNumber = nameof(ThreatFileX509SerialNumber);
+		public static string ThreatIndicatorFileX509SerialNumber = nameof(ThreatIndicatorFileX509SerialNumber);
 		///<summary>
-		/// <para><c>threat.file.x509.signature_algorithm</c></para>
+		/// <para><c>threat.indicator.file.x509.signature_algorithm</c></para>
 		/// <para>Identifier for certificate signature algorithm. We recommend using names found in Go Lang Crypto library. See https://github.com/golang/go/blob/go1.14/src/crypto/x509/x509.go#L337-L353.</para>
 		/// <example>SHA256-RSA</example>
 		///</summary>
-		public static string ThreatFileX509SignatureAlgorithm = nameof(ThreatFileX509SignatureAlgorithm);
+		public static string ThreatIndicatorFileX509SignatureAlgorithm = nameof(ThreatIndicatorFileX509SignatureAlgorithm);
 		///<summary>
-		/// <para><c>threat.file.x509.subject.distinguished_name</c></para>
+		/// <para><c>threat.indicator.file.x509.subject.distinguished_name</c></para>
 		/// <para>Distinguished name (DN) of the certificate subject entity.</para>
 		/// <example>C=US, ST=California, L=San Francisco, O=Example, Inc., CN=shared.global.example.net</example>
 		///</summary>
-		public static string ThreatFileX509SubjectDistinguishedName = nameof(ThreatFileX509SubjectDistinguishedName);
+		public static string ThreatIndicatorFileX509SubjectDistinguishedName = nameof(ThreatIndicatorFileX509SubjectDistinguishedName);
 		///<summary>
-		/// <para><c>threat.file.x509.version_number</c></para>
+		/// <para><c>threat.indicator.file.x509.version_number</c></para>
 		/// <para>Version of x509 format.</para>
 		/// <example>3</example>
 		///</summary>
-		public static string ThreatFileX509VersionNumber = nameof(ThreatFileX509VersionNumber);
+		public static string ThreatIndicatorFileX509VersionNumber = nameof(ThreatIndicatorFileX509VersionNumber);
 		///<summary>
-		/// <para><c>threat.file.code_signature.digest_algorithm</c></para>
+		/// <para><c>threat.indicator.file.code_signature.digest_algorithm</c></para>
 		/// <para>The hashing algorithm used to sign the process.
 		/// This value can distinguish signatures when a file is signed multiple times by the same signer but with a different digest algorithm.</para>
 		/// <example>sha256</example>
 		///</summary>
-		public static string ThreatFileCodeSignatureDigestAlgorithm = nameof(ThreatFileCodeSignatureDigestAlgorithm);
+		public static string ThreatIndicatorFileCodeSignatureDigestAlgorithm = nameof(ThreatIndicatorFileCodeSignatureDigestAlgorithm);
 		///<summary>
-		/// <para><c>threat.file.code_signature.exists</c></para>
+		/// <para><c>threat.indicator.file.code_signature.exists</c></para>
 		/// <para>Boolean to capture if a signature is present.</para>
 		/// <example>true</example>
 		///</summary>
-		public static string ThreatFileCodeSignatureExists = nameof(ThreatFileCodeSignatureExists);
+		public static string ThreatIndicatorFileCodeSignatureExists = nameof(ThreatIndicatorFileCodeSignatureExists);
 		///<summary>
-		/// <para><c>threat.file.code_signature.signing_id</c></para>
+		/// <para><c>threat.indicator.file.code_signature.signing_id</c></para>
 		/// <para>The identifier used to sign the process.
 		/// This is used to identify the application manufactured by a software vendor. The field is relevant to Apple *OS only.</para>
 		/// <example>com.apple.xpc.proxy</example>
 		///</summary>
-		public static string ThreatFileCodeSignatureSigningId = nameof(ThreatFileCodeSignatureSigningId);
+		public static string ThreatIndicatorFileCodeSignatureSigningId = nameof(ThreatIndicatorFileCodeSignatureSigningId);
 		///<summary>
-		/// <para><c>threat.file.code_signature.status</c></para>
+		/// <para><c>threat.indicator.file.code_signature.status</c></para>
 		/// <para>Additional information about the certificate status.
 		/// This is useful for logging cryptographic errors with the certificate validity or trust status. Leave unpopulated if the validity or trust of the certificate was unchecked.</para>
 		/// <example>ERROR_UNTRUSTED_ROOT</example>
 		///</summary>
-		public static string ThreatFileCodeSignatureStatus = nameof(ThreatFileCodeSignatureStatus);
+		public static string ThreatIndicatorFileCodeSignatureStatus = nameof(ThreatIndicatorFileCodeSignatureStatus);
 		///<summary>
-		/// <para><c>threat.file.code_signature.subject_name</c></para>
+		/// <para><c>threat.indicator.file.code_signature.subject_name</c></para>
 		/// <para>Subject name of the code signer</para>
 		/// <example>Microsoft Corporation</example>
 		///</summary>
-		public static string ThreatFileCodeSignatureSubjectName = nameof(ThreatFileCodeSignatureSubjectName);
+		public static string ThreatIndicatorFileCodeSignatureSubjectName = nameof(ThreatIndicatorFileCodeSignatureSubjectName);
 		///<summary>
-		/// <para><c>threat.file.code_signature.team_id</c></para>
+		/// <para><c>threat.indicator.file.code_signature.team_id</c></para>
 		/// <para>The team identifier used to sign the process.
 		/// This is used to identify the team or vendor of a software product. The field is relevant to Apple *OS only.</para>
 		/// <example>EQHXZ8M8AV</example>
 		///</summary>
-		public static string ThreatFileCodeSignatureTeamId = nameof(ThreatFileCodeSignatureTeamId);
+		public static string ThreatIndicatorFileCodeSignatureTeamId = nameof(ThreatIndicatorFileCodeSignatureTeamId);
 		///<summary>
-		/// <para><c>threat.file.code_signature.timestamp</c></para>
+		/// <para><c>threat.indicator.file.code_signature.timestamp</c></para>
 		/// <para>Date and time when the code signature was generated and signed.</para>
 		/// <example>1/1/2021 12:10:30 PM</example>
 		///</summary>
-		public static string ThreatFileCodeSignatureTimestamp = nameof(ThreatFileCodeSignatureTimestamp);
+		public static string ThreatIndicatorFileCodeSignatureTimestamp = nameof(ThreatIndicatorFileCodeSignatureTimestamp);
 		///<summary>
-		/// <para><c>threat.file.code_signature.trusted</c></para>
+		/// <para><c>threat.indicator.file.code_signature.trusted</c></para>
 		/// <para>Stores the trust status of the certificate chain.
 		/// Validating the trust of the certificate chain may be complicated, and this field should only be populated by tools that actively check the status.</para>
 		/// <example>true</example>
 		///</summary>
-		public static string ThreatFileCodeSignatureTrusted = nameof(ThreatFileCodeSignatureTrusted);
+		public static string ThreatIndicatorFileCodeSignatureTrusted = nameof(ThreatIndicatorFileCodeSignatureTrusted);
 		///<summary>
-		/// <para><c>threat.file.code_signature.valid</c></para>
+		/// <para><c>threat.indicator.file.code_signature.valid</c></para>
 		/// <para>Boolean to capture if the digital signature is verified against the binary content.
 		/// Leave unpopulated if a certificate was unchecked.</para>
 		/// <example>true</example>
 		///</summary>
-		public static string ThreatFileCodeSignatureValid = nameof(ThreatFileCodeSignatureValid);
+		public static string ThreatIndicatorFileCodeSignatureValid = nameof(ThreatIndicatorFileCodeSignatureValid);
 		///<summary>
-		/// <para><c>threat.file.elf.architecture</c></para>
+		/// <para><c>threat.indicator.file.elf.architecture</c></para>
 		/// <para>Machine architecture of the ELF file.</para>
 		/// <example>x86-64</example>
 		///</summary>
-		public static string ThreatFileElfArchitecture = nameof(ThreatFileElfArchitecture);
+		public static string ThreatIndicatorFileElfArchitecture = nameof(ThreatIndicatorFileElfArchitecture);
 		///<summary>
-		/// <para><c>threat.file.elf.byte_order</c></para>
+		/// <para><c>threat.indicator.file.elf.byte_order</c></para>
 		/// <para>Byte sequence of ELF file.</para>
 		/// <example>Little Endian</example>
 		///</summary>
-		public static string ThreatFileElfByteOrder = nameof(ThreatFileElfByteOrder);
+		public static string ThreatIndicatorFileElfByteOrder = nameof(ThreatIndicatorFileElfByteOrder);
 		///<summary>
-		/// <para><c>threat.file.elf.cpu_type</c></para>
+		/// <para><c>threat.indicator.file.elf.cpu_type</c></para>
 		/// <para>CPU type of the ELF file.</para>
 		/// <example>Intel</example>
 		///</summary>
-		public static string ThreatFileElfCpuType = nameof(ThreatFileElfCpuType);
+		public static string ThreatIndicatorFileElfCpuType = nameof(ThreatIndicatorFileElfCpuType);
 		///<summary>
-		/// <para><c>threat.file.elf.creation_date</c></para>
+		/// <para><c>threat.indicator.file.elf.creation_date</c></para>
 		/// <para>Extracted when possible from the file's metadata. Indicates when it was built or compiled. It can also be faked by malware creators.</para>
 		/// <example></example>
 		///</summary>
-		public static string ThreatFileElfCreationDate = nameof(ThreatFileElfCreationDate);
+		public static string ThreatIndicatorFileElfCreationDate = nameof(ThreatIndicatorFileElfCreationDate);
 		///<summary>
-		/// <para><c>threat.file.elf.go_import_hash</c></para>
+		/// <para><c>threat.indicator.file.elf.go_import_hash</c></para>
 		/// <para>A hash of the Go language imports in an ELF file excluding standard library imports. An import hash can be used to fingerprint binaries even after recompilation or other code-level transformations have occurred, which would change more traditional hash values.
 		/// The algorithm used to calculate the Go symbol hash and a reference implementation are available [here](https://github.com/elastic/toutoumomoma).</para>
 		/// <example>10bddcb4cee42080f76c88d9ff964491</example>
 		///</summary>
-		public static string ThreatFileElfGoImportHash = nameof(ThreatFileElfGoImportHash);
+		public static string ThreatIndicatorFileElfGoImportHash = nameof(ThreatIndicatorFileElfGoImportHash);
 		///<summary>
-		/// <para><c>threat.file.elf.go_imports</c></para>
+		/// <para><c>threat.indicator.file.elf.go_imports</c></para>
 		/// <para>List of imported Go language element names and types.</para>
 		/// <example></example>
 		///</summary>
-		public static string ThreatFileElfGoImports = nameof(ThreatFileElfGoImports);
+		public static string ThreatIndicatorFileElfGoImports = nameof(ThreatIndicatorFileElfGoImports);
 		///<summary>
-		/// <para><c>threat.file.elf.go_imports_names_entropy</c></para>
+		/// <para><c>threat.indicator.file.elf.go_imports_names_entropy</c></para>
 		/// <para>Shannon entropy calculation from the list of Go imports.</para>
 		/// <example></example>
 		///</summary>
-		public static string ThreatFileElfGoImportsNamesEntropy = nameof(ThreatFileElfGoImportsNamesEntropy);
+		public static string ThreatIndicatorFileElfGoImportsNamesEntropy = nameof(ThreatIndicatorFileElfGoImportsNamesEntropy);
 		///<summary>
-		/// <para><c>threat.file.elf.go_imports_names_var_entropy</c></para>
+		/// <para><c>threat.indicator.file.elf.go_imports_names_var_entropy</c></para>
 		/// <para>Variance for Shannon entropy calculation from the list of Go imports.</para>
 		/// <example></example>
 		///</summary>
-		public static string ThreatFileElfGoImportsNamesVarEntropy = nameof(ThreatFileElfGoImportsNamesVarEntropy);
+		public static string ThreatIndicatorFileElfGoImportsNamesVarEntropy = nameof(ThreatIndicatorFileElfGoImportsNamesVarEntropy);
 		///<summary>
-		/// <para><c>threat.file.elf.go_stripped</c></para>
+		/// <para><c>threat.indicator.file.elf.go_stripped</c></para>
 		/// <para>Set to true if the file is a Go executable that has had its symbols stripped or obfuscated and false if an unobfuscated Go executable.</para>
 		/// <example></example>
 		///</summary>
-		public static string ThreatFileElfGoStripped = nameof(ThreatFileElfGoStripped);
+		public static string ThreatIndicatorFileElfGoStripped = nameof(ThreatIndicatorFileElfGoStripped);
 		///<summary>
-		/// <para><c>threat.file.elf.header.abi_version</c></para>
+		/// <para><c>threat.indicator.file.elf.header.abi_version</c></para>
 		/// <para>Version of the ELF Application Binary Interface (ABI).</para>
 		/// <example></example>
 		///</summary>
-		public static string ThreatFileElfHeaderAbiVersion = nameof(ThreatFileElfHeaderAbiVersion);
+		public static string ThreatIndicatorFileElfHeaderAbiVersion = nameof(ThreatIndicatorFileElfHeaderAbiVersion);
 		///<summary>
-		/// <para><c>threat.file.elf.header.class</c></para>
+		/// <para><c>threat.indicator.file.elf.header.class</c></para>
 		/// <para>Header class of the ELF file.</para>
 		/// <example></example>
 		///</summary>
-		public static string ThreatFileElfHeaderClass = nameof(ThreatFileElfHeaderClass);
+		public static string ThreatIndicatorFileElfHeaderClass = nameof(ThreatIndicatorFileElfHeaderClass);
 		///<summary>
-		/// <para><c>threat.file.elf.header.data</c></para>
+		/// <para><c>threat.indicator.file.elf.header.data</c></para>
 		/// <para>Data table of the ELF header.</para>
 		/// <example></example>
 		///</summary>
-		public static string ThreatFileElfHeaderData = nameof(ThreatFileElfHeaderData);
+		public static string ThreatIndicatorFileElfHeaderData = nameof(ThreatIndicatorFileElfHeaderData);
 		///<summary>
-		/// <para><c>threat.file.elf.header.entrypoint</c></para>
+		/// <para><c>threat.indicator.file.elf.header.entrypoint</c></para>
 		/// <para>Header entrypoint of the ELF file.</para>
 		/// <example></example>
 		///</summary>
-		public static string ThreatFileElfHeaderEntrypoint = nameof(ThreatFileElfHeaderEntrypoint);
+		public static string ThreatIndicatorFileElfHeaderEntrypoint = nameof(ThreatIndicatorFileElfHeaderEntrypoint);
 		///<summary>
-		/// <para><c>threat.file.elf.header.object_version</c></para>
+		/// <para><c>threat.indicator.file.elf.header.object_version</c></para>
 		/// <para>"0x1" for original ELF files.</para>
 		/// <example></example>
 		///</summary>
-		public static string ThreatFileElfHeaderObjectVersion = nameof(ThreatFileElfHeaderObjectVersion);
+		public static string ThreatIndicatorFileElfHeaderObjectVersion = nameof(ThreatIndicatorFileElfHeaderObjectVersion);
 		///<summary>
-		/// <para><c>threat.file.elf.header.os_abi</c></para>
+		/// <para><c>threat.indicator.file.elf.header.os_abi</c></para>
 		/// <para>Application Binary Interface (ABI) of the Linux OS.</para>
 		/// <example></example>
 		///</summary>
-		public static string ThreatFileElfHeaderOsAbi = nameof(ThreatFileElfHeaderOsAbi);
+		public static string ThreatIndicatorFileElfHeaderOsAbi = nameof(ThreatIndicatorFileElfHeaderOsAbi);
 		///<summary>
-		/// <para><c>threat.file.elf.header.type</c></para>
+		/// <para><c>threat.indicator.file.elf.header.type</c></para>
 		/// <para>Header type of the ELF file.</para>
 		/// <example></example>
 		///</summary>
-		public static string ThreatFileElfHeaderType = nameof(ThreatFileElfHeaderType);
+		public static string ThreatIndicatorFileElfHeaderType = nameof(ThreatIndicatorFileElfHeaderType);
 		///<summary>
-		/// <para><c>threat.file.elf.header.version</c></para>
+		/// <para><c>threat.indicator.file.elf.header.version</c></para>
 		/// <para>Version of the ELF header.</para>
 		/// <example></example>
 		///</summary>
-		public static string ThreatFileElfHeaderVersion = nameof(ThreatFileElfHeaderVersion);
+		public static string ThreatIndicatorFileElfHeaderVersion = nameof(ThreatIndicatorFileElfHeaderVersion);
 		///<summary>
-		/// <para><c>threat.file.elf.import_hash</c></para>
+		/// <para><c>threat.indicator.file.elf.import_hash</c></para>
 		/// <para>A hash of the imports in an ELF file. An import hash can be used to fingerprint binaries even after recompilation or other code-level transformations have occurred, which would change more traditional hash values.
 		/// This is an ELF implementation of the Windows PE imphash.</para>
 		/// <example>d41d8cd98f00b204e9800998ecf8427e</example>
 		///</summary>
-		public static string ThreatFileElfImportHash = nameof(ThreatFileElfImportHash);
+		public static string ThreatIndicatorFileElfImportHash = nameof(ThreatIndicatorFileElfImportHash);
 		///<summary>
-		/// <para><c>threat.file.elf.imports_names_entropy</c></para>
+		/// <para><c>threat.indicator.file.elf.imports_names_entropy</c></para>
 		/// <para>Shannon entropy calculation from the list of imported element names and types.</para>
 		/// <example></example>
 		///</summary>
-		public static string ThreatFileElfImportsNamesEntropy = nameof(ThreatFileElfImportsNamesEntropy);
+		public static string ThreatIndicatorFileElfImportsNamesEntropy = nameof(ThreatIndicatorFileElfImportsNamesEntropy);
 		///<summary>
-		/// <para><c>threat.file.elf.imports_names_var_entropy</c></para>
+		/// <para><c>threat.indicator.file.elf.imports_names_var_entropy</c></para>
 		/// <para>Variance for Shannon entropy calculation from the list of imported element names and types.</para>
 		/// <example></example>
 		///</summary>
-		public static string ThreatFileElfImportsNamesVarEntropy = nameof(ThreatFileElfImportsNamesVarEntropy);
+		public static string ThreatIndicatorFileElfImportsNamesVarEntropy = nameof(ThreatIndicatorFileElfImportsNamesVarEntropy);
 		///<summary>
-		/// <para><c>threat.file.elf.telfhash</c></para>
+		/// <para><c>threat.indicator.file.elf.telfhash</c></para>
 		/// <para>telfhash symbol hash for ELF file.</para>
 		/// <example></example>
 		///</summary>
-		public static string ThreatFileElfTelfhash = nameof(ThreatFileElfTelfhash);
+		public static string ThreatIndicatorFileElfTelfhash = nameof(ThreatIndicatorFileElfTelfhash);
 		///<summary>
-		/// <para><c>threat.file.macho.go_import_hash</c></para>
+		/// <para><c>threat.indicator.file.macho.go_import_hash</c></para>
 		/// <para>A hash of the Go language imports in a Mach-O file excluding standard library imports. An import hash can be used to fingerprint binaries even after recompilation or other code-level transformations have occurred, which would change more traditional hash values.
 		/// The algorithm used to calculate the Go symbol hash and a reference implementation are available [here](https://github.com/elastic/toutoumomoma).</para>
 		/// <example>10bddcb4cee42080f76c88d9ff964491</example>
 		///</summary>
-		public static string ThreatFileMachoGoImportHash = nameof(ThreatFileMachoGoImportHash);
+		public static string ThreatIndicatorFileMachoGoImportHash = nameof(ThreatIndicatorFileMachoGoImportHash);
 		///<summary>
-		/// <para><c>threat.file.macho.go_imports</c></para>
+		/// <para><c>threat.indicator.file.macho.go_imports</c></para>
 		/// <para>List of imported Go language element names and types.</para>
 		/// <example></example>
 		///</summary>
-		public static string ThreatFileMachoGoImports = nameof(ThreatFileMachoGoImports);
+		public static string ThreatIndicatorFileMachoGoImports = nameof(ThreatIndicatorFileMachoGoImports);
 		///<summary>
-		/// <para><c>threat.file.macho.go_imports_names_entropy</c></para>
+		/// <para><c>threat.indicator.file.macho.go_imports_names_entropy</c></para>
 		/// <para>Shannon entropy calculation from the list of Go imports.</para>
 		/// <example></example>
 		///</summary>
-		public static string ThreatFileMachoGoImportsNamesEntropy = nameof(ThreatFileMachoGoImportsNamesEntropy);
+		public static string ThreatIndicatorFileMachoGoImportsNamesEntropy = nameof(ThreatIndicatorFileMachoGoImportsNamesEntropy);
 		///<summary>
-		/// <para><c>threat.file.macho.go_imports_names_var_entropy</c></para>
+		/// <para><c>threat.indicator.file.macho.go_imports_names_var_entropy</c></para>
 		/// <para>Variance for Shannon entropy calculation from the list of Go imports.</para>
 		/// <example></example>
 		///</summary>
-		public static string ThreatFileMachoGoImportsNamesVarEntropy = nameof(ThreatFileMachoGoImportsNamesVarEntropy);
+		public static string ThreatIndicatorFileMachoGoImportsNamesVarEntropy = nameof(ThreatIndicatorFileMachoGoImportsNamesVarEntropy);
 		///<summary>
-		/// <para><c>threat.file.macho.go_stripped</c></para>
+		/// <para><c>threat.indicator.file.macho.go_stripped</c></para>
 		/// <para>Set to true if the file is a Go executable that has had its symbols stripped or obfuscated and false if an unobfuscated Go executable.</para>
 		/// <example></example>
 		///</summary>
-		public static string ThreatFileMachoGoStripped = nameof(ThreatFileMachoGoStripped);
+		public static string ThreatIndicatorFileMachoGoStripped = nameof(ThreatIndicatorFileMachoGoStripped);
 		///<summary>
-		/// <para><c>threat.file.macho.import_hash</c></para>
+		/// <para><c>threat.indicator.file.macho.import_hash</c></para>
 		/// <para>A hash of the imports in a Mach-O file. An import hash can be used to fingerprint binaries even after recompilation or other code-level transformations have occurred, which would change more traditional hash values.
 		/// This is a synonym for symhash.</para>
 		/// <example>d41d8cd98f00b204e9800998ecf8427e</example>
 		///</summary>
-		public static string ThreatFileMachoImportHash = nameof(ThreatFileMachoImportHash);
+		public static string ThreatIndicatorFileMachoImportHash = nameof(ThreatIndicatorFileMachoImportHash);
 		///<summary>
-		/// <para><c>threat.file.macho.imports_names_entropy</c></para>
+		/// <para><c>threat.indicator.file.macho.imports_names_entropy</c></para>
 		/// <para>Shannon entropy calculation from the list of imported element names and types.</para>
 		/// <example></example>
 		///</summary>
-		public static string ThreatFileMachoImportsNamesEntropy = nameof(ThreatFileMachoImportsNamesEntropy);
+		public static string ThreatIndicatorFileMachoImportsNamesEntropy = nameof(ThreatIndicatorFileMachoImportsNamesEntropy);
 		///<summary>
-		/// <para><c>threat.file.macho.imports_names_var_entropy</c></para>
+		/// <para><c>threat.indicator.file.macho.imports_names_var_entropy</c></para>
 		/// <para>Variance for Shannon entropy calculation from the list of imported element names and types.</para>
 		/// <example></example>
 		///</summary>
-		public static string ThreatFileMachoImportsNamesVarEntropy = nameof(ThreatFileMachoImportsNamesVarEntropy);
+		public static string ThreatIndicatorFileMachoImportsNamesVarEntropy = nameof(ThreatIndicatorFileMachoImportsNamesVarEntropy);
 		///<summary>
-		/// <para><c>threat.file.macho.symhash</c></para>
+		/// <para><c>threat.indicator.file.macho.symhash</c></para>
 		/// <para>A hash of the imports in a Mach-O file. An import hash can be used to fingerprint binaries even after recompilation or other code-level transformations have occurred, which would change more traditional hash values.
 		/// This is a Mach-O implementation of the Windows PE imphash</para>
 		/// <example>d3ccf195b62a9279c3c19af1080497ec</example>
 		///</summary>
-		public static string ThreatFileMachoSymhash = nameof(ThreatFileMachoSymhash);
+		public static string ThreatIndicatorFileMachoSymhash = nameof(ThreatIndicatorFileMachoSymhash);
 		///<summary>
-		/// <para><c>threat.geo.city_name</c></para>
+		/// <para><c>threat.indicator.geo.city_name</c></para>
 		/// <para>City name.</para>
 		/// <example>Montreal</example>
 		///</summary>
-		public static string ThreatGeoCityName = nameof(ThreatGeoCityName);
+		public static string ThreatIndicatorGeoCityName = nameof(ThreatIndicatorGeoCityName);
 		///<summary>
-		/// <para><c>threat.geo.continent_code</c></para>
+		/// <para><c>threat.indicator.geo.continent_code</c></para>
 		/// <para>Two-letter code representing continent's name.</para>
 		/// <example>NA</example>
 		///</summary>
-		public static string ThreatGeoContinentCode = nameof(ThreatGeoContinentCode);
+		public static string ThreatIndicatorGeoContinentCode = nameof(ThreatIndicatorGeoContinentCode);
 		///<summary>
-		/// <para><c>threat.geo.continent_name</c></para>
+		/// <para><c>threat.indicator.geo.continent_name</c></para>
 		/// <para>Name of the continent.</para>
 		/// <example>North America</example>
 		///</summary>
-		public static string ThreatGeoContinentName = nameof(ThreatGeoContinentName);
+		public static string ThreatIndicatorGeoContinentName = nameof(ThreatIndicatorGeoContinentName);
 		///<summary>
-		/// <para><c>threat.geo.country_iso_code</c></para>
+		/// <para><c>threat.indicator.geo.country_iso_code</c></para>
 		/// <para>Country ISO code.</para>
 		/// <example>CA</example>
 		///</summary>
-		public static string ThreatGeoCountryIsoCode = nameof(ThreatGeoCountryIsoCode);
+		public static string ThreatIndicatorGeoCountryIsoCode = nameof(ThreatIndicatorGeoCountryIsoCode);
 		///<summary>
-		/// <para><c>threat.geo.country_name</c></para>
+		/// <para><c>threat.indicator.geo.country_name</c></para>
 		/// <para>Country name.</para>
 		/// <example>Canada</example>
 		///</summary>
-		public static string ThreatGeoCountryName = nameof(ThreatGeoCountryName);
+		public static string ThreatIndicatorGeoCountryName = nameof(ThreatIndicatorGeoCountryName);
 		///<summary>
-		/// <para><c>threat.geo.name</c></para>
+		/// <para><c>threat.indicator.geo.name</c></para>
 		/// <para>User-defined description of a location, at the level of granularity they care about.
 		/// Could be the name of their data centers, the floor number, if this describes a local physical entity, city names.
 		/// Not typically used in automated geolocation.</para>
 		/// <example>boston-dc</example>
 		///</summary>
-		public static string ThreatGeoName = nameof(ThreatGeoName);
+		public static string ThreatIndicatorGeoName = nameof(ThreatIndicatorGeoName);
 		///<summary>
-		/// <para><c>threat.geo.postal_code</c></para>
+		/// <para><c>threat.indicator.geo.postal_code</c></para>
 		/// <para>Postal code associated with the location.
 		/// Values appropriate for this field may also be known as a postcode or ZIP code and will vary widely from country to country.</para>
 		/// <example>94040</example>
 		///</summary>
-		public static string ThreatGeoPostalCode = nameof(ThreatGeoPostalCode);
+		public static string ThreatIndicatorGeoPostalCode = nameof(ThreatIndicatorGeoPostalCode);
 		///<summary>
-		/// <para><c>threat.geo.region_iso_code</c></para>
+		/// <para><c>threat.indicator.geo.region_iso_code</c></para>
 		/// <para>Region ISO code.</para>
 		/// <example>CA-QC</example>
 		///</summary>
-		public static string ThreatGeoRegionIsoCode = nameof(ThreatGeoRegionIsoCode);
+		public static string ThreatIndicatorGeoRegionIsoCode = nameof(ThreatIndicatorGeoRegionIsoCode);
 		///<summary>
-		/// <para><c>threat.geo.region_name</c></para>
+		/// <para><c>threat.indicator.geo.region_name</c></para>
 		/// <para>Region name.</para>
 		/// <example>Quebec</example>
 		///</summary>
-		public static string ThreatGeoRegionName = nameof(ThreatGeoRegionName);
+		public static string ThreatIndicatorGeoRegionName = nameof(ThreatIndicatorGeoRegionName);
 		///<summary>
-		/// <para><c>threat.geo.timezone</c></para>
+		/// <para><c>threat.indicator.geo.timezone</c></para>
 		/// <para>The time zone of the location, such as IANA time zone name.</para>
 		/// <example>America/Argentina/Buenos_Aires</example>
 		///</summary>
-		public static string ThreatGeoTimezone = nameof(ThreatGeoTimezone);
+		public static string ThreatIndicatorGeoTimezone = nameof(ThreatIndicatorGeoTimezone);
 		///<summary>
-		/// <para><c>threat.registry.data.bytes</c></para>
+		/// <para><c>threat.indicator.registry.data.bytes</c></para>
 		/// <para>Original bytes written with base64 encoding.
 		/// For Windows registry operations, such as SetValueEx and RegQueryValueEx, this corresponds to the data pointed by `lp_data`. This is optional but provides better recoverability and should be populated for REG_BINARY encoded values.</para>
 		/// <example>ZQBuAC0AVQBTAAAAZQBuAAAAAAA=</example>
 		///</summary>
-		public static string ThreatRegistryDataBytes = nameof(ThreatRegistryDataBytes);
+		public static string ThreatIndicatorRegistryDataBytes = nameof(ThreatIndicatorRegistryDataBytes);
 		///<summary>
-		/// <para><c>threat.registry.data.type</c></para>
+		/// <para><c>threat.indicator.registry.data.type</c></para>
 		/// <para>Standard registry type for encoding contents</para>
 		/// <example>REG_SZ</example>
 		///</summary>
-		public static string ThreatRegistryDataType = nameof(ThreatRegistryDataType);
+		public static string ThreatIndicatorRegistryDataType = nameof(ThreatIndicatorRegistryDataType);
 		///<summary>
-		/// <para><c>threat.registry.hive</c></para>
+		/// <para><c>threat.indicator.registry.hive</c></para>
 		/// <para>Abbreviated name for the hive.</para>
 		/// <example>HKLM</example>
 		///</summary>
-		public static string ThreatRegistryHive = nameof(ThreatRegistryHive);
+		public static string ThreatIndicatorRegistryHive = nameof(ThreatIndicatorRegistryHive);
 		///<summary>
-		/// <para><c>threat.registry.key</c></para>
+		/// <para><c>threat.indicator.registry.key</c></para>
 		/// <para>Hive-relative path of keys.</para>
 		/// <example>SOFTWARE\Microsoft\Windows NT\CurrentVersion\Image File Execution Options\winword.exe</example>
 		///</summary>
-		public static string ThreatRegistryKey = nameof(ThreatRegistryKey);
+		public static string ThreatIndicatorRegistryKey = nameof(ThreatIndicatorRegistryKey);
 		///<summary>
-		/// <para><c>threat.registry.path</c></para>
+		/// <para><c>threat.indicator.registry.path</c></para>
 		/// <para>Full path, including hive, key and value</para>
 		/// <example>HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Image File Execution Options\winword.exe\Debugger</example>
 		///</summary>
-		public static string ThreatRegistryPath = nameof(ThreatRegistryPath);
+		public static string ThreatIndicatorRegistryPath = nameof(ThreatIndicatorRegistryPath);
 		///<summary>
-		/// <para><c>threat.registry.value</c></para>
+		/// <para><c>threat.indicator.registry.value</c></para>
 		/// <para>Name of the value written.</para>
 		/// <example>Debugger</example>
 		///</summary>
-		public static string ThreatRegistryValue = nameof(ThreatRegistryValue);
+		public static string ThreatIndicatorRegistryValue = nameof(ThreatIndicatorRegistryValue);
 		///<summary>
-		/// <para><c>threat.url.domain</c></para>
+		/// <para><c>threat.indicator.url.domain</c></para>
 		/// <para>Domain of the url, such as "www.elastic.co".
 		/// In some cases a URL may refer to an IP and/or port directly, without a domain name. In this case, the IP address would go to the `domain` field.
 		/// If the URL contains a literal IPv6 address enclosed by `[` and `]` (IETF RFC 2732), the `[` and `]` characters should also be captured in the `domain` field.</para>
 		/// <example>www.elastic.co</example>
 		///</summary>
-		public static string ThreatUrlDomain = nameof(ThreatUrlDomain);
+		public static string ThreatIndicatorUrlDomain = nameof(ThreatIndicatorUrlDomain);
 		///<summary>
-		/// <para><c>threat.url.extension</c></para>
+		/// <para><c>threat.indicator.url.extension</c></para>
 		/// <para>The field contains the file extension from the original request url, excluding the leading dot.
 		/// The file extension is only set if it exists, as not every url has a file extension.
 		/// The leading period must not be included. For example, the value must be "png", not ".png".
 		/// Note that when the file name has multiple extensions (example.tar.gz), only the last one should be captured ("gz", not "tar.gz").</para>
 		/// <example>png</example>
 		///</summary>
-		public static string ThreatUrlExtension = nameof(ThreatUrlExtension);
+		public static string ThreatIndicatorUrlExtension = nameof(ThreatIndicatorUrlExtension);
 		///<summary>
-		/// <para><c>threat.url.fragment</c></para>
+		/// <para><c>threat.indicator.url.fragment</c></para>
 		/// <para>Portion of the url after the `#`, such as "top".
 		/// The `#` is not part of the fragment.</para>
 		/// <example></example>
 		///</summary>
-		public static string ThreatUrlFragment = nameof(ThreatUrlFragment);
+		public static string ThreatIndicatorUrlFragment = nameof(ThreatIndicatorUrlFragment);
 		///<summary>
-		/// <para><c>threat.url.full</c></para>
+		/// <para><c>threat.indicator.url.full</c></para>
 		/// <para>If full URLs are important to your use case, they should be stored in `url.full`, whether this field is reconstructed or present in the event source.</para>
 		/// <example>https://www.elastic.co:443/search?q=elasticsearch#top</example>
 		///</summary>
-		public static string ThreatUrlFull = nameof(ThreatUrlFull);
+		public static string ThreatIndicatorUrlFull = nameof(ThreatIndicatorUrlFull);
 		///<summary>
-		/// <para><c>threat.url.original</c></para>
+		/// <para><c>threat.indicator.url.original</c></para>
 		/// <para>Unmodified original url as seen in the event source.
 		/// Note that in network monitoring, the observed URL may be a full URL, whereas in access logs, the URL is often just represented as a path.
 		/// This field is meant to represent the URL as it was observed, complete or not.</para>
 		/// <example>https://www.elastic.co:443/search?q=elasticsearch#top or /search?q=elasticsearch</example>
 		///</summary>
-		public static string ThreatUrlOriginal = nameof(ThreatUrlOriginal);
+		public static string ThreatIndicatorUrlOriginal = nameof(ThreatIndicatorUrlOriginal);
 		///<summary>
-		/// <para><c>threat.url.password</c></para>
+		/// <para><c>threat.indicator.url.password</c></para>
 		/// <para>Password of the request.</para>
 		/// <example></example>
 		///</summary>
-		public static string ThreatUrlPassword = nameof(ThreatUrlPassword);
+		public static string ThreatIndicatorUrlPassword = nameof(ThreatIndicatorUrlPassword);
 		///<summary>
-		/// <para><c>threat.url.path</c></para>
+		/// <para><c>threat.indicator.url.path</c></para>
 		/// <para>Path of the request, such as "/search".</para>
 		/// <example></example>
 		///</summary>
-		public static string ThreatUrlPath = nameof(ThreatUrlPath);
+		public static string ThreatIndicatorUrlPath = nameof(ThreatIndicatorUrlPath);
 		///<summary>
-		/// <para><c>threat.url.port</c></para>
+		/// <para><c>threat.indicator.url.port</c></para>
 		/// <para>Port of the request, such as 443.</para>
 		/// <example>443</example>
 		///</summary>
-		public static string ThreatUrlPort = nameof(ThreatUrlPort);
+		public static string ThreatIndicatorUrlPort = nameof(ThreatIndicatorUrlPort);
 		///<summary>
-		/// <para><c>threat.url.query</c></para>
+		/// <para><c>threat.indicator.url.query</c></para>
 		/// <para>The query field describes the query string of the request, such as "q=elasticsearch".
 		/// The `?` is excluded from the query string. If a URL contains no `?`, there is no query field. If there is a `?` but no query, the query field exists with an empty string. The `exists` query can be used to differentiate between the two cases.</para>
 		/// <example></example>
 		///</summary>
-		public static string ThreatUrlQuery = nameof(ThreatUrlQuery);
+		public static string ThreatIndicatorUrlQuery = nameof(ThreatIndicatorUrlQuery);
 		///<summary>
-		/// <para><c>threat.url.registered_domain</c></para>
+		/// <para><c>threat.indicator.url.registered_domain</c></para>
 		/// <para>The highest registered url domain, stripped of the subdomain.
 		/// For example, the registered domain for "foo.example.com" is "example.com".
 		/// This value can be determined precisely with a list like the public suffix list (http://publicsuffix.org). Trying to approximate this by simply taking the last two labels will not work well for TLDs such as "co.uk".</para>
 		/// <example>example.com</example>
 		///</summary>
-		public static string ThreatUrlRegisteredDomain = nameof(ThreatUrlRegisteredDomain);
+		public static string ThreatIndicatorUrlRegisteredDomain = nameof(ThreatIndicatorUrlRegisteredDomain);
 		///<summary>
-		/// <para><c>threat.url.scheme</c></para>
+		/// <para><c>threat.indicator.url.scheme</c></para>
 		/// <para>Scheme of the request, such as "https".
 		/// Note: The `:` is not part of the scheme.</para>
 		/// <example>https</example>
 		///</summary>
-		public static string ThreatUrlScheme = nameof(ThreatUrlScheme);
+		public static string ThreatIndicatorUrlScheme = nameof(ThreatIndicatorUrlScheme);
 		///<summary>
-		/// <para><c>threat.url.subdomain</c></para>
+		/// <para><c>threat.indicator.url.subdomain</c></para>
 		/// <para>The subdomain portion of a fully qualified domain name includes all of the names except the host name under the registered_domain.  In a partially qualified domain, or if the the qualification level of the full name cannot be determined, subdomain contains all of the names below the registered domain.
 		/// For example the subdomain portion of "www.east.mydomain.co.uk" is "east". If the domain has multiple levels of subdomain, such as "sub2.sub1.example.com", the subdomain field should contain "sub2.sub1", with no trailing period.</para>
 		/// <example>east</example>
 		///</summary>
-		public static string ThreatUrlSubdomain = nameof(ThreatUrlSubdomain);
+		public static string ThreatIndicatorUrlSubdomain = nameof(ThreatIndicatorUrlSubdomain);
 		///<summary>
-		/// <para><c>threat.url.top_level_domain</c></para>
+		/// <para><c>threat.indicator.url.top_level_domain</c></para>
 		/// <para>The effective top level domain (eTLD), also known as the domain suffix, is the last part of the domain name. For example, the top level domain for example.com is "com".
 		/// This value can be determined precisely with a list like the public suffix list (http://publicsuffix.org). Trying to approximate this by simply taking the last label will not work well for effective TLDs such as "co.uk".</para>
 		/// <example>co.uk</example>
 		///</summary>
-		public static string ThreatUrlTopLevelDomain = nameof(ThreatUrlTopLevelDomain);
+		public static string ThreatIndicatorUrlTopLevelDomain = nameof(ThreatIndicatorUrlTopLevelDomain);
 		///<summary>
-		/// <para><c>threat.url.username</c></para>
+		/// <para><c>threat.indicator.url.username</c></para>
 		/// <para>Username of the request.</para>
 		/// <example></example>
 		///</summary>
-		public static string ThreatUrlUsername = nameof(ThreatUrlUsername);
+		public static string ThreatIndicatorUrlUsername = nameof(ThreatIndicatorUrlUsername);
 		///<summary>
 		/// <para><c>tls.cipher</c></para>
 		/// <para>String indicating the cipher used during the current connection.</para>
@@ -7237,72 +7237,72 @@ namespace Elastic.CommonSchema
 		///</summary>
 		public static string TlsVersionProtocol = nameof(TlsVersionProtocol);
 		///<summary>
-		/// <para><c>tls.x509.issuer.distinguished_name</c></para>
+		/// <para><c>tls.client.x509.issuer.distinguished_name</c></para>
 		/// <para>Distinguished name (DN) of issuing certificate authority.</para>
 		/// <example>C=US, O=Example Inc, OU=www.example.com, CN=Example SHA2 High Assurance Server CA</example>
 		///</summary>
-		public static string TlsX509IssuerDistinguishedName = nameof(TlsX509IssuerDistinguishedName);
+		public static string TlsClientX509IssuerDistinguishedName = nameof(TlsClientX509IssuerDistinguishedName);
 		///<summary>
-		/// <para><c>tls.x509.not_after</c></para>
+		/// <para><c>tls.client.x509.not_after</c></para>
 		/// <para>Time at which the certificate is no longer considered valid.</para>
 		/// <example>7/16/2020 3:15:39 AM</example>
 		///</summary>
-		public static string TlsX509NotAfter = nameof(TlsX509NotAfter);
+		public static string TlsClientX509NotAfter = nameof(TlsClientX509NotAfter);
 		///<summary>
-		/// <para><c>tls.x509.not_before</c></para>
+		/// <para><c>tls.client.x509.not_before</c></para>
 		/// <para>Time at which the certificate is first considered valid.</para>
 		/// <example>8/16/2019 1:40:25 AM</example>
 		///</summary>
-		public static string TlsX509NotBefore = nameof(TlsX509NotBefore);
+		public static string TlsClientX509NotBefore = nameof(TlsClientX509NotBefore);
 		///<summary>
-		/// <para><c>tls.x509.public_key_algorithm</c></para>
+		/// <para><c>tls.client.x509.public_key_algorithm</c></para>
 		/// <para>Algorithm used to generate the public key.</para>
 		/// <example>RSA</example>
 		///</summary>
-		public static string TlsX509PublicKeyAlgorithm = nameof(TlsX509PublicKeyAlgorithm);
+		public static string TlsClientX509PublicKeyAlgorithm = nameof(TlsClientX509PublicKeyAlgorithm);
 		///<summary>
-		/// <para><c>tls.x509.public_key_curve</c></para>
+		/// <para><c>tls.client.x509.public_key_curve</c></para>
 		/// <para>The curve used by the elliptic curve public key algorithm. This is algorithm specific.</para>
 		/// <example>nistp521</example>
 		///</summary>
-		public static string TlsX509PublicKeyCurve = nameof(TlsX509PublicKeyCurve);
+		public static string TlsClientX509PublicKeyCurve = nameof(TlsClientX509PublicKeyCurve);
 		///<summary>
-		/// <para><c>tls.x509.public_key_exponent</c></para>
+		/// <para><c>tls.client.x509.public_key_exponent</c></para>
 		/// <para>Exponent used to derive the public key. This is algorithm specific.
 		/// <para><br/>Stored but not available for search in Elasticsearch by default</para></para>
 		/// <example>65537</example>
 		///</summary>
-		public static string TlsX509PublicKeyExponent = nameof(TlsX509PublicKeyExponent);
+		public static string TlsClientX509PublicKeyExponent = nameof(TlsClientX509PublicKeyExponent);
 		///<summary>
-		/// <para><c>tls.x509.public_key_size</c></para>
+		/// <para><c>tls.client.x509.public_key_size</c></para>
 		/// <para>The size of the public key space in bits.</para>
 		/// <example>2048</example>
 		///</summary>
-		public static string TlsX509PublicKeySize = nameof(TlsX509PublicKeySize);
+		public static string TlsClientX509PublicKeySize = nameof(TlsClientX509PublicKeySize);
 		///<summary>
-		/// <para><c>tls.x509.serial_number</c></para>
+		/// <para><c>tls.client.x509.serial_number</c></para>
 		/// <para>Unique serial number issued by the certificate authority. For consistency, if this value is alphanumeric, it should be formatted without colons and uppercase characters.</para>
 		/// <example>55FBB9C7DEBF09809D12CCAA</example>
 		///</summary>
-		public static string TlsX509SerialNumber = nameof(TlsX509SerialNumber);
+		public static string TlsClientX509SerialNumber = nameof(TlsClientX509SerialNumber);
 		///<summary>
-		/// <para><c>tls.x509.signature_algorithm</c></para>
+		/// <para><c>tls.client.x509.signature_algorithm</c></para>
 		/// <para>Identifier for certificate signature algorithm. We recommend using names found in Go Lang Crypto library. See https://github.com/golang/go/blob/go1.14/src/crypto/x509/x509.go#L337-L353.</para>
 		/// <example>SHA256-RSA</example>
 		///</summary>
-		public static string TlsX509SignatureAlgorithm = nameof(TlsX509SignatureAlgorithm);
+		public static string TlsClientX509SignatureAlgorithm = nameof(TlsClientX509SignatureAlgorithm);
 		///<summary>
-		/// <para><c>tls.x509.subject.distinguished_name</c></para>
+		/// <para><c>tls.client.x509.subject.distinguished_name</c></para>
 		/// <para>Distinguished name (DN) of the certificate subject entity.</para>
 		/// <example>C=US, ST=California, L=San Francisco, O=Example, Inc., CN=shared.global.example.net</example>
 		///</summary>
-		public static string TlsX509SubjectDistinguishedName = nameof(TlsX509SubjectDistinguishedName);
+		public static string TlsClientX509SubjectDistinguishedName = nameof(TlsClientX509SubjectDistinguishedName);
 		///<summary>
-		/// <para><c>tls.x509.version_number</c></para>
+		/// <para><c>tls.client.x509.version_number</c></para>
 		/// <para>Version of x509 format.</para>
 		/// <example>3</example>
 		///</summary>
-		public static string TlsX509VersionNumber = nameof(TlsX509VersionNumber);
+		public static string TlsClientX509VersionNumber = nameof(TlsClientX509VersionNumber);
 		///<summary>
 		/// <para><c>url.domain</c></para>
 		/// <para>Domain of the url, such as "www.elastic.co".
@@ -7495,43 +7495,43 @@ namespace Elastic.CommonSchema
 		///</summary>
 		public static string UserRiskStaticScoreNorm = nameof(UserRiskStaticScoreNorm);
 		///<summary>
-		/// <para><c>user.user.domain</c></para>
+		/// <para><c>target.user.domain</c></para>
 		/// <para>Name of the directory the user is a member of.
 		/// For example, an LDAP or Active Directory domain name.</para>
 		/// <example></example>
 		///</summary>
-		public static string UserUserDomain = nameof(UserUserDomain);
+		public static string TargetUserDomain = nameof(TargetUserDomain);
 		///<summary>
-		/// <para><c>user.user.email</c></para>
+		/// <para><c>target.user.email</c></para>
 		/// <para>User email address.</para>
 		/// <example></example>
 		///</summary>
-		public static string UserUserEmail = nameof(UserUserEmail);
+		public static string TargetUserEmail = nameof(TargetUserEmail);
 		///<summary>
-		/// <para><c>user.user.full_name</c></para>
+		/// <para><c>target.user.full_name</c></para>
 		/// <para>User's full name, if available.</para>
 		/// <example>Albert Einstein</example>
 		///</summary>
-		public static string UserUserFullName = nameof(UserUserFullName);
+		public static string TargetUserFullName = nameof(TargetUserFullName);
 		///<summary>
-		/// <para><c>user.user.hash</c></para>
+		/// <para><c>target.user.hash</c></para>
 		/// <para>Unique user hash to correlate information for a user in anonymized form.
 		/// Useful if `user.id` or `user.name` contain confidential information and cannot be used.</para>
 		/// <example></example>
 		///</summary>
-		public static string UserUserHash = nameof(UserUserHash);
+		public static string TargetUserHash = nameof(TargetUserHash);
 		///<summary>
-		/// <para><c>user.user.id</c></para>
+		/// <para><c>target.user.id</c></para>
 		/// <para>Unique identifier of the user.</para>
 		/// <example>S-1-5-21-202424912787-2692429404-2351956786-1000</example>
 		///</summary>
-		public static string UserUserId = nameof(UserUserId);
+		public static string TargetUserId = nameof(TargetUserId);
 		///<summary>
-		/// <para><c>user.user.name</c></para>
+		/// <para><c>target.user.name</c></para>
 		/// <para>Short name or login of the user.</para>
 		/// <example>a.einstein</example>
 		///</summary>
-		public static string UserUserName = nameof(UserUserName);
+		public static string TargetUserName = nameof(TargetUserName);
 		///<summary>
 		/// <para><c>user_agent.device.name</c></para>
 		/// <para>Name of the device.</para>
@@ -7819,12 +7819,12 @@ namespace Elastic.CommonSchema
 			"client.user.risk.static_level", ClientUserRiskStaticLevel,
 			"client.user.risk.static_score", ClientUserRiskStaticScore,
 			"client.user.risk.static_score_norm", ClientUserRiskStaticScoreNorm,
-			"client.user.user.domain", ClientUserUserDomain,
-			"client.user.user.email", ClientUserUserEmail,
-			"client.user.user.full_name", ClientUserUserFullName,
-			"client.user.user.hash", ClientUserUserHash,
-			"client.user.user.id", ClientUserUserId,
-			"client.user.user.name", ClientUserUserName,
+			"client.user.target.user.domain", ClientUserTargetUserDomain,
+			"client.user.target.user.email", ClientUserTargetUserEmail,
+			"client.user.target.user.full_name", ClientUserTargetUserFullName,
+			"client.user.target.user.hash", ClientUserTargetUserHash,
+			"client.user.target.user.id", ClientUserTargetUserId,
+			"client.user.target.user.name", ClientUserTargetUserName,
 			"cloud.account.id", CloudAccountId,
 			"cloud.account.name", CloudAccountName,
 			"cloud.availability_zone", CloudAvailabilityZone,
@@ -7836,17 +7836,17 @@ namespace Elastic.CommonSchema
 			"cloud.provider", CloudProvider,
 			"cloud.region", CloudRegion,
 			"cloud.service.name", CloudServiceName,
-			"cloud.cloud.account.id", CloudCloudAccountId,
-			"cloud.cloud.account.name", CloudCloudAccountName,
-			"cloud.cloud.availability_zone", CloudCloudAvailabilityZone,
-			"cloud.cloud.instance.id", CloudCloudInstanceId,
-			"cloud.cloud.instance.name", CloudCloudInstanceName,
-			"cloud.cloud.machine.type", CloudCloudMachineType,
-			"cloud.cloud.project.id", CloudCloudProjectId,
-			"cloud.cloud.project.name", CloudCloudProjectName,
-			"cloud.cloud.provider", CloudCloudProvider,
-			"cloud.cloud.region", CloudCloudRegion,
-			"cloud.cloud.service.name", CloudCloudServiceName,
+			"origin.cloud.account.id", OriginCloudAccountId,
+			"origin.cloud.account.name", OriginCloudAccountName,
+			"origin.cloud.availability_zone", OriginCloudAvailabilityZone,
+			"origin.cloud.instance.id", OriginCloudInstanceId,
+			"origin.cloud.instance.name", OriginCloudInstanceName,
+			"origin.cloud.machine.type", OriginCloudMachineType,
+			"origin.cloud.project.id", OriginCloudProjectId,
+			"origin.cloud.project.name", OriginCloudProjectName,
+			"origin.cloud.provider", OriginCloudProvider,
+			"origin.cloud.region", OriginCloudRegion,
+			"origin.cloud.service.name", OriginCloudServiceName,
 			"code_signature.digest_algorithm", CodeSignatureDigestAlgorithm,
 			"code_signature.exists", CodeSignatureExists,
 			"code_signature.signing_id", CodeSignatureSigningId,
@@ -7909,12 +7909,12 @@ namespace Elastic.CommonSchema
 			"destination.user.risk.static_level", DestinationUserRiskStaticLevel,
 			"destination.user.risk.static_score", DestinationUserRiskStaticScore,
 			"destination.user.risk.static_score_norm", DestinationUserRiskStaticScoreNorm,
-			"destination.user.user.domain", DestinationUserUserDomain,
-			"destination.user.user.email", DestinationUserUserEmail,
-			"destination.user.user.full_name", DestinationUserUserFullName,
-			"destination.user.user.hash", DestinationUserUserHash,
-			"destination.user.user.id", DestinationUserUserId,
-			"destination.user.user.name", DestinationUserUserName,
+			"destination.user.target.user.domain", DestinationUserTargetUserDomain,
+			"destination.user.target.user.email", DestinationUserTargetUserEmail,
+			"destination.user.target.user.full_name", DestinationUserTargetUserFullName,
+			"destination.user.target.user.hash", DestinationUserTargetUserHash,
+			"destination.user.target.user.id", DestinationUserTargetUserId,
+			"destination.user.target.user.name", DestinationUserTargetUserName,
 			"device.id", DeviceId,
 			"device.manufacturer", DeviceManufacturer,
 			"device.model.identifier", DeviceModelIdentifier,
@@ -8383,51 +8383,51 @@ namespace Elastic.CommonSchema
 			"process.macho.imports_names_entropy", ProcessMachoImportsNamesEntropy,
 			"process.macho.imports_names_var_entropy", ProcessMachoImportsNamesVarEntropy,
 			"process.macho.symhash", ProcessMachoSymhash,
-			"process.source.address", ProcessSourceAddress,
-			"process.source.bytes", ProcessSourceBytes,
-			"process.source.domain", ProcessSourceDomain,
-			"process.source.ip", ProcessSourceIp,
-			"process.source.mac", ProcessSourceMac,
-			"process.source.nat.ip", ProcessSourceNatIp,
-			"process.source.nat.port", ProcessSourceNatPort,
-			"process.source.packets", ProcessSourcePackets,
-			"process.source.port", ProcessSourcePort,
-			"process.source.registered_domain", ProcessSourceRegisteredDomain,
-			"process.source.subdomain", ProcessSourceSubdomain,
-			"process.source.top_level_domain", ProcessSourceTopLevelDomain,
-			"process.source.as.number", ProcessSourceAsNumber,
-			"process.source.as.organization.name", ProcessSourceAsOrganizationName,
-			"process.source.geo.city_name", ProcessSourceGeoCityName,
-			"process.source.geo.continent_code", ProcessSourceGeoContinentCode,
-			"process.source.geo.continent_name", ProcessSourceGeoContinentName,
-			"process.source.geo.country_iso_code", ProcessSourceGeoCountryIsoCode,
-			"process.source.geo.country_name", ProcessSourceGeoCountryName,
-			"process.source.geo.name", ProcessSourceGeoName,
-			"process.source.geo.postal_code", ProcessSourceGeoPostalCode,
-			"process.source.geo.region_iso_code", ProcessSourceGeoRegionIsoCode,
-			"process.source.geo.region_name", ProcessSourceGeoRegionName,
-			"process.source.geo.timezone", ProcessSourceGeoTimezone,
-			"process.source.user.domain", ProcessSourceUserDomain,
-			"process.source.user.email", ProcessSourceUserEmail,
-			"process.source.user.full_name", ProcessSourceUserFullName,
-			"process.source.user.hash", ProcessSourceUserHash,
-			"process.source.user.id", ProcessSourceUserId,
-			"process.source.user.name", ProcessSourceUserName,
-			"process.source.user.group.domain", ProcessSourceUserGroupDomain,
-			"process.source.user.group.id", ProcessSourceUserGroupId,
-			"process.source.user.group.name", ProcessSourceUserGroupName,
-			"process.source.user.risk.calculated_level", ProcessSourceUserRiskCalculatedLevel,
-			"process.source.user.risk.calculated_score", ProcessSourceUserRiskCalculatedScore,
-			"process.source.user.risk.calculated_score_norm", ProcessSourceUserRiskCalculatedScoreNorm,
-			"process.source.user.risk.static_level", ProcessSourceUserRiskStaticLevel,
-			"process.source.user.risk.static_score", ProcessSourceUserRiskStaticScore,
-			"process.source.user.risk.static_score_norm", ProcessSourceUserRiskStaticScoreNorm,
-			"process.source.user.user.domain", ProcessSourceUserUserDomain,
-			"process.source.user.user.email", ProcessSourceUserUserEmail,
-			"process.source.user.user.full_name", ProcessSourceUserUserFullName,
-			"process.source.user.user.hash", ProcessSourceUserUserHash,
-			"process.source.user.user.id", ProcessSourceUserUserId,
-			"process.source.user.user.name", ProcessSourceUserUserName,
+			"process.entry_meta.source.address", ProcessEntryMetaSourceAddress,
+			"process.entry_meta.source.bytes", ProcessEntryMetaSourceBytes,
+			"process.entry_meta.source.domain", ProcessEntryMetaSourceDomain,
+			"process.entry_meta.source.ip", ProcessEntryMetaSourceIp,
+			"process.entry_meta.source.mac", ProcessEntryMetaSourceMac,
+			"process.entry_meta.source.nat.ip", ProcessEntryMetaSourceNatIp,
+			"process.entry_meta.source.nat.port", ProcessEntryMetaSourceNatPort,
+			"process.entry_meta.source.packets", ProcessEntryMetaSourcePackets,
+			"process.entry_meta.source.port", ProcessEntryMetaSourcePort,
+			"process.entry_meta.source.registered_domain", ProcessEntryMetaSourceRegisteredDomain,
+			"process.entry_meta.source.subdomain", ProcessEntryMetaSourceSubdomain,
+			"process.entry_meta.source.top_level_domain", ProcessEntryMetaSourceTopLevelDomain,
+			"process.entry_meta.source.as.number", ProcessEntryMetaSourceAsNumber,
+			"process.entry_meta.source.as.organization.name", ProcessEntryMetaSourceAsOrganizationName,
+			"process.entry_meta.source.geo.city_name", ProcessEntryMetaSourceGeoCityName,
+			"process.entry_meta.source.geo.continent_code", ProcessEntryMetaSourceGeoContinentCode,
+			"process.entry_meta.source.geo.continent_name", ProcessEntryMetaSourceGeoContinentName,
+			"process.entry_meta.source.geo.country_iso_code", ProcessEntryMetaSourceGeoCountryIsoCode,
+			"process.entry_meta.source.geo.country_name", ProcessEntryMetaSourceGeoCountryName,
+			"process.entry_meta.source.geo.name", ProcessEntryMetaSourceGeoName,
+			"process.entry_meta.source.geo.postal_code", ProcessEntryMetaSourceGeoPostalCode,
+			"process.entry_meta.source.geo.region_iso_code", ProcessEntryMetaSourceGeoRegionIsoCode,
+			"process.entry_meta.source.geo.region_name", ProcessEntryMetaSourceGeoRegionName,
+			"process.entry_meta.source.geo.timezone", ProcessEntryMetaSourceGeoTimezone,
+			"process.entry_meta.source.user.domain", ProcessEntryMetaSourceUserDomain,
+			"process.entry_meta.source.user.email", ProcessEntryMetaSourceUserEmail,
+			"process.entry_meta.source.user.full_name", ProcessEntryMetaSourceUserFullName,
+			"process.entry_meta.source.user.hash", ProcessEntryMetaSourceUserHash,
+			"process.entry_meta.source.user.id", ProcessEntryMetaSourceUserId,
+			"process.entry_meta.source.user.name", ProcessEntryMetaSourceUserName,
+			"process.entry_meta.source.user.group.domain", ProcessEntryMetaSourceUserGroupDomain,
+			"process.entry_meta.source.user.group.id", ProcessEntryMetaSourceUserGroupId,
+			"process.entry_meta.source.user.group.name", ProcessEntryMetaSourceUserGroupName,
+			"process.entry_meta.source.user.risk.calculated_level", ProcessEntryMetaSourceUserRiskCalculatedLevel,
+			"process.entry_meta.source.user.risk.calculated_score", ProcessEntryMetaSourceUserRiskCalculatedScore,
+			"process.entry_meta.source.user.risk.calculated_score_norm", ProcessEntryMetaSourceUserRiskCalculatedScoreNorm,
+			"process.entry_meta.source.user.risk.static_level", ProcessEntryMetaSourceUserRiskStaticLevel,
+			"process.entry_meta.source.user.risk.static_score", ProcessEntryMetaSourceUserRiskStaticScore,
+			"process.entry_meta.source.user.risk.static_score_norm", ProcessEntryMetaSourceUserRiskStaticScoreNorm,
+			"process.entry_meta.source.user.target.user.domain", ProcessEntryMetaSourceUserTargetUserDomain,
+			"process.entry_meta.source.user.target.user.email", ProcessEntryMetaSourceUserTargetUserEmail,
+			"process.entry_meta.source.user.target.user.full_name", ProcessEntryMetaSourceUserTargetUserFullName,
+			"process.entry_meta.source.user.target.user.hash", ProcessEntryMetaSourceUserTargetUserHash,
+			"process.entry_meta.source.user.target.user.id", ProcessEntryMetaSourceUserTargetUserId,
+			"process.entry_meta.source.user.target.user.name", ProcessEntryMetaSourceUserTargetUserName,
 			"process.user.domain", ProcessUserDomain,
 			"process.user.email", ProcessUserEmail,
 			"process.user.full_name", ProcessUserFullName,
@@ -8443,114 +8443,114 @@ namespace Elastic.CommonSchema
 			"process.user.risk.static_level", ProcessUserRiskStaticLevel,
 			"process.user.risk.static_score", ProcessUserRiskStaticScore,
 			"process.user.risk.static_score_norm", ProcessUserRiskStaticScoreNorm,
-			"process.user.user.domain", ProcessUserUserDomain,
-			"process.user.user.email", ProcessUserUserEmail,
-			"process.user.user.full_name", ProcessUserUserFullName,
-			"process.user.user.hash", ProcessUserUserHash,
-			"process.user.user.id", ProcessUserUserId,
-			"process.user.user.name", ProcessUserUserName,
-			"process.process.args_count", ProcessProcessArgsCount,
-			"process.process.command_line", ProcessProcessCommandLine,
-			"process.process.end", ProcessProcessEnd,
-			"process.process.entity_id", ProcessProcessEntityId,
-			"process.process.executable", ProcessProcessExecutable,
-			"process.process.exit_code", ProcessProcessExitCode,
-			"process.process.interactive", ProcessProcessInteractive,
-			"process.process.name", ProcessProcessName,
-			"process.process.pgid", ProcessProcessPgid,
-			"process.process.pid", ProcessProcessPid,
-			"process.process.start", ProcessProcessStart,
-			"process.process.thread.id", ProcessProcessThreadId,
-			"process.process.thread.name", ProcessProcessThreadName,
-			"process.process.title", ProcessProcessTitle,
-			"process.process.uptime", ProcessProcessUptime,
-			"process.process.vpid", ProcessProcessVpid,
-			"process.process.working_directory", ProcessProcessWorkingDirectory,
-			"process.process.parent.process.args_count", ProcessProcessParentProcessArgsCount,
-			"process.process.parent.process.command_line", ProcessProcessParentProcessCommandLine,
-			"process.process.parent.process.end", ProcessProcessParentProcessEnd,
-			"process.process.parent.process.entity_id", ProcessProcessParentProcessEntityId,
-			"process.process.parent.process.executable", ProcessProcessParentProcessExecutable,
-			"process.process.parent.process.exit_code", ProcessProcessParentProcessExitCode,
-			"process.process.parent.process.interactive", ProcessProcessParentProcessInteractive,
-			"process.process.parent.process.name", ProcessProcessParentProcessName,
-			"process.process.parent.process.pgid", ProcessProcessParentProcessPgid,
-			"process.process.parent.process.pid", ProcessProcessParentProcessPid,
-			"process.process.parent.process.start", ProcessProcessParentProcessStart,
-			"process.process.parent.process.thread.id", ProcessProcessParentProcessThreadId,
-			"process.process.parent.process.thread.name", ProcessProcessParentProcessThreadName,
-			"process.process.parent.process.title", ProcessProcessParentProcessTitle,
-			"process.process.parent.process.uptime", ProcessProcessParentProcessUptime,
-			"process.process.parent.process.vpid", ProcessProcessParentProcessVpid,
-			"process.process.parent.process.working_directory", ProcessProcessParentProcessWorkingDirectory,
-			"process.process.entry_leader.process.args_count", ProcessProcessEntryLeaderProcessArgsCount,
-			"process.process.entry_leader.process.command_line", ProcessProcessEntryLeaderProcessCommandLine,
-			"process.process.entry_leader.process.end", ProcessProcessEntryLeaderProcessEnd,
-			"process.process.entry_leader.process.entity_id", ProcessProcessEntryLeaderProcessEntityId,
-			"process.process.entry_leader.process.executable", ProcessProcessEntryLeaderProcessExecutable,
-			"process.process.entry_leader.process.exit_code", ProcessProcessEntryLeaderProcessExitCode,
-			"process.process.entry_leader.process.interactive", ProcessProcessEntryLeaderProcessInteractive,
-			"process.process.entry_leader.process.name", ProcessProcessEntryLeaderProcessName,
-			"process.process.entry_leader.process.pgid", ProcessProcessEntryLeaderProcessPgid,
-			"process.process.entry_leader.process.pid", ProcessProcessEntryLeaderProcessPid,
-			"process.process.entry_leader.process.start", ProcessProcessEntryLeaderProcessStart,
-			"process.process.entry_leader.process.thread.id", ProcessProcessEntryLeaderProcessThreadId,
-			"process.process.entry_leader.process.thread.name", ProcessProcessEntryLeaderProcessThreadName,
-			"process.process.entry_leader.process.title", ProcessProcessEntryLeaderProcessTitle,
-			"process.process.entry_leader.process.uptime", ProcessProcessEntryLeaderProcessUptime,
-			"process.process.entry_leader.process.vpid", ProcessProcessEntryLeaderProcessVpid,
-			"process.process.entry_leader.process.working_directory", ProcessProcessEntryLeaderProcessWorkingDirectory,
-			"process.process.entry_leader.process.entry_leader.parent.process.args_count", ProcessProcessEntryLeaderProcessEntryLeaderParentProcessArgsCount,
-			"process.process.entry_leader.process.entry_leader.parent.process.command_line", ProcessProcessEntryLeaderProcessEntryLeaderParentProcessCommandLine,
-			"process.process.entry_leader.process.entry_leader.parent.process.end", ProcessProcessEntryLeaderProcessEntryLeaderParentProcessEnd,
-			"process.process.entry_leader.process.entry_leader.parent.process.entity_id", ProcessProcessEntryLeaderProcessEntryLeaderParentProcessEntityId,
-			"process.process.entry_leader.process.entry_leader.parent.process.executable", ProcessProcessEntryLeaderProcessEntryLeaderParentProcessExecutable,
-			"process.process.entry_leader.process.entry_leader.parent.process.exit_code", ProcessProcessEntryLeaderProcessEntryLeaderParentProcessExitCode,
-			"process.process.entry_leader.process.entry_leader.parent.process.interactive", ProcessProcessEntryLeaderProcessEntryLeaderParentProcessInteractive,
-			"process.process.entry_leader.process.entry_leader.parent.process.name", ProcessProcessEntryLeaderProcessEntryLeaderParentProcessName,
-			"process.process.entry_leader.process.entry_leader.parent.process.pgid", ProcessProcessEntryLeaderProcessEntryLeaderParentProcessPgid,
-			"process.process.entry_leader.process.entry_leader.parent.process.pid", ProcessProcessEntryLeaderProcessEntryLeaderParentProcessPid,
-			"process.process.entry_leader.process.entry_leader.parent.process.start", ProcessProcessEntryLeaderProcessEntryLeaderParentProcessStart,
-			"process.process.entry_leader.process.entry_leader.parent.process.thread.id", ProcessProcessEntryLeaderProcessEntryLeaderParentProcessThreadId,
-			"process.process.entry_leader.process.entry_leader.parent.process.thread.name", ProcessProcessEntryLeaderProcessEntryLeaderParentProcessThreadName,
-			"process.process.entry_leader.process.entry_leader.parent.process.title", ProcessProcessEntryLeaderProcessEntryLeaderParentProcessTitle,
-			"process.process.entry_leader.process.entry_leader.parent.process.uptime", ProcessProcessEntryLeaderProcessEntryLeaderParentProcessUptime,
-			"process.process.entry_leader.process.entry_leader.parent.process.vpid", ProcessProcessEntryLeaderProcessEntryLeaderParentProcessVpid,
-			"process.process.entry_leader.process.entry_leader.parent.process.working_directory", ProcessProcessEntryLeaderProcessEntryLeaderParentProcessWorkingDirectory,
-			"process.process.session_leader.process.args_count", ProcessProcessSessionLeaderProcessArgsCount,
-			"process.process.session_leader.process.command_line", ProcessProcessSessionLeaderProcessCommandLine,
-			"process.process.session_leader.process.end", ProcessProcessSessionLeaderProcessEnd,
-			"process.process.session_leader.process.entity_id", ProcessProcessSessionLeaderProcessEntityId,
-			"process.process.session_leader.process.executable", ProcessProcessSessionLeaderProcessExecutable,
-			"process.process.session_leader.process.exit_code", ProcessProcessSessionLeaderProcessExitCode,
-			"process.process.session_leader.process.interactive", ProcessProcessSessionLeaderProcessInteractive,
-			"process.process.session_leader.process.name", ProcessProcessSessionLeaderProcessName,
-			"process.process.session_leader.process.pgid", ProcessProcessSessionLeaderProcessPgid,
-			"process.process.session_leader.process.pid", ProcessProcessSessionLeaderProcessPid,
-			"process.process.session_leader.process.start", ProcessProcessSessionLeaderProcessStart,
-			"process.process.session_leader.process.thread.id", ProcessProcessSessionLeaderProcessThreadId,
-			"process.process.session_leader.process.thread.name", ProcessProcessSessionLeaderProcessThreadName,
-			"process.process.session_leader.process.title", ProcessProcessSessionLeaderProcessTitle,
-			"process.process.session_leader.process.uptime", ProcessProcessSessionLeaderProcessUptime,
-			"process.process.session_leader.process.vpid", ProcessProcessSessionLeaderProcessVpid,
-			"process.process.session_leader.process.working_directory", ProcessProcessSessionLeaderProcessWorkingDirectory,
-			"process.process.session_leader.process.session_leader.parent.process.args_count", ProcessProcessSessionLeaderProcessSessionLeaderParentProcessArgsCount,
-			"process.process.session_leader.process.session_leader.parent.process.command_line", ProcessProcessSessionLeaderProcessSessionLeaderParentProcessCommandLine,
-			"process.process.session_leader.process.session_leader.parent.process.end", ProcessProcessSessionLeaderProcessSessionLeaderParentProcessEnd,
-			"process.process.session_leader.process.session_leader.parent.process.entity_id", ProcessProcessSessionLeaderProcessSessionLeaderParentProcessEntityId,
-			"process.process.session_leader.process.session_leader.parent.process.executable", ProcessProcessSessionLeaderProcessSessionLeaderParentProcessExecutable,
-			"process.process.session_leader.process.session_leader.parent.process.exit_code", ProcessProcessSessionLeaderProcessSessionLeaderParentProcessExitCode,
-			"process.process.session_leader.process.session_leader.parent.process.interactive", ProcessProcessSessionLeaderProcessSessionLeaderParentProcessInteractive,
-			"process.process.session_leader.process.session_leader.parent.process.name", ProcessProcessSessionLeaderProcessSessionLeaderParentProcessName,
-			"process.process.session_leader.process.session_leader.parent.process.pgid", ProcessProcessSessionLeaderProcessSessionLeaderParentProcessPgid,
-			"process.process.session_leader.process.session_leader.parent.process.pid", ProcessProcessSessionLeaderProcessSessionLeaderParentProcessPid,
-			"process.process.session_leader.process.session_leader.parent.process.start", ProcessProcessSessionLeaderProcessSessionLeaderParentProcessStart,
-			"process.process.session_leader.process.session_leader.parent.process.thread.id", ProcessProcessSessionLeaderProcessSessionLeaderParentProcessThreadId,
-			"process.process.session_leader.process.session_leader.parent.process.thread.name", ProcessProcessSessionLeaderProcessSessionLeaderParentProcessThreadName,
-			"process.process.session_leader.process.session_leader.parent.process.title", ProcessProcessSessionLeaderProcessSessionLeaderParentProcessTitle,
-			"process.process.session_leader.process.session_leader.parent.process.uptime", ProcessProcessSessionLeaderProcessSessionLeaderParentProcessUptime,
-			"process.process.session_leader.process.session_leader.parent.process.vpid", ProcessProcessSessionLeaderProcessSessionLeaderParentProcessVpid,
-			"process.process.session_leader.process.session_leader.parent.process.working_directory", ProcessProcessSessionLeaderProcessSessionLeaderParentProcessWorkingDirectory,
+			"process.user.target.user.domain", ProcessUserTargetUserDomain,
+			"process.user.target.user.email", ProcessUserTargetUserEmail,
+			"process.user.target.user.full_name", ProcessUserTargetUserFullName,
+			"process.user.target.user.hash", ProcessUserTargetUserHash,
+			"process.user.target.user.id", ProcessUserTargetUserId,
+			"process.user.target.user.name", ProcessUserTargetUserName,
+			"parent.process.args_count", ParentProcessArgsCount,
+			"parent.process.command_line", ParentProcessCommandLine,
+			"parent.process.end", ParentProcessEnd,
+			"parent.process.entity_id", ParentProcessEntityId,
+			"parent.process.executable", ParentProcessExecutable,
+			"parent.process.exit_code", ParentProcessExitCode,
+			"parent.process.interactive", ParentProcessInteractive,
+			"parent.process.name", ParentProcessName,
+			"parent.process.pgid", ParentProcessPgid,
+			"parent.process.pid", ParentProcessPid,
+			"parent.process.start", ParentProcessStart,
+			"parent.process.thread.id", ParentProcessThreadId,
+			"parent.process.thread.name", ParentProcessThreadName,
+			"parent.process.title", ParentProcessTitle,
+			"parent.process.uptime", ParentProcessUptime,
+			"parent.process.vpid", ParentProcessVpid,
+			"parent.process.working_directory", ParentProcessWorkingDirectory,
+			"process.parent.group_leader.process.args_count", ProcessParentGroupLeaderProcessArgsCount,
+			"process.parent.group_leader.process.command_line", ProcessParentGroupLeaderProcessCommandLine,
+			"process.parent.group_leader.process.end", ProcessParentGroupLeaderProcessEnd,
+			"process.parent.group_leader.process.entity_id", ProcessParentGroupLeaderProcessEntityId,
+			"process.parent.group_leader.process.executable", ProcessParentGroupLeaderProcessExecutable,
+			"process.parent.group_leader.process.exit_code", ProcessParentGroupLeaderProcessExitCode,
+			"process.parent.group_leader.process.interactive", ProcessParentGroupLeaderProcessInteractive,
+			"process.parent.group_leader.process.name", ProcessParentGroupLeaderProcessName,
+			"process.parent.group_leader.process.pgid", ProcessParentGroupLeaderProcessPgid,
+			"process.parent.group_leader.process.pid", ProcessParentGroupLeaderProcessPid,
+			"process.parent.group_leader.process.start", ProcessParentGroupLeaderProcessStart,
+			"process.parent.group_leader.process.thread.id", ProcessParentGroupLeaderProcessThreadId,
+			"process.parent.group_leader.process.thread.name", ProcessParentGroupLeaderProcessThreadName,
+			"process.parent.group_leader.process.title", ProcessParentGroupLeaderProcessTitle,
+			"process.parent.group_leader.process.uptime", ProcessParentGroupLeaderProcessUptime,
+			"process.parent.group_leader.process.vpid", ProcessParentGroupLeaderProcessVpid,
+			"process.parent.group_leader.process.working_directory", ProcessParentGroupLeaderProcessWorkingDirectory,
+			"process.entry_leader.parent.process.args_count", ProcessEntryLeaderParentProcessArgsCount,
+			"process.entry_leader.parent.process.command_line", ProcessEntryLeaderParentProcessCommandLine,
+			"process.entry_leader.parent.process.end", ProcessEntryLeaderParentProcessEnd,
+			"process.entry_leader.parent.process.entity_id", ProcessEntryLeaderParentProcessEntityId,
+			"process.entry_leader.parent.process.executable", ProcessEntryLeaderParentProcessExecutable,
+			"process.entry_leader.parent.process.exit_code", ProcessEntryLeaderParentProcessExitCode,
+			"process.entry_leader.parent.process.interactive", ProcessEntryLeaderParentProcessInteractive,
+			"process.entry_leader.parent.process.name", ProcessEntryLeaderParentProcessName,
+			"process.entry_leader.parent.process.pgid", ProcessEntryLeaderParentProcessPgid,
+			"process.entry_leader.parent.process.pid", ProcessEntryLeaderParentProcessPid,
+			"process.entry_leader.parent.process.start", ProcessEntryLeaderParentProcessStart,
+			"process.entry_leader.parent.process.thread.id", ProcessEntryLeaderParentProcessThreadId,
+			"process.entry_leader.parent.process.thread.name", ProcessEntryLeaderParentProcessThreadName,
+			"process.entry_leader.parent.process.title", ProcessEntryLeaderParentProcessTitle,
+			"process.entry_leader.parent.process.uptime", ProcessEntryLeaderParentProcessUptime,
+			"process.entry_leader.parent.process.vpid", ProcessEntryLeaderParentProcessVpid,
+			"process.entry_leader.parent.process.working_directory", ProcessEntryLeaderParentProcessWorkingDirectory,
+			"entry_leader.process.parent.entry_leader.parent.session_leader.process.args_count", EntryLeaderProcessParentEntryLeaderParentSessionLeaderProcessArgsCount,
+			"entry_leader.process.parent.entry_leader.parent.session_leader.process.command_line", EntryLeaderProcessParentEntryLeaderParentSessionLeaderProcessCommandLine,
+			"entry_leader.process.parent.entry_leader.parent.session_leader.process.end", EntryLeaderProcessParentEntryLeaderParentSessionLeaderProcessEnd,
+			"entry_leader.process.parent.entry_leader.parent.session_leader.process.entity_id", EntryLeaderProcessParentEntryLeaderParentSessionLeaderProcessEntityId,
+			"entry_leader.process.parent.entry_leader.parent.session_leader.process.executable", EntryLeaderProcessParentEntryLeaderParentSessionLeaderProcessExecutable,
+			"entry_leader.process.parent.entry_leader.parent.session_leader.process.exit_code", EntryLeaderProcessParentEntryLeaderParentSessionLeaderProcessExitCode,
+			"entry_leader.process.parent.entry_leader.parent.session_leader.process.interactive", EntryLeaderProcessParentEntryLeaderParentSessionLeaderProcessInteractive,
+			"entry_leader.process.parent.entry_leader.parent.session_leader.process.name", EntryLeaderProcessParentEntryLeaderParentSessionLeaderProcessName,
+			"entry_leader.process.parent.entry_leader.parent.session_leader.process.pgid", EntryLeaderProcessParentEntryLeaderParentSessionLeaderProcessPgid,
+			"entry_leader.process.parent.entry_leader.parent.session_leader.process.pid", EntryLeaderProcessParentEntryLeaderParentSessionLeaderProcessPid,
+			"entry_leader.process.parent.entry_leader.parent.session_leader.process.start", EntryLeaderProcessParentEntryLeaderParentSessionLeaderProcessStart,
+			"entry_leader.process.parent.entry_leader.parent.session_leader.process.thread.id", EntryLeaderProcessParentEntryLeaderParentSessionLeaderProcessThreadId,
+			"entry_leader.process.parent.entry_leader.parent.session_leader.process.thread.name", EntryLeaderProcessParentEntryLeaderParentSessionLeaderProcessThreadName,
+			"entry_leader.process.parent.entry_leader.parent.session_leader.process.title", EntryLeaderProcessParentEntryLeaderParentSessionLeaderProcessTitle,
+			"entry_leader.process.parent.entry_leader.parent.session_leader.process.uptime", EntryLeaderProcessParentEntryLeaderParentSessionLeaderProcessUptime,
+			"entry_leader.process.parent.entry_leader.parent.session_leader.process.vpid", EntryLeaderProcessParentEntryLeaderParentSessionLeaderProcessVpid,
+			"entry_leader.process.parent.entry_leader.parent.session_leader.process.working_directory", EntryLeaderProcessParentEntryLeaderParentSessionLeaderProcessWorkingDirectory,
+			"process.session_leader.parent.process.args_count", ProcessSessionLeaderParentProcessArgsCount,
+			"process.session_leader.parent.process.command_line", ProcessSessionLeaderParentProcessCommandLine,
+			"process.session_leader.parent.process.end", ProcessSessionLeaderParentProcessEnd,
+			"process.session_leader.parent.process.entity_id", ProcessSessionLeaderParentProcessEntityId,
+			"process.session_leader.parent.process.executable", ProcessSessionLeaderParentProcessExecutable,
+			"process.session_leader.parent.process.exit_code", ProcessSessionLeaderParentProcessExitCode,
+			"process.session_leader.parent.process.interactive", ProcessSessionLeaderParentProcessInteractive,
+			"process.session_leader.parent.process.name", ProcessSessionLeaderParentProcessName,
+			"process.session_leader.parent.process.pgid", ProcessSessionLeaderParentProcessPgid,
+			"process.session_leader.parent.process.pid", ProcessSessionLeaderParentProcessPid,
+			"process.session_leader.parent.process.start", ProcessSessionLeaderParentProcessStart,
+			"process.session_leader.parent.process.thread.id", ProcessSessionLeaderParentProcessThreadId,
+			"process.session_leader.parent.process.thread.name", ProcessSessionLeaderParentProcessThreadName,
+			"process.session_leader.parent.process.title", ProcessSessionLeaderParentProcessTitle,
+			"process.session_leader.parent.process.uptime", ProcessSessionLeaderParentProcessUptime,
+			"process.session_leader.parent.process.vpid", ProcessSessionLeaderParentProcessVpid,
+			"process.session_leader.parent.process.working_directory", ProcessSessionLeaderParentProcessWorkingDirectory,
+			"session_leader.process.parent.session_leader.parent.session_leader.process.args_count", SessionLeaderProcessParentSessionLeaderParentSessionLeaderProcessArgsCount,
+			"session_leader.process.parent.session_leader.parent.session_leader.process.command_line", SessionLeaderProcessParentSessionLeaderParentSessionLeaderProcessCommandLine,
+			"session_leader.process.parent.session_leader.parent.session_leader.process.end", SessionLeaderProcessParentSessionLeaderParentSessionLeaderProcessEnd,
+			"session_leader.process.parent.session_leader.parent.session_leader.process.entity_id", SessionLeaderProcessParentSessionLeaderParentSessionLeaderProcessEntityId,
+			"session_leader.process.parent.session_leader.parent.session_leader.process.executable", SessionLeaderProcessParentSessionLeaderParentSessionLeaderProcessExecutable,
+			"session_leader.process.parent.session_leader.parent.session_leader.process.exit_code", SessionLeaderProcessParentSessionLeaderParentSessionLeaderProcessExitCode,
+			"session_leader.process.parent.session_leader.parent.session_leader.process.interactive", SessionLeaderProcessParentSessionLeaderParentSessionLeaderProcessInteractive,
+			"session_leader.process.parent.session_leader.parent.session_leader.process.name", SessionLeaderProcessParentSessionLeaderParentSessionLeaderProcessName,
+			"session_leader.process.parent.session_leader.parent.session_leader.process.pgid", SessionLeaderProcessParentSessionLeaderParentSessionLeaderProcessPgid,
+			"session_leader.process.parent.session_leader.parent.session_leader.process.pid", SessionLeaderProcessParentSessionLeaderParentSessionLeaderProcessPid,
+			"session_leader.process.parent.session_leader.parent.session_leader.process.start", SessionLeaderProcessParentSessionLeaderParentSessionLeaderProcessStart,
+			"session_leader.process.parent.session_leader.parent.session_leader.process.thread.id", SessionLeaderProcessParentSessionLeaderParentSessionLeaderProcessThreadId,
+			"session_leader.process.parent.session_leader.parent.session_leader.process.thread.name", SessionLeaderProcessParentSessionLeaderParentSessionLeaderProcessThreadName,
+			"session_leader.process.parent.session_leader.parent.session_leader.process.title", SessionLeaderProcessParentSessionLeaderParentSessionLeaderProcessTitle,
+			"session_leader.process.parent.session_leader.parent.session_leader.process.uptime", SessionLeaderProcessParentSessionLeaderParentSessionLeaderProcessUptime,
+			"session_leader.process.parent.session_leader.parent.session_leader.process.vpid", SessionLeaderProcessParentSessionLeaderParentSessionLeaderProcessVpid,
+			"session_leader.process.parent.session_leader.parent.session_leader.process.working_directory", SessionLeaderProcessParentSessionLeaderParentSessionLeaderProcessWorkingDirectory,
 			"registry.data.bytes", RegistryDataBytes,
 			"registry.data.type", RegistryDataType,
 			"registry.hive", RegistryHive,
@@ -8611,12 +8611,12 @@ namespace Elastic.CommonSchema
 			"server.user.risk.static_level", ServerUserRiskStaticLevel,
 			"server.user.risk.static_score", ServerUserRiskStaticScore,
 			"server.user.risk.static_score_norm", ServerUserRiskStaticScoreNorm,
-			"server.user.user.domain", ServerUserUserDomain,
-			"server.user.user.email", ServerUserUserEmail,
-			"server.user.user.full_name", ServerUserUserFullName,
-			"server.user.user.hash", ServerUserUserHash,
-			"server.user.user.id", ServerUserUserId,
-			"server.user.user.name", ServerUserUserName,
+			"server.user.target.user.domain", ServerUserTargetUserDomain,
+			"server.user.target.user.email", ServerUserTargetUserEmail,
+			"server.user.target.user.full_name", ServerUserTargetUserFullName,
+			"server.user.target.user.hash", ServerUserTargetUserHash,
+			"server.user.target.user.id", ServerUserTargetUserId,
+			"server.user.target.user.name", ServerUserTargetUserName,
 			"service.address", ServiceAddress,
 			"service.environment", ServiceEnvironment,
 			"service.ephemeral_id", ServiceEphemeralId,
@@ -8627,16 +8627,16 @@ namespace Elastic.CommonSchema
 			"service.state", ServiceState,
 			"service.type", ServiceType,
 			"service.version", ServiceVersion,
-			"service.service.address", ServiceServiceAddress,
-			"service.service.environment", ServiceServiceEnvironment,
-			"service.service.ephemeral_id", ServiceServiceEphemeralId,
-			"service.service.id", ServiceServiceId,
-			"service.service.name", ServiceServiceName,
-			"service.service.node.name", ServiceServiceNodeName,
-			"service.service.node.role", ServiceServiceNodeRole,
-			"service.service.state", ServiceServiceState,
-			"service.service.type", ServiceServiceType,
-			"service.service.version", ServiceServiceVersion,
+			"origin.service.address", OriginServiceAddress,
+			"origin.service.environment", OriginServiceEnvironment,
+			"origin.service.ephemeral_id", OriginServiceEphemeralId,
+			"origin.service.id", OriginServiceId,
+			"origin.service.name", OriginServiceName,
+			"origin.service.node.name", OriginServiceNodeName,
+			"origin.service.node.role", OriginServiceNodeRole,
+			"origin.service.state", OriginServiceState,
+			"origin.service.type", OriginServiceType,
+			"origin.service.version", OriginServiceVersion,
 			"source.address", SourceAddress,
 			"source.bytes", SourceBytes,
 			"source.domain", SourceDomain,
@@ -8676,12 +8676,12 @@ namespace Elastic.CommonSchema
 			"source.user.risk.static_level", SourceUserRiskStaticLevel,
 			"source.user.risk.static_score", SourceUserRiskStaticScore,
 			"source.user.risk.static_score_norm", SourceUserRiskStaticScoreNorm,
-			"source.user.user.domain", SourceUserUserDomain,
-			"source.user.user.email", SourceUserUserEmail,
-			"source.user.user.full_name", SourceUserUserFullName,
-			"source.user.user.hash", SourceUserUserHash,
-			"source.user.user.id", SourceUserUserId,
-			"source.user.user.name", SourceUserUserName,
+			"source.user.target.user.domain", SourceUserTargetUserDomain,
+			"source.user.target.user.email", SourceUserTargetUserEmail,
+			"source.user.target.user.full_name", SourceUserTargetUserFullName,
+			"source.user.target.user.hash", SourceUserTargetUserHash,
+			"source.user.target.user.id", SourceUserTargetUserId,
+			"source.user.target.user.name", SourceUserTargetUserName,
 			"threat.feed.dashboard_id", ThreatFeedDashboardId,
 			"threat.feed.description", ThreatFeedDescription,
 			"threat.feed.name", ThreatFeedName,
@@ -8710,143 +8710,143 @@ namespace Elastic.CommonSchema
 			"threat.software.name", ThreatSoftwareName,
 			"threat.software.reference", ThreatSoftwareReference,
 			"threat.software.type", ThreatSoftwareType,
-			"threat.x509.issuer.distinguished_name", ThreatX509IssuerDistinguishedName,
-			"threat.x509.not_after", ThreatX509NotAfter,
-			"threat.x509.not_before", ThreatX509NotBefore,
-			"threat.x509.public_key_algorithm", ThreatX509PublicKeyAlgorithm,
-			"threat.x509.public_key_curve", ThreatX509PublicKeyCurve,
-			"threat.x509.public_key_exponent", ThreatX509PublicKeyExponent,
-			"threat.x509.public_key_size", ThreatX509PublicKeySize,
-			"threat.x509.serial_number", ThreatX509SerialNumber,
-			"threat.x509.signature_algorithm", ThreatX509SignatureAlgorithm,
-			"threat.x509.subject.distinguished_name", ThreatX509SubjectDistinguishedName,
-			"threat.x509.version_number", ThreatX509VersionNumber,
-			"threat.as.number", ThreatAsNumber,
-			"threat.as.organization.name", ThreatAsOrganizationName,
-			"threat.file.accessed", ThreatFileAccessed,
-			"threat.file.created", ThreatFileCreated,
-			"threat.file.ctime", ThreatFileCtime,
-			"threat.file.device", ThreatFileDevice,
-			"threat.file.directory", ThreatFileDirectory,
-			"threat.file.drive_letter", ThreatFileDriveLetter,
-			"threat.file.extension", ThreatFileExtension,
-			"threat.file.fork_name", ThreatFileForkName,
-			"threat.file.gid", ThreatFileGid,
-			"threat.file.group", ThreatFileGroup,
-			"threat.file.inode", ThreatFileInode,
-			"threat.file.mime_type", ThreatFileMimeType,
-			"threat.file.mode", ThreatFileMode,
-			"threat.file.mtime", ThreatFileMtime,
-			"threat.file.name", ThreatFileName,
-			"threat.file.owner", ThreatFileOwner,
-			"threat.file.path", ThreatFilePath,
-			"threat.file.size", ThreatFileSize,
-			"threat.file.target_path", ThreatFileTargetPath,
-			"threat.file.type", ThreatFileType,
-			"threat.file.uid", ThreatFileUid,
-			"threat.file.hash.md5", ThreatFileHashMd5,
-			"threat.file.hash.sha1", ThreatFileHashSha1,
-			"threat.file.hash.sha256", ThreatFileHashSha256,
-			"threat.file.hash.sha384", ThreatFileHashSha384,
-			"threat.file.hash.sha512", ThreatFileHashSha512,
-			"threat.file.hash.ssdeep", ThreatFileHashSsdeep,
-			"threat.file.hash.tlsh", ThreatFileHashTlsh,
-			"threat.file.pe.architecture", ThreatFilePeArchitecture,
-			"threat.file.pe.company", ThreatFilePeCompany,
-			"threat.file.pe.description", ThreatFilePeDescription,
-			"threat.file.pe.file_version", ThreatFilePeFileVersion,
-			"threat.file.pe.go_import_hash", ThreatFilePeGoImportHash,
-			"threat.file.pe.go_imports", ThreatFilePeGoImports,
-			"threat.file.pe.go_imports_names_entropy", ThreatFilePeGoImportsNamesEntropy,
-			"threat.file.pe.go_imports_names_var_entropy", ThreatFilePeGoImportsNamesVarEntropy,
-			"threat.file.pe.go_stripped", ThreatFilePeGoStripped,
-			"threat.file.pe.imphash", ThreatFilePeImphash,
-			"threat.file.pe.import_hash", ThreatFilePeImportHash,
-			"threat.file.pe.imports_names_entropy", ThreatFilePeImportsNamesEntropy,
-			"threat.file.pe.imports_names_var_entropy", ThreatFilePeImportsNamesVarEntropy,
-			"threat.file.pe.original_file_name", ThreatFilePeOriginalFileName,
-			"threat.file.pe.pehash", ThreatFilePePehash,
-			"threat.file.pe.product", ThreatFilePeProduct,
-			"threat.file.x509.issuer.distinguished_name", ThreatFileX509IssuerDistinguishedName,
-			"threat.file.x509.not_after", ThreatFileX509NotAfter,
-			"threat.file.x509.not_before", ThreatFileX509NotBefore,
-			"threat.file.x509.public_key_algorithm", ThreatFileX509PublicKeyAlgorithm,
-			"threat.file.x509.public_key_curve", ThreatFileX509PublicKeyCurve,
-			"threat.file.x509.public_key_exponent", ThreatFileX509PublicKeyExponent,
-			"threat.file.x509.public_key_size", ThreatFileX509PublicKeySize,
-			"threat.file.x509.serial_number", ThreatFileX509SerialNumber,
-			"threat.file.x509.signature_algorithm", ThreatFileX509SignatureAlgorithm,
-			"threat.file.x509.subject.distinguished_name", ThreatFileX509SubjectDistinguishedName,
-			"threat.file.x509.version_number", ThreatFileX509VersionNumber,
-			"threat.file.code_signature.digest_algorithm", ThreatFileCodeSignatureDigestAlgorithm,
-			"threat.file.code_signature.exists", ThreatFileCodeSignatureExists,
-			"threat.file.code_signature.signing_id", ThreatFileCodeSignatureSigningId,
-			"threat.file.code_signature.status", ThreatFileCodeSignatureStatus,
-			"threat.file.code_signature.subject_name", ThreatFileCodeSignatureSubjectName,
-			"threat.file.code_signature.team_id", ThreatFileCodeSignatureTeamId,
-			"threat.file.code_signature.timestamp", ThreatFileCodeSignatureTimestamp,
-			"threat.file.code_signature.trusted", ThreatFileCodeSignatureTrusted,
-			"threat.file.code_signature.valid", ThreatFileCodeSignatureValid,
-			"threat.file.elf.architecture", ThreatFileElfArchitecture,
-			"threat.file.elf.byte_order", ThreatFileElfByteOrder,
-			"threat.file.elf.cpu_type", ThreatFileElfCpuType,
-			"threat.file.elf.creation_date", ThreatFileElfCreationDate,
-			"threat.file.elf.go_import_hash", ThreatFileElfGoImportHash,
-			"threat.file.elf.go_imports", ThreatFileElfGoImports,
-			"threat.file.elf.go_imports_names_entropy", ThreatFileElfGoImportsNamesEntropy,
-			"threat.file.elf.go_imports_names_var_entropy", ThreatFileElfGoImportsNamesVarEntropy,
-			"threat.file.elf.go_stripped", ThreatFileElfGoStripped,
-			"threat.file.elf.header.abi_version", ThreatFileElfHeaderAbiVersion,
-			"threat.file.elf.header.class", ThreatFileElfHeaderClass,
-			"threat.file.elf.header.data", ThreatFileElfHeaderData,
-			"threat.file.elf.header.entrypoint", ThreatFileElfHeaderEntrypoint,
-			"threat.file.elf.header.object_version", ThreatFileElfHeaderObjectVersion,
-			"threat.file.elf.header.os_abi", ThreatFileElfHeaderOsAbi,
-			"threat.file.elf.header.type", ThreatFileElfHeaderType,
-			"threat.file.elf.header.version", ThreatFileElfHeaderVersion,
-			"threat.file.elf.import_hash", ThreatFileElfImportHash,
-			"threat.file.elf.imports_names_entropy", ThreatFileElfImportsNamesEntropy,
-			"threat.file.elf.imports_names_var_entropy", ThreatFileElfImportsNamesVarEntropy,
-			"threat.file.elf.telfhash", ThreatFileElfTelfhash,
-			"threat.file.macho.go_import_hash", ThreatFileMachoGoImportHash,
-			"threat.file.macho.go_imports", ThreatFileMachoGoImports,
-			"threat.file.macho.go_imports_names_entropy", ThreatFileMachoGoImportsNamesEntropy,
-			"threat.file.macho.go_imports_names_var_entropy", ThreatFileMachoGoImportsNamesVarEntropy,
-			"threat.file.macho.go_stripped", ThreatFileMachoGoStripped,
-			"threat.file.macho.import_hash", ThreatFileMachoImportHash,
-			"threat.file.macho.imports_names_entropy", ThreatFileMachoImportsNamesEntropy,
-			"threat.file.macho.imports_names_var_entropy", ThreatFileMachoImportsNamesVarEntropy,
-			"threat.file.macho.symhash", ThreatFileMachoSymhash,
-			"threat.geo.city_name", ThreatGeoCityName,
-			"threat.geo.continent_code", ThreatGeoContinentCode,
-			"threat.geo.continent_name", ThreatGeoContinentName,
-			"threat.geo.country_iso_code", ThreatGeoCountryIsoCode,
-			"threat.geo.country_name", ThreatGeoCountryName,
-			"threat.geo.name", ThreatGeoName,
-			"threat.geo.postal_code", ThreatGeoPostalCode,
-			"threat.geo.region_iso_code", ThreatGeoRegionIsoCode,
-			"threat.geo.region_name", ThreatGeoRegionName,
-			"threat.geo.timezone", ThreatGeoTimezone,
-			"threat.registry.data.bytes", ThreatRegistryDataBytes,
-			"threat.registry.data.type", ThreatRegistryDataType,
-			"threat.registry.hive", ThreatRegistryHive,
-			"threat.registry.key", ThreatRegistryKey,
-			"threat.registry.path", ThreatRegistryPath,
-			"threat.registry.value", ThreatRegistryValue,
-			"threat.url.domain", ThreatUrlDomain,
-			"threat.url.extension", ThreatUrlExtension,
-			"threat.url.fragment", ThreatUrlFragment,
-			"threat.url.full", ThreatUrlFull,
-			"threat.url.original", ThreatUrlOriginal,
-			"threat.url.password", ThreatUrlPassword,
-			"threat.url.path", ThreatUrlPath,
-			"threat.url.port", ThreatUrlPort,
-			"threat.url.query", ThreatUrlQuery,
-			"threat.url.registered_domain", ThreatUrlRegisteredDomain,
-			"threat.url.scheme", ThreatUrlScheme,
-			"threat.url.subdomain", ThreatUrlSubdomain,
-			"threat.url.top_level_domain", ThreatUrlTopLevelDomain,
-			"threat.url.username", ThreatUrlUsername,
+			"threat.indicator.x509.issuer.distinguished_name", ThreatIndicatorX509IssuerDistinguishedName,
+			"threat.indicator.x509.not_after", ThreatIndicatorX509NotAfter,
+			"threat.indicator.x509.not_before", ThreatIndicatorX509NotBefore,
+			"threat.indicator.x509.public_key_algorithm", ThreatIndicatorX509PublicKeyAlgorithm,
+			"threat.indicator.x509.public_key_curve", ThreatIndicatorX509PublicKeyCurve,
+			"threat.indicator.x509.public_key_exponent", ThreatIndicatorX509PublicKeyExponent,
+			"threat.indicator.x509.public_key_size", ThreatIndicatorX509PublicKeySize,
+			"threat.indicator.x509.serial_number", ThreatIndicatorX509SerialNumber,
+			"threat.indicator.x509.signature_algorithm", ThreatIndicatorX509SignatureAlgorithm,
+			"threat.indicator.x509.subject.distinguished_name", ThreatIndicatorX509SubjectDistinguishedName,
+			"threat.indicator.x509.version_number", ThreatIndicatorX509VersionNumber,
+			"threat.indicator.as.number", ThreatIndicatorAsNumber,
+			"threat.indicator.as.organization.name", ThreatIndicatorAsOrganizationName,
+			"threat.indicator.file.accessed", ThreatIndicatorFileAccessed,
+			"threat.indicator.file.created", ThreatIndicatorFileCreated,
+			"threat.indicator.file.ctime", ThreatIndicatorFileCtime,
+			"threat.indicator.file.device", ThreatIndicatorFileDevice,
+			"threat.indicator.file.directory", ThreatIndicatorFileDirectory,
+			"threat.indicator.file.drive_letter", ThreatIndicatorFileDriveLetter,
+			"threat.indicator.file.extension", ThreatIndicatorFileExtension,
+			"threat.indicator.file.fork_name", ThreatIndicatorFileForkName,
+			"threat.indicator.file.gid", ThreatIndicatorFileGid,
+			"threat.indicator.file.group", ThreatIndicatorFileGroup,
+			"threat.indicator.file.inode", ThreatIndicatorFileInode,
+			"threat.indicator.file.mime_type", ThreatIndicatorFileMimeType,
+			"threat.indicator.file.mode", ThreatIndicatorFileMode,
+			"threat.indicator.file.mtime", ThreatIndicatorFileMtime,
+			"threat.indicator.file.name", ThreatIndicatorFileName,
+			"threat.indicator.file.owner", ThreatIndicatorFileOwner,
+			"threat.indicator.file.path", ThreatIndicatorFilePath,
+			"threat.indicator.file.size", ThreatIndicatorFileSize,
+			"threat.indicator.file.target_path", ThreatIndicatorFileTargetPath,
+			"threat.indicator.file.type", ThreatIndicatorFileType,
+			"threat.indicator.file.uid", ThreatIndicatorFileUid,
+			"threat.indicator.file.hash.md5", ThreatIndicatorFileHashMd5,
+			"threat.indicator.file.hash.sha1", ThreatIndicatorFileHashSha1,
+			"threat.indicator.file.hash.sha256", ThreatIndicatorFileHashSha256,
+			"threat.indicator.file.hash.sha384", ThreatIndicatorFileHashSha384,
+			"threat.indicator.file.hash.sha512", ThreatIndicatorFileHashSha512,
+			"threat.indicator.file.hash.ssdeep", ThreatIndicatorFileHashSsdeep,
+			"threat.indicator.file.hash.tlsh", ThreatIndicatorFileHashTlsh,
+			"threat.indicator.file.pe.architecture", ThreatIndicatorFilePeArchitecture,
+			"threat.indicator.file.pe.company", ThreatIndicatorFilePeCompany,
+			"threat.indicator.file.pe.description", ThreatIndicatorFilePeDescription,
+			"threat.indicator.file.pe.file_version", ThreatIndicatorFilePeFileVersion,
+			"threat.indicator.file.pe.go_import_hash", ThreatIndicatorFilePeGoImportHash,
+			"threat.indicator.file.pe.go_imports", ThreatIndicatorFilePeGoImports,
+			"threat.indicator.file.pe.go_imports_names_entropy", ThreatIndicatorFilePeGoImportsNamesEntropy,
+			"threat.indicator.file.pe.go_imports_names_var_entropy", ThreatIndicatorFilePeGoImportsNamesVarEntropy,
+			"threat.indicator.file.pe.go_stripped", ThreatIndicatorFilePeGoStripped,
+			"threat.indicator.file.pe.imphash", ThreatIndicatorFilePeImphash,
+			"threat.indicator.file.pe.import_hash", ThreatIndicatorFilePeImportHash,
+			"threat.indicator.file.pe.imports_names_entropy", ThreatIndicatorFilePeImportsNamesEntropy,
+			"threat.indicator.file.pe.imports_names_var_entropy", ThreatIndicatorFilePeImportsNamesVarEntropy,
+			"threat.indicator.file.pe.original_file_name", ThreatIndicatorFilePeOriginalFileName,
+			"threat.indicator.file.pe.pehash", ThreatIndicatorFilePePehash,
+			"threat.indicator.file.pe.product", ThreatIndicatorFilePeProduct,
+			"threat.indicator.file.x509.issuer.distinguished_name", ThreatIndicatorFileX509IssuerDistinguishedName,
+			"threat.indicator.file.x509.not_after", ThreatIndicatorFileX509NotAfter,
+			"threat.indicator.file.x509.not_before", ThreatIndicatorFileX509NotBefore,
+			"threat.indicator.file.x509.public_key_algorithm", ThreatIndicatorFileX509PublicKeyAlgorithm,
+			"threat.indicator.file.x509.public_key_curve", ThreatIndicatorFileX509PublicKeyCurve,
+			"threat.indicator.file.x509.public_key_exponent", ThreatIndicatorFileX509PublicKeyExponent,
+			"threat.indicator.file.x509.public_key_size", ThreatIndicatorFileX509PublicKeySize,
+			"threat.indicator.file.x509.serial_number", ThreatIndicatorFileX509SerialNumber,
+			"threat.indicator.file.x509.signature_algorithm", ThreatIndicatorFileX509SignatureAlgorithm,
+			"threat.indicator.file.x509.subject.distinguished_name", ThreatIndicatorFileX509SubjectDistinguishedName,
+			"threat.indicator.file.x509.version_number", ThreatIndicatorFileX509VersionNumber,
+			"threat.indicator.file.code_signature.digest_algorithm", ThreatIndicatorFileCodeSignatureDigestAlgorithm,
+			"threat.indicator.file.code_signature.exists", ThreatIndicatorFileCodeSignatureExists,
+			"threat.indicator.file.code_signature.signing_id", ThreatIndicatorFileCodeSignatureSigningId,
+			"threat.indicator.file.code_signature.status", ThreatIndicatorFileCodeSignatureStatus,
+			"threat.indicator.file.code_signature.subject_name", ThreatIndicatorFileCodeSignatureSubjectName,
+			"threat.indicator.file.code_signature.team_id", ThreatIndicatorFileCodeSignatureTeamId,
+			"threat.indicator.file.code_signature.timestamp", ThreatIndicatorFileCodeSignatureTimestamp,
+			"threat.indicator.file.code_signature.trusted", ThreatIndicatorFileCodeSignatureTrusted,
+			"threat.indicator.file.code_signature.valid", ThreatIndicatorFileCodeSignatureValid,
+			"threat.indicator.file.elf.architecture", ThreatIndicatorFileElfArchitecture,
+			"threat.indicator.file.elf.byte_order", ThreatIndicatorFileElfByteOrder,
+			"threat.indicator.file.elf.cpu_type", ThreatIndicatorFileElfCpuType,
+			"threat.indicator.file.elf.creation_date", ThreatIndicatorFileElfCreationDate,
+			"threat.indicator.file.elf.go_import_hash", ThreatIndicatorFileElfGoImportHash,
+			"threat.indicator.file.elf.go_imports", ThreatIndicatorFileElfGoImports,
+			"threat.indicator.file.elf.go_imports_names_entropy", ThreatIndicatorFileElfGoImportsNamesEntropy,
+			"threat.indicator.file.elf.go_imports_names_var_entropy", ThreatIndicatorFileElfGoImportsNamesVarEntropy,
+			"threat.indicator.file.elf.go_stripped", ThreatIndicatorFileElfGoStripped,
+			"threat.indicator.file.elf.header.abi_version", ThreatIndicatorFileElfHeaderAbiVersion,
+			"threat.indicator.file.elf.header.class", ThreatIndicatorFileElfHeaderClass,
+			"threat.indicator.file.elf.header.data", ThreatIndicatorFileElfHeaderData,
+			"threat.indicator.file.elf.header.entrypoint", ThreatIndicatorFileElfHeaderEntrypoint,
+			"threat.indicator.file.elf.header.object_version", ThreatIndicatorFileElfHeaderObjectVersion,
+			"threat.indicator.file.elf.header.os_abi", ThreatIndicatorFileElfHeaderOsAbi,
+			"threat.indicator.file.elf.header.type", ThreatIndicatorFileElfHeaderType,
+			"threat.indicator.file.elf.header.version", ThreatIndicatorFileElfHeaderVersion,
+			"threat.indicator.file.elf.import_hash", ThreatIndicatorFileElfImportHash,
+			"threat.indicator.file.elf.imports_names_entropy", ThreatIndicatorFileElfImportsNamesEntropy,
+			"threat.indicator.file.elf.imports_names_var_entropy", ThreatIndicatorFileElfImportsNamesVarEntropy,
+			"threat.indicator.file.elf.telfhash", ThreatIndicatorFileElfTelfhash,
+			"threat.indicator.file.macho.go_import_hash", ThreatIndicatorFileMachoGoImportHash,
+			"threat.indicator.file.macho.go_imports", ThreatIndicatorFileMachoGoImports,
+			"threat.indicator.file.macho.go_imports_names_entropy", ThreatIndicatorFileMachoGoImportsNamesEntropy,
+			"threat.indicator.file.macho.go_imports_names_var_entropy", ThreatIndicatorFileMachoGoImportsNamesVarEntropy,
+			"threat.indicator.file.macho.go_stripped", ThreatIndicatorFileMachoGoStripped,
+			"threat.indicator.file.macho.import_hash", ThreatIndicatorFileMachoImportHash,
+			"threat.indicator.file.macho.imports_names_entropy", ThreatIndicatorFileMachoImportsNamesEntropy,
+			"threat.indicator.file.macho.imports_names_var_entropy", ThreatIndicatorFileMachoImportsNamesVarEntropy,
+			"threat.indicator.file.macho.symhash", ThreatIndicatorFileMachoSymhash,
+			"threat.indicator.geo.city_name", ThreatIndicatorGeoCityName,
+			"threat.indicator.geo.continent_code", ThreatIndicatorGeoContinentCode,
+			"threat.indicator.geo.continent_name", ThreatIndicatorGeoContinentName,
+			"threat.indicator.geo.country_iso_code", ThreatIndicatorGeoCountryIsoCode,
+			"threat.indicator.geo.country_name", ThreatIndicatorGeoCountryName,
+			"threat.indicator.geo.name", ThreatIndicatorGeoName,
+			"threat.indicator.geo.postal_code", ThreatIndicatorGeoPostalCode,
+			"threat.indicator.geo.region_iso_code", ThreatIndicatorGeoRegionIsoCode,
+			"threat.indicator.geo.region_name", ThreatIndicatorGeoRegionName,
+			"threat.indicator.geo.timezone", ThreatIndicatorGeoTimezone,
+			"threat.indicator.registry.data.bytes", ThreatIndicatorRegistryDataBytes,
+			"threat.indicator.registry.data.type", ThreatIndicatorRegistryDataType,
+			"threat.indicator.registry.hive", ThreatIndicatorRegistryHive,
+			"threat.indicator.registry.key", ThreatIndicatorRegistryKey,
+			"threat.indicator.registry.path", ThreatIndicatorRegistryPath,
+			"threat.indicator.registry.value", ThreatIndicatorRegistryValue,
+			"threat.indicator.url.domain", ThreatIndicatorUrlDomain,
+			"threat.indicator.url.extension", ThreatIndicatorUrlExtension,
+			"threat.indicator.url.fragment", ThreatIndicatorUrlFragment,
+			"threat.indicator.url.full", ThreatIndicatorUrlFull,
+			"threat.indicator.url.original", ThreatIndicatorUrlOriginal,
+			"threat.indicator.url.password", ThreatIndicatorUrlPassword,
+			"threat.indicator.url.path", ThreatIndicatorUrlPath,
+			"threat.indicator.url.port", ThreatIndicatorUrlPort,
+			"threat.indicator.url.query", ThreatIndicatorUrlQuery,
+			"threat.indicator.url.registered_domain", ThreatIndicatorUrlRegisteredDomain,
+			"threat.indicator.url.scheme", ThreatIndicatorUrlScheme,
+			"threat.indicator.url.subdomain", ThreatIndicatorUrlSubdomain,
+			"threat.indicator.url.top_level_domain", ThreatIndicatorUrlTopLevelDomain,
+			"threat.indicator.url.username", ThreatIndicatorUrlUsername,
 			"tls.cipher", TlsCipher,
 			"tls.client.certificate", TlsClientCertificate,
 			"tls.client.hash.md5", TlsClientHashMd5,
@@ -8873,17 +8873,17 @@ namespace Elastic.CommonSchema
 			"tls.server.subject", TlsServerSubject,
 			"tls.version", TlsVersion,
 			"tls.version_protocol", TlsVersionProtocol,
-			"tls.x509.issuer.distinguished_name", TlsX509IssuerDistinguishedName,
-			"tls.x509.not_after", TlsX509NotAfter,
-			"tls.x509.not_before", TlsX509NotBefore,
-			"tls.x509.public_key_algorithm", TlsX509PublicKeyAlgorithm,
-			"tls.x509.public_key_curve", TlsX509PublicKeyCurve,
-			"tls.x509.public_key_exponent", TlsX509PublicKeyExponent,
-			"tls.x509.public_key_size", TlsX509PublicKeySize,
-			"tls.x509.serial_number", TlsX509SerialNumber,
-			"tls.x509.signature_algorithm", TlsX509SignatureAlgorithm,
-			"tls.x509.subject.distinguished_name", TlsX509SubjectDistinguishedName,
-			"tls.x509.version_number", TlsX509VersionNumber,
+			"tls.client.x509.issuer.distinguished_name", TlsClientX509IssuerDistinguishedName,
+			"tls.client.x509.not_after", TlsClientX509NotAfter,
+			"tls.client.x509.not_before", TlsClientX509NotBefore,
+			"tls.client.x509.public_key_algorithm", TlsClientX509PublicKeyAlgorithm,
+			"tls.client.x509.public_key_curve", TlsClientX509PublicKeyCurve,
+			"tls.client.x509.public_key_exponent", TlsClientX509PublicKeyExponent,
+			"tls.client.x509.public_key_size", TlsClientX509PublicKeySize,
+			"tls.client.x509.serial_number", TlsClientX509SerialNumber,
+			"tls.client.x509.signature_algorithm", TlsClientX509SignatureAlgorithm,
+			"tls.client.x509.subject.distinguished_name", TlsClientX509SubjectDistinguishedName,
+			"tls.client.x509.version_number", TlsClientX509VersionNumber,
 			"url.domain", UrlDomain,
 			"url.extension", UrlExtension,
 			"url.fragment", UrlFragment,
@@ -8913,12 +8913,12 @@ namespace Elastic.CommonSchema
 			"user.risk.static_level", UserRiskStaticLevel,
 			"user.risk.static_score", UserRiskStaticScore,
 			"user.risk.static_score_norm", UserRiskStaticScoreNorm,
-			"user.user.domain", UserUserDomain,
-			"user.user.email", UserUserEmail,
-			"user.user.full_name", UserUserFullName,
-			"user.user.hash", UserUserHash,
-			"user.user.id", UserUserId,
-			"user.user.name", UserUserName,
+			"target.user.domain", TargetUserDomain,
+			"target.user.email", TargetUserEmail,
+			"target.user.full_name", TargetUserFullName,
+			"target.user.hash", TargetUserHash,
+			"target.user.id", TargetUserId,
+			"target.user.name", TargetUserName,
 			"user_agent.device.name", UserAgentDeviceName,
 			"user_agent.name", UserAgentName,
 			"user_agent.original", UserAgentOriginal,

@@ -17,7 +17,7 @@ namespace Elastic.CommonSchema.Generator.Projection
 		public string Name => JsonProperty.PascalCase();
 
 
-		public string LocalPath { get; }
+		private string LocalPath { get; }
 		public string FullPath { get; }
 		public string LogTemplateAlternative => FullPath.PascalCase();
 
@@ -90,15 +90,23 @@ namespace Elastic.CommonSchema.Generator.Projection
 			Example = NormalizeDescription(field.Example?.ToString() ?? string.Empty);
 		}
 
-		internal ValueTypePropertyReference(string parentPath, string prefix, string fullPath, Field field, EntityClass entity)
-			: this(parentPath, $"{prefix}.{fullPath}", field)
+		internal ValueTypePropertyReference(string parentPath, string fullPath, Field field, EntityPropertyReference property)
+			: this(parentPath, fullPath,field)
 		{
 			OriginalFullPath = fullPath;
 			IsEntityDispatch = true;
-			CastFromObject = $"TrySet{entity.Name}";
+			CastFromObject = $"TryAssign{property.Entity.Name}";
+
+			ContainerPath = property.Name;
+			ContainerPathEntity = property.Entity.Name;
+
+			//if (property.Name.Contains("."))
+			//CastFromObject = $"TrySet{property.Name}";
 		}
 		public bool IsEntityDispatch { get; }
 		public string OriginalFullPath { get; }
+		public string ContainerPath { get; }
+		public string ContainerPathEntity { get; }
 		internal string ParentPath { get; }
 		internal Field Field { get; }
 
@@ -108,8 +116,21 @@ namespace Elastic.CommonSchema.Generator.Projection
 		public override string Description { get; }
 		public override string Example { get; }
 
-		public ValueTypePropertyReference CreateSettableTypePropertyReference(string prefix, EntityClass entity) =>
-			new(ParentPath, prefix, FullPath, Field, entity);
+		public ValueTypePropertyReference CreateSettableTypePropertyReference(EntityPropertyReference property)
+		{
+			var tokens = property.FullPath.Split(['.']).Where(t => !FullPath.StartsWith($"{t}.")).ToArray();
+			var prefix = string.Join('.', tokens);
+			var newPath = $"{prefix}.{FullPath}";
+
+			return new ValueTypePropertyReference(prefix, newPath, Field, property);
+			/*
+			if (FullPath.StartsWith(property.JsonProperty))
+				return new ValueTypePropertyReference(ParentPath, "", FullPath, Field, property);
+
+			var tokens = property.JsonProperty.Split(['.']).Where(t => !FullPath.StartsWith($"{t}.")).ToArray();
+			return new ValueTypePropertyReference(ParentPath, prefix, FullPath, Field, property);
+			*/
+		}
 	}
 
 	public class InlineObjectPropertyReference : PropertyReference

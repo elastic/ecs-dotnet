@@ -151,30 +151,34 @@ namespace Elastic.CommonSchema
 {
 	var entity = dispatch.Entity;
 <text>
-		public static bool TrySet@(dispatch.Name)(@dispatch.Target document, string path, object value)
+		public static Func@(Raw("<"))@(dispatch.FuncTarget), object, bool@(Raw(">")) TryAssign@(dispatch.AssignEntity)(string path)
 		{
 			Func@(Raw("<"))@(dispatch.FuncTarget), object, bool@(Raw(">")) assign = path switch
 			{
-		@foreach (var prop in entity.SettableProperties)
+		@foreach (var prop in dispatch.SettableProperties)
 		{
 			if (!prop.IsEntityDispatch)
 			{
-			//				"client.as.number" => static (e, v) => TrySetAs(e, "as.number", v),
 <text>				"@prop.FullPath" => static (e, v) => @(prop.CastFromObject)(e, v, static (ee, p) => ee.@(prop.Name) = p),
 				"@prop.LogTemplateAlternative" => static (e, v) => @(prop.CastFromObject)(e, v, static (ee, p) => ee.@(prop.Name) = p),
 </text>
 			}
 			else
 			{
-<text>				"@prop.FullPath" => static (e, v) => @(prop.CastFromObject)(e, "@(prop.OriginalFullPath)", v),
-				"@prop.LogTemplateAlternative" => static (e, v) => @(prop.CastFromObject)(e, "@(prop.OriginalFullPath)", v),
+<text>				"@prop.FullPath" => static (e, v) => @(prop.CastFromObject)("@(prop.JsonProperty)")(e.@(prop.ContainerPath) ?? new @(prop.ContainerPathEntity)(),v),
+				"@prop.LogTemplateAlternative" => static (e, v) => @(prop.CastFromObject)("@(prop.JsonProperty)")(e.@(prop.ContainerPath) ?? new @(prop.ContainerPathEntity)(),v),
 </text>
 			}
 		}
 				_ => null
 			};
+			return assign;
+		}
+		public static bool TrySet@(dispatch.AssignEntity)(@dispatch.AssignParameter document, string path, object value)
+		{
+			var assign = TryAssign@(dispatch.AssignEntity)(path);
 			if (assign == null) return false;
-
+		
 			var entity = document.@(dispatch.AssignTarget) ?? new @(entity.Name)();
 			var assigned = assign(entity, value);
 			if (assigned) document.@(dispatch.AssignTarget) = entity;
