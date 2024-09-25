@@ -723,6 +723,8 @@ namespace Elastic.CommonSchema
 				case "ClientGeoCountryIsoCode":
 				case "client.geo.country_name":
 				case "ClientGeoCountryName":
+				case "client.geo.location":
+				case "ClientGeoLocation":
 				case "client.geo.name":
 				case "ClientGeoName":
 				case "client.geo.postal_code":
@@ -763,18 +765,6 @@ namespace Elastic.CommonSchema
 				case "ClientUserRiskStaticScore":
 				case "client.user.risk.static_score_norm":
 				case "ClientUserRiskStaticScoreNorm":
-				case "client.user.target.user.domain":
-				case "ClientUserTargetUserDomain":
-				case "client.user.target.user.email":
-				case "ClientUserTargetUserEmail":
-				case "client.user.target.user.full_name":
-				case "ClientUserTargetUserFullName":
-				case "client.user.target.user.hash":
-				case "ClientUserTargetUserHash":
-				case "client.user.target.user.id":
-				case "ClientUserTargetUserId":
-				case "client.user.target.user.name":
-				case "ClientUserTargetUserName":
 					return TrySetClient(document, path, value);
 				case "cloud.account.id":
 				case "CloudAccountId":
@@ -798,28 +788,6 @@ namespace Elastic.CommonSchema
 				case "CloudRegion":
 				case "cloud.service.name":
 				case "CloudServiceName":
-				case "origin.cloud.account.id":
-				case "OriginCloudAccountId":
-				case "origin.cloud.account.name":
-				case "OriginCloudAccountName":
-				case "origin.cloud.availability_zone":
-				case "OriginCloudAvailabilityZone":
-				case "origin.cloud.instance.id":
-				case "OriginCloudInstanceId":
-				case "origin.cloud.instance.name":
-				case "OriginCloudInstanceName":
-				case "origin.cloud.machine.type":
-				case "OriginCloudMachineType":
-				case "origin.cloud.project.id":
-				case "OriginCloudProjectId":
-				case "origin.cloud.project.name":
-				case "OriginCloudProjectName":
-				case "origin.cloud.provider":
-				case "OriginCloudProvider":
-				case "origin.cloud.region":
-				case "OriginCloudRegion":
-				case "origin.cloud.service.name":
-				case "OriginCloudServiceName":
 					return TrySetCloud(document, path, value);
 				case "code_signature.digest_algorithm":
 				case "CodeSignatureDigestAlgorithm":
@@ -908,6 +876,8 @@ namespace Elastic.CommonSchema
 				case "DestinationGeoCountryIsoCode":
 				case "destination.geo.country_name":
 				case "DestinationGeoCountryName":
+				case "destination.geo.location":
+				case "DestinationGeoLocation":
 				case "destination.geo.name":
 				case "DestinationGeoName":
 				case "destination.geo.postal_code":
@@ -948,18 +918,6 @@ namespace Elastic.CommonSchema
 				case "DestinationUserRiskStaticScore":
 				case "destination.user.risk.static_score_norm":
 				case "DestinationUserRiskStaticScoreNorm":
-				case "destination.user.target.user.domain":
-				case "DestinationUserTargetUserDomain":
-				case "destination.user.target.user.email":
-				case "DestinationUserTargetUserEmail":
-				case "destination.user.target.user.full_name":
-				case "DestinationUserTargetUserFullName":
-				case "destination.user.target.user.hash":
-				case "DestinationUserTargetUserHash":
-				case "destination.user.target.user.id":
-				case "DestinationUserTargetUserId":
-				case "destination.user.target.user.name":
-				case "DestinationUserTargetUserName":
 					return TrySetDestination(document, path, value);
 				case "device.id":
 				case "DeviceId":
@@ -1399,6 +1357,8 @@ namespace Elastic.CommonSchema
 				case "GeoCountryIsoCode":
 				case "geo.country_name":
 				case "GeoCountryName":
+				case "geo.location":
+				case "GeoLocation":
 				case "geo.name":
 				case "GeoName":
 				case "geo.postal_code":
@@ -1474,6 +1434,8 @@ namespace Elastic.CommonSchema
 				case "HostGeoCountryIsoCode":
 				case "host.geo.country_name":
 				case "HostGeoCountryName":
+				case "host.geo.location":
+				case "HostGeoLocation":
 				case "host.geo.name":
 				case "HostGeoName":
 				case "host.geo.postal_code":
@@ -1628,6 +1590,8 @@ namespace Elastic.CommonSchema
 				case "ObserverGeoCountryIsoCode":
 				case "observer.geo.country_name":
 				case "ObserverGeoCountryName":
+				case "observer.geo.location":
+				case "ObserverGeoLocation":
 				case "observer.geo.name":
 				case "ObserverGeoName":
 				case "observer.geo.postal_code":
@@ -1798,6 +1762,18 @@ namespace Elastic.CommonSchema
 				case "ProcessGroupId":
 				case "process.group.name":
 				case "ProcessGroupName":
+				case "process.real_group.domain":
+				case "ProcessRealGroupDomain":
+				case "process.real_group.id":
+				case "ProcessRealGroupId":
+				case "process.real_group.name":
+				case "ProcessRealGroupName":
+				case "process.saved_group.domain":
+				case "ProcessSavedGroupDomain":
+				case "process.saved_group.id":
+				case "ProcessSavedGroupId":
+				case "process.saved_group.name":
+				case "ProcessSavedGroupName":
 				case "process.hash.md5":
 				case "ProcessHashMd5":
 				case "process.hash.sha1":
@@ -1960,6 +1936,8 @@ namespace Elastic.CommonSchema
 				case "ProcessEntryMetaSourceGeoCountryIsoCode":
 				case "process.entry_meta.source.geo.country_name":
 				case "ProcessEntryMetaSourceGeoCountryName":
+				case "process.entry_meta.source.geo.location":
+				case "ProcessEntryMetaSourceGeoLocation":
 				case "process.entry_meta.source.geo.name":
 				case "ProcessEntryMetaSourceGeoName":
 				case "process.entry_meta.source.geo.postal_code":
@@ -2000,18 +1978,6 @@ namespace Elastic.CommonSchema
 				case "ProcessEntryMetaSourceUserRiskStaticScore":
 				case "process.entry_meta.source.user.risk.static_score_norm":
 				case "ProcessEntryMetaSourceUserRiskStaticScoreNorm":
-				case "process.entry_meta.source.user.target.user.domain":
-				case "ProcessEntryMetaSourceUserTargetUserDomain":
-				case "process.entry_meta.source.user.target.user.email":
-				case "ProcessEntryMetaSourceUserTargetUserEmail":
-				case "process.entry_meta.source.user.target.user.full_name":
-				case "ProcessEntryMetaSourceUserTargetUserFullName":
-				case "process.entry_meta.source.user.target.user.hash":
-				case "ProcessEntryMetaSourceUserTargetUserHash":
-				case "process.entry_meta.source.user.target.user.id":
-				case "ProcessEntryMetaSourceUserTargetUserId":
-				case "process.entry_meta.source.user.target.user.name":
-				case "ProcessEntryMetaSourceUserTargetUserName":
 				case "process.user.domain":
 				case "ProcessUserDomain":
 				case "process.user.email":
@@ -2042,222 +2008,96 @@ namespace Elastic.CommonSchema
 				case "ProcessUserRiskStaticScore":
 				case "process.user.risk.static_score_norm":
 				case "ProcessUserRiskStaticScoreNorm":
-				case "process.user.target.user.domain":
-				case "ProcessUserTargetUserDomain":
-				case "process.user.target.user.email":
-				case "ProcessUserTargetUserEmail":
-				case "process.user.target.user.full_name":
-				case "ProcessUserTargetUserFullName":
-				case "process.user.target.user.hash":
-				case "ProcessUserTargetUserHash":
-				case "process.user.target.user.id":
-				case "ProcessUserTargetUserId":
-				case "process.user.target.user.name":
-				case "ProcessUserTargetUserName":
-				case "parent.process.args_count":
-				case "ParentProcessArgsCount":
-				case "parent.process.command_line":
-				case "ParentProcessCommandLine":
-				case "parent.process.end":
-				case "ParentProcessEnd":
-				case "parent.process.entity_id":
-				case "ParentProcessEntityId":
-				case "parent.process.executable":
-				case "ParentProcessExecutable":
-				case "parent.process.exit_code":
-				case "ParentProcessExitCode":
-				case "parent.process.interactive":
-				case "ParentProcessInteractive":
-				case "parent.process.name":
-				case "ParentProcessName":
-				case "parent.process.pgid":
-				case "ParentProcessPgid":
-				case "parent.process.pid":
-				case "ParentProcessPid":
-				case "parent.process.start":
-				case "ParentProcessStart":
-				case "parent.process.thread.id":
-				case "ParentProcessThreadId":
-				case "parent.process.thread.name":
-				case "ParentProcessThreadName":
-				case "parent.process.title":
-				case "ParentProcessTitle":
-				case "parent.process.uptime":
-				case "ParentProcessUptime":
-				case "parent.process.vpid":
-				case "ParentProcessVpid":
-				case "parent.process.working_directory":
-				case "ParentProcessWorkingDirectory":
-				case "process.parent.group_leader.process.args_count":
-				case "ProcessParentGroupLeaderProcessArgsCount":
-				case "process.parent.group_leader.process.command_line":
-				case "ProcessParentGroupLeaderProcessCommandLine":
-				case "process.parent.group_leader.process.end":
-				case "ProcessParentGroupLeaderProcessEnd":
-				case "process.parent.group_leader.process.entity_id":
-				case "ProcessParentGroupLeaderProcessEntityId":
-				case "process.parent.group_leader.process.executable":
-				case "ProcessParentGroupLeaderProcessExecutable":
-				case "process.parent.group_leader.process.exit_code":
-				case "ProcessParentGroupLeaderProcessExitCode":
-				case "process.parent.group_leader.process.interactive":
-				case "ProcessParentGroupLeaderProcessInteractive":
-				case "process.parent.group_leader.process.name":
-				case "ProcessParentGroupLeaderProcessName":
-				case "process.parent.group_leader.process.pgid":
-				case "ProcessParentGroupLeaderProcessPgid":
-				case "process.parent.group_leader.process.pid":
-				case "ProcessParentGroupLeaderProcessPid":
-				case "process.parent.group_leader.process.start":
-				case "ProcessParentGroupLeaderProcessStart":
-				case "process.parent.group_leader.process.thread.id":
-				case "ProcessParentGroupLeaderProcessThreadId":
-				case "process.parent.group_leader.process.thread.name":
-				case "ProcessParentGroupLeaderProcessThreadName":
-				case "process.parent.group_leader.process.title":
-				case "ProcessParentGroupLeaderProcessTitle":
-				case "process.parent.group_leader.process.uptime":
-				case "ProcessParentGroupLeaderProcessUptime":
-				case "process.parent.group_leader.process.vpid":
-				case "ProcessParentGroupLeaderProcessVpid":
-				case "process.parent.group_leader.process.working_directory":
-				case "ProcessParentGroupLeaderProcessWorkingDirectory":
-				case "process.entry_leader.parent.process.args_count":
-				case "ProcessEntryLeaderParentProcessArgsCount":
-				case "process.entry_leader.parent.process.command_line":
-				case "ProcessEntryLeaderParentProcessCommandLine":
-				case "process.entry_leader.parent.process.end":
-				case "ProcessEntryLeaderParentProcessEnd":
-				case "process.entry_leader.parent.process.entity_id":
-				case "ProcessEntryLeaderParentProcessEntityId":
-				case "process.entry_leader.parent.process.executable":
-				case "ProcessEntryLeaderParentProcessExecutable":
-				case "process.entry_leader.parent.process.exit_code":
-				case "ProcessEntryLeaderParentProcessExitCode":
-				case "process.entry_leader.parent.process.interactive":
-				case "ProcessEntryLeaderParentProcessInteractive":
-				case "process.entry_leader.parent.process.name":
-				case "ProcessEntryLeaderParentProcessName":
-				case "process.entry_leader.parent.process.pgid":
-				case "ProcessEntryLeaderParentProcessPgid":
-				case "process.entry_leader.parent.process.pid":
-				case "ProcessEntryLeaderParentProcessPid":
-				case "process.entry_leader.parent.process.start":
-				case "ProcessEntryLeaderParentProcessStart":
-				case "process.entry_leader.parent.process.thread.id":
-				case "ProcessEntryLeaderParentProcessThreadId":
-				case "process.entry_leader.parent.process.thread.name":
-				case "ProcessEntryLeaderParentProcessThreadName":
-				case "process.entry_leader.parent.process.title":
-				case "ProcessEntryLeaderParentProcessTitle":
-				case "process.entry_leader.parent.process.uptime":
-				case "ProcessEntryLeaderParentProcessUptime":
-				case "process.entry_leader.parent.process.vpid":
-				case "ProcessEntryLeaderParentProcessVpid":
-				case "process.entry_leader.parent.process.working_directory":
-				case "ProcessEntryLeaderParentProcessWorkingDirectory":
-				case "entry_leader.process.parent.entry_leader.parent.session_leader.process.args_count":
-				case "EntryLeaderProcessParentEntryLeaderParentSessionLeaderProcessArgsCount":
-				case "entry_leader.process.parent.entry_leader.parent.session_leader.process.command_line":
-				case "EntryLeaderProcessParentEntryLeaderParentSessionLeaderProcessCommandLine":
-				case "entry_leader.process.parent.entry_leader.parent.session_leader.process.end":
-				case "EntryLeaderProcessParentEntryLeaderParentSessionLeaderProcessEnd":
-				case "entry_leader.process.parent.entry_leader.parent.session_leader.process.entity_id":
-				case "EntryLeaderProcessParentEntryLeaderParentSessionLeaderProcessEntityId":
-				case "entry_leader.process.parent.entry_leader.parent.session_leader.process.executable":
-				case "EntryLeaderProcessParentEntryLeaderParentSessionLeaderProcessExecutable":
-				case "entry_leader.process.parent.entry_leader.parent.session_leader.process.exit_code":
-				case "EntryLeaderProcessParentEntryLeaderParentSessionLeaderProcessExitCode":
-				case "entry_leader.process.parent.entry_leader.parent.session_leader.process.interactive":
-				case "EntryLeaderProcessParentEntryLeaderParentSessionLeaderProcessInteractive":
-				case "entry_leader.process.parent.entry_leader.parent.session_leader.process.name":
-				case "EntryLeaderProcessParentEntryLeaderParentSessionLeaderProcessName":
-				case "entry_leader.process.parent.entry_leader.parent.session_leader.process.pgid":
-				case "EntryLeaderProcessParentEntryLeaderParentSessionLeaderProcessPgid":
-				case "entry_leader.process.parent.entry_leader.parent.session_leader.process.pid":
-				case "EntryLeaderProcessParentEntryLeaderParentSessionLeaderProcessPid":
-				case "entry_leader.process.parent.entry_leader.parent.session_leader.process.start":
-				case "EntryLeaderProcessParentEntryLeaderParentSessionLeaderProcessStart":
-				case "entry_leader.process.parent.entry_leader.parent.session_leader.process.thread.id":
-				case "EntryLeaderProcessParentEntryLeaderParentSessionLeaderProcessThreadId":
-				case "entry_leader.process.parent.entry_leader.parent.session_leader.process.thread.name":
-				case "EntryLeaderProcessParentEntryLeaderParentSessionLeaderProcessThreadName":
-				case "entry_leader.process.parent.entry_leader.parent.session_leader.process.title":
-				case "EntryLeaderProcessParentEntryLeaderParentSessionLeaderProcessTitle":
-				case "entry_leader.process.parent.entry_leader.parent.session_leader.process.uptime":
-				case "EntryLeaderProcessParentEntryLeaderParentSessionLeaderProcessUptime":
-				case "entry_leader.process.parent.entry_leader.parent.session_leader.process.vpid":
-				case "EntryLeaderProcessParentEntryLeaderParentSessionLeaderProcessVpid":
-				case "entry_leader.process.parent.entry_leader.parent.session_leader.process.working_directory":
-				case "EntryLeaderProcessParentEntryLeaderParentSessionLeaderProcessWorkingDirectory":
-				case "process.session_leader.parent.process.args_count":
-				case "ProcessSessionLeaderParentProcessArgsCount":
-				case "process.session_leader.parent.process.command_line":
-				case "ProcessSessionLeaderParentProcessCommandLine":
-				case "process.session_leader.parent.process.end":
-				case "ProcessSessionLeaderParentProcessEnd":
-				case "process.session_leader.parent.process.entity_id":
-				case "ProcessSessionLeaderParentProcessEntityId":
-				case "process.session_leader.parent.process.executable":
-				case "ProcessSessionLeaderParentProcessExecutable":
-				case "process.session_leader.parent.process.exit_code":
-				case "ProcessSessionLeaderParentProcessExitCode":
-				case "process.session_leader.parent.process.interactive":
-				case "ProcessSessionLeaderParentProcessInteractive":
-				case "process.session_leader.parent.process.name":
-				case "ProcessSessionLeaderParentProcessName":
-				case "process.session_leader.parent.process.pgid":
-				case "ProcessSessionLeaderParentProcessPgid":
-				case "process.session_leader.parent.process.pid":
-				case "ProcessSessionLeaderParentProcessPid":
-				case "process.session_leader.parent.process.start":
-				case "ProcessSessionLeaderParentProcessStart":
-				case "process.session_leader.parent.process.thread.id":
-				case "ProcessSessionLeaderParentProcessThreadId":
-				case "process.session_leader.parent.process.thread.name":
-				case "ProcessSessionLeaderParentProcessThreadName":
-				case "process.session_leader.parent.process.title":
-				case "ProcessSessionLeaderParentProcessTitle":
-				case "process.session_leader.parent.process.uptime":
-				case "ProcessSessionLeaderParentProcessUptime":
-				case "process.session_leader.parent.process.vpid":
-				case "ProcessSessionLeaderParentProcessVpid":
-				case "process.session_leader.parent.process.working_directory":
-				case "ProcessSessionLeaderParentProcessWorkingDirectory":
-				case "session_leader.process.parent.session_leader.parent.session_leader.process.args_count":
-				case "SessionLeaderProcessParentSessionLeaderParentSessionLeaderProcessArgsCount":
-				case "session_leader.process.parent.session_leader.parent.session_leader.process.command_line":
-				case "SessionLeaderProcessParentSessionLeaderParentSessionLeaderProcessCommandLine":
-				case "session_leader.process.parent.session_leader.parent.session_leader.process.end":
-				case "SessionLeaderProcessParentSessionLeaderParentSessionLeaderProcessEnd":
-				case "session_leader.process.parent.session_leader.parent.session_leader.process.entity_id":
-				case "SessionLeaderProcessParentSessionLeaderParentSessionLeaderProcessEntityId":
-				case "session_leader.process.parent.session_leader.parent.session_leader.process.executable":
-				case "SessionLeaderProcessParentSessionLeaderParentSessionLeaderProcessExecutable":
-				case "session_leader.process.parent.session_leader.parent.session_leader.process.exit_code":
-				case "SessionLeaderProcessParentSessionLeaderParentSessionLeaderProcessExitCode":
-				case "session_leader.process.parent.session_leader.parent.session_leader.process.interactive":
-				case "SessionLeaderProcessParentSessionLeaderParentSessionLeaderProcessInteractive":
-				case "session_leader.process.parent.session_leader.parent.session_leader.process.name":
-				case "SessionLeaderProcessParentSessionLeaderParentSessionLeaderProcessName":
-				case "session_leader.process.parent.session_leader.parent.session_leader.process.pgid":
-				case "SessionLeaderProcessParentSessionLeaderParentSessionLeaderProcessPgid":
-				case "session_leader.process.parent.session_leader.parent.session_leader.process.pid":
-				case "SessionLeaderProcessParentSessionLeaderParentSessionLeaderProcessPid":
-				case "session_leader.process.parent.session_leader.parent.session_leader.process.start":
-				case "SessionLeaderProcessParentSessionLeaderParentSessionLeaderProcessStart":
-				case "session_leader.process.parent.session_leader.parent.session_leader.process.thread.id":
-				case "SessionLeaderProcessParentSessionLeaderParentSessionLeaderProcessThreadId":
-				case "session_leader.process.parent.session_leader.parent.session_leader.process.thread.name":
-				case "SessionLeaderProcessParentSessionLeaderParentSessionLeaderProcessThreadName":
-				case "session_leader.process.parent.session_leader.parent.session_leader.process.title":
-				case "SessionLeaderProcessParentSessionLeaderParentSessionLeaderProcessTitle":
-				case "session_leader.process.parent.session_leader.parent.session_leader.process.uptime":
-				case "SessionLeaderProcessParentSessionLeaderParentSessionLeaderProcessUptime":
-				case "session_leader.process.parent.session_leader.parent.session_leader.process.vpid":
-				case "SessionLeaderProcessParentSessionLeaderParentSessionLeaderProcessVpid":
-				case "session_leader.process.parent.session_leader.parent.session_leader.process.working_directory":
-				case "SessionLeaderProcessParentSessionLeaderParentSessionLeaderProcessWorkingDirectory":
+				case "process.saved_user.domain":
+				case "ProcessSavedUserDomain":
+				case "process.saved_user.email":
+				case "ProcessSavedUserEmail":
+				case "process.saved_user.full_name":
+				case "ProcessSavedUserFullName":
+				case "process.saved_user.hash":
+				case "ProcessSavedUserHash":
+				case "process.saved_user.id":
+				case "ProcessSavedUserId":
+				case "process.saved_user.name":
+				case "ProcessSavedUserName":
+				case "process.saved_user.group.domain":
+				case "ProcessSavedUserGroupDomain":
+				case "process.saved_user.group.id":
+				case "ProcessSavedUserGroupId":
+				case "process.saved_user.group.name":
+				case "ProcessSavedUserGroupName":
+				case "process.saved_user.risk.calculated_level":
+				case "ProcessSavedUserRiskCalculatedLevel":
+				case "process.saved_user.risk.calculated_score":
+				case "ProcessSavedUserRiskCalculatedScore":
+				case "process.saved_user.risk.calculated_score_norm":
+				case "ProcessSavedUserRiskCalculatedScoreNorm":
+				case "process.saved_user.risk.static_level":
+				case "ProcessSavedUserRiskStaticLevel":
+				case "process.saved_user.risk.static_score":
+				case "ProcessSavedUserRiskStaticScore":
+				case "process.saved_user.risk.static_score_norm":
+				case "ProcessSavedUserRiskStaticScoreNorm":
+				case "process.real_user.domain":
+				case "ProcessRealUserDomain":
+				case "process.real_user.email":
+				case "ProcessRealUserEmail":
+				case "process.real_user.full_name":
+				case "ProcessRealUserFullName":
+				case "process.real_user.hash":
+				case "ProcessRealUserHash":
+				case "process.real_user.id":
+				case "ProcessRealUserId":
+				case "process.real_user.name":
+				case "ProcessRealUserName":
+				case "process.real_user.group.domain":
+				case "ProcessRealUserGroupDomain":
+				case "process.real_user.group.id":
+				case "ProcessRealUserGroupId":
+				case "process.real_user.group.name":
+				case "ProcessRealUserGroupName":
+				case "process.real_user.risk.calculated_level":
+				case "ProcessRealUserRiskCalculatedLevel":
+				case "process.real_user.risk.calculated_score":
+				case "ProcessRealUserRiskCalculatedScore":
+				case "process.real_user.risk.calculated_score_norm":
+				case "ProcessRealUserRiskCalculatedScoreNorm":
+				case "process.real_user.risk.static_level":
+				case "ProcessRealUserRiskStaticLevel":
+				case "process.real_user.risk.static_score":
+				case "ProcessRealUserRiskStaticScore":
+				case "process.real_user.risk.static_score_norm":
+				case "ProcessRealUserRiskStaticScoreNorm":
+				case "process.attested_user.domain":
+				case "ProcessAttestedUserDomain":
+				case "process.attested_user.email":
+				case "ProcessAttestedUserEmail":
+				case "process.attested_user.full_name":
+				case "ProcessAttestedUserFullName":
+				case "process.attested_user.hash":
+				case "ProcessAttestedUserHash":
+				case "process.attested_user.id":
+				case "ProcessAttestedUserId":
+				case "process.attested_user.name":
+				case "ProcessAttestedUserName":
+				case "process.attested_user.group.domain":
+				case "ProcessAttestedUserGroupDomain":
+				case "process.attested_user.group.id":
+				case "ProcessAttestedUserGroupId":
+				case "process.attested_user.group.name":
+				case "ProcessAttestedUserGroupName":
+				case "process.attested_user.risk.calculated_level":
+				case "ProcessAttestedUserRiskCalculatedLevel":
+				case "process.attested_user.risk.calculated_score":
+				case "ProcessAttestedUserRiskCalculatedScore":
+				case "process.attested_user.risk.calculated_score_norm":
+				case "ProcessAttestedUserRiskCalculatedScoreNorm":
+				case "process.attested_user.risk.static_level":
+				case "ProcessAttestedUserRiskStaticLevel":
+				case "process.attested_user.risk.static_score":
+				case "ProcessAttestedUserRiskStaticScore":
+				case "process.attested_user.risk.static_score_norm":
+				case "ProcessAttestedUserRiskStaticScoreNorm":
 					return TrySetProcess(document, path, value);
 				case "registry.data.bytes":
 				case "RegistryDataBytes":
@@ -2342,6 +2182,8 @@ namespace Elastic.CommonSchema
 				case "ServerGeoCountryIsoCode":
 				case "server.geo.country_name":
 				case "ServerGeoCountryName":
+				case "server.geo.location":
+				case "ServerGeoLocation":
 				case "server.geo.name":
 				case "ServerGeoName":
 				case "server.geo.postal_code":
@@ -2382,18 +2224,6 @@ namespace Elastic.CommonSchema
 				case "ServerUserRiskStaticScore":
 				case "server.user.risk.static_score_norm":
 				case "ServerUserRiskStaticScoreNorm":
-				case "server.user.target.user.domain":
-				case "ServerUserTargetUserDomain":
-				case "server.user.target.user.email":
-				case "ServerUserTargetUserEmail":
-				case "server.user.target.user.full_name":
-				case "ServerUserTargetUserFullName":
-				case "server.user.target.user.hash":
-				case "ServerUserTargetUserHash":
-				case "server.user.target.user.id":
-				case "ServerUserTargetUserId":
-				case "server.user.target.user.name":
-				case "ServerUserTargetUserName":
 					return TrySetServer(document, path, value);
 				case "service.address":
 				case "ServiceAddress":
@@ -2415,26 +2245,6 @@ namespace Elastic.CommonSchema
 				case "ServiceType":
 				case "service.version":
 				case "ServiceVersion":
-				case "origin.service.address":
-				case "OriginServiceAddress":
-				case "origin.service.environment":
-				case "OriginServiceEnvironment":
-				case "origin.service.ephemeral_id":
-				case "OriginServiceEphemeralId":
-				case "origin.service.id":
-				case "OriginServiceId":
-				case "origin.service.name":
-				case "OriginServiceName":
-				case "origin.service.node.name":
-				case "OriginServiceNodeName":
-				case "origin.service.node.role":
-				case "OriginServiceNodeRole":
-				case "origin.service.state":
-				case "OriginServiceState":
-				case "origin.service.type":
-				case "OriginServiceType":
-				case "origin.service.version":
-				case "OriginServiceVersion":
 					return TrySetService(document, path, value);
 				case "source.address":
 				case "SourceAddress":
@@ -2474,6 +2284,8 @@ namespace Elastic.CommonSchema
 				case "SourceGeoCountryIsoCode":
 				case "source.geo.country_name":
 				case "SourceGeoCountryName":
+				case "source.geo.location":
+				case "SourceGeoLocation":
 				case "source.geo.name":
 				case "SourceGeoName":
 				case "source.geo.postal_code":
@@ -2514,18 +2326,6 @@ namespace Elastic.CommonSchema
 				case "SourceUserRiskStaticScore":
 				case "source.user.risk.static_score_norm":
 				case "SourceUserRiskStaticScoreNorm":
-				case "source.user.target.user.domain":
-				case "SourceUserTargetUserDomain":
-				case "source.user.target.user.email":
-				case "SourceUserTargetUserEmail":
-				case "source.user.target.user.full_name":
-				case "SourceUserTargetUserFullName":
-				case "source.user.target.user.hash":
-				case "SourceUserTargetUserHash":
-				case "source.user.target.user.id":
-				case "SourceUserTargetUserId":
-				case "source.user.target.user.name":
-				case "SourceUserTargetUserName":
 					return TrySetSource(document, path, value);
 				case "threat.feed.dashboard_id":
 				case "ThreatFeedDashboardId":
@@ -2807,6 +2607,8 @@ namespace Elastic.CommonSchema
 				case "ThreatIndicatorGeoCountryIsoCode":
 				case "threat.indicator.geo.country_name":
 				case "ThreatIndicatorGeoCountryName":
+				case "threat.indicator.geo.location":
+				case "ThreatIndicatorGeoLocation":
 				case "threat.indicator.geo.name":
 				case "ThreatIndicatorGeoName":
 				case "threat.indicator.geo.postal_code":
@@ -2992,18 +2794,6 @@ namespace Elastic.CommonSchema
 				case "UserRiskStaticScore":
 				case "user.risk.static_score_norm":
 				case "UserRiskStaticScoreNorm":
-				case "target.user.domain":
-				case "TargetUserDomain":
-				case "target.user.email":
-				case "TargetUserEmail":
-				case "target.user.full_name":
-				case "TargetUserFullName":
-				case "target.user.hash":
-				case "TargetUserHash":
-				case "target.user.id":
-				case "TargetUserId":
-				case "target.user.name":
-				case "TargetUserName":
 					return TrySetUser(document, path, value);
 				case "user_agent.device.name":
 				case "UserAgentDeviceName":
@@ -3187,72 +2977,62 @@ namespace Elastic.CommonSchema
 				"ClientSubdomain" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Subdomain = p),
 				"client.top_level_domain" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.TopLevelDomain = p),
 				"ClientTopLevelDomain" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.TopLevelDomain = p),
-				"client.as.number" => static (e, v) => TryAssignAs("as.number")(e.As ?? new As(),v),
-				"ClientAsNumber" => static (e, v) => TryAssignAs("as.number")(e.As ?? new As(),v),
-				"client.as.organization.name" => static (e, v) => TryAssignAs("as.organization.name")(e.As ?? new As(),v),
-				"ClientAsOrganizationName" => static (e, v) => TryAssignAs("as.organization.name")(e.As ?? new As(),v),
-				"client.geo.city_name" => static (e, v) => TryAssignGeo("geo.city_name")(e.Geo ?? new Geo(),v),
-				"ClientGeoCityName" => static (e, v) => TryAssignGeo("geo.city_name")(e.Geo ?? new Geo(),v),
-				"client.geo.continent_code" => static (e, v) => TryAssignGeo("geo.continent_code")(e.Geo ?? new Geo(),v),
-				"ClientGeoContinentCode" => static (e, v) => TryAssignGeo("geo.continent_code")(e.Geo ?? new Geo(),v),
-				"client.geo.continent_name" => static (e, v) => TryAssignGeo("geo.continent_name")(e.Geo ?? new Geo(),v),
-				"ClientGeoContinentName" => static (e, v) => TryAssignGeo("geo.continent_name")(e.Geo ?? new Geo(),v),
-				"client.geo.country_iso_code" => static (e, v) => TryAssignGeo("geo.country_iso_code")(e.Geo ?? new Geo(),v),
-				"ClientGeoCountryIsoCode" => static (e, v) => TryAssignGeo("geo.country_iso_code")(e.Geo ?? new Geo(),v),
-				"client.geo.country_name" => static (e, v) => TryAssignGeo("geo.country_name")(e.Geo ?? new Geo(),v),
-				"ClientGeoCountryName" => static (e, v) => TryAssignGeo("geo.country_name")(e.Geo ?? new Geo(),v),
-				"client.geo.name" => static (e, v) => TryAssignGeo("geo.name")(e.Geo ?? new Geo(),v),
-				"ClientGeoName" => static (e, v) => TryAssignGeo("geo.name")(e.Geo ?? new Geo(),v),
-				"client.geo.postal_code" => static (e, v) => TryAssignGeo("geo.postal_code")(e.Geo ?? new Geo(),v),
-				"ClientGeoPostalCode" => static (e, v) => TryAssignGeo("geo.postal_code")(e.Geo ?? new Geo(),v),
-				"client.geo.region_iso_code" => static (e, v) => TryAssignGeo("geo.region_iso_code")(e.Geo ?? new Geo(),v),
-				"ClientGeoRegionIsoCode" => static (e, v) => TryAssignGeo("geo.region_iso_code")(e.Geo ?? new Geo(),v),
-				"client.geo.region_name" => static (e, v) => TryAssignGeo("geo.region_name")(e.Geo ?? new Geo(),v),
-				"ClientGeoRegionName" => static (e, v) => TryAssignGeo("geo.region_name")(e.Geo ?? new Geo(),v),
-				"client.geo.timezone" => static (e, v) => TryAssignGeo("geo.timezone")(e.Geo ?? new Geo(),v),
-				"ClientGeoTimezone" => static (e, v) => TryAssignGeo("geo.timezone")(e.Geo ?? new Geo(),v),
-				"client.user.domain" => static (e, v) => TryAssignUser("user.domain")(e.User ?? new User(),v),
-				"ClientUserDomain" => static (e, v) => TryAssignUser("user.domain")(e.User ?? new User(),v),
-				"client.user.email" => static (e, v) => TryAssignUser("user.email")(e.User ?? new User(),v),
-				"ClientUserEmail" => static (e, v) => TryAssignUser("user.email")(e.User ?? new User(),v),
-				"client.user.full_name" => static (e, v) => TryAssignUser("user.full_name")(e.User ?? new User(),v),
-				"ClientUserFullName" => static (e, v) => TryAssignUser("user.full_name")(e.User ?? new User(),v),
-				"client.user.hash" => static (e, v) => TryAssignUser("user.hash")(e.User ?? new User(),v),
-				"ClientUserHash" => static (e, v) => TryAssignUser("user.hash")(e.User ?? new User(),v),
-				"client.user.id" => static (e, v) => TryAssignUser("user.id")(e.User ?? new User(),v),
-				"ClientUserId" => static (e, v) => TryAssignUser("user.id")(e.User ?? new User(),v),
-				"client.user.name" => static (e, v) => TryAssignUser("user.name")(e.User ?? new User(),v),
-				"ClientUserName" => static (e, v) => TryAssignUser("user.name")(e.User ?? new User(),v),
-				"client.user.group.domain" => static (e, v) => TryAssignUser("user.group.domain")(e.User ?? new User(),v),
-				"ClientUserGroupDomain" => static (e, v) => TryAssignUser("user.group.domain")(e.User ?? new User(),v),
-				"client.user.group.id" => static (e, v) => TryAssignUser("user.group.id")(e.User ?? new User(),v),
-				"ClientUserGroupId" => static (e, v) => TryAssignUser("user.group.id")(e.User ?? new User(),v),
-				"client.user.group.name" => static (e, v) => TryAssignUser("user.group.name")(e.User ?? new User(),v),
-				"ClientUserGroupName" => static (e, v) => TryAssignUser("user.group.name")(e.User ?? new User(),v),
-				"client.user.risk.calculated_level" => static (e, v) => TryAssignUser("user.risk.calculated_level")(e.User ?? new User(),v),
-				"ClientUserRiskCalculatedLevel" => static (e, v) => TryAssignUser("user.risk.calculated_level")(e.User ?? new User(),v),
-				"client.user.risk.calculated_score" => static (e, v) => TryAssignUser("user.risk.calculated_score")(e.User ?? new User(),v),
-				"ClientUserRiskCalculatedScore" => static (e, v) => TryAssignUser("user.risk.calculated_score")(e.User ?? new User(),v),
-				"client.user.risk.calculated_score_norm" => static (e, v) => TryAssignUser("user.risk.calculated_score_norm")(e.User ?? new User(),v),
-				"ClientUserRiskCalculatedScoreNorm" => static (e, v) => TryAssignUser("user.risk.calculated_score_norm")(e.User ?? new User(),v),
-				"client.user.risk.static_level" => static (e, v) => TryAssignUser("user.risk.static_level")(e.User ?? new User(),v),
-				"ClientUserRiskStaticLevel" => static (e, v) => TryAssignUser("user.risk.static_level")(e.User ?? new User(),v),
-				"client.user.risk.static_score" => static (e, v) => TryAssignUser("user.risk.static_score")(e.User ?? new User(),v),
-				"ClientUserRiskStaticScore" => static (e, v) => TryAssignUser("user.risk.static_score")(e.User ?? new User(),v),
-				"client.user.risk.static_score_norm" => static (e, v) => TryAssignUser("user.risk.static_score_norm")(e.User ?? new User(),v),
-				"ClientUserRiskStaticScoreNorm" => static (e, v) => TryAssignUser("user.risk.static_score_norm")(e.User ?? new User(),v),
-				"client.user.target.user.domain" => static (e, v) => TryAssignUser("target.user.domain")(e.User ?? new User(),v),
-				"ClientUserTargetUserDomain" => static (e, v) => TryAssignUser("target.user.domain")(e.User ?? new User(),v),
-				"client.user.target.user.email" => static (e, v) => TryAssignUser("target.user.email")(e.User ?? new User(),v),
-				"ClientUserTargetUserEmail" => static (e, v) => TryAssignUser("target.user.email")(e.User ?? new User(),v),
-				"client.user.target.user.full_name" => static (e, v) => TryAssignUser("target.user.full_name")(e.User ?? new User(),v),
-				"ClientUserTargetUserFullName" => static (e, v) => TryAssignUser("target.user.full_name")(e.User ?? new User(),v),
-				"client.user.target.user.hash" => static (e, v) => TryAssignUser("target.user.hash")(e.User ?? new User(),v),
-				"ClientUserTargetUserHash" => static (e, v) => TryAssignUser("target.user.hash")(e.User ?? new User(),v),
-				"client.user.target.user.id" => static (e, v) => TryAssignUser("target.user.id")(e.User ?? new User(),v),
-				"ClientUserTargetUserId" => static (e, v) => TryAssignUser("target.user.id")(e.User ?? new User(),v),
-				"client.user.target.user.name" => static (e, v) => TryAssignUser("target.user.name")(e.User ?? new User(),v),
-				"ClientUserTargetUserName" => static (e, v) => TryAssignUser("target.user.name")(e.User ?? new User(),v),
+				"client.as.number" => static (e, v) => TryAssignAs("as.number")(e.As ??= new As(),v),
+				"ClientAsNumber" => static (e, v) => TryAssignAs("as.number")(e.As ??= new As(),v),
+				"client.as.organization.name" => static (e, v) => TryAssignAs("as.organization.name")(e.As ??= new As(),v),
+				"ClientAsOrganizationName" => static (e, v) => TryAssignAs("as.organization.name")(e.As ??= new As(),v),
+				"client.geo.city_name" => static (e, v) => TryAssignGeo("geo.city_name")(e.Geo ??= new Geo(),v),
+				"ClientGeoCityName" => static (e, v) => TryAssignGeo("geo.city_name")(e.Geo ??= new Geo(),v),
+				"client.geo.continent_code" => static (e, v) => TryAssignGeo("geo.continent_code")(e.Geo ??= new Geo(),v),
+				"ClientGeoContinentCode" => static (e, v) => TryAssignGeo("geo.continent_code")(e.Geo ??= new Geo(),v),
+				"client.geo.continent_name" => static (e, v) => TryAssignGeo("geo.continent_name")(e.Geo ??= new Geo(),v),
+				"ClientGeoContinentName" => static (e, v) => TryAssignGeo("geo.continent_name")(e.Geo ??= new Geo(),v),
+				"client.geo.country_iso_code" => static (e, v) => TryAssignGeo("geo.country_iso_code")(e.Geo ??= new Geo(),v),
+				"ClientGeoCountryIsoCode" => static (e, v) => TryAssignGeo("geo.country_iso_code")(e.Geo ??= new Geo(),v),
+				"client.geo.country_name" => static (e, v) => TryAssignGeo("geo.country_name")(e.Geo ??= new Geo(),v),
+				"ClientGeoCountryName" => static (e, v) => TryAssignGeo("geo.country_name")(e.Geo ??= new Geo(),v),
+				"client.geo.location" => static (e, v) => TryAssignGeo("geo.location")(e.Geo ??= new Geo(),v),
+				"ClientGeoLocation" => static (e, v) => TryAssignGeo("geo.location")(e.Geo ??= new Geo(),v),
+				"client.geo.name" => static (e, v) => TryAssignGeo("geo.name")(e.Geo ??= new Geo(),v),
+				"ClientGeoName" => static (e, v) => TryAssignGeo("geo.name")(e.Geo ??= new Geo(),v),
+				"client.geo.postal_code" => static (e, v) => TryAssignGeo("geo.postal_code")(e.Geo ??= new Geo(),v),
+				"ClientGeoPostalCode" => static (e, v) => TryAssignGeo("geo.postal_code")(e.Geo ??= new Geo(),v),
+				"client.geo.region_iso_code" => static (e, v) => TryAssignGeo("geo.region_iso_code")(e.Geo ??= new Geo(),v),
+				"ClientGeoRegionIsoCode" => static (e, v) => TryAssignGeo("geo.region_iso_code")(e.Geo ??= new Geo(),v),
+				"client.geo.region_name" => static (e, v) => TryAssignGeo("geo.region_name")(e.Geo ??= new Geo(),v),
+				"ClientGeoRegionName" => static (e, v) => TryAssignGeo("geo.region_name")(e.Geo ??= new Geo(),v),
+				"client.geo.timezone" => static (e, v) => TryAssignGeo("geo.timezone")(e.Geo ??= new Geo(),v),
+				"ClientGeoTimezone" => static (e, v) => TryAssignGeo("geo.timezone")(e.Geo ??= new Geo(),v),
+				"client.user.domain" => static (e, v) => TryAssignUser("user.domain")(e.User ??= new User(),v),
+				"ClientUserDomain" => static (e, v) => TryAssignUser("user.domain")(e.User ??= new User(),v),
+				"client.user.email" => static (e, v) => TryAssignUser("user.email")(e.User ??= new User(),v),
+				"ClientUserEmail" => static (e, v) => TryAssignUser("user.email")(e.User ??= new User(),v),
+				"client.user.full_name" => static (e, v) => TryAssignUser("user.full_name")(e.User ??= new User(),v),
+				"ClientUserFullName" => static (e, v) => TryAssignUser("user.full_name")(e.User ??= new User(),v),
+				"client.user.hash" => static (e, v) => TryAssignUser("user.hash")(e.User ??= new User(),v),
+				"ClientUserHash" => static (e, v) => TryAssignUser("user.hash")(e.User ??= new User(),v),
+				"client.user.id" => static (e, v) => TryAssignUser("user.id")(e.User ??= new User(),v),
+				"ClientUserId" => static (e, v) => TryAssignUser("user.id")(e.User ??= new User(),v),
+				"client.user.name" => static (e, v) => TryAssignUser("user.name")(e.User ??= new User(),v),
+				"ClientUserName" => static (e, v) => TryAssignUser("user.name")(e.User ??= new User(),v),
+				"client.user.group.domain" => static (e, v) => TryAssignUser("user.group.domain")(e.User ??= new User(),v),
+				"ClientUserGroupDomain" => static (e, v) => TryAssignUser("user.group.domain")(e.User ??= new User(),v),
+				"client.user.group.id" => static (e, v) => TryAssignUser("user.group.id")(e.User ??= new User(),v),
+				"ClientUserGroupId" => static (e, v) => TryAssignUser("user.group.id")(e.User ??= new User(),v),
+				"client.user.group.name" => static (e, v) => TryAssignUser("user.group.name")(e.User ??= new User(),v),
+				"ClientUserGroupName" => static (e, v) => TryAssignUser("user.group.name")(e.User ??= new User(),v),
+				"client.user.risk.calculated_level" => static (e, v) => TryAssignUser("user.risk.calculated_level")(e.User ??= new User(),v),
+				"ClientUserRiskCalculatedLevel" => static (e, v) => TryAssignUser("user.risk.calculated_level")(e.User ??= new User(),v),
+				"client.user.risk.calculated_score" => static (e, v) => TryAssignUser("user.risk.calculated_score")(e.User ??= new User(),v),
+				"ClientUserRiskCalculatedScore" => static (e, v) => TryAssignUser("user.risk.calculated_score")(e.User ??= new User(),v),
+				"client.user.risk.calculated_score_norm" => static (e, v) => TryAssignUser("user.risk.calculated_score_norm")(e.User ??= new User(),v),
+				"ClientUserRiskCalculatedScoreNorm" => static (e, v) => TryAssignUser("user.risk.calculated_score_norm")(e.User ??= new User(),v),
+				"client.user.risk.static_level" => static (e, v) => TryAssignUser("user.risk.static_level")(e.User ??= new User(),v),
+				"ClientUserRiskStaticLevel" => static (e, v) => TryAssignUser("user.risk.static_level")(e.User ??= new User(),v),
+				"client.user.risk.static_score" => static (e, v) => TryAssignUser("user.risk.static_score")(e.User ??= new User(),v),
+				"ClientUserRiskStaticScore" => static (e, v) => TryAssignUser("user.risk.static_score")(e.User ??= new User(),v),
+				"client.user.risk.static_score_norm" => static (e, v) => TryAssignUser("user.risk.static_score_norm")(e.User ??= new User(),v),
+				"ClientUserRiskStaticScoreNorm" => static (e, v) => TryAssignUser("user.risk.static_score_norm")(e.User ??= new User(),v),
 				_ => null
 			};
 			return assign;
@@ -3294,28 +3074,6 @@ namespace Elastic.CommonSchema
 				"CloudRegion" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Region = p),
 				"cloud.service.name" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.ServiceName = p),
 				"CloudServiceName" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.ServiceName = p),
-				"origin.cloud.account.id" => static (e, v) => TryAssignCloudOrigin("cloud.account.id")(e.Origin ?? new CloudOrigin(),v),
-				"OriginCloudAccountId" => static (e, v) => TryAssignCloudOrigin("cloud.account.id")(e.Origin ?? new CloudOrigin(),v),
-				"origin.cloud.account.name" => static (e, v) => TryAssignCloudOrigin("cloud.account.name")(e.Origin ?? new CloudOrigin(),v),
-				"OriginCloudAccountName" => static (e, v) => TryAssignCloudOrigin("cloud.account.name")(e.Origin ?? new CloudOrigin(),v),
-				"origin.cloud.availability_zone" => static (e, v) => TryAssignCloudOrigin("cloud.availability_zone")(e.Origin ?? new CloudOrigin(),v),
-				"OriginCloudAvailabilityZone" => static (e, v) => TryAssignCloudOrigin("cloud.availability_zone")(e.Origin ?? new CloudOrigin(),v),
-				"origin.cloud.instance.id" => static (e, v) => TryAssignCloudOrigin("cloud.instance.id")(e.Origin ?? new CloudOrigin(),v),
-				"OriginCloudInstanceId" => static (e, v) => TryAssignCloudOrigin("cloud.instance.id")(e.Origin ?? new CloudOrigin(),v),
-				"origin.cloud.instance.name" => static (e, v) => TryAssignCloudOrigin("cloud.instance.name")(e.Origin ?? new CloudOrigin(),v),
-				"OriginCloudInstanceName" => static (e, v) => TryAssignCloudOrigin("cloud.instance.name")(e.Origin ?? new CloudOrigin(),v),
-				"origin.cloud.machine.type" => static (e, v) => TryAssignCloudOrigin("cloud.machine.type")(e.Origin ?? new CloudOrigin(),v),
-				"OriginCloudMachineType" => static (e, v) => TryAssignCloudOrigin("cloud.machine.type")(e.Origin ?? new CloudOrigin(),v),
-				"origin.cloud.project.id" => static (e, v) => TryAssignCloudOrigin("cloud.project.id")(e.Origin ?? new CloudOrigin(),v),
-				"OriginCloudProjectId" => static (e, v) => TryAssignCloudOrigin("cloud.project.id")(e.Origin ?? new CloudOrigin(),v),
-				"origin.cloud.project.name" => static (e, v) => TryAssignCloudOrigin("cloud.project.name")(e.Origin ?? new CloudOrigin(),v),
-				"OriginCloudProjectName" => static (e, v) => TryAssignCloudOrigin("cloud.project.name")(e.Origin ?? new CloudOrigin(),v),
-				"origin.cloud.provider" => static (e, v) => TryAssignCloudOrigin("cloud.provider")(e.Origin ?? new CloudOrigin(),v),
-				"OriginCloudProvider" => static (e, v) => TryAssignCloudOrigin("cloud.provider")(e.Origin ?? new CloudOrigin(),v),
-				"origin.cloud.region" => static (e, v) => TryAssignCloudOrigin("cloud.region")(e.Origin ?? new CloudOrigin(),v),
-				"OriginCloudRegion" => static (e, v) => TryAssignCloudOrigin("cloud.region")(e.Origin ?? new CloudOrigin(),v),
-				"origin.cloud.service.name" => static (e, v) => TryAssignCloudOrigin("cloud.service.name")(e.Origin ?? new CloudOrigin(),v),
-				"OriginCloudServiceName" => static (e, v) => TryAssignCloudOrigin("cloud.service.name")(e.Origin ?? new CloudOrigin(),v),
 				_ => null
 			};
 			return assign;
@@ -3462,72 +3220,62 @@ namespace Elastic.CommonSchema
 				"DestinationSubdomain" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Subdomain = p),
 				"destination.top_level_domain" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.TopLevelDomain = p),
 				"DestinationTopLevelDomain" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.TopLevelDomain = p),
-				"destination.as.number" => static (e, v) => TryAssignAs("as.number")(e.As ?? new As(),v),
-				"DestinationAsNumber" => static (e, v) => TryAssignAs("as.number")(e.As ?? new As(),v),
-				"destination.as.organization.name" => static (e, v) => TryAssignAs("as.organization.name")(e.As ?? new As(),v),
-				"DestinationAsOrganizationName" => static (e, v) => TryAssignAs("as.organization.name")(e.As ?? new As(),v),
-				"destination.geo.city_name" => static (e, v) => TryAssignGeo("geo.city_name")(e.Geo ?? new Geo(),v),
-				"DestinationGeoCityName" => static (e, v) => TryAssignGeo("geo.city_name")(e.Geo ?? new Geo(),v),
-				"destination.geo.continent_code" => static (e, v) => TryAssignGeo("geo.continent_code")(e.Geo ?? new Geo(),v),
-				"DestinationGeoContinentCode" => static (e, v) => TryAssignGeo("geo.continent_code")(e.Geo ?? new Geo(),v),
-				"destination.geo.continent_name" => static (e, v) => TryAssignGeo("geo.continent_name")(e.Geo ?? new Geo(),v),
-				"DestinationGeoContinentName" => static (e, v) => TryAssignGeo("geo.continent_name")(e.Geo ?? new Geo(),v),
-				"destination.geo.country_iso_code" => static (e, v) => TryAssignGeo("geo.country_iso_code")(e.Geo ?? new Geo(),v),
-				"DestinationGeoCountryIsoCode" => static (e, v) => TryAssignGeo("geo.country_iso_code")(e.Geo ?? new Geo(),v),
-				"destination.geo.country_name" => static (e, v) => TryAssignGeo("geo.country_name")(e.Geo ?? new Geo(),v),
-				"DestinationGeoCountryName" => static (e, v) => TryAssignGeo("geo.country_name")(e.Geo ?? new Geo(),v),
-				"destination.geo.name" => static (e, v) => TryAssignGeo("geo.name")(e.Geo ?? new Geo(),v),
-				"DestinationGeoName" => static (e, v) => TryAssignGeo("geo.name")(e.Geo ?? new Geo(),v),
-				"destination.geo.postal_code" => static (e, v) => TryAssignGeo("geo.postal_code")(e.Geo ?? new Geo(),v),
-				"DestinationGeoPostalCode" => static (e, v) => TryAssignGeo("geo.postal_code")(e.Geo ?? new Geo(),v),
-				"destination.geo.region_iso_code" => static (e, v) => TryAssignGeo("geo.region_iso_code")(e.Geo ?? new Geo(),v),
-				"DestinationGeoRegionIsoCode" => static (e, v) => TryAssignGeo("geo.region_iso_code")(e.Geo ?? new Geo(),v),
-				"destination.geo.region_name" => static (e, v) => TryAssignGeo("geo.region_name")(e.Geo ?? new Geo(),v),
-				"DestinationGeoRegionName" => static (e, v) => TryAssignGeo("geo.region_name")(e.Geo ?? new Geo(),v),
-				"destination.geo.timezone" => static (e, v) => TryAssignGeo("geo.timezone")(e.Geo ?? new Geo(),v),
-				"DestinationGeoTimezone" => static (e, v) => TryAssignGeo("geo.timezone")(e.Geo ?? new Geo(),v),
-				"destination.user.domain" => static (e, v) => TryAssignUser("user.domain")(e.User ?? new User(),v),
-				"DestinationUserDomain" => static (e, v) => TryAssignUser("user.domain")(e.User ?? new User(),v),
-				"destination.user.email" => static (e, v) => TryAssignUser("user.email")(e.User ?? new User(),v),
-				"DestinationUserEmail" => static (e, v) => TryAssignUser("user.email")(e.User ?? new User(),v),
-				"destination.user.full_name" => static (e, v) => TryAssignUser("user.full_name")(e.User ?? new User(),v),
-				"DestinationUserFullName" => static (e, v) => TryAssignUser("user.full_name")(e.User ?? new User(),v),
-				"destination.user.hash" => static (e, v) => TryAssignUser("user.hash")(e.User ?? new User(),v),
-				"DestinationUserHash" => static (e, v) => TryAssignUser("user.hash")(e.User ?? new User(),v),
-				"destination.user.id" => static (e, v) => TryAssignUser("user.id")(e.User ?? new User(),v),
-				"DestinationUserId" => static (e, v) => TryAssignUser("user.id")(e.User ?? new User(),v),
-				"destination.user.name" => static (e, v) => TryAssignUser("user.name")(e.User ?? new User(),v),
-				"DestinationUserName" => static (e, v) => TryAssignUser("user.name")(e.User ?? new User(),v),
-				"destination.user.group.domain" => static (e, v) => TryAssignUser("user.group.domain")(e.User ?? new User(),v),
-				"DestinationUserGroupDomain" => static (e, v) => TryAssignUser("user.group.domain")(e.User ?? new User(),v),
-				"destination.user.group.id" => static (e, v) => TryAssignUser("user.group.id")(e.User ?? new User(),v),
-				"DestinationUserGroupId" => static (e, v) => TryAssignUser("user.group.id")(e.User ?? new User(),v),
-				"destination.user.group.name" => static (e, v) => TryAssignUser("user.group.name")(e.User ?? new User(),v),
-				"DestinationUserGroupName" => static (e, v) => TryAssignUser("user.group.name")(e.User ?? new User(),v),
-				"destination.user.risk.calculated_level" => static (e, v) => TryAssignUser("user.risk.calculated_level")(e.User ?? new User(),v),
-				"DestinationUserRiskCalculatedLevel" => static (e, v) => TryAssignUser("user.risk.calculated_level")(e.User ?? new User(),v),
-				"destination.user.risk.calculated_score" => static (e, v) => TryAssignUser("user.risk.calculated_score")(e.User ?? new User(),v),
-				"DestinationUserRiskCalculatedScore" => static (e, v) => TryAssignUser("user.risk.calculated_score")(e.User ?? new User(),v),
-				"destination.user.risk.calculated_score_norm" => static (e, v) => TryAssignUser("user.risk.calculated_score_norm")(e.User ?? new User(),v),
-				"DestinationUserRiskCalculatedScoreNorm" => static (e, v) => TryAssignUser("user.risk.calculated_score_norm")(e.User ?? new User(),v),
-				"destination.user.risk.static_level" => static (e, v) => TryAssignUser("user.risk.static_level")(e.User ?? new User(),v),
-				"DestinationUserRiskStaticLevel" => static (e, v) => TryAssignUser("user.risk.static_level")(e.User ?? new User(),v),
-				"destination.user.risk.static_score" => static (e, v) => TryAssignUser("user.risk.static_score")(e.User ?? new User(),v),
-				"DestinationUserRiskStaticScore" => static (e, v) => TryAssignUser("user.risk.static_score")(e.User ?? new User(),v),
-				"destination.user.risk.static_score_norm" => static (e, v) => TryAssignUser("user.risk.static_score_norm")(e.User ?? new User(),v),
-				"DestinationUserRiskStaticScoreNorm" => static (e, v) => TryAssignUser("user.risk.static_score_norm")(e.User ?? new User(),v),
-				"destination.user.target.user.domain" => static (e, v) => TryAssignUser("target.user.domain")(e.User ?? new User(),v),
-				"DestinationUserTargetUserDomain" => static (e, v) => TryAssignUser("target.user.domain")(e.User ?? new User(),v),
-				"destination.user.target.user.email" => static (e, v) => TryAssignUser("target.user.email")(e.User ?? new User(),v),
-				"DestinationUserTargetUserEmail" => static (e, v) => TryAssignUser("target.user.email")(e.User ?? new User(),v),
-				"destination.user.target.user.full_name" => static (e, v) => TryAssignUser("target.user.full_name")(e.User ?? new User(),v),
-				"DestinationUserTargetUserFullName" => static (e, v) => TryAssignUser("target.user.full_name")(e.User ?? new User(),v),
-				"destination.user.target.user.hash" => static (e, v) => TryAssignUser("target.user.hash")(e.User ?? new User(),v),
-				"DestinationUserTargetUserHash" => static (e, v) => TryAssignUser("target.user.hash")(e.User ?? new User(),v),
-				"destination.user.target.user.id" => static (e, v) => TryAssignUser("target.user.id")(e.User ?? new User(),v),
-				"DestinationUserTargetUserId" => static (e, v) => TryAssignUser("target.user.id")(e.User ?? new User(),v),
-				"destination.user.target.user.name" => static (e, v) => TryAssignUser("target.user.name")(e.User ?? new User(),v),
-				"DestinationUserTargetUserName" => static (e, v) => TryAssignUser("target.user.name")(e.User ?? new User(),v),
+				"destination.as.number" => static (e, v) => TryAssignAs("as.number")(e.As ??= new As(),v),
+				"DestinationAsNumber" => static (e, v) => TryAssignAs("as.number")(e.As ??= new As(),v),
+				"destination.as.organization.name" => static (e, v) => TryAssignAs("as.organization.name")(e.As ??= new As(),v),
+				"DestinationAsOrganizationName" => static (e, v) => TryAssignAs("as.organization.name")(e.As ??= new As(),v),
+				"destination.geo.city_name" => static (e, v) => TryAssignGeo("geo.city_name")(e.Geo ??= new Geo(),v),
+				"DestinationGeoCityName" => static (e, v) => TryAssignGeo("geo.city_name")(e.Geo ??= new Geo(),v),
+				"destination.geo.continent_code" => static (e, v) => TryAssignGeo("geo.continent_code")(e.Geo ??= new Geo(),v),
+				"DestinationGeoContinentCode" => static (e, v) => TryAssignGeo("geo.continent_code")(e.Geo ??= new Geo(),v),
+				"destination.geo.continent_name" => static (e, v) => TryAssignGeo("geo.continent_name")(e.Geo ??= new Geo(),v),
+				"DestinationGeoContinentName" => static (e, v) => TryAssignGeo("geo.continent_name")(e.Geo ??= new Geo(),v),
+				"destination.geo.country_iso_code" => static (e, v) => TryAssignGeo("geo.country_iso_code")(e.Geo ??= new Geo(),v),
+				"DestinationGeoCountryIsoCode" => static (e, v) => TryAssignGeo("geo.country_iso_code")(e.Geo ??= new Geo(),v),
+				"destination.geo.country_name" => static (e, v) => TryAssignGeo("geo.country_name")(e.Geo ??= new Geo(),v),
+				"DestinationGeoCountryName" => static (e, v) => TryAssignGeo("geo.country_name")(e.Geo ??= new Geo(),v),
+				"destination.geo.location" => static (e, v) => TryAssignGeo("geo.location")(e.Geo ??= new Geo(),v),
+				"DestinationGeoLocation" => static (e, v) => TryAssignGeo("geo.location")(e.Geo ??= new Geo(),v),
+				"destination.geo.name" => static (e, v) => TryAssignGeo("geo.name")(e.Geo ??= new Geo(),v),
+				"DestinationGeoName" => static (e, v) => TryAssignGeo("geo.name")(e.Geo ??= new Geo(),v),
+				"destination.geo.postal_code" => static (e, v) => TryAssignGeo("geo.postal_code")(e.Geo ??= new Geo(),v),
+				"DestinationGeoPostalCode" => static (e, v) => TryAssignGeo("geo.postal_code")(e.Geo ??= new Geo(),v),
+				"destination.geo.region_iso_code" => static (e, v) => TryAssignGeo("geo.region_iso_code")(e.Geo ??= new Geo(),v),
+				"DestinationGeoRegionIsoCode" => static (e, v) => TryAssignGeo("geo.region_iso_code")(e.Geo ??= new Geo(),v),
+				"destination.geo.region_name" => static (e, v) => TryAssignGeo("geo.region_name")(e.Geo ??= new Geo(),v),
+				"DestinationGeoRegionName" => static (e, v) => TryAssignGeo("geo.region_name")(e.Geo ??= new Geo(),v),
+				"destination.geo.timezone" => static (e, v) => TryAssignGeo("geo.timezone")(e.Geo ??= new Geo(),v),
+				"DestinationGeoTimezone" => static (e, v) => TryAssignGeo("geo.timezone")(e.Geo ??= new Geo(),v),
+				"destination.user.domain" => static (e, v) => TryAssignUser("user.domain")(e.User ??= new User(),v),
+				"DestinationUserDomain" => static (e, v) => TryAssignUser("user.domain")(e.User ??= new User(),v),
+				"destination.user.email" => static (e, v) => TryAssignUser("user.email")(e.User ??= new User(),v),
+				"DestinationUserEmail" => static (e, v) => TryAssignUser("user.email")(e.User ??= new User(),v),
+				"destination.user.full_name" => static (e, v) => TryAssignUser("user.full_name")(e.User ??= new User(),v),
+				"DestinationUserFullName" => static (e, v) => TryAssignUser("user.full_name")(e.User ??= new User(),v),
+				"destination.user.hash" => static (e, v) => TryAssignUser("user.hash")(e.User ??= new User(),v),
+				"DestinationUserHash" => static (e, v) => TryAssignUser("user.hash")(e.User ??= new User(),v),
+				"destination.user.id" => static (e, v) => TryAssignUser("user.id")(e.User ??= new User(),v),
+				"DestinationUserId" => static (e, v) => TryAssignUser("user.id")(e.User ??= new User(),v),
+				"destination.user.name" => static (e, v) => TryAssignUser("user.name")(e.User ??= new User(),v),
+				"DestinationUserName" => static (e, v) => TryAssignUser("user.name")(e.User ??= new User(),v),
+				"destination.user.group.domain" => static (e, v) => TryAssignUser("user.group.domain")(e.User ??= new User(),v),
+				"DestinationUserGroupDomain" => static (e, v) => TryAssignUser("user.group.domain")(e.User ??= new User(),v),
+				"destination.user.group.id" => static (e, v) => TryAssignUser("user.group.id")(e.User ??= new User(),v),
+				"DestinationUserGroupId" => static (e, v) => TryAssignUser("user.group.id")(e.User ??= new User(),v),
+				"destination.user.group.name" => static (e, v) => TryAssignUser("user.group.name")(e.User ??= new User(),v),
+				"DestinationUserGroupName" => static (e, v) => TryAssignUser("user.group.name")(e.User ??= new User(),v),
+				"destination.user.risk.calculated_level" => static (e, v) => TryAssignUser("user.risk.calculated_level")(e.User ??= new User(),v),
+				"DestinationUserRiskCalculatedLevel" => static (e, v) => TryAssignUser("user.risk.calculated_level")(e.User ??= new User(),v),
+				"destination.user.risk.calculated_score" => static (e, v) => TryAssignUser("user.risk.calculated_score")(e.User ??= new User(),v),
+				"DestinationUserRiskCalculatedScore" => static (e, v) => TryAssignUser("user.risk.calculated_score")(e.User ??= new User(),v),
+				"destination.user.risk.calculated_score_norm" => static (e, v) => TryAssignUser("user.risk.calculated_score_norm")(e.User ??= new User(),v),
+				"DestinationUserRiskCalculatedScoreNorm" => static (e, v) => TryAssignUser("user.risk.calculated_score_norm")(e.User ??= new User(),v),
+				"destination.user.risk.static_level" => static (e, v) => TryAssignUser("user.risk.static_level")(e.User ??= new User(),v),
+				"DestinationUserRiskStaticLevel" => static (e, v) => TryAssignUser("user.risk.static_level")(e.User ??= new User(),v),
+				"destination.user.risk.static_score" => static (e, v) => TryAssignUser("user.risk.static_score")(e.User ??= new User(),v),
+				"DestinationUserRiskStaticScore" => static (e, v) => TryAssignUser("user.risk.static_score")(e.User ??= new User(),v),
+				"destination.user.risk.static_score_norm" => static (e, v) => TryAssignUser("user.risk.static_score_norm")(e.User ??= new User(),v),
+				"DestinationUserRiskStaticScoreNorm" => static (e, v) => TryAssignUser("user.risk.static_score_norm")(e.User ??= new User(),v),
 				_ => null
 			};
 			return assign;
@@ -3578,70 +3326,70 @@ namespace Elastic.CommonSchema
 				"DllName" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Name = p),
 				"dll.path" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Path = p),
 				"DllPath" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Path = p),
-				"dll.hash.md5" => static (e, v) => TryAssignHash("hash.md5")(e.Hash ?? new Hash(),v),
-				"DllHashMd5" => static (e, v) => TryAssignHash("hash.md5")(e.Hash ?? new Hash(),v),
-				"dll.hash.sha1" => static (e, v) => TryAssignHash("hash.sha1")(e.Hash ?? new Hash(),v),
-				"DllHashSha1" => static (e, v) => TryAssignHash("hash.sha1")(e.Hash ?? new Hash(),v),
-				"dll.hash.sha256" => static (e, v) => TryAssignHash("hash.sha256")(e.Hash ?? new Hash(),v),
-				"DllHashSha256" => static (e, v) => TryAssignHash("hash.sha256")(e.Hash ?? new Hash(),v),
-				"dll.hash.sha384" => static (e, v) => TryAssignHash("hash.sha384")(e.Hash ?? new Hash(),v),
-				"DllHashSha384" => static (e, v) => TryAssignHash("hash.sha384")(e.Hash ?? new Hash(),v),
-				"dll.hash.sha512" => static (e, v) => TryAssignHash("hash.sha512")(e.Hash ?? new Hash(),v),
-				"DllHashSha512" => static (e, v) => TryAssignHash("hash.sha512")(e.Hash ?? new Hash(),v),
-				"dll.hash.ssdeep" => static (e, v) => TryAssignHash("hash.ssdeep")(e.Hash ?? new Hash(),v),
-				"DllHashSsdeep" => static (e, v) => TryAssignHash("hash.ssdeep")(e.Hash ?? new Hash(),v),
-				"dll.hash.tlsh" => static (e, v) => TryAssignHash("hash.tlsh")(e.Hash ?? new Hash(),v),
-				"DllHashTlsh" => static (e, v) => TryAssignHash("hash.tlsh")(e.Hash ?? new Hash(),v),
-				"dll.pe.architecture" => static (e, v) => TryAssignPe("pe.architecture")(e.Pe ?? new Pe(),v),
-				"DllPeArchitecture" => static (e, v) => TryAssignPe("pe.architecture")(e.Pe ?? new Pe(),v),
-				"dll.pe.company" => static (e, v) => TryAssignPe("pe.company")(e.Pe ?? new Pe(),v),
-				"DllPeCompany" => static (e, v) => TryAssignPe("pe.company")(e.Pe ?? new Pe(),v),
-				"dll.pe.description" => static (e, v) => TryAssignPe("pe.description")(e.Pe ?? new Pe(),v),
-				"DllPeDescription" => static (e, v) => TryAssignPe("pe.description")(e.Pe ?? new Pe(),v),
-				"dll.pe.file_version" => static (e, v) => TryAssignPe("pe.file_version")(e.Pe ?? new Pe(),v),
-				"DllPeFileVersion" => static (e, v) => TryAssignPe("pe.file_version")(e.Pe ?? new Pe(),v),
-				"dll.pe.go_import_hash" => static (e, v) => TryAssignPe("pe.go_import_hash")(e.Pe ?? new Pe(),v),
-				"DllPeGoImportHash" => static (e, v) => TryAssignPe("pe.go_import_hash")(e.Pe ?? new Pe(),v),
-				"dll.pe.go_imports" => static (e, v) => TryAssignPe("pe.go_imports")(e.Pe ?? new Pe(),v),
-				"DllPeGoImports" => static (e, v) => TryAssignPe("pe.go_imports")(e.Pe ?? new Pe(),v),
-				"dll.pe.go_imports_names_entropy" => static (e, v) => TryAssignPe("pe.go_imports_names_entropy")(e.Pe ?? new Pe(),v),
-				"DllPeGoImportsNamesEntropy" => static (e, v) => TryAssignPe("pe.go_imports_names_entropy")(e.Pe ?? new Pe(),v),
-				"dll.pe.go_imports_names_var_entropy" => static (e, v) => TryAssignPe("pe.go_imports_names_var_entropy")(e.Pe ?? new Pe(),v),
-				"DllPeGoImportsNamesVarEntropy" => static (e, v) => TryAssignPe("pe.go_imports_names_var_entropy")(e.Pe ?? new Pe(),v),
-				"dll.pe.go_stripped" => static (e, v) => TryAssignPe("pe.go_stripped")(e.Pe ?? new Pe(),v),
-				"DllPeGoStripped" => static (e, v) => TryAssignPe("pe.go_stripped")(e.Pe ?? new Pe(),v),
-				"dll.pe.imphash" => static (e, v) => TryAssignPe("pe.imphash")(e.Pe ?? new Pe(),v),
-				"DllPeImphash" => static (e, v) => TryAssignPe("pe.imphash")(e.Pe ?? new Pe(),v),
-				"dll.pe.import_hash" => static (e, v) => TryAssignPe("pe.import_hash")(e.Pe ?? new Pe(),v),
-				"DllPeImportHash" => static (e, v) => TryAssignPe("pe.import_hash")(e.Pe ?? new Pe(),v),
-				"dll.pe.imports_names_entropy" => static (e, v) => TryAssignPe("pe.imports_names_entropy")(e.Pe ?? new Pe(),v),
-				"DllPeImportsNamesEntropy" => static (e, v) => TryAssignPe("pe.imports_names_entropy")(e.Pe ?? new Pe(),v),
-				"dll.pe.imports_names_var_entropy" => static (e, v) => TryAssignPe("pe.imports_names_var_entropy")(e.Pe ?? new Pe(),v),
-				"DllPeImportsNamesVarEntropy" => static (e, v) => TryAssignPe("pe.imports_names_var_entropy")(e.Pe ?? new Pe(),v),
-				"dll.pe.original_file_name" => static (e, v) => TryAssignPe("pe.original_file_name")(e.Pe ?? new Pe(),v),
-				"DllPeOriginalFileName" => static (e, v) => TryAssignPe("pe.original_file_name")(e.Pe ?? new Pe(),v),
-				"dll.pe.pehash" => static (e, v) => TryAssignPe("pe.pehash")(e.Pe ?? new Pe(),v),
-				"DllPePehash" => static (e, v) => TryAssignPe("pe.pehash")(e.Pe ?? new Pe(),v),
-				"dll.pe.product" => static (e, v) => TryAssignPe("pe.product")(e.Pe ?? new Pe(),v),
-				"DllPeProduct" => static (e, v) => TryAssignPe("pe.product")(e.Pe ?? new Pe(),v),
-				"dll.code_signature.digest_algorithm" => static (e, v) => TryAssignCodeSignature("code_signature.digest_algorithm")(e.CodeSignature ?? new CodeSignature(),v),
-				"DllCodeSignatureDigestAlgorithm" => static (e, v) => TryAssignCodeSignature("code_signature.digest_algorithm")(e.CodeSignature ?? new CodeSignature(),v),
-				"dll.code_signature.exists" => static (e, v) => TryAssignCodeSignature("code_signature.exists")(e.CodeSignature ?? new CodeSignature(),v),
-				"DllCodeSignatureExists" => static (e, v) => TryAssignCodeSignature("code_signature.exists")(e.CodeSignature ?? new CodeSignature(),v),
-				"dll.code_signature.signing_id" => static (e, v) => TryAssignCodeSignature("code_signature.signing_id")(e.CodeSignature ?? new CodeSignature(),v),
-				"DllCodeSignatureSigningId" => static (e, v) => TryAssignCodeSignature("code_signature.signing_id")(e.CodeSignature ?? new CodeSignature(),v),
-				"dll.code_signature.status" => static (e, v) => TryAssignCodeSignature("code_signature.status")(e.CodeSignature ?? new CodeSignature(),v),
-				"DllCodeSignatureStatus" => static (e, v) => TryAssignCodeSignature("code_signature.status")(e.CodeSignature ?? new CodeSignature(),v),
-				"dll.code_signature.subject_name" => static (e, v) => TryAssignCodeSignature("code_signature.subject_name")(e.CodeSignature ?? new CodeSignature(),v),
-				"DllCodeSignatureSubjectName" => static (e, v) => TryAssignCodeSignature("code_signature.subject_name")(e.CodeSignature ?? new CodeSignature(),v),
-				"dll.code_signature.team_id" => static (e, v) => TryAssignCodeSignature("code_signature.team_id")(e.CodeSignature ?? new CodeSignature(),v),
-				"DllCodeSignatureTeamId" => static (e, v) => TryAssignCodeSignature("code_signature.team_id")(e.CodeSignature ?? new CodeSignature(),v),
-				"dll.code_signature.timestamp" => static (e, v) => TryAssignCodeSignature("code_signature.timestamp")(e.CodeSignature ?? new CodeSignature(),v),
-				"DllCodeSignatureTimestamp" => static (e, v) => TryAssignCodeSignature("code_signature.timestamp")(e.CodeSignature ?? new CodeSignature(),v),
-				"dll.code_signature.trusted" => static (e, v) => TryAssignCodeSignature("code_signature.trusted")(e.CodeSignature ?? new CodeSignature(),v),
-				"DllCodeSignatureTrusted" => static (e, v) => TryAssignCodeSignature("code_signature.trusted")(e.CodeSignature ?? new CodeSignature(),v),
-				"dll.code_signature.valid" => static (e, v) => TryAssignCodeSignature("code_signature.valid")(e.CodeSignature ?? new CodeSignature(),v),
-				"DllCodeSignatureValid" => static (e, v) => TryAssignCodeSignature("code_signature.valid")(e.CodeSignature ?? new CodeSignature(),v),
+				"dll.hash.md5" => static (e, v) => TryAssignHash("hash.md5")(e.Hash ??= new Hash(),v),
+				"DllHashMd5" => static (e, v) => TryAssignHash("hash.md5")(e.Hash ??= new Hash(),v),
+				"dll.hash.sha1" => static (e, v) => TryAssignHash("hash.sha1")(e.Hash ??= new Hash(),v),
+				"DllHashSha1" => static (e, v) => TryAssignHash("hash.sha1")(e.Hash ??= new Hash(),v),
+				"dll.hash.sha256" => static (e, v) => TryAssignHash("hash.sha256")(e.Hash ??= new Hash(),v),
+				"DllHashSha256" => static (e, v) => TryAssignHash("hash.sha256")(e.Hash ??= new Hash(),v),
+				"dll.hash.sha384" => static (e, v) => TryAssignHash("hash.sha384")(e.Hash ??= new Hash(),v),
+				"DllHashSha384" => static (e, v) => TryAssignHash("hash.sha384")(e.Hash ??= new Hash(),v),
+				"dll.hash.sha512" => static (e, v) => TryAssignHash("hash.sha512")(e.Hash ??= new Hash(),v),
+				"DllHashSha512" => static (e, v) => TryAssignHash("hash.sha512")(e.Hash ??= new Hash(),v),
+				"dll.hash.ssdeep" => static (e, v) => TryAssignHash("hash.ssdeep")(e.Hash ??= new Hash(),v),
+				"DllHashSsdeep" => static (e, v) => TryAssignHash("hash.ssdeep")(e.Hash ??= new Hash(),v),
+				"dll.hash.tlsh" => static (e, v) => TryAssignHash("hash.tlsh")(e.Hash ??= new Hash(),v),
+				"DllHashTlsh" => static (e, v) => TryAssignHash("hash.tlsh")(e.Hash ??= new Hash(),v),
+				"dll.pe.architecture" => static (e, v) => TryAssignPe("pe.architecture")(e.Pe ??= new Pe(),v),
+				"DllPeArchitecture" => static (e, v) => TryAssignPe("pe.architecture")(e.Pe ??= new Pe(),v),
+				"dll.pe.company" => static (e, v) => TryAssignPe("pe.company")(e.Pe ??= new Pe(),v),
+				"DllPeCompany" => static (e, v) => TryAssignPe("pe.company")(e.Pe ??= new Pe(),v),
+				"dll.pe.description" => static (e, v) => TryAssignPe("pe.description")(e.Pe ??= new Pe(),v),
+				"DllPeDescription" => static (e, v) => TryAssignPe("pe.description")(e.Pe ??= new Pe(),v),
+				"dll.pe.file_version" => static (e, v) => TryAssignPe("pe.file_version")(e.Pe ??= new Pe(),v),
+				"DllPeFileVersion" => static (e, v) => TryAssignPe("pe.file_version")(e.Pe ??= new Pe(),v),
+				"dll.pe.go_import_hash" => static (e, v) => TryAssignPe("pe.go_import_hash")(e.Pe ??= new Pe(),v),
+				"DllPeGoImportHash" => static (e, v) => TryAssignPe("pe.go_import_hash")(e.Pe ??= new Pe(),v),
+				"dll.pe.go_imports" => static (e, v) => TryAssignPe("pe.go_imports")(e.Pe ??= new Pe(),v),
+				"DllPeGoImports" => static (e, v) => TryAssignPe("pe.go_imports")(e.Pe ??= new Pe(),v),
+				"dll.pe.go_imports_names_entropy" => static (e, v) => TryAssignPe("pe.go_imports_names_entropy")(e.Pe ??= new Pe(),v),
+				"DllPeGoImportsNamesEntropy" => static (e, v) => TryAssignPe("pe.go_imports_names_entropy")(e.Pe ??= new Pe(),v),
+				"dll.pe.go_imports_names_var_entropy" => static (e, v) => TryAssignPe("pe.go_imports_names_var_entropy")(e.Pe ??= new Pe(),v),
+				"DllPeGoImportsNamesVarEntropy" => static (e, v) => TryAssignPe("pe.go_imports_names_var_entropy")(e.Pe ??= new Pe(),v),
+				"dll.pe.go_stripped" => static (e, v) => TryAssignPe("pe.go_stripped")(e.Pe ??= new Pe(),v),
+				"DllPeGoStripped" => static (e, v) => TryAssignPe("pe.go_stripped")(e.Pe ??= new Pe(),v),
+				"dll.pe.imphash" => static (e, v) => TryAssignPe("pe.imphash")(e.Pe ??= new Pe(),v),
+				"DllPeImphash" => static (e, v) => TryAssignPe("pe.imphash")(e.Pe ??= new Pe(),v),
+				"dll.pe.import_hash" => static (e, v) => TryAssignPe("pe.import_hash")(e.Pe ??= new Pe(),v),
+				"DllPeImportHash" => static (e, v) => TryAssignPe("pe.import_hash")(e.Pe ??= new Pe(),v),
+				"dll.pe.imports_names_entropy" => static (e, v) => TryAssignPe("pe.imports_names_entropy")(e.Pe ??= new Pe(),v),
+				"DllPeImportsNamesEntropy" => static (e, v) => TryAssignPe("pe.imports_names_entropy")(e.Pe ??= new Pe(),v),
+				"dll.pe.imports_names_var_entropy" => static (e, v) => TryAssignPe("pe.imports_names_var_entropy")(e.Pe ??= new Pe(),v),
+				"DllPeImportsNamesVarEntropy" => static (e, v) => TryAssignPe("pe.imports_names_var_entropy")(e.Pe ??= new Pe(),v),
+				"dll.pe.original_file_name" => static (e, v) => TryAssignPe("pe.original_file_name")(e.Pe ??= new Pe(),v),
+				"DllPeOriginalFileName" => static (e, v) => TryAssignPe("pe.original_file_name")(e.Pe ??= new Pe(),v),
+				"dll.pe.pehash" => static (e, v) => TryAssignPe("pe.pehash")(e.Pe ??= new Pe(),v),
+				"DllPePehash" => static (e, v) => TryAssignPe("pe.pehash")(e.Pe ??= new Pe(),v),
+				"dll.pe.product" => static (e, v) => TryAssignPe("pe.product")(e.Pe ??= new Pe(),v),
+				"DllPeProduct" => static (e, v) => TryAssignPe("pe.product")(e.Pe ??= new Pe(),v),
+				"dll.code_signature.digest_algorithm" => static (e, v) => TryAssignCodeSignature("code_signature.digest_algorithm")(e.CodeSignature ??= new CodeSignature(),v),
+				"DllCodeSignatureDigestAlgorithm" => static (e, v) => TryAssignCodeSignature("code_signature.digest_algorithm")(e.CodeSignature ??= new CodeSignature(),v),
+				"dll.code_signature.exists" => static (e, v) => TryAssignCodeSignature("code_signature.exists")(e.CodeSignature ??= new CodeSignature(),v),
+				"DllCodeSignatureExists" => static (e, v) => TryAssignCodeSignature("code_signature.exists")(e.CodeSignature ??= new CodeSignature(),v),
+				"dll.code_signature.signing_id" => static (e, v) => TryAssignCodeSignature("code_signature.signing_id")(e.CodeSignature ??= new CodeSignature(),v),
+				"DllCodeSignatureSigningId" => static (e, v) => TryAssignCodeSignature("code_signature.signing_id")(e.CodeSignature ??= new CodeSignature(),v),
+				"dll.code_signature.status" => static (e, v) => TryAssignCodeSignature("code_signature.status")(e.CodeSignature ??= new CodeSignature(),v),
+				"DllCodeSignatureStatus" => static (e, v) => TryAssignCodeSignature("code_signature.status")(e.CodeSignature ??= new CodeSignature(),v),
+				"dll.code_signature.subject_name" => static (e, v) => TryAssignCodeSignature("code_signature.subject_name")(e.CodeSignature ??= new CodeSignature(),v),
+				"DllCodeSignatureSubjectName" => static (e, v) => TryAssignCodeSignature("code_signature.subject_name")(e.CodeSignature ??= new CodeSignature(),v),
+				"dll.code_signature.team_id" => static (e, v) => TryAssignCodeSignature("code_signature.team_id")(e.CodeSignature ??= new CodeSignature(),v),
+				"DllCodeSignatureTeamId" => static (e, v) => TryAssignCodeSignature("code_signature.team_id")(e.CodeSignature ??= new CodeSignature(),v),
+				"dll.code_signature.timestamp" => static (e, v) => TryAssignCodeSignature("code_signature.timestamp")(e.CodeSignature ??= new CodeSignature(),v),
+				"DllCodeSignatureTimestamp" => static (e, v) => TryAssignCodeSignature("code_signature.timestamp")(e.CodeSignature ??= new CodeSignature(),v),
+				"dll.code_signature.trusted" => static (e, v) => TryAssignCodeSignature("code_signature.trusted")(e.CodeSignature ??= new CodeSignature(),v),
+				"DllCodeSignatureTrusted" => static (e, v) => TryAssignCodeSignature("code_signature.trusted")(e.CodeSignature ??= new CodeSignature(),v),
+				"dll.code_signature.valid" => static (e, v) => TryAssignCodeSignature("code_signature.valid")(e.CodeSignature ??= new CodeSignature(),v),
+				"DllCodeSignatureValid" => static (e, v) => TryAssignCodeSignature("code_signature.valid")(e.CodeSignature ??= new CodeSignature(),v),
 				_ => null
 			};
 			return assign;
@@ -3990,152 +3738,152 @@ namespace Elastic.CommonSchema
 				"FileType" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Type = p),
 				"file.uid" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Uid = p),
 				"FileUid" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Uid = p),
-				"file.hash.md5" => static (e, v) => TryAssignHash("hash.md5")(e.Hash ?? new Hash(),v),
-				"FileHashMd5" => static (e, v) => TryAssignHash("hash.md5")(e.Hash ?? new Hash(),v),
-				"file.hash.sha1" => static (e, v) => TryAssignHash("hash.sha1")(e.Hash ?? new Hash(),v),
-				"FileHashSha1" => static (e, v) => TryAssignHash("hash.sha1")(e.Hash ?? new Hash(),v),
-				"file.hash.sha256" => static (e, v) => TryAssignHash("hash.sha256")(e.Hash ?? new Hash(),v),
-				"FileHashSha256" => static (e, v) => TryAssignHash("hash.sha256")(e.Hash ?? new Hash(),v),
-				"file.hash.sha384" => static (e, v) => TryAssignHash("hash.sha384")(e.Hash ?? new Hash(),v),
-				"FileHashSha384" => static (e, v) => TryAssignHash("hash.sha384")(e.Hash ?? new Hash(),v),
-				"file.hash.sha512" => static (e, v) => TryAssignHash("hash.sha512")(e.Hash ?? new Hash(),v),
-				"FileHashSha512" => static (e, v) => TryAssignHash("hash.sha512")(e.Hash ?? new Hash(),v),
-				"file.hash.ssdeep" => static (e, v) => TryAssignHash("hash.ssdeep")(e.Hash ?? new Hash(),v),
-				"FileHashSsdeep" => static (e, v) => TryAssignHash("hash.ssdeep")(e.Hash ?? new Hash(),v),
-				"file.hash.tlsh" => static (e, v) => TryAssignHash("hash.tlsh")(e.Hash ?? new Hash(),v),
-				"FileHashTlsh" => static (e, v) => TryAssignHash("hash.tlsh")(e.Hash ?? new Hash(),v),
-				"file.pe.architecture" => static (e, v) => TryAssignPe("pe.architecture")(e.Pe ?? new Pe(),v),
-				"FilePeArchitecture" => static (e, v) => TryAssignPe("pe.architecture")(e.Pe ?? new Pe(),v),
-				"file.pe.company" => static (e, v) => TryAssignPe("pe.company")(e.Pe ?? new Pe(),v),
-				"FilePeCompany" => static (e, v) => TryAssignPe("pe.company")(e.Pe ?? new Pe(),v),
-				"file.pe.description" => static (e, v) => TryAssignPe("pe.description")(e.Pe ?? new Pe(),v),
-				"FilePeDescription" => static (e, v) => TryAssignPe("pe.description")(e.Pe ?? new Pe(),v),
-				"file.pe.file_version" => static (e, v) => TryAssignPe("pe.file_version")(e.Pe ?? new Pe(),v),
-				"FilePeFileVersion" => static (e, v) => TryAssignPe("pe.file_version")(e.Pe ?? new Pe(),v),
-				"file.pe.go_import_hash" => static (e, v) => TryAssignPe("pe.go_import_hash")(e.Pe ?? new Pe(),v),
-				"FilePeGoImportHash" => static (e, v) => TryAssignPe("pe.go_import_hash")(e.Pe ?? new Pe(),v),
-				"file.pe.go_imports" => static (e, v) => TryAssignPe("pe.go_imports")(e.Pe ?? new Pe(),v),
-				"FilePeGoImports" => static (e, v) => TryAssignPe("pe.go_imports")(e.Pe ?? new Pe(),v),
-				"file.pe.go_imports_names_entropy" => static (e, v) => TryAssignPe("pe.go_imports_names_entropy")(e.Pe ?? new Pe(),v),
-				"FilePeGoImportsNamesEntropy" => static (e, v) => TryAssignPe("pe.go_imports_names_entropy")(e.Pe ?? new Pe(),v),
-				"file.pe.go_imports_names_var_entropy" => static (e, v) => TryAssignPe("pe.go_imports_names_var_entropy")(e.Pe ?? new Pe(),v),
-				"FilePeGoImportsNamesVarEntropy" => static (e, v) => TryAssignPe("pe.go_imports_names_var_entropy")(e.Pe ?? new Pe(),v),
-				"file.pe.go_stripped" => static (e, v) => TryAssignPe("pe.go_stripped")(e.Pe ?? new Pe(),v),
-				"FilePeGoStripped" => static (e, v) => TryAssignPe("pe.go_stripped")(e.Pe ?? new Pe(),v),
-				"file.pe.imphash" => static (e, v) => TryAssignPe("pe.imphash")(e.Pe ?? new Pe(),v),
-				"FilePeImphash" => static (e, v) => TryAssignPe("pe.imphash")(e.Pe ?? new Pe(),v),
-				"file.pe.import_hash" => static (e, v) => TryAssignPe("pe.import_hash")(e.Pe ?? new Pe(),v),
-				"FilePeImportHash" => static (e, v) => TryAssignPe("pe.import_hash")(e.Pe ?? new Pe(),v),
-				"file.pe.imports_names_entropy" => static (e, v) => TryAssignPe("pe.imports_names_entropy")(e.Pe ?? new Pe(),v),
-				"FilePeImportsNamesEntropy" => static (e, v) => TryAssignPe("pe.imports_names_entropy")(e.Pe ?? new Pe(),v),
-				"file.pe.imports_names_var_entropy" => static (e, v) => TryAssignPe("pe.imports_names_var_entropy")(e.Pe ?? new Pe(),v),
-				"FilePeImportsNamesVarEntropy" => static (e, v) => TryAssignPe("pe.imports_names_var_entropy")(e.Pe ?? new Pe(),v),
-				"file.pe.original_file_name" => static (e, v) => TryAssignPe("pe.original_file_name")(e.Pe ?? new Pe(),v),
-				"FilePeOriginalFileName" => static (e, v) => TryAssignPe("pe.original_file_name")(e.Pe ?? new Pe(),v),
-				"file.pe.pehash" => static (e, v) => TryAssignPe("pe.pehash")(e.Pe ?? new Pe(),v),
-				"FilePePehash" => static (e, v) => TryAssignPe("pe.pehash")(e.Pe ?? new Pe(),v),
-				"file.pe.product" => static (e, v) => TryAssignPe("pe.product")(e.Pe ?? new Pe(),v),
-				"FilePeProduct" => static (e, v) => TryAssignPe("pe.product")(e.Pe ?? new Pe(),v),
-				"file.x509.issuer.distinguished_name" => static (e, v) => TryAssignX509("x509.issuer.distinguished_name")(e.X509 ?? new X509(),v),
-				"FileX509IssuerDistinguishedName" => static (e, v) => TryAssignX509("x509.issuer.distinguished_name")(e.X509 ?? new X509(),v),
-				"file.x509.not_after" => static (e, v) => TryAssignX509("x509.not_after")(e.X509 ?? new X509(),v),
-				"FileX509NotAfter" => static (e, v) => TryAssignX509("x509.not_after")(e.X509 ?? new X509(),v),
-				"file.x509.not_before" => static (e, v) => TryAssignX509("x509.not_before")(e.X509 ?? new X509(),v),
-				"FileX509NotBefore" => static (e, v) => TryAssignX509("x509.not_before")(e.X509 ?? new X509(),v),
-				"file.x509.public_key_algorithm" => static (e, v) => TryAssignX509("x509.public_key_algorithm")(e.X509 ?? new X509(),v),
-				"FileX509PublicKeyAlgorithm" => static (e, v) => TryAssignX509("x509.public_key_algorithm")(e.X509 ?? new X509(),v),
-				"file.x509.public_key_curve" => static (e, v) => TryAssignX509("x509.public_key_curve")(e.X509 ?? new X509(),v),
-				"FileX509PublicKeyCurve" => static (e, v) => TryAssignX509("x509.public_key_curve")(e.X509 ?? new X509(),v),
-				"file.x509.public_key_exponent" => static (e, v) => TryAssignX509("x509.public_key_exponent")(e.X509 ?? new X509(),v),
-				"FileX509PublicKeyExponent" => static (e, v) => TryAssignX509("x509.public_key_exponent")(e.X509 ?? new X509(),v),
-				"file.x509.public_key_size" => static (e, v) => TryAssignX509("x509.public_key_size")(e.X509 ?? new X509(),v),
-				"FileX509PublicKeySize" => static (e, v) => TryAssignX509("x509.public_key_size")(e.X509 ?? new X509(),v),
-				"file.x509.serial_number" => static (e, v) => TryAssignX509("x509.serial_number")(e.X509 ?? new X509(),v),
-				"FileX509SerialNumber" => static (e, v) => TryAssignX509("x509.serial_number")(e.X509 ?? new X509(),v),
-				"file.x509.signature_algorithm" => static (e, v) => TryAssignX509("x509.signature_algorithm")(e.X509 ?? new X509(),v),
-				"FileX509SignatureAlgorithm" => static (e, v) => TryAssignX509("x509.signature_algorithm")(e.X509 ?? new X509(),v),
-				"file.x509.subject.distinguished_name" => static (e, v) => TryAssignX509("x509.subject.distinguished_name")(e.X509 ?? new X509(),v),
-				"FileX509SubjectDistinguishedName" => static (e, v) => TryAssignX509("x509.subject.distinguished_name")(e.X509 ?? new X509(),v),
-				"file.x509.version_number" => static (e, v) => TryAssignX509("x509.version_number")(e.X509 ?? new X509(),v),
-				"FileX509VersionNumber" => static (e, v) => TryAssignX509("x509.version_number")(e.X509 ?? new X509(),v),
-				"file.code_signature.digest_algorithm" => static (e, v) => TryAssignCodeSignature("code_signature.digest_algorithm")(e.CodeSignature ?? new CodeSignature(),v),
-				"FileCodeSignatureDigestAlgorithm" => static (e, v) => TryAssignCodeSignature("code_signature.digest_algorithm")(e.CodeSignature ?? new CodeSignature(),v),
-				"file.code_signature.exists" => static (e, v) => TryAssignCodeSignature("code_signature.exists")(e.CodeSignature ?? new CodeSignature(),v),
-				"FileCodeSignatureExists" => static (e, v) => TryAssignCodeSignature("code_signature.exists")(e.CodeSignature ?? new CodeSignature(),v),
-				"file.code_signature.signing_id" => static (e, v) => TryAssignCodeSignature("code_signature.signing_id")(e.CodeSignature ?? new CodeSignature(),v),
-				"FileCodeSignatureSigningId" => static (e, v) => TryAssignCodeSignature("code_signature.signing_id")(e.CodeSignature ?? new CodeSignature(),v),
-				"file.code_signature.status" => static (e, v) => TryAssignCodeSignature("code_signature.status")(e.CodeSignature ?? new CodeSignature(),v),
-				"FileCodeSignatureStatus" => static (e, v) => TryAssignCodeSignature("code_signature.status")(e.CodeSignature ?? new CodeSignature(),v),
-				"file.code_signature.subject_name" => static (e, v) => TryAssignCodeSignature("code_signature.subject_name")(e.CodeSignature ?? new CodeSignature(),v),
-				"FileCodeSignatureSubjectName" => static (e, v) => TryAssignCodeSignature("code_signature.subject_name")(e.CodeSignature ?? new CodeSignature(),v),
-				"file.code_signature.team_id" => static (e, v) => TryAssignCodeSignature("code_signature.team_id")(e.CodeSignature ?? new CodeSignature(),v),
-				"FileCodeSignatureTeamId" => static (e, v) => TryAssignCodeSignature("code_signature.team_id")(e.CodeSignature ?? new CodeSignature(),v),
-				"file.code_signature.timestamp" => static (e, v) => TryAssignCodeSignature("code_signature.timestamp")(e.CodeSignature ?? new CodeSignature(),v),
-				"FileCodeSignatureTimestamp" => static (e, v) => TryAssignCodeSignature("code_signature.timestamp")(e.CodeSignature ?? new CodeSignature(),v),
-				"file.code_signature.trusted" => static (e, v) => TryAssignCodeSignature("code_signature.trusted")(e.CodeSignature ?? new CodeSignature(),v),
-				"FileCodeSignatureTrusted" => static (e, v) => TryAssignCodeSignature("code_signature.trusted")(e.CodeSignature ?? new CodeSignature(),v),
-				"file.code_signature.valid" => static (e, v) => TryAssignCodeSignature("code_signature.valid")(e.CodeSignature ?? new CodeSignature(),v),
-				"FileCodeSignatureValid" => static (e, v) => TryAssignCodeSignature("code_signature.valid")(e.CodeSignature ?? new CodeSignature(),v),
-				"file.elf.architecture" => static (e, v) => TryAssignElf("elf.architecture")(e.Elf ?? new Elf(),v),
-				"FileElfArchitecture" => static (e, v) => TryAssignElf("elf.architecture")(e.Elf ?? new Elf(),v),
-				"file.elf.byte_order" => static (e, v) => TryAssignElf("elf.byte_order")(e.Elf ?? new Elf(),v),
-				"FileElfByteOrder" => static (e, v) => TryAssignElf("elf.byte_order")(e.Elf ?? new Elf(),v),
-				"file.elf.cpu_type" => static (e, v) => TryAssignElf("elf.cpu_type")(e.Elf ?? new Elf(),v),
-				"FileElfCpuType" => static (e, v) => TryAssignElf("elf.cpu_type")(e.Elf ?? new Elf(),v),
-				"file.elf.creation_date" => static (e, v) => TryAssignElf("elf.creation_date")(e.Elf ?? new Elf(),v),
-				"FileElfCreationDate" => static (e, v) => TryAssignElf("elf.creation_date")(e.Elf ?? new Elf(),v),
-				"file.elf.go_import_hash" => static (e, v) => TryAssignElf("elf.go_import_hash")(e.Elf ?? new Elf(),v),
-				"FileElfGoImportHash" => static (e, v) => TryAssignElf("elf.go_import_hash")(e.Elf ?? new Elf(),v),
-				"file.elf.go_imports" => static (e, v) => TryAssignElf("elf.go_imports")(e.Elf ?? new Elf(),v),
-				"FileElfGoImports" => static (e, v) => TryAssignElf("elf.go_imports")(e.Elf ?? new Elf(),v),
-				"file.elf.go_imports_names_entropy" => static (e, v) => TryAssignElf("elf.go_imports_names_entropy")(e.Elf ?? new Elf(),v),
-				"FileElfGoImportsNamesEntropy" => static (e, v) => TryAssignElf("elf.go_imports_names_entropy")(e.Elf ?? new Elf(),v),
-				"file.elf.go_imports_names_var_entropy" => static (e, v) => TryAssignElf("elf.go_imports_names_var_entropy")(e.Elf ?? new Elf(),v),
-				"FileElfGoImportsNamesVarEntropy" => static (e, v) => TryAssignElf("elf.go_imports_names_var_entropy")(e.Elf ?? new Elf(),v),
-				"file.elf.go_stripped" => static (e, v) => TryAssignElf("elf.go_stripped")(e.Elf ?? new Elf(),v),
-				"FileElfGoStripped" => static (e, v) => TryAssignElf("elf.go_stripped")(e.Elf ?? new Elf(),v),
-				"file.elf.header.abi_version" => static (e, v) => TryAssignElf("elf.header.abi_version")(e.Elf ?? new Elf(),v),
-				"FileElfHeaderAbiVersion" => static (e, v) => TryAssignElf("elf.header.abi_version")(e.Elf ?? new Elf(),v),
-				"file.elf.header.class" => static (e, v) => TryAssignElf("elf.header.class")(e.Elf ?? new Elf(),v),
-				"FileElfHeaderClass" => static (e, v) => TryAssignElf("elf.header.class")(e.Elf ?? new Elf(),v),
-				"file.elf.header.data" => static (e, v) => TryAssignElf("elf.header.data")(e.Elf ?? new Elf(),v),
-				"FileElfHeaderData" => static (e, v) => TryAssignElf("elf.header.data")(e.Elf ?? new Elf(),v),
-				"file.elf.header.entrypoint" => static (e, v) => TryAssignElf("elf.header.entrypoint")(e.Elf ?? new Elf(),v),
-				"FileElfHeaderEntrypoint" => static (e, v) => TryAssignElf("elf.header.entrypoint")(e.Elf ?? new Elf(),v),
-				"file.elf.header.object_version" => static (e, v) => TryAssignElf("elf.header.object_version")(e.Elf ?? new Elf(),v),
-				"FileElfHeaderObjectVersion" => static (e, v) => TryAssignElf("elf.header.object_version")(e.Elf ?? new Elf(),v),
-				"file.elf.header.os_abi" => static (e, v) => TryAssignElf("elf.header.os_abi")(e.Elf ?? new Elf(),v),
-				"FileElfHeaderOsAbi" => static (e, v) => TryAssignElf("elf.header.os_abi")(e.Elf ?? new Elf(),v),
-				"file.elf.header.type" => static (e, v) => TryAssignElf("elf.header.type")(e.Elf ?? new Elf(),v),
-				"FileElfHeaderType" => static (e, v) => TryAssignElf("elf.header.type")(e.Elf ?? new Elf(),v),
-				"file.elf.header.version" => static (e, v) => TryAssignElf("elf.header.version")(e.Elf ?? new Elf(),v),
-				"FileElfHeaderVersion" => static (e, v) => TryAssignElf("elf.header.version")(e.Elf ?? new Elf(),v),
-				"file.elf.import_hash" => static (e, v) => TryAssignElf("elf.import_hash")(e.Elf ?? new Elf(),v),
-				"FileElfImportHash" => static (e, v) => TryAssignElf("elf.import_hash")(e.Elf ?? new Elf(),v),
-				"file.elf.imports_names_entropy" => static (e, v) => TryAssignElf("elf.imports_names_entropy")(e.Elf ?? new Elf(),v),
-				"FileElfImportsNamesEntropy" => static (e, v) => TryAssignElf("elf.imports_names_entropy")(e.Elf ?? new Elf(),v),
-				"file.elf.imports_names_var_entropy" => static (e, v) => TryAssignElf("elf.imports_names_var_entropy")(e.Elf ?? new Elf(),v),
-				"FileElfImportsNamesVarEntropy" => static (e, v) => TryAssignElf("elf.imports_names_var_entropy")(e.Elf ?? new Elf(),v),
-				"file.elf.telfhash" => static (e, v) => TryAssignElf("elf.telfhash")(e.Elf ?? new Elf(),v),
-				"FileElfTelfhash" => static (e, v) => TryAssignElf("elf.telfhash")(e.Elf ?? new Elf(),v),
-				"file.macho.go_import_hash" => static (e, v) => TryAssignMacho("macho.go_import_hash")(e.Macho ?? new Macho(),v),
-				"FileMachoGoImportHash" => static (e, v) => TryAssignMacho("macho.go_import_hash")(e.Macho ?? new Macho(),v),
-				"file.macho.go_imports" => static (e, v) => TryAssignMacho("macho.go_imports")(e.Macho ?? new Macho(),v),
-				"FileMachoGoImports" => static (e, v) => TryAssignMacho("macho.go_imports")(e.Macho ?? new Macho(),v),
-				"file.macho.go_imports_names_entropy" => static (e, v) => TryAssignMacho("macho.go_imports_names_entropy")(e.Macho ?? new Macho(),v),
-				"FileMachoGoImportsNamesEntropy" => static (e, v) => TryAssignMacho("macho.go_imports_names_entropy")(e.Macho ?? new Macho(),v),
-				"file.macho.go_imports_names_var_entropy" => static (e, v) => TryAssignMacho("macho.go_imports_names_var_entropy")(e.Macho ?? new Macho(),v),
-				"FileMachoGoImportsNamesVarEntropy" => static (e, v) => TryAssignMacho("macho.go_imports_names_var_entropy")(e.Macho ?? new Macho(),v),
-				"file.macho.go_stripped" => static (e, v) => TryAssignMacho("macho.go_stripped")(e.Macho ?? new Macho(),v),
-				"FileMachoGoStripped" => static (e, v) => TryAssignMacho("macho.go_stripped")(e.Macho ?? new Macho(),v),
-				"file.macho.import_hash" => static (e, v) => TryAssignMacho("macho.import_hash")(e.Macho ?? new Macho(),v),
-				"FileMachoImportHash" => static (e, v) => TryAssignMacho("macho.import_hash")(e.Macho ?? new Macho(),v),
-				"file.macho.imports_names_entropy" => static (e, v) => TryAssignMacho("macho.imports_names_entropy")(e.Macho ?? new Macho(),v),
-				"FileMachoImportsNamesEntropy" => static (e, v) => TryAssignMacho("macho.imports_names_entropy")(e.Macho ?? new Macho(),v),
-				"file.macho.imports_names_var_entropy" => static (e, v) => TryAssignMacho("macho.imports_names_var_entropy")(e.Macho ?? new Macho(),v),
-				"FileMachoImportsNamesVarEntropy" => static (e, v) => TryAssignMacho("macho.imports_names_var_entropy")(e.Macho ?? new Macho(),v),
-				"file.macho.symhash" => static (e, v) => TryAssignMacho("macho.symhash")(e.Macho ?? new Macho(),v),
-				"FileMachoSymhash" => static (e, v) => TryAssignMacho("macho.symhash")(e.Macho ?? new Macho(),v),
+				"file.hash.md5" => static (e, v) => TryAssignHash("hash.md5")(e.Hash ??= new Hash(),v),
+				"FileHashMd5" => static (e, v) => TryAssignHash("hash.md5")(e.Hash ??= new Hash(),v),
+				"file.hash.sha1" => static (e, v) => TryAssignHash("hash.sha1")(e.Hash ??= new Hash(),v),
+				"FileHashSha1" => static (e, v) => TryAssignHash("hash.sha1")(e.Hash ??= new Hash(),v),
+				"file.hash.sha256" => static (e, v) => TryAssignHash("hash.sha256")(e.Hash ??= new Hash(),v),
+				"FileHashSha256" => static (e, v) => TryAssignHash("hash.sha256")(e.Hash ??= new Hash(),v),
+				"file.hash.sha384" => static (e, v) => TryAssignHash("hash.sha384")(e.Hash ??= new Hash(),v),
+				"FileHashSha384" => static (e, v) => TryAssignHash("hash.sha384")(e.Hash ??= new Hash(),v),
+				"file.hash.sha512" => static (e, v) => TryAssignHash("hash.sha512")(e.Hash ??= new Hash(),v),
+				"FileHashSha512" => static (e, v) => TryAssignHash("hash.sha512")(e.Hash ??= new Hash(),v),
+				"file.hash.ssdeep" => static (e, v) => TryAssignHash("hash.ssdeep")(e.Hash ??= new Hash(),v),
+				"FileHashSsdeep" => static (e, v) => TryAssignHash("hash.ssdeep")(e.Hash ??= new Hash(),v),
+				"file.hash.tlsh" => static (e, v) => TryAssignHash("hash.tlsh")(e.Hash ??= new Hash(),v),
+				"FileHashTlsh" => static (e, v) => TryAssignHash("hash.tlsh")(e.Hash ??= new Hash(),v),
+				"file.pe.architecture" => static (e, v) => TryAssignPe("pe.architecture")(e.Pe ??= new Pe(),v),
+				"FilePeArchitecture" => static (e, v) => TryAssignPe("pe.architecture")(e.Pe ??= new Pe(),v),
+				"file.pe.company" => static (e, v) => TryAssignPe("pe.company")(e.Pe ??= new Pe(),v),
+				"FilePeCompany" => static (e, v) => TryAssignPe("pe.company")(e.Pe ??= new Pe(),v),
+				"file.pe.description" => static (e, v) => TryAssignPe("pe.description")(e.Pe ??= new Pe(),v),
+				"FilePeDescription" => static (e, v) => TryAssignPe("pe.description")(e.Pe ??= new Pe(),v),
+				"file.pe.file_version" => static (e, v) => TryAssignPe("pe.file_version")(e.Pe ??= new Pe(),v),
+				"FilePeFileVersion" => static (e, v) => TryAssignPe("pe.file_version")(e.Pe ??= new Pe(),v),
+				"file.pe.go_import_hash" => static (e, v) => TryAssignPe("pe.go_import_hash")(e.Pe ??= new Pe(),v),
+				"FilePeGoImportHash" => static (e, v) => TryAssignPe("pe.go_import_hash")(e.Pe ??= new Pe(),v),
+				"file.pe.go_imports" => static (e, v) => TryAssignPe("pe.go_imports")(e.Pe ??= new Pe(),v),
+				"FilePeGoImports" => static (e, v) => TryAssignPe("pe.go_imports")(e.Pe ??= new Pe(),v),
+				"file.pe.go_imports_names_entropy" => static (e, v) => TryAssignPe("pe.go_imports_names_entropy")(e.Pe ??= new Pe(),v),
+				"FilePeGoImportsNamesEntropy" => static (e, v) => TryAssignPe("pe.go_imports_names_entropy")(e.Pe ??= new Pe(),v),
+				"file.pe.go_imports_names_var_entropy" => static (e, v) => TryAssignPe("pe.go_imports_names_var_entropy")(e.Pe ??= new Pe(),v),
+				"FilePeGoImportsNamesVarEntropy" => static (e, v) => TryAssignPe("pe.go_imports_names_var_entropy")(e.Pe ??= new Pe(),v),
+				"file.pe.go_stripped" => static (e, v) => TryAssignPe("pe.go_stripped")(e.Pe ??= new Pe(),v),
+				"FilePeGoStripped" => static (e, v) => TryAssignPe("pe.go_stripped")(e.Pe ??= new Pe(),v),
+				"file.pe.imphash" => static (e, v) => TryAssignPe("pe.imphash")(e.Pe ??= new Pe(),v),
+				"FilePeImphash" => static (e, v) => TryAssignPe("pe.imphash")(e.Pe ??= new Pe(),v),
+				"file.pe.import_hash" => static (e, v) => TryAssignPe("pe.import_hash")(e.Pe ??= new Pe(),v),
+				"FilePeImportHash" => static (e, v) => TryAssignPe("pe.import_hash")(e.Pe ??= new Pe(),v),
+				"file.pe.imports_names_entropy" => static (e, v) => TryAssignPe("pe.imports_names_entropy")(e.Pe ??= new Pe(),v),
+				"FilePeImportsNamesEntropy" => static (e, v) => TryAssignPe("pe.imports_names_entropy")(e.Pe ??= new Pe(),v),
+				"file.pe.imports_names_var_entropy" => static (e, v) => TryAssignPe("pe.imports_names_var_entropy")(e.Pe ??= new Pe(),v),
+				"FilePeImportsNamesVarEntropy" => static (e, v) => TryAssignPe("pe.imports_names_var_entropy")(e.Pe ??= new Pe(),v),
+				"file.pe.original_file_name" => static (e, v) => TryAssignPe("pe.original_file_name")(e.Pe ??= new Pe(),v),
+				"FilePeOriginalFileName" => static (e, v) => TryAssignPe("pe.original_file_name")(e.Pe ??= new Pe(),v),
+				"file.pe.pehash" => static (e, v) => TryAssignPe("pe.pehash")(e.Pe ??= new Pe(),v),
+				"FilePePehash" => static (e, v) => TryAssignPe("pe.pehash")(e.Pe ??= new Pe(),v),
+				"file.pe.product" => static (e, v) => TryAssignPe("pe.product")(e.Pe ??= new Pe(),v),
+				"FilePeProduct" => static (e, v) => TryAssignPe("pe.product")(e.Pe ??= new Pe(),v),
+				"file.x509.issuer.distinguished_name" => static (e, v) => TryAssignX509("x509.issuer.distinguished_name")(e.X509 ??= new X509(),v),
+				"FileX509IssuerDistinguishedName" => static (e, v) => TryAssignX509("x509.issuer.distinguished_name")(e.X509 ??= new X509(),v),
+				"file.x509.not_after" => static (e, v) => TryAssignX509("x509.not_after")(e.X509 ??= new X509(),v),
+				"FileX509NotAfter" => static (e, v) => TryAssignX509("x509.not_after")(e.X509 ??= new X509(),v),
+				"file.x509.not_before" => static (e, v) => TryAssignX509("x509.not_before")(e.X509 ??= new X509(),v),
+				"FileX509NotBefore" => static (e, v) => TryAssignX509("x509.not_before")(e.X509 ??= new X509(),v),
+				"file.x509.public_key_algorithm" => static (e, v) => TryAssignX509("x509.public_key_algorithm")(e.X509 ??= new X509(),v),
+				"FileX509PublicKeyAlgorithm" => static (e, v) => TryAssignX509("x509.public_key_algorithm")(e.X509 ??= new X509(),v),
+				"file.x509.public_key_curve" => static (e, v) => TryAssignX509("x509.public_key_curve")(e.X509 ??= new X509(),v),
+				"FileX509PublicKeyCurve" => static (e, v) => TryAssignX509("x509.public_key_curve")(e.X509 ??= new X509(),v),
+				"file.x509.public_key_exponent" => static (e, v) => TryAssignX509("x509.public_key_exponent")(e.X509 ??= new X509(),v),
+				"FileX509PublicKeyExponent" => static (e, v) => TryAssignX509("x509.public_key_exponent")(e.X509 ??= new X509(),v),
+				"file.x509.public_key_size" => static (e, v) => TryAssignX509("x509.public_key_size")(e.X509 ??= new X509(),v),
+				"FileX509PublicKeySize" => static (e, v) => TryAssignX509("x509.public_key_size")(e.X509 ??= new X509(),v),
+				"file.x509.serial_number" => static (e, v) => TryAssignX509("x509.serial_number")(e.X509 ??= new X509(),v),
+				"FileX509SerialNumber" => static (e, v) => TryAssignX509("x509.serial_number")(e.X509 ??= new X509(),v),
+				"file.x509.signature_algorithm" => static (e, v) => TryAssignX509("x509.signature_algorithm")(e.X509 ??= new X509(),v),
+				"FileX509SignatureAlgorithm" => static (e, v) => TryAssignX509("x509.signature_algorithm")(e.X509 ??= new X509(),v),
+				"file.x509.subject.distinguished_name" => static (e, v) => TryAssignX509("x509.subject.distinguished_name")(e.X509 ??= new X509(),v),
+				"FileX509SubjectDistinguishedName" => static (e, v) => TryAssignX509("x509.subject.distinguished_name")(e.X509 ??= new X509(),v),
+				"file.x509.version_number" => static (e, v) => TryAssignX509("x509.version_number")(e.X509 ??= new X509(),v),
+				"FileX509VersionNumber" => static (e, v) => TryAssignX509("x509.version_number")(e.X509 ??= new X509(),v),
+				"file.code_signature.digest_algorithm" => static (e, v) => TryAssignCodeSignature("code_signature.digest_algorithm")(e.CodeSignature ??= new CodeSignature(),v),
+				"FileCodeSignatureDigestAlgorithm" => static (e, v) => TryAssignCodeSignature("code_signature.digest_algorithm")(e.CodeSignature ??= new CodeSignature(),v),
+				"file.code_signature.exists" => static (e, v) => TryAssignCodeSignature("code_signature.exists")(e.CodeSignature ??= new CodeSignature(),v),
+				"FileCodeSignatureExists" => static (e, v) => TryAssignCodeSignature("code_signature.exists")(e.CodeSignature ??= new CodeSignature(),v),
+				"file.code_signature.signing_id" => static (e, v) => TryAssignCodeSignature("code_signature.signing_id")(e.CodeSignature ??= new CodeSignature(),v),
+				"FileCodeSignatureSigningId" => static (e, v) => TryAssignCodeSignature("code_signature.signing_id")(e.CodeSignature ??= new CodeSignature(),v),
+				"file.code_signature.status" => static (e, v) => TryAssignCodeSignature("code_signature.status")(e.CodeSignature ??= new CodeSignature(),v),
+				"FileCodeSignatureStatus" => static (e, v) => TryAssignCodeSignature("code_signature.status")(e.CodeSignature ??= new CodeSignature(),v),
+				"file.code_signature.subject_name" => static (e, v) => TryAssignCodeSignature("code_signature.subject_name")(e.CodeSignature ??= new CodeSignature(),v),
+				"FileCodeSignatureSubjectName" => static (e, v) => TryAssignCodeSignature("code_signature.subject_name")(e.CodeSignature ??= new CodeSignature(),v),
+				"file.code_signature.team_id" => static (e, v) => TryAssignCodeSignature("code_signature.team_id")(e.CodeSignature ??= new CodeSignature(),v),
+				"FileCodeSignatureTeamId" => static (e, v) => TryAssignCodeSignature("code_signature.team_id")(e.CodeSignature ??= new CodeSignature(),v),
+				"file.code_signature.timestamp" => static (e, v) => TryAssignCodeSignature("code_signature.timestamp")(e.CodeSignature ??= new CodeSignature(),v),
+				"FileCodeSignatureTimestamp" => static (e, v) => TryAssignCodeSignature("code_signature.timestamp")(e.CodeSignature ??= new CodeSignature(),v),
+				"file.code_signature.trusted" => static (e, v) => TryAssignCodeSignature("code_signature.trusted")(e.CodeSignature ??= new CodeSignature(),v),
+				"FileCodeSignatureTrusted" => static (e, v) => TryAssignCodeSignature("code_signature.trusted")(e.CodeSignature ??= new CodeSignature(),v),
+				"file.code_signature.valid" => static (e, v) => TryAssignCodeSignature("code_signature.valid")(e.CodeSignature ??= new CodeSignature(),v),
+				"FileCodeSignatureValid" => static (e, v) => TryAssignCodeSignature("code_signature.valid")(e.CodeSignature ??= new CodeSignature(),v),
+				"file.elf.architecture" => static (e, v) => TryAssignElf("elf.architecture")(e.Elf ??= new Elf(),v),
+				"FileElfArchitecture" => static (e, v) => TryAssignElf("elf.architecture")(e.Elf ??= new Elf(),v),
+				"file.elf.byte_order" => static (e, v) => TryAssignElf("elf.byte_order")(e.Elf ??= new Elf(),v),
+				"FileElfByteOrder" => static (e, v) => TryAssignElf("elf.byte_order")(e.Elf ??= new Elf(),v),
+				"file.elf.cpu_type" => static (e, v) => TryAssignElf("elf.cpu_type")(e.Elf ??= new Elf(),v),
+				"FileElfCpuType" => static (e, v) => TryAssignElf("elf.cpu_type")(e.Elf ??= new Elf(),v),
+				"file.elf.creation_date" => static (e, v) => TryAssignElf("elf.creation_date")(e.Elf ??= new Elf(),v),
+				"FileElfCreationDate" => static (e, v) => TryAssignElf("elf.creation_date")(e.Elf ??= new Elf(),v),
+				"file.elf.go_import_hash" => static (e, v) => TryAssignElf("elf.go_import_hash")(e.Elf ??= new Elf(),v),
+				"FileElfGoImportHash" => static (e, v) => TryAssignElf("elf.go_import_hash")(e.Elf ??= new Elf(),v),
+				"file.elf.go_imports" => static (e, v) => TryAssignElf("elf.go_imports")(e.Elf ??= new Elf(),v),
+				"FileElfGoImports" => static (e, v) => TryAssignElf("elf.go_imports")(e.Elf ??= new Elf(),v),
+				"file.elf.go_imports_names_entropy" => static (e, v) => TryAssignElf("elf.go_imports_names_entropy")(e.Elf ??= new Elf(),v),
+				"FileElfGoImportsNamesEntropy" => static (e, v) => TryAssignElf("elf.go_imports_names_entropy")(e.Elf ??= new Elf(),v),
+				"file.elf.go_imports_names_var_entropy" => static (e, v) => TryAssignElf("elf.go_imports_names_var_entropy")(e.Elf ??= new Elf(),v),
+				"FileElfGoImportsNamesVarEntropy" => static (e, v) => TryAssignElf("elf.go_imports_names_var_entropy")(e.Elf ??= new Elf(),v),
+				"file.elf.go_stripped" => static (e, v) => TryAssignElf("elf.go_stripped")(e.Elf ??= new Elf(),v),
+				"FileElfGoStripped" => static (e, v) => TryAssignElf("elf.go_stripped")(e.Elf ??= new Elf(),v),
+				"file.elf.header.abi_version" => static (e, v) => TryAssignElf("elf.header.abi_version")(e.Elf ??= new Elf(),v),
+				"FileElfHeaderAbiVersion" => static (e, v) => TryAssignElf("elf.header.abi_version")(e.Elf ??= new Elf(),v),
+				"file.elf.header.class" => static (e, v) => TryAssignElf("elf.header.class")(e.Elf ??= new Elf(),v),
+				"FileElfHeaderClass" => static (e, v) => TryAssignElf("elf.header.class")(e.Elf ??= new Elf(),v),
+				"file.elf.header.data" => static (e, v) => TryAssignElf("elf.header.data")(e.Elf ??= new Elf(),v),
+				"FileElfHeaderData" => static (e, v) => TryAssignElf("elf.header.data")(e.Elf ??= new Elf(),v),
+				"file.elf.header.entrypoint" => static (e, v) => TryAssignElf("elf.header.entrypoint")(e.Elf ??= new Elf(),v),
+				"FileElfHeaderEntrypoint" => static (e, v) => TryAssignElf("elf.header.entrypoint")(e.Elf ??= new Elf(),v),
+				"file.elf.header.object_version" => static (e, v) => TryAssignElf("elf.header.object_version")(e.Elf ??= new Elf(),v),
+				"FileElfHeaderObjectVersion" => static (e, v) => TryAssignElf("elf.header.object_version")(e.Elf ??= new Elf(),v),
+				"file.elf.header.os_abi" => static (e, v) => TryAssignElf("elf.header.os_abi")(e.Elf ??= new Elf(),v),
+				"FileElfHeaderOsAbi" => static (e, v) => TryAssignElf("elf.header.os_abi")(e.Elf ??= new Elf(),v),
+				"file.elf.header.type" => static (e, v) => TryAssignElf("elf.header.type")(e.Elf ??= new Elf(),v),
+				"FileElfHeaderType" => static (e, v) => TryAssignElf("elf.header.type")(e.Elf ??= new Elf(),v),
+				"file.elf.header.version" => static (e, v) => TryAssignElf("elf.header.version")(e.Elf ??= new Elf(),v),
+				"FileElfHeaderVersion" => static (e, v) => TryAssignElf("elf.header.version")(e.Elf ??= new Elf(),v),
+				"file.elf.import_hash" => static (e, v) => TryAssignElf("elf.import_hash")(e.Elf ??= new Elf(),v),
+				"FileElfImportHash" => static (e, v) => TryAssignElf("elf.import_hash")(e.Elf ??= new Elf(),v),
+				"file.elf.imports_names_entropy" => static (e, v) => TryAssignElf("elf.imports_names_entropy")(e.Elf ??= new Elf(),v),
+				"FileElfImportsNamesEntropy" => static (e, v) => TryAssignElf("elf.imports_names_entropy")(e.Elf ??= new Elf(),v),
+				"file.elf.imports_names_var_entropy" => static (e, v) => TryAssignElf("elf.imports_names_var_entropy")(e.Elf ??= new Elf(),v),
+				"FileElfImportsNamesVarEntropy" => static (e, v) => TryAssignElf("elf.imports_names_var_entropy")(e.Elf ??= new Elf(),v),
+				"file.elf.telfhash" => static (e, v) => TryAssignElf("elf.telfhash")(e.Elf ??= new Elf(),v),
+				"FileElfTelfhash" => static (e, v) => TryAssignElf("elf.telfhash")(e.Elf ??= new Elf(),v),
+				"file.macho.go_import_hash" => static (e, v) => TryAssignMacho("macho.go_import_hash")(e.Macho ??= new Macho(),v),
+				"FileMachoGoImportHash" => static (e, v) => TryAssignMacho("macho.go_import_hash")(e.Macho ??= new Macho(),v),
+				"file.macho.go_imports" => static (e, v) => TryAssignMacho("macho.go_imports")(e.Macho ??= new Macho(),v),
+				"FileMachoGoImports" => static (e, v) => TryAssignMacho("macho.go_imports")(e.Macho ??= new Macho(),v),
+				"file.macho.go_imports_names_entropy" => static (e, v) => TryAssignMacho("macho.go_imports_names_entropy")(e.Macho ??= new Macho(),v),
+				"FileMachoGoImportsNamesEntropy" => static (e, v) => TryAssignMacho("macho.go_imports_names_entropy")(e.Macho ??= new Macho(),v),
+				"file.macho.go_imports_names_var_entropy" => static (e, v) => TryAssignMacho("macho.go_imports_names_var_entropy")(e.Macho ??= new Macho(),v),
+				"FileMachoGoImportsNamesVarEntropy" => static (e, v) => TryAssignMacho("macho.go_imports_names_var_entropy")(e.Macho ??= new Macho(),v),
+				"file.macho.go_stripped" => static (e, v) => TryAssignMacho("macho.go_stripped")(e.Macho ??= new Macho(),v),
+				"FileMachoGoStripped" => static (e, v) => TryAssignMacho("macho.go_stripped")(e.Macho ??= new Macho(),v),
+				"file.macho.import_hash" => static (e, v) => TryAssignMacho("macho.import_hash")(e.Macho ??= new Macho(),v),
+				"FileMachoImportHash" => static (e, v) => TryAssignMacho("macho.import_hash")(e.Macho ??= new Macho(),v),
+				"file.macho.imports_names_entropy" => static (e, v) => TryAssignMacho("macho.imports_names_entropy")(e.Macho ??= new Macho(),v),
+				"FileMachoImportsNamesEntropy" => static (e, v) => TryAssignMacho("macho.imports_names_entropy")(e.Macho ??= new Macho(),v),
+				"file.macho.imports_names_var_entropy" => static (e, v) => TryAssignMacho("macho.imports_names_var_entropy")(e.Macho ??= new Macho(),v),
+				"FileMachoImportsNamesVarEntropy" => static (e, v) => TryAssignMacho("macho.imports_names_var_entropy")(e.Macho ??= new Macho(),v),
+				"file.macho.symhash" => static (e, v) => TryAssignMacho("macho.symhash")(e.Macho ??= new Macho(),v),
+				"FileMachoSymhash" => static (e, v) => TryAssignMacho("macho.symhash")(e.Macho ??= new Macho(),v),
 				_ => null
 			};
 			return assign;
@@ -4165,6 +3913,8 @@ namespace Elastic.CommonSchema
 				"GeoCountryIsoCode" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.CountryIsoCode = p),
 				"geo.country_name" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.CountryName = p),
 				"GeoCountryName" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.CountryName = p),
+				"geo.location" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Location = p),
+				"GeoLocation" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Location = p),
 				"geo.name" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Name = p),
 				"GeoName" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Name = p),
 				"geo.postal_code" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.PostalCode = p),
@@ -4284,52 +4034,54 @@ namespace Elastic.CommonSchema
 				"HostType" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Type = p),
 				"host.uptime" => static (e, v) => TrySetLong(e, v, static (ee, p) => ee.Uptime = p),
 				"HostUptime" => static (e, v) => TrySetLong(e, v, static (ee, p) => ee.Uptime = p),
-				"host.geo.city_name" => static (e, v) => TryAssignGeo("geo.city_name")(e.Geo ?? new Geo(),v),
-				"HostGeoCityName" => static (e, v) => TryAssignGeo("geo.city_name")(e.Geo ?? new Geo(),v),
-				"host.geo.continent_code" => static (e, v) => TryAssignGeo("geo.continent_code")(e.Geo ?? new Geo(),v),
-				"HostGeoContinentCode" => static (e, v) => TryAssignGeo("geo.continent_code")(e.Geo ?? new Geo(),v),
-				"host.geo.continent_name" => static (e, v) => TryAssignGeo("geo.continent_name")(e.Geo ?? new Geo(),v),
-				"HostGeoContinentName" => static (e, v) => TryAssignGeo("geo.continent_name")(e.Geo ?? new Geo(),v),
-				"host.geo.country_iso_code" => static (e, v) => TryAssignGeo("geo.country_iso_code")(e.Geo ?? new Geo(),v),
-				"HostGeoCountryIsoCode" => static (e, v) => TryAssignGeo("geo.country_iso_code")(e.Geo ?? new Geo(),v),
-				"host.geo.country_name" => static (e, v) => TryAssignGeo("geo.country_name")(e.Geo ?? new Geo(),v),
-				"HostGeoCountryName" => static (e, v) => TryAssignGeo("geo.country_name")(e.Geo ?? new Geo(),v),
-				"host.geo.name" => static (e, v) => TryAssignGeo("geo.name")(e.Geo ?? new Geo(),v),
-				"HostGeoName" => static (e, v) => TryAssignGeo("geo.name")(e.Geo ?? new Geo(),v),
-				"host.geo.postal_code" => static (e, v) => TryAssignGeo("geo.postal_code")(e.Geo ?? new Geo(),v),
-				"HostGeoPostalCode" => static (e, v) => TryAssignGeo("geo.postal_code")(e.Geo ?? new Geo(),v),
-				"host.geo.region_iso_code" => static (e, v) => TryAssignGeo("geo.region_iso_code")(e.Geo ?? new Geo(),v),
-				"HostGeoRegionIsoCode" => static (e, v) => TryAssignGeo("geo.region_iso_code")(e.Geo ?? new Geo(),v),
-				"host.geo.region_name" => static (e, v) => TryAssignGeo("geo.region_name")(e.Geo ?? new Geo(),v),
-				"HostGeoRegionName" => static (e, v) => TryAssignGeo("geo.region_name")(e.Geo ?? new Geo(),v),
-				"host.geo.timezone" => static (e, v) => TryAssignGeo("geo.timezone")(e.Geo ?? new Geo(),v),
-				"HostGeoTimezone" => static (e, v) => TryAssignGeo("geo.timezone")(e.Geo ?? new Geo(),v),
-				"host.os.family" => static (e, v) => TryAssignOs("os.family")(e.Os ?? new Os(),v),
-				"HostOsFamily" => static (e, v) => TryAssignOs("os.family")(e.Os ?? new Os(),v),
-				"host.os.full" => static (e, v) => TryAssignOs("os.full")(e.Os ?? new Os(),v),
-				"HostOsFull" => static (e, v) => TryAssignOs("os.full")(e.Os ?? new Os(),v),
-				"host.os.kernel" => static (e, v) => TryAssignOs("os.kernel")(e.Os ?? new Os(),v),
-				"HostOsKernel" => static (e, v) => TryAssignOs("os.kernel")(e.Os ?? new Os(),v),
-				"host.os.name" => static (e, v) => TryAssignOs("os.name")(e.Os ?? new Os(),v),
-				"HostOsName" => static (e, v) => TryAssignOs("os.name")(e.Os ?? new Os(),v),
-				"host.os.platform" => static (e, v) => TryAssignOs("os.platform")(e.Os ?? new Os(),v),
-				"HostOsPlatform" => static (e, v) => TryAssignOs("os.platform")(e.Os ?? new Os(),v),
-				"host.os.type" => static (e, v) => TryAssignOs("os.type")(e.Os ?? new Os(),v),
-				"HostOsType" => static (e, v) => TryAssignOs("os.type")(e.Os ?? new Os(),v),
-				"host.os.version" => static (e, v) => TryAssignOs("os.version")(e.Os ?? new Os(),v),
-				"HostOsVersion" => static (e, v) => TryAssignOs("os.version")(e.Os ?? new Os(),v),
-				"host.risk.calculated_level" => static (e, v) => TryAssignRisk("risk.calculated_level")(e.Risk ?? new Risk(),v),
-				"HostRiskCalculatedLevel" => static (e, v) => TryAssignRisk("risk.calculated_level")(e.Risk ?? new Risk(),v),
-				"host.risk.calculated_score" => static (e, v) => TryAssignRisk("risk.calculated_score")(e.Risk ?? new Risk(),v),
-				"HostRiskCalculatedScore" => static (e, v) => TryAssignRisk("risk.calculated_score")(e.Risk ?? new Risk(),v),
-				"host.risk.calculated_score_norm" => static (e, v) => TryAssignRisk("risk.calculated_score_norm")(e.Risk ?? new Risk(),v),
-				"HostRiskCalculatedScoreNorm" => static (e, v) => TryAssignRisk("risk.calculated_score_norm")(e.Risk ?? new Risk(),v),
-				"host.risk.static_level" => static (e, v) => TryAssignRisk("risk.static_level")(e.Risk ?? new Risk(),v),
-				"HostRiskStaticLevel" => static (e, v) => TryAssignRisk("risk.static_level")(e.Risk ?? new Risk(),v),
-				"host.risk.static_score" => static (e, v) => TryAssignRisk("risk.static_score")(e.Risk ?? new Risk(),v),
-				"HostRiskStaticScore" => static (e, v) => TryAssignRisk("risk.static_score")(e.Risk ?? new Risk(),v),
-				"host.risk.static_score_norm" => static (e, v) => TryAssignRisk("risk.static_score_norm")(e.Risk ?? new Risk(),v),
-				"HostRiskStaticScoreNorm" => static (e, v) => TryAssignRisk("risk.static_score_norm")(e.Risk ?? new Risk(),v),
+				"host.geo.city_name" => static (e, v) => TryAssignGeo("geo.city_name")(e.Geo ??= new Geo(),v),
+				"HostGeoCityName" => static (e, v) => TryAssignGeo("geo.city_name")(e.Geo ??= new Geo(),v),
+				"host.geo.continent_code" => static (e, v) => TryAssignGeo("geo.continent_code")(e.Geo ??= new Geo(),v),
+				"HostGeoContinentCode" => static (e, v) => TryAssignGeo("geo.continent_code")(e.Geo ??= new Geo(),v),
+				"host.geo.continent_name" => static (e, v) => TryAssignGeo("geo.continent_name")(e.Geo ??= new Geo(),v),
+				"HostGeoContinentName" => static (e, v) => TryAssignGeo("geo.continent_name")(e.Geo ??= new Geo(),v),
+				"host.geo.country_iso_code" => static (e, v) => TryAssignGeo("geo.country_iso_code")(e.Geo ??= new Geo(),v),
+				"HostGeoCountryIsoCode" => static (e, v) => TryAssignGeo("geo.country_iso_code")(e.Geo ??= new Geo(),v),
+				"host.geo.country_name" => static (e, v) => TryAssignGeo("geo.country_name")(e.Geo ??= new Geo(),v),
+				"HostGeoCountryName" => static (e, v) => TryAssignGeo("geo.country_name")(e.Geo ??= new Geo(),v),
+				"host.geo.location" => static (e, v) => TryAssignGeo("geo.location")(e.Geo ??= new Geo(),v),
+				"HostGeoLocation" => static (e, v) => TryAssignGeo("geo.location")(e.Geo ??= new Geo(),v),
+				"host.geo.name" => static (e, v) => TryAssignGeo("geo.name")(e.Geo ??= new Geo(),v),
+				"HostGeoName" => static (e, v) => TryAssignGeo("geo.name")(e.Geo ??= new Geo(),v),
+				"host.geo.postal_code" => static (e, v) => TryAssignGeo("geo.postal_code")(e.Geo ??= new Geo(),v),
+				"HostGeoPostalCode" => static (e, v) => TryAssignGeo("geo.postal_code")(e.Geo ??= new Geo(),v),
+				"host.geo.region_iso_code" => static (e, v) => TryAssignGeo("geo.region_iso_code")(e.Geo ??= new Geo(),v),
+				"HostGeoRegionIsoCode" => static (e, v) => TryAssignGeo("geo.region_iso_code")(e.Geo ??= new Geo(),v),
+				"host.geo.region_name" => static (e, v) => TryAssignGeo("geo.region_name")(e.Geo ??= new Geo(),v),
+				"HostGeoRegionName" => static (e, v) => TryAssignGeo("geo.region_name")(e.Geo ??= new Geo(),v),
+				"host.geo.timezone" => static (e, v) => TryAssignGeo("geo.timezone")(e.Geo ??= new Geo(),v),
+				"HostGeoTimezone" => static (e, v) => TryAssignGeo("geo.timezone")(e.Geo ??= new Geo(),v),
+				"host.os.family" => static (e, v) => TryAssignOs("os.family")(e.Os ??= new Os(),v),
+				"HostOsFamily" => static (e, v) => TryAssignOs("os.family")(e.Os ??= new Os(),v),
+				"host.os.full" => static (e, v) => TryAssignOs("os.full")(e.Os ??= new Os(),v),
+				"HostOsFull" => static (e, v) => TryAssignOs("os.full")(e.Os ??= new Os(),v),
+				"host.os.kernel" => static (e, v) => TryAssignOs("os.kernel")(e.Os ??= new Os(),v),
+				"HostOsKernel" => static (e, v) => TryAssignOs("os.kernel")(e.Os ??= new Os(),v),
+				"host.os.name" => static (e, v) => TryAssignOs("os.name")(e.Os ??= new Os(),v),
+				"HostOsName" => static (e, v) => TryAssignOs("os.name")(e.Os ??= new Os(),v),
+				"host.os.platform" => static (e, v) => TryAssignOs("os.platform")(e.Os ??= new Os(),v),
+				"HostOsPlatform" => static (e, v) => TryAssignOs("os.platform")(e.Os ??= new Os(),v),
+				"host.os.type" => static (e, v) => TryAssignOs("os.type")(e.Os ??= new Os(),v),
+				"HostOsType" => static (e, v) => TryAssignOs("os.type")(e.Os ??= new Os(),v),
+				"host.os.version" => static (e, v) => TryAssignOs("os.version")(e.Os ??= new Os(),v),
+				"HostOsVersion" => static (e, v) => TryAssignOs("os.version")(e.Os ??= new Os(),v),
+				"host.risk.calculated_level" => static (e, v) => TryAssignRisk("risk.calculated_level")(e.Risk ??= new Risk(),v),
+				"HostRiskCalculatedLevel" => static (e, v) => TryAssignRisk("risk.calculated_level")(e.Risk ??= new Risk(),v),
+				"host.risk.calculated_score" => static (e, v) => TryAssignRisk("risk.calculated_score")(e.Risk ??= new Risk(),v),
+				"HostRiskCalculatedScore" => static (e, v) => TryAssignRisk("risk.calculated_score")(e.Risk ??= new Risk(),v),
+				"host.risk.calculated_score_norm" => static (e, v) => TryAssignRisk("risk.calculated_score_norm")(e.Risk ??= new Risk(),v),
+				"HostRiskCalculatedScoreNorm" => static (e, v) => TryAssignRisk("risk.calculated_score_norm")(e.Risk ??= new Risk(),v),
+				"host.risk.static_level" => static (e, v) => TryAssignRisk("risk.static_level")(e.Risk ??= new Risk(),v),
+				"HostRiskStaticLevel" => static (e, v) => TryAssignRisk("risk.static_level")(e.Risk ??= new Risk(),v),
+				"host.risk.static_score" => static (e, v) => TryAssignRisk("risk.static_score")(e.Risk ??= new Risk(),v),
+				"HostRiskStaticScore" => static (e, v) => TryAssignRisk("risk.static_score")(e.Risk ??= new Risk(),v),
+				"host.risk.static_score_norm" => static (e, v) => TryAssignRisk("risk.static_score_norm")(e.Risk ??= new Risk(),v),
+				"HostRiskStaticScoreNorm" => static (e, v) => TryAssignRisk("risk.static_score_norm")(e.Risk ??= new Risk(),v),
 				_ => null
 			};
 			return assign;
@@ -4509,10 +4261,10 @@ namespace Elastic.CommonSchema
 				"NetworkTransport" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Transport = p),
 				"network.type" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Type = p),
 				"NetworkType" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Type = p),
-				"network.vlan.id" => static (e, v) => TryAssignVlan("vlan.id")(e.Vlan ?? new Vlan(),v),
-				"NetworkVlanId" => static (e, v) => TryAssignVlan("vlan.id")(e.Vlan ?? new Vlan(),v),
-				"network.vlan.name" => static (e, v) => TryAssignVlan("vlan.name")(e.Vlan ?? new Vlan(),v),
-				"NetworkVlanName" => static (e, v) => TryAssignVlan("vlan.name")(e.Vlan ?? new Vlan(),v),
+				"network.vlan.id" => static (e, v) => TryAssignVlan("vlan.id")(e.Vlan ??= new Vlan(),v),
+				"NetworkVlanId" => static (e, v) => TryAssignVlan("vlan.id")(e.Vlan ??= new Vlan(),v),
+				"network.vlan.name" => static (e, v) => TryAssignVlan("vlan.name")(e.Vlan ??= new Vlan(),v),
+				"NetworkVlanName" => static (e, v) => TryAssignVlan("vlan.name")(e.Vlan ??= new Vlan(),v),
 				_ => null
 			};
 			return assign;
@@ -4546,40 +4298,42 @@ namespace Elastic.CommonSchema
 				"ObserverVendor" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Vendor = p),
 				"observer.version" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Version = p),
 				"ObserverVersion" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Version = p),
-				"observer.geo.city_name" => static (e, v) => TryAssignGeo("geo.city_name")(e.Geo ?? new Geo(),v),
-				"ObserverGeoCityName" => static (e, v) => TryAssignGeo("geo.city_name")(e.Geo ?? new Geo(),v),
-				"observer.geo.continent_code" => static (e, v) => TryAssignGeo("geo.continent_code")(e.Geo ?? new Geo(),v),
-				"ObserverGeoContinentCode" => static (e, v) => TryAssignGeo("geo.continent_code")(e.Geo ?? new Geo(),v),
-				"observer.geo.continent_name" => static (e, v) => TryAssignGeo("geo.continent_name")(e.Geo ?? new Geo(),v),
-				"ObserverGeoContinentName" => static (e, v) => TryAssignGeo("geo.continent_name")(e.Geo ?? new Geo(),v),
-				"observer.geo.country_iso_code" => static (e, v) => TryAssignGeo("geo.country_iso_code")(e.Geo ?? new Geo(),v),
-				"ObserverGeoCountryIsoCode" => static (e, v) => TryAssignGeo("geo.country_iso_code")(e.Geo ?? new Geo(),v),
-				"observer.geo.country_name" => static (e, v) => TryAssignGeo("geo.country_name")(e.Geo ?? new Geo(),v),
-				"ObserverGeoCountryName" => static (e, v) => TryAssignGeo("geo.country_name")(e.Geo ?? new Geo(),v),
-				"observer.geo.name" => static (e, v) => TryAssignGeo("geo.name")(e.Geo ?? new Geo(),v),
-				"ObserverGeoName" => static (e, v) => TryAssignGeo("geo.name")(e.Geo ?? new Geo(),v),
-				"observer.geo.postal_code" => static (e, v) => TryAssignGeo("geo.postal_code")(e.Geo ?? new Geo(),v),
-				"ObserverGeoPostalCode" => static (e, v) => TryAssignGeo("geo.postal_code")(e.Geo ?? new Geo(),v),
-				"observer.geo.region_iso_code" => static (e, v) => TryAssignGeo("geo.region_iso_code")(e.Geo ?? new Geo(),v),
-				"ObserverGeoRegionIsoCode" => static (e, v) => TryAssignGeo("geo.region_iso_code")(e.Geo ?? new Geo(),v),
-				"observer.geo.region_name" => static (e, v) => TryAssignGeo("geo.region_name")(e.Geo ?? new Geo(),v),
-				"ObserverGeoRegionName" => static (e, v) => TryAssignGeo("geo.region_name")(e.Geo ?? new Geo(),v),
-				"observer.geo.timezone" => static (e, v) => TryAssignGeo("geo.timezone")(e.Geo ?? new Geo(),v),
-				"ObserverGeoTimezone" => static (e, v) => TryAssignGeo("geo.timezone")(e.Geo ?? new Geo(),v),
-				"observer.os.family" => static (e, v) => TryAssignOs("os.family")(e.Os ?? new Os(),v),
-				"ObserverOsFamily" => static (e, v) => TryAssignOs("os.family")(e.Os ?? new Os(),v),
-				"observer.os.full" => static (e, v) => TryAssignOs("os.full")(e.Os ?? new Os(),v),
-				"ObserverOsFull" => static (e, v) => TryAssignOs("os.full")(e.Os ?? new Os(),v),
-				"observer.os.kernel" => static (e, v) => TryAssignOs("os.kernel")(e.Os ?? new Os(),v),
-				"ObserverOsKernel" => static (e, v) => TryAssignOs("os.kernel")(e.Os ?? new Os(),v),
-				"observer.os.name" => static (e, v) => TryAssignOs("os.name")(e.Os ?? new Os(),v),
-				"ObserverOsName" => static (e, v) => TryAssignOs("os.name")(e.Os ?? new Os(),v),
-				"observer.os.platform" => static (e, v) => TryAssignOs("os.platform")(e.Os ?? new Os(),v),
-				"ObserverOsPlatform" => static (e, v) => TryAssignOs("os.platform")(e.Os ?? new Os(),v),
-				"observer.os.type" => static (e, v) => TryAssignOs("os.type")(e.Os ?? new Os(),v),
-				"ObserverOsType" => static (e, v) => TryAssignOs("os.type")(e.Os ?? new Os(),v),
-				"observer.os.version" => static (e, v) => TryAssignOs("os.version")(e.Os ?? new Os(),v),
-				"ObserverOsVersion" => static (e, v) => TryAssignOs("os.version")(e.Os ?? new Os(),v),
+				"observer.geo.city_name" => static (e, v) => TryAssignGeo("geo.city_name")(e.Geo ??= new Geo(),v),
+				"ObserverGeoCityName" => static (e, v) => TryAssignGeo("geo.city_name")(e.Geo ??= new Geo(),v),
+				"observer.geo.continent_code" => static (e, v) => TryAssignGeo("geo.continent_code")(e.Geo ??= new Geo(),v),
+				"ObserverGeoContinentCode" => static (e, v) => TryAssignGeo("geo.continent_code")(e.Geo ??= new Geo(),v),
+				"observer.geo.continent_name" => static (e, v) => TryAssignGeo("geo.continent_name")(e.Geo ??= new Geo(),v),
+				"ObserverGeoContinentName" => static (e, v) => TryAssignGeo("geo.continent_name")(e.Geo ??= new Geo(),v),
+				"observer.geo.country_iso_code" => static (e, v) => TryAssignGeo("geo.country_iso_code")(e.Geo ??= new Geo(),v),
+				"ObserverGeoCountryIsoCode" => static (e, v) => TryAssignGeo("geo.country_iso_code")(e.Geo ??= new Geo(),v),
+				"observer.geo.country_name" => static (e, v) => TryAssignGeo("geo.country_name")(e.Geo ??= new Geo(),v),
+				"ObserverGeoCountryName" => static (e, v) => TryAssignGeo("geo.country_name")(e.Geo ??= new Geo(),v),
+				"observer.geo.location" => static (e, v) => TryAssignGeo("geo.location")(e.Geo ??= new Geo(),v),
+				"ObserverGeoLocation" => static (e, v) => TryAssignGeo("geo.location")(e.Geo ??= new Geo(),v),
+				"observer.geo.name" => static (e, v) => TryAssignGeo("geo.name")(e.Geo ??= new Geo(),v),
+				"ObserverGeoName" => static (e, v) => TryAssignGeo("geo.name")(e.Geo ??= new Geo(),v),
+				"observer.geo.postal_code" => static (e, v) => TryAssignGeo("geo.postal_code")(e.Geo ??= new Geo(),v),
+				"ObserverGeoPostalCode" => static (e, v) => TryAssignGeo("geo.postal_code")(e.Geo ??= new Geo(),v),
+				"observer.geo.region_iso_code" => static (e, v) => TryAssignGeo("geo.region_iso_code")(e.Geo ??= new Geo(),v),
+				"ObserverGeoRegionIsoCode" => static (e, v) => TryAssignGeo("geo.region_iso_code")(e.Geo ??= new Geo(),v),
+				"observer.geo.region_name" => static (e, v) => TryAssignGeo("geo.region_name")(e.Geo ??= new Geo(),v),
+				"ObserverGeoRegionName" => static (e, v) => TryAssignGeo("geo.region_name")(e.Geo ??= new Geo(),v),
+				"observer.geo.timezone" => static (e, v) => TryAssignGeo("geo.timezone")(e.Geo ??= new Geo(),v),
+				"ObserverGeoTimezone" => static (e, v) => TryAssignGeo("geo.timezone")(e.Geo ??= new Geo(),v),
+				"observer.os.family" => static (e, v) => TryAssignOs("os.family")(e.Os ??= new Os(),v),
+				"ObserverOsFamily" => static (e, v) => TryAssignOs("os.family")(e.Os ??= new Os(),v),
+				"observer.os.full" => static (e, v) => TryAssignOs("os.full")(e.Os ??= new Os(),v),
+				"ObserverOsFull" => static (e, v) => TryAssignOs("os.full")(e.Os ??= new Os(),v),
+				"observer.os.kernel" => static (e, v) => TryAssignOs("os.kernel")(e.Os ??= new Os(),v),
+				"ObserverOsKernel" => static (e, v) => TryAssignOs("os.kernel")(e.Os ??= new Os(),v),
+				"observer.os.name" => static (e, v) => TryAssignOs("os.name")(e.Os ??= new Os(),v),
+				"ObserverOsName" => static (e, v) => TryAssignOs("os.name")(e.Os ??= new Os(),v),
+				"observer.os.platform" => static (e, v) => TryAssignOs("os.platform")(e.Os ??= new Os(),v),
+				"ObserverOsPlatform" => static (e, v) => TryAssignOs("os.platform")(e.Os ??= new Os(),v),
+				"observer.os.type" => static (e, v) => TryAssignOs("os.type")(e.Os ??= new Os(),v),
+				"ObserverOsType" => static (e, v) => TryAssignOs("os.type")(e.Os ??= new Os(),v),
+				"observer.os.version" => static (e, v) => TryAssignOs("os.version")(e.Os ??= new Os(),v),
+				"ObserverOsVersion" => static (e, v) => TryAssignOs("os.version")(e.Os ??= new Os(),v),
 				_ => null
 			};
 			return assign;
@@ -4828,472 +4582,348 @@ namespace Elastic.CommonSchema
 				"ProcessVpid" => static (e, v) => TrySetLong(e, v, static (ee, p) => ee.Vpid = p),
 				"process.working_directory" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.WorkingDirectory = p),
 				"ProcessWorkingDirectory" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.WorkingDirectory = p),
-				"process.group.domain" => static (e, v) => TryAssignGroup("group.domain")(e.Group ?? new Group(),v),
-				"ProcessGroupDomain" => static (e, v) => TryAssignGroup("group.domain")(e.Group ?? new Group(),v),
-				"process.group.id" => static (e, v) => TryAssignGroup("group.id")(e.Group ?? new Group(),v),
-				"ProcessGroupId" => static (e, v) => TryAssignGroup("group.id")(e.Group ?? new Group(),v),
-				"process.group.name" => static (e, v) => TryAssignGroup("group.name")(e.Group ?? new Group(),v),
-				"ProcessGroupName" => static (e, v) => TryAssignGroup("group.name")(e.Group ?? new Group(),v),
-				"process.hash.md5" => static (e, v) => TryAssignHash("hash.md5")(e.Hash ?? new Hash(),v),
-				"ProcessHashMd5" => static (e, v) => TryAssignHash("hash.md5")(e.Hash ?? new Hash(),v),
-				"process.hash.sha1" => static (e, v) => TryAssignHash("hash.sha1")(e.Hash ?? new Hash(),v),
-				"ProcessHashSha1" => static (e, v) => TryAssignHash("hash.sha1")(e.Hash ?? new Hash(),v),
-				"process.hash.sha256" => static (e, v) => TryAssignHash("hash.sha256")(e.Hash ?? new Hash(),v),
-				"ProcessHashSha256" => static (e, v) => TryAssignHash("hash.sha256")(e.Hash ?? new Hash(),v),
-				"process.hash.sha384" => static (e, v) => TryAssignHash("hash.sha384")(e.Hash ?? new Hash(),v),
-				"ProcessHashSha384" => static (e, v) => TryAssignHash("hash.sha384")(e.Hash ?? new Hash(),v),
-				"process.hash.sha512" => static (e, v) => TryAssignHash("hash.sha512")(e.Hash ?? new Hash(),v),
-				"ProcessHashSha512" => static (e, v) => TryAssignHash("hash.sha512")(e.Hash ?? new Hash(),v),
-				"process.hash.ssdeep" => static (e, v) => TryAssignHash("hash.ssdeep")(e.Hash ?? new Hash(),v),
-				"ProcessHashSsdeep" => static (e, v) => TryAssignHash("hash.ssdeep")(e.Hash ?? new Hash(),v),
-				"process.hash.tlsh" => static (e, v) => TryAssignHash("hash.tlsh")(e.Hash ?? new Hash(),v),
-				"ProcessHashTlsh" => static (e, v) => TryAssignHash("hash.tlsh")(e.Hash ?? new Hash(),v),
-				"process.pe.architecture" => static (e, v) => TryAssignPe("pe.architecture")(e.Pe ?? new Pe(),v),
-				"ProcessPeArchitecture" => static (e, v) => TryAssignPe("pe.architecture")(e.Pe ?? new Pe(),v),
-				"process.pe.company" => static (e, v) => TryAssignPe("pe.company")(e.Pe ?? new Pe(),v),
-				"ProcessPeCompany" => static (e, v) => TryAssignPe("pe.company")(e.Pe ?? new Pe(),v),
-				"process.pe.description" => static (e, v) => TryAssignPe("pe.description")(e.Pe ?? new Pe(),v),
-				"ProcessPeDescription" => static (e, v) => TryAssignPe("pe.description")(e.Pe ?? new Pe(),v),
-				"process.pe.file_version" => static (e, v) => TryAssignPe("pe.file_version")(e.Pe ?? new Pe(),v),
-				"ProcessPeFileVersion" => static (e, v) => TryAssignPe("pe.file_version")(e.Pe ?? new Pe(),v),
-				"process.pe.go_import_hash" => static (e, v) => TryAssignPe("pe.go_import_hash")(e.Pe ?? new Pe(),v),
-				"ProcessPeGoImportHash" => static (e, v) => TryAssignPe("pe.go_import_hash")(e.Pe ?? new Pe(),v),
-				"process.pe.go_imports" => static (e, v) => TryAssignPe("pe.go_imports")(e.Pe ?? new Pe(),v),
-				"ProcessPeGoImports" => static (e, v) => TryAssignPe("pe.go_imports")(e.Pe ?? new Pe(),v),
-				"process.pe.go_imports_names_entropy" => static (e, v) => TryAssignPe("pe.go_imports_names_entropy")(e.Pe ?? new Pe(),v),
-				"ProcessPeGoImportsNamesEntropy" => static (e, v) => TryAssignPe("pe.go_imports_names_entropy")(e.Pe ?? new Pe(),v),
-				"process.pe.go_imports_names_var_entropy" => static (e, v) => TryAssignPe("pe.go_imports_names_var_entropy")(e.Pe ?? new Pe(),v),
-				"ProcessPeGoImportsNamesVarEntropy" => static (e, v) => TryAssignPe("pe.go_imports_names_var_entropy")(e.Pe ?? new Pe(),v),
-				"process.pe.go_stripped" => static (e, v) => TryAssignPe("pe.go_stripped")(e.Pe ?? new Pe(),v),
-				"ProcessPeGoStripped" => static (e, v) => TryAssignPe("pe.go_stripped")(e.Pe ?? new Pe(),v),
-				"process.pe.imphash" => static (e, v) => TryAssignPe("pe.imphash")(e.Pe ?? new Pe(),v),
-				"ProcessPeImphash" => static (e, v) => TryAssignPe("pe.imphash")(e.Pe ?? new Pe(),v),
-				"process.pe.import_hash" => static (e, v) => TryAssignPe("pe.import_hash")(e.Pe ?? new Pe(),v),
-				"ProcessPeImportHash" => static (e, v) => TryAssignPe("pe.import_hash")(e.Pe ?? new Pe(),v),
-				"process.pe.imports_names_entropy" => static (e, v) => TryAssignPe("pe.imports_names_entropy")(e.Pe ?? new Pe(),v),
-				"ProcessPeImportsNamesEntropy" => static (e, v) => TryAssignPe("pe.imports_names_entropy")(e.Pe ?? new Pe(),v),
-				"process.pe.imports_names_var_entropy" => static (e, v) => TryAssignPe("pe.imports_names_var_entropy")(e.Pe ?? new Pe(),v),
-				"ProcessPeImportsNamesVarEntropy" => static (e, v) => TryAssignPe("pe.imports_names_var_entropy")(e.Pe ?? new Pe(),v),
-				"process.pe.original_file_name" => static (e, v) => TryAssignPe("pe.original_file_name")(e.Pe ?? new Pe(),v),
-				"ProcessPeOriginalFileName" => static (e, v) => TryAssignPe("pe.original_file_name")(e.Pe ?? new Pe(),v),
-				"process.pe.pehash" => static (e, v) => TryAssignPe("pe.pehash")(e.Pe ?? new Pe(),v),
-				"ProcessPePehash" => static (e, v) => TryAssignPe("pe.pehash")(e.Pe ?? new Pe(),v),
-				"process.pe.product" => static (e, v) => TryAssignPe("pe.product")(e.Pe ?? new Pe(),v),
-				"ProcessPeProduct" => static (e, v) => TryAssignPe("pe.product")(e.Pe ?? new Pe(),v),
-				"process.code_signature.digest_algorithm" => static (e, v) => TryAssignCodeSignature("code_signature.digest_algorithm")(e.CodeSignature ?? new CodeSignature(),v),
-				"ProcessCodeSignatureDigestAlgorithm" => static (e, v) => TryAssignCodeSignature("code_signature.digest_algorithm")(e.CodeSignature ?? new CodeSignature(),v),
-				"process.code_signature.exists" => static (e, v) => TryAssignCodeSignature("code_signature.exists")(e.CodeSignature ?? new CodeSignature(),v),
-				"ProcessCodeSignatureExists" => static (e, v) => TryAssignCodeSignature("code_signature.exists")(e.CodeSignature ?? new CodeSignature(),v),
-				"process.code_signature.signing_id" => static (e, v) => TryAssignCodeSignature("code_signature.signing_id")(e.CodeSignature ?? new CodeSignature(),v),
-				"ProcessCodeSignatureSigningId" => static (e, v) => TryAssignCodeSignature("code_signature.signing_id")(e.CodeSignature ?? new CodeSignature(),v),
-				"process.code_signature.status" => static (e, v) => TryAssignCodeSignature("code_signature.status")(e.CodeSignature ?? new CodeSignature(),v),
-				"ProcessCodeSignatureStatus" => static (e, v) => TryAssignCodeSignature("code_signature.status")(e.CodeSignature ?? new CodeSignature(),v),
-				"process.code_signature.subject_name" => static (e, v) => TryAssignCodeSignature("code_signature.subject_name")(e.CodeSignature ?? new CodeSignature(),v),
-				"ProcessCodeSignatureSubjectName" => static (e, v) => TryAssignCodeSignature("code_signature.subject_name")(e.CodeSignature ?? new CodeSignature(),v),
-				"process.code_signature.team_id" => static (e, v) => TryAssignCodeSignature("code_signature.team_id")(e.CodeSignature ?? new CodeSignature(),v),
-				"ProcessCodeSignatureTeamId" => static (e, v) => TryAssignCodeSignature("code_signature.team_id")(e.CodeSignature ?? new CodeSignature(),v),
-				"process.code_signature.timestamp" => static (e, v) => TryAssignCodeSignature("code_signature.timestamp")(e.CodeSignature ?? new CodeSignature(),v),
-				"ProcessCodeSignatureTimestamp" => static (e, v) => TryAssignCodeSignature("code_signature.timestamp")(e.CodeSignature ?? new CodeSignature(),v),
-				"process.code_signature.trusted" => static (e, v) => TryAssignCodeSignature("code_signature.trusted")(e.CodeSignature ?? new CodeSignature(),v),
-				"ProcessCodeSignatureTrusted" => static (e, v) => TryAssignCodeSignature("code_signature.trusted")(e.CodeSignature ?? new CodeSignature(),v),
-				"process.code_signature.valid" => static (e, v) => TryAssignCodeSignature("code_signature.valid")(e.CodeSignature ?? new CodeSignature(),v),
-				"ProcessCodeSignatureValid" => static (e, v) => TryAssignCodeSignature("code_signature.valid")(e.CodeSignature ?? new CodeSignature(),v),
-				"process.elf.architecture" => static (e, v) => TryAssignElf("elf.architecture")(e.Elf ?? new Elf(),v),
-				"ProcessElfArchitecture" => static (e, v) => TryAssignElf("elf.architecture")(e.Elf ?? new Elf(),v),
-				"process.elf.byte_order" => static (e, v) => TryAssignElf("elf.byte_order")(e.Elf ?? new Elf(),v),
-				"ProcessElfByteOrder" => static (e, v) => TryAssignElf("elf.byte_order")(e.Elf ?? new Elf(),v),
-				"process.elf.cpu_type" => static (e, v) => TryAssignElf("elf.cpu_type")(e.Elf ?? new Elf(),v),
-				"ProcessElfCpuType" => static (e, v) => TryAssignElf("elf.cpu_type")(e.Elf ?? new Elf(),v),
-				"process.elf.creation_date" => static (e, v) => TryAssignElf("elf.creation_date")(e.Elf ?? new Elf(),v),
-				"ProcessElfCreationDate" => static (e, v) => TryAssignElf("elf.creation_date")(e.Elf ?? new Elf(),v),
-				"process.elf.go_import_hash" => static (e, v) => TryAssignElf("elf.go_import_hash")(e.Elf ?? new Elf(),v),
-				"ProcessElfGoImportHash" => static (e, v) => TryAssignElf("elf.go_import_hash")(e.Elf ?? new Elf(),v),
-				"process.elf.go_imports" => static (e, v) => TryAssignElf("elf.go_imports")(e.Elf ?? new Elf(),v),
-				"ProcessElfGoImports" => static (e, v) => TryAssignElf("elf.go_imports")(e.Elf ?? new Elf(),v),
-				"process.elf.go_imports_names_entropy" => static (e, v) => TryAssignElf("elf.go_imports_names_entropy")(e.Elf ?? new Elf(),v),
-				"ProcessElfGoImportsNamesEntropy" => static (e, v) => TryAssignElf("elf.go_imports_names_entropy")(e.Elf ?? new Elf(),v),
-				"process.elf.go_imports_names_var_entropy" => static (e, v) => TryAssignElf("elf.go_imports_names_var_entropy")(e.Elf ?? new Elf(),v),
-				"ProcessElfGoImportsNamesVarEntropy" => static (e, v) => TryAssignElf("elf.go_imports_names_var_entropy")(e.Elf ?? new Elf(),v),
-				"process.elf.go_stripped" => static (e, v) => TryAssignElf("elf.go_stripped")(e.Elf ?? new Elf(),v),
-				"ProcessElfGoStripped" => static (e, v) => TryAssignElf("elf.go_stripped")(e.Elf ?? new Elf(),v),
-				"process.elf.header.abi_version" => static (e, v) => TryAssignElf("elf.header.abi_version")(e.Elf ?? new Elf(),v),
-				"ProcessElfHeaderAbiVersion" => static (e, v) => TryAssignElf("elf.header.abi_version")(e.Elf ?? new Elf(),v),
-				"process.elf.header.class" => static (e, v) => TryAssignElf("elf.header.class")(e.Elf ?? new Elf(),v),
-				"ProcessElfHeaderClass" => static (e, v) => TryAssignElf("elf.header.class")(e.Elf ?? new Elf(),v),
-				"process.elf.header.data" => static (e, v) => TryAssignElf("elf.header.data")(e.Elf ?? new Elf(),v),
-				"ProcessElfHeaderData" => static (e, v) => TryAssignElf("elf.header.data")(e.Elf ?? new Elf(),v),
-				"process.elf.header.entrypoint" => static (e, v) => TryAssignElf("elf.header.entrypoint")(e.Elf ?? new Elf(),v),
-				"ProcessElfHeaderEntrypoint" => static (e, v) => TryAssignElf("elf.header.entrypoint")(e.Elf ?? new Elf(),v),
-				"process.elf.header.object_version" => static (e, v) => TryAssignElf("elf.header.object_version")(e.Elf ?? new Elf(),v),
-				"ProcessElfHeaderObjectVersion" => static (e, v) => TryAssignElf("elf.header.object_version")(e.Elf ?? new Elf(),v),
-				"process.elf.header.os_abi" => static (e, v) => TryAssignElf("elf.header.os_abi")(e.Elf ?? new Elf(),v),
-				"ProcessElfHeaderOsAbi" => static (e, v) => TryAssignElf("elf.header.os_abi")(e.Elf ?? new Elf(),v),
-				"process.elf.header.type" => static (e, v) => TryAssignElf("elf.header.type")(e.Elf ?? new Elf(),v),
-				"ProcessElfHeaderType" => static (e, v) => TryAssignElf("elf.header.type")(e.Elf ?? new Elf(),v),
-				"process.elf.header.version" => static (e, v) => TryAssignElf("elf.header.version")(e.Elf ?? new Elf(),v),
-				"ProcessElfHeaderVersion" => static (e, v) => TryAssignElf("elf.header.version")(e.Elf ?? new Elf(),v),
-				"process.elf.import_hash" => static (e, v) => TryAssignElf("elf.import_hash")(e.Elf ?? new Elf(),v),
-				"ProcessElfImportHash" => static (e, v) => TryAssignElf("elf.import_hash")(e.Elf ?? new Elf(),v),
-				"process.elf.imports_names_entropy" => static (e, v) => TryAssignElf("elf.imports_names_entropy")(e.Elf ?? new Elf(),v),
-				"ProcessElfImportsNamesEntropy" => static (e, v) => TryAssignElf("elf.imports_names_entropy")(e.Elf ?? new Elf(),v),
-				"process.elf.imports_names_var_entropy" => static (e, v) => TryAssignElf("elf.imports_names_var_entropy")(e.Elf ?? new Elf(),v),
-				"ProcessElfImportsNamesVarEntropy" => static (e, v) => TryAssignElf("elf.imports_names_var_entropy")(e.Elf ?? new Elf(),v),
-				"process.elf.telfhash" => static (e, v) => TryAssignElf("elf.telfhash")(e.Elf ?? new Elf(),v),
-				"ProcessElfTelfhash" => static (e, v) => TryAssignElf("elf.telfhash")(e.Elf ?? new Elf(),v),
-				"process.macho.go_import_hash" => static (e, v) => TryAssignMacho("macho.go_import_hash")(e.Macho ?? new Macho(),v),
-				"ProcessMachoGoImportHash" => static (e, v) => TryAssignMacho("macho.go_import_hash")(e.Macho ?? new Macho(),v),
-				"process.macho.go_imports" => static (e, v) => TryAssignMacho("macho.go_imports")(e.Macho ?? new Macho(),v),
-				"ProcessMachoGoImports" => static (e, v) => TryAssignMacho("macho.go_imports")(e.Macho ?? new Macho(),v),
-				"process.macho.go_imports_names_entropy" => static (e, v) => TryAssignMacho("macho.go_imports_names_entropy")(e.Macho ?? new Macho(),v),
-				"ProcessMachoGoImportsNamesEntropy" => static (e, v) => TryAssignMacho("macho.go_imports_names_entropy")(e.Macho ?? new Macho(),v),
-				"process.macho.go_imports_names_var_entropy" => static (e, v) => TryAssignMacho("macho.go_imports_names_var_entropy")(e.Macho ?? new Macho(),v),
-				"ProcessMachoGoImportsNamesVarEntropy" => static (e, v) => TryAssignMacho("macho.go_imports_names_var_entropy")(e.Macho ?? new Macho(),v),
-				"process.macho.go_stripped" => static (e, v) => TryAssignMacho("macho.go_stripped")(e.Macho ?? new Macho(),v),
-				"ProcessMachoGoStripped" => static (e, v) => TryAssignMacho("macho.go_stripped")(e.Macho ?? new Macho(),v),
-				"process.macho.import_hash" => static (e, v) => TryAssignMacho("macho.import_hash")(e.Macho ?? new Macho(),v),
-				"ProcessMachoImportHash" => static (e, v) => TryAssignMacho("macho.import_hash")(e.Macho ?? new Macho(),v),
-				"process.macho.imports_names_entropy" => static (e, v) => TryAssignMacho("macho.imports_names_entropy")(e.Macho ?? new Macho(),v),
-				"ProcessMachoImportsNamesEntropy" => static (e, v) => TryAssignMacho("macho.imports_names_entropy")(e.Macho ?? new Macho(),v),
-				"process.macho.imports_names_var_entropy" => static (e, v) => TryAssignMacho("macho.imports_names_var_entropy")(e.Macho ?? new Macho(),v),
-				"ProcessMachoImportsNamesVarEntropy" => static (e, v) => TryAssignMacho("macho.imports_names_var_entropy")(e.Macho ?? new Macho(),v),
-				"process.macho.symhash" => static (e, v) => TryAssignMacho("macho.symhash")(e.Macho ?? new Macho(),v),
-				"ProcessMachoSymhash" => static (e, v) => TryAssignMacho("macho.symhash")(e.Macho ?? new Macho(),v),
-				"process.entry_meta.source.address" => static (e, v) => TryAssignSource("source.address")(e.EntryMetaSource ?? new Source(),v),
-				"ProcessEntryMetaSourceAddress" => static (e, v) => TryAssignSource("source.address")(e.EntryMetaSource ?? new Source(),v),
-				"process.entry_meta.source.bytes" => static (e, v) => TryAssignSource("source.bytes")(e.EntryMetaSource ?? new Source(),v),
-				"ProcessEntryMetaSourceBytes" => static (e, v) => TryAssignSource("source.bytes")(e.EntryMetaSource ?? new Source(),v),
-				"process.entry_meta.source.domain" => static (e, v) => TryAssignSource("source.domain")(e.EntryMetaSource ?? new Source(),v),
-				"ProcessEntryMetaSourceDomain" => static (e, v) => TryAssignSource("source.domain")(e.EntryMetaSource ?? new Source(),v),
-				"process.entry_meta.source.ip" => static (e, v) => TryAssignSource("source.ip")(e.EntryMetaSource ?? new Source(),v),
-				"ProcessEntryMetaSourceIp" => static (e, v) => TryAssignSource("source.ip")(e.EntryMetaSource ?? new Source(),v),
-				"process.entry_meta.source.mac" => static (e, v) => TryAssignSource("source.mac")(e.EntryMetaSource ?? new Source(),v),
-				"ProcessEntryMetaSourceMac" => static (e, v) => TryAssignSource("source.mac")(e.EntryMetaSource ?? new Source(),v),
-				"process.entry_meta.source.nat.ip" => static (e, v) => TryAssignSource("source.nat.ip")(e.EntryMetaSource ?? new Source(),v),
-				"ProcessEntryMetaSourceNatIp" => static (e, v) => TryAssignSource("source.nat.ip")(e.EntryMetaSource ?? new Source(),v),
-				"process.entry_meta.source.nat.port" => static (e, v) => TryAssignSource("source.nat.port")(e.EntryMetaSource ?? new Source(),v),
-				"ProcessEntryMetaSourceNatPort" => static (e, v) => TryAssignSource("source.nat.port")(e.EntryMetaSource ?? new Source(),v),
-				"process.entry_meta.source.packets" => static (e, v) => TryAssignSource("source.packets")(e.EntryMetaSource ?? new Source(),v),
-				"ProcessEntryMetaSourcePackets" => static (e, v) => TryAssignSource("source.packets")(e.EntryMetaSource ?? new Source(),v),
-				"process.entry_meta.source.port" => static (e, v) => TryAssignSource("source.port")(e.EntryMetaSource ?? new Source(),v),
-				"ProcessEntryMetaSourcePort" => static (e, v) => TryAssignSource("source.port")(e.EntryMetaSource ?? new Source(),v),
-				"process.entry_meta.source.registered_domain" => static (e, v) => TryAssignSource("source.registered_domain")(e.EntryMetaSource ?? new Source(),v),
-				"ProcessEntryMetaSourceRegisteredDomain" => static (e, v) => TryAssignSource("source.registered_domain")(e.EntryMetaSource ?? new Source(),v),
-				"process.entry_meta.source.subdomain" => static (e, v) => TryAssignSource("source.subdomain")(e.EntryMetaSource ?? new Source(),v),
-				"ProcessEntryMetaSourceSubdomain" => static (e, v) => TryAssignSource("source.subdomain")(e.EntryMetaSource ?? new Source(),v),
-				"process.entry_meta.source.top_level_domain" => static (e, v) => TryAssignSource("source.top_level_domain")(e.EntryMetaSource ?? new Source(),v),
-				"ProcessEntryMetaSourceTopLevelDomain" => static (e, v) => TryAssignSource("source.top_level_domain")(e.EntryMetaSource ?? new Source(),v),
-				"process.entry_meta.source.as.number" => static (e, v) => TryAssignSource("source.as.number")(e.EntryMetaSource ?? new Source(),v),
-				"ProcessEntryMetaSourceAsNumber" => static (e, v) => TryAssignSource("source.as.number")(e.EntryMetaSource ?? new Source(),v),
-				"process.entry_meta.source.as.organization.name" => static (e, v) => TryAssignSource("source.as.organization.name")(e.EntryMetaSource ?? new Source(),v),
-				"ProcessEntryMetaSourceAsOrganizationName" => static (e, v) => TryAssignSource("source.as.organization.name")(e.EntryMetaSource ?? new Source(),v),
-				"process.entry_meta.source.geo.city_name" => static (e, v) => TryAssignSource("source.geo.city_name")(e.EntryMetaSource ?? new Source(),v),
-				"ProcessEntryMetaSourceGeoCityName" => static (e, v) => TryAssignSource("source.geo.city_name")(e.EntryMetaSource ?? new Source(),v),
-				"process.entry_meta.source.geo.continent_code" => static (e, v) => TryAssignSource("source.geo.continent_code")(e.EntryMetaSource ?? new Source(),v),
-				"ProcessEntryMetaSourceGeoContinentCode" => static (e, v) => TryAssignSource("source.geo.continent_code")(e.EntryMetaSource ?? new Source(),v),
-				"process.entry_meta.source.geo.continent_name" => static (e, v) => TryAssignSource("source.geo.continent_name")(e.EntryMetaSource ?? new Source(),v),
-				"ProcessEntryMetaSourceGeoContinentName" => static (e, v) => TryAssignSource("source.geo.continent_name")(e.EntryMetaSource ?? new Source(),v),
-				"process.entry_meta.source.geo.country_iso_code" => static (e, v) => TryAssignSource("source.geo.country_iso_code")(e.EntryMetaSource ?? new Source(),v),
-				"ProcessEntryMetaSourceGeoCountryIsoCode" => static (e, v) => TryAssignSource("source.geo.country_iso_code")(e.EntryMetaSource ?? new Source(),v),
-				"process.entry_meta.source.geo.country_name" => static (e, v) => TryAssignSource("source.geo.country_name")(e.EntryMetaSource ?? new Source(),v),
-				"ProcessEntryMetaSourceGeoCountryName" => static (e, v) => TryAssignSource("source.geo.country_name")(e.EntryMetaSource ?? new Source(),v),
-				"process.entry_meta.source.geo.name" => static (e, v) => TryAssignSource("source.geo.name")(e.EntryMetaSource ?? new Source(),v),
-				"ProcessEntryMetaSourceGeoName" => static (e, v) => TryAssignSource("source.geo.name")(e.EntryMetaSource ?? new Source(),v),
-				"process.entry_meta.source.geo.postal_code" => static (e, v) => TryAssignSource("source.geo.postal_code")(e.EntryMetaSource ?? new Source(),v),
-				"ProcessEntryMetaSourceGeoPostalCode" => static (e, v) => TryAssignSource("source.geo.postal_code")(e.EntryMetaSource ?? new Source(),v),
-				"process.entry_meta.source.geo.region_iso_code" => static (e, v) => TryAssignSource("source.geo.region_iso_code")(e.EntryMetaSource ?? new Source(),v),
-				"ProcessEntryMetaSourceGeoRegionIsoCode" => static (e, v) => TryAssignSource("source.geo.region_iso_code")(e.EntryMetaSource ?? new Source(),v),
-				"process.entry_meta.source.geo.region_name" => static (e, v) => TryAssignSource("source.geo.region_name")(e.EntryMetaSource ?? new Source(),v),
-				"ProcessEntryMetaSourceGeoRegionName" => static (e, v) => TryAssignSource("source.geo.region_name")(e.EntryMetaSource ?? new Source(),v),
-				"process.entry_meta.source.geo.timezone" => static (e, v) => TryAssignSource("source.geo.timezone")(e.EntryMetaSource ?? new Source(),v),
-				"ProcessEntryMetaSourceGeoTimezone" => static (e, v) => TryAssignSource("source.geo.timezone")(e.EntryMetaSource ?? new Source(),v),
-				"process.entry_meta.source.user.domain" => static (e, v) => TryAssignSource("source.user.domain")(e.EntryMetaSource ?? new Source(),v),
-				"ProcessEntryMetaSourceUserDomain" => static (e, v) => TryAssignSource("source.user.domain")(e.EntryMetaSource ?? new Source(),v),
-				"process.entry_meta.source.user.email" => static (e, v) => TryAssignSource("source.user.email")(e.EntryMetaSource ?? new Source(),v),
-				"ProcessEntryMetaSourceUserEmail" => static (e, v) => TryAssignSource("source.user.email")(e.EntryMetaSource ?? new Source(),v),
-				"process.entry_meta.source.user.full_name" => static (e, v) => TryAssignSource("source.user.full_name")(e.EntryMetaSource ?? new Source(),v),
-				"ProcessEntryMetaSourceUserFullName" => static (e, v) => TryAssignSource("source.user.full_name")(e.EntryMetaSource ?? new Source(),v),
-				"process.entry_meta.source.user.hash" => static (e, v) => TryAssignSource("source.user.hash")(e.EntryMetaSource ?? new Source(),v),
-				"ProcessEntryMetaSourceUserHash" => static (e, v) => TryAssignSource("source.user.hash")(e.EntryMetaSource ?? new Source(),v),
-				"process.entry_meta.source.user.id" => static (e, v) => TryAssignSource("source.user.id")(e.EntryMetaSource ?? new Source(),v),
-				"ProcessEntryMetaSourceUserId" => static (e, v) => TryAssignSource("source.user.id")(e.EntryMetaSource ?? new Source(),v),
-				"process.entry_meta.source.user.name" => static (e, v) => TryAssignSource("source.user.name")(e.EntryMetaSource ?? new Source(),v),
-				"ProcessEntryMetaSourceUserName" => static (e, v) => TryAssignSource("source.user.name")(e.EntryMetaSource ?? new Source(),v),
-				"process.entry_meta.source.user.group.domain" => static (e, v) => TryAssignSource("source.user.group.domain")(e.EntryMetaSource ?? new Source(),v),
-				"ProcessEntryMetaSourceUserGroupDomain" => static (e, v) => TryAssignSource("source.user.group.domain")(e.EntryMetaSource ?? new Source(),v),
-				"process.entry_meta.source.user.group.id" => static (e, v) => TryAssignSource("source.user.group.id")(e.EntryMetaSource ?? new Source(),v),
-				"ProcessEntryMetaSourceUserGroupId" => static (e, v) => TryAssignSource("source.user.group.id")(e.EntryMetaSource ?? new Source(),v),
-				"process.entry_meta.source.user.group.name" => static (e, v) => TryAssignSource("source.user.group.name")(e.EntryMetaSource ?? new Source(),v),
-				"ProcessEntryMetaSourceUserGroupName" => static (e, v) => TryAssignSource("source.user.group.name")(e.EntryMetaSource ?? new Source(),v),
-				"process.entry_meta.source.user.risk.calculated_level" => static (e, v) => TryAssignSource("source.user.risk.calculated_level")(e.EntryMetaSource ?? new Source(),v),
-				"ProcessEntryMetaSourceUserRiskCalculatedLevel" => static (e, v) => TryAssignSource("source.user.risk.calculated_level")(e.EntryMetaSource ?? new Source(),v),
-				"process.entry_meta.source.user.risk.calculated_score" => static (e, v) => TryAssignSource("source.user.risk.calculated_score")(e.EntryMetaSource ?? new Source(),v),
-				"ProcessEntryMetaSourceUserRiskCalculatedScore" => static (e, v) => TryAssignSource("source.user.risk.calculated_score")(e.EntryMetaSource ?? new Source(),v),
-				"process.entry_meta.source.user.risk.calculated_score_norm" => static (e, v) => TryAssignSource("source.user.risk.calculated_score_norm")(e.EntryMetaSource ?? new Source(),v),
-				"ProcessEntryMetaSourceUserRiskCalculatedScoreNorm" => static (e, v) => TryAssignSource("source.user.risk.calculated_score_norm")(e.EntryMetaSource ?? new Source(),v),
-				"process.entry_meta.source.user.risk.static_level" => static (e, v) => TryAssignSource("source.user.risk.static_level")(e.EntryMetaSource ?? new Source(),v),
-				"ProcessEntryMetaSourceUserRiskStaticLevel" => static (e, v) => TryAssignSource("source.user.risk.static_level")(e.EntryMetaSource ?? new Source(),v),
-				"process.entry_meta.source.user.risk.static_score" => static (e, v) => TryAssignSource("source.user.risk.static_score")(e.EntryMetaSource ?? new Source(),v),
-				"ProcessEntryMetaSourceUserRiskStaticScore" => static (e, v) => TryAssignSource("source.user.risk.static_score")(e.EntryMetaSource ?? new Source(),v),
-				"process.entry_meta.source.user.risk.static_score_norm" => static (e, v) => TryAssignSource("source.user.risk.static_score_norm")(e.EntryMetaSource ?? new Source(),v),
-				"ProcessEntryMetaSourceUserRiskStaticScoreNorm" => static (e, v) => TryAssignSource("source.user.risk.static_score_norm")(e.EntryMetaSource ?? new Source(),v),
-				"process.entry_meta.source.user.target.user.domain" => static (e, v) => TryAssignSource("source.user.target.user.domain")(e.EntryMetaSource ?? new Source(),v),
-				"ProcessEntryMetaSourceUserTargetUserDomain" => static (e, v) => TryAssignSource("source.user.target.user.domain")(e.EntryMetaSource ?? new Source(),v),
-				"process.entry_meta.source.user.target.user.email" => static (e, v) => TryAssignSource("source.user.target.user.email")(e.EntryMetaSource ?? new Source(),v),
-				"ProcessEntryMetaSourceUserTargetUserEmail" => static (e, v) => TryAssignSource("source.user.target.user.email")(e.EntryMetaSource ?? new Source(),v),
-				"process.entry_meta.source.user.target.user.full_name" => static (e, v) => TryAssignSource("source.user.target.user.full_name")(e.EntryMetaSource ?? new Source(),v),
-				"ProcessEntryMetaSourceUserTargetUserFullName" => static (e, v) => TryAssignSource("source.user.target.user.full_name")(e.EntryMetaSource ?? new Source(),v),
-				"process.entry_meta.source.user.target.user.hash" => static (e, v) => TryAssignSource("source.user.target.user.hash")(e.EntryMetaSource ?? new Source(),v),
-				"ProcessEntryMetaSourceUserTargetUserHash" => static (e, v) => TryAssignSource("source.user.target.user.hash")(e.EntryMetaSource ?? new Source(),v),
-				"process.entry_meta.source.user.target.user.id" => static (e, v) => TryAssignSource("source.user.target.user.id")(e.EntryMetaSource ?? new Source(),v),
-				"ProcessEntryMetaSourceUserTargetUserId" => static (e, v) => TryAssignSource("source.user.target.user.id")(e.EntryMetaSource ?? new Source(),v),
-				"process.entry_meta.source.user.target.user.name" => static (e, v) => TryAssignSource("source.user.target.user.name")(e.EntryMetaSource ?? new Source(),v),
-				"ProcessEntryMetaSourceUserTargetUserName" => static (e, v) => TryAssignSource("source.user.target.user.name")(e.EntryMetaSource ?? new Source(),v),
-				"process.user.domain" => static (e, v) => TryAssignUser("user.domain")(e.User ?? new User(),v),
-				"ProcessUserDomain" => static (e, v) => TryAssignUser("user.domain")(e.User ?? new User(),v),
-				"process.user.email" => static (e, v) => TryAssignUser("user.email")(e.User ?? new User(),v),
-				"ProcessUserEmail" => static (e, v) => TryAssignUser("user.email")(e.User ?? new User(),v),
-				"process.user.full_name" => static (e, v) => TryAssignUser("user.full_name")(e.User ?? new User(),v),
-				"ProcessUserFullName" => static (e, v) => TryAssignUser("user.full_name")(e.User ?? new User(),v),
-				"process.user.hash" => static (e, v) => TryAssignUser("user.hash")(e.User ?? new User(),v),
-				"ProcessUserHash" => static (e, v) => TryAssignUser("user.hash")(e.User ?? new User(),v),
-				"process.user.id" => static (e, v) => TryAssignUser("user.id")(e.User ?? new User(),v),
-				"ProcessUserId" => static (e, v) => TryAssignUser("user.id")(e.User ?? new User(),v),
-				"process.user.name" => static (e, v) => TryAssignUser("user.name")(e.User ?? new User(),v),
-				"ProcessUserName" => static (e, v) => TryAssignUser("user.name")(e.User ?? new User(),v),
-				"process.user.group.domain" => static (e, v) => TryAssignUser("user.group.domain")(e.User ?? new User(),v),
-				"ProcessUserGroupDomain" => static (e, v) => TryAssignUser("user.group.domain")(e.User ?? new User(),v),
-				"process.user.group.id" => static (e, v) => TryAssignUser("user.group.id")(e.User ?? new User(),v),
-				"ProcessUserGroupId" => static (e, v) => TryAssignUser("user.group.id")(e.User ?? new User(),v),
-				"process.user.group.name" => static (e, v) => TryAssignUser("user.group.name")(e.User ?? new User(),v),
-				"ProcessUserGroupName" => static (e, v) => TryAssignUser("user.group.name")(e.User ?? new User(),v),
-				"process.user.risk.calculated_level" => static (e, v) => TryAssignUser("user.risk.calculated_level")(e.User ?? new User(),v),
-				"ProcessUserRiskCalculatedLevel" => static (e, v) => TryAssignUser("user.risk.calculated_level")(e.User ?? new User(),v),
-				"process.user.risk.calculated_score" => static (e, v) => TryAssignUser("user.risk.calculated_score")(e.User ?? new User(),v),
-				"ProcessUserRiskCalculatedScore" => static (e, v) => TryAssignUser("user.risk.calculated_score")(e.User ?? new User(),v),
-				"process.user.risk.calculated_score_norm" => static (e, v) => TryAssignUser("user.risk.calculated_score_norm")(e.User ?? new User(),v),
-				"ProcessUserRiskCalculatedScoreNorm" => static (e, v) => TryAssignUser("user.risk.calculated_score_norm")(e.User ?? new User(),v),
-				"process.user.risk.static_level" => static (e, v) => TryAssignUser("user.risk.static_level")(e.User ?? new User(),v),
-				"ProcessUserRiskStaticLevel" => static (e, v) => TryAssignUser("user.risk.static_level")(e.User ?? new User(),v),
-				"process.user.risk.static_score" => static (e, v) => TryAssignUser("user.risk.static_score")(e.User ?? new User(),v),
-				"ProcessUserRiskStaticScore" => static (e, v) => TryAssignUser("user.risk.static_score")(e.User ?? new User(),v),
-				"process.user.risk.static_score_norm" => static (e, v) => TryAssignUser("user.risk.static_score_norm")(e.User ?? new User(),v),
-				"ProcessUserRiskStaticScoreNorm" => static (e, v) => TryAssignUser("user.risk.static_score_norm")(e.User ?? new User(),v),
-				"process.user.target.user.domain" => static (e, v) => TryAssignUser("target.user.domain")(e.User ?? new User(),v),
-				"ProcessUserTargetUserDomain" => static (e, v) => TryAssignUser("target.user.domain")(e.User ?? new User(),v),
-				"process.user.target.user.email" => static (e, v) => TryAssignUser("target.user.email")(e.User ?? new User(),v),
-				"ProcessUserTargetUserEmail" => static (e, v) => TryAssignUser("target.user.email")(e.User ?? new User(),v),
-				"process.user.target.user.full_name" => static (e, v) => TryAssignUser("target.user.full_name")(e.User ?? new User(),v),
-				"ProcessUserTargetUserFullName" => static (e, v) => TryAssignUser("target.user.full_name")(e.User ?? new User(),v),
-				"process.user.target.user.hash" => static (e, v) => TryAssignUser("target.user.hash")(e.User ?? new User(),v),
-				"ProcessUserTargetUserHash" => static (e, v) => TryAssignUser("target.user.hash")(e.User ?? new User(),v),
-				"process.user.target.user.id" => static (e, v) => TryAssignUser("target.user.id")(e.User ?? new User(),v),
-				"ProcessUserTargetUserId" => static (e, v) => TryAssignUser("target.user.id")(e.User ?? new User(),v),
-				"process.user.target.user.name" => static (e, v) => TryAssignUser("target.user.name")(e.User ?? new User(),v),
-				"ProcessUserTargetUserName" => static (e, v) => TryAssignUser("target.user.name")(e.User ?? new User(),v),
-				"parent.process.args_count" => static (e, v) => TryAssignProcessParent("process.args_count")(e.Parent ?? new ProcessParent(),v),
-				"ParentProcessArgsCount" => static (e, v) => TryAssignProcessParent("process.args_count")(e.Parent ?? new ProcessParent(),v),
-				"parent.process.command_line" => static (e, v) => TryAssignProcessParent("process.command_line")(e.Parent ?? new ProcessParent(),v),
-				"ParentProcessCommandLine" => static (e, v) => TryAssignProcessParent("process.command_line")(e.Parent ?? new ProcessParent(),v),
-				"parent.process.end" => static (e, v) => TryAssignProcessParent("process.end")(e.Parent ?? new ProcessParent(),v),
-				"ParentProcessEnd" => static (e, v) => TryAssignProcessParent("process.end")(e.Parent ?? new ProcessParent(),v),
-				"parent.process.entity_id" => static (e, v) => TryAssignProcessParent("process.entity_id")(e.Parent ?? new ProcessParent(),v),
-				"ParentProcessEntityId" => static (e, v) => TryAssignProcessParent("process.entity_id")(e.Parent ?? new ProcessParent(),v),
-				"parent.process.executable" => static (e, v) => TryAssignProcessParent("process.executable")(e.Parent ?? new ProcessParent(),v),
-				"ParentProcessExecutable" => static (e, v) => TryAssignProcessParent("process.executable")(e.Parent ?? new ProcessParent(),v),
-				"parent.process.exit_code" => static (e, v) => TryAssignProcessParent("process.exit_code")(e.Parent ?? new ProcessParent(),v),
-				"ParentProcessExitCode" => static (e, v) => TryAssignProcessParent("process.exit_code")(e.Parent ?? new ProcessParent(),v),
-				"parent.process.interactive" => static (e, v) => TryAssignProcessParent("process.interactive")(e.Parent ?? new ProcessParent(),v),
-				"ParentProcessInteractive" => static (e, v) => TryAssignProcessParent("process.interactive")(e.Parent ?? new ProcessParent(),v),
-				"parent.process.name" => static (e, v) => TryAssignProcessParent("process.name")(e.Parent ?? new ProcessParent(),v),
-				"ParentProcessName" => static (e, v) => TryAssignProcessParent("process.name")(e.Parent ?? new ProcessParent(),v),
-				"parent.process.pgid" => static (e, v) => TryAssignProcessParent("process.pgid")(e.Parent ?? new ProcessParent(),v),
-				"ParentProcessPgid" => static (e, v) => TryAssignProcessParent("process.pgid")(e.Parent ?? new ProcessParent(),v),
-				"parent.process.pid" => static (e, v) => TryAssignProcessParent("process.pid")(e.Parent ?? new ProcessParent(),v),
-				"ParentProcessPid" => static (e, v) => TryAssignProcessParent("process.pid")(e.Parent ?? new ProcessParent(),v),
-				"parent.process.start" => static (e, v) => TryAssignProcessParent("process.start")(e.Parent ?? new ProcessParent(),v),
-				"ParentProcessStart" => static (e, v) => TryAssignProcessParent("process.start")(e.Parent ?? new ProcessParent(),v),
-				"parent.process.thread.id" => static (e, v) => TryAssignProcessParent("process.thread.id")(e.Parent ?? new ProcessParent(),v),
-				"ParentProcessThreadId" => static (e, v) => TryAssignProcessParent("process.thread.id")(e.Parent ?? new ProcessParent(),v),
-				"parent.process.thread.name" => static (e, v) => TryAssignProcessParent("process.thread.name")(e.Parent ?? new ProcessParent(),v),
-				"ParentProcessThreadName" => static (e, v) => TryAssignProcessParent("process.thread.name")(e.Parent ?? new ProcessParent(),v),
-				"parent.process.title" => static (e, v) => TryAssignProcessParent("process.title")(e.Parent ?? new ProcessParent(),v),
-				"ParentProcessTitle" => static (e, v) => TryAssignProcessParent("process.title")(e.Parent ?? new ProcessParent(),v),
-				"parent.process.uptime" => static (e, v) => TryAssignProcessParent("process.uptime")(e.Parent ?? new ProcessParent(),v),
-				"ParentProcessUptime" => static (e, v) => TryAssignProcessParent("process.uptime")(e.Parent ?? new ProcessParent(),v),
-				"parent.process.vpid" => static (e, v) => TryAssignProcessParent("process.vpid")(e.Parent ?? new ProcessParent(),v),
-				"ParentProcessVpid" => static (e, v) => TryAssignProcessParent("process.vpid")(e.Parent ?? new ProcessParent(),v),
-				"parent.process.working_directory" => static (e, v) => TryAssignProcessParent("process.working_directory")(e.Parent ?? new ProcessParent(),v),
-				"ParentProcessWorkingDirectory" => static (e, v) => TryAssignProcessParent("process.working_directory")(e.Parent ?? new ProcessParent(),v),
-				"process.parent.group_leader.process.args_count" => static (e, v) => TryAssignProcessParent("parent.group_leader.process.args_count")(e.Parent ?? new ProcessParent(),v),
-				"ProcessParentGroupLeaderProcessArgsCount" => static (e, v) => TryAssignProcessParent("parent.group_leader.process.args_count")(e.Parent ?? new ProcessParent(),v),
-				"process.parent.group_leader.process.command_line" => static (e, v) => TryAssignProcessParent("parent.group_leader.process.command_line")(e.Parent ?? new ProcessParent(),v),
-				"ProcessParentGroupLeaderProcessCommandLine" => static (e, v) => TryAssignProcessParent("parent.group_leader.process.command_line")(e.Parent ?? new ProcessParent(),v),
-				"process.parent.group_leader.process.end" => static (e, v) => TryAssignProcessParent("parent.group_leader.process.end")(e.Parent ?? new ProcessParent(),v),
-				"ProcessParentGroupLeaderProcessEnd" => static (e, v) => TryAssignProcessParent("parent.group_leader.process.end")(e.Parent ?? new ProcessParent(),v),
-				"process.parent.group_leader.process.entity_id" => static (e, v) => TryAssignProcessParent("parent.group_leader.process.entity_id")(e.Parent ?? new ProcessParent(),v),
-				"ProcessParentGroupLeaderProcessEntityId" => static (e, v) => TryAssignProcessParent("parent.group_leader.process.entity_id")(e.Parent ?? new ProcessParent(),v),
-				"process.parent.group_leader.process.executable" => static (e, v) => TryAssignProcessParent("parent.group_leader.process.executable")(e.Parent ?? new ProcessParent(),v),
-				"ProcessParentGroupLeaderProcessExecutable" => static (e, v) => TryAssignProcessParent("parent.group_leader.process.executable")(e.Parent ?? new ProcessParent(),v),
-				"process.parent.group_leader.process.exit_code" => static (e, v) => TryAssignProcessParent("parent.group_leader.process.exit_code")(e.Parent ?? new ProcessParent(),v),
-				"ProcessParentGroupLeaderProcessExitCode" => static (e, v) => TryAssignProcessParent("parent.group_leader.process.exit_code")(e.Parent ?? new ProcessParent(),v),
-				"process.parent.group_leader.process.interactive" => static (e, v) => TryAssignProcessParent("parent.group_leader.process.interactive")(e.Parent ?? new ProcessParent(),v),
-				"ProcessParentGroupLeaderProcessInteractive" => static (e, v) => TryAssignProcessParent("parent.group_leader.process.interactive")(e.Parent ?? new ProcessParent(),v),
-				"process.parent.group_leader.process.name" => static (e, v) => TryAssignProcessParent("parent.group_leader.process.name")(e.Parent ?? new ProcessParent(),v),
-				"ProcessParentGroupLeaderProcessName" => static (e, v) => TryAssignProcessParent("parent.group_leader.process.name")(e.Parent ?? new ProcessParent(),v),
-				"process.parent.group_leader.process.pgid" => static (e, v) => TryAssignProcessParent("parent.group_leader.process.pgid")(e.Parent ?? new ProcessParent(),v),
-				"ProcessParentGroupLeaderProcessPgid" => static (e, v) => TryAssignProcessParent("parent.group_leader.process.pgid")(e.Parent ?? new ProcessParent(),v),
-				"process.parent.group_leader.process.pid" => static (e, v) => TryAssignProcessParent("parent.group_leader.process.pid")(e.Parent ?? new ProcessParent(),v),
-				"ProcessParentGroupLeaderProcessPid" => static (e, v) => TryAssignProcessParent("parent.group_leader.process.pid")(e.Parent ?? new ProcessParent(),v),
-				"process.parent.group_leader.process.start" => static (e, v) => TryAssignProcessParent("parent.group_leader.process.start")(e.Parent ?? new ProcessParent(),v),
-				"ProcessParentGroupLeaderProcessStart" => static (e, v) => TryAssignProcessParent("parent.group_leader.process.start")(e.Parent ?? new ProcessParent(),v),
-				"process.parent.group_leader.process.thread.id" => static (e, v) => TryAssignProcessParent("parent.group_leader.process.thread.id")(e.Parent ?? new ProcessParent(),v),
-				"ProcessParentGroupLeaderProcessThreadId" => static (e, v) => TryAssignProcessParent("parent.group_leader.process.thread.id")(e.Parent ?? new ProcessParent(),v),
-				"process.parent.group_leader.process.thread.name" => static (e, v) => TryAssignProcessParent("parent.group_leader.process.thread.name")(e.Parent ?? new ProcessParent(),v),
-				"ProcessParentGroupLeaderProcessThreadName" => static (e, v) => TryAssignProcessParent("parent.group_leader.process.thread.name")(e.Parent ?? new ProcessParent(),v),
-				"process.parent.group_leader.process.title" => static (e, v) => TryAssignProcessParent("parent.group_leader.process.title")(e.Parent ?? new ProcessParent(),v),
-				"ProcessParentGroupLeaderProcessTitle" => static (e, v) => TryAssignProcessParent("parent.group_leader.process.title")(e.Parent ?? new ProcessParent(),v),
-				"process.parent.group_leader.process.uptime" => static (e, v) => TryAssignProcessParent("parent.group_leader.process.uptime")(e.Parent ?? new ProcessParent(),v),
-				"ProcessParentGroupLeaderProcessUptime" => static (e, v) => TryAssignProcessParent("parent.group_leader.process.uptime")(e.Parent ?? new ProcessParent(),v),
-				"process.parent.group_leader.process.vpid" => static (e, v) => TryAssignProcessParent("parent.group_leader.process.vpid")(e.Parent ?? new ProcessParent(),v),
-				"ProcessParentGroupLeaderProcessVpid" => static (e, v) => TryAssignProcessParent("parent.group_leader.process.vpid")(e.Parent ?? new ProcessParent(),v),
-				"process.parent.group_leader.process.working_directory" => static (e, v) => TryAssignProcessParent("parent.group_leader.process.working_directory")(e.Parent ?? new ProcessParent(),v),
-				"ProcessParentGroupLeaderProcessWorkingDirectory" => static (e, v) => TryAssignProcessParent("parent.group_leader.process.working_directory")(e.Parent ?? new ProcessParent(),v),
-				"process.entry_leader.parent.process.args_count" => static (e, v) => TryAssignProcessEntryLeader("entry_leader.parent.process.args_count")(e.EntryLeader ?? new ProcessEntryLeader(),v),
-				"ProcessEntryLeaderParentProcessArgsCount" => static (e, v) => TryAssignProcessEntryLeader("entry_leader.parent.process.args_count")(e.EntryLeader ?? new ProcessEntryLeader(),v),
-				"process.entry_leader.parent.process.command_line" => static (e, v) => TryAssignProcessEntryLeader("entry_leader.parent.process.command_line")(e.EntryLeader ?? new ProcessEntryLeader(),v),
-				"ProcessEntryLeaderParentProcessCommandLine" => static (e, v) => TryAssignProcessEntryLeader("entry_leader.parent.process.command_line")(e.EntryLeader ?? new ProcessEntryLeader(),v),
-				"process.entry_leader.parent.process.end" => static (e, v) => TryAssignProcessEntryLeader("entry_leader.parent.process.end")(e.EntryLeader ?? new ProcessEntryLeader(),v),
-				"ProcessEntryLeaderParentProcessEnd" => static (e, v) => TryAssignProcessEntryLeader("entry_leader.parent.process.end")(e.EntryLeader ?? new ProcessEntryLeader(),v),
-				"process.entry_leader.parent.process.entity_id" => static (e, v) => TryAssignProcessEntryLeader("entry_leader.parent.process.entity_id")(e.EntryLeader ?? new ProcessEntryLeader(),v),
-				"ProcessEntryLeaderParentProcessEntityId" => static (e, v) => TryAssignProcessEntryLeader("entry_leader.parent.process.entity_id")(e.EntryLeader ?? new ProcessEntryLeader(),v),
-				"process.entry_leader.parent.process.executable" => static (e, v) => TryAssignProcessEntryLeader("entry_leader.parent.process.executable")(e.EntryLeader ?? new ProcessEntryLeader(),v),
-				"ProcessEntryLeaderParentProcessExecutable" => static (e, v) => TryAssignProcessEntryLeader("entry_leader.parent.process.executable")(e.EntryLeader ?? new ProcessEntryLeader(),v),
-				"process.entry_leader.parent.process.exit_code" => static (e, v) => TryAssignProcessEntryLeader("entry_leader.parent.process.exit_code")(e.EntryLeader ?? new ProcessEntryLeader(),v),
-				"ProcessEntryLeaderParentProcessExitCode" => static (e, v) => TryAssignProcessEntryLeader("entry_leader.parent.process.exit_code")(e.EntryLeader ?? new ProcessEntryLeader(),v),
-				"process.entry_leader.parent.process.interactive" => static (e, v) => TryAssignProcessEntryLeader("entry_leader.parent.process.interactive")(e.EntryLeader ?? new ProcessEntryLeader(),v),
-				"ProcessEntryLeaderParentProcessInteractive" => static (e, v) => TryAssignProcessEntryLeader("entry_leader.parent.process.interactive")(e.EntryLeader ?? new ProcessEntryLeader(),v),
-				"process.entry_leader.parent.process.name" => static (e, v) => TryAssignProcessEntryLeader("entry_leader.parent.process.name")(e.EntryLeader ?? new ProcessEntryLeader(),v),
-				"ProcessEntryLeaderParentProcessName" => static (e, v) => TryAssignProcessEntryLeader("entry_leader.parent.process.name")(e.EntryLeader ?? new ProcessEntryLeader(),v),
-				"process.entry_leader.parent.process.pgid" => static (e, v) => TryAssignProcessEntryLeader("entry_leader.parent.process.pgid")(e.EntryLeader ?? new ProcessEntryLeader(),v),
-				"ProcessEntryLeaderParentProcessPgid" => static (e, v) => TryAssignProcessEntryLeader("entry_leader.parent.process.pgid")(e.EntryLeader ?? new ProcessEntryLeader(),v),
-				"process.entry_leader.parent.process.pid" => static (e, v) => TryAssignProcessEntryLeader("entry_leader.parent.process.pid")(e.EntryLeader ?? new ProcessEntryLeader(),v),
-				"ProcessEntryLeaderParentProcessPid" => static (e, v) => TryAssignProcessEntryLeader("entry_leader.parent.process.pid")(e.EntryLeader ?? new ProcessEntryLeader(),v),
-				"process.entry_leader.parent.process.start" => static (e, v) => TryAssignProcessEntryLeader("entry_leader.parent.process.start")(e.EntryLeader ?? new ProcessEntryLeader(),v),
-				"ProcessEntryLeaderParentProcessStart" => static (e, v) => TryAssignProcessEntryLeader("entry_leader.parent.process.start")(e.EntryLeader ?? new ProcessEntryLeader(),v),
-				"process.entry_leader.parent.process.thread.id" => static (e, v) => TryAssignProcessEntryLeader("entry_leader.parent.process.thread.id")(e.EntryLeader ?? new ProcessEntryLeader(),v),
-				"ProcessEntryLeaderParentProcessThreadId" => static (e, v) => TryAssignProcessEntryLeader("entry_leader.parent.process.thread.id")(e.EntryLeader ?? new ProcessEntryLeader(),v),
-				"process.entry_leader.parent.process.thread.name" => static (e, v) => TryAssignProcessEntryLeader("entry_leader.parent.process.thread.name")(e.EntryLeader ?? new ProcessEntryLeader(),v),
-				"ProcessEntryLeaderParentProcessThreadName" => static (e, v) => TryAssignProcessEntryLeader("entry_leader.parent.process.thread.name")(e.EntryLeader ?? new ProcessEntryLeader(),v),
-				"process.entry_leader.parent.process.title" => static (e, v) => TryAssignProcessEntryLeader("entry_leader.parent.process.title")(e.EntryLeader ?? new ProcessEntryLeader(),v),
-				"ProcessEntryLeaderParentProcessTitle" => static (e, v) => TryAssignProcessEntryLeader("entry_leader.parent.process.title")(e.EntryLeader ?? new ProcessEntryLeader(),v),
-				"process.entry_leader.parent.process.uptime" => static (e, v) => TryAssignProcessEntryLeader("entry_leader.parent.process.uptime")(e.EntryLeader ?? new ProcessEntryLeader(),v),
-				"ProcessEntryLeaderParentProcessUptime" => static (e, v) => TryAssignProcessEntryLeader("entry_leader.parent.process.uptime")(e.EntryLeader ?? new ProcessEntryLeader(),v),
-				"process.entry_leader.parent.process.vpid" => static (e, v) => TryAssignProcessEntryLeader("entry_leader.parent.process.vpid")(e.EntryLeader ?? new ProcessEntryLeader(),v),
-				"ProcessEntryLeaderParentProcessVpid" => static (e, v) => TryAssignProcessEntryLeader("entry_leader.parent.process.vpid")(e.EntryLeader ?? new ProcessEntryLeader(),v),
-				"process.entry_leader.parent.process.working_directory" => static (e, v) => TryAssignProcessEntryLeader("entry_leader.parent.process.working_directory")(e.EntryLeader ?? new ProcessEntryLeader(),v),
-				"ProcessEntryLeaderParentProcessWorkingDirectory" => static (e, v) => TryAssignProcessEntryLeader("entry_leader.parent.process.working_directory")(e.EntryLeader ?? new ProcessEntryLeader(),v),
-				"entry_leader.process.parent.entry_leader.parent.session_leader.process.args_count" => static (e, v) => TryAssignProcessEntryLeader("process.parent.entry_leader.parent.session_leader.process.args_count")(e.EntryLeader ?? new ProcessEntryLeader(),v),
-				"EntryLeaderProcessParentEntryLeaderParentSessionLeaderProcessArgsCount" => static (e, v) => TryAssignProcessEntryLeader("process.parent.entry_leader.parent.session_leader.process.args_count")(e.EntryLeader ?? new ProcessEntryLeader(),v),
-				"entry_leader.process.parent.entry_leader.parent.session_leader.process.command_line" => static (e, v) => TryAssignProcessEntryLeader("process.parent.entry_leader.parent.session_leader.process.command_line")(e.EntryLeader ?? new ProcessEntryLeader(),v),
-				"EntryLeaderProcessParentEntryLeaderParentSessionLeaderProcessCommandLine" => static (e, v) => TryAssignProcessEntryLeader("process.parent.entry_leader.parent.session_leader.process.command_line")(e.EntryLeader ?? new ProcessEntryLeader(),v),
-				"entry_leader.process.parent.entry_leader.parent.session_leader.process.end" => static (e, v) => TryAssignProcessEntryLeader("process.parent.entry_leader.parent.session_leader.process.end")(e.EntryLeader ?? new ProcessEntryLeader(),v),
-				"EntryLeaderProcessParentEntryLeaderParentSessionLeaderProcessEnd" => static (e, v) => TryAssignProcessEntryLeader("process.parent.entry_leader.parent.session_leader.process.end")(e.EntryLeader ?? new ProcessEntryLeader(),v),
-				"entry_leader.process.parent.entry_leader.parent.session_leader.process.entity_id" => static (e, v) => TryAssignProcessEntryLeader("process.parent.entry_leader.parent.session_leader.process.entity_id")(e.EntryLeader ?? new ProcessEntryLeader(),v),
-				"EntryLeaderProcessParentEntryLeaderParentSessionLeaderProcessEntityId" => static (e, v) => TryAssignProcessEntryLeader("process.parent.entry_leader.parent.session_leader.process.entity_id")(e.EntryLeader ?? new ProcessEntryLeader(),v),
-				"entry_leader.process.parent.entry_leader.parent.session_leader.process.executable" => static (e, v) => TryAssignProcessEntryLeader("process.parent.entry_leader.parent.session_leader.process.executable")(e.EntryLeader ?? new ProcessEntryLeader(),v),
-				"EntryLeaderProcessParentEntryLeaderParentSessionLeaderProcessExecutable" => static (e, v) => TryAssignProcessEntryLeader("process.parent.entry_leader.parent.session_leader.process.executable")(e.EntryLeader ?? new ProcessEntryLeader(),v),
-				"entry_leader.process.parent.entry_leader.parent.session_leader.process.exit_code" => static (e, v) => TryAssignProcessEntryLeader("process.parent.entry_leader.parent.session_leader.process.exit_code")(e.EntryLeader ?? new ProcessEntryLeader(),v),
-				"EntryLeaderProcessParentEntryLeaderParentSessionLeaderProcessExitCode" => static (e, v) => TryAssignProcessEntryLeader("process.parent.entry_leader.parent.session_leader.process.exit_code")(e.EntryLeader ?? new ProcessEntryLeader(),v),
-				"entry_leader.process.parent.entry_leader.parent.session_leader.process.interactive" => static (e, v) => TryAssignProcessEntryLeader("process.parent.entry_leader.parent.session_leader.process.interactive")(e.EntryLeader ?? new ProcessEntryLeader(),v),
-				"EntryLeaderProcessParentEntryLeaderParentSessionLeaderProcessInteractive" => static (e, v) => TryAssignProcessEntryLeader("process.parent.entry_leader.parent.session_leader.process.interactive")(e.EntryLeader ?? new ProcessEntryLeader(),v),
-				"entry_leader.process.parent.entry_leader.parent.session_leader.process.name" => static (e, v) => TryAssignProcessEntryLeader("process.parent.entry_leader.parent.session_leader.process.name")(e.EntryLeader ?? new ProcessEntryLeader(),v),
-				"EntryLeaderProcessParentEntryLeaderParentSessionLeaderProcessName" => static (e, v) => TryAssignProcessEntryLeader("process.parent.entry_leader.parent.session_leader.process.name")(e.EntryLeader ?? new ProcessEntryLeader(),v),
-				"entry_leader.process.parent.entry_leader.parent.session_leader.process.pgid" => static (e, v) => TryAssignProcessEntryLeader("process.parent.entry_leader.parent.session_leader.process.pgid")(e.EntryLeader ?? new ProcessEntryLeader(),v),
-				"EntryLeaderProcessParentEntryLeaderParentSessionLeaderProcessPgid" => static (e, v) => TryAssignProcessEntryLeader("process.parent.entry_leader.parent.session_leader.process.pgid")(e.EntryLeader ?? new ProcessEntryLeader(),v),
-				"entry_leader.process.parent.entry_leader.parent.session_leader.process.pid" => static (e, v) => TryAssignProcessEntryLeader("process.parent.entry_leader.parent.session_leader.process.pid")(e.EntryLeader ?? new ProcessEntryLeader(),v),
-				"EntryLeaderProcessParentEntryLeaderParentSessionLeaderProcessPid" => static (e, v) => TryAssignProcessEntryLeader("process.parent.entry_leader.parent.session_leader.process.pid")(e.EntryLeader ?? new ProcessEntryLeader(),v),
-				"entry_leader.process.parent.entry_leader.parent.session_leader.process.start" => static (e, v) => TryAssignProcessEntryLeader("process.parent.entry_leader.parent.session_leader.process.start")(e.EntryLeader ?? new ProcessEntryLeader(),v),
-				"EntryLeaderProcessParentEntryLeaderParentSessionLeaderProcessStart" => static (e, v) => TryAssignProcessEntryLeader("process.parent.entry_leader.parent.session_leader.process.start")(e.EntryLeader ?? new ProcessEntryLeader(),v),
-				"entry_leader.process.parent.entry_leader.parent.session_leader.process.thread.id" => static (e, v) => TryAssignProcessEntryLeader("process.parent.entry_leader.parent.session_leader.process.thread.id")(e.EntryLeader ?? new ProcessEntryLeader(),v),
-				"EntryLeaderProcessParentEntryLeaderParentSessionLeaderProcessThreadId" => static (e, v) => TryAssignProcessEntryLeader("process.parent.entry_leader.parent.session_leader.process.thread.id")(e.EntryLeader ?? new ProcessEntryLeader(),v),
-				"entry_leader.process.parent.entry_leader.parent.session_leader.process.thread.name" => static (e, v) => TryAssignProcessEntryLeader("process.parent.entry_leader.parent.session_leader.process.thread.name")(e.EntryLeader ?? new ProcessEntryLeader(),v),
-				"EntryLeaderProcessParentEntryLeaderParentSessionLeaderProcessThreadName" => static (e, v) => TryAssignProcessEntryLeader("process.parent.entry_leader.parent.session_leader.process.thread.name")(e.EntryLeader ?? new ProcessEntryLeader(),v),
-				"entry_leader.process.parent.entry_leader.parent.session_leader.process.title" => static (e, v) => TryAssignProcessEntryLeader("process.parent.entry_leader.parent.session_leader.process.title")(e.EntryLeader ?? new ProcessEntryLeader(),v),
-				"EntryLeaderProcessParentEntryLeaderParentSessionLeaderProcessTitle" => static (e, v) => TryAssignProcessEntryLeader("process.parent.entry_leader.parent.session_leader.process.title")(e.EntryLeader ?? new ProcessEntryLeader(),v),
-				"entry_leader.process.parent.entry_leader.parent.session_leader.process.uptime" => static (e, v) => TryAssignProcessEntryLeader("process.parent.entry_leader.parent.session_leader.process.uptime")(e.EntryLeader ?? new ProcessEntryLeader(),v),
-				"EntryLeaderProcessParentEntryLeaderParentSessionLeaderProcessUptime" => static (e, v) => TryAssignProcessEntryLeader("process.parent.entry_leader.parent.session_leader.process.uptime")(e.EntryLeader ?? new ProcessEntryLeader(),v),
-				"entry_leader.process.parent.entry_leader.parent.session_leader.process.vpid" => static (e, v) => TryAssignProcessEntryLeader("process.parent.entry_leader.parent.session_leader.process.vpid")(e.EntryLeader ?? new ProcessEntryLeader(),v),
-				"EntryLeaderProcessParentEntryLeaderParentSessionLeaderProcessVpid" => static (e, v) => TryAssignProcessEntryLeader("process.parent.entry_leader.parent.session_leader.process.vpid")(e.EntryLeader ?? new ProcessEntryLeader(),v),
-				"entry_leader.process.parent.entry_leader.parent.session_leader.process.working_directory" => static (e, v) => TryAssignProcessEntryLeader("process.parent.entry_leader.parent.session_leader.process.working_directory")(e.EntryLeader ?? new ProcessEntryLeader(),v),
-				"EntryLeaderProcessParentEntryLeaderParentSessionLeaderProcessWorkingDirectory" => static (e, v) => TryAssignProcessEntryLeader("process.parent.entry_leader.parent.session_leader.process.working_directory")(e.EntryLeader ?? new ProcessEntryLeader(),v),
-				"process.session_leader.parent.process.args_count" => static (e, v) => TryAssignProcessSessionLeader("session_leader.parent.process.args_count")(e.SessionLeader ?? new ProcessSessionLeader(),v),
-				"ProcessSessionLeaderParentProcessArgsCount" => static (e, v) => TryAssignProcessSessionLeader("session_leader.parent.process.args_count")(e.SessionLeader ?? new ProcessSessionLeader(),v),
-				"process.session_leader.parent.process.command_line" => static (e, v) => TryAssignProcessSessionLeader("session_leader.parent.process.command_line")(e.SessionLeader ?? new ProcessSessionLeader(),v),
-				"ProcessSessionLeaderParentProcessCommandLine" => static (e, v) => TryAssignProcessSessionLeader("session_leader.parent.process.command_line")(e.SessionLeader ?? new ProcessSessionLeader(),v),
-				"process.session_leader.parent.process.end" => static (e, v) => TryAssignProcessSessionLeader("session_leader.parent.process.end")(e.SessionLeader ?? new ProcessSessionLeader(),v),
-				"ProcessSessionLeaderParentProcessEnd" => static (e, v) => TryAssignProcessSessionLeader("session_leader.parent.process.end")(e.SessionLeader ?? new ProcessSessionLeader(),v),
-				"process.session_leader.parent.process.entity_id" => static (e, v) => TryAssignProcessSessionLeader("session_leader.parent.process.entity_id")(e.SessionLeader ?? new ProcessSessionLeader(),v),
-				"ProcessSessionLeaderParentProcessEntityId" => static (e, v) => TryAssignProcessSessionLeader("session_leader.parent.process.entity_id")(e.SessionLeader ?? new ProcessSessionLeader(),v),
-				"process.session_leader.parent.process.executable" => static (e, v) => TryAssignProcessSessionLeader("session_leader.parent.process.executable")(e.SessionLeader ?? new ProcessSessionLeader(),v),
-				"ProcessSessionLeaderParentProcessExecutable" => static (e, v) => TryAssignProcessSessionLeader("session_leader.parent.process.executable")(e.SessionLeader ?? new ProcessSessionLeader(),v),
-				"process.session_leader.parent.process.exit_code" => static (e, v) => TryAssignProcessSessionLeader("session_leader.parent.process.exit_code")(e.SessionLeader ?? new ProcessSessionLeader(),v),
-				"ProcessSessionLeaderParentProcessExitCode" => static (e, v) => TryAssignProcessSessionLeader("session_leader.parent.process.exit_code")(e.SessionLeader ?? new ProcessSessionLeader(),v),
-				"process.session_leader.parent.process.interactive" => static (e, v) => TryAssignProcessSessionLeader("session_leader.parent.process.interactive")(e.SessionLeader ?? new ProcessSessionLeader(),v),
-				"ProcessSessionLeaderParentProcessInteractive" => static (e, v) => TryAssignProcessSessionLeader("session_leader.parent.process.interactive")(e.SessionLeader ?? new ProcessSessionLeader(),v),
-				"process.session_leader.parent.process.name" => static (e, v) => TryAssignProcessSessionLeader("session_leader.parent.process.name")(e.SessionLeader ?? new ProcessSessionLeader(),v),
-				"ProcessSessionLeaderParentProcessName" => static (e, v) => TryAssignProcessSessionLeader("session_leader.parent.process.name")(e.SessionLeader ?? new ProcessSessionLeader(),v),
-				"process.session_leader.parent.process.pgid" => static (e, v) => TryAssignProcessSessionLeader("session_leader.parent.process.pgid")(e.SessionLeader ?? new ProcessSessionLeader(),v),
-				"ProcessSessionLeaderParentProcessPgid" => static (e, v) => TryAssignProcessSessionLeader("session_leader.parent.process.pgid")(e.SessionLeader ?? new ProcessSessionLeader(),v),
-				"process.session_leader.parent.process.pid" => static (e, v) => TryAssignProcessSessionLeader("session_leader.parent.process.pid")(e.SessionLeader ?? new ProcessSessionLeader(),v),
-				"ProcessSessionLeaderParentProcessPid" => static (e, v) => TryAssignProcessSessionLeader("session_leader.parent.process.pid")(e.SessionLeader ?? new ProcessSessionLeader(),v),
-				"process.session_leader.parent.process.start" => static (e, v) => TryAssignProcessSessionLeader("session_leader.parent.process.start")(e.SessionLeader ?? new ProcessSessionLeader(),v),
-				"ProcessSessionLeaderParentProcessStart" => static (e, v) => TryAssignProcessSessionLeader("session_leader.parent.process.start")(e.SessionLeader ?? new ProcessSessionLeader(),v),
-				"process.session_leader.parent.process.thread.id" => static (e, v) => TryAssignProcessSessionLeader("session_leader.parent.process.thread.id")(e.SessionLeader ?? new ProcessSessionLeader(),v),
-				"ProcessSessionLeaderParentProcessThreadId" => static (e, v) => TryAssignProcessSessionLeader("session_leader.parent.process.thread.id")(e.SessionLeader ?? new ProcessSessionLeader(),v),
-				"process.session_leader.parent.process.thread.name" => static (e, v) => TryAssignProcessSessionLeader("session_leader.parent.process.thread.name")(e.SessionLeader ?? new ProcessSessionLeader(),v),
-				"ProcessSessionLeaderParentProcessThreadName" => static (e, v) => TryAssignProcessSessionLeader("session_leader.parent.process.thread.name")(e.SessionLeader ?? new ProcessSessionLeader(),v),
-				"process.session_leader.parent.process.title" => static (e, v) => TryAssignProcessSessionLeader("session_leader.parent.process.title")(e.SessionLeader ?? new ProcessSessionLeader(),v),
-				"ProcessSessionLeaderParentProcessTitle" => static (e, v) => TryAssignProcessSessionLeader("session_leader.parent.process.title")(e.SessionLeader ?? new ProcessSessionLeader(),v),
-				"process.session_leader.parent.process.uptime" => static (e, v) => TryAssignProcessSessionLeader("session_leader.parent.process.uptime")(e.SessionLeader ?? new ProcessSessionLeader(),v),
-				"ProcessSessionLeaderParentProcessUptime" => static (e, v) => TryAssignProcessSessionLeader("session_leader.parent.process.uptime")(e.SessionLeader ?? new ProcessSessionLeader(),v),
-				"process.session_leader.parent.process.vpid" => static (e, v) => TryAssignProcessSessionLeader("session_leader.parent.process.vpid")(e.SessionLeader ?? new ProcessSessionLeader(),v),
-				"ProcessSessionLeaderParentProcessVpid" => static (e, v) => TryAssignProcessSessionLeader("session_leader.parent.process.vpid")(e.SessionLeader ?? new ProcessSessionLeader(),v),
-				"process.session_leader.parent.process.working_directory" => static (e, v) => TryAssignProcessSessionLeader("session_leader.parent.process.working_directory")(e.SessionLeader ?? new ProcessSessionLeader(),v),
-				"ProcessSessionLeaderParentProcessWorkingDirectory" => static (e, v) => TryAssignProcessSessionLeader("session_leader.parent.process.working_directory")(e.SessionLeader ?? new ProcessSessionLeader(),v),
-				"session_leader.process.parent.session_leader.parent.session_leader.process.args_count" => static (e, v) => TryAssignProcessSessionLeader("process.parent.session_leader.parent.session_leader.process.args_count")(e.SessionLeader ?? new ProcessSessionLeader(),v),
-				"SessionLeaderProcessParentSessionLeaderParentSessionLeaderProcessArgsCount" => static (e, v) => TryAssignProcessSessionLeader("process.parent.session_leader.parent.session_leader.process.args_count")(e.SessionLeader ?? new ProcessSessionLeader(),v),
-				"session_leader.process.parent.session_leader.parent.session_leader.process.command_line" => static (e, v) => TryAssignProcessSessionLeader("process.parent.session_leader.parent.session_leader.process.command_line")(e.SessionLeader ?? new ProcessSessionLeader(),v),
-				"SessionLeaderProcessParentSessionLeaderParentSessionLeaderProcessCommandLine" => static (e, v) => TryAssignProcessSessionLeader("process.parent.session_leader.parent.session_leader.process.command_line")(e.SessionLeader ?? new ProcessSessionLeader(),v),
-				"session_leader.process.parent.session_leader.parent.session_leader.process.end" => static (e, v) => TryAssignProcessSessionLeader("process.parent.session_leader.parent.session_leader.process.end")(e.SessionLeader ?? new ProcessSessionLeader(),v),
-				"SessionLeaderProcessParentSessionLeaderParentSessionLeaderProcessEnd" => static (e, v) => TryAssignProcessSessionLeader("process.parent.session_leader.parent.session_leader.process.end")(e.SessionLeader ?? new ProcessSessionLeader(),v),
-				"session_leader.process.parent.session_leader.parent.session_leader.process.entity_id" => static (e, v) => TryAssignProcessSessionLeader("process.parent.session_leader.parent.session_leader.process.entity_id")(e.SessionLeader ?? new ProcessSessionLeader(),v),
-				"SessionLeaderProcessParentSessionLeaderParentSessionLeaderProcessEntityId" => static (e, v) => TryAssignProcessSessionLeader("process.parent.session_leader.parent.session_leader.process.entity_id")(e.SessionLeader ?? new ProcessSessionLeader(),v),
-				"session_leader.process.parent.session_leader.parent.session_leader.process.executable" => static (e, v) => TryAssignProcessSessionLeader("process.parent.session_leader.parent.session_leader.process.executable")(e.SessionLeader ?? new ProcessSessionLeader(),v),
-				"SessionLeaderProcessParentSessionLeaderParentSessionLeaderProcessExecutable" => static (e, v) => TryAssignProcessSessionLeader("process.parent.session_leader.parent.session_leader.process.executable")(e.SessionLeader ?? new ProcessSessionLeader(),v),
-				"session_leader.process.parent.session_leader.parent.session_leader.process.exit_code" => static (e, v) => TryAssignProcessSessionLeader("process.parent.session_leader.parent.session_leader.process.exit_code")(e.SessionLeader ?? new ProcessSessionLeader(),v),
-				"SessionLeaderProcessParentSessionLeaderParentSessionLeaderProcessExitCode" => static (e, v) => TryAssignProcessSessionLeader("process.parent.session_leader.parent.session_leader.process.exit_code")(e.SessionLeader ?? new ProcessSessionLeader(),v),
-				"session_leader.process.parent.session_leader.parent.session_leader.process.interactive" => static (e, v) => TryAssignProcessSessionLeader("process.parent.session_leader.parent.session_leader.process.interactive")(e.SessionLeader ?? new ProcessSessionLeader(),v),
-				"SessionLeaderProcessParentSessionLeaderParentSessionLeaderProcessInteractive" => static (e, v) => TryAssignProcessSessionLeader("process.parent.session_leader.parent.session_leader.process.interactive")(e.SessionLeader ?? new ProcessSessionLeader(),v),
-				"session_leader.process.parent.session_leader.parent.session_leader.process.name" => static (e, v) => TryAssignProcessSessionLeader("process.parent.session_leader.parent.session_leader.process.name")(e.SessionLeader ?? new ProcessSessionLeader(),v),
-				"SessionLeaderProcessParentSessionLeaderParentSessionLeaderProcessName" => static (e, v) => TryAssignProcessSessionLeader("process.parent.session_leader.parent.session_leader.process.name")(e.SessionLeader ?? new ProcessSessionLeader(),v),
-				"session_leader.process.parent.session_leader.parent.session_leader.process.pgid" => static (e, v) => TryAssignProcessSessionLeader("process.parent.session_leader.parent.session_leader.process.pgid")(e.SessionLeader ?? new ProcessSessionLeader(),v),
-				"SessionLeaderProcessParentSessionLeaderParentSessionLeaderProcessPgid" => static (e, v) => TryAssignProcessSessionLeader("process.parent.session_leader.parent.session_leader.process.pgid")(e.SessionLeader ?? new ProcessSessionLeader(),v),
-				"session_leader.process.parent.session_leader.parent.session_leader.process.pid" => static (e, v) => TryAssignProcessSessionLeader("process.parent.session_leader.parent.session_leader.process.pid")(e.SessionLeader ?? new ProcessSessionLeader(),v),
-				"SessionLeaderProcessParentSessionLeaderParentSessionLeaderProcessPid" => static (e, v) => TryAssignProcessSessionLeader("process.parent.session_leader.parent.session_leader.process.pid")(e.SessionLeader ?? new ProcessSessionLeader(),v),
-				"session_leader.process.parent.session_leader.parent.session_leader.process.start" => static (e, v) => TryAssignProcessSessionLeader("process.parent.session_leader.parent.session_leader.process.start")(e.SessionLeader ?? new ProcessSessionLeader(),v),
-				"SessionLeaderProcessParentSessionLeaderParentSessionLeaderProcessStart" => static (e, v) => TryAssignProcessSessionLeader("process.parent.session_leader.parent.session_leader.process.start")(e.SessionLeader ?? new ProcessSessionLeader(),v),
-				"session_leader.process.parent.session_leader.parent.session_leader.process.thread.id" => static (e, v) => TryAssignProcessSessionLeader("process.parent.session_leader.parent.session_leader.process.thread.id")(e.SessionLeader ?? new ProcessSessionLeader(),v),
-				"SessionLeaderProcessParentSessionLeaderParentSessionLeaderProcessThreadId" => static (e, v) => TryAssignProcessSessionLeader("process.parent.session_leader.parent.session_leader.process.thread.id")(e.SessionLeader ?? new ProcessSessionLeader(),v),
-				"session_leader.process.parent.session_leader.parent.session_leader.process.thread.name" => static (e, v) => TryAssignProcessSessionLeader("process.parent.session_leader.parent.session_leader.process.thread.name")(e.SessionLeader ?? new ProcessSessionLeader(),v),
-				"SessionLeaderProcessParentSessionLeaderParentSessionLeaderProcessThreadName" => static (e, v) => TryAssignProcessSessionLeader("process.parent.session_leader.parent.session_leader.process.thread.name")(e.SessionLeader ?? new ProcessSessionLeader(),v),
-				"session_leader.process.parent.session_leader.parent.session_leader.process.title" => static (e, v) => TryAssignProcessSessionLeader("process.parent.session_leader.parent.session_leader.process.title")(e.SessionLeader ?? new ProcessSessionLeader(),v),
-				"SessionLeaderProcessParentSessionLeaderParentSessionLeaderProcessTitle" => static (e, v) => TryAssignProcessSessionLeader("process.parent.session_leader.parent.session_leader.process.title")(e.SessionLeader ?? new ProcessSessionLeader(),v),
-				"session_leader.process.parent.session_leader.parent.session_leader.process.uptime" => static (e, v) => TryAssignProcessSessionLeader("process.parent.session_leader.parent.session_leader.process.uptime")(e.SessionLeader ?? new ProcessSessionLeader(),v),
-				"SessionLeaderProcessParentSessionLeaderParentSessionLeaderProcessUptime" => static (e, v) => TryAssignProcessSessionLeader("process.parent.session_leader.parent.session_leader.process.uptime")(e.SessionLeader ?? new ProcessSessionLeader(),v),
-				"session_leader.process.parent.session_leader.parent.session_leader.process.vpid" => static (e, v) => TryAssignProcessSessionLeader("process.parent.session_leader.parent.session_leader.process.vpid")(e.SessionLeader ?? new ProcessSessionLeader(),v),
-				"SessionLeaderProcessParentSessionLeaderParentSessionLeaderProcessVpid" => static (e, v) => TryAssignProcessSessionLeader("process.parent.session_leader.parent.session_leader.process.vpid")(e.SessionLeader ?? new ProcessSessionLeader(),v),
-				"session_leader.process.parent.session_leader.parent.session_leader.process.working_directory" => static (e, v) => TryAssignProcessSessionLeader("process.parent.session_leader.parent.session_leader.process.working_directory")(e.SessionLeader ?? new ProcessSessionLeader(),v),
-				"SessionLeaderProcessParentSessionLeaderParentSessionLeaderProcessWorkingDirectory" => static (e, v) => TryAssignProcessSessionLeader("process.parent.session_leader.parent.session_leader.process.working_directory")(e.SessionLeader ?? new ProcessSessionLeader(),v),
+				"process.group.domain" => static (e, v) => TryAssignGroup("group.domain")(e.Group ??= new Group(),v),
+				"ProcessGroupDomain" => static (e, v) => TryAssignGroup("group.domain")(e.Group ??= new Group(),v),
+				"process.group.id" => static (e, v) => TryAssignGroup("group.id")(e.Group ??= new Group(),v),
+				"ProcessGroupId" => static (e, v) => TryAssignGroup("group.id")(e.Group ??= new Group(),v),
+				"process.group.name" => static (e, v) => TryAssignGroup("group.name")(e.Group ??= new Group(),v),
+				"ProcessGroupName" => static (e, v) => TryAssignGroup("group.name")(e.Group ??= new Group(),v),
+				"process.real_group.domain" => static (e, v) => TryAssignGroup("real_group.domain")(e.RealGroup ??= new Group(),v),
+				"ProcessRealGroupDomain" => static (e, v) => TryAssignGroup("real_group.domain")(e.RealGroup ??= new Group(),v),
+				"process.real_group.id" => static (e, v) => TryAssignGroup("real_group.id")(e.RealGroup ??= new Group(),v),
+				"ProcessRealGroupId" => static (e, v) => TryAssignGroup("real_group.id")(e.RealGroup ??= new Group(),v),
+				"process.real_group.name" => static (e, v) => TryAssignGroup("real_group.name")(e.RealGroup ??= new Group(),v),
+				"ProcessRealGroupName" => static (e, v) => TryAssignGroup("real_group.name")(e.RealGroup ??= new Group(),v),
+				"process.saved_group.domain" => static (e, v) => TryAssignGroup("saved_group.domain")(e.SavedGroup ??= new Group(),v),
+				"ProcessSavedGroupDomain" => static (e, v) => TryAssignGroup("saved_group.domain")(e.SavedGroup ??= new Group(),v),
+				"process.saved_group.id" => static (e, v) => TryAssignGroup("saved_group.id")(e.SavedGroup ??= new Group(),v),
+				"ProcessSavedGroupId" => static (e, v) => TryAssignGroup("saved_group.id")(e.SavedGroup ??= new Group(),v),
+				"process.saved_group.name" => static (e, v) => TryAssignGroup("saved_group.name")(e.SavedGroup ??= new Group(),v),
+				"ProcessSavedGroupName" => static (e, v) => TryAssignGroup("saved_group.name")(e.SavedGroup ??= new Group(),v),
+				"process.hash.md5" => static (e, v) => TryAssignHash("hash.md5")(e.Hash ??= new Hash(),v),
+				"ProcessHashMd5" => static (e, v) => TryAssignHash("hash.md5")(e.Hash ??= new Hash(),v),
+				"process.hash.sha1" => static (e, v) => TryAssignHash("hash.sha1")(e.Hash ??= new Hash(),v),
+				"ProcessHashSha1" => static (e, v) => TryAssignHash("hash.sha1")(e.Hash ??= new Hash(),v),
+				"process.hash.sha256" => static (e, v) => TryAssignHash("hash.sha256")(e.Hash ??= new Hash(),v),
+				"ProcessHashSha256" => static (e, v) => TryAssignHash("hash.sha256")(e.Hash ??= new Hash(),v),
+				"process.hash.sha384" => static (e, v) => TryAssignHash("hash.sha384")(e.Hash ??= new Hash(),v),
+				"ProcessHashSha384" => static (e, v) => TryAssignHash("hash.sha384")(e.Hash ??= new Hash(),v),
+				"process.hash.sha512" => static (e, v) => TryAssignHash("hash.sha512")(e.Hash ??= new Hash(),v),
+				"ProcessHashSha512" => static (e, v) => TryAssignHash("hash.sha512")(e.Hash ??= new Hash(),v),
+				"process.hash.ssdeep" => static (e, v) => TryAssignHash("hash.ssdeep")(e.Hash ??= new Hash(),v),
+				"ProcessHashSsdeep" => static (e, v) => TryAssignHash("hash.ssdeep")(e.Hash ??= new Hash(),v),
+				"process.hash.tlsh" => static (e, v) => TryAssignHash("hash.tlsh")(e.Hash ??= new Hash(),v),
+				"ProcessHashTlsh" => static (e, v) => TryAssignHash("hash.tlsh")(e.Hash ??= new Hash(),v),
+				"process.pe.architecture" => static (e, v) => TryAssignPe("pe.architecture")(e.Pe ??= new Pe(),v),
+				"ProcessPeArchitecture" => static (e, v) => TryAssignPe("pe.architecture")(e.Pe ??= new Pe(),v),
+				"process.pe.company" => static (e, v) => TryAssignPe("pe.company")(e.Pe ??= new Pe(),v),
+				"ProcessPeCompany" => static (e, v) => TryAssignPe("pe.company")(e.Pe ??= new Pe(),v),
+				"process.pe.description" => static (e, v) => TryAssignPe("pe.description")(e.Pe ??= new Pe(),v),
+				"ProcessPeDescription" => static (e, v) => TryAssignPe("pe.description")(e.Pe ??= new Pe(),v),
+				"process.pe.file_version" => static (e, v) => TryAssignPe("pe.file_version")(e.Pe ??= new Pe(),v),
+				"ProcessPeFileVersion" => static (e, v) => TryAssignPe("pe.file_version")(e.Pe ??= new Pe(),v),
+				"process.pe.go_import_hash" => static (e, v) => TryAssignPe("pe.go_import_hash")(e.Pe ??= new Pe(),v),
+				"ProcessPeGoImportHash" => static (e, v) => TryAssignPe("pe.go_import_hash")(e.Pe ??= new Pe(),v),
+				"process.pe.go_imports" => static (e, v) => TryAssignPe("pe.go_imports")(e.Pe ??= new Pe(),v),
+				"ProcessPeGoImports" => static (e, v) => TryAssignPe("pe.go_imports")(e.Pe ??= new Pe(),v),
+				"process.pe.go_imports_names_entropy" => static (e, v) => TryAssignPe("pe.go_imports_names_entropy")(e.Pe ??= new Pe(),v),
+				"ProcessPeGoImportsNamesEntropy" => static (e, v) => TryAssignPe("pe.go_imports_names_entropy")(e.Pe ??= new Pe(),v),
+				"process.pe.go_imports_names_var_entropy" => static (e, v) => TryAssignPe("pe.go_imports_names_var_entropy")(e.Pe ??= new Pe(),v),
+				"ProcessPeGoImportsNamesVarEntropy" => static (e, v) => TryAssignPe("pe.go_imports_names_var_entropy")(e.Pe ??= new Pe(),v),
+				"process.pe.go_stripped" => static (e, v) => TryAssignPe("pe.go_stripped")(e.Pe ??= new Pe(),v),
+				"ProcessPeGoStripped" => static (e, v) => TryAssignPe("pe.go_stripped")(e.Pe ??= new Pe(),v),
+				"process.pe.imphash" => static (e, v) => TryAssignPe("pe.imphash")(e.Pe ??= new Pe(),v),
+				"ProcessPeImphash" => static (e, v) => TryAssignPe("pe.imphash")(e.Pe ??= new Pe(),v),
+				"process.pe.import_hash" => static (e, v) => TryAssignPe("pe.import_hash")(e.Pe ??= new Pe(),v),
+				"ProcessPeImportHash" => static (e, v) => TryAssignPe("pe.import_hash")(e.Pe ??= new Pe(),v),
+				"process.pe.imports_names_entropy" => static (e, v) => TryAssignPe("pe.imports_names_entropy")(e.Pe ??= new Pe(),v),
+				"ProcessPeImportsNamesEntropy" => static (e, v) => TryAssignPe("pe.imports_names_entropy")(e.Pe ??= new Pe(),v),
+				"process.pe.imports_names_var_entropy" => static (e, v) => TryAssignPe("pe.imports_names_var_entropy")(e.Pe ??= new Pe(),v),
+				"ProcessPeImportsNamesVarEntropy" => static (e, v) => TryAssignPe("pe.imports_names_var_entropy")(e.Pe ??= new Pe(),v),
+				"process.pe.original_file_name" => static (e, v) => TryAssignPe("pe.original_file_name")(e.Pe ??= new Pe(),v),
+				"ProcessPeOriginalFileName" => static (e, v) => TryAssignPe("pe.original_file_name")(e.Pe ??= new Pe(),v),
+				"process.pe.pehash" => static (e, v) => TryAssignPe("pe.pehash")(e.Pe ??= new Pe(),v),
+				"ProcessPePehash" => static (e, v) => TryAssignPe("pe.pehash")(e.Pe ??= new Pe(),v),
+				"process.pe.product" => static (e, v) => TryAssignPe("pe.product")(e.Pe ??= new Pe(),v),
+				"ProcessPeProduct" => static (e, v) => TryAssignPe("pe.product")(e.Pe ??= new Pe(),v),
+				"process.code_signature.digest_algorithm" => static (e, v) => TryAssignCodeSignature("code_signature.digest_algorithm")(e.CodeSignature ??= new CodeSignature(),v),
+				"ProcessCodeSignatureDigestAlgorithm" => static (e, v) => TryAssignCodeSignature("code_signature.digest_algorithm")(e.CodeSignature ??= new CodeSignature(),v),
+				"process.code_signature.exists" => static (e, v) => TryAssignCodeSignature("code_signature.exists")(e.CodeSignature ??= new CodeSignature(),v),
+				"ProcessCodeSignatureExists" => static (e, v) => TryAssignCodeSignature("code_signature.exists")(e.CodeSignature ??= new CodeSignature(),v),
+				"process.code_signature.signing_id" => static (e, v) => TryAssignCodeSignature("code_signature.signing_id")(e.CodeSignature ??= new CodeSignature(),v),
+				"ProcessCodeSignatureSigningId" => static (e, v) => TryAssignCodeSignature("code_signature.signing_id")(e.CodeSignature ??= new CodeSignature(),v),
+				"process.code_signature.status" => static (e, v) => TryAssignCodeSignature("code_signature.status")(e.CodeSignature ??= new CodeSignature(),v),
+				"ProcessCodeSignatureStatus" => static (e, v) => TryAssignCodeSignature("code_signature.status")(e.CodeSignature ??= new CodeSignature(),v),
+				"process.code_signature.subject_name" => static (e, v) => TryAssignCodeSignature("code_signature.subject_name")(e.CodeSignature ??= new CodeSignature(),v),
+				"ProcessCodeSignatureSubjectName" => static (e, v) => TryAssignCodeSignature("code_signature.subject_name")(e.CodeSignature ??= new CodeSignature(),v),
+				"process.code_signature.team_id" => static (e, v) => TryAssignCodeSignature("code_signature.team_id")(e.CodeSignature ??= new CodeSignature(),v),
+				"ProcessCodeSignatureTeamId" => static (e, v) => TryAssignCodeSignature("code_signature.team_id")(e.CodeSignature ??= new CodeSignature(),v),
+				"process.code_signature.timestamp" => static (e, v) => TryAssignCodeSignature("code_signature.timestamp")(e.CodeSignature ??= new CodeSignature(),v),
+				"ProcessCodeSignatureTimestamp" => static (e, v) => TryAssignCodeSignature("code_signature.timestamp")(e.CodeSignature ??= new CodeSignature(),v),
+				"process.code_signature.trusted" => static (e, v) => TryAssignCodeSignature("code_signature.trusted")(e.CodeSignature ??= new CodeSignature(),v),
+				"ProcessCodeSignatureTrusted" => static (e, v) => TryAssignCodeSignature("code_signature.trusted")(e.CodeSignature ??= new CodeSignature(),v),
+				"process.code_signature.valid" => static (e, v) => TryAssignCodeSignature("code_signature.valid")(e.CodeSignature ??= new CodeSignature(),v),
+				"ProcessCodeSignatureValid" => static (e, v) => TryAssignCodeSignature("code_signature.valid")(e.CodeSignature ??= new CodeSignature(),v),
+				"process.elf.architecture" => static (e, v) => TryAssignElf("elf.architecture")(e.Elf ??= new Elf(),v),
+				"ProcessElfArchitecture" => static (e, v) => TryAssignElf("elf.architecture")(e.Elf ??= new Elf(),v),
+				"process.elf.byte_order" => static (e, v) => TryAssignElf("elf.byte_order")(e.Elf ??= new Elf(),v),
+				"ProcessElfByteOrder" => static (e, v) => TryAssignElf("elf.byte_order")(e.Elf ??= new Elf(),v),
+				"process.elf.cpu_type" => static (e, v) => TryAssignElf("elf.cpu_type")(e.Elf ??= new Elf(),v),
+				"ProcessElfCpuType" => static (e, v) => TryAssignElf("elf.cpu_type")(e.Elf ??= new Elf(),v),
+				"process.elf.creation_date" => static (e, v) => TryAssignElf("elf.creation_date")(e.Elf ??= new Elf(),v),
+				"ProcessElfCreationDate" => static (e, v) => TryAssignElf("elf.creation_date")(e.Elf ??= new Elf(),v),
+				"process.elf.go_import_hash" => static (e, v) => TryAssignElf("elf.go_import_hash")(e.Elf ??= new Elf(),v),
+				"ProcessElfGoImportHash" => static (e, v) => TryAssignElf("elf.go_import_hash")(e.Elf ??= new Elf(),v),
+				"process.elf.go_imports" => static (e, v) => TryAssignElf("elf.go_imports")(e.Elf ??= new Elf(),v),
+				"ProcessElfGoImports" => static (e, v) => TryAssignElf("elf.go_imports")(e.Elf ??= new Elf(),v),
+				"process.elf.go_imports_names_entropy" => static (e, v) => TryAssignElf("elf.go_imports_names_entropy")(e.Elf ??= new Elf(),v),
+				"ProcessElfGoImportsNamesEntropy" => static (e, v) => TryAssignElf("elf.go_imports_names_entropy")(e.Elf ??= new Elf(),v),
+				"process.elf.go_imports_names_var_entropy" => static (e, v) => TryAssignElf("elf.go_imports_names_var_entropy")(e.Elf ??= new Elf(),v),
+				"ProcessElfGoImportsNamesVarEntropy" => static (e, v) => TryAssignElf("elf.go_imports_names_var_entropy")(e.Elf ??= new Elf(),v),
+				"process.elf.go_stripped" => static (e, v) => TryAssignElf("elf.go_stripped")(e.Elf ??= new Elf(),v),
+				"ProcessElfGoStripped" => static (e, v) => TryAssignElf("elf.go_stripped")(e.Elf ??= new Elf(),v),
+				"process.elf.header.abi_version" => static (e, v) => TryAssignElf("elf.header.abi_version")(e.Elf ??= new Elf(),v),
+				"ProcessElfHeaderAbiVersion" => static (e, v) => TryAssignElf("elf.header.abi_version")(e.Elf ??= new Elf(),v),
+				"process.elf.header.class" => static (e, v) => TryAssignElf("elf.header.class")(e.Elf ??= new Elf(),v),
+				"ProcessElfHeaderClass" => static (e, v) => TryAssignElf("elf.header.class")(e.Elf ??= new Elf(),v),
+				"process.elf.header.data" => static (e, v) => TryAssignElf("elf.header.data")(e.Elf ??= new Elf(),v),
+				"ProcessElfHeaderData" => static (e, v) => TryAssignElf("elf.header.data")(e.Elf ??= new Elf(),v),
+				"process.elf.header.entrypoint" => static (e, v) => TryAssignElf("elf.header.entrypoint")(e.Elf ??= new Elf(),v),
+				"ProcessElfHeaderEntrypoint" => static (e, v) => TryAssignElf("elf.header.entrypoint")(e.Elf ??= new Elf(),v),
+				"process.elf.header.object_version" => static (e, v) => TryAssignElf("elf.header.object_version")(e.Elf ??= new Elf(),v),
+				"ProcessElfHeaderObjectVersion" => static (e, v) => TryAssignElf("elf.header.object_version")(e.Elf ??= new Elf(),v),
+				"process.elf.header.os_abi" => static (e, v) => TryAssignElf("elf.header.os_abi")(e.Elf ??= new Elf(),v),
+				"ProcessElfHeaderOsAbi" => static (e, v) => TryAssignElf("elf.header.os_abi")(e.Elf ??= new Elf(),v),
+				"process.elf.header.type" => static (e, v) => TryAssignElf("elf.header.type")(e.Elf ??= new Elf(),v),
+				"ProcessElfHeaderType" => static (e, v) => TryAssignElf("elf.header.type")(e.Elf ??= new Elf(),v),
+				"process.elf.header.version" => static (e, v) => TryAssignElf("elf.header.version")(e.Elf ??= new Elf(),v),
+				"ProcessElfHeaderVersion" => static (e, v) => TryAssignElf("elf.header.version")(e.Elf ??= new Elf(),v),
+				"process.elf.import_hash" => static (e, v) => TryAssignElf("elf.import_hash")(e.Elf ??= new Elf(),v),
+				"ProcessElfImportHash" => static (e, v) => TryAssignElf("elf.import_hash")(e.Elf ??= new Elf(),v),
+				"process.elf.imports_names_entropy" => static (e, v) => TryAssignElf("elf.imports_names_entropy")(e.Elf ??= new Elf(),v),
+				"ProcessElfImportsNamesEntropy" => static (e, v) => TryAssignElf("elf.imports_names_entropy")(e.Elf ??= new Elf(),v),
+				"process.elf.imports_names_var_entropy" => static (e, v) => TryAssignElf("elf.imports_names_var_entropy")(e.Elf ??= new Elf(),v),
+				"ProcessElfImportsNamesVarEntropy" => static (e, v) => TryAssignElf("elf.imports_names_var_entropy")(e.Elf ??= new Elf(),v),
+				"process.elf.telfhash" => static (e, v) => TryAssignElf("elf.telfhash")(e.Elf ??= new Elf(),v),
+				"ProcessElfTelfhash" => static (e, v) => TryAssignElf("elf.telfhash")(e.Elf ??= new Elf(),v),
+				"process.macho.go_import_hash" => static (e, v) => TryAssignMacho("macho.go_import_hash")(e.Macho ??= new Macho(),v),
+				"ProcessMachoGoImportHash" => static (e, v) => TryAssignMacho("macho.go_import_hash")(e.Macho ??= new Macho(),v),
+				"process.macho.go_imports" => static (e, v) => TryAssignMacho("macho.go_imports")(e.Macho ??= new Macho(),v),
+				"ProcessMachoGoImports" => static (e, v) => TryAssignMacho("macho.go_imports")(e.Macho ??= new Macho(),v),
+				"process.macho.go_imports_names_entropy" => static (e, v) => TryAssignMacho("macho.go_imports_names_entropy")(e.Macho ??= new Macho(),v),
+				"ProcessMachoGoImportsNamesEntropy" => static (e, v) => TryAssignMacho("macho.go_imports_names_entropy")(e.Macho ??= new Macho(),v),
+				"process.macho.go_imports_names_var_entropy" => static (e, v) => TryAssignMacho("macho.go_imports_names_var_entropy")(e.Macho ??= new Macho(),v),
+				"ProcessMachoGoImportsNamesVarEntropy" => static (e, v) => TryAssignMacho("macho.go_imports_names_var_entropy")(e.Macho ??= new Macho(),v),
+				"process.macho.go_stripped" => static (e, v) => TryAssignMacho("macho.go_stripped")(e.Macho ??= new Macho(),v),
+				"ProcessMachoGoStripped" => static (e, v) => TryAssignMacho("macho.go_stripped")(e.Macho ??= new Macho(),v),
+				"process.macho.import_hash" => static (e, v) => TryAssignMacho("macho.import_hash")(e.Macho ??= new Macho(),v),
+				"ProcessMachoImportHash" => static (e, v) => TryAssignMacho("macho.import_hash")(e.Macho ??= new Macho(),v),
+				"process.macho.imports_names_entropy" => static (e, v) => TryAssignMacho("macho.imports_names_entropy")(e.Macho ??= new Macho(),v),
+				"ProcessMachoImportsNamesEntropy" => static (e, v) => TryAssignMacho("macho.imports_names_entropy")(e.Macho ??= new Macho(),v),
+				"process.macho.imports_names_var_entropy" => static (e, v) => TryAssignMacho("macho.imports_names_var_entropy")(e.Macho ??= new Macho(),v),
+				"ProcessMachoImportsNamesVarEntropy" => static (e, v) => TryAssignMacho("macho.imports_names_var_entropy")(e.Macho ??= new Macho(),v),
+				"process.macho.symhash" => static (e, v) => TryAssignMacho("macho.symhash")(e.Macho ??= new Macho(),v),
+				"ProcessMachoSymhash" => static (e, v) => TryAssignMacho("macho.symhash")(e.Macho ??= new Macho(),v),
+				"process.entry_meta.source.address" => static (e, v) => TryAssignSource("source.address")(e.EntryMetaSource ??= new Source(),v),
+				"ProcessEntryMetaSourceAddress" => static (e, v) => TryAssignSource("source.address")(e.EntryMetaSource ??= new Source(),v),
+				"process.entry_meta.source.bytes" => static (e, v) => TryAssignSource("source.bytes")(e.EntryMetaSource ??= new Source(),v),
+				"ProcessEntryMetaSourceBytes" => static (e, v) => TryAssignSource("source.bytes")(e.EntryMetaSource ??= new Source(),v),
+				"process.entry_meta.source.domain" => static (e, v) => TryAssignSource("source.domain")(e.EntryMetaSource ??= new Source(),v),
+				"ProcessEntryMetaSourceDomain" => static (e, v) => TryAssignSource("source.domain")(e.EntryMetaSource ??= new Source(),v),
+				"process.entry_meta.source.ip" => static (e, v) => TryAssignSource("source.ip")(e.EntryMetaSource ??= new Source(),v),
+				"ProcessEntryMetaSourceIp" => static (e, v) => TryAssignSource("source.ip")(e.EntryMetaSource ??= new Source(),v),
+				"process.entry_meta.source.mac" => static (e, v) => TryAssignSource("source.mac")(e.EntryMetaSource ??= new Source(),v),
+				"ProcessEntryMetaSourceMac" => static (e, v) => TryAssignSource("source.mac")(e.EntryMetaSource ??= new Source(),v),
+				"process.entry_meta.source.nat.ip" => static (e, v) => TryAssignSource("source.nat.ip")(e.EntryMetaSource ??= new Source(),v),
+				"ProcessEntryMetaSourceNatIp" => static (e, v) => TryAssignSource("source.nat.ip")(e.EntryMetaSource ??= new Source(),v),
+				"process.entry_meta.source.nat.port" => static (e, v) => TryAssignSource("source.nat.port")(e.EntryMetaSource ??= new Source(),v),
+				"ProcessEntryMetaSourceNatPort" => static (e, v) => TryAssignSource("source.nat.port")(e.EntryMetaSource ??= new Source(),v),
+				"process.entry_meta.source.packets" => static (e, v) => TryAssignSource("source.packets")(e.EntryMetaSource ??= new Source(),v),
+				"ProcessEntryMetaSourcePackets" => static (e, v) => TryAssignSource("source.packets")(e.EntryMetaSource ??= new Source(),v),
+				"process.entry_meta.source.port" => static (e, v) => TryAssignSource("source.port")(e.EntryMetaSource ??= new Source(),v),
+				"ProcessEntryMetaSourcePort" => static (e, v) => TryAssignSource("source.port")(e.EntryMetaSource ??= new Source(),v),
+				"process.entry_meta.source.registered_domain" => static (e, v) => TryAssignSource("source.registered_domain")(e.EntryMetaSource ??= new Source(),v),
+				"ProcessEntryMetaSourceRegisteredDomain" => static (e, v) => TryAssignSource("source.registered_domain")(e.EntryMetaSource ??= new Source(),v),
+				"process.entry_meta.source.subdomain" => static (e, v) => TryAssignSource("source.subdomain")(e.EntryMetaSource ??= new Source(),v),
+				"ProcessEntryMetaSourceSubdomain" => static (e, v) => TryAssignSource("source.subdomain")(e.EntryMetaSource ??= new Source(),v),
+				"process.entry_meta.source.top_level_domain" => static (e, v) => TryAssignSource("source.top_level_domain")(e.EntryMetaSource ??= new Source(),v),
+				"ProcessEntryMetaSourceTopLevelDomain" => static (e, v) => TryAssignSource("source.top_level_domain")(e.EntryMetaSource ??= new Source(),v),
+				"process.entry_meta.source.as.number" => static (e, v) => TryAssignSource("source.as.number")(e.EntryMetaSource ??= new Source(),v),
+				"ProcessEntryMetaSourceAsNumber" => static (e, v) => TryAssignSource("source.as.number")(e.EntryMetaSource ??= new Source(),v),
+				"process.entry_meta.source.as.organization.name" => static (e, v) => TryAssignSource("source.as.organization.name")(e.EntryMetaSource ??= new Source(),v),
+				"ProcessEntryMetaSourceAsOrganizationName" => static (e, v) => TryAssignSource("source.as.organization.name")(e.EntryMetaSource ??= new Source(),v),
+				"process.entry_meta.source.geo.city_name" => static (e, v) => TryAssignSource("source.geo.city_name")(e.EntryMetaSource ??= new Source(),v),
+				"ProcessEntryMetaSourceGeoCityName" => static (e, v) => TryAssignSource("source.geo.city_name")(e.EntryMetaSource ??= new Source(),v),
+				"process.entry_meta.source.geo.continent_code" => static (e, v) => TryAssignSource("source.geo.continent_code")(e.EntryMetaSource ??= new Source(),v),
+				"ProcessEntryMetaSourceGeoContinentCode" => static (e, v) => TryAssignSource("source.geo.continent_code")(e.EntryMetaSource ??= new Source(),v),
+				"process.entry_meta.source.geo.continent_name" => static (e, v) => TryAssignSource("source.geo.continent_name")(e.EntryMetaSource ??= new Source(),v),
+				"ProcessEntryMetaSourceGeoContinentName" => static (e, v) => TryAssignSource("source.geo.continent_name")(e.EntryMetaSource ??= new Source(),v),
+				"process.entry_meta.source.geo.country_iso_code" => static (e, v) => TryAssignSource("source.geo.country_iso_code")(e.EntryMetaSource ??= new Source(),v),
+				"ProcessEntryMetaSourceGeoCountryIsoCode" => static (e, v) => TryAssignSource("source.geo.country_iso_code")(e.EntryMetaSource ??= new Source(),v),
+				"process.entry_meta.source.geo.country_name" => static (e, v) => TryAssignSource("source.geo.country_name")(e.EntryMetaSource ??= new Source(),v),
+				"ProcessEntryMetaSourceGeoCountryName" => static (e, v) => TryAssignSource("source.geo.country_name")(e.EntryMetaSource ??= new Source(),v),
+				"process.entry_meta.source.geo.location" => static (e, v) => TryAssignSource("source.geo.location")(e.EntryMetaSource ??= new Source(),v),
+				"ProcessEntryMetaSourceGeoLocation" => static (e, v) => TryAssignSource("source.geo.location")(e.EntryMetaSource ??= new Source(),v),
+				"process.entry_meta.source.geo.name" => static (e, v) => TryAssignSource("source.geo.name")(e.EntryMetaSource ??= new Source(),v),
+				"ProcessEntryMetaSourceGeoName" => static (e, v) => TryAssignSource("source.geo.name")(e.EntryMetaSource ??= new Source(),v),
+				"process.entry_meta.source.geo.postal_code" => static (e, v) => TryAssignSource("source.geo.postal_code")(e.EntryMetaSource ??= new Source(),v),
+				"ProcessEntryMetaSourceGeoPostalCode" => static (e, v) => TryAssignSource("source.geo.postal_code")(e.EntryMetaSource ??= new Source(),v),
+				"process.entry_meta.source.geo.region_iso_code" => static (e, v) => TryAssignSource("source.geo.region_iso_code")(e.EntryMetaSource ??= new Source(),v),
+				"ProcessEntryMetaSourceGeoRegionIsoCode" => static (e, v) => TryAssignSource("source.geo.region_iso_code")(e.EntryMetaSource ??= new Source(),v),
+				"process.entry_meta.source.geo.region_name" => static (e, v) => TryAssignSource("source.geo.region_name")(e.EntryMetaSource ??= new Source(),v),
+				"ProcessEntryMetaSourceGeoRegionName" => static (e, v) => TryAssignSource("source.geo.region_name")(e.EntryMetaSource ??= new Source(),v),
+				"process.entry_meta.source.geo.timezone" => static (e, v) => TryAssignSource("source.geo.timezone")(e.EntryMetaSource ??= new Source(),v),
+				"ProcessEntryMetaSourceGeoTimezone" => static (e, v) => TryAssignSource("source.geo.timezone")(e.EntryMetaSource ??= new Source(),v),
+				"process.entry_meta.source.user.domain" => static (e, v) => TryAssignSource("source.user.domain")(e.EntryMetaSource ??= new Source(),v),
+				"ProcessEntryMetaSourceUserDomain" => static (e, v) => TryAssignSource("source.user.domain")(e.EntryMetaSource ??= new Source(),v),
+				"process.entry_meta.source.user.email" => static (e, v) => TryAssignSource("source.user.email")(e.EntryMetaSource ??= new Source(),v),
+				"ProcessEntryMetaSourceUserEmail" => static (e, v) => TryAssignSource("source.user.email")(e.EntryMetaSource ??= new Source(),v),
+				"process.entry_meta.source.user.full_name" => static (e, v) => TryAssignSource("source.user.full_name")(e.EntryMetaSource ??= new Source(),v),
+				"ProcessEntryMetaSourceUserFullName" => static (e, v) => TryAssignSource("source.user.full_name")(e.EntryMetaSource ??= new Source(),v),
+				"process.entry_meta.source.user.hash" => static (e, v) => TryAssignSource("source.user.hash")(e.EntryMetaSource ??= new Source(),v),
+				"ProcessEntryMetaSourceUserHash" => static (e, v) => TryAssignSource("source.user.hash")(e.EntryMetaSource ??= new Source(),v),
+				"process.entry_meta.source.user.id" => static (e, v) => TryAssignSource("source.user.id")(e.EntryMetaSource ??= new Source(),v),
+				"ProcessEntryMetaSourceUserId" => static (e, v) => TryAssignSource("source.user.id")(e.EntryMetaSource ??= new Source(),v),
+				"process.entry_meta.source.user.name" => static (e, v) => TryAssignSource("source.user.name")(e.EntryMetaSource ??= new Source(),v),
+				"ProcessEntryMetaSourceUserName" => static (e, v) => TryAssignSource("source.user.name")(e.EntryMetaSource ??= new Source(),v),
+				"process.entry_meta.source.user.group.domain" => static (e, v) => TryAssignSource("source.user.group.domain")(e.EntryMetaSource ??= new Source(),v),
+				"ProcessEntryMetaSourceUserGroupDomain" => static (e, v) => TryAssignSource("source.user.group.domain")(e.EntryMetaSource ??= new Source(),v),
+				"process.entry_meta.source.user.group.id" => static (e, v) => TryAssignSource("source.user.group.id")(e.EntryMetaSource ??= new Source(),v),
+				"ProcessEntryMetaSourceUserGroupId" => static (e, v) => TryAssignSource("source.user.group.id")(e.EntryMetaSource ??= new Source(),v),
+				"process.entry_meta.source.user.group.name" => static (e, v) => TryAssignSource("source.user.group.name")(e.EntryMetaSource ??= new Source(),v),
+				"ProcessEntryMetaSourceUserGroupName" => static (e, v) => TryAssignSource("source.user.group.name")(e.EntryMetaSource ??= new Source(),v),
+				"process.entry_meta.source.user.risk.calculated_level" => static (e, v) => TryAssignSource("source.user.risk.calculated_level")(e.EntryMetaSource ??= new Source(),v),
+				"ProcessEntryMetaSourceUserRiskCalculatedLevel" => static (e, v) => TryAssignSource("source.user.risk.calculated_level")(e.EntryMetaSource ??= new Source(),v),
+				"process.entry_meta.source.user.risk.calculated_score" => static (e, v) => TryAssignSource("source.user.risk.calculated_score")(e.EntryMetaSource ??= new Source(),v),
+				"ProcessEntryMetaSourceUserRiskCalculatedScore" => static (e, v) => TryAssignSource("source.user.risk.calculated_score")(e.EntryMetaSource ??= new Source(),v),
+				"process.entry_meta.source.user.risk.calculated_score_norm" => static (e, v) => TryAssignSource("source.user.risk.calculated_score_norm")(e.EntryMetaSource ??= new Source(),v),
+				"ProcessEntryMetaSourceUserRiskCalculatedScoreNorm" => static (e, v) => TryAssignSource("source.user.risk.calculated_score_norm")(e.EntryMetaSource ??= new Source(),v),
+				"process.entry_meta.source.user.risk.static_level" => static (e, v) => TryAssignSource("source.user.risk.static_level")(e.EntryMetaSource ??= new Source(),v),
+				"ProcessEntryMetaSourceUserRiskStaticLevel" => static (e, v) => TryAssignSource("source.user.risk.static_level")(e.EntryMetaSource ??= new Source(),v),
+				"process.entry_meta.source.user.risk.static_score" => static (e, v) => TryAssignSource("source.user.risk.static_score")(e.EntryMetaSource ??= new Source(),v),
+				"ProcessEntryMetaSourceUserRiskStaticScore" => static (e, v) => TryAssignSource("source.user.risk.static_score")(e.EntryMetaSource ??= new Source(),v),
+				"process.entry_meta.source.user.risk.static_score_norm" => static (e, v) => TryAssignSource("source.user.risk.static_score_norm")(e.EntryMetaSource ??= new Source(),v),
+				"ProcessEntryMetaSourceUserRiskStaticScoreNorm" => static (e, v) => TryAssignSource("source.user.risk.static_score_norm")(e.EntryMetaSource ??= new Source(),v),
+				"process.user.domain" => static (e, v) => TryAssignUser("user.domain")(e.User ??= new User(),v),
+				"ProcessUserDomain" => static (e, v) => TryAssignUser("user.domain")(e.User ??= new User(),v),
+				"process.user.email" => static (e, v) => TryAssignUser("user.email")(e.User ??= new User(),v),
+				"ProcessUserEmail" => static (e, v) => TryAssignUser("user.email")(e.User ??= new User(),v),
+				"process.user.full_name" => static (e, v) => TryAssignUser("user.full_name")(e.User ??= new User(),v),
+				"ProcessUserFullName" => static (e, v) => TryAssignUser("user.full_name")(e.User ??= new User(),v),
+				"process.user.hash" => static (e, v) => TryAssignUser("user.hash")(e.User ??= new User(),v),
+				"ProcessUserHash" => static (e, v) => TryAssignUser("user.hash")(e.User ??= new User(),v),
+				"process.user.id" => static (e, v) => TryAssignUser("user.id")(e.User ??= new User(),v),
+				"ProcessUserId" => static (e, v) => TryAssignUser("user.id")(e.User ??= new User(),v),
+				"process.user.name" => static (e, v) => TryAssignUser("user.name")(e.User ??= new User(),v),
+				"ProcessUserName" => static (e, v) => TryAssignUser("user.name")(e.User ??= new User(),v),
+				"process.user.group.domain" => static (e, v) => TryAssignUser("user.group.domain")(e.User ??= new User(),v),
+				"ProcessUserGroupDomain" => static (e, v) => TryAssignUser("user.group.domain")(e.User ??= new User(),v),
+				"process.user.group.id" => static (e, v) => TryAssignUser("user.group.id")(e.User ??= new User(),v),
+				"ProcessUserGroupId" => static (e, v) => TryAssignUser("user.group.id")(e.User ??= new User(),v),
+				"process.user.group.name" => static (e, v) => TryAssignUser("user.group.name")(e.User ??= new User(),v),
+				"ProcessUserGroupName" => static (e, v) => TryAssignUser("user.group.name")(e.User ??= new User(),v),
+				"process.user.risk.calculated_level" => static (e, v) => TryAssignUser("user.risk.calculated_level")(e.User ??= new User(),v),
+				"ProcessUserRiskCalculatedLevel" => static (e, v) => TryAssignUser("user.risk.calculated_level")(e.User ??= new User(),v),
+				"process.user.risk.calculated_score" => static (e, v) => TryAssignUser("user.risk.calculated_score")(e.User ??= new User(),v),
+				"ProcessUserRiskCalculatedScore" => static (e, v) => TryAssignUser("user.risk.calculated_score")(e.User ??= new User(),v),
+				"process.user.risk.calculated_score_norm" => static (e, v) => TryAssignUser("user.risk.calculated_score_norm")(e.User ??= new User(),v),
+				"ProcessUserRiskCalculatedScoreNorm" => static (e, v) => TryAssignUser("user.risk.calculated_score_norm")(e.User ??= new User(),v),
+				"process.user.risk.static_level" => static (e, v) => TryAssignUser("user.risk.static_level")(e.User ??= new User(),v),
+				"ProcessUserRiskStaticLevel" => static (e, v) => TryAssignUser("user.risk.static_level")(e.User ??= new User(),v),
+				"process.user.risk.static_score" => static (e, v) => TryAssignUser("user.risk.static_score")(e.User ??= new User(),v),
+				"ProcessUserRiskStaticScore" => static (e, v) => TryAssignUser("user.risk.static_score")(e.User ??= new User(),v),
+				"process.user.risk.static_score_norm" => static (e, v) => TryAssignUser("user.risk.static_score_norm")(e.User ??= new User(),v),
+				"ProcessUserRiskStaticScoreNorm" => static (e, v) => TryAssignUser("user.risk.static_score_norm")(e.User ??= new User(),v),
+				"process.saved_user.domain" => static (e, v) => TryAssignUser("saved_user.domain")(e.SavedUser ??= new User(),v),
+				"ProcessSavedUserDomain" => static (e, v) => TryAssignUser("saved_user.domain")(e.SavedUser ??= new User(),v),
+				"process.saved_user.email" => static (e, v) => TryAssignUser("saved_user.email")(e.SavedUser ??= new User(),v),
+				"ProcessSavedUserEmail" => static (e, v) => TryAssignUser("saved_user.email")(e.SavedUser ??= new User(),v),
+				"process.saved_user.full_name" => static (e, v) => TryAssignUser("saved_user.full_name")(e.SavedUser ??= new User(),v),
+				"ProcessSavedUserFullName" => static (e, v) => TryAssignUser("saved_user.full_name")(e.SavedUser ??= new User(),v),
+				"process.saved_user.hash" => static (e, v) => TryAssignUser("saved_user.hash")(e.SavedUser ??= new User(),v),
+				"ProcessSavedUserHash" => static (e, v) => TryAssignUser("saved_user.hash")(e.SavedUser ??= new User(),v),
+				"process.saved_user.id" => static (e, v) => TryAssignUser("saved_user.id")(e.SavedUser ??= new User(),v),
+				"ProcessSavedUserId" => static (e, v) => TryAssignUser("saved_user.id")(e.SavedUser ??= new User(),v),
+				"process.saved_user.name" => static (e, v) => TryAssignUser("saved_user.name")(e.SavedUser ??= new User(),v),
+				"ProcessSavedUserName" => static (e, v) => TryAssignUser("saved_user.name")(e.SavedUser ??= new User(),v),
+				"process.saved_user.group.domain" => static (e, v) => TryAssignUser("saved_user.group.domain")(e.SavedUser ??= new User(),v),
+				"ProcessSavedUserGroupDomain" => static (e, v) => TryAssignUser("saved_user.group.domain")(e.SavedUser ??= new User(),v),
+				"process.saved_user.group.id" => static (e, v) => TryAssignUser("saved_user.group.id")(e.SavedUser ??= new User(),v),
+				"ProcessSavedUserGroupId" => static (e, v) => TryAssignUser("saved_user.group.id")(e.SavedUser ??= new User(),v),
+				"process.saved_user.group.name" => static (e, v) => TryAssignUser("saved_user.group.name")(e.SavedUser ??= new User(),v),
+				"ProcessSavedUserGroupName" => static (e, v) => TryAssignUser("saved_user.group.name")(e.SavedUser ??= new User(),v),
+				"process.saved_user.risk.calculated_level" => static (e, v) => TryAssignUser("saved_user.risk.calculated_level")(e.SavedUser ??= new User(),v),
+				"ProcessSavedUserRiskCalculatedLevel" => static (e, v) => TryAssignUser("saved_user.risk.calculated_level")(e.SavedUser ??= new User(),v),
+				"process.saved_user.risk.calculated_score" => static (e, v) => TryAssignUser("saved_user.risk.calculated_score")(e.SavedUser ??= new User(),v),
+				"ProcessSavedUserRiskCalculatedScore" => static (e, v) => TryAssignUser("saved_user.risk.calculated_score")(e.SavedUser ??= new User(),v),
+				"process.saved_user.risk.calculated_score_norm" => static (e, v) => TryAssignUser("saved_user.risk.calculated_score_norm")(e.SavedUser ??= new User(),v),
+				"ProcessSavedUserRiskCalculatedScoreNorm" => static (e, v) => TryAssignUser("saved_user.risk.calculated_score_norm")(e.SavedUser ??= new User(),v),
+				"process.saved_user.risk.static_level" => static (e, v) => TryAssignUser("saved_user.risk.static_level")(e.SavedUser ??= new User(),v),
+				"ProcessSavedUserRiskStaticLevel" => static (e, v) => TryAssignUser("saved_user.risk.static_level")(e.SavedUser ??= new User(),v),
+				"process.saved_user.risk.static_score" => static (e, v) => TryAssignUser("saved_user.risk.static_score")(e.SavedUser ??= new User(),v),
+				"ProcessSavedUserRiskStaticScore" => static (e, v) => TryAssignUser("saved_user.risk.static_score")(e.SavedUser ??= new User(),v),
+				"process.saved_user.risk.static_score_norm" => static (e, v) => TryAssignUser("saved_user.risk.static_score_norm")(e.SavedUser ??= new User(),v),
+				"ProcessSavedUserRiskStaticScoreNorm" => static (e, v) => TryAssignUser("saved_user.risk.static_score_norm")(e.SavedUser ??= new User(),v),
+				"process.real_user.domain" => static (e, v) => TryAssignUser("real_user.domain")(e.RealUser ??= new User(),v),
+				"ProcessRealUserDomain" => static (e, v) => TryAssignUser("real_user.domain")(e.RealUser ??= new User(),v),
+				"process.real_user.email" => static (e, v) => TryAssignUser("real_user.email")(e.RealUser ??= new User(),v),
+				"ProcessRealUserEmail" => static (e, v) => TryAssignUser("real_user.email")(e.RealUser ??= new User(),v),
+				"process.real_user.full_name" => static (e, v) => TryAssignUser("real_user.full_name")(e.RealUser ??= new User(),v),
+				"ProcessRealUserFullName" => static (e, v) => TryAssignUser("real_user.full_name")(e.RealUser ??= new User(),v),
+				"process.real_user.hash" => static (e, v) => TryAssignUser("real_user.hash")(e.RealUser ??= new User(),v),
+				"ProcessRealUserHash" => static (e, v) => TryAssignUser("real_user.hash")(e.RealUser ??= new User(),v),
+				"process.real_user.id" => static (e, v) => TryAssignUser("real_user.id")(e.RealUser ??= new User(),v),
+				"ProcessRealUserId" => static (e, v) => TryAssignUser("real_user.id")(e.RealUser ??= new User(),v),
+				"process.real_user.name" => static (e, v) => TryAssignUser("real_user.name")(e.RealUser ??= new User(),v),
+				"ProcessRealUserName" => static (e, v) => TryAssignUser("real_user.name")(e.RealUser ??= new User(),v),
+				"process.real_user.group.domain" => static (e, v) => TryAssignUser("real_user.group.domain")(e.RealUser ??= new User(),v),
+				"ProcessRealUserGroupDomain" => static (e, v) => TryAssignUser("real_user.group.domain")(e.RealUser ??= new User(),v),
+				"process.real_user.group.id" => static (e, v) => TryAssignUser("real_user.group.id")(e.RealUser ??= new User(),v),
+				"ProcessRealUserGroupId" => static (e, v) => TryAssignUser("real_user.group.id")(e.RealUser ??= new User(),v),
+				"process.real_user.group.name" => static (e, v) => TryAssignUser("real_user.group.name")(e.RealUser ??= new User(),v),
+				"ProcessRealUserGroupName" => static (e, v) => TryAssignUser("real_user.group.name")(e.RealUser ??= new User(),v),
+				"process.real_user.risk.calculated_level" => static (e, v) => TryAssignUser("real_user.risk.calculated_level")(e.RealUser ??= new User(),v),
+				"ProcessRealUserRiskCalculatedLevel" => static (e, v) => TryAssignUser("real_user.risk.calculated_level")(e.RealUser ??= new User(),v),
+				"process.real_user.risk.calculated_score" => static (e, v) => TryAssignUser("real_user.risk.calculated_score")(e.RealUser ??= new User(),v),
+				"ProcessRealUserRiskCalculatedScore" => static (e, v) => TryAssignUser("real_user.risk.calculated_score")(e.RealUser ??= new User(),v),
+				"process.real_user.risk.calculated_score_norm" => static (e, v) => TryAssignUser("real_user.risk.calculated_score_norm")(e.RealUser ??= new User(),v),
+				"ProcessRealUserRiskCalculatedScoreNorm" => static (e, v) => TryAssignUser("real_user.risk.calculated_score_norm")(e.RealUser ??= new User(),v),
+				"process.real_user.risk.static_level" => static (e, v) => TryAssignUser("real_user.risk.static_level")(e.RealUser ??= new User(),v),
+				"ProcessRealUserRiskStaticLevel" => static (e, v) => TryAssignUser("real_user.risk.static_level")(e.RealUser ??= new User(),v),
+				"process.real_user.risk.static_score" => static (e, v) => TryAssignUser("real_user.risk.static_score")(e.RealUser ??= new User(),v),
+				"ProcessRealUserRiskStaticScore" => static (e, v) => TryAssignUser("real_user.risk.static_score")(e.RealUser ??= new User(),v),
+				"process.real_user.risk.static_score_norm" => static (e, v) => TryAssignUser("real_user.risk.static_score_norm")(e.RealUser ??= new User(),v),
+				"ProcessRealUserRiskStaticScoreNorm" => static (e, v) => TryAssignUser("real_user.risk.static_score_norm")(e.RealUser ??= new User(),v),
+				"process.attested_user.domain" => static (e, v) => TryAssignUser("attested_user.domain")(e.AttestedUser ??= new User(),v),
+				"ProcessAttestedUserDomain" => static (e, v) => TryAssignUser("attested_user.domain")(e.AttestedUser ??= new User(),v),
+				"process.attested_user.email" => static (e, v) => TryAssignUser("attested_user.email")(e.AttestedUser ??= new User(),v),
+				"ProcessAttestedUserEmail" => static (e, v) => TryAssignUser("attested_user.email")(e.AttestedUser ??= new User(),v),
+				"process.attested_user.full_name" => static (e, v) => TryAssignUser("attested_user.full_name")(e.AttestedUser ??= new User(),v),
+				"ProcessAttestedUserFullName" => static (e, v) => TryAssignUser("attested_user.full_name")(e.AttestedUser ??= new User(),v),
+				"process.attested_user.hash" => static (e, v) => TryAssignUser("attested_user.hash")(e.AttestedUser ??= new User(),v),
+				"ProcessAttestedUserHash" => static (e, v) => TryAssignUser("attested_user.hash")(e.AttestedUser ??= new User(),v),
+				"process.attested_user.id" => static (e, v) => TryAssignUser("attested_user.id")(e.AttestedUser ??= new User(),v),
+				"ProcessAttestedUserId" => static (e, v) => TryAssignUser("attested_user.id")(e.AttestedUser ??= new User(),v),
+				"process.attested_user.name" => static (e, v) => TryAssignUser("attested_user.name")(e.AttestedUser ??= new User(),v),
+				"ProcessAttestedUserName" => static (e, v) => TryAssignUser("attested_user.name")(e.AttestedUser ??= new User(),v),
+				"process.attested_user.group.domain" => static (e, v) => TryAssignUser("attested_user.group.domain")(e.AttestedUser ??= new User(),v),
+				"ProcessAttestedUserGroupDomain" => static (e, v) => TryAssignUser("attested_user.group.domain")(e.AttestedUser ??= new User(),v),
+				"process.attested_user.group.id" => static (e, v) => TryAssignUser("attested_user.group.id")(e.AttestedUser ??= new User(),v),
+				"ProcessAttestedUserGroupId" => static (e, v) => TryAssignUser("attested_user.group.id")(e.AttestedUser ??= new User(),v),
+				"process.attested_user.group.name" => static (e, v) => TryAssignUser("attested_user.group.name")(e.AttestedUser ??= new User(),v),
+				"ProcessAttestedUserGroupName" => static (e, v) => TryAssignUser("attested_user.group.name")(e.AttestedUser ??= new User(),v),
+				"process.attested_user.risk.calculated_level" => static (e, v) => TryAssignUser("attested_user.risk.calculated_level")(e.AttestedUser ??= new User(),v),
+				"ProcessAttestedUserRiskCalculatedLevel" => static (e, v) => TryAssignUser("attested_user.risk.calculated_level")(e.AttestedUser ??= new User(),v),
+				"process.attested_user.risk.calculated_score" => static (e, v) => TryAssignUser("attested_user.risk.calculated_score")(e.AttestedUser ??= new User(),v),
+				"ProcessAttestedUserRiskCalculatedScore" => static (e, v) => TryAssignUser("attested_user.risk.calculated_score")(e.AttestedUser ??= new User(),v),
+				"process.attested_user.risk.calculated_score_norm" => static (e, v) => TryAssignUser("attested_user.risk.calculated_score_norm")(e.AttestedUser ??= new User(),v),
+				"ProcessAttestedUserRiskCalculatedScoreNorm" => static (e, v) => TryAssignUser("attested_user.risk.calculated_score_norm")(e.AttestedUser ??= new User(),v),
+				"process.attested_user.risk.static_level" => static (e, v) => TryAssignUser("attested_user.risk.static_level")(e.AttestedUser ??= new User(),v),
+				"ProcessAttestedUserRiskStaticLevel" => static (e, v) => TryAssignUser("attested_user.risk.static_level")(e.AttestedUser ??= new User(),v),
+				"process.attested_user.risk.static_score" => static (e, v) => TryAssignUser("attested_user.risk.static_score")(e.AttestedUser ??= new User(),v),
+				"ProcessAttestedUserRiskStaticScore" => static (e, v) => TryAssignUser("attested_user.risk.static_score")(e.AttestedUser ??= new User(),v),
+				"process.attested_user.risk.static_score_norm" => static (e, v) => TryAssignUser("attested_user.risk.static_score_norm")(e.AttestedUser ??= new User(),v),
+				"ProcessAttestedUserRiskStaticScoreNorm" => static (e, v) => TryAssignUser("attested_user.risk.static_score_norm")(e.AttestedUser ??= new User(),v),
 				_ => null
 			};
 			return assign;
@@ -5455,72 +5085,62 @@ namespace Elastic.CommonSchema
 				"ServerSubdomain" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Subdomain = p),
 				"server.top_level_domain" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.TopLevelDomain = p),
 				"ServerTopLevelDomain" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.TopLevelDomain = p),
-				"server.as.number" => static (e, v) => TryAssignAs("as.number")(e.As ?? new As(),v),
-				"ServerAsNumber" => static (e, v) => TryAssignAs("as.number")(e.As ?? new As(),v),
-				"server.as.organization.name" => static (e, v) => TryAssignAs("as.organization.name")(e.As ?? new As(),v),
-				"ServerAsOrganizationName" => static (e, v) => TryAssignAs("as.organization.name")(e.As ?? new As(),v),
-				"server.geo.city_name" => static (e, v) => TryAssignGeo("geo.city_name")(e.Geo ?? new Geo(),v),
-				"ServerGeoCityName" => static (e, v) => TryAssignGeo("geo.city_name")(e.Geo ?? new Geo(),v),
-				"server.geo.continent_code" => static (e, v) => TryAssignGeo("geo.continent_code")(e.Geo ?? new Geo(),v),
-				"ServerGeoContinentCode" => static (e, v) => TryAssignGeo("geo.continent_code")(e.Geo ?? new Geo(),v),
-				"server.geo.continent_name" => static (e, v) => TryAssignGeo("geo.continent_name")(e.Geo ?? new Geo(),v),
-				"ServerGeoContinentName" => static (e, v) => TryAssignGeo("geo.continent_name")(e.Geo ?? new Geo(),v),
-				"server.geo.country_iso_code" => static (e, v) => TryAssignGeo("geo.country_iso_code")(e.Geo ?? new Geo(),v),
-				"ServerGeoCountryIsoCode" => static (e, v) => TryAssignGeo("geo.country_iso_code")(e.Geo ?? new Geo(),v),
-				"server.geo.country_name" => static (e, v) => TryAssignGeo("geo.country_name")(e.Geo ?? new Geo(),v),
-				"ServerGeoCountryName" => static (e, v) => TryAssignGeo("geo.country_name")(e.Geo ?? new Geo(),v),
-				"server.geo.name" => static (e, v) => TryAssignGeo("geo.name")(e.Geo ?? new Geo(),v),
-				"ServerGeoName" => static (e, v) => TryAssignGeo("geo.name")(e.Geo ?? new Geo(),v),
-				"server.geo.postal_code" => static (e, v) => TryAssignGeo("geo.postal_code")(e.Geo ?? new Geo(),v),
-				"ServerGeoPostalCode" => static (e, v) => TryAssignGeo("geo.postal_code")(e.Geo ?? new Geo(),v),
-				"server.geo.region_iso_code" => static (e, v) => TryAssignGeo("geo.region_iso_code")(e.Geo ?? new Geo(),v),
-				"ServerGeoRegionIsoCode" => static (e, v) => TryAssignGeo("geo.region_iso_code")(e.Geo ?? new Geo(),v),
-				"server.geo.region_name" => static (e, v) => TryAssignGeo("geo.region_name")(e.Geo ?? new Geo(),v),
-				"ServerGeoRegionName" => static (e, v) => TryAssignGeo("geo.region_name")(e.Geo ?? new Geo(),v),
-				"server.geo.timezone" => static (e, v) => TryAssignGeo("geo.timezone")(e.Geo ?? new Geo(),v),
-				"ServerGeoTimezone" => static (e, v) => TryAssignGeo("geo.timezone")(e.Geo ?? new Geo(),v),
-				"server.user.domain" => static (e, v) => TryAssignUser("user.domain")(e.User ?? new User(),v),
-				"ServerUserDomain" => static (e, v) => TryAssignUser("user.domain")(e.User ?? new User(),v),
-				"server.user.email" => static (e, v) => TryAssignUser("user.email")(e.User ?? new User(),v),
-				"ServerUserEmail" => static (e, v) => TryAssignUser("user.email")(e.User ?? new User(),v),
-				"server.user.full_name" => static (e, v) => TryAssignUser("user.full_name")(e.User ?? new User(),v),
-				"ServerUserFullName" => static (e, v) => TryAssignUser("user.full_name")(e.User ?? new User(),v),
-				"server.user.hash" => static (e, v) => TryAssignUser("user.hash")(e.User ?? new User(),v),
-				"ServerUserHash" => static (e, v) => TryAssignUser("user.hash")(e.User ?? new User(),v),
-				"server.user.id" => static (e, v) => TryAssignUser("user.id")(e.User ?? new User(),v),
-				"ServerUserId" => static (e, v) => TryAssignUser("user.id")(e.User ?? new User(),v),
-				"server.user.name" => static (e, v) => TryAssignUser("user.name")(e.User ?? new User(),v),
-				"ServerUserName" => static (e, v) => TryAssignUser("user.name")(e.User ?? new User(),v),
-				"server.user.group.domain" => static (e, v) => TryAssignUser("user.group.domain")(e.User ?? new User(),v),
-				"ServerUserGroupDomain" => static (e, v) => TryAssignUser("user.group.domain")(e.User ?? new User(),v),
-				"server.user.group.id" => static (e, v) => TryAssignUser("user.group.id")(e.User ?? new User(),v),
-				"ServerUserGroupId" => static (e, v) => TryAssignUser("user.group.id")(e.User ?? new User(),v),
-				"server.user.group.name" => static (e, v) => TryAssignUser("user.group.name")(e.User ?? new User(),v),
-				"ServerUserGroupName" => static (e, v) => TryAssignUser("user.group.name")(e.User ?? new User(),v),
-				"server.user.risk.calculated_level" => static (e, v) => TryAssignUser("user.risk.calculated_level")(e.User ?? new User(),v),
-				"ServerUserRiskCalculatedLevel" => static (e, v) => TryAssignUser("user.risk.calculated_level")(e.User ?? new User(),v),
-				"server.user.risk.calculated_score" => static (e, v) => TryAssignUser("user.risk.calculated_score")(e.User ?? new User(),v),
-				"ServerUserRiskCalculatedScore" => static (e, v) => TryAssignUser("user.risk.calculated_score")(e.User ?? new User(),v),
-				"server.user.risk.calculated_score_norm" => static (e, v) => TryAssignUser("user.risk.calculated_score_norm")(e.User ?? new User(),v),
-				"ServerUserRiskCalculatedScoreNorm" => static (e, v) => TryAssignUser("user.risk.calculated_score_norm")(e.User ?? new User(),v),
-				"server.user.risk.static_level" => static (e, v) => TryAssignUser("user.risk.static_level")(e.User ?? new User(),v),
-				"ServerUserRiskStaticLevel" => static (e, v) => TryAssignUser("user.risk.static_level")(e.User ?? new User(),v),
-				"server.user.risk.static_score" => static (e, v) => TryAssignUser("user.risk.static_score")(e.User ?? new User(),v),
-				"ServerUserRiskStaticScore" => static (e, v) => TryAssignUser("user.risk.static_score")(e.User ?? new User(),v),
-				"server.user.risk.static_score_norm" => static (e, v) => TryAssignUser("user.risk.static_score_norm")(e.User ?? new User(),v),
-				"ServerUserRiskStaticScoreNorm" => static (e, v) => TryAssignUser("user.risk.static_score_norm")(e.User ?? new User(),v),
-				"server.user.target.user.domain" => static (e, v) => TryAssignUser("target.user.domain")(e.User ?? new User(),v),
-				"ServerUserTargetUserDomain" => static (e, v) => TryAssignUser("target.user.domain")(e.User ?? new User(),v),
-				"server.user.target.user.email" => static (e, v) => TryAssignUser("target.user.email")(e.User ?? new User(),v),
-				"ServerUserTargetUserEmail" => static (e, v) => TryAssignUser("target.user.email")(e.User ?? new User(),v),
-				"server.user.target.user.full_name" => static (e, v) => TryAssignUser("target.user.full_name")(e.User ?? new User(),v),
-				"ServerUserTargetUserFullName" => static (e, v) => TryAssignUser("target.user.full_name")(e.User ?? new User(),v),
-				"server.user.target.user.hash" => static (e, v) => TryAssignUser("target.user.hash")(e.User ?? new User(),v),
-				"ServerUserTargetUserHash" => static (e, v) => TryAssignUser("target.user.hash")(e.User ?? new User(),v),
-				"server.user.target.user.id" => static (e, v) => TryAssignUser("target.user.id")(e.User ?? new User(),v),
-				"ServerUserTargetUserId" => static (e, v) => TryAssignUser("target.user.id")(e.User ?? new User(),v),
-				"server.user.target.user.name" => static (e, v) => TryAssignUser("target.user.name")(e.User ?? new User(),v),
-				"ServerUserTargetUserName" => static (e, v) => TryAssignUser("target.user.name")(e.User ?? new User(),v),
+				"server.as.number" => static (e, v) => TryAssignAs("as.number")(e.As ??= new As(),v),
+				"ServerAsNumber" => static (e, v) => TryAssignAs("as.number")(e.As ??= new As(),v),
+				"server.as.organization.name" => static (e, v) => TryAssignAs("as.organization.name")(e.As ??= new As(),v),
+				"ServerAsOrganizationName" => static (e, v) => TryAssignAs("as.organization.name")(e.As ??= new As(),v),
+				"server.geo.city_name" => static (e, v) => TryAssignGeo("geo.city_name")(e.Geo ??= new Geo(),v),
+				"ServerGeoCityName" => static (e, v) => TryAssignGeo("geo.city_name")(e.Geo ??= new Geo(),v),
+				"server.geo.continent_code" => static (e, v) => TryAssignGeo("geo.continent_code")(e.Geo ??= new Geo(),v),
+				"ServerGeoContinentCode" => static (e, v) => TryAssignGeo("geo.continent_code")(e.Geo ??= new Geo(),v),
+				"server.geo.continent_name" => static (e, v) => TryAssignGeo("geo.continent_name")(e.Geo ??= new Geo(),v),
+				"ServerGeoContinentName" => static (e, v) => TryAssignGeo("geo.continent_name")(e.Geo ??= new Geo(),v),
+				"server.geo.country_iso_code" => static (e, v) => TryAssignGeo("geo.country_iso_code")(e.Geo ??= new Geo(),v),
+				"ServerGeoCountryIsoCode" => static (e, v) => TryAssignGeo("geo.country_iso_code")(e.Geo ??= new Geo(),v),
+				"server.geo.country_name" => static (e, v) => TryAssignGeo("geo.country_name")(e.Geo ??= new Geo(),v),
+				"ServerGeoCountryName" => static (e, v) => TryAssignGeo("geo.country_name")(e.Geo ??= new Geo(),v),
+				"server.geo.location" => static (e, v) => TryAssignGeo("geo.location")(e.Geo ??= new Geo(),v),
+				"ServerGeoLocation" => static (e, v) => TryAssignGeo("geo.location")(e.Geo ??= new Geo(),v),
+				"server.geo.name" => static (e, v) => TryAssignGeo("geo.name")(e.Geo ??= new Geo(),v),
+				"ServerGeoName" => static (e, v) => TryAssignGeo("geo.name")(e.Geo ??= new Geo(),v),
+				"server.geo.postal_code" => static (e, v) => TryAssignGeo("geo.postal_code")(e.Geo ??= new Geo(),v),
+				"ServerGeoPostalCode" => static (e, v) => TryAssignGeo("geo.postal_code")(e.Geo ??= new Geo(),v),
+				"server.geo.region_iso_code" => static (e, v) => TryAssignGeo("geo.region_iso_code")(e.Geo ??= new Geo(),v),
+				"ServerGeoRegionIsoCode" => static (e, v) => TryAssignGeo("geo.region_iso_code")(e.Geo ??= new Geo(),v),
+				"server.geo.region_name" => static (e, v) => TryAssignGeo("geo.region_name")(e.Geo ??= new Geo(),v),
+				"ServerGeoRegionName" => static (e, v) => TryAssignGeo("geo.region_name")(e.Geo ??= new Geo(),v),
+				"server.geo.timezone" => static (e, v) => TryAssignGeo("geo.timezone")(e.Geo ??= new Geo(),v),
+				"ServerGeoTimezone" => static (e, v) => TryAssignGeo("geo.timezone")(e.Geo ??= new Geo(),v),
+				"server.user.domain" => static (e, v) => TryAssignUser("user.domain")(e.User ??= new User(),v),
+				"ServerUserDomain" => static (e, v) => TryAssignUser("user.domain")(e.User ??= new User(),v),
+				"server.user.email" => static (e, v) => TryAssignUser("user.email")(e.User ??= new User(),v),
+				"ServerUserEmail" => static (e, v) => TryAssignUser("user.email")(e.User ??= new User(),v),
+				"server.user.full_name" => static (e, v) => TryAssignUser("user.full_name")(e.User ??= new User(),v),
+				"ServerUserFullName" => static (e, v) => TryAssignUser("user.full_name")(e.User ??= new User(),v),
+				"server.user.hash" => static (e, v) => TryAssignUser("user.hash")(e.User ??= new User(),v),
+				"ServerUserHash" => static (e, v) => TryAssignUser("user.hash")(e.User ??= new User(),v),
+				"server.user.id" => static (e, v) => TryAssignUser("user.id")(e.User ??= new User(),v),
+				"ServerUserId" => static (e, v) => TryAssignUser("user.id")(e.User ??= new User(),v),
+				"server.user.name" => static (e, v) => TryAssignUser("user.name")(e.User ??= new User(),v),
+				"ServerUserName" => static (e, v) => TryAssignUser("user.name")(e.User ??= new User(),v),
+				"server.user.group.domain" => static (e, v) => TryAssignUser("user.group.domain")(e.User ??= new User(),v),
+				"ServerUserGroupDomain" => static (e, v) => TryAssignUser("user.group.domain")(e.User ??= new User(),v),
+				"server.user.group.id" => static (e, v) => TryAssignUser("user.group.id")(e.User ??= new User(),v),
+				"ServerUserGroupId" => static (e, v) => TryAssignUser("user.group.id")(e.User ??= new User(),v),
+				"server.user.group.name" => static (e, v) => TryAssignUser("user.group.name")(e.User ??= new User(),v),
+				"ServerUserGroupName" => static (e, v) => TryAssignUser("user.group.name")(e.User ??= new User(),v),
+				"server.user.risk.calculated_level" => static (e, v) => TryAssignUser("user.risk.calculated_level")(e.User ??= new User(),v),
+				"ServerUserRiskCalculatedLevel" => static (e, v) => TryAssignUser("user.risk.calculated_level")(e.User ??= new User(),v),
+				"server.user.risk.calculated_score" => static (e, v) => TryAssignUser("user.risk.calculated_score")(e.User ??= new User(),v),
+				"ServerUserRiskCalculatedScore" => static (e, v) => TryAssignUser("user.risk.calculated_score")(e.User ??= new User(),v),
+				"server.user.risk.calculated_score_norm" => static (e, v) => TryAssignUser("user.risk.calculated_score_norm")(e.User ??= new User(),v),
+				"ServerUserRiskCalculatedScoreNorm" => static (e, v) => TryAssignUser("user.risk.calculated_score_norm")(e.User ??= new User(),v),
+				"server.user.risk.static_level" => static (e, v) => TryAssignUser("user.risk.static_level")(e.User ??= new User(),v),
+				"ServerUserRiskStaticLevel" => static (e, v) => TryAssignUser("user.risk.static_level")(e.User ??= new User(),v),
+				"server.user.risk.static_score" => static (e, v) => TryAssignUser("user.risk.static_score")(e.User ??= new User(),v),
+				"ServerUserRiskStaticScore" => static (e, v) => TryAssignUser("user.risk.static_score")(e.User ??= new User(),v),
+				"server.user.risk.static_score_norm" => static (e, v) => TryAssignUser("user.risk.static_score_norm")(e.User ??= new User(),v),
+				"ServerUserRiskStaticScoreNorm" => static (e, v) => TryAssignUser("user.risk.static_score_norm")(e.User ??= new User(),v),
 				_ => null
 			};
 			return assign;
@@ -5560,26 +5180,6 @@ namespace Elastic.CommonSchema
 				"ServiceType" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Type = p),
 				"service.version" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Version = p),
 				"ServiceVersion" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Version = p),
-				"origin.service.address" => static (e, v) => TryAssignServiceOrigin("service.address")(e.Origin ?? new ServiceOrigin(),v),
-				"OriginServiceAddress" => static (e, v) => TryAssignServiceOrigin("service.address")(e.Origin ?? new ServiceOrigin(),v),
-				"origin.service.environment" => static (e, v) => TryAssignServiceOrigin("service.environment")(e.Origin ?? new ServiceOrigin(),v),
-				"OriginServiceEnvironment" => static (e, v) => TryAssignServiceOrigin("service.environment")(e.Origin ?? new ServiceOrigin(),v),
-				"origin.service.ephemeral_id" => static (e, v) => TryAssignServiceOrigin("service.ephemeral_id")(e.Origin ?? new ServiceOrigin(),v),
-				"OriginServiceEphemeralId" => static (e, v) => TryAssignServiceOrigin("service.ephemeral_id")(e.Origin ?? new ServiceOrigin(),v),
-				"origin.service.id" => static (e, v) => TryAssignServiceOrigin("service.id")(e.Origin ?? new ServiceOrigin(),v),
-				"OriginServiceId" => static (e, v) => TryAssignServiceOrigin("service.id")(e.Origin ?? new ServiceOrigin(),v),
-				"origin.service.name" => static (e, v) => TryAssignServiceOrigin("service.name")(e.Origin ?? new ServiceOrigin(),v),
-				"OriginServiceName" => static (e, v) => TryAssignServiceOrigin("service.name")(e.Origin ?? new ServiceOrigin(),v),
-				"origin.service.node.name" => static (e, v) => TryAssignServiceOrigin("service.node.name")(e.Origin ?? new ServiceOrigin(),v),
-				"OriginServiceNodeName" => static (e, v) => TryAssignServiceOrigin("service.node.name")(e.Origin ?? new ServiceOrigin(),v),
-				"origin.service.node.role" => static (e, v) => TryAssignServiceOrigin("service.node.role")(e.Origin ?? new ServiceOrigin(),v),
-				"OriginServiceNodeRole" => static (e, v) => TryAssignServiceOrigin("service.node.role")(e.Origin ?? new ServiceOrigin(),v),
-				"origin.service.state" => static (e, v) => TryAssignServiceOrigin("service.state")(e.Origin ?? new ServiceOrigin(),v),
-				"OriginServiceState" => static (e, v) => TryAssignServiceOrigin("service.state")(e.Origin ?? new ServiceOrigin(),v),
-				"origin.service.type" => static (e, v) => TryAssignServiceOrigin("service.type")(e.Origin ?? new ServiceOrigin(),v),
-				"OriginServiceType" => static (e, v) => TryAssignServiceOrigin("service.type")(e.Origin ?? new ServiceOrigin(),v),
-				"origin.service.version" => static (e, v) => TryAssignServiceOrigin("service.version")(e.Origin ?? new ServiceOrigin(),v),
-				"OriginServiceVersion" => static (e, v) => TryAssignServiceOrigin("service.version")(e.Origin ?? new ServiceOrigin(),v),
 				_ => null
 			};
 			return assign;
@@ -5623,72 +5223,62 @@ namespace Elastic.CommonSchema
 				"SourceSubdomain" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Subdomain = p),
 				"source.top_level_domain" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.TopLevelDomain = p),
 				"SourceTopLevelDomain" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.TopLevelDomain = p),
-				"source.as.number" => static (e, v) => TryAssignAs("as.number")(e.As ?? new As(),v),
-				"SourceAsNumber" => static (e, v) => TryAssignAs("as.number")(e.As ?? new As(),v),
-				"source.as.organization.name" => static (e, v) => TryAssignAs("as.organization.name")(e.As ?? new As(),v),
-				"SourceAsOrganizationName" => static (e, v) => TryAssignAs("as.organization.name")(e.As ?? new As(),v),
-				"source.geo.city_name" => static (e, v) => TryAssignGeo("geo.city_name")(e.Geo ?? new Geo(),v),
-				"SourceGeoCityName" => static (e, v) => TryAssignGeo("geo.city_name")(e.Geo ?? new Geo(),v),
-				"source.geo.continent_code" => static (e, v) => TryAssignGeo("geo.continent_code")(e.Geo ?? new Geo(),v),
-				"SourceGeoContinentCode" => static (e, v) => TryAssignGeo("geo.continent_code")(e.Geo ?? new Geo(),v),
-				"source.geo.continent_name" => static (e, v) => TryAssignGeo("geo.continent_name")(e.Geo ?? new Geo(),v),
-				"SourceGeoContinentName" => static (e, v) => TryAssignGeo("geo.continent_name")(e.Geo ?? new Geo(),v),
-				"source.geo.country_iso_code" => static (e, v) => TryAssignGeo("geo.country_iso_code")(e.Geo ?? new Geo(),v),
-				"SourceGeoCountryIsoCode" => static (e, v) => TryAssignGeo("geo.country_iso_code")(e.Geo ?? new Geo(),v),
-				"source.geo.country_name" => static (e, v) => TryAssignGeo("geo.country_name")(e.Geo ?? new Geo(),v),
-				"SourceGeoCountryName" => static (e, v) => TryAssignGeo("geo.country_name")(e.Geo ?? new Geo(),v),
-				"source.geo.name" => static (e, v) => TryAssignGeo("geo.name")(e.Geo ?? new Geo(),v),
-				"SourceGeoName" => static (e, v) => TryAssignGeo("geo.name")(e.Geo ?? new Geo(),v),
-				"source.geo.postal_code" => static (e, v) => TryAssignGeo("geo.postal_code")(e.Geo ?? new Geo(),v),
-				"SourceGeoPostalCode" => static (e, v) => TryAssignGeo("geo.postal_code")(e.Geo ?? new Geo(),v),
-				"source.geo.region_iso_code" => static (e, v) => TryAssignGeo("geo.region_iso_code")(e.Geo ?? new Geo(),v),
-				"SourceGeoRegionIsoCode" => static (e, v) => TryAssignGeo("geo.region_iso_code")(e.Geo ?? new Geo(),v),
-				"source.geo.region_name" => static (e, v) => TryAssignGeo("geo.region_name")(e.Geo ?? new Geo(),v),
-				"SourceGeoRegionName" => static (e, v) => TryAssignGeo("geo.region_name")(e.Geo ?? new Geo(),v),
-				"source.geo.timezone" => static (e, v) => TryAssignGeo("geo.timezone")(e.Geo ?? new Geo(),v),
-				"SourceGeoTimezone" => static (e, v) => TryAssignGeo("geo.timezone")(e.Geo ?? new Geo(),v),
-				"source.user.domain" => static (e, v) => TryAssignUser("user.domain")(e.User ?? new User(),v),
-				"SourceUserDomain" => static (e, v) => TryAssignUser("user.domain")(e.User ?? new User(),v),
-				"source.user.email" => static (e, v) => TryAssignUser("user.email")(e.User ?? new User(),v),
-				"SourceUserEmail" => static (e, v) => TryAssignUser("user.email")(e.User ?? new User(),v),
-				"source.user.full_name" => static (e, v) => TryAssignUser("user.full_name")(e.User ?? new User(),v),
-				"SourceUserFullName" => static (e, v) => TryAssignUser("user.full_name")(e.User ?? new User(),v),
-				"source.user.hash" => static (e, v) => TryAssignUser("user.hash")(e.User ?? new User(),v),
-				"SourceUserHash" => static (e, v) => TryAssignUser("user.hash")(e.User ?? new User(),v),
-				"source.user.id" => static (e, v) => TryAssignUser("user.id")(e.User ?? new User(),v),
-				"SourceUserId" => static (e, v) => TryAssignUser("user.id")(e.User ?? new User(),v),
-				"source.user.name" => static (e, v) => TryAssignUser("user.name")(e.User ?? new User(),v),
-				"SourceUserName" => static (e, v) => TryAssignUser("user.name")(e.User ?? new User(),v),
-				"source.user.group.domain" => static (e, v) => TryAssignUser("user.group.domain")(e.User ?? new User(),v),
-				"SourceUserGroupDomain" => static (e, v) => TryAssignUser("user.group.domain")(e.User ?? new User(),v),
-				"source.user.group.id" => static (e, v) => TryAssignUser("user.group.id")(e.User ?? new User(),v),
-				"SourceUserGroupId" => static (e, v) => TryAssignUser("user.group.id")(e.User ?? new User(),v),
-				"source.user.group.name" => static (e, v) => TryAssignUser("user.group.name")(e.User ?? new User(),v),
-				"SourceUserGroupName" => static (e, v) => TryAssignUser("user.group.name")(e.User ?? new User(),v),
-				"source.user.risk.calculated_level" => static (e, v) => TryAssignUser("user.risk.calculated_level")(e.User ?? new User(),v),
-				"SourceUserRiskCalculatedLevel" => static (e, v) => TryAssignUser("user.risk.calculated_level")(e.User ?? new User(),v),
-				"source.user.risk.calculated_score" => static (e, v) => TryAssignUser("user.risk.calculated_score")(e.User ?? new User(),v),
-				"SourceUserRiskCalculatedScore" => static (e, v) => TryAssignUser("user.risk.calculated_score")(e.User ?? new User(),v),
-				"source.user.risk.calculated_score_norm" => static (e, v) => TryAssignUser("user.risk.calculated_score_norm")(e.User ?? new User(),v),
-				"SourceUserRiskCalculatedScoreNorm" => static (e, v) => TryAssignUser("user.risk.calculated_score_norm")(e.User ?? new User(),v),
-				"source.user.risk.static_level" => static (e, v) => TryAssignUser("user.risk.static_level")(e.User ?? new User(),v),
-				"SourceUserRiskStaticLevel" => static (e, v) => TryAssignUser("user.risk.static_level")(e.User ?? new User(),v),
-				"source.user.risk.static_score" => static (e, v) => TryAssignUser("user.risk.static_score")(e.User ?? new User(),v),
-				"SourceUserRiskStaticScore" => static (e, v) => TryAssignUser("user.risk.static_score")(e.User ?? new User(),v),
-				"source.user.risk.static_score_norm" => static (e, v) => TryAssignUser("user.risk.static_score_norm")(e.User ?? new User(),v),
-				"SourceUserRiskStaticScoreNorm" => static (e, v) => TryAssignUser("user.risk.static_score_norm")(e.User ?? new User(),v),
-				"source.user.target.user.domain" => static (e, v) => TryAssignUser("target.user.domain")(e.User ?? new User(),v),
-				"SourceUserTargetUserDomain" => static (e, v) => TryAssignUser("target.user.domain")(e.User ?? new User(),v),
-				"source.user.target.user.email" => static (e, v) => TryAssignUser("target.user.email")(e.User ?? new User(),v),
-				"SourceUserTargetUserEmail" => static (e, v) => TryAssignUser("target.user.email")(e.User ?? new User(),v),
-				"source.user.target.user.full_name" => static (e, v) => TryAssignUser("target.user.full_name")(e.User ?? new User(),v),
-				"SourceUserTargetUserFullName" => static (e, v) => TryAssignUser("target.user.full_name")(e.User ?? new User(),v),
-				"source.user.target.user.hash" => static (e, v) => TryAssignUser("target.user.hash")(e.User ?? new User(),v),
-				"SourceUserTargetUserHash" => static (e, v) => TryAssignUser("target.user.hash")(e.User ?? new User(),v),
-				"source.user.target.user.id" => static (e, v) => TryAssignUser("target.user.id")(e.User ?? new User(),v),
-				"SourceUserTargetUserId" => static (e, v) => TryAssignUser("target.user.id")(e.User ?? new User(),v),
-				"source.user.target.user.name" => static (e, v) => TryAssignUser("target.user.name")(e.User ?? new User(),v),
-				"SourceUserTargetUserName" => static (e, v) => TryAssignUser("target.user.name")(e.User ?? new User(),v),
+				"source.as.number" => static (e, v) => TryAssignAs("as.number")(e.As ??= new As(),v),
+				"SourceAsNumber" => static (e, v) => TryAssignAs("as.number")(e.As ??= new As(),v),
+				"source.as.organization.name" => static (e, v) => TryAssignAs("as.organization.name")(e.As ??= new As(),v),
+				"SourceAsOrganizationName" => static (e, v) => TryAssignAs("as.organization.name")(e.As ??= new As(),v),
+				"source.geo.city_name" => static (e, v) => TryAssignGeo("geo.city_name")(e.Geo ??= new Geo(),v),
+				"SourceGeoCityName" => static (e, v) => TryAssignGeo("geo.city_name")(e.Geo ??= new Geo(),v),
+				"source.geo.continent_code" => static (e, v) => TryAssignGeo("geo.continent_code")(e.Geo ??= new Geo(),v),
+				"SourceGeoContinentCode" => static (e, v) => TryAssignGeo("geo.continent_code")(e.Geo ??= new Geo(),v),
+				"source.geo.continent_name" => static (e, v) => TryAssignGeo("geo.continent_name")(e.Geo ??= new Geo(),v),
+				"SourceGeoContinentName" => static (e, v) => TryAssignGeo("geo.continent_name")(e.Geo ??= new Geo(),v),
+				"source.geo.country_iso_code" => static (e, v) => TryAssignGeo("geo.country_iso_code")(e.Geo ??= new Geo(),v),
+				"SourceGeoCountryIsoCode" => static (e, v) => TryAssignGeo("geo.country_iso_code")(e.Geo ??= new Geo(),v),
+				"source.geo.country_name" => static (e, v) => TryAssignGeo("geo.country_name")(e.Geo ??= new Geo(),v),
+				"SourceGeoCountryName" => static (e, v) => TryAssignGeo("geo.country_name")(e.Geo ??= new Geo(),v),
+				"source.geo.location" => static (e, v) => TryAssignGeo("geo.location")(e.Geo ??= new Geo(),v),
+				"SourceGeoLocation" => static (e, v) => TryAssignGeo("geo.location")(e.Geo ??= new Geo(),v),
+				"source.geo.name" => static (e, v) => TryAssignGeo("geo.name")(e.Geo ??= new Geo(),v),
+				"SourceGeoName" => static (e, v) => TryAssignGeo("geo.name")(e.Geo ??= new Geo(),v),
+				"source.geo.postal_code" => static (e, v) => TryAssignGeo("geo.postal_code")(e.Geo ??= new Geo(),v),
+				"SourceGeoPostalCode" => static (e, v) => TryAssignGeo("geo.postal_code")(e.Geo ??= new Geo(),v),
+				"source.geo.region_iso_code" => static (e, v) => TryAssignGeo("geo.region_iso_code")(e.Geo ??= new Geo(),v),
+				"SourceGeoRegionIsoCode" => static (e, v) => TryAssignGeo("geo.region_iso_code")(e.Geo ??= new Geo(),v),
+				"source.geo.region_name" => static (e, v) => TryAssignGeo("geo.region_name")(e.Geo ??= new Geo(),v),
+				"SourceGeoRegionName" => static (e, v) => TryAssignGeo("geo.region_name")(e.Geo ??= new Geo(),v),
+				"source.geo.timezone" => static (e, v) => TryAssignGeo("geo.timezone")(e.Geo ??= new Geo(),v),
+				"SourceGeoTimezone" => static (e, v) => TryAssignGeo("geo.timezone")(e.Geo ??= new Geo(),v),
+				"source.user.domain" => static (e, v) => TryAssignUser("user.domain")(e.User ??= new User(),v),
+				"SourceUserDomain" => static (e, v) => TryAssignUser("user.domain")(e.User ??= new User(),v),
+				"source.user.email" => static (e, v) => TryAssignUser("user.email")(e.User ??= new User(),v),
+				"SourceUserEmail" => static (e, v) => TryAssignUser("user.email")(e.User ??= new User(),v),
+				"source.user.full_name" => static (e, v) => TryAssignUser("user.full_name")(e.User ??= new User(),v),
+				"SourceUserFullName" => static (e, v) => TryAssignUser("user.full_name")(e.User ??= new User(),v),
+				"source.user.hash" => static (e, v) => TryAssignUser("user.hash")(e.User ??= new User(),v),
+				"SourceUserHash" => static (e, v) => TryAssignUser("user.hash")(e.User ??= new User(),v),
+				"source.user.id" => static (e, v) => TryAssignUser("user.id")(e.User ??= new User(),v),
+				"SourceUserId" => static (e, v) => TryAssignUser("user.id")(e.User ??= new User(),v),
+				"source.user.name" => static (e, v) => TryAssignUser("user.name")(e.User ??= new User(),v),
+				"SourceUserName" => static (e, v) => TryAssignUser("user.name")(e.User ??= new User(),v),
+				"source.user.group.domain" => static (e, v) => TryAssignUser("user.group.domain")(e.User ??= new User(),v),
+				"SourceUserGroupDomain" => static (e, v) => TryAssignUser("user.group.domain")(e.User ??= new User(),v),
+				"source.user.group.id" => static (e, v) => TryAssignUser("user.group.id")(e.User ??= new User(),v),
+				"SourceUserGroupId" => static (e, v) => TryAssignUser("user.group.id")(e.User ??= new User(),v),
+				"source.user.group.name" => static (e, v) => TryAssignUser("user.group.name")(e.User ??= new User(),v),
+				"SourceUserGroupName" => static (e, v) => TryAssignUser("user.group.name")(e.User ??= new User(),v),
+				"source.user.risk.calculated_level" => static (e, v) => TryAssignUser("user.risk.calculated_level")(e.User ??= new User(),v),
+				"SourceUserRiskCalculatedLevel" => static (e, v) => TryAssignUser("user.risk.calculated_level")(e.User ??= new User(),v),
+				"source.user.risk.calculated_score" => static (e, v) => TryAssignUser("user.risk.calculated_score")(e.User ??= new User(),v),
+				"SourceUserRiskCalculatedScore" => static (e, v) => TryAssignUser("user.risk.calculated_score")(e.User ??= new User(),v),
+				"source.user.risk.calculated_score_norm" => static (e, v) => TryAssignUser("user.risk.calculated_score_norm")(e.User ??= new User(),v),
+				"SourceUserRiskCalculatedScoreNorm" => static (e, v) => TryAssignUser("user.risk.calculated_score_norm")(e.User ??= new User(),v),
+				"source.user.risk.static_level" => static (e, v) => TryAssignUser("user.risk.static_level")(e.User ??= new User(),v),
+				"SourceUserRiskStaticLevel" => static (e, v) => TryAssignUser("user.risk.static_level")(e.User ??= new User(),v),
+				"source.user.risk.static_score" => static (e, v) => TryAssignUser("user.risk.static_score")(e.User ??= new User(),v),
+				"SourceUserRiskStaticScore" => static (e, v) => TryAssignUser("user.risk.static_score")(e.User ??= new User(),v),
+				"source.user.risk.static_score_norm" => static (e, v) => TryAssignUser("user.risk.static_score_norm")(e.User ??= new User(),v),
+				"SourceUserRiskStaticScoreNorm" => static (e, v) => TryAssignUser("user.risk.static_score_norm")(e.User ??= new User(),v),
 				_ => null
 			};
 			return assign;
@@ -5764,280 +5354,282 @@ namespace Elastic.CommonSchema
 				"ThreatSoftwareReference" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.SoftwareReference = p),
 				"threat.software.type" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.SoftwareType = p),
 				"ThreatSoftwareType" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.SoftwareType = p),
-				"threat.indicator.x509.issuer.distinguished_name" => static (e, v) => TryAssignX509("x509.issuer.distinguished_name")(e.IndicatorX509 ?? new X509(),v),
-				"ThreatIndicatorX509IssuerDistinguishedName" => static (e, v) => TryAssignX509("x509.issuer.distinguished_name")(e.IndicatorX509 ?? new X509(),v),
-				"threat.indicator.x509.not_after" => static (e, v) => TryAssignX509("x509.not_after")(e.IndicatorX509 ?? new X509(),v),
-				"ThreatIndicatorX509NotAfter" => static (e, v) => TryAssignX509("x509.not_after")(e.IndicatorX509 ?? new X509(),v),
-				"threat.indicator.x509.not_before" => static (e, v) => TryAssignX509("x509.not_before")(e.IndicatorX509 ?? new X509(),v),
-				"ThreatIndicatorX509NotBefore" => static (e, v) => TryAssignX509("x509.not_before")(e.IndicatorX509 ?? new X509(),v),
-				"threat.indicator.x509.public_key_algorithm" => static (e, v) => TryAssignX509("x509.public_key_algorithm")(e.IndicatorX509 ?? new X509(),v),
-				"ThreatIndicatorX509PublicKeyAlgorithm" => static (e, v) => TryAssignX509("x509.public_key_algorithm")(e.IndicatorX509 ?? new X509(),v),
-				"threat.indicator.x509.public_key_curve" => static (e, v) => TryAssignX509("x509.public_key_curve")(e.IndicatorX509 ?? new X509(),v),
-				"ThreatIndicatorX509PublicKeyCurve" => static (e, v) => TryAssignX509("x509.public_key_curve")(e.IndicatorX509 ?? new X509(),v),
-				"threat.indicator.x509.public_key_exponent" => static (e, v) => TryAssignX509("x509.public_key_exponent")(e.IndicatorX509 ?? new X509(),v),
-				"ThreatIndicatorX509PublicKeyExponent" => static (e, v) => TryAssignX509("x509.public_key_exponent")(e.IndicatorX509 ?? new X509(),v),
-				"threat.indicator.x509.public_key_size" => static (e, v) => TryAssignX509("x509.public_key_size")(e.IndicatorX509 ?? new X509(),v),
-				"ThreatIndicatorX509PublicKeySize" => static (e, v) => TryAssignX509("x509.public_key_size")(e.IndicatorX509 ?? new X509(),v),
-				"threat.indicator.x509.serial_number" => static (e, v) => TryAssignX509("x509.serial_number")(e.IndicatorX509 ?? new X509(),v),
-				"ThreatIndicatorX509SerialNumber" => static (e, v) => TryAssignX509("x509.serial_number")(e.IndicatorX509 ?? new X509(),v),
-				"threat.indicator.x509.signature_algorithm" => static (e, v) => TryAssignX509("x509.signature_algorithm")(e.IndicatorX509 ?? new X509(),v),
-				"ThreatIndicatorX509SignatureAlgorithm" => static (e, v) => TryAssignX509("x509.signature_algorithm")(e.IndicatorX509 ?? new X509(),v),
-				"threat.indicator.x509.subject.distinguished_name" => static (e, v) => TryAssignX509("x509.subject.distinguished_name")(e.IndicatorX509 ?? new X509(),v),
-				"ThreatIndicatorX509SubjectDistinguishedName" => static (e, v) => TryAssignX509("x509.subject.distinguished_name")(e.IndicatorX509 ?? new X509(),v),
-				"threat.indicator.x509.version_number" => static (e, v) => TryAssignX509("x509.version_number")(e.IndicatorX509 ?? new X509(),v),
-				"ThreatIndicatorX509VersionNumber" => static (e, v) => TryAssignX509("x509.version_number")(e.IndicatorX509 ?? new X509(),v),
-				"threat.indicator.as.number" => static (e, v) => TryAssignAs("as.number")(e.IndicatorAs ?? new As(),v),
-				"ThreatIndicatorAsNumber" => static (e, v) => TryAssignAs("as.number")(e.IndicatorAs ?? new As(),v),
-				"threat.indicator.as.organization.name" => static (e, v) => TryAssignAs("as.organization.name")(e.IndicatorAs ?? new As(),v),
-				"ThreatIndicatorAsOrganizationName" => static (e, v) => TryAssignAs("as.organization.name")(e.IndicatorAs ?? new As(),v),
-				"threat.indicator.file.accessed" => static (e, v) => TryAssignFile("file.accessed")(e.IndicatorFile ?? new File(),v),
-				"ThreatIndicatorFileAccessed" => static (e, v) => TryAssignFile("file.accessed")(e.IndicatorFile ?? new File(),v),
-				"threat.indicator.file.created" => static (e, v) => TryAssignFile("file.created")(e.IndicatorFile ?? new File(),v),
-				"ThreatIndicatorFileCreated" => static (e, v) => TryAssignFile("file.created")(e.IndicatorFile ?? new File(),v),
-				"threat.indicator.file.ctime" => static (e, v) => TryAssignFile("file.ctime")(e.IndicatorFile ?? new File(),v),
-				"ThreatIndicatorFileCtime" => static (e, v) => TryAssignFile("file.ctime")(e.IndicatorFile ?? new File(),v),
-				"threat.indicator.file.device" => static (e, v) => TryAssignFile("file.device")(e.IndicatorFile ?? new File(),v),
-				"ThreatIndicatorFileDevice" => static (e, v) => TryAssignFile("file.device")(e.IndicatorFile ?? new File(),v),
-				"threat.indicator.file.directory" => static (e, v) => TryAssignFile("file.directory")(e.IndicatorFile ?? new File(),v),
-				"ThreatIndicatorFileDirectory" => static (e, v) => TryAssignFile("file.directory")(e.IndicatorFile ?? new File(),v),
-				"threat.indicator.file.drive_letter" => static (e, v) => TryAssignFile("file.drive_letter")(e.IndicatorFile ?? new File(),v),
-				"ThreatIndicatorFileDriveLetter" => static (e, v) => TryAssignFile("file.drive_letter")(e.IndicatorFile ?? new File(),v),
-				"threat.indicator.file.extension" => static (e, v) => TryAssignFile("file.extension")(e.IndicatorFile ?? new File(),v),
-				"ThreatIndicatorFileExtension" => static (e, v) => TryAssignFile("file.extension")(e.IndicatorFile ?? new File(),v),
-				"threat.indicator.file.fork_name" => static (e, v) => TryAssignFile("file.fork_name")(e.IndicatorFile ?? new File(),v),
-				"ThreatIndicatorFileForkName" => static (e, v) => TryAssignFile("file.fork_name")(e.IndicatorFile ?? new File(),v),
-				"threat.indicator.file.gid" => static (e, v) => TryAssignFile("file.gid")(e.IndicatorFile ?? new File(),v),
-				"ThreatIndicatorFileGid" => static (e, v) => TryAssignFile("file.gid")(e.IndicatorFile ?? new File(),v),
-				"threat.indicator.file.group" => static (e, v) => TryAssignFile("file.group")(e.IndicatorFile ?? new File(),v),
-				"ThreatIndicatorFileGroup" => static (e, v) => TryAssignFile("file.group")(e.IndicatorFile ?? new File(),v),
-				"threat.indicator.file.inode" => static (e, v) => TryAssignFile("file.inode")(e.IndicatorFile ?? new File(),v),
-				"ThreatIndicatorFileInode" => static (e, v) => TryAssignFile("file.inode")(e.IndicatorFile ?? new File(),v),
-				"threat.indicator.file.mime_type" => static (e, v) => TryAssignFile("file.mime_type")(e.IndicatorFile ?? new File(),v),
-				"ThreatIndicatorFileMimeType" => static (e, v) => TryAssignFile("file.mime_type")(e.IndicatorFile ?? new File(),v),
-				"threat.indicator.file.mode" => static (e, v) => TryAssignFile("file.mode")(e.IndicatorFile ?? new File(),v),
-				"ThreatIndicatorFileMode" => static (e, v) => TryAssignFile("file.mode")(e.IndicatorFile ?? new File(),v),
-				"threat.indicator.file.mtime" => static (e, v) => TryAssignFile("file.mtime")(e.IndicatorFile ?? new File(),v),
-				"ThreatIndicatorFileMtime" => static (e, v) => TryAssignFile("file.mtime")(e.IndicatorFile ?? new File(),v),
-				"threat.indicator.file.name" => static (e, v) => TryAssignFile("file.name")(e.IndicatorFile ?? new File(),v),
-				"ThreatIndicatorFileName" => static (e, v) => TryAssignFile("file.name")(e.IndicatorFile ?? new File(),v),
-				"threat.indicator.file.owner" => static (e, v) => TryAssignFile("file.owner")(e.IndicatorFile ?? new File(),v),
-				"ThreatIndicatorFileOwner" => static (e, v) => TryAssignFile("file.owner")(e.IndicatorFile ?? new File(),v),
-				"threat.indicator.file.path" => static (e, v) => TryAssignFile("file.path")(e.IndicatorFile ?? new File(),v),
-				"ThreatIndicatorFilePath" => static (e, v) => TryAssignFile("file.path")(e.IndicatorFile ?? new File(),v),
-				"threat.indicator.file.size" => static (e, v) => TryAssignFile("file.size")(e.IndicatorFile ?? new File(),v),
-				"ThreatIndicatorFileSize" => static (e, v) => TryAssignFile("file.size")(e.IndicatorFile ?? new File(),v),
-				"threat.indicator.file.target_path" => static (e, v) => TryAssignFile("file.target_path")(e.IndicatorFile ?? new File(),v),
-				"ThreatIndicatorFileTargetPath" => static (e, v) => TryAssignFile("file.target_path")(e.IndicatorFile ?? new File(),v),
-				"threat.indicator.file.type" => static (e, v) => TryAssignFile("file.type")(e.IndicatorFile ?? new File(),v),
-				"ThreatIndicatorFileType" => static (e, v) => TryAssignFile("file.type")(e.IndicatorFile ?? new File(),v),
-				"threat.indicator.file.uid" => static (e, v) => TryAssignFile("file.uid")(e.IndicatorFile ?? new File(),v),
-				"ThreatIndicatorFileUid" => static (e, v) => TryAssignFile("file.uid")(e.IndicatorFile ?? new File(),v),
-				"threat.indicator.file.hash.md5" => static (e, v) => TryAssignFile("file.hash.md5")(e.IndicatorFile ?? new File(),v),
-				"ThreatIndicatorFileHashMd5" => static (e, v) => TryAssignFile("file.hash.md5")(e.IndicatorFile ?? new File(),v),
-				"threat.indicator.file.hash.sha1" => static (e, v) => TryAssignFile("file.hash.sha1")(e.IndicatorFile ?? new File(),v),
-				"ThreatIndicatorFileHashSha1" => static (e, v) => TryAssignFile("file.hash.sha1")(e.IndicatorFile ?? new File(),v),
-				"threat.indicator.file.hash.sha256" => static (e, v) => TryAssignFile("file.hash.sha256")(e.IndicatorFile ?? new File(),v),
-				"ThreatIndicatorFileHashSha256" => static (e, v) => TryAssignFile("file.hash.sha256")(e.IndicatorFile ?? new File(),v),
-				"threat.indicator.file.hash.sha384" => static (e, v) => TryAssignFile("file.hash.sha384")(e.IndicatorFile ?? new File(),v),
-				"ThreatIndicatorFileHashSha384" => static (e, v) => TryAssignFile("file.hash.sha384")(e.IndicatorFile ?? new File(),v),
-				"threat.indicator.file.hash.sha512" => static (e, v) => TryAssignFile("file.hash.sha512")(e.IndicatorFile ?? new File(),v),
-				"ThreatIndicatorFileHashSha512" => static (e, v) => TryAssignFile("file.hash.sha512")(e.IndicatorFile ?? new File(),v),
-				"threat.indicator.file.hash.ssdeep" => static (e, v) => TryAssignFile("file.hash.ssdeep")(e.IndicatorFile ?? new File(),v),
-				"ThreatIndicatorFileHashSsdeep" => static (e, v) => TryAssignFile("file.hash.ssdeep")(e.IndicatorFile ?? new File(),v),
-				"threat.indicator.file.hash.tlsh" => static (e, v) => TryAssignFile("file.hash.tlsh")(e.IndicatorFile ?? new File(),v),
-				"ThreatIndicatorFileHashTlsh" => static (e, v) => TryAssignFile("file.hash.tlsh")(e.IndicatorFile ?? new File(),v),
-				"threat.indicator.file.pe.architecture" => static (e, v) => TryAssignFile("file.pe.architecture")(e.IndicatorFile ?? new File(),v),
-				"ThreatIndicatorFilePeArchitecture" => static (e, v) => TryAssignFile("file.pe.architecture")(e.IndicatorFile ?? new File(),v),
-				"threat.indicator.file.pe.company" => static (e, v) => TryAssignFile("file.pe.company")(e.IndicatorFile ?? new File(),v),
-				"ThreatIndicatorFilePeCompany" => static (e, v) => TryAssignFile("file.pe.company")(e.IndicatorFile ?? new File(),v),
-				"threat.indicator.file.pe.description" => static (e, v) => TryAssignFile("file.pe.description")(e.IndicatorFile ?? new File(),v),
-				"ThreatIndicatorFilePeDescription" => static (e, v) => TryAssignFile("file.pe.description")(e.IndicatorFile ?? new File(),v),
-				"threat.indicator.file.pe.file_version" => static (e, v) => TryAssignFile("file.pe.file_version")(e.IndicatorFile ?? new File(),v),
-				"ThreatIndicatorFilePeFileVersion" => static (e, v) => TryAssignFile("file.pe.file_version")(e.IndicatorFile ?? new File(),v),
-				"threat.indicator.file.pe.go_import_hash" => static (e, v) => TryAssignFile("file.pe.go_import_hash")(e.IndicatorFile ?? new File(),v),
-				"ThreatIndicatorFilePeGoImportHash" => static (e, v) => TryAssignFile("file.pe.go_import_hash")(e.IndicatorFile ?? new File(),v),
-				"threat.indicator.file.pe.go_imports" => static (e, v) => TryAssignFile("file.pe.go_imports")(e.IndicatorFile ?? new File(),v),
-				"ThreatIndicatorFilePeGoImports" => static (e, v) => TryAssignFile("file.pe.go_imports")(e.IndicatorFile ?? new File(),v),
-				"threat.indicator.file.pe.go_imports_names_entropy" => static (e, v) => TryAssignFile("file.pe.go_imports_names_entropy")(e.IndicatorFile ?? new File(),v),
-				"ThreatIndicatorFilePeGoImportsNamesEntropy" => static (e, v) => TryAssignFile("file.pe.go_imports_names_entropy")(e.IndicatorFile ?? new File(),v),
-				"threat.indicator.file.pe.go_imports_names_var_entropy" => static (e, v) => TryAssignFile("file.pe.go_imports_names_var_entropy")(e.IndicatorFile ?? new File(),v),
-				"ThreatIndicatorFilePeGoImportsNamesVarEntropy" => static (e, v) => TryAssignFile("file.pe.go_imports_names_var_entropy")(e.IndicatorFile ?? new File(),v),
-				"threat.indicator.file.pe.go_stripped" => static (e, v) => TryAssignFile("file.pe.go_stripped")(e.IndicatorFile ?? new File(),v),
-				"ThreatIndicatorFilePeGoStripped" => static (e, v) => TryAssignFile("file.pe.go_stripped")(e.IndicatorFile ?? new File(),v),
-				"threat.indicator.file.pe.imphash" => static (e, v) => TryAssignFile("file.pe.imphash")(e.IndicatorFile ?? new File(),v),
-				"ThreatIndicatorFilePeImphash" => static (e, v) => TryAssignFile("file.pe.imphash")(e.IndicatorFile ?? new File(),v),
-				"threat.indicator.file.pe.import_hash" => static (e, v) => TryAssignFile("file.pe.import_hash")(e.IndicatorFile ?? new File(),v),
-				"ThreatIndicatorFilePeImportHash" => static (e, v) => TryAssignFile("file.pe.import_hash")(e.IndicatorFile ?? new File(),v),
-				"threat.indicator.file.pe.imports_names_entropy" => static (e, v) => TryAssignFile("file.pe.imports_names_entropy")(e.IndicatorFile ?? new File(),v),
-				"ThreatIndicatorFilePeImportsNamesEntropy" => static (e, v) => TryAssignFile("file.pe.imports_names_entropy")(e.IndicatorFile ?? new File(),v),
-				"threat.indicator.file.pe.imports_names_var_entropy" => static (e, v) => TryAssignFile("file.pe.imports_names_var_entropy")(e.IndicatorFile ?? new File(),v),
-				"ThreatIndicatorFilePeImportsNamesVarEntropy" => static (e, v) => TryAssignFile("file.pe.imports_names_var_entropy")(e.IndicatorFile ?? new File(),v),
-				"threat.indicator.file.pe.original_file_name" => static (e, v) => TryAssignFile("file.pe.original_file_name")(e.IndicatorFile ?? new File(),v),
-				"ThreatIndicatorFilePeOriginalFileName" => static (e, v) => TryAssignFile("file.pe.original_file_name")(e.IndicatorFile ?? new File(),v),
-				"threat.indicator.file.pe.pehash" => static (e, v) => TryAssignFile("file.pe.pehash")(e.IndicatorFile ?? new File(),v),
-				"ThreatIndicatorFilePePehash" => static (e, v) => TryAssignFile("file.pe.pehash")(e.IndicatorFile ?? new File(),v),
-				"threat.indicator.file.pe.product" => static (e, v) => TryAssignFile("file.pe.product")(e.IndicatorFile ?? new File(),v),
-				"ThreatIndicatorFilePeProduct" => static (e, v) => TryAssignFile("file.pe.product")(e.IndicatorFile ?? new File(),v),
-				"threat.indicator.file.x509.issuer.distinguished_name" => static (e, v) => TryAssignFile("file.x509.issuer.distinguished_name")(e.IndicatorFile ?? new File(),v),
-				"ThreatIndicatorFileX509IssuerDistinguishedName" => static (e, v) => TryAssignFile("file.x509.issuer.distinguished_name")(e.IndicatorFile ?? new File(),v),
-				"threat.indicator.file.x509.not_after" => static (e, v) => TryAssignFile("file.x509.not_after")(e.IndicatorFile ?? new File(),v),
-				"ThreatIndicatorFileX509NotAfter" => static (e, v) => TryAssignFile("file.x509.not_after")(e.IndicatorFile ?? new File(),v),
-				"threat.indicator.file.x509.not_before" => static (e, v) => TryAssignFile("file.x509.not_before")(e.IndicatorFile ?? new File(),v),
-				"ThreatIndicatorFileX509NotBefore" => static (e, v) => TryAssignFile("file.x509.not_before")(e.IndicatorFile ?? new File(),v),
-				"threat.indicator.file.x509.public_key_algorithm" => static (e, v) => TryAssignFile("file.x509.public_key_algorithm")(e.IndicatorFile ?? new File(),v),
-				"ThreatIndicatorFileX509PublicKeyAlgorithm" => static (e, v) => TryAssignFile("file.x509.public_key_algorithm")(e.IndicatorFile ?? new File(),v),
-				"threat.indicator.file.x509.public_key_curve" => static (e, v) => TryAssignFile("file.x509.public_key_curve")(e.IndicatorFile ?? new File(),v),
-				"ThreatIndicatorFileX509PublicKeyCurve" => static (e, v) => TryAssignFile("file.x509.public_key_curve")(e.IndicatorFile ?? new File(),v),
-				"threat.indicator.file.x509.public_key_exponent" => static (e, v) => TryAssignFile("file.x509.public_key_exponent")(e.IndicatorFile ?? new File(),v),
-				"ThreatIndicatorFileX509PublicKeyExponent" => static (e, v) => TryAssignFile("file.x509.public_key_exponent")(e.IndicatorFile ?? new File(),v),
-				"threat.indicator.file.x509.public_key_size" => static (e, v) => TryAssignFile("file.x509.public_key_size")(e.IndicatorFile ?? new File(),v),
-				"ThreatIndicatorFileX509PublicKeySize" => static (e, v) => TryAssignFile("file.x509.public_key_size")(e.IndicatorFile ?? new File(),v),
-				"threat.indicator.file.x509.serial_number" => static (e, v) => TryAssignFile("file.x509.serial_number")(e.IndicatorFile ?? new File(),v),
-				"ThreatIndicatorFileX509SerialNumber" => static (e, v) => TryAssignFile("file.x509.serial_number")(e.IndicatorFile ?? new File(),v),
-				"threat.indicator.file.x509.signature_algorithm" => static (e, v) => TryAssignFile("file.x509.signature_algorithm")(e.IndicatorFile ?? new File(),v),
-				"ThreatIndicatorFileX509SignatureAlgorithm" => static (e, v) => TryAssignFile("file.x509.signature_algorithm")(e.IndicatorFile ?? new File(),v),
-				"threat.indicator.file.x509.subject.distinguished_name" => static (e, v) => TryAssignFile("file.x509.subject.distinguished_name")(e.IndicatorFile ?? new File(),v),
-				"ThreatIndicatorFileX509SubjectDistinguishedName" => static (e, v) => TryAssignFile("file.x509.subject.distinguished_name")(e.IndicatorFile ?? new File(),v),
-				"threat.indicator.file.x509.version_number" => static (e, v) => TryAssignFile("file.x509.version_number")(e.IndicatorFile ?? new File(),v),
-				"ThreatIndicatorFileX509VersionNumber" => static (e, v) => TryAssignFile("file.x509.version_number")(e.IndicatorFile ?? new File(),v),
-				"threat.indicator.file.code_signature.digest_algorithm" => static (e, v) => TryAssignFile("file.code_signature.digest_algorithm")(e.IndicatorFile ?? new File(),v),
-				"ThreatIndicatorFileCodeSignatureDigestAlgorithm" => static (e, v) => TryAssignFile("file.code_signature.digest_algorithm")(e.IndicatorFile ?? new File(),v),
-				"threat.indicator.file.code_signature.exists" => static (e, v) => TryAssignFile("file.code_signature.exists")(e.IndicatorFile ?? new File(),v),
-				"ThreatIndicatorFileCodeSignatureExists" => static (e, v) => TryAssignFile("file.code_signature.exists")(e.IndicatorFile ?? new File(),v),
-				"threat.indicator.file.code_signature.signing_id" => static (e, v) => TryAssignFile("file.code_signature.signing_id")(e.IndicatorFile ?? new File(),v),
-				"ThreatIndicatorFileCodeSignatureSigningId" => static (e, v) => TryAssignFile("file.code_signature.signing_id")(e.IndicatorFile ?? new File(),v),
-				"threat.indicator.file.code_signature.status" => static (e, v) => TryAssignFile("file.code_signature.status")(e.IndicatorFile ?? new File(),v),
-				"ThreatIndicatorFileCodeSignatureStatus" => static (e, v) => TryAssignFile("file.code_signature.status")(e.IndicatorFile ?? new File(),v),
-				"threat.indicator.file.code_signature.subject_name" => static (e, v) => TryAssignFile("file.code_signature.subject_name")(e.IndicatorFile ?? new File(),v),
-				"ThreatIndicatorFileCodeSignatureSubjectName" => static (e, v) => TryAssignFile("file.code_signature.subject_name")(e.IndicatorFile ?? new File(),v),
-				"threat.indicator.file.code_signature.team_id" => static (e, v) => TryAssignFile("file.code_signature.team_id")(e.IndicatorFile ?? new File(),v),
-				"ThreatIndicatorFileCodeSignatureTeamId" => static (e, v) => TryAssignFile("file.code_signature.team_id")(e.IndicatorFile ?? new File(),v),
-				"threat.indicator.file.code_signature.timestamp" => static (e, v) => TryAssignFile("file.code_signature.timestamp")(e.IndicatorFile ?? new File(),v),
-				"ThreatIndicatorFileCodeSignatureTimestamp" => static (e, v) => TryAssignFile("file.code_signature.timestamp")(e.IndicatorFile ?? new File(),v),
-				"threat.indicator.file.code_signature.trusted" => static (e, v) => TryAssignFile("file.code_signature.trusted")(e.IndicatorFile ?? new File(),v),
-				"ThreatIndicatorFileCodeSignatureTrusted" => static (e, v) => TryAssignFile("file.code_signature.trusted")(e.IndicatorFile ?? new File(),v),
-				"threat.indicator.file.code_signature.valid" => static (e, v) => TryAssignFile("file.code_signature.valid")(e.IndicatorFile ?? new File(),v),
-				"ThreatIndicatorFileCodeSignatureValid" => static (e, v) => TryAssignFile("file.code_signature.valid")(e.IndicatorFile ?? new File(),v),
-				"threat.indicator.file.elf.architecture" => static (e, v) => TryAssignFile("file.elf.architecture")(e.IndicatorFile ?? new File(),v),
-				"ThreatIndicatorFileElfArchitecture" => static (e, v) => TryAssignFile("file.elf.architecture")(e.IndicatorFile ?? new File(),v),
-				"threat.indicator.file.elf.byte_order" => static (e, v) => TryAssignFile("file.elf.byte_order")(e.IndicatorFile ?? new File(),v),
-				"ThreatIndicatorFileElfByteOrder" => static (e, v) => TryAssignFile("file.elf.byte_order")(e.IndicatorFile ?? new File(),v),
-				"threat.indicator.file.elf.cpu_type" => static (e, v) => TryAssignFile("file.elf.cpu_type")(e.IndicatorFile ?? new File(),v),
-				"ThreatIndicatorFileElfCpuType" => static (e, v) => TryAssignFile("file.elf.cpu_type")(e.IndicatorFile ?? new File(),v),
-				"threat.indicator.file.elf.creation_date" => static (e, v) => TryAssignFile("file.elf.creation_date")(e.IndicatorFile ?? new File(),v),
-				"ThreatIndicatorFileElfCreationDate" => static (e, v) => TryAssignFile("file.elf.creation_date")(e.IndicatorFile ?? new File(),v),
-				"threat.indicator.file.elf.go_import_hash" => static (e, v) => TryAssignFile("file.elf.go_import_hash")(e.IndicatorFile ?? new File(),v),
-				"ThreatIndicatorFileElfGoImportHash" => static (e, v) => TryAssignFile("file.elf.go_import_hash")(e.IndicatorFile ?? new File(),v),
-				"threat.indicator.file.elf.go_imports" => static (e, v) => TryAssignFile("file.elf.go_imports")(e.IndicatorFile ?? new File(),v),
-				"ThreatIndicatorFileElfGoImports" => static (e, v) => TryAssignFile("file.elf.go_imports")(e.IndicatorFile ?? new File(),v),
-				"threat.indicator.file.elf.go_imports_names_entropy" => static (e, v) => TryAssignFile("file.elf.go_imports_names_entropy")(e.IndicatorFile ?? new File(),v),
-				"ThreatIndicatorFileElfGoImportsNamesEntropy" => static (e, v) => TryAssignFile("file.elf.go_imports_names_entropy")(e.IndicatorFile ?? new File(),v),
-				"threat.indicator.file.elf.go_imports_names_var_entropy" => static (e, v) => TryAssignFile("file.elf.go_imports_names_var_entropy")(e.IndicatorFile ?? new File(),v),
-				"ThreatIndicatorFileElfGoImportsNamesVarEntropy" => static (e, v) => TryAssignFile("file.elf.go_imports_names_var_entropy")(e.IndicatorFile ?? new File(),v),
-				"threat.indicator.file.elf.go_stripped" => static (e, v) => TryAssignFile("file.elf.go_stripped")(e.IndicatorFile ?? new File(),v),
-				"ThreatIndicatorFileElfGoStripped" => static (e, v) => TryAssignFile("file.elf.go_stripped")(e.IndicatorFile ?? new File(),v),
-				"threat.indicator.file.elf.header.abi_version" => static (e, v) => TryAssignFile("file.elf.header.abi_version")(e.IndicatorFile ?? new File(),v),
-				"ThreatIndicatorFileElfHeaderAbiVersion" => static (e, v) => TryAssignFile("file.elf.header.abi_version")(e.IndicatorFile ?? new File(),v),
-				"threat.indicator.file.elf.header.class" => static (e, v) => TryAssignFile("file.elf.header.class")(e.IndicatorFile ?? new File(),v),
-				"ThreatIndicatorFileElfHeaderClass" => static (e, v) => TryAssignFile("file.elf.header.class")(e.IndicatorFile ?? new File(),v),
-				"threat.indicator.file.elf.header.data" => static (e, v) => TryAssignFile("file.elf.header.data")(e.IndicatorFile ?? new File(),v),
-				"ThreatIndicatorFileElfHeaderData" => static (e, v) => TryAssignFile("file.elf.header.data")(e.IndicatorFile ?? new File(),v),
-				"threat.indicator.file.elf.header.entrypoint" => static (e, v) => TryAssignFile("file.elf.header.entrypoint")(e.IndicatorFile ?? new File(),v),
-				"ThreatIndicatorFileElfHeaderEntrypoint" => static (e, v) => TryAssignFile("file.elf.header.entrypoint")(e.IndicatorFile ?? new File(),v),
-				"threat.indicator.file.elf.header.object_version" => static (e, v) => TryAssignFile("file.elf.header.object_version")(e.IndicatorFile ?? new File(),v),
-				"ThreatIndicatorFileElfHeaderObjectVersion" => static (e, v) => TryAssignFile("file.elf.header.object_version")(e.IndicatorFile ?? new File(),v),
-				"threat.indicator.file.elf.header.os_abi" => static (e, v) => TryAssignFile("file.elf.header.os_abi")(e.IndicatorFile ?? new File(),v),
-				"ThreatIndicatorFileElfHeaderOsAbi" => static (e, v) => TryAssignFile("file.elf.header.os_abi")(e.IndicatorFile ?? new File(),v),
-				"threat.indicator.file.elf.header.type" => static (e, v) => TryAssignFile("file.elf.header.type")(e.IndicatorFile ?? new File(),v),
-				"ThreatIndicatorFileElfHeaderType" => static (e, v) => TryAssignFile("file.elf.header.type")(e.IndicatorFile ?? new File(),v),
-				"threat.indicator.file.elf.header.version" => static (e, v) => TryAssignFile("file.elf.header.version")(e.IndicatorFile ?? new File(),v),
-				"ThreatIndicatorFileElfHeaderVersion" => static (e, v) => TryAssignFile("file.elf.header.version")(e.IndicatorFile ?? new File(),v),
-				"threat.indicator.file.elf.import_hash" => static (e, v) => TryAssignFile("file.elf.import_hash")(e.IndicatorFile ?? new File(),v),
-				"ThreatIndicatorFileElfImportHash" => static (e, v) => TryAssignFile("file.elf.import_hash")(e.IndicatorFile ?? new File(),v),
-				"threat.indicator.file.elf.imports_names_entropy" => static (e, v) => TryAssignFile("file.elf.imports_names_entropy")(e.IndicatorFile ?? new File(),v),
-				"ThreatIndicatorFileElfImportsNamesEntropy" => static (e, v) => TryAssignFile("file.elf.imports_names_entropy")(e.IndicatorFile ?? new File(),v),
-				"threat.indicator.file.elf.imports_names_var_entropy" => static (e, v) => TryAssignFile("file.elf.imports_names_var_entropy")(e.IndicatorFile ?? new File(),v),
-				"ThreatIndicatorFileElfImportsNamesVarEntropy" => static (e, v) => TryAssignFile("file.elf.imports_names_var_entropy")(e.IndicatorFile ?? new File(),v),
-				"threat.indicator.file.elf.telfhash" => static (e, v) => TryAssignFile("file.elf.telfhash")(e.IndicatorFile ?? new File(),v),
-				"ThreatIndicatorFileElfTelfhash" => static (e, v) => TryAssignFile("file.elf.telfhash")(e.IndicatorFile ?? new File(),v),
-				"threat.indicator.file.macho.go_import_hash" => static (e, v) => TryAssignFile("file.macho.go_import_hash")(e.IndicatorFile ?? new File(),v),
-				"ThreatIndicatorFileMachoGoImportHash" => static (e, v) => TryAssignFile("file.macho.go_import_hash")(e.IndicatorFile ?? new File(),v),
-				"threat.indicator.file.macho.go_imports" => static (e, v) => TryAssignFile("file.macho.go_imports")(e.IndicatorFile ?? new File(),v),
-				"ThreatIndicatorFileMachoGoImports" => static (e, v) => TryAssignFile("file.macho.go_imports")(e.IndicatorFile ?? new File(),v),
-				"threat.indicator.file.macho.go_imports_names_entropy" => static (e, v) => TryAssignFile("file.macho.go_imports_names_entropy")(e.IndicatorFile ?? new File(),v),
-				"ThreatIndicatorFileMachoGoImportsNamesEntropy" => static (e, v) => TryAssignFile("file.macho.go_imports_names_entropy")(e.IndicatorFile ?? new File(),v),
-				"threat.indicator.file.macho.go_imports_names_var_entropy" => static (e, v) => TryAssignFile("file.macho.go_imports_names_var_entropy")(e.IndicatorFile ?? new File(),v),
-				"ThreatIndicatorFileMachoGoImportsNamesVarEntropy" => static (e, v) => TryAssignFile("file.macho.go_imports_names_var_entropy")(e.IndicatorFile ?? new File(),v),
-				"threat.indicator.file.macho.go_stripped" => static (e, v) => TryAssignFile("file.macho.go_stripped")(e.IndicatorFile ?? new File(),v),
-				"ThreatIndicatorFileMachoGoStripped" => static (e, v) => TryAssignFile("file.macho.go_stripped")(e.IndicatorFile ?? new File(),v),
-				"threat.indicator.file.macho.import_hash" => static (e, v) => TryAssignFile("file.macho.import_hash")(e.IndicatorFile ?? new File(),v),
-				"ThreatIndicatorFileMachoImportHash" => static (e, v) => TryAssignFile("file.macho.import_hash")(e.IndicatorFile ?? new File(),v),
-				"threat.indicator.file.macho.imports_names_entropy" => static (e, v) => TryAssignFile("file.macho.imports_names_entropy")(e.IndicatorFile ?? new File(),v),
-				"ThreatIndicatorFileMachoImportsNamesEntropy" => static (e, v) => TryAssignFile("file.macho.imports_names_entropy")(e.IndicatorFile ?? new File(),v),
-				"threat.indicator.file.macho.imports_names_var_entropy" => static (e, v) => TryAssignFile("file.macho.imports_names_var_entropy")(e.IndicatorFile ?? new File(),v),
-				"ThreatIndicatorFileMachoImportsNamesVarEntropy" => static (e, v) => TryAssignFile("file.macho.imports_names_var_entropy")(e.IndicatorFile ?? new File(),v),
-				"threat.indicator.file.macho.symhash" => static (e, v) => TryAssignFile("file.macho.symhash")(e.IndicatorFile ?? new File(),v),
-				"ThreatIndicatorFileMachoSymhash" => static (e, v) => TryAssignFile("file.macho.symhash")(e.IndicatorFile ?? new File(),v),
-				"threat.indicator.geo.city_name" => static (e, v) => TryAssignGeo("geo.city_name")(e.IndicatorGeo ?? new Geo(),v),
-				"ThreatIndicatorGeoCityName" => static (e, v) => TryAssignGeo("geo.city_name")(e.IndicatorGeo ?? new Geo(),v),
-				"threat.indicator.geo.continent_code" => static (e, v) => TryAssignGeo("geo.continent_code")(e.IndicatorGeo ?? new Geo(),v),
-				"ThreatIndicatorGeoContinentCode" => static (e, v) => TryAssignGeo("geo.continent_code")(e.IndicatorGeo ?? new Geo(),v),
-				"threat.indicator.geo.continent_name" => static (e, v) => TryAssignGeo("geo.continent_name")(e.IndicatorGeo ?? new Geo(),v),
-				"ThreatIndicatorGeoContinentName" => static (e, v) => TryAssignGeo("geo.continent_name")(e.IndicatorGeo ?? new Geo(),v),
-				"threat.indicator.geo.country_iso_code" => static (e, v) => TryAssignGeo("geo.country_iso_code")(e.IndicatorGeo ?? new Geo(),v),
-				"ThreatIndicatorGeoCountryIsoCode" => static (e, v) => TryAssignGeo("geo.country_iso_code")(e.IndicatorGeo ?? new Geo(),v),
-				"threat.indicator.geo.country_name" => static (e, v) => TryAssignGeo("geo.country_name")(e.IndicatorGeo ?? new Geo(),v),
-				"ThreatIndicatorGeoCountryName" => static (e, v) => TryAssignGeo("geo.country_name")(e.IndicatorGeo ?? new Geo(),v),
-				"threat.indicator.geo.name" => static (e, v) => TryAssignGeo("geo.name")(e.IndicatorGeo ?? new Geo(),v),
-				"ThreatIndicatorGeoName" => static (e, v) => TryAssignGeo("geo.name")(e.IndicatorGeo ?? new Geo(),v),
-				"threat.indicator.geo.postal_code" => static (e, v) => TryAssignGeo("geo.postal_code")(e.IndicatorGeo ?? new Geo(),v),
-				"ThreatIndicatorGeoPostalCode" => static (e, v) => TryAssignGeo("geo.postal_code")(e.IndicatorGeo ?? new Geo(),v),
-				"threat.indicator.geo.region_iso_code" => static (e, v) => TryAssignGeo("geo.region_iso_code")(e.IndicatorGeo ?? new Geo(),v),
-				"ThreatIndicatorGeoRegionIsoCode" => static (e, v) => TryAssignGeo("geo.region_iso_code")(e.IndicatorGeo ?? new Geo(),v),
-				"threat.indicator.geo.region_name" => static (e, v) => TryAssignGeo("geo.region_name")(e.IndicatorGeo ?? new Geo(),v),
-				"ThreatIndicatorGeoRegionName" => static (e, v) => TryAssignGeo("geo.region_name")(e.IndicatorGeo ?? new Geo(),v),
-				"threat.indicator.geo.timezone" => static (e, v) => TryAssignGeo("geo.timezone")(e.IndicatorGeo ?? new Geo(),v),
-				"ThreatIndicatorGeoTimezone" => static (e, v) => TryAssignGeo("geo.timezone")(e.IndicatorGeo ?? new Geo(),v),
-				"threat.indicator.registry.data.bytes" => static (e, v) => TryAssignRegistry("registry.data.bytes")(e.IndicatorRegistry ?? new Registry(),v),
-				"ThreatIndicatorRegistryDataBytes" => static (e, v) => TryAssignRegistry("registry.data.bytes")(e.IndicatorRegistry ?? new Registry(),v),
-				"threat.indicator.registry.data.type" => static (e, v) => TryAssignRegistry("registry.data.type")(e.IndicatorRegistry ?? new Registry(),v),
-				"ThreatIndicatorRegistryDataType" => static (e, v) => TryAssignRegistry("registry.data.type")(e.IndicatorRegistry ?? new Registry(),v),
-				"threat.indicator.registry.hive" => static (e, v) => TryAssignRegistry("registry.hive")(e.IndicatorRegistry ?? new Registry(),v),
-				"ThreatIndicatorRegistryHive" => static (e, v) => TryAssignRegistry("registry.hive")(e.IndicatorRegistry ?? new Registry(),v),
-				"threat.indicator.registry.key" => static (e, v) => TryAssignRegistry("registry.key")(e.IndicatorRegistry ?? new Registry(),v),
-				"ThreatIndicatorRegistryKey" => static (e, v) => TryAssignRegistry("registry.key")(e.IndicatorRegistry ?? new Registry(),v),
-				"threat.indicator.registry.path" => static (e, v) => TryAssignRegistry("registry.path")(e.IndicatorRegistry ?? new Registry(),v),
-				"ThreatIndicatorRegistryPath" => static (e, v) => TryAssignRegistry("registry.path")(e.IndicatorRegistry ?? new Registry(),v),
-				"threat.indicator.registry.value" => static (e, v) => TryAssignRegistry("registry.value")(e.IndicatorRegistry ?? new Registry(),v),
-				"ThreatIndicatorRegistryValue" => static (e, v) => TryAssignRegistry("registry.value")(e.IndicatorRegistry ?? new Registry(),v),
-				"threat.indicator.url.domain" => static (e, v) => TryAssignUrl("url.domain")(e.IndicatorUrl ?? new Url(),v),
-				"ThreatIndicatorUrlDomain" => static (e, v) => TryAssignUrl("url.domain")(e.IndicatorUrl ?? new Url(),v),
-				"threat.indicator.url.extension" => static (e, v) => TryAssignUrl("url.extension")(e.IndicatorUrl ?? new Url(),v),
-				"ThreatIndicatorUrlExtension" => static (e, v) => TryAssignUrl("url.extension")(e.IndicatorUrl ?? new Url(),v),
-				"threat.indicator.url.fragment" => static (e, v) => TryAssignUrl("url.fragment")(e.IndicatorUrl ?? new Url(),v),
-				"ThreatIndicatorUrlFragment" => static (e, v) => TryAssignUrl("url.fragment")(e.IndicatorUrl ?? new Url(),v),
-				"threat.indicator.url.full" => static (e, v) => TryAssignUrl("url.full")(e.IndicatorUrl ?? new Url(),v),
-				"ThreatIndicatorUrlFull" => static (e, v) => TryAssignUrl("url.full")(e.IndicatorUrl ?? new Url(),v),
-				"threat.indicator.url.original" => static (e, v) => TryAssignUrl("url.original")(e.IndicatorUrl ?? new Url(),v),
-				"ThreatIndicatorUrlOriginal" => static (e, v) => TryAssignUrl("url.original")(e.IndicatorUrl ?? new Url(),v),
-				"threat.indicator.url.password" => static (e, v) => TryAssignUrl("url.password")(e.IndicatorUrl ?? new Url(),v),
-				"ThreatIndicatorUrlPassword" => static (e, v) => TryAssignUrl("url.password")(e.IndicatorUrl ?? new Url(),v),
-				"threat.indicator.url.path" => static (e, v) => TryAssignUrl("url.path")(e.IndicatorUrl ?? new Url(),v),
-				"ThreatIndicatorUrlPath" => static (e, v) => TryAssignUrl("url.path")(e.IndicatorUrl ?? new Url(),v),
-				"threat.indicator.url.port" => static (e, v) => TryAssignUrl("url.port")(e.IndicatorUrl ?? new Url(),v),
-				"ThreatIndicatorUrlPort" => static (e, v) => TryAssignUrl("url.port")(e.IndicatorUrl ?? new Url(),v),
-				"threat.indicator.url.query" => static (e, v) => TryAssignUrl("url.query")(e.IndicatorUrl ?? new Url(),v),
-				"ThreatIndicatorUrlQuery" => static (e, v) => TryAssignUrl("url.query")(e.IndicatorUrl ?? new Url(),v),
-				"threat.indicator.url.registered_domain" => static (e, v) => TryAssignUrl("url.registered_domain")(e.IndicatorUrl ?? new Url(),v),
-				"ThreatIndicatorUrlRegisteredDomain" => static (e, v) => TryAssignUrl("url.registered_domain")(e.IndicatorUrl ?? new Url(),v),
-				"threat.indicator.url.scheme" => static (e, v) => TryAssignUrl("url.scheme")(e.IndicatorUrl ?? new Url(),v),
-				"ThreatIndicatorUrlScheme" => static (e, v) => TryAssignUrl("url.scheme")(e.IndicatorUrl ?? new Url(),v),
-				"threat.indicator.url.subdomain" => static (e, v) => TryAssignUrl("url.subdomain")(e.IndicatorUrl ?? new Url(),v),
-				"ThreatIndicatorUrlSubdomain" => static (e, v) => TryAssignUrl("url.subdomain")(e.IndicatorUrl ?? new Url(),v),
-				"threat.indicator.url.top_level_domain" => static (e, v) => TryAssignUrl("url.top_level_domain")(e.IndicatorUrl ?? new Url(),v),
-				"ThreatIndicatorUrlTopLevelDomain" => static (e, v) => TryAssignUrl("url.top_level_domain")(e.IndicatorUrl ?? new Url(),v),
-				"threat.indicator.url.username" => static (e, v) => TryAssignUrl("url.username")(e.IndicatorUrl ?? new Url(),v),
-				"ThreatIndicatorUrlUsername" => static (e, v) => TryAssignUrl("url.username")(e.IndicatorUrl ?? new Url(),v),
+				"threat.indicator.x509.issuer.distinguished_name" => static (e, v) => TryAssignX509("x509.issuer.distinguished_name")(e.IndicatorX509 ??= new X509(),v),
+				"ThreatIndicatorX509IssuerDistinguishedName" => static (e, v) => TryAssignX509("x509.issuer.distinguished_name")(e.IndicatorX509 ??= new X509(),v),
+				"threat.indicator.x509.not_after" => static (e, v) => TryAssignX509("x509.not_after")(e.IndicatorX509 ??= new X509(),v),
+				"ThreatIndicatorX509NotAfter" => static (e, v) => TryAssignX509("x509.not_after")(e.IndicatorX509 ??= new X509(),v),
+				"threat.indicator.x509.not_before" => static (e, v) => TryAssignX509("x509.not_before")(e.IndicatorX509 ??= new X509(),v),
+				"ThreatIndicatorX509NotBefore" => static (e, v) => TryAssignX509("x509.not_before")(e.IndicatorX509 ??= new X509(),v),
+				"threat.indicator.x509.public_key_algorithm" => static (e, v) => TryAssignX509("x509.public_key_algorithm")(e.IndicatorX509 ??= new X509(),v),
+				"ThreatIndicatorX509PublicKeyAlgorithm" => static (e, v) => TryAssignX509("x509.public_key_algorithm")(e.IndicatorX509 ??= new X509(),v),
+				"threat.indicator.x509.public_key_curve" => static (e, v) => TryAssignX509("x509.public_key_curve")(e.IndicatorX509 ??= new X509(),v),
+				"ThreatIndicatorX509PublicKeyCurve" => static (e, v) => TryAssignX509("x509.public_key_curve")(e.IndicatorX509 ??= new X509(),v),
+				"threat.indicator.x509.public_key_exponent" => static (e, v) => TryAssignX509("x509.public_key_exponent")(e.IndicatorX509 ??= new X509(),v),
+				"ThreatIndicatorX509PublicKeyExponent" => static (e, v) => TryAssignX509("x509.public_key_exponent")(e.IndicatorX509 ??= new X509(),v),
+				"threat.indicator.x509.public_key_size" => static (e, v) => TryAssignX509("x509.public_key_size")(e.IndicatorX509 ??= new X509(),v),
+				"ThreatIndicatorX509PublicKeySize" => static (e, v) => TryAssignX509("x509.public_key_size")(e.IndicatorX509 ??= new X509(),v),
+				"threat.indicator.x509.serial_number" => static (e, v) => TryAssignX509("x509.serial_number")(e.IndicatorX509 ??= new X509(),v),
+				"ThreatIndicatorX509SerialNumber" => static (e, v) => TryAssignX509("x509.serial_number")(e.IndicatorX509 ??= new X509(),v),
+				"threat.indicator.x509.signature_algorithm" => static (e, v) => TryAssignX509("x509.signature_algorithm")(e.IndicatorX509 ??= new X509(),v),
+				"ThreatIndicatorX509SignatureAlgorithm" => static (e, v) => TryAssignX509("x509.signature_algorithm")(e.IndicatorX509 ??= new X509(),v),
+				"threat.indicator.x509.subject.distinguished_name" => static (e, v) => TryAssignX509("x509.subject.distinguished_name")(e.IndicatorX509 ??= new X509(),v),
+				"ThreatIndicatorX509SubjectDistinguishedName" => static (e, v) => TryAssignX509("x509.subject.distinguished_name")(e.IndicatorX509 ??= new X509(),v),
+				"threat.indicator.x509.version_number" => static (e, v) => TryAssignX509("x509.version_number")(e.IndicatorX509 ??= new X509(),v),
+				"ThreatIndicatorX509VersionNumber" => static (e, v) => TryAssignX509("x509.version_number")(e.IndicatorX509 ??= new X509(),v),
+				"threat.indicator.as.number" => static (e, v) => TryAssignAs("as.number")(e.IndicatorAs ??= new As(),v),
+				"ThreatIndicatorAsNumber" => static (e, v) => TryAssignAs("as.number")(e.IndicatorAs ??= new As(),v),
+				"threat.indicator.as.organization.name" => static (e, v) => TryAssignAs("as.organization.name")(e.IndicatorAs ??= new As(),v),
+				"ThreatIndicatorAsOrganizationName" => static (e, v) => TryAssignAs("as.organization.name")(e.IndicatorAs ??= new As(),v),
+				"threat.indicator.file.accessed" => static (e, v) => TryAssignFile("file.accessed")(e.IndicatorFile ??= new File(),v),
+				"ThreatIndicatorFileAccessed" => static (e, v) => TryAssignFile("file.accessed")(e.IndicatorFile ??= new File(),v),
+				"threat.indicator.file.created" => static (e, v) => TryAssignFile("file.created")(e.IndicatorFile ??= new File(),v),
+				"ThreatIndicatorFileCreated" => static (e, v) => TryAssignFile("file.created")(e.IndicatorFile ??= new File(),v),
+				"threat.indicator.file.ctime" => static (e, v) => TryAssignFile("file.ctime")(e.IndicatorFile ??= new File(),v),
+				"ThreatIndicatorFileCtime" => static (e, v) => TryAssignFile("file.ctime")(e.IndicatorFile ??= new File(),v),
+				"threat.indicator.file.device" => static (e, v) => TryAssignFile("file.device")(e.IndicatorFile ??= new File(),v),
+				"ThreatIndicatorFileDevice" => static (e, v) => TryAssignFile("file.device")(e.IndicatorFile ??= new File(),v),
+				"threat.indicator.file.directory" => static (e, v) => TryAssignFile("file.directory")(e.IndicatorFile ??= new File(),v),
+				"ThreatIndicatorFileDirectory" => static (e, v) => TryAssignFile("file.directory")(e.IndicatorFile ??= new File(),v),
+				"threat.indicator.file.drive_letter" => static (e, v) => TryAssignFile("file.drive_letter")(e.IndicatorFile ??= new File(),v),
+				"ThreatIndicatorFileDriveLetter" => static (e, v) => TryAssignFile("file.drive_letter")(e.IndicatorFile ??= new File(),v),
+				"threat.indicator.file.extension" => static (e, v) => TryAssignFile("file.extension")(e.IndicatorFile ??= new File(),v),
+				"ThreatIndicatorFileExtension" => static (e, v) => TryAssignFile("file.extension")(e.IndicatorFile ??= new File(),v),
+				"threat.indicator.file.fork_name" => static (e, v) => TryAssignFile("file.fork_name")(e.IndicatorFile ??= new File(),v),
+				"ThreatIndicatorFileForkName" => static (e, v) => TryAssignFile("file.fork_name")(e.IndicatorFile ??= new File(),v),
+				"threat.indicator.file.gid" => static (e, v) => TryAssignFile("file.gid")(e.IndicatorFile ??= new File(),v),
+				"ThreatIndicatorFileGid" => static (e, v) => TryAssignFile("file.gid")(e.IndicatorFile ??= new File(),v),
+				"threat.indicator.file.group" => static (e, v) => TryAssignFile("file.group")(e.IndicatorFile ??= new File(),v),
+				"ThreatIndicatorFileGroup" => static (e, v) => TryAssignFile("file.group")(e.IndicatorFile ??= new File(),v),
+				"threat.indicator.file.inode" => static (e, v) => TryAssignFile("file.inode")(e.IndicatorFile ??= new File(),v),
+				"ThreatIndicatorFileInode" => static (e, v) => TryAssignFile("file.inode")(e.IndicatorFile ??= new File(),v),
+				"threat.indicator.file.mime_type" => static (e, v) => TryAssignFile("file.mime_type")(e.IndicatorFile ??= new File(),v),
+				"ThreatIndicatorFileMimeType" => static (e, v) => TryAssignFile("file.mime_type")(e.IndicatorFile ??= new File(),v),
+				"threat.indicator.file.mode" => static (e, v) => TryAssignFile("file.mode")(e.IndicatorFile ??= new File(),v),
+				"ThreatIndicatorFileMode" => static (e, v) => TryAssignFile("file.mode")(e.IndicatorFile ??= new File(),v),
+				"threat.indicator.file.mtime" => static (e, v) => TryAssignFile("file.mtime")(e.IndicatorFile ??= new File(),v),
+				"ThreatIndicatorFileMtime" => static (e, v) => TryAssignFile("file.mtime")(e.IndicatorFile ??= new File(),v),
+				"threat.indicator.file.name" => static (e, v) => TryAssignFile("file.name")(e.IndicatorFile ??= new File(),v),
+				"ThreatIndicatorFileName" => static (e, v) => TryAssignFile("file.name")(e.IndicatorFile ??= new File(),v),
+				"threat.indicator.file.owner" => static (e, v) => TryAssignFile("file.owner")(e.IndicatorFile ??= new File(),v),
+				"ThreatIndicatorFileOwner" => static (e, v) => TryAssignFile("file.owner")(e.IndicatorFile ??= new File(),v),
+				"threat.indicator.file.path" => static (e, v) => TryAssignFile("file.path")(e.IndicatorFile ??= new File(),v),
+				"ThreatIndicatorFilePath" => static (e, v) => TryAssignFile("file.path")(e.IndicatorFile ??= new File(),v),
+				"threat.indicator.file.size" => static (e, v) => TryAssignFile("file.size")(e.IndicatorFile ??= new File(),v),
+				"ThreatIndicatorFileSize" => static (e, v) => TryAssignFile("file.size")(e.IndicatorFile ??= new File(),v),
+				"threat.indicator.file.target_path" => static (e, v) => TryAssignFile("file.target_path")(e.IndicatorFile ??= new File(),v),
+				"ThreatIndicatorFileTargetPath" => static (e, v) => TryAssignFile("file.target_path")(e.IndicatorFile ??= new File(),v),
+				"threat.indicator.file.type" => static (e, v) => TryAssignFile("file.type")(e.IndicatorFile ??= new File(),v),
+				"ThreatIndicatorFileType" => static (e, v) => TryAssignFile("file.type")(e.IndicatorFile ??= new File(),v),
+				"threat.indicator.file.uid" => static (e, v) => TryAssignFile("file.uid")(e.IndicatorFile ??= new File(),v),
+				"ThreatIndicatorFileUid" => static (e, v) => TryAssignFile("file.uid")(e.IndicatorFile ??= new File(),v),
+				"threat.indicator.file.hash.md5" => static (e, v) => TryAssignFile("file.hash.md5")(e.IndicatorFile ??= new File(),v),
+				"ThreatIndicatorFileHashMd5" => static (e, v) => TryAssignFile("file.hash.md5")(e.IndicatorFile ??= new File(),v),
+				"threat.indicator.file.hash.sha1" => static (e, v) => TryAssignFile("file.hash.sha1")(e.IndicatorFile ??= new File(),v),
+				"ThreatIndicatorFileHashSha1" => static (e, v) => TryAssignFile("file.hash.sha1")(e.IndicatorFile ??= new File(),v),
+				"threat.indicator.file.hash.sha256" => static (e, v) => TryAssignFile("file.hash.sha256")(e.IndicatorFile ??= new File(),v),
+				"ThreatIndicatorFileHashSha256" => static (e, v) => TryAssignFile("file.hash.sha256")(e.IndicatorFile ??= new File(),v),
+				"threat.indicator.file.hash.sha384" => static (e, v) => TryAssignFile("file.hash.sha384")(e.IndicatorFile ??= new File(),v),
+				"ThreatIndicatorFileHashSha384" => static (e, v) => TryAssignFile("file.hash.sha384")(e.IndicatorFile ??= new File(),v),
+				"threat.indicator.file.hash.sha512" => static (e, v) => TryAssignFile("file.hash.sha512")(e.IndicatorFile ??= new File(),v),
+				"ThreatIndicatorFileHashSha512" => static (e, v) => TryAssignFile("file.hash.sha512")(e.IndicatorFile ??= new File(),v),
+				"threat.indicator.file.hash.ssdeep" => static (e, v) => TryAssignFile("file.hash.ssdeep")(e.IndicatorFile ??= new File(),v),
+				"ThreatIndicatorFileHashSsdeep" => static (e, v) => TryAssignFile("file.hash.ssdeep")(e.IndicatorFile ??= new File(),v),
+				"threat.indicator.file.hash.tlsh" => static (e, v) => TryAssignFile("file.hash.tlsh")(e.IndicatorFile ??= new File(),v),
+				"ThreatIndicatorFileHashTlsh" => static (e, v) => TryAssignFile("file.hash.tlsh")(e.IndicatorFile ??= new File(),v),
+				"threat.indicator.file.pe.architecture" => static (e, v) => TryAssignFile("file.pe.architecture")(e.IndicatorFile ??= new File(),v),
+				"ThreatIndicatorFilePeArchitecture" => static (e, v) => TryAssignFile("file.pe.architecture")(e.IndicatorFile ??= new File(),v),
+				"threat.indicator.file.pe.company" => static (e, v) => TryAssignFile("file.pe.company")(e.IndicatorFile ??= new File(),v),
+				"ThreatIndicatorFilePeCompany" => static (e, v) => TryAssignFile("file.pe.company")(e.IndicatorFile ??= new File(),v),
+				"threat.indicator.file.pe.description" => static (e, v) => TryAssignFile("file.pe.description")(e.IndicatorFile ??= new File(),v),
+				"ThreatIndicatorFilePeDescription" => static (e, v) => TryAssignFile("file.pe.description")(e.IndicatorFile ??= new File(),v),
+				"threat.indicator.file.pe.file_version" => static (e, v) => TryAssignFile("file.pe.file_version")(e.IndicatorFile ??= new File(),v),
+				"ThreatIndicatorFilePeFileVersion" => static (e, v) => TryAssignFile("file.pe.file_version")(e.IndicatorFile ??= new File(),v),
+				"threat.indicator.file.pe.go_import_hash" => static (e, v) => TryAssignFile("file.pe.go_import_hash")(e.IndicatorFile ??= new File(),v),
+				"ThreatIndicatorFilePeGoImportHash" => static (e, v) => TryAssignFile("file.pe.go_import_hash")(e.IndicatorFile ??= new File(),v),
+				"threat.indicator.file.pe.go_imports" => static (e, v) => TryAssignFile("file.pe.go_imports")(e.IndicatorFile ??= new File(),v),
+				"ThreatIndicatorFilePeGoImports" => static (e, v) => TryAssignFile("file.pe.go_imports")(e.IndicatorFile ??= new File(),v),
+				"threat.indicator.file.pe.go_imports_names_entropy" => static (e, v) => TryAssignFile("file.pe.go_imports_names_entropy")(e.IndicatorFile ??= new File(),v),
+				"ThreatIndicatorFilePeGoImportsNamesEntropy" => static (e, v) => TryAssignFile("file.pe.go_imports_names_entropy")(e.IndicatorFile ??= new File(),v),
+				"threat.indicator.file.pe.go_imports_names_var_entropy" => static (e, v) => TryAssignFile("file.pe.go_imports_names_var_entropy")(e.IndicatorFile ??= new File(),v),
+				"ThreatIndicatorFilePeGoImportsNamesVarEntropy" => static (e, v) => TryAssignFile("file.pe.go_imports_names_var_entropy")(e.IndicatorFile ??= new File(),v),
+				"threat.indicator.file.pe.go_stripped" => static (e, v) => TryAssignFile("file.pe.go_stripped")(e.IndicatorFile ??= new File(),v),
+				"ThreatIndicatorFilePeGoStripped" => static (e, v) => TryAssignFile("file.pe.go_stripped")(e.IndicatorFile ??= new File(),v),
+				"threat.indicator.file.pe.imphash" => static (e, v) => TryAssignFile("file.pe.imphash")(e.IndicatorFile ??= new File(),v),
+				"ThreatIndicatorFilePeImphash" => static (e, v) => TryAssignFile("file.pe.imphash")(e.IndicatorFile ??= new File(),v),
+				"threat.indicator.file.pe.import_hash" => static (e, v) => TryAssignFile("file.pe.import_hash")(e.IndicatorFile ??= new File(),v),
+				"ThreatIndicatorFilePeImportHash" => static (e, v) => TryAssignFile("file.pe.import_hash")(e.IndicatorFile ??= new File(),v),
+				"threat.indicator.file.pe.imports_names_entropy" => static (e, v) => TryAssignFile("file.pe.imports_names_entropy")(e.IndicatorFile ??= new File(),v),
+				"ThreatIndicatorFilePeImportsNamesEntropy" => static (e, v) => TryAssignFile("file.pe.imports_names_entropy")(e.IndicatorFile ??= new File(),v),
+				"threat.indicator.file.pe.imports_names_var_entropy" => static (e, v) => TryAssignFile("file.pe.imports_names_var_entropy")(e.IndicatorFile ??= new File(),v),
+				"ThreatIndicatorFilePeImportsNamesVarEntropy" => static (e, v) => TryAssignFile("file.pe.imports_names_var_entropy")(e.IndicatorFile ??= new File(),v),
+				"threat.indicator.file.pe.original_file_name" => static (e, v) => TryAssignFile("file.pe.original_file_name")(e.IndicatorFile ??= new File(),v),
+				"ThreatIndicatorFilePeOriginalFileName" => static (e, v) => TryAssignFile("file.pe.original_file_name")(e.IndicatorFile ??= new File(),v),
+				"threat.indicator.file.pe.pehash" => static (e, v) => TryAssignFile("file.pe.pehash")(e.IndicatorFile ??= new File(),v),
+				"ThreatIndicatorFilePePehash" => static (e, v) => TryAssignFile("file.pe.pehash")(e.IndicatorFile ??= new File(),v),
+				"threat.indicator.file.pe.product" => static (e, v) => TryAssignFile("file.pe.product")(e.IndicatorFile ??= new File(),v),
+				"ThreatIndicatorFilePeProduct" => static (e, v) => TryAssignFile("file.pe.product")(e.IndicatorFile ??= new File(),v),
+				"threat.indicator.file.x509.issuer.distinguished_name" => static (e, v) => TryAssignFile("file.x509.issuer.distinguished_name")(e.IndicatorFile ??= new File(),v),
+				"ThreatIndicatorFileX509IssuerDistinguishedName" => static (e, v) => TryAssignFile("file.x509.issuer.distinguished_name")(e.IndicatorFile ??= new File(),v),
+				"threat.indicator.file.x509.not_after" => static (e, v) => TryAssignFile("file.x509.not_after")(e.IndicatorFile ??= new File(),v),
+				"ThreatIndicatorFileX509NotAfter" => static (e, v) => TryAssignFile("file.x509.not_after")(e.IndicatorFile ??= new File(),v),
+				"threat.indicator.file.x509.not_before" => static (e, v) => TryAssignFile("file.x509.not_before")(e.IndicatorFile ??= new File(),v),
+				"ThreatIndicatorFileX509NotBefore" => static (e, v) => TryAssignFile("file.x509.not_before")(e.IndicatorFile ??= new File(),v),
+				"threat.indicator.file.x509.public_key_algorithm" => static (e, v) => TryAssignFile("file.x509.public_key_algorithm")(e.IndicatorFile ??= new File(),v),
+				"ThreatIndicatorFileX509PublicKeyAlgorithm" => static (e, v) => TryAssignFile("file.x509.public_key_algorithm")(e.IndicatorFile ??= new File(),v),
+				"threat.indicator.file.x509.public_key_curve" => static (e, v) => TryAssignFile("file.x509.public_key_curve")(e.IndicatorFile ??= new File(),v),
+				"ThreatIndicatorFileX509PublicKeyCurve" => static (e, v) => TryAssignFile("file.x509.public_key_curve")(e.IndicatorFile ??= new File(),v),
+				"threat.indicator.file.x509.public_key_exponent" => static (e, v) => TryAssignFile("file.x509.public_key_exponent")(e.IndicatorFile ??= new File(),v),
+				"ThreatIndicatorFileX509PublicKeyExponent" => static (e, v) => TryAssignFile("file.x509.public_key_exponent")(e.IndicatorFile ??= new File(),v),
+				"threat.indicator.file.x509.public_key_size" => static (e, v) => TryAssignFile("file.x509.public_key_size")(e.IndicatorFile ??= new File(),v),
+				"ThreatIndicatorFileX509PublicKeySize" => static (e, v) => TryAssignFile("file.x509.public_key_size")(e.IndicatorFile ??= new File(),v),
+				"threat.indicator.file.x509.serial_number" => static (e, v) => TryAssignFile("file.x509.serial_number")(e.IndicatorFile ??= new File(),v),
+				"ThreatIndicatorFileX509SerialNumber" => static (e, v) => TryAssignFile("file.x509.serial_number")(e.IndicatorFile ??= new File(),v),
+				"threat.indicator.file.x509.signature_algorithm" => static (e, v) => TryAssignFile("file.x509.signature_algorithm")(e.IndicatorFile ??= new File(),v),
+				"ThreatIndicatorFileX509SignatureAlgorithm" => static (e, v) => TryAssignFile("file.x509.signature_algorithm")(e.IndicatorFile ??= new File(),v),
+				"threat.indicator.file.x509.subject.distinguished_name" => static (e, v) => TryAssignFile("file.x509.subject.distinguished_name")(e.IndicatorFile ??= new File(),v),
+				"ThreatIndicatorFileX509SubjectDistinguishedName" => static (e, v) => TryAssignFile("file.x509.subject.distinguished_name")(e.IndicatorFile ??= new File(),v),
+				"threat.indicator.file.x509.version_number" => static (e, v) => TryAssignFile("file.x509.version_number")(e.IndicatorFile ??= new File(),v),
+				"ThreatIndicatorFileX509VersionNumber" => static (e, v) => TryAssignFile("file.x509.version_number")(e.IndicatorFile ??= new File(),v),
+				"threat.indicator.file.code_signature.digest_algorithm" => static (e, v) => TryAssignFile("file.code_signature.digest_algorithm")(e.IndicatorFile ??= new File(),v),
+				"ThreatIndicatorFileCodeSignatureDigestAlgorithm" => static (e, v) => TryAssignFile("file.code_signature.digest_algorithm")(e.IndicatorFile ??= new File(),v),
+				"threat.indicator.file.code_signature.exists" => static (e, v) => TryAssignFile("file.code_signature.exists")(e.IndicatorFile ??= new File(),v),
+				"ThreatIndicatorFileCodeSignatureExists" => static (e, v) => TryAssignFile("file.code_signature.exists")(e.IndicatorFile ??= new File(),v),
+				"threat.indicator.file.code_signature.signing_id" => static (e, v) => TryAssignFile("file.code_signature.signing_id")(e.IndicatorFile ??= new File(),v),
+				"ThreatIndicatorFileCodeSignatureSigningId" => static (e, v) => TryAssignFile("file.code_signature.signing_id")(e.IndicatorFile ??= new File(),v),
+				"threat.indicator.file.code_signature.status" => static (e, v) => TryAssignFile("file.code_signature.status")(e.IndicatorFile ??= new File(),v),
+				"ThreatIndicatorFileCodeSignatureStatus" => static (e, v) => TryAssignFile("file.code_signature.status")(e.IndicatorFile ??= new File(),v),
+				"threat.indicator.file.code_signature.subject_name" => static (e, v) => TryAssignFile("file.code_signature.subject_name")(e.IndicatorFile ??= new File(),v),
+				"ThreatIndicatorFileCodeSignatureSubjectName" => static (e, v) => TryAssignFile("file.code_signature.subject_name")(e.IndicatorFile ??= new File(),v),
+				"threat.indicator.file.code_signature.team_id" => static (e, v) => TryAssignFile("file.code_signature.team_id")(e.IndicatorFile ??= new File(),v),
+				"ThreatIndicatorFileCodeSignatureTeamId" => static (e, v) => TryAssignFile("file.code_signature.team_id")(e.IndicatorFile ??= new File(),v),
+				"threat.indicator.file.code_signature.timestamp" => static (e, v) => TryAssignFile("file.code_signature.timestamp")(e.IndicatorFile ??= new File(),v),
+				"ThreatIndicatorFileCodeSignatureTimestamp" => static (e, v) => TryAssignFile("file.code_signature.timestamp")(e.IndicatorFile ??= new File(),v),
+				"threat.indicator.file.code_signature.trusted" => static (e, v) => TryAssignFile("file.code_signature.trusted")(e.IndicatorFile ??= new File(),v),
+				"ThreatIndicatorFileCodeSignatureTrusted" => static (e, v) => TryAssignFile("file.code_signature.trusted")(e.IndicatorFile ??= new File(),v),
+				"threat.indicator.file.code_signature.valid" => static (e, v) => TryAssignFile("file.code_signature.valid")(e.IndicatorFile ??= new File(),v),
+				"ThreatIndicatorFileCodeSignatureValid" => static (e, v) => TryAssignFile("file.code_signature.valid")(e.IndicatorFile ??= new File(),v),
+				"threat.indicator.file.elf.architecture" => static (e, v) => TryAssignFile("file.elf.architecture")(e.IndicatorFile ??= new File(),v),
+				"ThreatIndicatorFileElfArchitecture" => static (e, v) => TryAssignFile("file.elf.architecture")(e.IndicatorFile ??= new File(),v),
+				"threat.indicator.file.elf.byte_order" => static (e, v) => TryAssignFile("file.elf.byte_order")(e.IndicatorFile ??= new File(),v),
+				"ThreatIndicatorFileElfByteOrder" => static (e, v) => TryAssignFile("file.elf.byte_order")(e.IndicatorFile ??= new File(),v),
+				"threat.indicator.file.elf.cpu_type" => static (e, v) => TryAssignFile("file.elf.cpu_type")(e.IndicatorFile ??= new File(),v),
+				"ThreatIndicatorFileElfCpuType" => static (e, v) => TryAssignFile("file.elf.cpu_type")(e.IndicatorFile ??= new File(),v),
+				"threat.indicator.file.elf.creation_date" => static (e, v) => TryAssignFile("file.elf.creation_date")(e.IndicatorFile ??= new File(),v),
+				"ThreatIndicatorFileElfCreationDate" => static (e, v) => TryAssignFile("file.elf.creation_date")(e.IndicatorFile ??= new File(),v),
+				"threat.indicator.file.elf.go_import_hash" => static (e, v) => TryAssignFile("file.elf.go_import_hash")(e.IndicatorFile ??= new File(),v),
+				"ThreatIndicatorFileElfGoImportHash" => static (e, v) => TryAssignFile("file.elf.go_import_hash")(e.IndicatorFile ??= new File(),v),
+				"threat.indicator.file.elf.go_imports" => static (e, v) => TryAssignFile("file.elf.go_imports")(e.IndicatorFile ??= new File(),v),
+				"ThreatIndicatorFileElfGoImports" => static (e, v) => TryAssignFile("file.elf.go_imports")(e.IndicatorFile ??= new File(),v),
+				"threat.indicator.file.elf.go_imports_names_entropy" => static (e, v) => TryAssignFile("file.elf.go_imports_names_entropy")(e.IndicatorFile ??= new File(),v),
+				"ThreatIndicatorFileElfGoImportsNamesEntropy" => static (e, v) => TryAssignFile("file.elf.go_imports_names_entropy")(e.IndicatorFile ??= new File(),v),
+				"threat.indicator.file.elf.go_imports_names_var_entropy" => static (e, v) => TryAssignFile("file.elf.go_imports_names_var_entropy")(e.IndicatorFile ??= new File(),v),
+				"ThreatIndicatorFileElfGoImportsNamesVarEntropy" => static (e, v) => TryAssignFile("file.elf.go_imports_names_var_entropy")(e.IndicatorFile ??= new File(),v),
+				"threat.indicator.file.elf.go_stripped" => static (e, v) => TryAssignFile("file.elf.go_stripped")(e.IndicatorFile ??= new File(),v),
+				"ThreatIndicatorFileElfGoStripped" => static (e, v) => TryAssignFile("file.elf.go_stripped")(e.IndicatorFile ??= new File(),v),
+				"threat.indicator.file.elf.header.abi_version" => static (e, v) => TryAssignFile("file.elf.header.abi_version")(e.IndicatorFile ??= new File(),v),
+				"ThreatIndicatorFileElfHeaderAbiVersion" => static (e, v) => TryAssignFile("file.elf.header.abi_version")(e.IndicatorFile ??= new File(),v),
+				"threat.indicator.file.elf.header.class" => static (e, v) => TryAssignFile("file.elf.header.class")(e.IndicatorFile ??= new File(),v),
+				"ThreatIndicatorFileElfHeaderClass" => static (e, v) => TryAssignFile("file.elf.header.class")(e.IndicatorFile ??= new File(),v),
+				"threat.indicator.file.elf.header.data" => static (e, v) => TryAssignFile("file.elf.header.data")(e.IndicatorFile ??= new File(),v),
+				"ThreatIndicatorFileElfHeaderData" => static (e, v) => TryAssignFile("file.elf.header.data")(e.IndicatorFile ??= new File(),v),
+				"threat.indicator.file.elf.header.entrypoint" => static (e, v) => TryAssignFile("file.elf.header.entrypoint")(e.IndicatorFile ??= new File(),v),
+				"ThreatIndicatorFileElfHeaderEntrypoint" => static (e, v) => TryAssignFile("file.elf.header.entrypoint")(e.IndicatorFile ??= new File(),v),
+				"threat.indicator.file.elf.header.object_version" => static (e, v) => TryAssignFile("file.elf.header.object_version")(e.IndicatorFile ??= new File(),v),
+				"ThreatIndicatorFileElfHeaderObjectVersion" => static (e, v) => TryAssignFile("file.elf.header.object_version")(e.IndicatorFile ??= new File(),v),
+				"threat.indicator.file.elf.header.os_abi" => static (e, v) => TryAssignFile("file.elf.header.os_abi")(e.IndicatorFile ??= new File(),v),
+				"ThreatIndicatorFileElfHeaderOsAbi" => static (e, v) => TryAssignFile("file.elf.header.os_abi")(e.IndicatorFile ??= new File(),v),
+				"threat.indicator.file.elf.header.type" => static (e, v) => TryAssignFile("file.elf.header.type")(e.IndicatorFile ??= new File(),v),
+				"ThreatIndicatorFileElfHeaderType" => static (e, v) => TryAssignFile("file.elf.header.type")(e.IndicatorFile ??= new File(),v),
+				"threat.indicator.file.elf.header.version" => static (e, v) => TryAssignFile("file.elf.header.version")(e.IndicatorFile ??= new File(),v),
+				"ThreatIndicatorFileElfHeaderVersion" => static (e, v) => TryAssignFile("file.elf.header.version")(e.IndicatorFile ??= new File(),v),
+				"threat.indicator.file.elf.import_hash" => static (e, v) => TryAssignFile("file.elf.import_hash")(e.IndicatorFile ??= new File(),v),
+				"ThreatIndicatorFileElfImportHash" => static (e, v) => TryAssignFile("file.elf.import_hash")(e.IndicatorFile ??= new File(),v),
+				"threat.indicator.file.elf.imports_names_entropy" => static (e, v) => TryAssignFile("file.elf.imports_names_entropy")(e.IndicatorFile ??= new File(),v),
+				"ThreatIndicatorFileElfImportsNamesEntropy" => static (e, v) => TryAssignFile("file.elf.imports_names_entropy")(e.IndicatorFile ??= new File(),v),
+				"threat.indicator.file.elf.imports_names_var_entropy" => static (e, v) => TryAssignFile("file.elf.imports_names_var_entropy")(e.IndicatorFile ??= new File(),v),
+				"ThreatIndicatorFileElfImportsNamesVarEntropy" => static (e, v) => TryAssignFile("file.elf.imports_names_var_entropy")(e.IndicatorFile ??= new File(),v),
+				"threat.indicator.file.elf.telfhash" => static (e, v) => TryAssignFile("file.elf.telfhash")(e.IndicatorFile ??= new File(),v),
+				"ThreatIndicatorFileElfTelfhash" => static (e, v) => TryAssignFile("file.elf.telfhash")(e.IndicatorFile ??= new File(),v),
+				"threat.indicator.file.macho.go_import_hash" => static (e, v) => TryAssignFile("file.macho.go_import_hash")(e.IndicatorFile ??= new File(),v),
+				"ThreatIndicatorFileMachoGoImportHash" => static (e, v) => TryAssignFile("file.macho.go_import_hash")(e.IndicatorFile ??= new File(),v),
+				"threat.indicator.file.macho.go_imports" => static (e, v) => TryAssignFile("file.macho.go_imports")(e.IndicatorFile ??= new File(),v),
+				"ThreatIndicatorFileMachoGoImports" => static (e, v) => TryAssignFile("file.macho.go_imports")(e.IndicatorFile ??= new File(),v),
+				"threat.indicator.file.macho.go_imports_names_entropy" => static (e, v) => TryAssignFile("file.macho.go_imports_names_entropy")(e.IndicatorFile ??= new File(),v),
+				"ThreatIndicatorFileMachoGoImportsNamesEntropy" => static (e, v) => TryAssignFile("file.macho.go_imports_names_entropy")(e.IndicatorFile ??= new File(),v),
+				"threat.indicator.file.macho.go_imports_names_var_entropy" => static (e, v) => TryAssignFile("file.macho.go_imports_names_var_entropy")(e.IndicatorFile ??= new File(),v),
+				"ThreatIndicatorFileMachoGoImportsNamesVarEntropy" => static (e, v) => TryAssignFile("file.macho.go_imports_names_var_entropy")(e.IndicatorFile ??= new File(),v),
+				"threat.indicator.file.macho.go_stripped" => static (e, v) => TryAssignFile("file.macho.go_stripped")(e.IndicatorFile ??= new File(),v),
+				"ThreatIndicatorFileMachoGoStripped" => static (e, v) => TryAssignFile("file.macho.go_stripped")(e.IndicatorFile ??= new File(),v),
+				"threat.indicator.file.macho.import_hash" => static (e, v) => TryAssignFile("file.macho.import_hash")(e.IndicatorFile ??= new File(),v),
+				"ThreatIndicatorFileMachoImportHash" => static (e, v) => TryAssignFile("file.macho.import_hash")(e.IndicatorFile ??= new File(),v),
+				"threat.indicator.file.macho.imports_names_entropy" => static (e, v) => TryAssignFile("file.macho.imports_names_entropy")(e.IndicatorFile ??= new File(),v),
+				"ThreatIndicatorFileMachoImportsNamesEntropy" => static (e, v) => TryAssignFile("file.macho.imports_names_entropy")(e.IndicatorFile ??= new File(),v),
+				"threat.indicator.file.macho.imports_names_var_entropy" => static (e, v) => TryAssignFile("file.macho.imports_names_var_entropy")(e.IndicatorFile ??= new File(),v),
+				"ThreatIndicatorFileMachoImportsNamesVarEntropy" => static (e, v) => TryAssignFile("file.macho.imports_names_var_entropy")(e.IndicatorFile ??= new File(),v),
+				"threat.indicator.file.macho.symhash" => static (e, v) => TryAssignFile("file.macho.symhash")(e.IndicatorFile ??= new File(),v),
+				"ThreatIndicatorFileMachoSymhash" => static (e, v) => TryAssignFile("file.macho.symhash")(e.IndicatorFile ??= new File(),v),
+				"threat.indicator.geo.city_name" => static (e, v) => TryAssignGeo("geo.city_name")(e.IndicatorGeo ??= new Geo(),v),
+				"ThreatIndicatorGeoCityName" => static (e, v) => TryAssignGeo("geo.city_name")(e.IndicatorGeo ??= new Geo(),v),
+				"threat.indicator.geo.continent_code" => static (e, v) => TryAssignGeo("geo.continent_code")(e.IndicatorGeo ??= new Geo(),v),
+				"ThreatIndicatorGeoContinentCode" => static (e, v) => TryAssignGeo("geo.continent_code")(e.IndicatorGeo ??= new Geo(),v),
+				"threat.indicator.geo.continent_name" => static (e, v) => TryAssignGeo("geo.continent_name")(e.IndicatorGeo ??= new Geo(),v),
+				"ThreatIndicatorGeoContinentName" => static (e, v) => TryAssignGeo("geo.continent_name")(e.IndicatorGeo ??= new Geo(),v),
+				"threat.indicator.geo.country_iso_code" => static (e, v) => TryAssignGeo("geo.country_iso_code")(e.IndicatorGeo ??= new Geo(),v),
+				"ThreatIndicatorGeoCountryIsoCode" => static (e, v) => TryAssignGeo("geo.country_iso_code")(e.IndicatorGeo ??= new Geo(),v),
+				"threat.indicator.geo.country_name" => static (e, v) => TryAssignGeo("geo.country_name")(e.IndicatorGeo ??= new Geo(),v),
+				"ThreatIndicatorGeoCountryName" => static (e, v) => TryAssignGeo("geo.country_name")(e.IndicatorGeo ??= new Geo(),v),
+				"threat.indicator.geo.location" => static (e, v) => TryAssignGeo("geo.location")(e.IndicatorGeo ??= new Geo(),v),
+				"ThreatIndicatorGeoLocation" => static (e, v) => TryAssignGeo("geo.location")(e.IndicatorGeo ??= new Geo(),v),
+				"threat.indicator.geo.name" => static (e, v) => TryAssignGeo("geo.name")(e.IndicatorGeo ??= new Geo(),v),
+				"ThreatIndicatorGeoName" => static (e, v) => TryAssignGeo("geo.name")(e.IndicatorGeo ??= new Geo(),v),
+				"threat.indicator.geo.postal_code" => static (e, v) => TryAssignGeo("geo.postal_code")(e.IndicatorGeo ??= new Geo(),v),
+				"ThreatIndicatorGeoPostalCode" => static (e, v) => TryAssignGeo("geo.postal_code")(e.IndicatorGeo ??= new Geo(),v),
+				"threat.indicator.geo.region_iso_code" => static (e, v) => TryAssignGeo("geo.region_iso_code")(e.IndicatorGeo ??= new Geo(),v),
+				"ThreatIndicatorGeoRegionIsoCode" => static (e, v) => TryAssignGeo("geo.region_iso_code")(e.IndicatorGeo ??= new Geo(),v),
+				"threat.indicator.geo.region_name" => static (e, v) => TryAssignGeo("geo.region_name")(e.IndicatorGeo ??= new Geo(),v),
+				"ThreatIndicatorGeoRegionName" => static (e, v) => TryAssignGeo("geo.region_name")(e.IndicatorGeo ??= new Geo(),v),
+				"threat.indicator.geo.timezone" => static (e, v) => TryAssignGeo("geo.timezone")(e.IndicatorGeo ??= new Geo(),v),
+				"ThreatIndicatorGeoTimezone" => static (e, v) => TryAssignGeo("geo.timezone")(e.IndicatorGeo ??= new Geo(),v),
+				"threat.indicator.registry.data.bytes" => static (e, v) => TryAssignRegistry("registry.data.bytes")(e.IndicatorRegistry ??= new Registry(),v),
+				"ThreatIndicatorRegistryDataBytes" => static (e, v) => TryAssignRegistry("registry.data.bytes")(e.IndicatorRegistry ??= new Registry(),v),
+				"threat.indicator.registry.data.type" => static (e, v) => TryAssignRegistry("registry.data.type")(e.IndicatorRegistry ??= new Registry(),v),
+				"ThreatIndicatorRegistryDataType" => static (e, v) => TryAssignRegistry("registry.data.type")(e.IndicatorRegistry ??= new Registry(),v),
+				"threat.indicator.registry.hive" => static (e, v) => TryAssignRegistry("registry.hive")(e.IndicatorRegistry ??= new Registry(),v),
+				"ThreatIndicatorRegistryHive" => static (e, v) => TryAssignRegistry("registry.hive")(e.IndicatorRegistry ??= new Registry(),v),
+				"threat.indicator.registry.key" => static (e, v) => TryAssignRegistry("registry.key")(e.IndicatorRegistry ??= new Registry(),v),
+				"ThreatIndicatorRegistryKey" => static (e, v) => TryAssignRegistry("registry.key")(e.IndicatorRegistry ??= new Registry(),v),
+				"threat.indicator.registry.path" => static (e, v) => TryAssignRegistry("registry.path")(e.IndicatorRegistry ??= new Registry(),v),
+				"ThreatIndicatorRegistryPath" => static (e, v) => TryAssignRegistry("registry.path")(e.IndicatorRegistry ??= new Registry(),v),
+				"threat.indicator.registry.value" => static (e, v) => TryAssignRegistry("registry.value")(e.IndicatorRegistry ??= new Registry(),v),
+				"ThreatIndicatorRegistryValue" => static (e, v) => TryAssignRegistry("registry.value")(e.IndicatorRegistry ??= new Registry(),v),
+				"threat.indicator.url.domain" => static (e, v) => TryAssignUrl("url.domain")(e.IndicatorUrl ??= new Url(),v),
+				"ThreatIndicatorUrlDomain" => static (e, v) => TryAssignUrl("url.domain")(e.IndicatorUrl ??= new Url(),v),
+				"threat.indicator.url.extension" => static (e, v) => TryAssignUrl("url.extension")(e.IndicatorUrl ??= new Url(),v),
+				"ThreatIndicatorUrlExtension" => static (e, v) => TryAssignUrl("url.extension")(e.IndicatorUrl ??= new Url(),v),
+				"threat.indicator.url.fragment" => static (e, v) => TryAssignUrl("url.fragment")(e.IndicatorUrl ??= new Url(),v),
+				"ThreatIndicatorUrlFragment" => static (e, v) => TryAssignUrl("url.fragment")(e.IndicatorUrl ??= new Url(),v),
+				"threat.indicator.url.full" => static (e, v) => TryAssignUrl("url.full")(e.IndicatorUrl ??= new Url(),v),
+				"ThreatIndicatorUrlFull" => static (e, v) => TryAssignUrl("url.full")(e.IndicatorUrl ??= new Url(),v),
+				"threat.indicator.url.original" => static (e, v) => TryAssignUrl("url.original")(e.IndicatorUrl ??= new Url(),v),
+				"ThreatIndicatorUrlOriginal" => static (e, v) => TryAssignUrl("url.original")(e.IndicatorUrl ??= new Url(),v),
+				"threat.indicator.url.password" => static (e, v) => TryAssignUrl("url.password")(e.IndicatorUrl ??= new Url(),v),
+				"ThreatIndicatorUrlPassword" => static (e, v) => TryAssignUrl("url.password")(e.IndicatorUrl ??= new Url(),v),
+				"threat.indicator.url.path" => static (e, v) => TryAssignUrl("url.path")(e.IndicatorUrl ??= new Url(),v),
+				"ThreatIndicatorUrlPath" => static (e, v) => TryAssignUrl("url.path")(e.IndicatorUrl ??= new Url(),v),
+				"threat.indicator.url.port" => static (e, v) => TryAssignUrl("url.port")(e.IndicatorUrl ??= new Url(),v),
+				"ThreatIndicatorUrlPort" => static (e, v) => TryAssignUrl("url.port")(e.IndicatorUrl ??= new Url(),v),
+				"threat.indicator.url.query" => static (e, v) => TryAssignUrl("url.query")(e.IndicatorUrl ??= new Url(),v),
+				"ThreatIndicatorUrlQuery" => static (e, v) => TryAssignUrl("url.query")(e.IndicatorUrl ??= new Url(),v),
+				"threat.indicator.url.registered_domain" => static (e, v) => TryAssignUrl("url.registered_domain")(e.IndicatorUrl ??= new Url(),v),
+				"ThreatIndicatorUrlRegisteredDomain" => static (e, v) => TryAssignUrl("url.registered_domain")(e.IndicatorUrl ??= new Url(),v),
+				"threat.indicator.url.scheme" => static (e, v) => TryAssignUrl("url.scheme")(e.IndicatorUrl ??= new Url(),v),
+				"ThreatIndicatorUrlScheme" => static (e, v) => TryAssignUrl("url.scheme")(e.IndicatorUrl ??= new Url(),v),
+				"threat.indicator.url.subdomain" => static (e, v) => TryAssignUrl("url.subdomain")(e.IndicatorUrl ??= new Url(),v),
+				"ThreatIndicatorUrlSubdomain" => static (e, v) => TryAssignUrl("url.subdomain")(e.IndicatorUrl ??= new Url(),v),
+				"threat.indicator.url.top_level_domain" => static (e, v) => TryAssignUrl("url.top_level_domain")(e.IndicatorUrl ??= new Url(),v),
+				"ThreatIndicatorUrlTopLevelDomain" => static (e, v) => TryAssignUrl("url.top_level_domain")(e.IndicatorUrl ??= new Url(),v),
+				"threat.indicator.url.username" => static (e, v) => TryAssignUrl("url.username")(e.IndicatorUrl ??= new Url(),v),
+				"ThreatIndicatorUrlUsername" => static (e, v) => TryAssignUrl("url.username")(e.IndicatorUrl ??= new Url(),v),
 				_ => null
 			};
 			return assign;
@@ -6109,28 +5701,28 @@ namespace Elastic.CommonSchema
 				"TlsVersion" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Version = p),
 				"tls.version_protocol" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.VersionProtocol = p),
 				"TlsVersionProtocol" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.VersionProtocol = p),
-				"tls.client.x509.issuer.distinguished_name" => static (e, v) => TryAssignX509("x509.issuer.distinguished_name")(e.ClientX509 ?? new X509(),v),
-				"TlsClientX509IssuerDistinguishedName" => static (e, v) => TryAssignX509("x509.issuer.distinguished_name")(e.ClientX509 ?? new X509(),v),
-				"tls.client.x509.not_after" => static (e, v) => TryAssignX509("x509.not_after")(e.ClientX509 ?? new X509(),v),
-				"TlsClientX509NotAfter" => static (e, v) => TryAssignX509("x509.not_after")(e.ClientX509 ?? new X509(),v),
-				"tls.client.x509.not_before" => static (e, v) => TryAssignX509("x509.not_before")(e.ClientX509 ?? new X509(),v),
-				"TlsClientX509NotBefore" => static (e, v) => TryAssignX509("x509.not_before")(e.ClientX509 ?? new X509(),v),
-				"tls.client.x509.public_key_algorithm" => static (e, v) => TryAssignX509("x509.public_key_algorithm")(e.ClientX509 ?? new X509(),v),
-				"TlsClientX509PublicKeyAlgorithm" => static (e, v) => TryAssignX509("x509.public_key_algorithm")(e.ClientX509 ?? new X509(),v),
-				"tls.client.x509.public_key_curve" => static (e, v) => TryAssignX509("x509.public_key_curve")(e.ClientX509 ?? new X509(),v),
-				"TlsClientX509PublicKeyCurve" => static (e, v) => TryAssignX509("x509.public_key_curve")(e.ClientX509 ?? new X509(),v),
-				"tls.client.x509.public_key_exponent" => static (e, v) => TryAssignX509("x509.public_key_exponent")(e.ClientX509 ?? new X509(),v),
-				"TlsClientX509PublicKeyExponent" => static (e, v) => TryAssignX509("x509.public_key_exponent")(e.ClientX509 ?? new X509(),v),
-				"tls.client.x509.public_key_size" => static (e, v) => TryAssignX509("x509.public_key_size")(e.ClientX509 ?? new X509(),v),
-				"TlsClientX509PublicKeySize" => static (e, v) => TryAssignX509("x509.public_key_size")(e.ClientX509 ?? new X509(),v),
-				"tls.client.x509.serial_number" => static (e, v) => TryAssignX509("x509.serial_number")(e.ClientX509 ?? new X509(),v),
-				"TlsClientX509SerialNumber" => static (e, v) => TryAssignX509("x509.serial_number")(e.ClientX509 ?? new X509(),v),
-				"tls.client.x509.signature_algorithm" => static (e, v) => TryAssignX509("x509.signature_algorithm")(e.ClientX509 ?? new X509(),v),
-				"TlsClientX509SignatureAlgorithm" => static (e, v) => TryAssignX509("x509.signature_algorithm")(e.ClientX509 ?? new X509(),v),
-				"tls.client.x509.subject.distinguished_name" => static (e, v) => TryAssignX509("x509.subject.distinguished_name")(e.ClientX509 ?? new X509(),v),
-				"TlsClientX509SubjectDistinguishedName" => static (e, v) => TryAssignX509("x509.subject.distinguished_name")(e.ClientX509 ?? new X509(),v),
-				"tls.client.x509.version_number" => static (e, v) => TryAssignX509("x509.version_number")(e.ClientX509 ?? new X509(),v),
-				"TlsClientX509VersionNumber" => static (e, v) => TryAssignX509("x509.version_number")(e.ClientX509 ?? new X509(),v),
+				"tls.client.x509.issuer.distinguished_name" => static (e, v) => TryAssignX509("x509.issuer.distinguished_name")(e.ClientX509 ??= new X509(),v),
+				"TlsClientX509IssuerDistinguishedName" => static (e, v) => TryAssignX509("x509.issuer.distinguished_name")(e.ClientX509 ??= new X509(),v),
+				"tls.client.x509.not_after" => static (e, v) => TryAssignX509("x509.not_after")(e.ClientX509 ??= new X509(),v),
+				"TlsClientX509NotAfter" => static (e, v) => TryAssignX509("x509.not_after")(e.ClientX509 ??= new X509(),v),
+				"tls.client.x509.not_before" => static (e, v) => TryAssignX509("x509.not_before")(e.ClientX509 ??= new X509(),v),
+				"TlsClientX509NotBefore" => static (e, v) => TryAssignX509("x509.not_before")(e.ClientX509 ??= new X509(),v),
+				"tls.client.x509.public_key_algorithm" => static (e, v) => TryAssignX509("x509.public_key_algorithm")(e.ClientX509 ??= new X509(),v),
+				"TlsClientX509PublicKeyAlgorithm" => static (e, v) => TryAssignX509("x509.public_key_algorithm")(e.ClientX509 ??= new X509(),v),
+				"tls.client.x509.public_key_curve" => static (e, v) => TryAssignX509("x509.public_key_curve")(e.ClientX509 ??= new X509(),v),
+				"TlsClientX509PublicKeyCurve" => static (e, v) => TryAssignX509("x509.public_key_curve")(e.ClientX509 ??= new X509(),v),
+				"tls.client.x509.public_key_exponent" => static (e, v) => TryAssignX509("x509.public_key_exponent")(e.ClientX509 ??= new X509(),v),
+				"TlsClientX509PublicKeyExponent" => static (e, v) => TryAssignX509("x509.public_key_exponent")(e.ClientX509 ??= new X509(),v),
+				"tls.client.x509.public_key_size" => static (e, v) => TryAssignX509("x509.public_key_size")(e.ClientX509 ??= new X509(),v),
+				"TlsClientX509PublicKeySize" => static (e, v) => TryAssignX509("x509.public_key_size")(e.ClientX509 ??= new X509(),v),
+				"tls.client.x509.serial_number" => static (e, v) => TryAssignX509("x509.serial_number")(e.ClientX509 ??= new X509(),v),
+				"TlsClientX509SerialNumber" => static (e, v) => TryAssignX509("x509.serial_number")(e.ClientX509 ??= new X509(),v),
+				"tls.client.x509.signature_algorithm" => static (e, v) => TryAssignX509("x509.signature_algorithm")(e.ClientX509 ??= new X509(),v),
+				"TlsClientX509SignatureAlgorithm" => static (e, v) => TryAssignX509("x509.signature_algorithm")(e.ClientX509 ??= new X509(),v),
+				"tls.client.x509.subject.distinguished_name" => static (e, v) => TryAssignX509("x509.subject.distinguished_name")(e.ClientX509 ??= new X509(),v),
+				"TlsClientX509SubjectDistinguishedName" => static (e, v) => TryAssignX509("x509.subject.distinguished_name")(e.ClientX509 ??= new X509(),v),
+				"tls.client.x509.version_number" => static (e, v) => TryAssignX509("x509.version_number")(e.ClientX509 ??= new X509(),v),
+				"TlsClientX509VersionNumber" => static (e, v) => TryAssignX509("x509.version_number")(e.ClientX509 ??= new X509(),v),
 				_ => null
 			};
 			return assign;
@@ -6209,36 +5801,24 @@ namespace Elastic.CommonSchema
 				"UserId" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Id = p),
 				"user.name" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Name = p),
 				"UserName" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Name = p),
-				"user.group.domain" => static (e, v) => TryAssignGroup("group.domain")(e.Group ?? new Group(),v),
-				"UserGroupDomain" => static (e, v) => TryAssignGroup("group.domain")(e.Group ?? new Group(),v),
-				"user.group.id" => static (e, v) => TryAssignGroup("group.id")(e.Group ?? new Group(),v),
-				"UserGroupId" => static (e, v) => TryAssignGroup("group.id")(e.Group ?? new Group(),v),
-				"user.group.name" => static (e, v) => TryAssignGroup("group.name")(e.Group ?? new Group(),v),
-				"UserGroupName" => static (e, v) => TryAssignGroup("group.name")(e.Group ?? new Group(),v),
-				"user.risk.calculated_level" => static (e, v) => TryAssignRisk("risk.calculated_level")(e.Risk ?? new Risk(),v),
-				"UserRiskCalculatedLevel" => static (e, v) => TryAssignRisk("risk.calculated_level")(e.Risk ?? new Risk(),v),
-				"user.risk.calculated_score" => static (e, v) => TryAssignRisk("risk.calculated_score")(e.Risk ?? new Risk(),v),
-				"UserRiskCalculatedScore" => static (e, v) => TryAssignRisk("risk.calculated_score")(e.Risk ?? new Risk(),v),
-				"user.risk.calculated_score_norm" => static (e, v) => TryAssignRisk("risk.calculated_score_norm")(e.Risk ?? new Risk(),v),
-				"UserRiskCalculatedScoreNorm" => static (e, v) => TryAssignRisk("risk.calculated_score_norm")(e.Risk ?? new Risk(),v),
-				"user.risk.static_level" => static (e, v) => TryAssignRisk("risk.static_level")(e.Risk ?? new Risk(),v),
-				"UserRiskStaticLevel" => static (e, v) => TryAssignRisk("risk.static_level")(e.Risk ?? new Risk(),v),
-				"user.risk.static_score" => static (e, v) => TryAssignRisk("risk.static_score")(e.Risk ?? new Risk(),v),
-				"UserRiskStaticScore" => static (e, v) => TryAssignRisk("risk.static_score")(e.Risk ?? new Risk(),v),
-				"user.risk.static_score_norm" => static (e, v) => TryAssignRisk("risk.static_score_norm")(e.Risk ?? new Risk(),v),
-				"UserRiskStaticScoreNorm" => static (e, v) => TryAssignRisk("risk.static_score_norm")(e.Risk ?? new Risk(),v),
-				"target.user.domain" => static (e, v) => TryAssignUserTarget("user.domain")(e.Target ?? new UserTarget(),v),
-				"TargetUserDomain" => static (e, v) => TryAssignUserTarget("user.domain")(e.Target ?? new UserTarget(),v),
-				"target.user.email" => static (e, v) => TryAssignUserTarget("user.email")(e.Target ?? new UserTarget(),v),
-				"TargetUserEmail" => static (e, v) => TryAssignUserTarget("user.email")(e.Target ?? new UserTarget(),v),
-				"target.user.full_name" => static (e, v) => TryAssignUserTarget("user.full_name")(e.Target ?? new UserTarget(),v),
-				"TargetUserFullName" => static (e, v) => TryAssignUserTarget("user.full_name")(e.Target ?? new UserTarget(),v),
-				"target.user.hash" => static (e, v) => TryAssignUserTarget("user.hash")(e.Target ?? new UserTarget(),v),
-				"TargetUserHash" => static (e, v) => TryAssignUserTarget("user.hash")(e.Target ?? new UserTarget(),v),
-				"target.user.id" => static (e, v) => TryAssignUserTarget("user.id")(e.Target ?? new UserTarget(),v),
-				"TargetUserId" => static (e, v) => TryAssignUserTarget("user.id")(e.Target ?? new UserTarget(),v),
-				"target.user.name" => static (e, v) => TryAssignUserTarget("user.name")(e.Target ?? new UserTarget(),v),
-				"TargetUserName" => static (e, v) => TryAssignUserTarget("user.name")(e.Target ?? new UserTarget(),v),
+				"user.group.domain" => static (e, v) => TryAssignGroup("group.domain")(e.Group ??= new Group(),v),
+				"UserGroupDomain" => static (e, v) => TryAssignGroup("group.domain")(e.Group ??= new Group(),v),
+				"user.group.id" => static (e, v) => TryAssignGroup("group.id")(e.Group ??= new Group(),v),
+				"UserGroupId" => static (e, v) => TryAssignGroup("group.id")(e.Group ??= new Group(),v),
+				"user.group.name" => static (e, v) => TryAssignGroup("group.name")(e.Group ??= new Group(),v),
+				"UserGroupName" => static (e, v) => TryAssignGroup("group.name")(e.Group ??= new Group(),v),
+				"user.risk.calculated_level" => static (e, v) => TryAssignRisk("risk.calculated_level")(e.Risk ??= new Risk(),v),
+				"UserRiskCalculatedLevel" => static (e, v) => TryAssignRisk("risk.calculated_level")(e.Risk ??= new Risk(),v),
+				"user.risk.calculated_score" => static (e, v) => TryAssignRisk("risk.calculated_score")(e.Risk ??= new Risk(),v),
+				"UserRiskCalculatedScore" => static (e, v) => TryAssignRisk("risk.calculated_score")(e.Risk ??= new Risk(),v),
+				"user.risk.calculated_score_norm" => static (e, v) => TryAssignRisk("risk.calculated_score_norm")(e.Risk ??= new Risk(),v),
+				"UserRiskCalculatedScoreNorm" => static (e, v) => TryAssignRisk("risk.calculated_score_norm")(e.Risk ??= new Risk(),v),
+				"user.risk.static_level" => static (e, v) => TryAssignRisk("risk.static_level")(e.Risk ??= new Risk(),v),
+				"UserRiskStaticLevel" => static (e, v) => TryAssignRisk("risk.static_level")(e.Risk ??= new Risk(),v),
+				"user.risk.static_score" => static (e, v) => TryAssignRisk("risk.static_score")(e.Risk ??= new Risk(),v),
+				"UserRiskStaticScore" => static (e, v) => TryAssignRisk("risk.static_score")(e.Risk ??= new Risk(),v),
+				"user.risk.static_score_norm" => static (e, v) => TryAssignRisk("risk.static_score_norm")(e.Risk ??= new Risk(),v),
+				"UserRiskStaticScoreNorm" => static (e, v) => TryAssignRisk("risk.static_score_norm")(e.Risk ??= new Risk(),v),
 				_ => null
 			};
 			return assign;
@@ -6266,20 +5846,20 @@ namespace Elastic.CommonSchema
 				"UserAgentOriginal" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Original = p),
 				"user_agent.version" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Version = p),
 				"UserAgentVersion" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Version = p),
-				"user_agent.os.family" => static (e, v) => TryAssignOs("os.family")(e.Os ?? new Os(),v),
-				"UserAgentOsFamily" => static (e, v) => TryAssignOs("os.family")(e.Os ?? new Os(),v),
-				"user_agent.os.full" => static (e, v) => TryAssignOs("os.full")(e.Os ?? new Os(),v),
-				"UserAgentOsFull" => static (e, v) => TryAssignOs("os.full")(e.Os ?? new Os(),v),
-				"user_agent.os.kernel" => static (e, v) => TryAssignOs("os.kernel")(e.Os ?? new Os(),v),
-				"UserAgentOsKernel" => static (e, v) => TryAssignOs("os.kernel")(e.Os ?? new Os(),v),
-				"user_agent.os.name" => static (e, v) => TryAssignOs("os.name")(e.Os ?? new Os(),v),
-				"UserAgentOsName" => static (e, v) => TryAssignOs("os.name")(e.Os ?? new Os(),v),
-				"user_agent.os.platform" => static (e, v) => TryAssignOs("os.platform")(e.Os ?? new Os(),v),
-				"UserAgentOsPlatform" => static (e, v) => TryAssignOs("os.platform")(e.Os ?? new Os(),v),
-				"user_agent.os.type" => static (e, v) => TryAssignOs("os.type")(e.Os ?? new Os(),v),
-				"UserAgentOsType" => static (e, v) => TryAssignOs("os.type")(e.Os ?? new Os(),v),
-				"user_agent.os.version" => static (e, v) => TryAssignOs("os.version")(e.Os ?? new Os(),v),
-				"UserAgentOsVersion" => static (e, v) => TryAssignOs("os.version")(e.Os ?? new Os(),v),
+				"user_agent.os.family" => static (e, v) => TryAssignOs("os.family")(e.Os ??= new Os(),v),
+				"UserAgentOsFamily" => static (e, v) => TryAssignOs("os.family")(e.Os ??= new Os(),v),
+				"user_agent.os.full" => static (e, v) => TryAssignOs("os.full")(e.Os ??= new Os(),v),
+				"UserAgentOsFull" => static (e, v) => TryAssignOs("os.full")(e.Os ??= new Os(),v),
+				"user_agent.os.kernel" => static (e, v) => TryAssignOs("os.kernel")(e.Os ??= new Os(),v),
+				"UserAgentOsKernel" => static (e, v) => TryAssignOs("os.kernel")(e.Os ??= new Os(),v),
+				"user_agent.os.name" => static (e, v) => TryAssignOs("os.name")(e.Os ??= new Os(),v),
+				"UserAgentOsName" => static (e, v) => TryAssignOs("os.name")(e.Os ??= new Os(),v),
+				"user_agent.os.platform" => static (e, v) => TryAssignOs("os.platform")(e.Os ??= new Os(),v),
+				"UserAgentOsPlatform" => static (e, v) => TryAssignOs("os.platform")(e.Os ??= new Os(),v),
+				"user_agent.os.type" => static (e, v) => TryAssignOs("os.type")(e.Os ??= new Os(),v),
+				"UserAgentOsType" => static (e, v) => TryAssignOs("os.type")(e.Os ??= new Os(),v),
+				"user_agent.os.version" => static (e, v) => TryAssignOs("os.version")(e.Os ??= new Os(),v),
+				"UserAgentOsVersion" => static (e, v) => TryAssignOs("os.version")(e.Os ??= new Os(),v),
 				_ => null
 			};
 			return assign;
@@ -6399,974 +5979,6 @@ namespace Elastic.CommonSchema
 			var entity = document.X509 ?? new X509();
 			var assigned = assign(entity, value);
 			if (assigned) document.X509 = entity;
-			return assigned;
-		}
-
-		public static Func<CloudOrigin, object, bool> TryAssignCloudOrigin(string path)
-		{
-			Func<CloudOrigin, object, bool> assign = path switch
-			{
-				"cloud.account.id" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.AccountId = p),
-				"CloudAccountId" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.AccountId = p),
-				"cloud.account.name" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.AccountName = p),
-				"CloudAccountName" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.AccountName = p),
-				"cloud.availability_zone" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.AvailabilityZone = p),
-				"CloudAvailabilityZone" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.AvailabilityZone = p),
-				"cloud.instance.id" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.InstanceId = p),
-				"CloudInstanceId" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.InstanceId = p),
-				"cloud.instance.name" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.InstanceName = p),
-				"CloudInstanceName" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.InstanceName = p),
-				"cloud.machine.type" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.MachineType = p),
-				"CloudMachineType" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.MachineType = p),
-				"cloud.project.id" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.ProjectId = p),
-				"CloudProjectId" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.ProjectId = p),
-				"cloud.project.name" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.ProjectName = p),
-				"CloudProjectName" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.ProjectName = p),
-				"cloud.provider" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Provider = p),
-				"CloudProvider" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Provider = p),
-				"cloud.region" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Region = p),
-				"CloudRegion" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Region = p),
-				"cloud.service.name" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.ServiceName = p),
-				"CloudServiceName" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.ServiceName = p),
-				_ => null
-			};
-			return assign;
-		}
-		public static bool TrySetCloudOrigin(ICloudOrigin document, string path, object value)
-		{
-			var assign = TryAssignCloudOrigin(path);
-			if (assign == null) return false;
-		
-			var entity = document.Origin ?? new CloudOrigin();
-			var assigned = assign(entity, value);
-			if (assigned) document.Origin = entity;
-			return assigned;
-		}
-
-		public static Func<CloudTarget, object, bool> TryAssignCloudTarget(string path)
-		{
-			Func<CloudTarget, object, bool> assign = path switch
-			{
-				"cloud.account.id" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.AccountId = p),
-				"CloudAccountId" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.AccountId = p),
-				"cloud.account.name" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.AccountName = p),
-				"CloudAccountName" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.AccountName = p),
-				"cloud.availability_zone" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.AvailabilityZone = p),
-				"CloudAvailabilityZone" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.AvailabilityZone = p),
-				"cloud.instance.id" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.InstanceId = p),
-				"CloudInstanceId" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.InstanceId = p),
-				"cloud.instance.name" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.InstanceName = p),
-				"CloudInstanceName" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.InstanceName = p),
-				"cloud.machine.type" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.MachineType = p),
-				"CloudMachineType" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.MachineType = p),
-				"cloud.project.id" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.ProjectId = p),
-				"CloudProjectId" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.ProjectId = p),
-				"cloud.project.name" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.ProjectName = p),
-				"CloudProjectName" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.ProjectName = p),
-				"cloud.provider" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Provider = p),
-				"CloudProvider" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Provider = p),
-				"cloud.region" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Region = p),
-				"CloudRegion" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Region = p),
-				"cloud.service.name" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.ServiceName = p),
-				"CloudServiceName" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.ServiceName = p),
-				_ => null
-			};
-			return assign;
-		}
-		public static bool TrySetCloudTarget(ICloudTarget document, string path, object value)
-		{
-			var assign = TryAssignCloudTarget(path);
-			if (assign == null) return false;
-		
-			var entity = document.Target ?? new CloudTarget();
-			var assigned = assign(entity, value);
-			if (assigned) document.Target = entity;
-			return assigned;
-		}
-
-		public static Func<ProcessParent, object, bool> TryAssignProcessParent(string path)
-		{
-			Func<ProcessParent, object, bool> assign = path switch
-			{
-				"process.args_count" => static (e, v) => TrySetLong(e, v, static (ee, p) => ee.ArgsCount = p),
-				"ProcessArgsCount" => static (e, v) => TrySetLong(e, v, static (ee, p) => ee.ArgsCount = p),
-				"process.command_line" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.CommandLine = p),
-				"ProcessCommandLine" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.CommandLine = p),
-				"process.end" => static (e, v) => TrySetDateTimeOffset(e, v, static (ee, p) => ee.End = p),
-				"ProcessEnd" => static (e, v) => TrySetDateTimeOffset(e, v, static (ee, p) => ee.End = p),
-				"process.entity_id" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.EntityId = p),
-				"ProcessEntityId" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.EntityId = p),
-				"process.executable" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Executable = p),
-				"ProcessExecutable" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Executable = p),
-				"process.exit_code" => static (e, v) => TrySetLong(e, v, static (ee, p) => ee.ExitCode = p),
-				"ProcessExitCode" => static (e, v) => TrySetLong(e, v, static (ee, p) => ee.ExitCode = p),
-				"process.interactive" => static (e, v) => TrySetBool(e, v, static (ee, p) => ee.Interactive = p),
-				"ProcessInteractive" => static (e, v) => TrySetBool(e, v, static (ee, p) => ee.Interactive = p),
-				"process.name" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Name = p),
-				"ProcessName" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Name = p),
-				"process.pgid" => static (e, v) => TrySetLong(e, v, static (ee, p) => ee.Pgid = p),
-				"ProcessPgid" => static (e, v) => TrySetLong(e, v, static (ee, p) => ee.Pgid = p),
-				"process.pid" => static (e, v) => TrySetLong(e, v, static (ee, p) => ee.Pid = p),
-				"ProcessPid" => static (e, v) => TrySetLong(e, v, static (ee, p) => ee.Pid = p),
-				"process.start" => static (e, v) => TrySetDateTimeOffset(e, v, static (ee, p) => ee.Start = p),
-				"ProcessStart" => static (e, v) => TrySetDateTimeOffset(e, v, static (ee, p) => ee.Start = p),
-				"process.thread.id" => static (e, v) => TrySetLong(e, v, static (ee, p) => ee.ThreadId = p),
-				"ProcessThreadId" => static (e, v) => TrySetLong(e, v, static (ee, p) => ee.ThreadId = p),
-				"process.thread.name" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.ThreadName = p),
-				"ProcessThreadName" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.ThreadName = p),
-				"process.title" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Title = p),
-				"ProcessTitle" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Title = p),
-				"process.uptime" => static (e, v) => TrySetLong(e, v, static (ee, p) => ee.Uptime = p),
-				"ProcessUptime" => static (e, v) => TrySetLong(e, v, static (ee, p) => ee.Uptime = p),
-				"process.vpid" => static (e, v) => TrySetLong(e, v, static (ee, p) => ee.Vpid = p),
-				"ProcessVpid" => static (e, v) => TrySetLong(e, v, static (ee, p) => ee.Vpid = p),
-				"process.working_directory" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.WorkingDirectory = p),
-				"ProcessWorkingDirectory" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.WorkingDirectory = p),
-				"parent.group_leader.process.args_count" => static (e, v) => TryAssignProcessParentGroupLeader("process.args_count")(e.GroupLeader ?? new ProcessParentGroupLeader(),v),
-				"ParentGroupLeaderProcessArgsCount" => static (e, v) => TryAssignProcessParentGroupLeader("process.args_count")(e.GroupLeader ?? new ProcessParentGroupLeader(),v),
-				"parent.group_leader.process.command_line" => static (e, v) => TryAssignProcessParentGroupLeader("process.command_line")(e.GroupLeader ?? new ProcessParentGroupLeader(),v),
-				"ParentGroupLeaderProcessCommandLine" => static (e, v) => TryAssignProcessParentGroupLeader("process.command_line")(e.GroupLeader ?? new ProcessParentGroupLeader(),v),
-				"parent.group_leader.process.end" => static (e, v) => TryAssignProcessParentGroupLeader("process.end")(e.GroupLeader ?? new ProcessParentGroupLeader(),v),
-				"ParentGroupLeaderProcessEnd" => static (e, v) => TryAssignProcessParentGroupLeader("process.end")(e.GroupLeader ?? new ProcessParentGroupLeader(),v),
-				"parent.group_leader.process.entity_id" => static (e, v) => TryAssignProcessParentGroupLeader("process.entity_id")(e.GroupLeader ?? new ProcessParentGroupLeader(),v),
-				"ParentGroupLeaderProcessEntityId" => static (e, v) => TryAssignProcessParentGroupLeader("process.entity_id")(e.GroupLeader ?? new ProcessParentGroupLeader(),v),
-				"parent.group_leader.process.executable" => static (e, v) => TryAssignProcessParentGroupLeader("process.executable")(e.GroupLeader ?? new ProcessParentGroupLeader(),v),
-				"ParentGroupLeaderProcessExecutable" => static (e, v) => TryAssignProcessParentGroupLeader("process.executable")(e.GroupLeader ?? new ProcessParentGroupLeader(),v),
-				"parent.group_leader.process.exit_code" => static (e, v) => TryAssignProcessParentGroupLeader("process.exit_code")(e.GroupLeader ?? new ProcessParentGroupLeader(),v),
-				"ParentGroupLeaderProcessExitCode" => static (e, v) => TryAssignProcessParentGroupLeader("process.exit_code")(e.GroupLeader ?? new ProcessParentGroupLeader(),v),
-				"parent.group_leader.process.interactive" => static (e, v) => TryAssignProcessParentGroupLeader("process.interactive")(e.GroupLeader ?? new ProcessParentGroupLeader(),v),
-				"ParentGroupLeaderProcessInteractive" => static (e, v) => TryAssignProcessParentGroupLeader("process.interactive")(e.GroupLeader ?? new ProcessParentGroupLeader(),v),
-				"parent.group_leader.process.name" => static (e, v) => TryAssignProcessParentGroupLeader("process.name")(e.GroupLeader ?? new ProcessParentGroupLeader(),v),
-				"ParentGroupLeaderProcessName" => static (e, v) => TryAssignProcessParentGroupLeader("process.name")(e.GroupLeader ?? new ProcessParentGroupLeader(),v),
-				"parent.group_leader.process.pgid" => static (e, v) => TryAssignProcessParentGroupLeader("process.pgid")(e.GroupLeader ?? new ProcessParentGroupLeader(),v),
-				"ParentGroupLeaderProcessPgid" => static (e, v) => TryAssignProcessParentGroupLeader("process.pgid")(e.GroupLeader ?? new ProcessParentGroupLeader(),v),
-				"parent.group_leader.process.pid" => static (e, v) => TryAssignProcessParentGroupLeader("process.pid")(e.GroupLeader ?? new ProcessParentGroupLeader(),v),
-				"ParentGroupLeaderProcessPid" => static (e, v) => TryAssignProcessParentGroupLeader("process.pid")(e.GroupLeader ?? new ProcessParentGroupLeader(),v),
-				"parent.group_leader.process.start" => static (e, v) => TryAssignProcessParentGroupLeader("process.start")(e.GroupLeader ?? new ProcessParentGroupLeader(),v),
-				"ParentGroupLeaderProcessStart" => static (e, v) => TryAssignProcessParentGroupLeader("process.start")(e.GroupLeader ?? new ProcessParentGroupLeader(),v),
-				"parent.group_leader.process.thread.id" => static (e, v) => TryAssignProcessParentGroupLeader("process.thread.id")(e.GroupLeader ?? new ProcessParentGroupLeader(),v),
-				"ParentGroupLeaderProcessThreadId" => static (e, v) => TryAssignProcessParentGroupLeader("process.thread.id")(e.GroupLeader ?? new ProcessParentGroupLeader(),v),
-				"parent.group_leader.process.thread.name" => static (e, v) => TryAssignProcessParentGroupLeader("process.thread.name")(e.GroupLeader ?? new ProcessParentGroupLeader(),v),
-				"ParentGroupLeaderProcessThreadName" => static (e, v) => TryAssignProcessParentGroupLeader("process.thread.name")(e.GroupLeader ?? new ProcessParentGroupLeader(),v),
-				"parent.group_leader.process.title" => static (e, v) => TryAssignProcessParentGroupLeader("process.title")(e.GroupLeader ?? new ProcessParentGroupLeader(),v),
-				"ParentGroupLeaderProcessTitle" => static (e, v) => TryAssignProcessParentGroupLeader("process.title")(e.GroupLeader ?? new ProcessParentGroupLeader(),v),
-				"parent.group_leader.process.uptime" => static (e, v) => TryAssignProcessParentGroupLeader("process.uptime")(e.GroupLeader ?? new ProcessParentGroupLeader(),v),
-				"ParentGroupLeaderProcessUptime" => static (e, v) => TryAssignProcessParentGroupLeader("process.uptime")(e.GroupLeader ?? new ProcessParentGroupLeader(),v),
-				"parent.group_leader.process.vpid" => static (e, v) => TryAssignProcessParentGroupLeader("process.vpid")(e.GroupLeader ?? new ProcessParentGroupLeader(),v),
-				"ParentGroupLeaderProcessVpid" => static (e, v) => TryAssignProcessParentGroupLeader("process.vpid")(e.GroupLeader ?? new ProcessParentGroupLeader(),v),
-				"parent.group_leader.process.working_directory" => static (e, v) => TryAssignProcessParentGroupLeader("process.working_directory")(e.GroupLeader ?? new ProcessParentGroupLeader(),v),
-				"ParentGroupLeaderProcessWorkingDirectory" => static (e, v) => TryAssignProcessParentGroupLeader("process.working_directory")(e.GroupLeader ?? new ProcessParentGroupLeader(),v),
-				_ => null
-			};
-			return assign;
-		}
-		public static bool TrySetProcessParent(IProcessParent document, string path, object value)
-		{
-			var assign = TryAssignProcessParent(path);
-			if (assign == null) return false;
-		
-			var entity = document.Parent ?? new ProcessParent();
-			var assigned = assign(entity, value);
-			if (assigned) document.Parent = entity;
-			return assigned;
-		}
-
-		public static Func<ProcessEntryLeader, object, bool> TryAssignProcessEntryLeader(string path)
-		{
-			Func<ProcessEntryLeader, object, bool> assign = path switch
-			{
-				"process.args_count" => static (e, v) => TrySetLong(e, v, static (ee, p) => ee.ArgsCount = p),
-				"ProcessArgsCount" => static (e, v) => TrySetLong(e, v, static (ee, p) => ee.ArgsCount = p),
-				"process.command_line" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.CommandLine = p),
-				"ProcessCommandLine" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.CommandLine = p),
-				"process.end" => static (e, v) => TrySetDateTimeOffset(e, v, static (ee, p) => ee.End = p),
-				"ProcessEnd" => static (e, v) => TrySetDateTimeOffset(e, v, static (ee, p) => ee.End = p),
-				"process.entity_id" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.EntityId = p),
-				"ProcessEntityId" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.EntityId = p),
-				"process.executable" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Executable = p),
-				"ProcessExecutable" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Executable = p),
-				"process.exit_code" => static (e, v) => TrySetLong(e, v, static (ee, p) => ee.ExitCode = p),
-				"ProcessExitCode" => static (e, v) => TrySetLong(e, v, static (ee, p) => ee.ExitCode = p),
-				"process.interactive" => static (e, v) => TrySetBool(e, v, static (ee, p) => ee.Interactive = p),
-				"ProcessInteractive" => static (e, v) => TrySetBool(e, v, static (ee, p) => ee.Interactive = p),
-				"process.name" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Name = p),
-				"ProcessName" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Name = p),
-				"process.pgid" => static (e, v) => TrySetLong(e, v, static (ee, p) => ee.Pgid = p),
-				"ProcessPgid" => static (e, v) => TrySetLong(e, v, static (ee, p) => ee.Pgid = p),
-				"process.pid" => static (e, v) => TrySetLong(e, v, static (ee, p) => ee.Pid = p),
-				"ProcessPid" => static (e, v) => TrySetLong(e, v, static (ee, p) => ee.Pid = p),
-				"process.start" => static (e, v) => TrySetDateTimeOffset(e, v, static (ee, p) => ee.Start = p),
-				"ProcessStart" => static (e, v) => TrySetDateTimeOffset(e, v, static (ee, p) => ee.Start = p),
-				"process.thread.id" => static (e, v) => TrySetLong(e, v, static (ee, p) => ee.ThreadId = p),
-				"ProcessThreadId" => static (e, v) => TrySetLong(e, v, static (ee, p) => ee.ThreadId = p),
-				"process.thread.name" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.ThreadName = p),
-				"ProcessThreadName" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.ThreadName = p),
-				"process.title" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Title = p),
-				"ProcessTitle" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Title = p),
-				"process.uptime" => static (e, v) => TrySetLong(e, v, static (ee, p) => ee.Uptime = p),
-				"ProcessUptime" => static (e, v) => TrySetLong(e, v, static (ee, p) => ee.Uptime = p),
-				"process.vpid" => static (e, v) => TrySetLong(e, v, static (ee, p) => ee.Vpid = p),
-				"ProcessVpid" => static (e, v) => TrySetLong(e, v, static (ee, p) => ee.Vpid = p),
-				"process.working_directory" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.WorkingDirectory = p),
-				"ProcessWorkingDirectory" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.WorkingDirectory = p),
-				"entry_leader.parent.process.args_count" => static (e, v) => TryAssignProcessEntryLeaderParent("process.args_count")(e.Parent ?? new ProcessEntryLeaderParent(),v),
-				"EntryLeaderParentProcessArgsCount" => static (e, v) => TryAssignProcessEntryLeaderParent("process.args_count")(e.Parent ?? new ProcessEntryLeaderParent(),v),
-				"entry_leader.parent.process.command_line" => static (e, v) => TryAssignProcessEntryLeaderParent("process.command_line")(e.Parent ?? new ProcessEntryLeaderParent(),v),
-				"EntryLeaderParentProcessCommandLine" => static (e, v) => TryAssignProcessEntryLeaderParent("process.command_line")(e.Parent ?? new ProcessEntryLeaderParent(),v),
-				"entry_leader.parent.process.end" => static (e, v) => TryAssignProcessEntryLeaderParent("process.end")(e.Parent ?? new ProcessEntryLeaderParent(),v),
-				"EntryLeaderParentProcessEnd" => static (e, v) => TryAssignProcessEntryLeaderParent("process.end")(e.Parent ?? new ProcessEntryLeaderParent(),v),
-				"entry_leader.parent.process.entity_id" => static (e, v) => TryAssignProcessEntryLeaderParent("process.entity_id")(e.Parent ?? new ProcessEntryLeaderParent(),v),
-				"EntryLeaderParentProcessEntityId" => static (e, v) => TryAssignProcessEntryLeaderParent("process.entity_id")(e.Parent ?? new ProcessEntryLeaderParent(),v),
-				"entry_leader.parent.process.executable" => static (e, v) => TryAssignProcessEntryLeaderParent("process.executable")(e.Parent ?? new ProcessEntryLeaderParent(),v),
-				"EntryLeaderParentProcessExecutable" => static (e, v) => TryAssignProcessEntryLeaderParent("process.executable")(e.Parent ?? new ProcessEntryLeaderParent(),v),
-				"entry_leader.parent.process.exit_code" => static (e, v) => TryAssignProcessEntryLeaderParent("process.exit_code")(e.Parent ?? new ProcessEntryLeaderParent(),v),
-				"EntryLeaderParentProcessExitCode" => static (e, v) => TryAssignProcessEntryLeaderParent("process.exit_code")(e.Parent ?? new ProcessEntryLeaderParent(),v),
-				"entry_leader.parent.process.interactive" => static (e, v) => TryAssignProcessEntryLeaderParent("process.interactive")(e.Parent ?? new ProcessEntryLeaderParent(),v),
-				"EntryLeaderParentProcessInteractive" => static (e, v) => TryAssignProcessEntryLeaderParent("process.interactive")(e.Parent ?? new ProcessEntryLeaderParent(),v),
-				"entry_leader.parent.process.name" => static (e, v) => TryAssignProcessEntryLeaderParent("process.name")(e.Parent ?? new ProcessEntryLeaderParent(),v),
-				"EntryLeaderParentProcessName" => static (e, v) => TryAssignProcessEntryLeaderParent("process.name")(e.Parent ?? new ProcessEntryLeaderParent(),v),
-				"entry_leader.parent.process.pgid" => static (e, v) => TryAssignProcessEntryLeaderParent("process.pgid")(e.Parent ?? new ProcessEntryLeaderParent(),v),
-				"EntryLeaderParentProcessPgid" => static (e, v) => TryAssignProcessEntryLeaderParent("process.pgid")(e.Parent ?? new ProcessEntryLeaderParent(),v),
-				"entry_leader.parent.process.pid" => static (e, v) => TryAssignProcessEntryLeaderParent("process.pid")(e.Parent ?? new ProcessEntryLeaderParent(),v),
-				"EntryLeaderParentProcessPid" => static (e, v) => TryAssignProcessEntryLeaderParent("process.pid")(e.Parent ?? new ProcessEntryLeaderParent(),v),
-				"entry_leader.parent.process.start" => static (e, v) => TryAssignProcessEntryLeaderParent("process.start")(e.Parent ?? new ProcessEntryLeaderParent(),v),
-				"EntryLeaderParentProcessStart" => static (e, v) => TryAssignProcessEntryLeaderParent("process.start")(e.Parent ?? new ProcessEntryLeaderParent(),v),
-				"entry_leader.parent.process.thread.id" => static (e, v) => TryAssignProcessEntryLeaderParent("process.thread.id")(e.Parent ?? new ProcessEntryLeaderParent(),v),
-				"EntryLeaderParentProcessThreadId" => static (e, v) => TryAssignProcessEntryLeaderParent("process.thread.id")(e.Parent ?? new ProcessEntryLeaderParent(),v),
-				"entry_leader.parent.process.thread.name" => static (e, v) => TryAssignProcessEntryLeaderParent("process.thread.name")(e.Parent ?? new ProcessEntryLeaderParent(),v),
-				"EntryLeaderParentProcessThreadName" => static (e, v) => TryAssignProcessEntryLeaderParent("process.thread.name")(e.Parent ?? new ProcessEntryLeaderParent(),v),
-				"entry_leader.parent.process.title" => static (e, v) => TryAssignProcessEntryLeaderParent("process.title")(e.Parent ?? new ProcessEntryLeaderParent(),v),
-				"EntryLeaderParentProcessTitle" => static (e, v) => TryAssignProcessEntryLeaderParent("process.title")(e.Parent ?? new ProcessEntryLeaderParent(),v),
-				"entry_leader.parent.process.uptime" => static (e, v) => TryAssignProcessEntryLeaderParent("process.uptime")(e.Parent ?? new ProcessEntryLeaderParent(),v),
-				"EntryLeaderParentProcessUptime" => static (e, v) => TryAssignProcessEntryLeaderParent("process.uptime")(e.Parent ?? new ProcessEntryLeaderParent(),v),
-				"entry_leader.parent.process.vpid" => static (e, v) => TryAssignProcessEntryLeaderParent("process.vpid")(e.Parent ?? new ProcessEntryLeaderParent(),v),
-				"EntryLeaderParentProcessVpid" => static (e, v) => TryAssignProcessEntryLeaderParent("process.vpid")(e.Parent ?? new ProcessEntryLeaderParent(),v),
-				"entry_leader.parent.process.working_directory" => static (e, v) => TryAssignProcessEntryLeaderParent("process.working_directory")(e.Parent ?? new ProcessEntryLeaderParent(),v),
-				"EntryLeaderParentProcessWorkingDirectory" => static (e, v) => TryAssignProcessEntryLeaderParent("process.working_directory")(e.Parent ?? new ProcessEntryLeaderParent(),v),
-				"process.parent.entry_leader.parent.session_leader.process.args_count" => static (e, v) => TryAssignProcessEntryLeaderParent("entry_leader.parent.session_leader.process.args_count")(e.Parent ?? new ProcessEntryLeaderParent(),v),
-				"ProcessParentEntryLeaderParentSessionLeaderProcessArgsCount" => static (e, v) => TryAssignProcessEntryLeaderParent("entry_leader.parent.session_leader.process.args_count")(e.Parent ?? new ProcessEntryLeaderParent(),v),
-				"process.parent.entry_leader.parent.session_leader.process.command_line" => static (e, v) => TryAssignProcessEntryLeaderParent("entry_leader.parent.session_leader.process.command_line")(e.Parent ?? new ProcessEntryLeaderParent(),v),
-				"ProcessParentEntryLeaderParentSessionLeaderProcessCommandLine" => static (e, v) => TryAssignProcessEntryLeaderParent("entry_leader.parent.session_leader.process.command_line")(e.Parent ?? new ProcessEntryLeaderParent(),v),
-				"process.parent.entry_leader.parent.session_leader.process.end" => static (e, v) => TryAssignProcessEntryLeaderParent("entry_leader.parent.session_leader.process.end")(e.Parent ?? new ProcessEntryLeaderParent(),v),
-				"ProcessParentEntryLeaderParentSessionLeaderProcessEnd" => static (e, v) => TryAssignProcessEntryLeaderParent("entry_leader.parent.session_leader.process.end")(e.Parent ?? new ProcessEntryLeaderParent(),v),
-				"process.parent.entry_leader.parent.session_leader.process.entity_id" => static (e, v) => TryAssignProcessEntryLeaderParent("entry_leader.parent.session_leader.process.entity_id")(e.Parent ?? new ProcessEntryLeaderParent(),v),
-				"ProcessParentEntryLeaderParentSessionLeaderProcessEntityId" => static (e, v) => TryAssignProcessEntryLeaderParent("entry_leader.parent.session_leader.process.entity_id")(e.Parent ?? new ProcessEntryLeaderParent(),v),
-				"process.parent.entry_leader.parent.session_leader.process.executable" => static (e, v) => TryAssignProcessEntryLeaderParent("entry_leader.parent.session_leader.process.executable")(e.Parent ?? new ProcessEntryLeaderParent(),v),
-				"ProcessParentEntryLeaderParentSessionLeaderProcessExecutable" => static (e, v) => TryAssignProcessEntryLeaderParent("entry_leader.parent.session_leader.process.executable")(e.Parent ?? new ProcessEntryLeaderParent(),v),
-				"process.parent.entry_leader.parent.session_leader.process.exit_code" => static (e, v) => TryAssignProcessEntryLeaderParent("entry_leader.parent.session_leader.process.exit_code")(e.Parent ?? new ProcessEntryLeaderParent(),v),
-				"ProcessParentEntryLeaderParentSessionLeaderProcessExitCode" => static (e, v) => TryAssignProcessEntryLeaderParent("entry_leader.parent.session_leader.process.exit_code")(e.Parent ?? new ProcessEntryLeaderParent(),v),
-				"process.parent.entry_leader.parent.session_leader.process.interactive" => static (e, v) => TryAssignProcessEntryLeaderParent("entry_leader.parent.session_leader.process.interactive")(e.Parent ?? new ProcessEntryLeaderParent(),v),
-				"ProcessParentEntryLeaderParentSessionLeaderProcessInteractive" => static (e, v) => TryAssignProcessEntryLeaderParent("entry_leader.parent.session_leader.process.interactive")(e.Parent ?? new ProcessEntryLeaderParent(),v),
-				"process.parent.entry_leader.parent.session_leader.process.name" => static (e, v) => TryAssignProcessEntryLeaderParent("entry_leader.parent.session_leader.process.name")(e.Parent ?? new ProcessEntryLeaderParent(),v),
-				"ProcessParentEntryLeaderParentSessionLeaderProcessName" => static (e, v) => TryAssignProcessEntryLeaderParent("entry_leader.parent.session_leader.process.name")(e.Parent ?? new ProcessEntryLeaderParent(),v),
-				"process.parent.entry_leader.parent.session_leader.process.pgid" => static (e, v) => TryAssignProcessEntryLeaderParent("entry_leader.parent.session_leader.process.pgid")(e.Parent ?? new ProcessEntryLeaderParent(),v),
-				"ProcessParentEntryLeaderParentSessionLeaderProcessPgid" => static (e, v) => TryAssignProcessEntryLeaderParent("entry_leader.parent.session_leader.process.pgid")(e.Parent ?? new ProcessEntryLeaderParent(),v),
-				"process.parent.entry_leader.parent.session_leader.process.pid" => static (e, v) => TryAssignProcessEntryLeaderParent("entry_leader.parent.session_leader.process.pid")(e.Parent ?? new ProcessEntryLeaderParent(),v),
-				"ProcessParentEntryLeaderParentSessionLeaderProcessPid" => static (e, v) => TryAssignProcessEntryLeaderParent("entry_leader.parent.session_leader.process.pid")(e.Parent ?? new ProcessEntryLeaderParent(),v),
-				"process.parent.entry_leader.parent.session_leader.process.start" => static (e, v) => TryAssignProcessEntryLeaderParent("entry_leader.parent.session_leader.process.start")(e.Parent ?? new ProcessEntryLeaderParent(),v),
-				"ProcessParentEntryLeaderParentSessionLeaderProcessStart" => static (e, v) => TryAssignProcessEntryLeaderParent("entry_leader.parent.session_leader.process.start")(e.Parent ?? new ProcessEntryLeaderParent(),v),
-				"process.parent.entry_leader.parent.session_leader.process.thread.id" => static (e, v) => TryAssignProcessEntryLeaderParent("entry_leader.parent.session_leader.process.thread.id")(e.Parent ?? new ProcessEntryLeaderParent(),v),
-				"ProcessParentEntryLeaderParentSessionLeaderProcessThreadId" => static (e, v) => TryAssignProcessEntryLeaderParent("entry_leader.parent.session_leader.process.thread.id")(e.Parent ?? new ProcessEntryLeaderParent(),v),
-				"process.parent.entry_leader.parent.session_leader.process.thread.name" => static (e, v) => TryAssignProcessEntryLeaderParent("entry_leader.parent.session_leader.process.thread.name")(e.Parent ?? new ProcessEntryLeaderParent(),v),
-				"ProcessParentEntryLeaderParentSessionLeaderProcessThreadName" => static (e, v) => TryAssignProcessEntryLeaderParent("entry_leader.parent.session_leader.process.thread.name")(e.Parent ?? new ProcessEntryLeaderParent(),v),
-				"process.parent.entry_leader.parent.session_leader.process.title" => static (e, v) => TryAssignProcessEntryLeaderParent("entry_leader.parent.session_leader.process.title")(e.Parent ?? new ProcessEntryLeaderParent(),v),
-				"ProcessParentEntryLeaderParentSessionLeaderProcessTitle" => static (e, v) => TryAssignProcessEntryLeaderParent("entry_leader.parent.session_leader.process.title")(e.Parent ?? new ProcessEntryLeaderParent(),v),
-				"process.parent.entry_leader.parent.session_leader.process.uptime" => static (e, v) => TryAssignProcessEntryLeaderParent("entry_leader.parent.session_leader.process.uptime")(e.Parent ?? new ProcessEntryLeaderParent(),v),
-				"ProcessParentEntryLeaderParentSessionLeaderProcessUptime" => static (e, v) => TryAssignProcessEntryLeaderParent("entry_leader.parent.session_leader.process.uptime")(e.Parent ?? new ProcessEntryLeaderParent(),v),
-				"process.parent.entry_leader.parent.session_leader.process.vpid" => static (e, v) => TryAssignProcessEntryLeaderParent("entry_leader.parent.session_leader.process.vpid")(e.Parent ?? new ProcessEntryLeaderParent(),v),
-				"ProcessParentEntryLeaderParentSessionLeaderProcessVpid" => static (e, v) => TryAssignProcessEntryLeaderParent("entry_leader.parent.session_leader.process.vpid")(e.Parent ?? new ProcessEntryLeaderParent(),v),
-				"process.parent.entry_leader.parent.session_leader.process.working_directory" => static (e, v) => TryAssignProcessEntryLeaderParent("entry_leader.parent.session_leader.process.working_directory")(e.Parent ?? new ProcessEntryLeaderParent(),v),
-				"ProcessParentEntryLeaderParentSessionLeaderProcessWorkingDirectory" => static (e, v) => TryAssignProcessEntryLeaderParent("entry_leader.parent.session_leader.process.working_directory")(e.Parent ?? new ProcessEntryLeaderParent(),v),
-				_ => null
-			};
-			return assign;
-		}
-		public static bool TrySetProcessEntryLeader(IProcessEntryLeader document, string path, object value)
-		{
-			var assign = TryAssignProcessEntryLeader(path);
-			if (assign == null) return false;
-		
-			var entity = document.EntryLeader ?? new ProcessEntryLeader();
-			var assigned = assign(entity, value);
-			if (assigned) document.EntryLeader = entity;
-			return assigned;
-		}
-
-		public static Func<ProcessSessionLeader, object, bool> TryAssignProcessSessionLeader(string path)
-		{
-			Func<ProcessSessionLeader, object, bool> assign = path switch
-			{
-				"process.args_count" => static (e, v) => TrySetLong(e, v, static (ee, p) => ee.ArgsCount = p),
-				"ProcessArgsCount" => static (e, v) => TrySetLong(e, v, static (ee, p) => ee.ArgsCount = p),
-				"process.command_line" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.CommandLine = p),
-				"ProcessCommandLine" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.CommandLine = p),
-				"process.end" => static (e, v) => TrySetDateTimeOffset(e, v, static (ee, p) => ee.End = p),
-				"ProcessEnd" => static (e, v) => TrySetDateTimeOffset(e, v, static (ee, p) => ee.End = p),
-				"process.entity_id" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.EntityId = p),
-				"ProcessEntityId" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.EntityId = p),
-				"process.executable" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Executable = p),
-				"ProcessExecutable" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Executable = p),
-				"process.exit_code" => static (e, v) => TrySetLong(e, v, static (ee, p) => ee.ExitCode = p),
-				"ProcessExitCode" => static (e, v) => TrySetLong(e, v, static (ee, p) => ee.ExitCode = p),
-				"process.interactive" => static (e, v) => TrySetBool(e, v, static (ee, p) => ee.Interactive = p),
-				"ProcessInteractive" => static (e, v) => TrySetBool(e, v, static (ee, p) => ee.Interactive = p),
-				"process.name" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Name = p),
-				"ProcessName" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Name = p),
-				"process.pgid" => static (e, v) => TrySetLong(e, v, static (ee, p) => ee.Pgid = p),
-				"ProcessPgid" => static (e, v) => TrySetLong(e, v, static (ee, p) => ee.Pgid = p),
-				"process.pid" => static (e, v) => TrySetLong(e, v, static (ee, p) => ee.Pid = p),
-				"ProcessPid" => static (e, v) => TrySetLong(e, v, static (ee, p) => ee.Pid = p),
-				"process.start" => static (e, v) => TrySetDateTimeOffset(e, v, static (ee, p) => ee.Start = p),
-				"ProcessStart" => static (e, v) => TrySetDateTimeOffset(e, v, static (ee, p) => ee.Start = p),
-				"process.thread.id" => static (e, v) => TrySetLong(e, v, static (ee, p) => ee.ThreadId = p),
-				"ProcessThreadId" => static (e, v) => TrySetLong(e, v, static (ee, p) => ee.ThreadId = p),
-				"process.thread.name" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.ThreadName = p),
-				"ProcessThreadName" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.ThreadName = p),
-				"process.title" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Title = p),
-				"ProcessTitle" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Title = p),
-				"process.uptime" => static (e, v) => TrySetLong(e, v, static (ee, p) => ee.Uptime = p),
-				"ProcessUptime" => static (e, v) => TrySetLong(e, v, static (ee, p) => ee.Uptime = p),
-				"process.vpid" => static (e, v) => TrySetLong(e, v, static (ee, p) => ee.Vpid = p),
-				"ProcessVpid" => static (e, v) => TrySetLong(e, v, static (ee, p) => ee.Vpid = p),
-				"process.working_directory" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.WorkingDirectory = p),
-				"ProcessWorkingDirectory" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.WorkingDirectory = p),
-				"session_leader.parent.process.args_count" => static (e, v) => TryAssignProcessSessionLeaderParent("process.args_count")(e.Parent ?? new ProcessSessionLeaderParent(),v),
-				"SessionLeaderParentProcessArgsCount" => static (e, v) => TryAssignProcessSessionLeaderParent("process.args_count")(e.Parent ?? new ProcessSessionLeaderParent(),v),
-				"session_leader.parent.process.command_line" => static (e, v) => TryAssignProcessSessionLeaderParent("process.command_line")(e.Parent ?? new ProcessSessionLeaderParent(),v),
-				"SessionLeaderParentProcessCommandLine" => static (e, v) => TryAssignProcessSessionLeaderParent("process.command_line")(e.Parent ?? new ProcessSessionLeaderParent(),v),
-				"session_leader.parent.process.end" => static (e, v) => TryAssignProcessSessionLeaderParent("process.end")(e.Parent ?? new ProcessSessionLeaderParent(),v),
-				"SessionLeaderParentProcessEnd" => static (e, v) => TryAssignProcessSessionLeaderParent("process.end")(e.Parent ?? new ProcessSessionLeaderParent(),v),
-				"session_leader.parent.process.entity_id" => static (e, v) => TryAssignProcessSessionLeaderParent("process.entity_id")(e.Parent ?? new ProcessSessionLeaderParent(),v),
-				"SessionLeaderParentProcessEntityId" => static (e, v) => TryAssignProcessSessionLeaderParent("process.entity_id")(e.Parent ?? new ProcessSessionLeaderParent(),v),
-				"session_leader.parent.process.executable" => static (e, v) => TryAssignProcessSessionLeaderParent("process.executable")(e.Parent ?? new ProcessSessionLeaderParent(),v),
-				"SessionLeaderParentProcessExecutable" => static (e, v) => TryAssignProcessSessionLeaderParent("process.executable")(e.Parent ?? new ProcessSessionLeaderParent(),v),
-				"session_leader.parent.process.exit_code" => static (e, v) => TryAssignProcessSessionLeaderParent("process.exit_code")(e.Parent ?? new ProcessSessionLeaderParent(),v),
-				"SessionLeaderParentProcessExitCode" => static (e, v) => TryAssignProcessSessionLeaderParent("process.exit_code")(e.Parent ?? new ProcessSessionLeaderParent(),v),
-				"session_leader.parent.process.interactive" => static (e, v) => TryAssignProcessSessionLeaderParent("process.interactive")(e.Parent ?? new ProcessSessionLeaderParent(),v),
-				"SessionLeaderParentProcessInteractive" => static (e, v) => TryAssignProcessSessionLeaderParent("process.interactive")(e.Parent ?? new ProcessSessionLeaderParent(),v),
-				"session_leader.parent.process.name" => static (e, v) => TryAssignProcessSessionLeaderParent("process.name")(e.Parent ?? new ProcessSessionLeaderParent(),v),
-				"SessionLeaderParentProcessName" => static (e, v) => TryAssignProcessSessionLeaderParent("process.name")(e.Parent ?? new ProcessSessionLeaderParent(),v),
-				"session_leader.parent.process.pgid" => static (e, v) => TryAssignProcessSessionLeaderParent("process.pgid")(e.Parent ?? new ProcessSessionLeaderParent(),v),
-				"SessionLeaderParentProcessPgid" => static (e, v) => TryAssignProcessSessionLeaderParent("process.pgid")(e.Parent ?? new ProcessSessionLeaderParent(),v),
-				"session_leader.parent.process.pid" => static (e, v) => TryAssignProcessSessionLeaderParent("process.pid")(e.Parent ?? new ProcessSessionLeaderParent(),v),
-				"SessionLeaderParentProcessPid" => static (e, v) => TryAssignProcessSessionLeaderParent("process.pid")(e.Parent ?? new ProcessSessionLeaderParent(),v),
-				"session_leader.parent.process.start" => static (e, v) => TryAssignProcessSessionLeaderParent("process.start")(e.Parent ?? new ProcessSessionLeaderParent(),v),
-				"SessionLeaderParentProcessStart" => static (e, v) => TryAssignProcessSessionLeaderParent("process.start")(e.Parent ?? new ProcessSessionLeaderParent(),v),
-				"session_leader.parent.process.thread.id" => static (e, v) => TryAssignProcessSessionLeaderParent("process.thread.id")(e.Parent ?? new ProcessSessionLeaderParent(),v),
-				"SessionLeaderParentProcessThreadId" => static (e, v) => TryAssignProcessSessionLeaderParent("process.thread.id")(e.Parent ?? new ProcessSessionLeaderParent(),v),
-				"session_leader.parent.process.thread.name" => static (e, v) => TryAssignProcessSessionLeaderParent("process.thread.name")(e.Parent ?? new ProcessSessionLeaderParent(),v),
-				"SessionLeaderParentProcessThreadName" => static (e, v) => TryAssignProcessSessionLeaderParent("process.thread.name")(e.Parent ?? new ProcessSessionLeaderParent(),v),
-				"session_leader.parent.process.title" => static (e, v) => TryAssignProcessSessionLeaderParent("process.title")(e.Parent ?? new ProcessSessionLeaderParent(),v),
-				"SessionLeaderParentProcessTitle" => static (e, v) => TryAssignProcessSessionLeaderParent("process.title")(e.Parent ?? new ProcessSessionLeaderParent(),v),
-				"session_leader.parent.process.uptime" => static (e, v) => TryAssignProcessSessionLeaderParent("process.uptime")(e.Parent ?? new ProcessSessionLeaderParent(),v),
-				"SessionLeaderParentProcessUptime" => static (e, v) => TryAssignProcessSessionLeaderParent("process.uptime")(e.Parent ?? new ProcessSessionLeaderParent(),v),
-				"session_leader.parent.process.vpid" => static (e, v) => TryAssignProcessSessionLeaderParent("process.vpid")(e.Parent ?? new ProcessSessionLeaderParent(),v),
-				"SessionLeaderParentProcessVpid" => static (e, v) => TryAssignProcessSessionLeaderParent("process.vpid")(e.Parent ?? new ProcessSessionLeaderParent(),v),
-				"session_leader.parent.process.working_directory" => static (e, v) => TryAssignProcessSessionLeaderParent("process.working_directory")(e.Parent ?? new ProcessSessionLeaderParent(),v),
-				"SessionLeaderParentProcessWorkingDirectory" => static (e, v) => TryAssignProcessSessionLeaderParent("process.working_directory")(e.Parent ?? new ProcessSessionLeaderParent(),v),
-				"process.parent.session_leader.parent.session_leader.process.args_count" => static (e, v) => TryAssignProcessSessionLeaderParent("session_leader.parent.session_leader.process.args_count")(e.Parent ?? new ProcessSessionLeaderParent(),v),
-				"ProcessParentSessionLeaderParentSessionLeaderProcessArgsCount" => static (e, v) => TryAssignProcessSessionLeaderParent("session_leader.parent.session_leader.process.args_count")(e.Parent ?? new ProcessSessionLeaderParent(),v),
-				"process.parent.session_leader.parent.session_leader.process.command_line" => static (e, v) => TryAssignProcessSessionLeaderParent("session_leader.parent.session_leader.process.command_line")(e.Parent ?? new ProcessSessionLeaderParent(),v),
-				"ProcessParentSessionLeaderParentSessionLeaderProcessCommandLine" => static (e, v) => TryAssignProcessSessionLeaderParent("session_leader.parent.session_leader.process.command_line")(e.Parent ?? new ProcessSessionLeaderParent(),v),
-				"process.parent.session_leader.parent.session_leader.process.end" => static (e, v) => TryAssignProcessSessionLeaderParent("session_leader.parent.session_leader.process.end")(e.Parent ?? new ProcessSessionLeaderParent(),v),
-				"ProcessParentSessionLeaderParentSessionLeaderProcessEnd" => static (e, v) => TryAssignProcessSessionLeaderParent("session_leader.parent.session_leader.process.end")(e.Parent ?? new ProcessSessionLeaderParent(),v),
-				"process.parent.session_leader.parent.session_leader.process.entity_id" => static (e, v) => TryAssignProcessSessionLeaderParent("session_leader.parent.session_leader.process.entity_id")(e.Parent ?? new ProcessSessionLeaderParent(),v),
-				"ProcessParentSessionLeaderParentSessionLeaderProcessEntityId" => static (e, v) => TryAssignProcessSessionLeaderParent("session_leader.parent.session_leader.process.entity_id")(e.Parent ?? new ProcessSessionLeaderParent(),v),
-				"process.parent.session_leader.parent.session_leader.process.executable" => static (e, v) => TryAssignProcessSessionLeaderParent("session_leader.parent.session_leader.process.executable")(e.Parent ?? new ProcessSessionLeaderParent(),v),
-				"ProcessParentSessionLeaderParentSessionLeaderProcessExecutable" => static (e, v) => TryAssignProcessSessionLeaderParent("session_leader.parent.session_leader.process.executable")(e.Parent ?? new ProcessSessionLeaderParent(),v),
-				"process.parent.session_leader.parent.session_leader.process.exit_code" => static (e, v) => TryAssignProcessSessionLeaderParent("session_leader.parent.session_leader.process.exit_code")(e.Parent ?? new ProcessSessionLeaderParent(),v),
-				"ProcessParentSessionLeaderParentSessionLeaderProcessExitCode" => static (e, v) => TryAssignProcessSessionLeaderParent("session_leader.parent.session_leader.process.exit_code")(e.Parent ?? new ProcessSessionLeaderParent(),v),
-				"process.parent.session_leader.parent.session_leader.process.interactive" => static (e, v) => TryAssignProcessSessionLeaderParent("session_leader.parent.session_leader.process.interactive")(e.Parent ?? new ProcessSessionLeaderParent(),v),
-				"ProcessParentSessionLeaderParentSessionLeaderProcessInteractive" => static (e, v) => TryAssignProcessSessionLeaderParent("session_leader.parent.session_leader.process.interactive")(e.Parent ?? new ProcessSessionLeaderParent(),v),
-				"process.parent.session_leader.parent.session_leader.process.name" => static (e, v) => TryAssignProcessSessionLeaderParent("session_leader.parent.session_leader.process.name")(e.Parent ?? new ProcessSessionLeaderParent(),v),
-				"ProcessParentSessionLeaderParentSessionLeaderProcessName" => static (e, v) => TryAssignProcessSessionLeaderParent("session_leader.parent.session_leader.process.name")(e.Parent ?? new ProcessSessionLeaderParent(),v),
-				"process.parent.session_leader.parent.session_leader.process.pgid" => static (e, v) => TryAssignProcessSessionLeaderParent("session_leader.parent.session_leader.process.pgid")(e.Parent ?? new ProcessSessionLeaderParent(),v),
-				"ProcessParentSessionLeaderParentSessionLeaderProcessPgid" => static (e, v) => TryAssignProcessSessionLeaderParent("session_leader.parent.session_leader.process.pgid")(e.Parent ?? new ProcessSessionLeaderParent(),v),
-				"process.parent.session_leader.parent.session_leader.process.pid" => static (e, v) => TryAssignProcessSessionLeaderParent("session_leader.parent.session_leader.process.pid")(e.Parent ?? new ProcessSessionLeaderParent(),v),
-				"ProcessParentSessionLeaderParentSessionLeaderProcessPid" => static (e, v) => TryAssignProcessSessionLeaderParent("session_leader.parent.session_leader.process.pid")(e.Parent ?? new ProcessSessionLeaderParent(),v),
-				"process.parent.session_leader.parent.session_leader.process.start" => static (e, v) => TryAssignProcessSessionLeaderParent("session_leader.parent.session_leader.process.start")(e.Parent ?? new ProcessSessionLeaderParent(),v),
-				"ProcessParentSessionLeaderParentSessionLeaderProcessStart" => static (e, v) => TryAssignProcessSessionLeaderParent("session_leader.parent.session_leader.process.start")(e.Parent ?? new ProcessSessionLeaderParent(),v),
-				"process.parent.session_leader.parent.session_leader.process.thread.id" => static (e, v) => TryAssignProcessSessionLeaderParent("session_leader.parent.session_leader.process.thread.id")(e.Parent ?? new ProcessSessionLeaderParent(),v),
-				"ProcessParentSessionLeaderParentSessionLeaderProcessThreadId" => static (e, v) => TryAssignProcessSessionLeaderParent("session_leader.parent.session_leader.process.thread.id")(e.Parent ?? new ProcessSessionLeaderParent(),v),
-				"process.parent.session_leader.parent.session_leader.process.thread.name" => static (e, v) => TryAssignProcessSessionLeaderParent("session_leader.parent.session_leader.process.thread.name")(e.Parent ?? new ProcessSessionLeaderParent(),v),
-				"ProcessParentSessionLeaderParentSessionLeaderProcessThreadName" => static (e, v) => TryAssignProcessSessionLeaderParent("session_leader.parent.session_leader.process.thread.name")(e.Parent ?? new ProcessSessionLeaderParent(),v),
-				"process.parent.session_leader.parent.session_leader.process.title" => static (e, v) => TryAssignProcessSessionLeaderParent("session_leader.parent.session_leader.process.title")(e.Parent ?? new ProcessSessionLeaderParent(),v),
-				"ProcessParentSessionLeaderParentSessionLeaderProcessTitle" => static (e, v) => TryAssignProcessSessionLeaderParent("session_leader.parent.session_leader.process.title")(e.Parent ?? new ProcessSessionLeaderParent(),v),
-				"process.parent.session_leader.parent.session_leader.process.uptime" => static (e, v) => TryAssignProcessSessionLeaderParent("session_leader.parent.session_leader.process.uptime")(e.Parent ?? new ProcessSessionLeaderParent(),v),
-				"ProcessParentSessionLeaderParentSessionLeaderProcessUptime" => static (e, v) => TryAssignProcessSessionLeaderParent("session_leader.parent.session_leader.process.uptime")(e.Parent ?? new ProcessSessionLeaderParent(),v),
-				"process.parent.session_leader.parent.session_leader.process.vpid" => static (e, v) => TryAssignProcessSessionLeaderParent("session_leader.parent.session_leader.process.vpid")(e.Parent ?? new ProcessSessionLeaderParent(),v),
-				"ProcessParentSessionLeaderParentSessionLeaderProcessVpid" => static (e, v) => TryAssignProcessSessionLeaderParent("session_leader.parent.session_leader.process.vpid")(e.Parent ?? new ProcessSessionLeaderParent(),v),
-				"process.parent.session_leader.parent.session_leader.process.working_directory" => static (e, v) => TryAssignProcessSessionLeaderParent("session_leader.parent.session_leader.process.working_directory")(e.Parent ?? new ProcessSessionLeaderParent(),v),
-				"ProcessParentSessionLeaderParentSessionLeaderProcessWorkingDirectory" => static (e, v) => TryAssignProcessSessionLeaderParent("session_leader.parent.session_leader.process.working_directory")(e.Parent ?? new ProcessSessionLeaderParent(),v),
-				_ => null
-			};
-			return assign;
-		}
-		public static bool TrySetProcessSessionLeader(IProcessSessionLeader document, string path, object value)
-		{
-			var assign = TryAssignProcessSessionLeader(path);
-			if (assign == null) return false;
-		
-			var entity = document.SessionLeader ?? new ProcessSessionLeader();
-			var assigned = assign(entity, value);
-			if (assigned) document.SessionLeader = entity;
-			return assigned;
-		}
-
-		public static Func<ProcessGroupLeader, object, bool> TryAssignProcessGroupLeader(string path)
-		{
-			Func<ProcessGroupLeader, object, bool> assign = path switch
-			{
-				"process.args_count" => static (e, v) => TrySetLong(e, v, static (ee, p) => ee.ArgsCount = p),
-				"ProcessArgsCount" => static (e, v) => TrySetLong(e, v, static (ee, p) => ee.ArgsCount = p),
-				"process.command_line" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.CommandLine = p),
-				"ProcessCommandLine" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.CommandLine = p),
-				"process.end" => static (e, v) => TrySetDateTimeOffset(e, v, static (ee, p) => ee.End = p),
-				"ProcessEnd" => static (e, v) => TrySetDateTimeOffset(e, v, static (ee, p) => ee.End = p),
-				"process.entity_id" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.EntityId = p),
-				"ProcessEntityId" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.EntityId = p),
-				"process.executable" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Executable = p),
-				"ProcessExecutable" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Executable = p),
-				"process.exit_code" => static (e, v) => TrySetLong(e, v, static (ee, p) => ee.ExitCode = p),
-				"ProcessExitCode" => static (e, v) => TrySetLong(e, v, static (ee, p) => ee.ExitCode = p),
-				"process.interactive" => static (e, v) => TrySetBool(e, v, static (ee, p) => ee.Interactive = p),
-				"ProcessInteractive" => static (e, v) => TrySetBool(e, v, static (ee, p) => ee.Interactive = p),
-				"process.name" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Name = p),
-				"ProcessName" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Name = p),
-				"process.pgid" => static (e, v) => TrySetLong(e, v, static (ee, p) => ee.Pgid = p),
-				"ProcessPgid" => static (e, v) => TrySetLong(e, v, static (ee, p) => ee.Pgid = p),
-				"process.pid" => static (e, v) => TrySetLong(e, v, static (ee, p) => ee.Pid = p),
-				"ProcessPid" => static (e, v) => TrySetLong(e, v, static (ee, p) => ee.Pid = p),
-				"process.start" => static (e, v) => TrySetDateTimeOffset(e, v, static (ee, p) => ee.Start = p),
-				"ProcessStart" => static (e, v) => TrySetDateTimeOffset(e, v, static (ee, p) => ee.Start = p),
-				"process.thread.id" => static (e, v) => TrySetLong(e, v, static (ee, p) => ee.ThreadId = p),
-				"ProcessThreadId" => static (e, v) => TrySetLong(e, v, static (ee, p) => ee.ThreadId = p),
-				"process.thread.name" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.ThreadName = p),
-				"ProcessThreadName" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.ThreadName = p),
-				"process.title" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Title = p),
-				"ProcessTitle" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Title = p),
-				"process.uptime" => static (e, v) => TrySetLong(e, v, static (ee, p) => ee.Uptime = p),
-				"ProcessUptime" => static (e, v) => TrySetLong(e, v, static (ee, p) => ee.Uptime = p),
-				"process.vpid" => static (e, v) => TrySetLong(e, v, static (ee, p) => ee.Vpid = p),
-				"ProcessVpid" => static (e, v) => TrySetLong(e, v, static (ee, p) => ee.Vpid = p),
-				"process.working_directory" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.WorkingDirectory = p),
-				"ProcessWorkingDirectory" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.WorkingDirectory = p),
-				_ => null
-			};
-			return assign;
-		}
-		public static bool TrySetProcessGroupLeader(IProcessGroupLeader document, string path, object value)
-		{
-			var assign = TryAssignProcessGroupLeader(path);
-			if (assign == null) return false;
-		
-			var entity = document.GroupLeader ?? new ProcessGroupLeader();
-			var assigned = assign(entity, value);
-			if (assigned) document.GroupLeader = entity;
-			return assigned;
-		}
-
-		public static Func<ProcessParentGroupLeader, object, bool> TryAssignProcessParentGroupLeader(string path)
-		{
-			Func<ProcessParentGroupLeader, object, bool> assign = path switch
-			{
-				"process.args_count" => static (e, v) => TrySetLong(e, v, static (ee, p) => ee.ArgsCount = p),
-				"ProcessArgsCount" => static (e, v) => TrySetLong(e, v, static (ee, p) => ee.ArgsCount = p),
-				"process.command_line" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.CommandLine = p),
-				"ProcessCommandLine" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.CommandLine = p),
-				"process.end" => static (e, v) => TrySetDateTimeOffset(e, v, static (ee, p) => ee.End = p),
-				"ProcessEnd" => static (e, v) => TrySetDateTimeOffset(e, v, static (ee, p) => ee.End = p),
-				"process.entity_id" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.EntityId = p),
-				"ProcessEntityId" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.EntityId = p),
-				"process.executable" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Executable = p),
-				"ProcessExecutable" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Executable = p),
-				"process.exit_code" => static (e, v) => TrySetLong(e, v, static (ee, p) => ee.ExitCode = p),
-				"ProcessExitCode" => static (e, v) => TrySetLong(e, v, static (ee, p) => ee.ExitCode = p),
-				"process.interactive" => static (e, v) => TrySetBool(e, v, static (ee, p) => ee.Interactive = p),
-				"ProcessInteractive" => static (e, v) => TrySetBool(e, v, static (ee, p) => ee.Interactive = p),
-				"process.name" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Name = p),
-				"ProcessName" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Name = p),
-				"process.pgid" => static (e, v) => TrySetLong(e, v, static (ee, p) => ee.Pgid = p),
-				"ProcessPgid" => static (e, v) => TrySetLong(e, v, static (ee, p) => ee.Pgid = p),
-				"process.pid" => static (e, v) => TrySetLong(e, v, static (ee, p) => ee.Pid = p),
-				"ProcessPid" => static (e, v) => TrySetLong(e, v, static (ee, p) => ee.Pid = p),
-				"process.start" => static (e, v) => TrySetDateTimeOffset(e, v, static (ee, p) => ee.Start = p),
-				"ProcessStart" => static (e, v) => TrySetDateTimeOffset(e, v, static (ee, p) => ee.Start = p),
-				"process.thread.id" => static (e, v) => TrySetLong(e, v, static (ee, p) => ee.ThreadId = p),
-				"ProcessThreadId" => static (e, v) => TrySetLong(e, v, static (ee, p) => ee.ThreadId = p),
-				"process.thread.name" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.ThreadName = p),
-				"ProcessThreadName" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.ThreadName = p),
-				"process.title" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Title = p),
-				"ProcessTitle" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Title = p),
-				"process.uptime" => static (e, v) => TrySetLong(e, v, static (ee, p) => ee.Uptime = p),
-				"ProcessUptime" => static (e, v) => TrySetLong(e, v, static (ee, p) => ee.Uptime = p),
-				"process.vpid" => static (e, v) => TrySetLong(e, v, static (ee, p) => ee.Vpid = p),
-				"ProcessVpid" => static (e, v) => TrySetLong(e, v, static (ee, p) => ee.Vpid = p),
-				"process.working_directory" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.WorkingDirectory = p),
-				"ProcessWorkingDirectory" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.WorkingDirectory = p),
-				_ => null
-			};
-			return assign;
-		}
-		public static bool TrySetProcessParentGroupLeader(IProcessParentGroupLeader document, string path, object value)
-		{
-			var assign = TryAssignProcessParentGroupLeader(path);
-			if (assign == null) return false;
-		
-			var entity = document.GroupLeader ?? new ProcessParentGroupLeader();
-			var assigned = assign(entity, value);
-			if (assigned) document.GroupLeader = entity;
-			return assigned;
-		}
-
-		public static Func<ProcessEntryLeaderParent, object, bool> TryAssignProcessEntryLeaderParent(string path)
-		{
-			Func<ProcessEntryLeaderParent, object, bool> assign = path switch
-			{
-				"process.args_count" => static (e, v) => TrySetLong(e, v, static (ee, p) => ee.ArgsCount = p),
-				"ProcessArgsCount" => static (e, v) => TrySetLong(e, v, static (ee, p) => ee.ArgsCount = p),
-				"process.command_line" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.CommandLine = p),
-				"ProcessCommandLine" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.CommandLine = p),
-				"process.end" => static (e, v) => TrySetDateTimeOffset(e, v, static (ee, p) => ee.End = p),
-				"ProcessEnd" => static (e, v) => TrySetDateTimeOffset(e, v, static (ee, p) => ee.End = p),
-				"process.entity_id" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.EntityId = p),
-				"ProcessEntityId" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.EntityId = p),
-				"process.executable" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Executable = p),
-				"ProcessExecutable" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Executable = p),
-				"process.exit_code" => static (e, v) => TrySetLong(e, v, static (ee, p) => ee.ExitCode = p),
-				"ProcessExitCode" => static (e, v) => TrySetLong(e, v, static (ee, p) => ee.ExitCode = p),
-				"process.interactive" => static (e, v) => TrySetBool(e, v, static (ee, p) => ee.Interactive = p),
-				"ProcessInteractive" => static (e, v) => TrySetBool(e, v, static (ee, p) => ee.Interactive = p),
-				"process.name" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Name = p),
-				"ProcessName" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Name = p),
-				"process.pgid" => static (e, v) => TrySetLong(e, v, static (ee, p) => ee.Pgid = p),
-				"ProcessPgid" => static (e, v) => TrySetLong(e, v, static (ee, p) => ee.Pgid = p),
-				"process.pid" => static (e, v) => TrySetLong(e, v, static (ee, p) => ee.Pid = p),
-				"ProcessPid" => static (e, v) => TrySetLong(e, v, static (ee, p) => ee.Pid = p),
-				"process.start" => static (e, v) => TrySetDateTimeOffset(e, v, static (ee, p) => ee.Start = p),
-				"ProcessStart" => static (e, v) => TrySetDateTimeOffset(e, v, static (ee, p) => ee.Start = p),
-				"process.thread.id" => static (e, v) => TrySetLong(e, v, static (ee, p) => ee.ThreadId = p),
-				"ProcessThreadId" => static (e, v) => TrySetLong(e, v, static (ee, p) => ee.ThreadId = p),
-				"process.thread.name" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.ThreadName = p),
-				"ProcessThreadName" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.ThreadName = p),
-				"process.title" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Title = p),
-				"ProcessTitle" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Title = p),
-				"process.uptime" => static (e, v) => TrySetLong(e, v, static (ee, p) => ee.Uptime = p),
-				"ProcessUptime" => static (e, v) => TrySetLong(e, v, static (ee, p) => ee.Uptime = p),
-				"process.vpid" => static (e, v) => TrySetLong(e, v, static (ee, p) => ee.Vpid = p),
-				"ProcessVpid" => static (e, v) => TrySetLong(e, v, static (ee, p) => ee.Vpid = p),
-				"process.working_directory" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.WorkingDirectory = p),
-				"ProcessWorkingDirectory" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.WorkingDirectory = p),
-				"entry_leader.parent.session_leader.process.args_count" => static (e, v) => TryAssignProcessEntryLeaderParentSessionLeader("process.args_count")(e.SessionLeader ?? new ProcessEntryLeaderParentSessionLeader(),v),
-				"EntryLeaderParentSessionLeaderProcessArgsCount" => static (e, v) => TryAssignProcessEntryLeaderParentSessionLeader("process.args_count")(e.SessionLeader ?? new ProcessEntryLeaderParentSessionLeader(),v),
-				"entry_leader.parent.session_leader.process.command_line" => static (e, v) => TryAssignProcessEntryLeaderParentSessionLeader("process.command_line")(e.SessionLeader ?? new ProcessEntryLeaderParentSessionLeader(),v),
-				"EntryLeaderParentSessionLeaderProcessCommandLine" => static (e, v) => TryAssignProcessEntryLeaderParentSessionLeader("process.command_line")(e.SessionLeader ?? new ProcessEntryLeaderParentSessionLeader(),v),
-				"entry_leader.parent.session_leader.process.end" => static (e, v) => TryAssignProcessEntryLeaderParentSessionLeader("process.end")(e.SessionLeader ?? new ProcessEntryLeaderParentSessionLeader(),v),
-				"EntryLeaderParentSessionLeaderProcessEnd" => static (e, v) => TryAssignProcessEntryLeaderParentSessionLeader("process.end")(e.SessionLeader ?? new ProcessEntryLeaderParentSessionLeader(),v),
-				"entry_leader.parent.session_leader.process.entity_id" => static (e, v) => TryAssignProcessEntryLeaderParentSessionLeader("process.entity_id")(e.SessionLeader ?? new ProcessEntryLeaderParentSessionLeader(),v),
-				"EntryLeaderParentSessionLeaderProcessEntityId" => static (e, v) => TryAssignProcessEntryLeaderParentSessionLeader("process.entity_id")(e.SessionLeader ?? new ProcessEntryLeaderParentSessionLeader(),v),
-				"entry_leader.parent.session_leader.process.executable" => static (e, v) => TryAssignProcessEntryLeaderParentSessionLeader("process.executable")(e.SessionLeader ?? new ProcessEntryLeaderParentSessionLeader(),v),
-				"EntryLeaderParentSessionLeaderProcessExecutable" => static (e, v) => TryAssignProcessEntryLeaderParentSessionLeader("process.executable")(e.SessionLeader ?? new ProcessEntryLeaderParentSessionLeader(),v),
-				"entry_leader.parent.session_leader.process.exit_code" => static (e, v) => TryAssignProcessEntryLeaderParentSessionLeader("process.exit_code")(e.SessionLeader ?? new ProcessEntryLeaderParentSessionLeader(),v),
-				"EntryLeaderParentSessionLeaderProcessExitCode" => static (e, v) => TryAssignProcessEntryLeaderParentSessionLeader("process.exit_code")(e.SessionLeader ?? new ProcessEntryLeaderParentSessionLeader(),v),
-				"entry_leader.parent.session_leader.process.interactive" => static (e, v) => TryAssignProcessEntryLeaderParentSessionLeader("process.interactive")(e.SessionLeader ?? new ProcessEntryLeaderParentSessionLeader(),v),
-				"EntryLeaderParentSessionLeaderProcessInteractive" => static (e, v) => TryAssignProcessEntryLeaderParentSessionLeader("process.interactive")(e.SessionLeader ?? new ProcessEntryLeaderParentSessionLeader(),v),
-				"entry_leader.parent.session_leader.process.name" => static (e, v) => TryAssignProcessEntryLeaderParentSessionLeader("process.name")(e.SessionLeader ?? new ProcessEntryLeaderParentSessionLeader(),v),
-				"EntryLeaderParentSessionLeaderProcessName" => static (e, v) => TryAssignProcessEntryLeaderParentSessionLeader("process.name")(e.SessionLeader ?? new ProcessEntryLeaderParentSessionLeader(),v),
-				"entry_leader.parent.session_leader.process.pgid" => static (e, v) => TryAssignProcessEntryLeaderParentSessionLeader("process.pgid")(e.SessionLeader ?? new ProcessEntryLeaderParentSessionLeader(),v),
-				"EntryLeaderParentSessionLeaderProcessPgid" => static (e, v) => TryAssignProcessEntryLeaderParentSessionLeader("process.pgid")(e.SessionLeader ?? new ProcessEntryLeaderParentSessionLeader(),v),
-				"entry_leader.parent.session_leader.process.pid" => static (e, v) => TryAssignProcessEntryLeaderParentSessionLeader("process.pid")(e.SessionLeader ?? new ProcessEntryLeaderParentSessionLeader(),v),
-				"EntryLeaderParentSessionLeaderProcessPid" => static (e, v) => TryAssignProcessEntryLeaderParentSessionLeader("process.pid")(e.SessionLeader ?? new ProcessEntryLeaderParentSessionLeader(),v),
-				"entry_leader.parent.session_leader.process.start" => static (e, v) => TryAssignProcessEntryLeaderParentSessionLeader("process.start")(e.SessionLeader ?? new ProcessEntryLeaderParentSessionLeader(),v),
-				"EntryLeaderParentSessionLeaderProcessStart" => static (e, v) => TryAssignProcessEntryLeaderParentSessionLeader("process.start")(e.SessionLeader ?? new ProcessEntryLeaderParentSessionLeader(),v),
-				"entry_leader.parent.session_leader.process.thread.id" => static (e, v) => TryAssignProcessEntryLeaderParentSessionLeader("process.thread.id")(e.SessionLeader ?? new ProcessEntryLeaderParentSessionLeader(),v),
-				"EntryLeaderParentSessionLeaderProcessThreadId" => static (e, v) => TryAssignProcessEntryLeaderParentSessionLeader("process.thread.id")(e.SessionLeader ?? new ProcessEntryLeaderParentSessionLeader(),v),
-				"entry_leader.parent.session_leader.process.thread.name" => static (e, v) => TryAssignProcessEntryLeaderParentSessionLeader("process.thread.name")(e.SessionLeader ?? new ProcessEntryLeaderParentSessionLeader(),v),
-				"EntryLeaderParentSessionLeaderProcessThreadName" => static (e, v) => TryAssignProcessEntryLeaderParentSessionLeader("process.thread.name")(e.SessionLeader ?? new ProcessEntryLeaderParentSessionLeader(),v),
-				"entry_leader.parent.session_leader.process.title" => static (e, v) => TryAssignProcessEntryLeaderParentSessionLeader("process.title")(e.SessionLeader ?? new ProcessEntryLeaderParentSessionLeader(),v),
-				"EntryLeaderParentSessionLeaderProcessTitle" => static (e, v) => TryAssignProcessEntryLeaderParentSessionLeader("process.title")(e.SessionLeader ?? new ProcessEntryLeaderParentSessionLeader(),v),
-				"entry_leader.parent.session_leader.process.uptime" => static (e, v) => TryAssignProcessEntryLeaderParentSessionLeader("process.uptime")(e.SessionLeader ?? new ProcessEntryLeaderParentSessionLeader(),v),
-				"EntryLeaderParentSessionLeaderProcessUptime" => static (e, v) => TryAssignProcessEntryLeaderParentSessionLeader("process.uptime")(e.SessionLeader ?? new ProcessEntryLeaderParentSessionLeader(),v),
-				"entry_leader.parent.session_leader.process.vpid" => static (e, v) => TryAssignProcessEntryLeaderParentSessionLeader("process.vpid")(e.SessionLeader ?? new ProcessEntryLeaderParentSessionLeader(),v),
-				"EntryLeaderParentSessionLeaderProcessVpid" => static (e, v) => TryAssignProcessEntryLeaderParentSessionLeader("process.vpid")(e.SessionLeader ?? new ProcessEntryLeaderParentSessionLeader(),v),
-				"entry_leader.parent.session_leader.process.working_directory" => static (e, v) => TryAssignProcessEntryLeaderParentSessionLeader("process.working_directory")(e.SessionLeader ?? new ProcessEntryLeaderParentSessionLeader(),v),
-				"EntryLeaderParentSessionLeaderProcessWorkingDirectory" => static (e, v) => TryAssignProcessEntryLeaderParentSessionLeader("process.working_directory")(e.SessionLeader ?? new ProcessEntryLeaderParentSessionLeader(),v),
-				_ => null
-			};
-			return assign;
-		}
-		public static bool TrySetProcessEntryLeaderParent(IProcessEntryLeaderParent document, string path, object value)
-		{
-			var assign = TryAssignProcessEntryLeaderParent(path);
-			if (assign == null) return false;
-		
-			var entity = document.Parent ?? new ProcessEntryLeaderParent();
-			var assigned = assign(entity, value);
-			if (assigned) document.Parent = entity;
-			return assigned;
-		}
-
-		public static Func<ProcessSessionLeaderParent, object, bool> TryAssignProcessSessionLeaderParent(string path)
-		{
-			Func<ProcessSessionLeaderParent, object, bool> assign = path switch
-			{
-				"process.args_count" => static (e, v) => TrySetLong(e, v, static (ee, p) => ee.ArgsCount = p),
-				"ProcessArgsCount" => static (e, v) => TrySetLong(e, v, static (ee, p) => ee.ArgsCount = p),
-				"process.command_line" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.CommandLine = p),
-				"ProcessCommandLine" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.CommandLine = p),
-				"process.end" => static (e, v) => TrySetDateTimeOffset(e, v, static (ee, p) => ee.End = p),
-				"ProcessEnd" => static (e, v) => TrySetDateTimeOffset(e, v, static (ee, p) => ee.End = p),
-				"process.entity_id" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.EntityId = p),
-				"ProcessEntityId" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.EntityId = p),
-				"process.executable" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Executable = p),
-				"ProcessExecutable" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Executable = p),
-				"process.exit_code" => static (e, v) => TrySetLong(e, v, static (ee, p) => ee.ExitCode = p),
-				"ProcessExitCode" => static (e, v) => TrySetLong(e, v, static (ee, p) => ee.ExitCode = p),
-				"process.interactive" => static (e, v) => TrySetBool(e, v, static (ee, p) => ee.Interactive = p),
-				"ProcessInteractive" => static (e, v) => TrySetBool(e, v, static (ee, p) => ee.Interactive = p),
-				"process.name" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Name = p),
-				"ProcessName" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Name = p),
-				"process.pgid" => static (e, v) => TrySetLong(e, v, static (ee, p) => ee.Pgid = p),
-				"ProcessPgid" => static (e, v) => TrySetLong(e, v, static (ee, p) => ee.Pgid = p),
-				"process.pid" => static (e, v) => TrySetLong(e, v, static (ee, p) => ee.Pid = p),
-				"ProcessPid" => static (e, v) => TrySetLong(e, v, static (ee, p) => ee.Pid = p),
-				"process.start" => static (e, v) => TrySetDateTimeOffset(e, v, static (ee, p) => ee.Start = p),
-				"ProcessStart" => static (e, v) => TrySetDateTimeOffset(e, v, static (ee, p) => ee.Start = p),
-				"process.thread.id" => static (e, v) => TrySetLong(e, v, static (ee, p) => ee.ThreadId = p),
-				"ProcessThreadId" => static (e, v) => TrySetLong(e, v, static (ee, p) => ee.ThreadId = p),
-				"process.thread.name" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.ThreadName = p),
-				"ProcessThreadName" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.ThreadName = p),
-				"process.title" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Title = p),
-				"ProcessTitle" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Title = p),
-				"process.uptime" => static (e, v) => TrySetLong(e, v, static (ee, p) => ee.Uptime = p),
-				"ProcessUptime" => static (e, v) => TrySetLong(e, v, static (ee, p) => ee.Uptime = p),
-				"process.vpid" => static (e, v) => TrySetLong(e, v, static (ee, p) => ee.Vpid = p),
-				"ProcessVpid" => static (e, v) => TrySetLong(e, v, static (ee, p) => ee.Vpid = p),
-				"process.working_directory" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.WorkingDirectory = p),
-				"ProcessWorkingDirectory" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.WorkingDirectory = p),
-				"session_leader.parent.session_leader.process.args_count" => static (e, v) => TryAssignProcessSessionLeaderParentSessionLeader("process.args_count")(e.SessionLeader ?? new ProcessSessionLeaderParentSessionLeader(),v),
-				"SessionLeaderParentSessionLeaderProcessArgsCount" => static (e, v) => TryAssignProcessSessionLeaderParentSessionLeader("process.args_count")(e.SessionLeader ?? new ProcessSessionLeaderParentSessionLeader(),v),
-				"session_leader.parent.session_leader.process.command_line" => static (e, v) => TryAssignProcessSessionLeaderParentSessionLeader("process.command_line")(e.SessionLeader ?? new ProcessSessionLeaderParentSessionLeader(),v),
-				"SessionLeaderParentSessionLeaderProcessCommandLine" => static (e, v) => TryAssignProcessSessionLeaderParentSessionLeader("process.command_line")(e.SessionLeader ?? new ProcessSessionLeaderParentSessionLeader(),v),
-				"session_leader.parent.session_leader.process.end" => static (e, v) => TryAssignProcessSessionLeaderParentSessionLeader("process.end")(e.SessionLeader ?? new ProcessSessionLeaderParentSessionLeader(),v),
-				"SessionLeaderParentSessionLeaderProcessEnd" => static (e, v) => TryAssignProcessSessionLeaderParentSessionLeader("process.end")(e.SessionLeader ?? new ProcessSessionLeaderParentSessionLeader(),v),
-				"session_leader.parent.session_leader.process.entity_id" => static (e, v) => TryAssignProcessSessionLeaderParentSessionLeader("process.entity_id")(e.SessionLeader ?? new ProcessSessionLeaderParentSessionLeader(),v),
-				"SessionLeaderParentSessionLeaderProcessEntityId" => static (e, v) => TryAssignProcessSessionLeaderParentSessionLeader("process.entity_id")(e.SessionLeader ?? new ProcessSessionLeaderParentSessionLeader(),v),
-				"session_leader.parent.session_leader.process.executable" => static (e, v) => TryAssignProcessSessionLeaderParentSessionLeader("process.executable")(e.SessionLeader ?? new ProcessSessionLeaderParentSessionLeader(),v),
-				"SessionLeaderParentSessionLeaderProcessExecutable" => static (e, v) => TryAssignProcessSessionLeaderParentSessionLeader("process.executable")(e.SessionLeader ?? new ProcessSessionLeaderParentSessionLeader(),v),
-				"session_leader.parent.session_leader.process.exit_code" => static (e, v) => TryAssignProcessSessionLeaderParentSessionLeader("process.exit_code")(e.SessionLeader ?? new ProcessSessionLeaderParentSessionLeader(),v),
-				"SessionLeaderParentSessionLeaderProcessExitCode" => static (e, v) => TryAssignProcessSessionLeaderParentSessionLeader("process.exit_code")(e.SessionLeader ?? new ProcessSessionLeaderParentSessionLeader(),v),
-				"session_leader.parent.session_leader.process.interactive" => static (e, v) => TryAssignProcessSessionLeaderParentSessionLeader("process.interactive")(e.SessionLeader ?? new ProcessSessionLeaderParentSessionLeader(),v),
-				"SessionLeaderParentSessionLeaderProcessInteractive" => static (e, v) => TryAssignProcessSessionLeaderParentSessionLeader("process.interactive")(e.SessionLeader ?? new ProcessSessionLeaderParentSessionLeader(),v),
-				"session_leader.parent.session_leader.process.name" => static (e, v) => TryAssignProcessSessionLeaderParentSessionLeader("process.name")(e.SessionLeader ?? new ProcessSessionLeaderParentSessionLeader(),v),
-				"SessionLeaderParentSessionLeaderProcessName" => static (e, v) => TryAssignProcessSessionLeaderParentSessionLeader("process.name")(e.SessionLeader ?? new ProcessSessionLeaderParentSessionLeader(),v),
-				"session_leader.parent.session_leader.process.pgid" => static (e, v) => TryAssignProcessSessionLeaderParentSessionLeader("process.pgid")(e.SessionLeader ?? new ProcessSessionLeaderParentSessionLeader(),v),
-				"SessionLeaderParentSessionLeaderProcessPgid" => static (e, v) => TryAssignProcessSessionLeaderParentSessionLeader("process.pgid")(e.SessionLeader ?? new ProcessSessionLeaderParentSessionLeader(),v),
-				"session_leader.parent.session_leader.process.pid" => static (e, v) => TryAssignProcessSessionLeaderParentSessionLeader("process.pid")(e.SessionLeader ?? new ProcessSessionLeaderParentSessionLeader(),v),
-				"SessionLeaderParentSessionLeaderProcessPid" => static (e, v) => TryAssignProcessSessionLeaderParentSessionLeader("process.pid")(e.SessionLeader ?? new ProcessSessionLeaderParentSessionLeader(),v),
-				"session_leader.parent.session_leader.process.start" => static (e, v) => TryAssignProcessSessionLeaderParentSessionLeader("process.start")(e.SessionLeader ?? new ProcessSessionLeaderParentSessionLeader(),v),
-				"SessionLeaderParentSessionLeaderProcessStart" => static (e, v) => TryAssignProcessSessionLeaderParentSessionLeader("process.start")(e.SessionLeader ?? new ProcessSessionLeaderParentSessionLeader(),v),
-				"session_leader.parent.session_leader.process.thread.id" => static (e, v) => TryAssignProcessSessionLeaderParentSessionLeader("process.thread.id")(e.SessionLeader ?? new ProcessSessionLeaderParentSessionLeader(),v),
-				"SessionLeaderParentSessionLeaderProcessThreadId" => static (e, v) => TryAssignProcessSessionLeaderParentSessionLeader("process.thread.id")(e.SessionLeader ?? new ProcessSessionLeaderParentSessionLeader(),v),
-				"session_leader.parent.session_leader.process.thread.name" => static (e, v) => TryAssignProcessSessionLeaderParentSessionLeader("process.thread.name")(e.SessionLeader ?? new ProcessSessionLeaderParentSessionLeader(),v),
-				"SessionLeaderParentSessionLeaderProcessThreadName" => static (e, v) => TryAssignProcessSessionLeaderParentSessionLeader("process.thread.name")(e.SessionLeader ?? new ProcessSessionLeaderParentSessionLeader(),v),
-				"session_leader.parent.session_leader.process.title" => static (e, v) => TryAssignProcessSessionLeaderParentSessionLeader("process.title")(e.SessionLeader ?? new ProcessSessionLeaderParentSessionLeader(),v),
-				"SessionLeaderParentSessionLeaderProcessTitle" => static (e, v) => TryAssignProcessSessionLeaderParentSessionLeader("process.title")(e.SessionLeader ?? new ProcessSessionLeaderParentSessionLeader(),v),
-				"session_leader.parent.session_leader.process.uptime" => static (e, v) => TryAssignProcessSessionLeaderParentSessionLeader("process.uptime")(e.SessionLeader ?? new ProcessSessionLeaderParentSessionLeader(),v),
-				"SessionLeaderParentSessionLeaderProcessUptime" => static (e, v) => TryAssignProcessSessionLeaderParentSessionLeader("process.uptime")(e.SessionLeader ?? new ProcessSessionLeaderParentSessionLeader(),v),
-				"session_leader.parent.session_leader.process.vpid" => static (e, v) => TryAssignProcessSessionLeaderParentSessionLeader("process.vpid")(e.SessionLeader ?? new ProcessSessionLeaderParentSessionLeader(),v),
-				"SessionLeaderParentSessionLeaderProcessVpid" => static (e, v) => TryAssignProcessSessionLeaderParentSessionLeader("process.vpid")(e.SessionLeader ?? new ProcessSessionLeaderParentSessionLeader(),v),
-				"session_leader.parent.session_leader.process.working_directory" => static (e, v) => TryAssignProcessSessionLeaderParentSessionLeader("process.working_directory")(e.SessionLeader ?? new ProcessSessionLeaderParentSessionLeader(),v),
-				"SessionLeaderParentSessionLeaderProcessWorkingDirectory" => static (e, v) => TryAssignProcessSessionLeaderParentSessionLeader("process.working_directory")(e.SessionLeader ?? new ProcessSessionLeaderParentSessionLeader(),v),
-				_ => null
-			};
-			return assign;
-		}
-		public static bool TrySetProcessSessionLeaderParent(IProcessSessionLeaderParent document, string path, object value)
-		{
-			var assign = TryAssignProcessSessionLeaderParent(path);
-			if (assign == null) return false;
-		
-			var entity = document.Parent ?? new ProcessSessionLeaderParent();
-			var assigned = assign(entity, value);
-			if (assigned) document.Parent = entity;
-			return assigned;
-		}
-
-		public static Func<ProcessEntryLeaderParentSessionLeader, object, bool> TryAssignProcessEntryLeaderParentSessionLeader(string path)
-		{
-			Func<ProcessEntryLeaderParentSessionLeader, object, bool> assign = path switch
-			{
-				"process.args_count" => static (e, v) => TrySetLong(e, v, static (ee, p) => ee.ArgsCount = p),
-				"ProcessArgsCount" => static (e, v) => TrySetLong(e, v, static (ee, p) => ee.ArgsCount = p),
-				"process.command_line" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.CommandLine = p),
-				"ProcessCommandLine" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.CommandLine = p),
-				"process.end" => static (e, v) => TrySetDateTimeOffset(e, v, static (ee, p) => ee.End = p),
-				"ProcessEnd" => static (e, v) => TrySetDateTimeOffset(e, v, static (ee, p) => ee.End = p),
-				"process.entity_id" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.EntityId = p),
-				"ProcessEntityId" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.EntityId = p),
-				"process.executable" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Executable = p),
-				"ProcessExecutable" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Executable = p),
-				"process.exit_code" => static (e, v) => TrySetLong(e, v, static (ee, p) => ee.ExitCode = p),
-				"ProcessExitCode" => static (e, v) => TrySetLong(e, v, static (ee, p) => ee.ExitCode = p),
-				"process.interactive" => static (e, v) => TrySetBool(e, v, static (ee, p) => ee.Interactive = p),
-				"ProcessInteractive" => static (e, v) => TrySetBool(e, v, static (ee, p) => ee.Interactive = p),
-				"process.name" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Name = p),
-				"ProcessName" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Name = p),
-				"process.pgid" => static (e, v) => TrySetLong(e, v, static (ee, p) => ee.Pgid = p),
-				"ProcessPgid" => static (e, v) => TrySetLong(e, v, static (ee, p) => ee.Pgid = p),
-				"process.pid" => static (e, v) => TrySetLong(e, v, static (ee, p) => ee.Pid = p),
-				"ProcessPid" => static (e, v) => TrySetLong(e, v, static (ee, p) => ee.Pid = p),
-				"process.start" => static (e, v) => TrySetDateTimeOffset(e, v, static (ee, p) => ee.Start = p),
-				"ProcessStart" => static (e, v) => TrySetDateTimeOffset(e, v, static (ee, p) => ee.Start = p),
-				"process.thread.id" => static (e, v) => TrySetLong(e, v, static (ee, p) => ee.ThreadId = p),
-				"ProcessThreadId" => static (e, v) => TrySetLong(e, v, static (ee, p) => ee.ThreadId = p),
-				"process.thread.name" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.ThreadName = p),
-				"ProcessThreadName" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.ThreadName = p),
-				"process.title" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Title = p),
-				"ProcessTitle" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Title = p),
-				"process.uptime" => static (e, v) => TrySetLong(e, v, static (ee, p) => ee.Uptime = p),
-				"ProcessUptime" => static (e, v) => TrySetLong(e, v, static (ee, p) => ee.Uptime = p),
-				"process.vpid" => static (e, v) => TrySetLong(e, v, static (ee, p) => ee.Vpid = p),
-				"ProcessVpid" => static (e, v) => TrySetLong(e, v, static (ee, p) => ee.Vpid = p),
-				"process.working_directory" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.WorkingDirectory = p),
-				"ProcessWorkingDirectory" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.WorkingDirectory = p),
-				_ => null
-			};
-			return assign;
-		}
-		public static bool TrySetProcessEntryLeaderParentSessionLeader(IProcessEntryLeaderParentSessionLeader document, string path, object value)
-		{
-			var assign = TryAssignProcessEntryLeaderParentSessionLeader(path);
-			if (assign == null) return false;
-		
-			var entity = document.SessionLeader ?? new ProcessEntryLeaderParentSessionLeader();
-			var assigned = assign(entity, value);
-			if (assigned) document.SessionLeader = entity;
-			return assigned;
-		}
-
-		public static Func<ProcessSessionLeaderParentSessionLeader, object, bool> TryAssignProcessSessionLeaderParentSessionLeader(string path)
-		{
-			Func<ProcessSessionLeaderParentSessionLeader, object, bool> assign = path switch
-			{
-				"process.args_count" => static (e, v) => TrySetLong(e, v, static (ee, p) => ee.ArgsCount = p),
-				"ProcessArgsCount" => static (e, v) => TrySetLong(e, v, static (ee, p) => ee.ArgsCount = p),
-				"process.command_line" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.CommandLine = p),
-				"ProcessCommandLine" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.CommandLine = p),
-				"process.end" => static (e, v) => TrySetDateTimeOffset(e, v, static (ee, p) => ee.End = p),
-				"ProcessEnd" => static (e, v) => TrySetDateTimeOffset(e, v, static (ee, p) => ee.End = p),
-				"process.entity_id" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.EntityId = p),
-				"ProcessEntityId" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.EntityId = p),
-				"process.executable" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Executable = p),
-				"ProcessExecutable" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Executable = p),
-				"process.exit_code" => static (e, v) => TrySetLong(e, v, static (ee, p) => ee.ExitCode = p),
-				"ProcessExitCode" => static (e, v) => TrySetLong(e, v, static (ee, p) => ee.ExitCode = p),
-				"process.interactive" => static (e, v) => TrySetBool(e, v, static (ee, p) => ee.Interactive = p),
-				"ProcessInteractive" => static (e, v) => TrySetBool(e, v, static (ee, p) => ee.Interactive = p),
-				"process.name" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Name = p),
-				"ProcessName" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Name = p),
-				"process.pgid" => static (e, v) => TrySetLong(e, v, static (ee, p) => ee.Pgid = p),
-				"ProcessPgid" => static (e, v) => TrySetLong(e, v, static (ee, p) => ee.Pgid = p),
-				"process.pid" => static (e, v) => TrySetLong(e, v, static (ee, p) => ee.Pid = p),
-				"ProcessPid" => static (e, v) => TrySetLong(e, v, static (ee, p) => ee.Pid = p),
-				"process.start" => static (e, v) => TrySetDateTimeOffset(e, v, static (ee, p) => ee.Start = p),
-				"ProcessStart" => static (e, v) => TrySetDateTimeOffset(e, v, static (ee, p) => ee.Start = p),
-				"process.thread.id" => static (e, v) => TrySetLong(e, v, static (ee, p) => ee.ThreadId = p),
-				"ProcessThreadId" => static (e, v) => TrySetLong(e, v, static (ee, p) => ee.ThreadId = p),
-				"process.thread.name" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.ThreadName = p),
-				"ProcessThreadName" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.ThreadName = p),
-				"process.title" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Title = p),
-				"ProcessTitle" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Title = p),
-				"process.uptime" => static (e, v) => TrySetLong(e, v, static (ee, p) => ee.Uptime = p),
-				"ProcessUptime" => static (e, v) => TrySetLong(e, v, static (ee, p) => ee.Uptime = p),
-				"process.vpid" => static (e, v) => TrySetLong(e, v, static (ee, p) => ee.Vpid = p),
-				"ProcessVpid" => static (e, v) => TrySetLong(e, v, static (ee, p) => ee.Vpid = p),
-				"process.working_directory" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.WorkingDirectory = p),
-				"ProcessWorkingDirectory" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.WorkingDirectory = p),
-				_ => null
-			};
-			return assign;
-		}
-		public static bool TrySetProcessSessionLeaderParentSessionLeader(IProcessSessionLeaderParentSessionLeader document, string path, object value)
-		{
-			var assign = TryAssignProcessSessionLeaderParentSessionLeader(path);
-			if (assign == null) return false;
-		
-			var entity = document.SessionLeader ?? new ProcessSessionLeaderParentSessionLeader();
-			var assigned = assign(entity, value);
-			if (assigned) document.SessionLeader = entity;
-			return assigned;
-		}
-
-		public static Func<ServiceOrigin, object, bool> TryAssignServiceOrigin(string path)
-		{
-			Func<ServiceOrigin, object, bool> assign = path switch
-			{
-				"service.address" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Address = p),
-				"ServiceAddress" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Address = p),
-				"service.environment" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Environment = p),
-				"ServiceEnvironment" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Environment = p),
-				"service.ephemeral_id" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.EphemeralId = p),
-				"ServiceEphemeralId" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.EphemeralId = p),
-				"service.id" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Id = p),
-				"ServiceId" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Id = p),
-				"service.name" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Name = p),
-				"ServiceName" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Name = p),
-				"service.node.name" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.NodeName = p),
-				"ServiceNodeName" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.NodeName = p),
-				"service.node.role" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.NodeRole = p),
-				"ServiceNodeRole" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.NodeRole = p),
-				"service.state" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.State = p),
-				"ServiceState" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.State = p),
-				"service.type" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Type = p),
-				"ServiceType" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Type = p),
-				"service.version" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Version = p),
-				"ServiceVersion" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Version = p),
-				_ => null
-			};
-			return assign;
-		}
-		public static bool TrySetServiceOrigin(IServiceOrigin document, string path, object value)
-		{
-			var assign = TryAssignServiceOrigin(path);
-			if (assign == null) return false;
-		
-			var entity = document.Origin ?? new ServiceOrigin();
-			var assigned = assign(entity, value);
-			if (assigned) document.Origin = entity;
-			return assigned;
-		}
-
-		public static Func<ServiceTarget, object, bool> TryAssignServiceTarget(string path)
-		{
-			Func<ServiceTarget, object, bool> assign = path switch
-			{
-				"service.address" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Address = p),
-				"ServiceAddress" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Address = p),
-				"service.environment" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Environment = p),
-				"ServiceEnvironment" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Environment = p),
-				"service.ephemeral_id" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.EphemeralId = p),
-				"ServiceEphemeralId" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.EphemeralId = p),
-				"service.id" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Id = p),
-				"ServiceId" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Id = p),
-				"service.name" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Name = p),
-				"ServiceName" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Name = p),
-				"service.node.name" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.NodeName = p),
-				"ServiceNodeName" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.NodeName = p),
-				"service.node.role" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.NodeRole = p),
-				"ServiceNodeRole" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.NodeRole = p),
-				"service.state" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.State = p),
-				"ServiceState" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.State = p),
-				"service.type" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Type = p),
-				"ServiceType" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Type = p),
-				"service.version" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Version = p),
-				"ServiceVersion" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Version = p),
-				_ => null
-			};
-			return assign;
-		}
-		public static bool TrySetServiceTarget(IServiceTarget document, string path, object value)
-		{
-			var assign = TryAssignServiceTarget(path);
-			if (assign == null) return false;
-		
-			var entity = document.Target ?? new ServiceTarget();
-			var assigned = assign(entity, value);
-			if (assigned) document.Target = entity;
-			return assigned;
-		}
-
-		public static Func<UserTarget, object, bool> TryAssignUserTarget(string path)
-		{
-			Func<UserTarget, object, bool> assign = path switch
-			{
-				"user.domain" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Domain = p),
-				"UserDomain" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Domain = p),
-				"user.email" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Email = p),
-				"UserEmail" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Email = p),
-				"user.full_name" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.FullName = p),
-				"UserFullName" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.FullName = p),
-				"user.hash" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Hash = p),
-				"UserHash" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Hash = p),
-				"user.id" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Id = p),
-				"UserId" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Id = p),
-				"user.name" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Name = p),
-				"UserName" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Name = p),
-				_ => null
-			};
-			return assign;
-		}
-		public static bool TrySetUserTarget(IUserTarget document, string path, object value)
-		{
-			var assign = TryAssignUserTarget(path);
-			if (assign == null) return false;
-		
-			var entity = document.Target ?? new UserTarget();
-			var assigned = assign(entity, value);
-			if (assigned) document.Target = entity;
-			return assigned;
-		}
-
-		public static Func<UserEffective, object, bool> TryAssignUserEffective(string path)
-		{
-			Func<UserEffective, object, bool> assign = path switch
-			{
-				"user.domain" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Domain = p),
-				"UserDomain" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Domain = p),
-				"user.email" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Email = p),
-				"UserEmail" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Email = p),
-				"user.full_name" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.FullName = p),
-				"UserFullName" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.FullName = p),
-				"user.hash" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Hash = p),
-				"UserHash" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Hash = p),
-				"user.id" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Id = p),
-				"UserId" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Id = p),
-				"user.name" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Name = p),
-				"UserName" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Name = p),
-				_ => null
-			};
-			return assign;
-		}
-		public static bool TrySetUserEffective(IUserEffective document, string path, object value)
-		{
-			var assign = TryAssignUserEffective(path);
-			if (assign == null) return false;
-		
-			var entity = document.Effective ?? new UserEffective();
-			var assigned = assign(entity, value);
-			if (assigned) document.Effective = entity;
-			return assigned;
-		}
-
-		public static Func<UserChanges, object, bool> TryAssignUserChanges(string path)
-		{
-			Func<UserChanges, object, bool> assign = path switch
-			{
-				"user.domain" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Domain = p),
-				"UserDomain" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Domain = p),
-				"user.email" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Email = p),
-				"UserEmail" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Email = p),
-				"user.full_name" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.FullName = p),
-				"UserFullName" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.FullName = p),
-				"user.hash" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Hash = p),
-				"UserHash" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Hash = p),
-				"user.id" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Id = p),
-				"UserId" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Id = p),
-				"user.name" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Name = p),
-				"UserName" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Name = p),
-				_ => null
-			};
-			return assign;
-		}
-		public static bool TrySetUserChanges(IUserChanges document, string path, object value)
-		{
-			var assign = TryAssignUserChanges(path);
-			if (assign == null) return false;
-		
-			var entity = document.Changes ?? new UserChanges();
-			var assigned = assign(entity, value);
-			if (assigned) document.Changes = entity;
 			return assigned;
 		}
 	}

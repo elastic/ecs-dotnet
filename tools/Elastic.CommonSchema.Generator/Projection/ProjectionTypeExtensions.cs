@@ -37,6 +37,7 @@ namespace Elastic.CommonSchema.Generator.Projection
 				case FieldType.Wildcard:
 				case FieldType.Text:
 				case FieldType.Ip:
+				case FieldType.GeoPoint:
 					return "TrySetString";
 				case FieldType.Boolean:
 					return "TrySetBool";

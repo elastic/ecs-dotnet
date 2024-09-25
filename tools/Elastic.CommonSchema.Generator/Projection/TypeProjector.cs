@@ -130,9 +130,7 @@ namespace Elastic.CommonSchema.Generator.Projection
 				//.DistinctBy(g=>g.Name)
 				.ToList();
 			foreach (var entity in entities)
-			{
 				entity.AssignableInterfaces = assignables.Where(a => a.Entities.Contains(entity)).DistinctBy(a=>a.Name).ToList();
-			}
 
 			Projection = new CommonSchemaTypesProjection
 			{
@@ -164,6 +162,8 @@ namespace Elastic.CommonSchema.Generator.Projection
 			{
 				var found = assignable.TryGetValue(name, out var a);
 				if (found && a.Property.IsArray)
+					continue;
+				if (entity is SelfReferentialReusedEntityClass)
 					continue;
 				propDispatches.Add(new PropDispatch(entity, a));
 			}
@@ -278,10 +278,10 @@ namespace Elastic.CommonSchema.Generator.Projection
 							currentPropertyReferences[fullPath] =
 								currentPropertyReferences.TryGetValue(fullPath, out var p)
 									? p
-									: new InlineObjectPropertyReference(parentPath, fullPath, InlineObjects[fullPath], field);
+									: new InlineObjectPropertyReference(field, parentPath, fullPath, InlineObjects[fullPath]);
 						}
 						else
-							currentPropertyReferences[fullPath] = new ValueTypePropertyReference(parentPath, fullPath, field);
+							currentPropertyReferences[fullPath] = new ValueTypePropertyReference(field, parentPath, fullPath);
 					}
 					else
 					{
@@ -307,13 +307,13 @@ namespace Elastic.CommonSchema.Generator.Projection
 							currentPropertyReferences[path] =
 								currentPropertyReferences.TryGetValue(path, out var p)
 									? p
-									: new InlineObjectPropertyReference(parentPath, path, InlineObjects[path], field);
+									: new InlineObjectPropertyReference(field, parentPath, path, InlineObjects[path]);
 							currentPropertyReferences = InlineObjects[path].Properties;
 							parentPath = path;
 							foundInlineObjectPath = true;
 						}
 						if (!foundInlineObjectPath) parentPath = name;
-						currentPropertyReferences[fullPath] = new ValueTypePropertyReference(parentPath, fullPath, field);
+						currentPropertyReferences[fullPath] = new ValueTypePropertyReference(field, parentPath, fullPath);
 					}
 				}
 			}

@@ -106,7 +106,7 @@ namespace Elastic.CommonSchema
 		{
 			switch (path) 
 			{
-	@foreach (var prop in Model.Base.BaseFieldSet.SettableProperties)
+	@foreach (var prop in Model.Base.SettableProperties)
 	{
 <text>				case "@prop.FullPath":
 				case "@prop.LogTemplateAlternative":
@@ -115,7 +115,7 @@ namespace Elastic.CommonSchema
 					return TrySet@(@Model.Base.Name)(document, path, value);
 @foreach (var entity in Model.EntityClasses)
 {
-	if (!entity.BaseFieldSet.SettableProperties.Any())
+	if (!entity.SettableProperties.Any())
 	{
 		continue;
 	}
@@ -137,7 +137,7 @@ namespace Elastic.CommonSchema
 		{
 			Func@(Raw("<"))@(Model.Base.Name), object, bool@(Raw(">")) assign = path switch
 			{
-		@foreach (var prop in Model.Base.BaseFieldSet.SettableProperties)
+		@foreach (var prop in Model.Base.DispatchProperties)
 		{
 <text>				"@prop.FullPath" => static (e, v) => @(prop.CastFromObject)(e, v, static (ee, p) => ee.@(prop.Name) = p),
 				"@prop.LogTemplateAlternative" => static (e, v) => @(prop.CastFromObject)(e, v, static (ee, p) => ee.@(prop.Name) = p),
@@ -155,7 +155,7 @@ namespace Elastic.CommonSchema
 		{
 			Func@(Raw("<"))@(dispatch.FuncTarget), object, bool@(Raw(">")) assign = path switch
 			{
-		@foreach (var prop in dispatch.SettableProperties)
+		@foreach (var prop in dispatch.AssignableProperties)
 		{
 			if (!prop.IsEntityDispatch)
 			{
@@ -165,8 +165,8 @@ namespace Elastic.CommonSchema
 			}
 			else
 			{
-<text>				"@prop.FullPath" => static (e, v) => @(prop.CastFromObject)("@(prop.JsonProperty)")(e.@(prop.ContainerPath) ?? new @(prop.ContainerPathEntity)(),v),
-				"@prop.LogTemplateAlternative" => static (e, v) => @(prop.CastFromObject)("@(prop.JsonProperty)")(e.@(prop.ContainerPath) ?? new @(prop.ContainerPathEntity)(),v),
+<text>				"@prop.FullPath" => static (e, v) => @(prop.CastFromObject)("@(prop.JsonProperty)")(e.@(prop.ContainerPath) ??= new @(prop.ContainerPathEntity)(),v),
+				"@prop.LogTemplateAlternative" => static (e, v) => @(prop.CastFromObject)("@(prop.JsonProperty)")(e.@(prop.ContainerPath) ??= new @(prop.ContainerPathEntity)(),v),
 </text>
 			}
 		}

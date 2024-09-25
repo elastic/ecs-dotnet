@@ -29,7 +29,7 @@ namespace Elastic.CommonSchema
 	///<summary>All properties that <see cref="EcsDocument.AssignField" /> supports </summary>
 	public static class LogTemplateProperties
 	{
-@foreach (var prop in Model.Base.BaseFieldSet.SettableProperties)
+@foreach (var prop in Model.Base.SettableProperties)
 {
 <text>		///<summary>
 		/// <para><c>@prop.FullPath</c></para>
@@ -57,7 +57,7 @@ namespace Elastic.CommonSchema
 		///<summary>All properties that <see cref="EcsDocument.AssignField" /> supports </summary>
 		public static readonly HashSet@(Raw("<string>")) All = new()
 		{
-@foreach (var prop in Model.Base.BaseFieldSet.SettableProperties)
+@foreach (var prop in Model.Base.SettableProperties)
 {
 <text>			"@prop.FullPath", @prop.LogTemplateAlternative,
 </text>

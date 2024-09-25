@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 using Elastic.CommonSchema.Generator.Schema.DTO;
 
 namespace Elastic.CommonSchema.Generator.Projection
@@ -17,8 +18,6 @@ namespace Elastic.CommonSchema.Generator.Projection
 
 		public IEnumerable<InlineObjectPropertyReference> InlineObjectProperties =>
 			Properties.Values.OfType<InlineObjectPropertyReference>();
-
-		public IEnumerable<ValueTypePropertyReference> SettableProperties => ValueProperties.Where(p => !string.IsNullOrEmpty(p.CastFromObject));
 
 	}
 
@@ -40,11 +39,32 @@ namespace Elastic.CommonSchema.Generator.Projection
 	}
 
 	public class SelfReferentialReusedEntityClass
-		(string name, FieldSetBaseClass baseFieldSet, string reuseDescription, bool isArray)
-		: EntityClass(name, baseFieldSet)
+		: EntityClass
 	{
-		public string ReuseDescription { get; } = reuseDescription;
-		public bool IsArray { get; } = isArray;
+		public SelfReferentialReusedEntityClass(string name, FieldSetBaseClass baseFieldSet, string reuseDescription, bool isArray)
+			: base(name, baseFieldSet)
+		{
+			ReuseDescription = reuseDescription;
+			IsArray = isArray;
+
+			Find = baseFieldSet.FieldSet.Name;
+			Replace = name;
+		}
+
+		public string Replace { get; set; }
+		public string Find { get; set; }
+		public string ReuseDescription { get; }
+		public bool IsArray { get; }
+
+		protected override IEnumerable<ValueTypePropertyReference> OwnProperties =>
+			BaseFieldSet.ValueProperties.Where(p => p.IsAssignable)
+				.Select(v=>
+				{
+					var localPath = Replace;
+					var fullPath = Regex.Replace(v.FullPath, $@"^{Find}\.", $"{Replace}.");
+
+					return new ValueTypePropertyReference(v, localPath, fullPath);
+				});
 	}
 
 
@@ -67,10 +87,27 @@ namespace Elastic.CommonSchema.Generator.Projection
 
 		public IEnumerable<EntityPropertyReference> EntityProperties => EntityReferences.Values;
 
-		public IEnumerable<ValueTypePropertyReference> SettableProperties =>
-			BaseFieldSet.ValueProperties.Where(p => !string.IsNullOrEmpty(p.CastFromObject))
-				.Concat(EntityProperties.SelectMany(e=>e.Entity.SettableProperties.Select(s=>s.CreateSettableTypePropertyReference(e))))
-				.DistinctBy(e=>e.Name);
+		protected virtual IEnumerable<ValueTypePropertyReference> OwnProperties =>
+			BaseFieldSet.ValueProperties.Where(p => p.IsAssignable);
+
+		public IEnumerable<ValueTypePropertyReference> SettableProperties
+		{
+			get
+			{
+				if (Name is "EcsDocument")
+					return OwnProperties;
+				return OwnProperties
+					.Concat(EntityProperties
+						.Where(p => p.IsAssignable)
+						.SelectMany(e => e.Entity.SettableProperties
+							.Select(s => s.CreateSettableTypePropertyReference(e))
+						)
+					)
+					.DistinctBy(e => e.Name);
+			}
+		}
+
+		public IList<DispatchProperty> DispatchProperties => SettableProperties.Select(s=> new DispatchProperty(s)).ToList();
 
 
 		//provided later
@@ -86,19 +123,52 @@ namespace Elastic.CommonSchema.Generator.Projection
 		}
 	}
 
-
-	public class AssignableEntityInterface
+	/// <summary>
+	/// Represents an interface for entities that can set a particular nested property.
+	/// E.g. both EcsDocument and Client have an `As` property of type `As`.
+	/// </summary>
+	public class AssignableEntityInterface(string name, EntityPropertyReference property, List<EntityClass> entities)
 	{
-		public AssignableEntityInterface(string name, EntityPropertyReference property, List<EntityClass> entities)
-		{
-			Name = $"I{name}";
-			Property = property;
-			Entities = entities;
-		}
+		public EntityPropertyReference Property { get; } = property;
+		public List<EntityClass> Entities { get; } = entities;
+		public string Name { get; } = $"I{name}";
+	}
 
-		public EntityPropertyReference Property { get; }
-		public List<EntityClass> Entities { get; }
+
+	public class DispatchProperty
+	{
+		public bool IsEntityDispatch { get; }
+		public string FullPath { get; }
+		public string LogTemplateAlternative { get; }
+		public string CastFromObject { get; }
+		public string ContainerPath { get; } = string.Empty;
+		public string ContainerPathEntity { get; } = string.Empty;
+
 		public string Name { get; }
+		public string JsonProperty { get; }
+		public bool SelfReferential { get; }
+
+		public DispatchProperty(PropertyReference property)
+		{
+			JsonProperty = property.JsonProperty;
+			FullPath = property.FullPath;
+			LogTemplateAlternative = property.LogTemplateAlternative;
+			Name = property.Name;
+			switch (property)
+			{
+				case NestedValueTypePropertyReference nested:
+					IsEntityDispatch = true;
+					CastFromObject = $"TryAssign{nested.Entity.Name}";
+					ContainerPath = nested.ContainerPath;
+					ContainerPathEntity = nested.ContainerPathEntity;
+					SelfReferential = nested.SelfReferential;
+					break;
+				case ValueTypePropertyReference value:
+					CastFromObject = value.Field.GetCastFromObject();
+					SelfReferential = value.SelfReferential;
+					break;
+			}
+		}
 	}
 
 	public class PropDispatch
@@ -109,6 +179,7 @@ namespace Elastic.CommonSchema.Generator.Projection
 		public EntityClass Entity { get; }
 		public string AssignParameter { get; }
 		public string AssignEntity { get; set; }
+		public List<DispatchProperty> AssignableProperties { get; set; }
 
 		public PropDispatch(EntityClass entity, AssignableEntityInterface assignable)
 		{
@@ -118,15 +189,13 @@ namespace Elastic.CommonSchema.Generator.Projection
 			AssignEntity = entity.Name;
 			Entity = entity;
 			AssignTarget = entity.Name;
-			SettableProperties = Entity.SettableProperties.ToList();
+			AssignableProperties = Entity.SettableProperties.Select(e => new DispatchProperty(e)).ToList();
 			AssignParameter = "EcsDocument";
-			if (assignable is { } a)
+			if (assignable is not null)
 			{
 				AssignParameter = $"I{Name}";
 				AssignTarget = assignable.Property.Name;
 			}
 		}
-
-		public List<ValueTypePropertyReference> SettableProperties { get; set; }
 	}
 }
