@@ -54,6 +54,15 @@ public class GithubIssue402 : LogTestsBase
 		info.Threat.Should().NotBeNull();
 		info.Threat!.IndicatorX509.Should().NotBeNull();
 		info.Threat!.IndicatorX509!.SerialNumber.Should().Be(v);
+		//info.Threat.IndicatorFile.Pe.Company
+	});
+	[Fact]
+	public void CanAssignMultipleEntitiesDeep() => Setup("threat.indicator.file.pe.company", "comp", (info, v) =>
+	{
+		info.Threat.Should().NotBeNull();
+		info.Threat!.IndicatorFile.Should().NotBeNull();
+		info.Threat!.IndicatorFile!.Pe.Should().NotBeNull();
+		info.Threat.IndicatorFile!.Pe!.Company.Should().Be(v);
 	});
 
 	[Fact]

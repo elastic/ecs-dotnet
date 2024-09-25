@@ -63,5 +63,7 @@ namespace Elastic.CommonSchema.Serialization;
 [JsonSerializable(typeof(Vlan))]
 [JsonSerializable(typeof(Vulnerability))]
 [JsonSerializable(typeof(X509))]
+[JsonSerializable(typeof(LogEntityJsonConverter.LogOriginInvalid))]
+[JsonSerializable(typeof(LogEntityJsonConverter.LogFileOriginInvalid))]
 [JsonSourceGenerationOptions(DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull)]
 internal partial class EcsJsonContext : JsonSerializerContext { }
