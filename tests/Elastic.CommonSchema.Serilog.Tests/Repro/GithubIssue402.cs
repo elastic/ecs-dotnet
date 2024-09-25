@@ -42,6 +42,13 @@ public class GithubIssue402 : LogTestsBase
 	});
 
 	[Fact]
+	public void CanAssignNestedNatIp() => Setup("client.nat.ip", "ip", (info, v) =>
+	{
+		info.Client.Should().NotBeNull();
+		info.Client!.NatIp.Should().Be(v);
+	});
+
+	[Fact]
 	public void CanAssignDeeplyNestedThreatX509() => Setup("threat.indicator.x509.serial_number", "123", (info, v) =>
 	{
 		info.Threat.Should().NotBeNull();
