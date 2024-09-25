@@ -4,6 +4,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.IO;
 using Elastic.CommonSchema.Serilog.Adapters;
 using Serilog.Events;
 
@@ -13,7 +14,7 @@ namespace Elastic.CommonSchema.Serilog
 	public interface IEcsTextFormatterConfiguration : IEcsDocumentCreationOptions
 	{
 		/// <summary>
-		/// Expert option, its recommended to use <see cref="EnricherExtensions.WithEcsHttpContext"/> to ensure HttpContext gets mapped
+		/// Expert option: Installing <c>Elastic.Serilog.Enrichers.Web</c> is recommended to ensure HttpContext gets mapped.
 		/// to the appropriate ECS fields.
 		/// <para> Example: </para>
 		/// <code>
@@ -32,6 +33,11 @@ namespace Elastic.CommonSchema.Serilog
 		/// Stop certain keys to be persisted as <see cref="EcsDocument.Metadata"/> or <see cref="BaseFieldSet.Labels"/>
 		/// </summary>
 		ISet<string>? LogEventPropertiesToFilter { get;set; }
+
+		/// <summary>
+		/// Provide a <see cref="IFormatProvider"/> to <see cref="LogEvent.RenderMessage(System.IO.TextWriter,System.IFormatProvider)"/>
+		/// </summary>
+		IFormatProvider? MessageFormatProvider { get; set; }
 	}
 
 	/// <summary> Provides configuration options for <see cref="EcsTextFormatter{TEcsDocument}"/> </summary>
@@ -65,6 +71,9 @@ namespace Elastic.CommonSchema.Serilog
 
 		/// <inheritdoc cref="IEcsTextFormatterConfiguration.LogEventPropertiesToFilter"/>
 		public ISet<string>? LogEventPropertiesToFilter { get; set; }
+
+		/// <inheritdoc cref="IEcsTextFormatterConfiguration.MessageFormatProvider"/>
+		public IFormatProvider? MessageFormatProvider { get; set; }
 
 		/// <inheritdoc cref="IEcsTextFormatterConfiguration{TEcsDocument}.MapCustom"/>
 		public Func<TEcsDocument, LogEvent, TEcsDocument>? MapCustom { get; set; }

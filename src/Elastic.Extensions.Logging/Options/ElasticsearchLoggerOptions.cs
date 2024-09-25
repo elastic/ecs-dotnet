@@ -1,3 +1,4 @@
+using System;
 using Elastic.CommonSchema;
 using Elastic.Extensions.Logging.Common;
 using Elastic.Ingest.Elasticsearch;
@@ -8,7 +9,7 @@ namespace Elastic.Extensions.Logging.Options
 	/// <summary>
 	/// Provide options to <see cref="ElasticsearchLogger"/> to control how data gets written to Elasticsearch
 	/// </summary>
-	public class ElasticsearchLoggerOptions : ILogEventCreationOptions
+	public class ElasticsearchLoggerOptions : ILogEventCreationOptions<LogEvent>
 	{
 		/// <summary>
 		/// Gets or sets a flag indicating whether host details should be included in the message. Defaults to <c>true</c>.
@@ -91,5 +92,8 @@ namespace Elastic.Extensions.Logging.Options
 		/// <para>If set takes precedence over <see cref="ShipTo"/> </para>
 		/// </summary>
 		public ITransport? Transport { get; set; }
+
+		/// <inheritdoc cref="ILogEventCreationOptions{TEcsDocument}.MapCustom"/>
+		public Action<LogEvent>? MapCustom { get; set; }
 	}
 }

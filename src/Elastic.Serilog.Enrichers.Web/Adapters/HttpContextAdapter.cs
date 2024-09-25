@@ -2,10 +2,12 @@
 // Elasticsearch B.V licenses this file to you under the Apache 2.0 License.
 // See the LICENSE file in the project root for more information
 
-#if !NETSTANDARD
+#if FULLFRAMEWORK
+using Elastic.CommonSchema;
+using Elastic.CommonSchema.Serilog.Adapters;
 using System.Web;
 
-namespace Elastic.CommonSchema.Serilog.Adapters
+namespace Elastic.Serilog.Enrichers.Web.Adapters
 {
 	/// <inheritdoc cref="IHttpAdapter"/>
 	public class HttpAdapter : IHttpAdapter

@@ -28,7 +28,7 @@ namespace Elastic.Serilog.Sinks
 			this LoggerSinkConfiguration loggerConfiguration,
 			BootstrapMethod bootstrapMethod,
 			ICollection<Uri> nodes,
-			bool useSniffing = true,
+			bool useSniffing = false,
 			string? dataStream = null,
 			string? ilmPolicy = null,
 			string? apiKey = null,
@@ -58,7 +58,7 @@ namespace Elastic.Serilog.Sinks
 			LogEventLevel restrictedToMinimumLevel = LevelAlias.Minimum
 		)
 		{
-			var transportConfig = !useSniffing ? TransportHelper.Static(nodes) : TransportHelper.Sniffing(nodes);
+			var transportConfig = useSniffing ? TransportHelper.Sniffing(nodes) : TransportHelper.Static(nodes);
 			SetTransportConfig(transportConfig, apiKey, username, password, proxy, proxyUsername, proxyPassword, fingerprint, debugMode
 			);
 

@@ -3,20 +3,22 @@
 // See the LICENSE file in the project root for more information
 
 using Elastic.CommonSchema.Serilog.Adapters;
+using Elastic.Serilog.Enrichers.Web.Adapters;
 using Serilog.Core;
 using Serilog.Events;
-#if NETSTANDARD
+#if NET
 using Microsoft.AspNetCore.Http;
 #else
 using System.Web;
 #endif
+using static Elastic.CommonSchema.Serilog.SpecialProperties;
 
-namespace Elastic.CommonSchema.Serilog;
+namespace Elastic.Serilog.Enrichers.Web;
 
 /// <summary>Include current HTTP context data on any ECS document created</summary>
 public class HttpContextEnricher : ILogEventEnricher
 {
-#if NETSTANDARD
+#if NET
 	private readonly IHttpContextAccessor _httpContextAccessor;
 
 	/// <summary>Include current HTTP context data on any ECS document created</summary>
@@ -27,6 +29,7 @@ public class HttpContextEnricher : ILogEventEnricher
 #else
 	private IHttpAdapter Adapter => new HttpAdapter(HttpContext.Current);
 #endif
+
 
 
 	/// <summary> The property name added to enriched log events.</summary>
@@ -49,13 +52,4 @@ public class HttpContextEnricher : ILogEventEnricher
 		logEvent.AddPropertyIfAbsent(new LogEventProperty(PropertyName, new ScalarValue(r)));
 	}
 
-	internal class HttpContextEnrichments
-	{
-		public Client? Client { get; set; }
-		public Http? Http { get; set; }
-		public Server? Server { get; set; }
-		public Url? Url { get; set; }
-		public User? User { get; set; }
-		public UserAgent? UserAgent { get; set; }
-	}
 }

@@ -15,6 +15,6 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\src\Elastic.Apm.SerilogEnricher\Elastic.Apm.SerilogEnricher.csproj" />
-    <ProjectReference Include="..\..\src\Elastic.CommonSchema.Serilog\Elastic.CommonSchema.Serilog.csproj" />
+    <ProjectReference Include="..\..\src\Elastic.Serilog.Enrichers.Web\Elastic.Serilog.Enrichers.Web.csproj" />
   </ItemGroup>
 </Project>
