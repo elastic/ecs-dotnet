@@ -29,7 +29,7 @@ namespace Elastic.CommonSchema
 {
 <text>
 	///<inheritdoc cref="@entity.BaseFieldSet.Name"/>
-	public class @entity.Name : @entity.BaseFieldSet.Name {
+	public class @entity.Name : @entity.BaseFieldSet.Name @entity.AssignableInterfacesAsString {
 @foreach (var property in entity.EntityProperties)
 {
 <text>
@@ -48,7 +48,7 @@ namespace Elastic.CommonSchema
 {
 <text>
 	///<inheritdoc cref="@entity.BaseFieldSet.Name"/>
-	public@(entity.Partial ? " partial" : "") class @entity.Name : @entity.BaseFieldSet.Name {
+	public@(entity.Partial ? " partial" : "") class @entity.Name : @entity.BaseFieldSet.Name @entity.AssignableInterfacesAsString {
 @foreach (var property in entity.EntityProperties)
 {
 <text>

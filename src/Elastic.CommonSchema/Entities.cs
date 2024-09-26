@@ -11,3 +11,4 @@ namespace Elastic.CommonSchema;
 public partial class Log { }
 [JsonConverter(typeof(EcsEntityJsonConverter))]
 public partial class Ecs { }
+

@@ -709,6 +709,62 @@ namespace Elastic.CommonSchema
 				case "ClientSubdomain":
 				case "client.top_level_domain":
 				case "ClientTopLevelDomain":
+				case "client.as.number":
+				case "ClientAsNumber":
+				case "client.as.organization.name":
+				case "ClientAsOrganizationName":
+				case "client.geo.city_name":
+				case "ClientGeoCityName":
+				case "client.geo.continent_code":
+				case "ClientGeoContinentCode":
+				case "client.geo.continent_name":
+				case "ClientGeoContinentName":
+				case "client.geo.country_iso_code":
+				case "ClientGeoCountryIsoCode":
+				case "client.geo.country_name":
+				case "ClientGeoCountryName":
+				case "client.geo.location":
+				case "ClientGeoLocation":
+				case "client.geo.name":
+				case "ClientGeoName":
+				case "client.geo.postal_code":
+				case "ClientGeoPostalCode":
+				case "client.geo.region_iso_code":
+				case "ClientGeoRegionIsoCode":
+				case "client.geo.region_name":
+				case "ClientGeoRegionName":
+				case "client.geo.timezone":
+				case "ClientGeoTimezone":
+				case "client.user.domain":
+				case "ClientUserDomain":
+				case "client.user.email":
+				case "ClientUserEmail":
+				case "client.user.full_name":
+				case "ClientUserFullName":
+				case "client.user.hash":
+				case "ClientUserHash":
+				case "client.user.id":
+				case "ClientUserId":
+				case "client.user.name":
+				case "ClientUserName":
+				case "client.user.group.domain":
+				case "ClientUserGroupDomain":
+				case "client.user.group.id":
+				case "ClientUserGroupId":
+				case "client.user.group.name":
+				case "ClientUserGroupName":
+				case "client.user.risk.calculated_level":
+				case "ClientUserRiskCalculatedLevel":
+				case "client.user.risk.calculated_score":
+				case "ClientUserRiskCalculatedScore":
+				case "client.user.risk.calculated_score_norm":
+				case "ClientUserRiskCalculatedScoreNorm":
+				case "client.user.risk.static_level":
+				case "ClientUserRiskStaticLevel":
+				case "client.user.risk.static_score":
+				case "ClientUserRiskStaticScore":
+				case "client.user.risk.static_score_norm":
+				case "ClientUserRiskStaticScoreNorm":
 					return TrySetClient(document, path, value);
 				case "cloud.account.id":
 				case "CloudAccountId":
@@ -806,6 +862,62 @@ namespace Elastic.CommonSchema
 				case "DestinationSubdomain":
 				case "destination.top_level_domain":
 				case "DestinationTopLevelDomain":
+				case "destination.as.number":
+				case "DestinationAsNumber":
+				case "destination.as.organization.name":
+				case "DestinationAsOrganizationName":
+				case "destination.geo.city_name":
+				case "DestinationGeoCityName":
+				case "destination.geo.continent_code":
+				case "DestinationGeoContinentCode":
+				case "destination.geo.continent_name":
+				case "DestinationGeoContinentName":
+				case "destination.geo.country_iso_code":
+				case "DestinationGeoCountryIsoCode":
+				case "destination.geo.country_name":
+				case "DestinationGeoCountryName":
+				case "destination.geo.location":
+				case "DestinationGeoLocation":
+				case "destination.geo.name":
+				case "DestinationGeoName":
+				case "destination.geo.postal_code":
+				case "DestinationGeoPostalCode":
+				case "destination.geo.region_iso_code":
+				case "DestinationGeoRegionIsoCode":
+				case "destination.geo.region_name":
+				case "DestinationGeoRegionName":
+				case "destination.geo.timezone":
+				case "DestinationGeoTimezone":
+				case "destination.user.domain":
+				case "DestinationUserDomain":
+				case "destination.user.email":
+				case "DestinationUserEmail":
+				case "destination.user.full_name":
+				case "DestinationUserFullName":
+				case "destination.user.hash":
+				case "DestinationUserHash":
+				case "destination.user.id":
+				case "DestinationUserId":
+				case "destination.user.name":
+				case "DestinationUserName":
+				case "destination.user.group.domain":
+				case "DestinationUserGroupDomain":
+				case "destination.user.group.id":
+				case "DestinationUserGroupId":
+				case "destination.user.group.name":
+				case "DestinationUserGroupName":
+				case "destination.user.risk.calculated_level":
+				case "DestinationUserRiskCalculatedLevel":
+				case "destination.user.risk.calculated_score":
+				case "DestinationUserRiskCalculatedScore":
+				case "destination.user.risk.calculated_score_norm":
+				case "DestinationUserRiskCalculatedScoreNorm":
+				case "destination.user.risk.static_level":
+				case "DestinationUserRiskStaticLevel":
+				case "destination.user.risk.static_score":
+				case "DestinationUserRiskStaticScore":
+				case "destination.user.risk.static_score_norm":
+				case "DestinationUserRiskStaticScoreNorm":
 					return TrySetDestination(document, path, value);
 				case "device.id":
 				case "DeviceId":
@@ -820,6 +932,70 @@ namespace Elastic.CommonSchema
 				case "DllName":
 				case "dll.path":
 				case "DllPath":
+				case "dll.hash.md5":
+				case "DllHashMd5":
+				case "dll.hash.sha1":
+				case "DllHashSha1":
+				case "dll.hash.sha256":
+				case "DllHashSha256":
+				case "dll.hash.sha384":
+				case "DllHashSha384":
+				case "dll.hash.sha512":
+				case "DllHashSha512":
+				case "dll.hash.ssdeep":
+				case "DllHashSsdeep":
+				case "dll.hash.tlsh":
+				case "DllHashTlsh":
+				case "dll.pe.architecture":
+				case "DllPeArchitecture":
+				case "dll.pe.company":
+				case "DllPeCompany":
+				case "dll.pe.description":
+				case "DllPeDescription":
+				case "dll.pe.file_version":
+				case "DllPeFileVersion":
+				case "dll.pe.go_import_hash":
+				case "DllPeGoImportHash":
+				case "dll.pe.go_imports":
+				case "DllPeGoImports":
+				case "dll.pe.go_imports_names_entropy":
+				case "DllPeGoImportsNamesEntropy":
+				case "dll.pe.go_imports_names_var_entropy":
+				case "DllPeGoImportsNamesVarEntropy":
+				case "dll.pe.go_stripped":
+				case "DllPeGoStripped":
+				case "dll.pe.imphash":
+				case "DllPeImphash":
+				case "dll.pe.import_hash":
+				case "DllPeImportHash":
+				case "dll.pe.imports_names_entropy":
+				case "DllPeImportsNamesEntropy":
+				case "dll.pe.imports_names_var_entropy":
+				case "DllPeImportsNamesVarEntropy":
+				case "dll.pe.original_file_name":
+				case "DllPeOriginalFileName":
+				case "dll.pe.pehash":
+				case "DllPePehash":
+				case "dll.pe.product":
+				case "DllPeProduct":
+				case "dll.code_signature.digest_algorithm":
+				case "DllCodeSignatureDigestAlgorithm":
+				case "dll.code_signature.exists":
+				case "DllCodeSignatureExists":
+				case "dll.code_signature.signing_id":
+				case "DllCodeSignatureSigningId":
+				case "dll.code_signature.status":
+				case "DllCodeSignatureStatus":
+				case "dll.code_signature.subject_name":
+				case "DllCodeSignatureSubjectName":
+				case "dll.code_signature.team_id":
+				case "DllCodeSignatureTeamId":
+				case "dll.code_signature.timestamp":
+				case "DllCodeSignatureTimestamp":
+				case "dll.code_signature.trusted":
+				case "DllCodeSignatureTrusted":
+				case "dll.code_signature.valid":
+				case "DllCodeSignatureValid":
 					return TrySetDll(document, path, value);
 				case "dns.id":
 				case "DnsId":
@@ -1024,6 +1200,152 @@ namespace Elastic.CommonSchema
 				case "FileType":
 				case "file.uid":
 				case "FileUid":
+				case "file.hash.md5":
+				case "FileHashMd5":
+				case "file.hash.sha1":
+				case "FileHashSha1":
+				case "file.hash.sha256":
+				case "FileHashSha256":
+				case "file.hash.sha384":
+				case "FileHashSha384":
+				case "file.hash.sha512":
+				case "FileHashSha512":
+				case "file.hash.ssdeep":
+				case "FileHashSsdeep":
+				case "file.hash.tlsh":
+				case "FileHashTlsh":
+				case "file.pe.architecture":
+				case "FilePeArchitecture":
+				case "file.pe.company":
+				case "FilePeCompany":
+				case "file.pe.description":
+				case "FilePeDescription":
+				case "file.pe.file_version":
+				case "FilePeFileVersion":
+				case "file.pe.go_import_hash":
+				case "FilePeGoImportHash":
+				case "file.pe.go_imports":
+				case "FilePeGoImports":
+				case "file.pe.go_imports_names_entropy":
+				case "FilePeGoImportsNamesEntropy":
+				case "file.pe.go_imports_names_var_entropy":
+				case "FilePeGoImportsNamesVarEntropy":
+				case "file.pe.go_stripped":
+				case "FilePeGoStripped":
+				case "file.pe.imphash":
+				case "FilePeImphash":
+				case "file.pe.import_hash":
+				case "FilePeImportHash":
+				case "file.pe.imports_names_entropy":
+				case "FilePeImportsNamesEntropy":
+				case "file.pe.imports_names_var_entropy":
+				case "FilePeImportsNamesVarEntropy":
+				case "file.pe.original_file_name":
+				case "FilePeOriginalFileName":
+				case "file.pe.pehash":
+				case "FilePePehash":
+				case "file.pe.product":
+				case "FilePeProduct":
+				case "file.x509.issuer.distinguished_name":
+				case "FileX509IssuerDistinguishedName":
+				case "file.x509.not_after":
+				case "FileX509NotAfter":
+				case "file.x509.not_before":
+				case "FileX509NotBefore":
+				case "file.x509.public_key_algorithm":
+				case "FileX509PublicKeyAlgorithm":
+				case "file.x509.public_key_curve":
+				case "FileX509PublicKeyCurve":
+				case "file.x509.public_key_exponent":
+				case "FileX509PublicKeyExponent":
+				case "file.x509.public_key_size":
+				case "FileX509PublicKeySize":
+				case "file.x509.serial_number":
+				case "FileX509SerialNumber":
+				case "file.x509.signature_algorithm":
+				case "FileX509SignatureAlgorithm":
+				case "file.x509.subject.distinguished_name":
+				case "FileX509SubjectDistinguishedName":
+				case "file.x509.version_number":
+				case "FileX509VersionNumber":
+				case "file.code_signature.digest_algorithm":
+				case "FileCodeSignatureDigestAlgorithm":
+				case "file.code_signature.exists":
+				case "FileCodeSignatureExists":
+				case "file.code_signature.signing_id":
+				case "FileCodeSignatureSigningId":
+				case "file.code_signature.status":
+				case "FileCodeSignatureStatus":
+				case "file.code_signature.subject_name":
+				case "FileCodeSignatureSubjectName":
+				case "file.code_signature.team_id":
+				case "FileCodeSignatureTeamId":
+				case "file.code_signature.timestamp":
+				case "FileCodeSignatureTimestamp":
+				case "file.code_signature.trusted":
+				case "FileCodeSignatureTrusted":
+				case "file.code_signature.valid":
+				case "FileCodeSignatureValid":
+				case "file.elf.architecture":
+				case "FileElfArchitecture":
+				case "file.elf.byte_order":
+				case "FileElfByteOrder":
+				case "file.elf.cpu_type":
+				case "FileElfCpuType":
+				case "file.elf.creation_date":
+				case "FileElfCreationDate":
+				case "file.elf.go_import_hash":
+				case "FileElfGoImportHash":
+				case "file.elf.go_imports":
+				case "FileElfGoImports":
+				case "file.elf.go_imports_names_entropy":
+				case "FileElfGoImportsNamesEntropy":
+				case "file.elf.go_imports_names_var_entropy":
+				case "FileElfGoImportsNamesVarEntropy":
+				case "file.elf.go_stripped":
+				case "FileElfGoStripped":
+				case "file.elf.header.abi_version":
+				case "FileElfHeaderAbiVersion":
+				case "file.elf.header.class":
+				case "FileElfHeaderClass":
+				case "file.elf.header.data":
+				case "FileElfHeaderData":
+				case "file.elf.header.entrypoint":
+				case "FileElfHeaderEntrypoint":
+				case "file.elf.header.object_version":
+				case "FileElfHeaderObjectVersion":
+				case "file.elf.header.os_abi":
+				case "FileElfHeaderOsAbi":
+				case "file.elf.header.type":
+				case "FileElfHeaderType":
+				case "file.elf.header.version":
+				case "FileElfHeaderVersion":
+				case "file.elf.import_hash":
+				case "FileElfImportHash":
+				case "file.elf.imports_names_entropy":
+				case "FileElfImportsNamesEntropy":
+				case "file.elf.imports_names_var_entropy":
+				case "FileElfImportsNamesVarEntropy":
+				case "file.elf.telfhash":
+				case "FileElfTelfhash":
+				case "file.macho.go_import_hash":
+				case "FileMachoGoImportHash":
+				case "file.macho.go_imports":
+				case "FileMachoGoImports":
+				case "file.macho.go_imports_names_entropy":
+				case "FileMachoGoImportsNamesEntropy":
+				case "file.macho.go_imports_names_var_entropy":
+				case "FileMachoGoImportsNamesVarEntropy":
+				case "file.macho.go_stripped":
+				case "FileMachoGoStripped":
+				case "file.macho.import_hash":
+				case "FileMachoImportHash":
+				case "file.macho.imports_names_entropy":
+				case "FileMachoImportsNamesEntropy":
+				case "file.macho.imports_names_var_entropy":
+				case "FileMachoImportsNamesVarEntropy":
+				case "file.macho.symhash":
+				case "FileMachoSymhash":
 					return TrySetFile(document, path, value);
 				case "geo.city_name":
 				case "GeoCityName":
@@ -1035,6 +1357,8 @@ namespace Elastic.CommonSchema
 				case "GeoCountryIsoCode":
 				case "geo.country_name":
 				case "GeoCountryName":
+				case "geo.location":
+				case "GeoLocation":
 				case "geo.name":
 				case "GeoName":
 				case "geo.postal_code":
@@ -1100,6 +1424,54 @@ namespace Elastic.CommonSchema
 				case "HostType":
 				case "host.uptime":
 				case "HostUptime":
+				case "host.geo.city_name":
+				case "HostGeoCityName":
+				case "host.geo.continent_code":
+				case "HostGeoContinentCode":
+				case "host.geo.continent_name":
+				case "HostGeoContinentName":
+				case "host.geo.country_iso_code":
+				case "HostGeoCountryIsoCode":
+				case "host.geo.country_name":
+				case "HostGeoCountryName":
+				case "host.geo.location":
+				case "HostGeoLocation":
+				case "host.geo.name":
+				case "HostGeoName":
+				case "host.geo.postal_code":
+				case "HostGeoPostalCode":
+				case "host.geo.region_iso_code":
+				case "HostGeoRegionIsoCode":
+				case "host.geo.region_name":
+				case "HostGeoRegionName":
+				case "host.geo.timezone":
+				case "HostGeoTimezone":
+				case "host.os.family":
+				case "HostOsFamily":
+				case "host.os.full":
+				case "HostOsFull":
+				case "host.os.kernel":
+				case "HostOsKernel":
+				case "host.os.name":
+				case "HostOsName":
+				case "host.os.platform":
+				case "HostOsPlatform":
+				case "host.os.type":
+				case "HostOsType":
+				case "host.os.version":
+				case "HostOsVersion":
+				case "host.risk.calculated_level":
+				case "HostRiskCalculatedLevel":
+				case "host.risk.calculated_score":
+				case "HostRiskCalculatedScore":
+				case "host.risk.calculated_score_norm":
+				case "HostRiskCalculatedScoreNorm":
+				case "host.risk.static_level":
+				case "HostRiskStaticLevel":
+				case "host.risk.static_score":
+				case "HostRiskStaticScore":
+				case "host.risk.static_score_norm":
+				case "HostRiskStaticScoreNorm":
 					return TrySetHost(document, path, value);
 				case "http.request.body.bytes":
 				case "HttpRequestBodyBytes":
@@ -1189,6 +1561,10 @@ namespace Elastic.CommonSchema
 				case "NetworkTransport":
 				case "network.type":
 				case "NetworkType":
+				case "network.vlan.id":
+				case "NetworkVlanId":
+				case "network.vlan.name":
+				case "NetworkVlanName":
 					return TrySetNetwork(document, path, value);
 				case "observer.hostname":
 				case "ObserverHostname":
@@ -1204,6 +1580,42 @@ namespace Elastic.CommonSchema
 				case "ObserverVendor":
 				case "observer.version":
 				case "ObserverVersion":
+				case "observer.geo.city_name":
+				case "ObserverGeoCityName":
+				case "observer.geo.continent_code":
+				case "ObserverGeoContinentCode":
+				case "observer.geo.continent_name":
+				case "ObserverGeoContinentName":
+				case "observer.geo.country_iso_code":
+				case "ObserverGeoCountryIsoCode":
+				case "observer.geo.country_name":
+				case "ObserverGeoCountryName":
+				case "observer.geo.location":
+				case "ObserverGeoLocation":
+				case "observer.geo.name":
+				case "ObserverGeoName":
+				case "observer.geo.postal_code":
+				case "ObserverGeoPostalCode":
+				case "observer.geo.region_iso_code":
+				case "ObserverGeoRegionIsoCode":
+				case "observer.geo.region_name":
+				case "ObserverGeoRegionName":
+				case "observer.geo.timezone":
+				case "ObserverGeoTimezone":
+				case "observer.os.family":
+				case "ObserverOsFamily":
+				case "observer.os.full":
+				case "ObserverOsFull":
+				case "observer.os.kernel":
+				case "ObserverOsKernel":
+				case "observer.os.name":
+				case "ObserverOsName":
+				case "observer.os.platform":
+				case "ObserverOsPlatform":
+				case "observer.os.type":
+				case "ObserverOsType":
+				case "observer.os.version":
+				case "ObserverOsVersion":
 					return TrySetObserver(document, path, value);
 				case "orchestrator.api_version":
 				case "OrchestratorApiVersion":
@@ -1344,6 +1756,348 @@ namespace Elastic.CommonSchema
 				case "ProcessVpid":
 				case "process.working_directory":
 				case "ProcessWorkingDirectory":
+				case "process.group.domain":
+				case "ProcessGroupDomain":
+				case "process.group.id":
+				case "ProcessGroupId":
+				case "process.group.name":
+				case "ProcessGroupName":
+				case "process.real_group.domain":
+				case "ProcessRealGroupDomain":
+				case "process.real_group.id":
+				case "ProcessRealGroupId":
+				case "process.real_group.name":
+				case "ProcessRealGroupName":
+				case "process.saved_group.domain":
+				case "ProcessSavedGroupDomain":
+				case "process.saved_group.id":
+				case "ProcessSavedGroupId":
+				case "process.saved_group.name":
+				case "ProcessSavedGroupName":
+				case "process.hash.md5":
+				case "ProcessHashMd5":
+				case "process.hash.sha1":
+				case "ProcessHashSha1":
+				case "process.hash.sha256":
+				case "ProcessHashSha256":
+				case "process.hash.sha384":
+				case "ProcessHashSha384":
+				case "process.hash.sha512":
+				case "ProcessHashSha512":
+				case "process.hash.ssdeep":
+				case "ProcessHashSsdeep":
+				case "process.hash.tlsh":
+				case "ProcessHashTlsh":
+				case "process.pe.architecture":
+				case "ProcessPeArchitecture":
+				case "process.pe.company":
+				case "ProcessPeCompany":
+				case "process.pe.description":
+				case "ProcessPeDescription":
+				case "process.pe.file_version":
+				case "ProcessPeFileVersion":
+				case "process.pe.go_import_hash":
+				case "ProcessPeGoImportHash":
+				case "process.pe.go_imports":
+				case "ProcessPeGoImports":
+				case "process.pe.go_imports_names_entropy":
+				case "ProcessPeGoImportsNamesEntropy":
+				case "process.pe.go_imports_names_var_entropy":
+				case "ProcessPeGoImportsNamesVarEntropy":
+				case "process.pe.go_stripped":
+				case "ProcessPeGoStripped":
+				case "process.pe.imphash":
+				case "ProcessPeImphash":
+				case "process.pe.import_hash":
+				case "ProcessPeImportHash":
+				case "process.pe.imports_names_entropy":
+				case "ProcessPeImportsNamesEntropy":
+				case "process.pe.imports_names_var_entropy":
+				case "ProcessPeImportsNamesVarEntropy":
+				case "process.pe.original_file_name":
+				case "ProcessPeOriginalFileName":
+				case "process.pe.pehash":
+				case "ProcessPePehash":
+				case "process.pe.product":
+				case "ProcessPeProduct":
+				case "process.code_signature.digest_algorithm":
+				case "ProcessCodeSignatureDigestAlgorithm":
+				case "process.code_signature.exists":
+				case "ProcessCodeSignatureExists":
+				case "process.code_signature.signing_id":
+				case "ProcessCodeSignatureSigningId":
+				case "process.code_signature.status":
+				case "ProcessCodeSignatureStatus":
+				case "process.code_signature.subject_name":
+				case "ProcessCodeSignatureSubjectName":
+				case "process.code_signature.team_id":
+				case "ProcessCodeSignatureTeamId":
+				case "process.code_signature.timestamp":
+				case "ProcessCodeSignatureTimestamp":
+				case "process.code_signature.trusted":
+				case "ProcessCodeSignatureTrusted":
+				case "process.code_signature.valid":
+				case "ProcessCodeSignatureValid":
+				case "process.elf.architecture":
+				case "ProcessElfArchitecture":
+				case "process.elf.byte_order":
+				case "ProcessElfByteOrder":
+				case "process.elf.cpu_type":
+				case "ProcessElfCpuType":
+				case "process.elf.creation_date":
+				case "ProcessElfCreationDate":
+				case "process.elf.go_import_hash":
+				case "ProcessElfGoImportHash":
+				case "process.elf.go_imports":
+				case "ProcessElfGoImports":
+				case "process.elf.go_imports_names_entropy":
+				case "ProcessElfGoImportsNamesEntropy":
+				case "process.elf.go_imports_names_var_entropy":
+				case "ProcessElfGoImportsNamesVarEntropy":
+				case "process.elf.go_stripped":
+				case "ProcessElfGoStripped":
+				case "process.elf.header.abi_version":
+				case "ProcessElfHeaderAbiVersion":
+				case "process.elf.header.class":
+				case "ProcessElfHeaderClass":
+				case "process.elf.header.data":
+				case "ProcessElfHeaderData":
+				case "process.elf.header.entrypoint":
+				case "ProcessElfHeaderEntrypoint":
+				case "process.elf.header.object_version":
+				case "ProcessElfHeaderObjectVersion":
+				case "process.elf.header.os_abi":
+				case "ProcessElfHeaderOsAbi":
+				case "process.elf.header.type":
+				case "ProcessElfHeaderType":
+				case "process.elf.header.version":
+				case "ProcessElfHeaderVersion":
+				case "process.elf.import_hash":
+				case "ProcessElfImportHash":
+				case "process.elf.imports_names_entropy":
+				case "ProcessElfImportsNamesEntropy":
+				case "process.elf.imports_names_var_entropy":
+				case "ProcessElfImportsNamesVarEntropy":
+				case "process.elf.telfhash":
+				case "ProcessElfTelfhash":
+				case "process.macho.go_import_hash":
+				case "ProcessMachoGoImportHash":
+				case "process.macho.go_imports":
+				case "ProcessMachoGoImports":
+				case "process.macho.go_imports_names_entropy":
+				case "ProcessMachoGoImportsNamesEntropy":
+				case "process.macho.go_imports_names_var_entropy":
+				case "ProcessMachoGoImportsNamesVarEntropy":
+				case "process.macho.go_stripped":
+				case "ProcessMachoGoStripped":
+				case "process.macho.import_hash":
+				case "ProcessMachoImportHash":
+				case "process.macho.imports_names_entropy":
+				case "ProcessMachoImportsNamesEntropy":
+				case "process.macho.imports_names_var_entropy":
+				case "ProcessMachoImportsNamesVarEntropy":
+				case "process.macho.symhash":
+				case "ProcessMachoSymhash":
+				case "process.entry_meta.source.address":
+				case "ProcessEntryMetaSourceAddress":
+				case "process.entry_meta.source.bytes":
+				case "ProcessEntryMetaSourceBytes":
+				case "process.entry_meta.source.domain":
+				case "ProcessEntryMetaSourceDomain":
+				case "process.entry_meta.source.ip":
+				case "ProcessEntryMetaSourceIp":
+				case "process.entry_meta.source.mac":
+				case "ProcessEntryMetaSourceMac":
+				case "process.entry_meta.source.nat.ip":
+				case "ProcessEntryMetaSourceNatIp":
+				case "process.entry_meta.source.nat.port":
+				case "ProcessEntryMetaSourceNatPort":
+				case "process.entry_meta.source.packets":
+				case "ProcessEntryMetaSourcePackets":
+				case "process.entry_meta.source.port":
+				case "ProcessEntryMetaSourcePort":
+				case "process.entry_meta.source.registered_domain":
+				case "ProcessEntryMetaSourceRegisteredDomain":
+				case "process.entry_meta.source.subdomain":
+				case "ProcessEntryMetaSourceSubdomain":
+				case "process.entry_meta.source.top_level_domain":
+				case "ProcessEntryMetaSourceTopLevelDomain":
+				case "process.entry_meta.source.as.number":
+				case "ProcessEntryMetaSourceAsNumber":
+				case "process.entry_meta.source.as.organization.name":
+				case "ProcessEntryMetaSourceAsOrganizationName":
+				case "process.entry_meta.source.geo.city_name":
+				case "ProcessEntryMetaSourceGeoCityName":
+				case "process.entry_meta.source.geo.continent_code":
+				case "ProcessEntryMetaSourceGeoContinentCode":
+				case "process.entry_meta.source.geo.continent_name":
+				case "ProcessEntryMetaSourceGeoContinentName":
+				case "process.entry_meta.source.geo.country_iso_code":
+				case "ProcessEntryMetaSourceGeoCountryIsoCode":
+				case "process.entry_meta.source.geo.country_name":
+				case "ProcessEntryMetaSourceGeoCountryName":
+				case "process.entry_meta.source.geo.location":
+				case "ProcessEntryMetaSourceGeoLocation":
+				case "process.entry_meta.source.geo.name":
+				case "ProcessEntryMetaSourceGeoName":
+				case "process.entry_meta.source.geo.postal_code":
+				case "ProcessEntryMetaSourceGeoPostalCode":
+				case "process.entry_meta.source.geo.region_iso_code":
+				case "ProcessEntryMetaSourceGeoRegionIsoCode":
+				case "process.entry_meta.source.geo.region_name":
+				case "ProcessEntryMetaSourceGeoRegionName":
+				case "process.entry_meta.source.geo.timezone":
+				case "ProcessEntryMetaSourceGeoTimezone":
+				case "process.entry_meta.source.user.domain":
+				case "ProcessEntryMetaSourceUserDomain":
+				case "process.entry_meta.source.user.email":
+				case "ProcessEntryMetaSourceUserEmail":
+				case "process.entry_meta.source.user.full_name":
+				case "ProcessEntryMetaSourceUserFullName":
+				case "process.entry_meta.source.user.hash":
+				case "ProcessEntryMetaSourceUserHash":
+				case "process.entry_meta.source.user.id":
+				case "ProcessEntryMetaSourceUserId":
+				case "process.entry_meta.source.user.name":
+				case "ProcessEntryMetaSourceUserName":
+				case "process.entry_meta.source.user.group.domain":
+				case "ProcessEntryMetaSourceUserGroupDomain":
+				case "process.entry_meta.source.user.group.id":
+				case "ProcessEntryMetaSourceUserGroupId":
+				case "process.entry_meta.source.user.group.name":
+				case "ProcessEntryMetaSourceUserGroupName":
+				case "process.entry_meta.source.user.risk.calculated_level":
+				case "ProcessEntryMetaSourceUserRiskCalculatedLevel":
+				case "process.entry_meta.source.user.risk.calculated_score":
+				case "ProcessEntryMetaSourceUserRiskCalculatedScore":
+				case "process.entry_meta.source.user.risk.calculated_score_norm":
+				case "ProcessEntryMetaSourceUserRiskCalculatedScoreNorm":
+				case "process.entry_meta.source.user.risk.static_level":
+				case "ProcessEntryMetaSourceUserRiskStaticLevel":
+				case "process.entry_meta.source.user.risk.static_score":
+				case "ProcessEntryMetaSourceUserRiskStaticScore":
+				case "process.entry_meta.source.user.risk.static_score_norm":
+				case "ProcessEntryMetaSourceUserRiskStaticScoreNorm":
+				case "process.user.domain":
+				case "ProcessUserDomain":
+				case "process.user.email":
+				case "ProcessUserEmail":
+				case "process.user.full_name":
+				case "ProcessUserFullName":
+				case "process.user.hash":
+				case "ProcessUserHash":
+				case "process.user.id":
+				case "ProcessUserId":
+				case "process.user.name":
+				case "ProcessUserName":
+				case "process.user.group.domain":
+				case "ProcessUserGroupDomain":
+				case "process.user.group.id":
+				case "ProcessUserGroupId":
+				case "process.user.group.name":
+				case "ProcessUserGroupName":
+				case "process.user.risk.calculated_level":
+				case "ProcessUserRiskCalculatedLevel":
+				case "process.user.risk.calculated_score":
+				case "ProcessUserRiskCalculatedScore":
+				case "process.user.risk.calculated_score_norm":
+				case "ProcessUserRiskCalculatedScoreNorm":
+				case "process.user.risk.static_level":
+				case "ProcessUserRiskStaticLevel":
+				case "process.user.risk.static_score":
+				case "ProcessUserRiskStaticScore":
+				case "process.user.risk.static_score_norm":
+				case "ProcessUserRiskStaticScoreNorm":
+				case "process.saved_user.domain":
+				case "ProcessSavedUserDomain":
+				case "process.saved_user.email":
+				case "ProcessSavedUserEmail":
+				case "process.saved_user.full_name":
+				case "ProcessSavedUserFullName":
+				case "process.saved_user.hash":
+				case "ProcessSavedUserHash":
+				case "process.saved_user.id":
+				case "ProcessSavedUserId":
+				case "process.saved_user.name":
+				case "ProcessSavedUserName":
+				case "process.saved_user.group.domain":
+				case "ProcessSavedUserGroupDomain":
+				case "process.saved_user.group.id":
+				case "ProcessSavedUserGroupId":
+				case "process.saved_user.group.name":
+				case "ProcessSavedUserGroupName":
+				case "process.saved_user.risk.calculated_level":
+				case "ProcessSavedUserRiskCalculatedLevel":
+				case "process.saved_user.risk.calculated_score":
+				case "ProcessSavedUserRiskCalculatedScore":
+				case "process.saved_user.risk.calculated_score_norm":
+				case "ProcessSavedUserRiskCalculatedScoreNorm":
+				case "process.saved_user.risk.static_level":
+				case "ProcessSavedUserRiskStaticLevel":
+				case "process.saved_user.risk.static_score":
+				case "ProcessSavedUserRiskStaticScore":
+				case "process.saved_user.risk.static_score_norm":
+				case "ProcessSavedUserRiskStaticScoreNorm":
+				case "process.real_user.domain":
+				case "ProcessRealUserDomain":
+				case "process.real_user.email":
+				case "ProcessRealUserEmail":
+				case "process.real_user.full_name":
+				case "ProcessRealUserFullName":
+				case "process.real_user.hash":
+				case "ProcessRealUserHash":
+				case "process.real_user.id":
+				case "ProcessRealUserId":
+				case "process.real_user.name":
+				case "ProcessRealUserName":
+				case "process.real_user.group.domain":
+				case "ProcessRealUserGroupDomain":
+				case "process.real_user.group.id":
+				case "ProcessRealUserGroupId":
+				case "process.real_user.group.name":
+				case "ProcessRealUserGroupName":
+				case "process.real_user.risk.calculated_level":
+				case "ProcessRealUserRiskCalculatedLevel":
+				case "process.real_user.risk.calculated_score":
+				case "ProcessRealUserRiskCalculatedScore":
+				case "process.real_user.risk.calculated_score_norm":
+				case "ProcessRealUserRiskCalculatedScoreNorm":
+				case "process.real_user.risk.static_level":
+				case "ProcessRealUserRiskStaticLevel":
+				case "process.real_user.risk.static_score":
+				case "ProcessRealUserRiskStaticScore":
+				case "process.real_user.risk.static_score_norm":
+				case "ProcessRealUserRiskStaticScoreNorm":
+				case "process.attested_user.domain":
+				case "ProcessAttestedUserDomain":
+				case "process.attested_user.email":
+				case "ProcessAttestedUserEmail":
+				case "process.attested_user.full_name":
+				case "ProcessAttestedUserFullName":
+				case "process.attested_user.hash":
+				case "ProcessAttestedUserHash":
+				case "process.attested_user.id":
+				case "ProcessAttestedUserId":
+				case "process.attested_user.name":
+				case "ProcessAttestedUserName":
+				case "process.attested_user.group.domain":
+				case "ProcessAttestedUserGroupDomain":
+				case "process.attested_user.group.id":
+				case "ProcessAttestedUserGroupId":
+				case "process.attested_user.group.name":
+				case "ProcessAttestedUserGroupName":
+				case "process.attested_user.risk.calculated_level":
+				case "ProcessAttestedUserRiskCalculatedLevel":
+				case "process.attested_user.risk.calculated_score":
+				case "ProcessAttestedUserRiskCalculatedScore":
+				case "process.attested_user.risk.calculated_score_norm":
+				case "ProcessAttestedUserRiskCalculatedScoreNorm":
+				case "process.attested_user.risk.static_level":
+				case "ProcessAttestedUserRiskStaticLevel":
+				case "process.attested_user.risk.static_score":
+				case "ProcessAttestedUserRiskStaticScore":
+				case "process.attested_user.risk.static_score_norm":
+				case "ProcessAttestedUserRiskStaticScoreNorm":
 					return TrySetProcess(document, path, value);
 				case "registry.data.bytes":
 				case "RegistryDataBytes":
@@ -1414,6 +2168,62 @@ namespace Elastic.CommonSchema
 				case "ServerSubdomain":
 				case "server.top_level_domain":
 				case "ServerTopLevelDomain":
+				case "server.as.number":
+				case "ServerAsNumber":
+				case "server.as.organization.name":
+				case "ServerAsOrganizationName":
+				case "server.geo.city_name":
+				case "ServerGeoCityName":
+				case "server.geo.continent_code":
+				case "ServerGeoContinentCode":
+				case "server.geo.continent_name":
+				case "ServerGeoContinentName":
+				case "server.geo.country_iso_code":
+				case "ServerGeoCountryIsoCode":
+				case "server.geo.country_name":
+				case "ServerGeoCountryName":
+				case "server.geo.location":
+				case "ServerGeoLocation":
+				case "server.geo.name":
+				case "ServerGeoName":
+				case "server.geo.postal_code":
+				case "ServerGeoPostalCode":
+				case "server.geo.region_iso_code":
+				case "ServerGeoRegionIsoCode":
+				case "server.geo.region_name":
+				case "ServerGeoRegionName":
+				case "server.geo.timezone":
+				case "ServerGeoTimezone":
+				case "server.user.domain":
+				case "ServerUserDomain":
+				case "server.user.email":
+				case "ServerUserEmail":
+				case "server.user.full_name":
+				case "ServerUserFullName":
+				case "server.user.hash":
+				case "ServerUserHash":
+				case "server.user.id":
+				case "ServerUserId":
+				case "server.user.name":
+				case "ServerUserName":
+				case "server.user.group.domain":
+				case "ServerUserGroupDomain":
+				case "server.user.group.id":
+				case "ServerUserGroupId":
+				case "server.user.group.name":
+				case "ServerUserGroupName":
+				case "server.user.risk.calculated_level":
+				case "ServerUserRiskCalculatedLevel":
+				case "server.user.risk.calculated_score":
+				case "ServerUserRiskCalculatedScore":
+				case "server.user.risk.calculated_score_norm":
+				case "ServerUserRiskCalculatedScoreNorm":
+				case "server.user.risk.static_level":
+				case "ServerUserRiskStaticLevel":
+				case "server.user.risk.static_score":
+				case "ServerUserRiskStaticScore":
+				case "server.user.risk.static_score_norm":
+				case "ServerUserRiskStaticScoreNorm":
 					return TrySetServer(document, path, value);
 				case "service.address":
 				case "ServiceAddress":
@@ -1460,6 +2270,62 @@ namespace Elastic.CommonSchema
 				case "SourceSubdomain":
 				case "source.top_level_domain":
 				case "SourceTopLevelDomain":
+				case "source.as.number":
+				case "SourceAsNumber":
+				case "source.as.organization.name":
+				case "SourceAsOrganizationName":
+				case "source.geo.city_name":
+				case "SourceGeoCityName":
+				case "source.geo.continent_code":
+				case "SourceGeoContinentCode":
+				case "source.geo.continent_name":
+				case "SourceGeoContinentName":
+				case "source.geo.country_iso_code":
+				case "SourceGeoCountryIsoCode":
+				case "source.geo.country_name":
+				case "SourceGeoCountryName":
+				case "source.geo.location":
+				case "SourceGeoLocation":
+				case "source.geo.name":
+				case "SourceGeoName":
+				case "source.geo.postal_code":
+				case "SourceGeoPostalCode":
+				case "source.geo.region_iso_code":
+				case "SourceGeoRegionIsoCode":
+				case "source.geo.region_name":
+				case "SourceGeoRegionName":
+				case "source.geo.timezone":
+				case "SourceGeoTimezone":
+				case "source.user.domain":
+				case "SourceUserDomain":
+				case "source.user.email":
+				case "SourceUserEmail":
+				case "source.user.full_name":
+				case "SourceUserFullName":
+				case "source.user.hash":
+				case "SourceUserHash":
+				case "source.user.id":
+				case "SourceUserId":
+				case "source.user.name":
+				case "SourceUserName":
+				case "source.user.group.domain":
+				case "SourceUserGroupDomain":
+				case "source.user.group.id":
+				case "SourceUserGroupId":
+				case "source.user.group.name":
+				case "SourceUserGroupName":
+				case "source.user.risk.calculated_level":
+				case "SourceUserRiskCalculatedLevel":
+				case "source.user.risk.calculated_score":
+				case "SourceUserRiskCalculatedScore":
+				case "source.user.risk.calculated_score_norm":
+				case "SourceUserRiskCalculatedScoreNorm":
+				case "source.user.risk.static_level":
+				case "SourceUserRiskStaticLevel":
+				case "source.user.risk.static_score":
+				case "SourceUserRiskStaticScore":
+				case "source.user.risk.static_score_norm":
+				case "SourceUserRiskStaticScoreNorm":
 					return TrySetSource(document, path, value);
 				case "threat.feed.dashboard_id":
 				case "ThreatFeedDashboardId":
@@ -1517,6 +2383,282 @@ namespace Elastic.CommonSchema
 				case "ThreatSoftwareReference":
 				case "threat.software.type":
 				case "ThreatSoftwareType":
+				case "threat.indicator.x509.issuer.distinguished_name":
+				case "ThreatIndicatorX509IssuerDistinguishedName":
+				case "threat.indicator.x509.not_after":
+				case "ThreatIndicatorX509NotAfter":
+				case "threat.indicator.x509.not_before":
+				case "ThreatIndicatorX509NotBefore":
+				case "threat.indicator.x509.public_key_algorithm":
+				case "ThreatIndicatorX509PublicKeyAlgorithm":
+				case "threat.indicator.x509.public_key_curve":
+				case "ThreatIndicatorX509PublicKeyCurve":
+				case "threat.indicator.x509.public_key_exponent":
+				case "ThreatIndicatorX509PublicKeyExponent":
+				case "threat.indicator.x509.public_key_size":
+				case "ThreatIndicatorX509PublicKeySize":
+				case "threat.indicator.x509.serial_number":
+				case "ThreatIndicatorX509SerialNumber":
+				case "threat.indicator.x509.signature_algorithm":
+				case "ThreatIndicatorX509SignatureAlgorithm":
+				case "threat.indicator.x509.subject.distinguished_name":
+				case "ThreatIndicatorX509SubjectDistinguishedName":
+				case "threat.indicator.x509.version_number":
+				case "ThreatIndicatorX509VersionNumber":
+				case "threat.indicator.as.number":
+				case "ThreatIndicatorAsNumber":
+				case "threat.indicator.as.organization.name":
+				case "ThreatIndicatorAsOrganizationName":
+				case "threat.indicator.file.accessed":
+				case "ThreatIndicatorFileAccessed":
+				case "threat.indicator.file.created":
+				case "ThreatIndicatorFileCreated":
+				case "threat.indicator.file.ctime":
+				case "ThreatIndicatorFileCtime":
+				case "threat.indicator.file.device":
+				case "ThreatIndicatorFileDevice":
+				case "threat.indicator.file.directory":
+				case "ThreatIndicatorFileDirectory":
+				case "threat.indicator.file.drive_letter":
+				case "ThreatIndicatorFileDriveLetter":
+				case "threat.indicator.file.extension":
+				case "ThreatIndicatorFileExtension":
+				case "threat.indicator.file.fork_name":
+				case "ThreatIndicatorFileForkName":
+				case "threat.indicator.file.gid":
+				case "ThreatIndicatorFileGid":
+				case "threat.indicator.file.group":
+				case "ThreatIndicatorFileGroup":
+				case "threat.indicator.file.inode":
+				case "ThreatIndicatorFileInode":
+				case "threat.indicator.file.mime_type":
+				case "ThreatIndicatorFileMimeType":
+				case "threat.indicator.file.mode":
+				case "ThreatIndicatorFileMode":
+				case "threat.indicator.file.mtime":
+				case "ThreatIndicatorFileMtime":
+				case "threat.indicator.file.name":
+				case "ThreatIndicatorFileName":
+				case "threat.indicator.file.owner":
+				case "ThreatIndicatorFileOwner":
+				case "threat.indicator.file.path":
+				case "ThreatIndicatorFilePath":
+				case "threat.indicator.file.size":
+				case "ThreatIndicatorFileSize":
+				case "threat.indicator.file.target_path":
+				case "ThreatIndicatorFileTargetPath":
+				case "threat.indicator.file.type":
+				case "ThreatIndicatorFileType":
+				case "threat.indicator.file.uid":
+				case "ThreatIndicatorFileUid":
+				case "threat.indicator.file.hash.md5":
+				case "ThreatIndicatorFileHashMd5":
+				case "threat.indicator.file.hash.sha1":
+				case "ThreatIndicatorFileHashSha1":
+				case "threat.indicator.file.hash.sha256":
+				case "ThreatIndicatorFileHashSha256":
+				case "threat.indicator.file.hash.sha384":
+				case "ThreatIndicatorFileHashSha384":
+				case "threat.indicator.file.hash.sha512":
+				case "ThreatIndicatorFileHashSha512":
+				case "threat.indicator.file.hash.ssdeep":
+				case "ThreatIndicatorFileHashSsdeep":
+				case "threat.indicator.file.hash.tlsh":
+				case "ThreatIndicatorFileHashTlsh":
+				case "threat.indicator.file.pe.architecture":
+				case "ThreatIndicatorFilePeArchitecture":
+				case "threat.indicator.file.pe.company":
+				case "ThreatIndicatorFilePeCompany":
+				case "threat.indicator.file.pe.description":
+				case "ThreatIndicatorFilePeDescription":
+				case "threat.indicator.file.pe.file_version":
+				case "ThreatIndicatorFilePeFileVersion":
+				case "threat.indicator.file.pe.go_import_hash":
+				case "ThreatIndicatorFilePeGoImportHash":
+				case "threat.indicator.file.pe.go_imports":
+				case "ThreatIndicatorFilePeGoImports":
+				case "threat.indicator.file.pe.go_imports_names_entropy":
+				case "ThreatIndicatorFilePeGoImportsNamesEntropy":
+				case "threat.indicator.file.pe.go_imports_names_var_entropy":
+				case "ThreatIndicatorFilePeGoImportsNamesVarEntropy":
+				case "threat.indicator.file.pe.go_stripped":
+				case "ThreatIndicatorFilePeGoStripped":
+				case "threat.indicator.file.pe.imphash":
+				case "ThreatIndicatorFilePeImphash":
+				case "threat.indicator.file.pe.import_hash":
+				case "ThreatIndicatorFilePeImportHash":
+				case "threat.indicator.file.pe.imports_names_entropy":
+				case "ThreatIndicatorFilePeImportsNamesEntropy":
+				case "threat.indicator.file.pe.imports_names_var_entropy":
+				case "ThreatIndicatorFilePeImportsNamesVarEntropy":
+				case "threat.indicator.file.pe.original_file_name":
+				case "ThreatIndicatorFilePeOriginalFileName":
+				case "threat.indicator.file.pe.pehash":
+				case "ThreatIndicatorFilePePehash":
+				case "threat.indicator.file.pe.product":
+				case "ThreatIndicatorFilePeProduct":
+				case "threat.indicator.file.x509.issuer.distinguished_name":
+				case "ThreatIndicatorFileX509IssuerDistinguishedName":
+				case "threat.indicator.file.x509.not_after":
+				case "ThreatIndicatorFileX509NotAfter":
+				case "threat.indicator.file.x509.not_before":
+				case "ThreatIndicatorFileX509NotBefore":
+				case "threat.indicator.file.x509.public_key_algorithm":
+				case "ThreatIndicatorFileX509PublicKeyAlgorithm":
+				case "threat.indicator.file.x509.public_key_curve":
+				case "ThreatIndicatorFileX509PublicKeyCurve":
+				case "threat.indicator.file.x509.public_key_exponent":
+				case "ThreatIndicatorFileX509PublicKeyExponent":
+				case "threat.indicator.file.x509.public_key_size":
+				case "ThreatIndicatorFileX509PublicKeySize":
+				case "threat.indicator.file.x509.serial_number":
+				case "ThreatIndicatorFileX509SerialNumber":
+				case "threat.indicator.file.x509.signature_algorithm":
+				case "ThreatIndicatorFileX509SignatureAlgorithm":
+				case "threat.indicator.file.x509.subject.distinguished_name":
+				case "ThreatIndicatorFileX509SubjectDistinguishedName":
+				case "threat.indicator.file.x509.version_number":
+				case "ThreatIndicatorFileX509VersionNumber":
+				case "threat.indicator.file.code_signature.digest_algorithm":
+				case "ThreatIndicatorFileCodeSignatureDigestAlgorithm":
+				case "threat.indicator.file.code_signature.exists":
+				case "ThreatIndicatorFileCodeSignatureExists":
+				case "threat.indicator.file.code_signature.signing_id":
+				case "ThreatIndicatorFileCodeSignatureSigningId":
+				case "threat.indicator.file.code_signature.status":
+				case "ThreatIndicatorFileCodeSignatureStatus":
+				case "threat.indicator.file.code_signature.subject_name":
+				case "ThreatIndicatorFileCodeSignatureSubjectName":
+				case "threat.indicator.file.code_signature.team_id":
+				case "ThreatIndicatorFileCodeSignatureTeamId":
+				case "threat.indicator.file.code_signature.timestamp":
+				case "ThreatIndicatorFileCodeSignatureTimestamp":
+				case "threat.indicator.file.code_signature.trusted":
+				case "ThreatIndicatorFileCodeSignatureTrusted":
+				case "threat.indicator.file.code_signature.valid":
+				case "ThreatIndicatorFileCodeSignatureValid":
+				case "threat.indicator.file.elf.architecture":
+				case "ThreatIndicatorFileElfArchitecture":
+				case "threat.indicator.file.elf.byte_order":
+				case "ThreatIndicatorFileElfByteOrder":
+				case "threat.indicator.file.elf.cpu_type":
+				case "ThreatIndicatorFileElfCpuType":
+				case "threat.indicator.file.elf.creation_date":
+				case "ThreatIndicatorFileElfCreationDate":
+				case "threat.indicator.file.elf.go_import_hash":
+				case "ThreatIndicatorFileElfGoImportHash":
+				case "threat.indicator.file.elf.go_imports":
+				case "ThreatIndicatorFileElfGoImports":
+				case "threat.indicator.file.elf.go_imports_names_entropy":
+				case "ThreatIndicatorFileElfGoImportsNamesEntropy":
+				case "threat.indicator.file.elf.go_imports_names_var_entropy":
+				case "ThreatIndicatorFileElfGoImportsNamesVarEntropy":
+				case "threat.indicator.file.elf.go_stripped":
+				case "ThreatIndicatorFileElfGoStripped":
+				case "threat.indicator.file.elf.header.abi_version":
+				case "ThreatIndicatorFileElfHeaderAbiVersion":
+				case "threat.indicator.file.elf.header.class":
+				case "ThreatIndicatorFileElfHeaderClass":
+				case "threat.indicator.file.elf.header.data":
+				case "ThreatIndicatorFileElfHeaderData":
+				case "threat.indicator.file.elf.header.entrypoint":
+				case "ThreatIndicatorFileElfHeaderEntrypoint":
+				case "threat.indicator.file.elf.header.object_version":
+				case "ThreatIndicatorFileElfHeaderObjectVersion":
+				case "threat.indicator.file.elf.header.os_abi":
+				case "ThreatIndicatorFileElfHeaderOsAbi":
+				case "threat.indicator.file.elf.header.type":
+				case "ThreatIndicatorFileElfHeaderType":
+				case "threat.indicator.file.elf.header.version":
+				case "ThreatIndicatorFileElfHeaderVersion":
+				case "threat.indicator.file.elf.import_hash":
+				case "ThreatIndicatorFileElfImportHash":
+				case "threat.indicator.file.elf.imports_names_entropy":
+				case "ThreatIndicatorFileElfImportsNamesEntropy":
+				case "threat.indicator.file.elf.imports_names_var_entropy":
+				case "ThreatIndicatorFileElfImportsNamesVarEntropy":
+				case "threat.indicator.file.elf.telfhash":
+				case "ThreatIndicatorFileElfTelfhash":
+				case "threat.indicator.file.macho.go_import_hash":
+				case "ThreatIndicatorFileMachoGoImportHash":
+				case "threat.indicator.file.macho.go_imports":
+				case "ThreatIndicatorFileMachoGoImports":
+				case "threat.indicator.file.macho.go_imports_names_entropy":
+				case "ThreatIndicatorFileMachoGoImportsNamesEntropy":
+				case "threat.indicator.file.macho.go_imports_names_var_entropy":
+				case "ThreatIndicatorFileMachoGoImportsNamesVarEntropy":
+				case "threat.indicator.file.macho.go_stripped":
+				case "ThreatIndicatorFileMachoGoStripped":
+				case "threat.indicator.file.macho.import_hash":
+				case "ThreatIndicatorFileMachoImportHash":
+				case "threat.indicator.file.macho.imports_names_entropy":
+				case "ThreatIndicatorFileMachoImportsNamesEntropy":
+				case "threat.indicator.file.macho.imports_names_var_entropy":
+				case "ThreatIndicatorFileMachoImportsNamesVarEntropy":
+				case "threat.indicator.file.macho.symhash":
+				case "ThreatIndicatorFileMachoSymhash":
+				case "threat.indicator.geo.city_name":
+				case "ThreatIndicatorGeoCityName":
+				case "threat.indicator.geo.continent_code":
+				case "ThreatIndicatorGeoContinentCode":
+				case "threat.indicator.geo.continent_name":
+				case "ThreatIndicatorGeoContinentName":
+				case "threat.indicator.geo.country_iso_code":
+				case "ThreatIndicatorGeoCountryIsoCode":
+				case "threat.indicator.geo.country_name":
+				case "ThreatIndicatorGeoCountryName":
+				case "threat.indicator.geo.location":
+				case "ThreatIndicatorGeoLocation":
+				case "threat.indicator.geo.name":
+				case "ThreatIndicatorGeoName":
+				case "threat.indicator.geo.postal_code":
+				case "ThreatIndicatorGeoPostalCode":
+				case "threat.indicator.geo.region_iso_code":
+				case "ThreatIndicatorGeoRegionIsoCode":
+				case "threat.indicator.geo.region_name":
+				case "ThreatIndicatorGeoRegionName":
+				case "threat.indicator.geo.timezone":
+				case "ThreatIndicatorGeoTimezone":
+				case "threat.indicator.registry.data.bytes":
+				case "ThreatIndicatorRegistryDataBytes":
+				case "threat.indicator.registry.data.type":
+				case "ThreatIndicatorRegistryDataType":
+				case "threat.indicator.registry.hive":
+				case "ThreatIndicatorRegistryHive":
+				case "threat.indicator.registry.key":
+				case "ThreatIndicatorRegistryKey":
+				case "threat.indicator.registry.path":
+				case "ThreatIndicatorRegistryPath":
+				case "threat.indicator.registry.value":
+				case "ThreatIndicatorRegistryValue":
+				case "threat.indicator.url.domain":
+				case "ThreatIndicatorUrlDomain":
+				case "threat.indicator.url.extension":
+				case "ThreatIndicatorUrlExtension":
+				case "threat.indicator.url.fragment":
+				case "ThreatIndicatorUrlFragment":
+				case "threat.indicator.url.full":
+				case "ThreatIndicatorUrlFull":
+				case "threat.indicator.url.original":
+				case "ThreatIndicatorUrlOriginal":
+				case "threat.indicator.url.password":
+				case "ThreatIndicatorUrlPassword":
+				case "threat.indicator.url.path":
+				case "ThreatIndicatorUrlPath":
+				case "threat.indicator.url.port":
+				case "ThreatIndicatorUrlPort":
+				case "threat.indicator.url.query":
+				case "ThreatIndicatorUrlQuery":
+				case "threat.indicator.url.registered_domain":
+				case "ThreatIndicatorUrlRegisteredDomain":
+				case "threat.indicator.url.scheme":
+				case "ThreatIndicatorUrlScheme":
+				case "threat.indicator.url.subdomain":
+				case "ThreatIndicatorUrlSubdomain":
+				case "threat.indicator.url.top_level_domain":
+				case "ThreatIndicatorUrlTopLevelDomain":
+				case "threat.indicator.url.username":
+				case "ThreatIndicatorUrlUsername":
 					return TrySetThreat(document, path, value);
 				case "tls.cipher":
 				case "TlsCipher":
@@ -1570,6 +2712,28 @@ namespace Elastic.CommonSchema
 				case "TlsVersion":
 				case "tls.version_protocol":
 				case "TlsVersionProtocol":
+				case "tls.client.x509.issuer.distinguished_name":
+				case "TlsClientX509IssuerDistinguishedName":
+				case "tls.client.x509.not_after":
+				case "TlsClientX509NotAfter":
+				case "tls.client.x509.not_before":
+				case "TlsClientX509NotBefore":
+				case "tls.client.x509.public_key_algorithm":
+				case "TlsClientX509PublicKeyAlgorithm":
+				case "tls.client.x509.public_key_curve":
+				case "TlsClientX509PublicKeyCurve":
+				case "tls.client.x509.public_key_exponent":
+				case "TlsClientX509PublicKeyExponent":
+				case "tls.client.x509.public_key_size":
+				case "TlsClientX509PublicKeySize":
+				case "tls.client.x509.serial_number":
+				case "TlsClientX509SerialNumber":
+				case "tls.client.x509.signature_algorithm":
+				case "TlsClientX509SignatureAlgorithm":
+				case "tls.client.x509.subject.distinguished_name":
+				case "TlsClientX509SubjectDistinguishedName":
+				case "tls.client.x509.version_number":
+				case "TlsClientX509VersionNumber":
 					return TrySetTls(document, path, value);
 				case "url.domain":
 				case "UrlDomain":
@@ -1612,6 +2776,24 @@ namespace Elastic.CommonSchema
 				case "UserId":
 				case "user.name":
 				case "UserName":
+				case "user.group.domain":
+				case "UserGroupDomain":
+				case "user.group.id":
+				case "UserGroupId":
+				case "user.group.name":
+				case "UserGroupName":
+				case "user.risk.calculated_level":
+				case "UserRiskCalculatedLevel":
+				case "user.risk.calculated_score":
+				case "UserRiskCalculatedScore":
+				case "user.risk.calculated_score_norm":
+				case "UserRiskCalculatedScoreNorm":
+				case "user.risk.static_level":
+				case "UserRiskStaticLevel":
+				case "user.risk.static_score":
+				case "UserRiskStaticScore":
+				case "user.risk.static_score_norm":
+				case "UserRiskStaticScoreNorm":
 					return TrySetUser(document, path, value);
 				case "user_agent.device.name":
 				case "UserAgentDeviceName":
@@ -1621,6 +2803,20 @@ namespace Elastic.CommonSchema
 				case "UserAgentOriginal":
 				case "user_agent.version":
 				case "UserAgentVersion":
+				case "user_agent.os.family":
+				case "UserAgentOsFamily":
+				case "user_agent.os.full":
+				case "UserAgentOsFull":
+				case "user_agent.os.kernel":
+				case "UserAgentOsKernel":
+				case "user_agent.os.name":
+				case "UserAgentOsName":
+				case "user_agent.os.platform":
+				case "UserAgentOsPlatform":
+				case "user_agent.os.type":
+				case "UserAgentOsType":
+				case "user_agent.os.version":
+				case "UserAgentOsVersion":
 					return TrySetUserAgent(document, path, value);
 				case "vlan.id":
 				case "VlanId":
@@ -1699,7 +2895,7 @@ namespace Elastic.CommonSchema
 			return assign != null && assign(document, value);
 		}
 
-		public static bool TrySetAgent(EcsDocument document, string path, object value)
+		public static Func<Agent, object, bool> TryAssignAgent(string path)
 		{
 			Func<Agent, object, bool> assign = path switch
 			{
@@ -1717,15 +2913,20 @@ namespace Elastic.CommonSchema
 				"AgentVersion" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Version = p),
 				_ => null
 			};
+			return assign;
+		}
+		public static bool TrySetAgent(EcsDocument document, string path, object value)
+		{
+			var assign = TryAssignAgent(path);
 			if (assign == null) return false;
-
+		
 			var entity = document.Agent ?? new Agent();
 			var assigned = assign(entity, value);
 			if (assigned) document.Agent = entity;
 			return assigned;
 		}
 
-		public static bool TrySetAs(EcsDocument document, string path, object value)
+		public static Func<As, object, bool> TryAssignAs(string path)
 		{
 			Func<As, object, bool> assign = path switch
 			{
@@ -1735,15 +2936,20 @@ namespace Elastic.CommonSchema
 				"AsOrganizationName" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.OrganizationName = p),
 				_ => null
 			};
+			return assign;
+		}
+		public static bool TrySetAs(IAs document, string path, object value)
+		{
+			var assign = TryAssignAs(path);
 			if (assign == null) return false;
-
+		
 			var entity = document.As ?? new As();
 			var assigned = assign(entity, value);
 			if (assigned) document.As = entity;
 			return assigned;
 		}
 
-		public static bool TrySetClient(EcsDocument document, string path, object value)
+		public static Func<Client, object, bool> TryAssignClient(string path)
 		{
 			Func<Client, object, bool> assign = path switch
 			{
@@ -1771,17 +2977,78 @@ namespace Elastic.CommonSchema
 				"ClientSubdomain" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Subdomain = p),
 				"client.top_level_domain" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.TopLevelDomain = p),
 				"ClientTopLevelDomain" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.TopLevelDomain = p),
+				"client.as.number" => static (e, v) => TryAssignAs("as.number")(e.As ??= new As(),v),
+				"ClientAsNumber" => static (e, v) => TryAssignAs("as.number")(e.As ??= new As(),v),
+				"client.as.organization.name" => static (e, v) => TryAssignAs("as.organization.name")(e.As ??= new As(),v),
+				"ClientAsOrganizationName" => static (e, v) => TryAssignAs("as.organization.name")(e.As ??= new As(),v),
+				"client.geo.city_name" => static (e, v) => TryAssignGeo("geo.city_name")(e.Geo ??= new Geo(),v),
+				"ClientGeoCityName" => static (e, v) => TryAssignGeo("geo.city_name")(e.Geo ??= new Geo(),v),
+				"client.geo.continent_code" => static (e, v) => TryAssignGeo("geo.continent_code")(e.Geo ??= new Geo(),v),
+				"ClientGeoContinentCode" => static (e, v) => TryAssignGeo("geo.continent_code")(e.Geo ??= new Geo(),v),
+				"client.geo.continent_name" => static (e, v) => TryAssignGeo("geo.continent_name")(e.Geo ??= new Geo(),v),
+				"ClientGeoContinentName" => static (e, v) => TryAssignGeo("geo.continent_name")(e.Geo ??= new Geo(),v),
+				"client.geo.country_iso_code" => static (e, v) => TryAssignGeo("geo.country_iso_code")(e.Geo ??= new Geo(),v),
+				"ClientGeoCountryIsoCode" => static (e, v) => TryAssignGeo("geo.country_iso_code")(e.Geo ??= new Geo(),v),
+				"client.geo.country_name" => static (e, v) => TryAssignGeo("geo.country_name")(e.Geo ??= new Geo(),v),
+				"ClientGeoCountryName" => static (e, v) => TryAssignGeo("geo.country_name")(e.Geo ??= new Geo(),v),
+				"client.geo.location" => static (e, v) => TryAssignGeo("geo.location")(e.Geo ??= new Geo(),v),
+				"ClientGeoLocation" => static (e, v) => TryAssignGeo("geo.location")(e.Geo ??= new Geo(),v),
+				"client.geo.name" => static (e, v) => TryAssignGeo("geo.name")(e.Geo ??= new Geo(),v),
+				"ClientGeoName" => static (e, v) => TryAssignGeo("geo.name")(e.Geo ??= new Geo(),v),
+				"client.geo.postal_code" => static (e, v) => TryAssignGeo("geo.postal_code")(e.Geo ??= new Geo(),v),
+				"ClientGeoPostalCode" => static (e, v) => TryAssignGeo("geo.postal_code")(e.Geo ??= new Geo(),v),
+				"client.geo.region_iso_code" => static (e, v) => TryAssignGeo("geo.region_iso_code")(e.Geo ??= new Geo(),v),
+				"ClientGeoRegionIsoCode" => static (e, v) => TryAssignGeo("geo.region_iso_code")(e.Geo ??= new Geo(),v),
+				"client.geo.region_name" => static (e, v) => TryAssignGeo("geo.region_name")(e.Geo ??= new Geo(),v),
+				"ClientGeoRegionName" => static (e, v) => TryAssignGeo("geo.region_name")(e.Geo ??= new Geo(),v),
+				"client.geo.timezone" => static (e, v) => TryAssignGeo("geo.timezone")(e.Geo ??= new Geo(),v),
+				"ClientGeoTimezone" => static (e, v) => TryAssignGeo("geo.timezone")(e.Geo ??= new Geo(),v),
+				"client.user.domain" => static (e, v) => TryAssignUser("user.domain")(e.User ??= new User(),v),
+				"ClientUserDomain" => static (e, v) => TryAssignUser("user.domain")(e.User ??= new User(),v),
+				"client.user.email" => static (e, v) => TryAssignUser("user.email")(e.User ??= new User(),v),
+				"ClientUserEmail" => static (e, v) => TryAssignUser("user.email")(e.User ??= new User(),v),
+				"client.user.full_name" => static (e, v) => TryAssignUser("user.full_name")(e.User ??= new User(),v),
+				"ClientUserFullName" => static (e, v) => TryAssignUser("user.full_name")(e.User ??= new User(),v),
+				"client.user.hash" => static (e, v) => TryAssignUser("user.hash")(e.User ??= new User(),v),
+				"ClientUserHash" => static (e, v) => TryAssignUser("user.hash")(e.User ??= new User(),v),
+				"client.user.id" => static (e, v) => TryAssignUser("user.id")(e.User ??= new User(),v),
+				"ClientUserId" => static (e, v) => TryAssignUser("user.id")(e.User ??= new User(),v),
+				"client.user.name" => static (e, v) => TryAssignUser("user.name")(e.User ??= new User(),v),
+				"ClientUserName" => static (e, v) => TryAssignUser("user.name")(e.User ??= new User(),v),
+				"client.user.group.domain" => static (e, v) => TryAssignUser("user.group.domain")(e.User ??= new User(),v),
+				"ClientUserGroupDomain" => static (e, v) => TryAssignUser("user.group.domain")(e.User ??= new User(),v),
+				"client.user.group.id" => static (e, v) => TryAssignUser("user.group.id")(e.User ??= new User(),v),
+				"ClientUserGroupId" => static (e, v) => TryAssignUser("user.group.id")(e.User ??= new User(),v),
+				"client.user.group.name" => static (e, v) => TryAssignUser("user.group.name")(e.User ??= new User(),v),
+				"ClientUserGroupName" => static (e, v) => TryAssignUser("user.group.name")(e.User ??= new User(),v),
+				"client.user.risk.calculated_level" => static (e, v) => TryAssignUser("user.risk.calculated_level")(e.User ??= new User(),v),
+				"ClientUserRiskCalculatedLevel" => static (e, v) => TryAssignUser("user.risk.calculated_level")(e.User ??= new User(),v),
+				"client.user.risk.calculated_score" => static (e, v) => TryAssignUser("user.risk.calculated_score")(e.User ??= new User(),v),
+				"ClientUserRiskCalculatedScore" => static (e, v) => TryAssignUser("user.risk.calculated_score")(e.User ??= new User(),v),
+				"client.user.risk.calculated_score_norm" => static (e, v) => TryAssignUser("user.risk.calculated_score_norm")(e.User ??= new User(),v),
+				"ClientUserRiskCalculatedScoreNorm" => static (e, v) => TryAssignUser("user.risk.calculated_score_norm")(e.User ??= new User(),v),
+				"client.user.risk.static_level" => static (e, v) => TryAssignUser("user.risk.static_level")(e.User ??= new User(),v),
+				"ClientUserRiskStaticLevel" => static (e, v) => TryAssignUser("user.risk.static_level")(e.User ??= new User(),v),
+				"client.user.risk.static_score" => static (e, v) => TryAssignUser("user.risk.static_score")(e.User ??= new User(),v),
+				"ClientUserRiskStaticScore" => static (e, v) => TryAssignUser("user.risk.static_score")(e.User ??= new User(),v),
+				"client.user.risk.static_score_norm" => static (e, v) => TryAssignUser("user.risk.static_score_norm")(e.User ??= new User(),v),
+				"ClientUserRiskStaticScoreNorm" => static (e, v) => TryAssignUser("user.risk.static_score_norm")(e.User ??= new User(),v),
 				_ => null
 			};
+			return assign;
+		}
+		public static bool TrySetClient(EcsDocument document, string path, object value)
+		{
+			var assign = TryAssignClient(path);
 			if (assign == null) return false;
-
+		
 			var entity = document.Client ?? new Client();
 			var assigned = assign(entity, value);
 			if (assigned) document.Client = entity;
 			return assigned;
 		}
 
-		public static bool TrySetCloud(EcsDocument document, string path, object value)
+		public static Func<Cloud, object, bool> TryAssignCloud(string path)
 		{
 			Func<Cloud, object, bool> assign = path switch
 			{
@@ -1809,15 +3076,20 @@ namespace Elastic.CommonSchema
 				"CloudServiceName" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.ServiceName = p),
 				_ => null
 			};
+			return assign;
+		}
+		public static bool TrySetCloud(EcsDocument document, string path, object value)
+		{
+			var assign = TryAssignCloud(path);
 			if (assign == null) return false;
-
+		
 			var entity = document.Cloud ?? new Cloud();
 			var assigned = assign(entity, value);
 			if (assigned) document.Cloud = entity;
 			return assigned;
 		}
 
-		public static bool TrySetCodeSignature(EcsDocument document, string path, object value)
+		public static Func<CodeSignature, object, bool> TryAssignCodeSignature(string path)
 		{
 			Func<CodeSignature, object, bool> assign = path switch
 			{
@@ -1841,15 +3113,20 @@ namespace Elastic.CommonSchema
 				"CodeSignatureValid" => static (e, v) => TrySetBool(e, v, static (ee, p) => ee.Valid = p),
 				_ => null
 			};
+			return assign;
+		}
+		public static bool TrySetCodeSignature(ICodeSignature document, string path, object value)
+		{
+			var assign = TryAssignCodeSignature(path);
 			if (assign == null) return false;
-
+		
 			var entity = document.CodeSignature ?? new CodeSignature();
 			var assigned = assign(entity, value);
 			if (assigned) document.CodeSignature = entity;
 			return assigned;
 		}
 
-		public static bool TrySetContainer(EcsDocument document, string path, object value)
+		public static Func<Container, object, bool> TryAssignContainer(string path)
 		{
 			Func<Container, object, bool> assign = path switch
 			{
@@ -1877,15 +3154,20 @@ namespace Elastic.CommonSchema
 				"ContainerSecurityContextPrivileged" => static (e, v) => TrySetBool(e, v, static (ee, p) => ee.SecurityContextPrivileged = p),
 				_ => null
 			};
+			return assign;
+		}
+		public static bool TrySetContainer(EcsDocument document, string path, object value)
+		{
+			var assign = TryAssignContainer(path);
 			if (assign == null) return false;
-
+		
 			var entity = document.Container ?? new Container();
 			var assigned = assign(entity, value);
 			if (assigned) document.Container = entity;
 			return assigned;
 		}
 
-		public static bool TrySetDataStream(EcsDocument document, string path, object value)
+		public static Func<DataStream, object, bool> TryAssignDataStream(string path)
 		{
 			Func<DataStream, object, bool> assign = path switch
 			{
@@ -1897,15 +3179,20 @@ namespace Elastic.CommonSchema
 				"DataStreamType" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Type = p),
 				_ => null
 			};
+			return assign;
+		}
+		public static bool TrySetDataStream(EcsDocument document, string path, object value)
+		{
+			var assign = TryAssignDataStream(path);
 			if (assign == null) return false;
-
+		
 			var entity = document.DataStream ?? new DataStream();
 			var assigned = assign(entity, value);
 			if (assigned) document.DataStream = entity;
 			return assigned;
 		}
 
-		public static bool TrySetDestination(EcsDocument document, string path, object value)
+		public static Func<Destination, object, bool> TryAssignDestination(string path)
 		{
 			Func<Destination, object, bool> assign = path switch
 			{
@@ -1933,17 +3220,78 @@ namespace Elastic.CommonSchema
 				"DestinationSubdomain" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Subdomain = p),
 				"destination.top_level_domain" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.TopLevelDomain = p),
 				"DestinationTopLevelDomain" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.TopLevelDomain = p),
+				"destination.as.number" => static (e, v) => TryAssignAs("as.number")(e.As ??= new As(),v),
+				"DestinationAsNumber" => static (e, v) => TryAssignAs("as.number")(e.As ??= new As(),v),
+				"destination.as.organization.name" => static (e, v) => TryAssignAs("as.organization.name")(e.As ??= new As(),v),
+				"DestinationAsOrganizationName" => static (e, v) => TryAssignAs("as.organization.name")(e.As ??= new As(),v),
+				"destination.geo.city_name" => static (e, v) => TryAssignGeo("geo.city_name")(e.Geo ??= new Geo(),v),
+				"DestinationGeoCityName" => static (e, v) => TryAssignGeo("geo.city_name")(e.Geo ??= new Geo(),v),
+				"destination.geo.continent_code" => static (e, v) => TryAssignGeo("geo.continent_code")(e.Geo ??= new Geo(),v),
+				"DestinationGeoContinentCode" => static (e, v) => TryAssignGeo("geo.continent_code")(e.Geo ??= new Geo(),v),
+				"destination.geo.continent_name" => static (e, v) => TryAssignGeo("geo.continent_name")(e.Geo ??= new Geo(),v),
+				"DestinationGeoContinentName" => static (e, v) => TryAssignGeo("geo.continent_name")(e.Geo ??= new Geo(),v),
+				"destination.geo.country_iso_code" => static (e, v) => TryAssignGeo("geo.country_iso_code")(e.Geo ??= new Geo(),v),
+				"DestinationGeoCountryIsoCode" => static (e, v) => TryAssignGeo("geo.country_iso_code")(e.Geo ??= new Geo(),v),
+				"destination.geo.country_name" => static (e, v) => TryAssignGeo("geo.country_name")(e.Geo ??= new Geo(),v),
+				"DestinationGeoCountryName" => static (e, v) => TryAssignGeo("geo.country_name")(e.Geo ??= new Geo(),v),
+				"destination.geo.location" => static (e, v) => TryAssignGeo("geo.location")(e.Geo ??= new Geo(),v),
+				"DestinationGeoLocation" => static (e, v) => TryAssignGeo("geo.location")(e.Geo ??= new Geo(),v),
+				"destination.geo.name" => static (e, v) => TryAssignGeo("geo.name")(e.Geo ??= new Geo(),v),
+				"DestinationGeoName" => static (e, v) => TryAssignGeo("geo.name")(e.Geo ??= new Geo(),v),
+				"destination.geo.postal_code" => static (e, v) => TryAssignGeo("geo.postal_code")(e.Geo ??= new Geo(),v),
+				"DestinationGeoPostalCode" => static (e, v) => TryAssignGeo("geo.postal_code")(e.Geo ??= new Geo(),v),
+				"destination.geo.region_iso_code" => static (e, v) => TryAssignGeo("geo.region_iso_code")(e.Geo ??= new Geo(),v),
+				"DestinationGeoRegionIsoCode" => static (e, v) => TryAssignGeo("geo.region_iso_code")(e.Geo ??= new Geo(),v),
+				"destination.geo.region_name" => static (e, v) => TryAssignGeo("geo.region_name")(e.Geo ??= new Geo(),v),
+				"DestinationGeoRegionName" => static (e, v) => TryAssignGeo("geo.region_name")(e.Geo ??= new Geo(),v),
+				"destination.geo.timezone" => static (e, v) => TryAssignGeo("geo.timezone")(e.Geo ??= new Geo(),v),
+				"DestinationGeoTimezone" => static (e, v) => TryAssignGeo("geo.timezone")(e.Geo ??= new Geo(),v),
+				"destination.user.domain" => static (e, v) => TryAssignUser("user.domain")(e.User ??= new User(),v),
+				"DestinationUserDomain" => static (e, v) => TryAssignUser("user.domain")(e.User ??= new User(),v),
+				"destination.user.email" => static (e, v) => TryAssignUser("user.email")(e.User ??= new User(),v),
+				"DestinationUserEmail" => static (e, v) => TryAssignUser("user.email")(e.User ??= new User(),v),
+				"destination.user.full_name" => static (e, v) => TryAssignUser("user.full_name")(e.User ??= new User(),v),
+				"DestinationUserFullName" => static (e, v) => TryAssignUser("user.full_name")(e.User ??= new User(),v),
+				"destination.user.hash" => static (e, v) => TryAssignUser("user.hash")(e.User ??= new User(),v),
+				"DestinationUserHash" => static (e, v) => TryAssignUser("user.hash")(e.User ??= new User(),v),
+				"destination.user.id" => static (e, v) => TryAssignUser("user.id")(e.User ??= new User(),v),
+				"DestinationUserId" => static (e, v) => TryAssignUser("user.id")(e.User ??= new User(),v),
+				"destination.user.name" => static (e, v) => TryAssignUser("user.name")(e.User ??= new User(),v),
+				"DestinationUserName" => static (e, v) => TryAssignUser("user.name")(e.User ??= new User(),v),
+				"destination.user.group.domain" => static (e, v) => TryAssignUser("user.group.domain")(e.User ??= new User(),v),
+				"DestinationUserGroupDomain" => static (e, v) => TryAssignUser("user.group.domain")(e.User ??= new User(),v),
+				"destination.user.group.id" => static (e, v) => TryAssignUser("user.group.id")(e.User ??= new User(),v),
+				"DestinationUserGroupId" => static (e, v) => TryAssignUser("user.group.id")(e.User ??= new User(),v),
+				"destination.user.group.name" => static (e, v) => TryAssignUser("user.group.name")(e.User ??= new User(),v),
+				"DestinationUserGroupName" => static (e, v) => TryAssignUser("user.group.name")(e.User ??= new User(),v),
+				"destination.user.risk.calculated_level" => static (e, v) => TryAssignUser("user.risk.calculated_level")(e.User ??= new User(),v),
+				"DestinationUserRiskCalculatedLevel" => static (e, v) => TryAssignUser("user.risk.calculated_level")(e.User ??= new User(),v),
+				"destination.user.risk.calculated_score" => static (e, v) => TryAssignUser("user.risk.calculated_score")(e.User ??= new User(),v),
+				"DestinationUserRiskCalculatedScore" => static (e, v) => TryAssignUser("user.risk.calculated_score")(e.User ??= new User(),v),
+				"destination.user.risk.calculated_score_norm" => static (e, v) => TryAssignUser("user.risk.calculated_score_norm")(e.User ??= new User(),v),
+				"DestinationUserRiskCalculatedScoreNorm" => static (e, v) => TryAssignUser("user.risk.calculated_score_norm")(e.User ??= new User(),v),
+				"destination.user.risk.static_level" => static (e, v) => TryAssignUser("user.risk.static_level")(e.User ??= new User(),v),
+				"DestinationUserRiskStaticLevel" => static (e, v) => TryAssignUser("user.risk.static_level")(e.User ??= new User(),v),
+				"destination.user.risk.static_score" => static (e, v) => TryAssignUser("user.risk.static_score")(e.User ??= new User(),v),
+				"DestinationUserRiskStaticScore" => static (e, v) => TryAssignUser("user.risk.static_score")(e.User ??= new User(),v),
+				"destination.user.risk.static_score_norm" => static (e, v) => TryAssignUser("user.risk.static_score_norm")(e.User ??= new User(),v),
+				"DestinationUserRiskStaticScoreNorm" => static (e, v) => TryAssignUser("user.risk.static_score_norm")(e.User ??= new User(),v),
 				_ => null
 			};
+			return assign;
+		}
+		public static bool TrySetDestination(EcsDocument document, string path, object value)
+		{
+			var assign = TryAssignDestination(path);
 			if (assign == null) return false;
-
+		
 			var entity = document.Destination ?? new Destination();
 			var assigned = assign(entity, value);
 			if (assigned) document.Destination = entity;
 			return assigned;
 		}
 
-		public static bool TrySetDevice(EcsDocument document, string path, object value)
+		public static Func<Device, object, bool> TryAssignDevice(string path)
 		{
 			Func<Device, object, bool> assign = path switch
 			{
@@ -1957,15 +3305,20 @@ namespace Elastic.CommonSchema
 				"DeviceModelName" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.ModelName = p),
 				_ => null
 			};
+			return assign;
+		}
+		public static bool TrySetDevice(EcsDocument document, string path, object value)
+		{
+			var assign = TryAssignDevice(path);
 			if (assign == null) return false;
-
+		
 			var entity = document.Device ?? new Device();
 			var assigned = assign(entity, value);
 			if (assigned) document.Device = entity;
 			return assigned;
 		}
 
-		public static bool TrySetDll(EcsDocument document, string path, object value)
+		public static Func<Dll, object, bool> TryAssignDll(string path)
 		{
 			Func<Dll, object, bool> assign = path switch
 			{
@@ -1973,17 +3326,86 @@ namespace Elastic.CommonSchema
 				"DllName" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Name = p),
 				"dll.path" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Path = p),
 				"DllPath" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Path = p),
+				"dll.hash.md5" => static (e, v) => TryAssignHash("hash.md5")(e.Hash ??= new Hash(),v),
+				"DllHashMd5" => static (e, v) => TryAssignHash("hash.md5")(e.Hash ??= new Hash(),v),
+				"dll.hash.sha1" => static (e, v) => TryAssignHash("hash.sha1")(e.Hash ??= new Hash(),v),
+				"DllHashSha1" => static (e, v) => TryAssignHash("hash.sha1")(e.Hash ??= new Hash(),v),
+				"dll.hash.sha256" => static (e, v) => TryAssignHash("hash.sha256")(e.Hash ??= new Hash(),v),
+				"DllHashSha256" => static (e, v) => TryAssignHash("hash.sha256")(e.Hash ??= new Hash(),v),
+				"dll.hash.sha384" => static (e, v) => TryAssignHash("hash.sha384")(e.Hash ??= new Hash(),v),
+				"DllHashSha384" => static (e, v) => TryAssignHash("hash.sha384")(e.Hash ??= new Hash(),v),
+				"dll.hash.sha512" => static (e, v) => TryAssignHash("hash.sha512")(e.Hash ??= new Hash(),v),
+				"DllHashSha512" => static (e, v) => TryAssignHash("hash.sha512")(e.Hash ??= new Hash(),v),
+				"dll.hash.ssdeep" => static (e, v) => TryAssignHash("hash.ssdeep")(e.Hash ??= new Hash(),v),
+				"DllHashSsdeep" => static (e, v) => TryAssignHash("hash.ssdeep")(e.Hash ??= new Hash(),v),
+				"dll.hash.tlsh" => static (e, v) => TryAssignHash("hash.tlsh")(e.Hash ??= new Hash(),v),
+				"DllHashTlsh" => static (e, v) => TryAssignHash("hash.tlsh")(e.Hash ??= new Hash(),v),
+				"dll.pe.architecture" => static (e, v) => TryAssignPe("pe.architecture")(e.Pe ??= new Pe(),v),
+				"DllPeArchitecture" => static (e, v) => TryAssignPe("pe.architecture")(e.Pe ??= new Pe(),v),
+				"dll.pe.company" => static (e, v) => TryAssignPe("pe.company")(e.Pe ??= new Pe(),v),
+				"DllPeCompany" => static (e, v) => TryAssignPe("pe.company")(e.Pe ??= new Pe(),v),
+				"dll.pe.description" => static (e, v) => TryAssignPe("pe.description")(e.Pe ??= new Pe(),v),
+				"DllPeDescription" => static (e, v) => TryAssignPe("pe.description")(e.Pe ??= new Pe(),v),
+				"dll.pe.file_version" => static (e, v) => TryAssignPe("pe.file_version")(e.Pe ??= new Pe(),v),
+				"DllPeFileVersion" => static (e, v) => TryAssignPe("pe.file_version")(e.Pe ??= new Pe(),v),
+				"dll.pe.go_import_hash" => static (e, v) => TryAssignPe("pe.go_import_hash")(e.Pe ??= new Pe(),v),
+				"DllPeGoImportHash" => static (e, v) => TryAssignPe("pe.go_import_hash")(e.Pe ??= new Pe(),v),
+				"dll.pe.go_imports" => static (e, v) => TryAssignPe("pe.go_imports")(e.Pe ??= new Pe(),v),
+				"DllPeGoImports" => static (e, v) => TryAssignPe("pe.go_imports")(e.Pe ??= new Pe(),v),
+				"dll.pe.go_imports_names_entropy" => static (e, v) => TryAssignPe("pe.go_imports_names_entropy")(e.Pe ??= new Pe(),v),
+				"DllPeGoImportsNamesEntropy" => static (e, v) => TryAssignPe("pe.go_imports_names_entropy")(e.Pe ??= new Pe(),v),
+				"dll.pe.go_imports_names_var_entropy" => static (e, v) => TryAssignPe("pe.go_imports_names_var_entropy")(e.Pe ??= new Pe(),v),
+				"DllPeGoImportsNamesVarEntropy" => static (e, v) => TryAssignPe("pe.go_imports_names_var_entropy")(e.Pe ??= new Pe(),v),
+				"dll.pe.go_stripped" => static (e, v) => TryAssignPe("pe.go_stripped")(e.Pe ??= new Pe(),v),
+				"DllPeGoStripped" => static (e, v) => TryAssignPe("pe.go_stripped")(e.Pe ??= new Pe(),v),
+				"dll.pe.imphash" => static (e, v) => TryAssignPe("pe.imphash")(e.Pe ??= new Pe(),v),
+				"DllPeImphash" => static (e, v) => TryAssignPe("pe.imphash")(e.Pe ??= new Pe(),v),
+				"dll.pe.import_hash" => static (e, v) => TryAssignPe("pe.import_hash")(e.Pe ??= new Pe(),v),
+				"DllPeImportHash" => static (e, v) => TryAssignPe("pe.import_hash")(e.Pe ??= new Pe(),v),
+				"dll.pe.imports_names_entropy" => static (e, v) => TryAssignPe("pe.imports_names_entropy")(e.Pe ??= new Pe(),v),
+				"DllPeImportsNamesEntropy" => static (e, v) => TryAssignPe("pe.imports_names_entropy")(e.Pe ??= new Pe(),v),
+				"dll.pe.imports_names_var_entropy" => static (e, v) => TryAssignPe("pe.imports_names_var_entropy")(e.Pe ??= new Pe(),v),
+				"DllPeImportsNamesVarEntropy" => static (e, v) => TryAssignPe("pe.imports_names_var_entropy")(e.Pe ??= new Pe(),v),
+				"dll.pe.original_file_name" => static (e, v) => TryAssignPe("pe.original_file_name")(e.Pe ??= new Pe(),v),
+				"DllPeOriginalFileName" => static (e, v) => TryAssignPe("pe.original_file_name")(e.Pe ??= new Pe(),v),
+				"dll.pe.pehash" => static (e, v) => TryAssignPe("pe.pehash")(e.Pe ??= new Pe(),v),
+				"DllPePehash" => static (e, v) => TryAssignPe("pe.pehash")(e.Pe ??= new Pe(),v),
+				"dll.pe.product" => static (e, v) => TryAssignPe("pe.product")(e.Pe ??= new Pe(),v),
+				"DllPeProduct" => static (e, v) => TryAssignPe("pe.product")(e.Pe ??= new Pe(),v),
+				"dll.code_signature.digest_algorithm" => static (e, v) => TryAssignCodeSignature("code_signature.digest_algorithm")(e.CodeSignature ??= new CodeSignature(),v),
+				"DllCodeSignatureDigestAlgorithm" => static (e, v) => TryAssignCodeSignature("code_signature.digest_algorithm")(e.CodeSignature ??= new CodeSignature(),v),
+				"dll.code_signature.exists" => static (e, v) => TryAssignCodeSignature("code_signature.exists")(e.CodeSignature ??= new CodeSignature(),v),
+				"DllCodeSignatureExists" => static (e, v) => TryAssignCodeSignature("code_signature.exists")(e.CodeSignature ??= new CodeSignature(),v),
+				"dll.code_signature.signing_id" => static (e, v) => TryAssignCodeSignature("code_signature.signing_id")(e.CodeSignature ??= new CodeSignature(),v),
+				"DllCodeSignatureSigningId" => static (e, v) => TryAssignCodeSignature("code_signature.signing_id")(e.CodeSignature ??= new CodeSignature(),v),
+				"dll.code_signature.status" => static (e, v) => TryAssignCodeSignature("code_signature.status")(e.CodeSignature ??= new CodeSignature(),v),
+				"DllCodeSignatureStatus" => static (e, v) => TryAssignCodeSignature("code_signature.status")(e.CodeSignature ??= new CodeSignature(),v),
+				"dll.code_signature.subject_name" => static (e, v) => TryAssignCodeSignature("code_signature.subject_name")(e.CodeSignature ??= new CodeSignature(),v),
+				"DllCodeSignatureSubjectName" => static (e, v) => TryAssignCodeSignature("code_signature.subject_name")(e.CodeSignature ??= new CodeSignature(),v),
+				"dll.code_signature.team_id" => static (e, v) => TryAssignCodeSignature("code_signature.team_id")(e.CodeSignature ??= new CodeSignature(),v),
+				"DllCodeSignatureTeamId" => static (e, v) => TryAssignCodeSignature("code_signature.team_id")(e.CodeSignature ??= new CodeSignature(),v),
+				"dll.code_signature.timestamp" => static (e, v) => TryAssignCodeSignature("code_signature.timestamp")(e.CodeSignature ??= new CodeSignature(),v),
+				"DllCodeSignatureTimestamp" => static (e, v) => TryAssignCodeSignature("code_signature.timestamp")(e.CodeSignature ??= new CodeSignature(),v),
+				"dll.code_signature.trusted" => static (e, v) => TryAssignCodeSignature("code_signature.trusted")(e.CodeSignature ??= new CodeSignature(),v),
+				"DllCodeSignatureTrusted" => static (e, v) => TryAssignCodeSignature("code_signature.trusted")(e.CodeSignature ??= new CodeSignature(),v),
+				"dll.code_signature.valid" => static (e, v) => TryAssignCodeSignature("code_signature.valid")(e.CodeSignature ??= new CodeSignature(),v),
+				"DllCodeSignatureValid" => static (e, v) => TryAssignCodeSignature("code_signature.valid")(e.CodeSignature ??= new CodeSignature(),v),
 				_ => null
 			};
+			return assign;
+		}
+		public static bool TrySetDll(EcsDocument document, string path, object value)
+		{
+			var assign = TryAssignDll(path);
 			if (assign == null) return false;
-
+		
 			var entity = document.Dll ?? new Dll();
 			var assigned = assign(entity, value);
 			if (assigned) document.Dll = entity;
 			return assigned;
 		}
 
-		public static bool TrySetDns(EcsDocument document, string path, object value)
+		public static Func<Dns, object, bool> TryAssignDns(string path)
 		{
 			Func<Dns, object, bool> assign = path switch
 			{
@@ -2009,15 +3431,20 @@ namespace Elastic.CommonSchema
 				"DnsType" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Type = p),
 				_ => null
 			};
+			return assign;
+		}
+		public static bool TrySetDns(EcsDocument document, string path, object value)
+		{
+			var assign = TryAssignDns(path);
 			if (assign == null) return false;
-
+		
 			var entity = document.Dns ?? new Dns();
 			var assigned = assign(entity, value);
 			if (assigned) document.Dns = entity;
 			return assigned;
 		}
 
-		public static bool TrySetEcs(EcsDocument document, string path, object value)
+		public static Func<Ecs, object, bool> TryAssignEcs(string path)
 		{
 			Func<Ecs, object, bool> assign = path switch
 			{
@@ -2025,15 +3452,20 @@ namespace Elastic.CommonSchema
 				"EcsVersion" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Version = p),
 				_ => null
 			};
+			return assign;
+		}
+		public static bool TrySetEcs(EcsDocument document, string path, object value)
+		{
+			var assign = TryAssignEcs(path);
 			if (assign == null) return false;
-
+		
 			var entity = document.Ecs ?? new Ecs();
 			var assigned = assign(entity, value);
 			if (assigned) document.Ecs = entity;
 			return assigned;
 		}
 
-		public static bool TrySetElf(EcsDocument document, string path, object value)
+		public static Func<Elf, object, bool> TryAssignElf(string path)
 		{
 			Func<Elf, object, bool> assign = path switch
 			{
@@ -2081,15 +3513,20 @@ namespace Elastic.CommonSchema
 				"ElfTelfhash" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Telfhash = p),
 				_ => null
 			};
+			return assign;
+		}
+		public static bool TrySetElf(IElf document, string path, object value)
+		{
+			var assign = TryAssignElf(path);
 			if (assign == null) return false;
-
+		
 			var entity = document.Elf ?? new Elf();
 			var assigned = assign(entity, value);
 			if (assigned) document.Elf = entity;
 			return assigned;
 		}
 
-		public static bool TrySetEmail(EcsDocument document, string path, object value)
+		public static Func<Email, object, bool> TryAssignEmail(string path)
 		{
 			Func<Email, object, bool> assign = path switch
 			{
@@ -2113,15 +3550,20 @@ namespace Elastic.CommonSchema
 				"EmailXMailer" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.XMailer = p),
 				_ => null
 			};
+			return assign;
+		}
+		public static bool TrySetEmail(EcsDocument document, string path, object value)
+		{
+			var assign = TryAssignEmail(path);
 			if (assign == null) return false;
-
+		
 			var entity = document.Email ?? new Email();
 			var assigned = assign(entity, value);
 			if (assigned) document.Email = entity;
 			return assigned;
 		}
 
-		public static bool TrySetError(EcsDocument document, string path, object value)
+		public static Func<Error, object, bool> TryAssignError(string path)
 		{
 			Func<Error, object, bool> assign = path switch
 			{
@@ -2137,15 +3579,20 @@ namespace Elastic.CommonSchema
 				"ErrorType" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Type = p),
 				_ => null
 			};
+			return assign;
+		}
+		public static bool TrySetError(EcsDocument document, string path, object value)
+		{
+			var assign = TryAssignError(path);
 			if (assign == null) return false;
-
+		
 			var entity = document.Error ?? new Error();
 			var assigned = assign(entity, value);
 			if (assigned) document.Error = entity;
 			return assigned;
 		}
 
-		public static bool TrySetEvent(EcsDocument document, string path, object value)
+		public static Func<Event, object, bool> TryAssignEvent(string path)
 		{
 			Func<Event, object, bool> assign = path switch
 			{
@@ -2199,15 +3646,20 @@ namespace Elastic.CommonSchema
 				"EventUrl" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Url = p),
 				_ => null
 			};
+			return assign;
+		}
+		public static bool TrySetEvent(EcsDocument document, string path, object value)
+		{
+			var assign = TryAssignEvent(path);
 			if (assign == null) return false;
-
+		
 			var entity = document.Event ?? new Event();
 			var assigned = assign(entity, value);
 			if (assigned) document.Event = entity;
 			return assigned;
 		}
 
-		public static bool TrySetFaas(EcsDocument document, string path, object value)
+		public static Func<Faas, object, bool> TryAssignFaas(string path)
 		{
 			Func<Faas, object, bool> assign = path switch
 			{
@@ -2227,15 +3679,20 @@ namespace Elastic.CommonSchema
 				"FaasVersion" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Version = p),
 				_ => null
 			};
+			return assign;
+		}
+		public static bool TrySetFaas(EcsDocument document, string path, object value)
+		{
+			var assign = TryAssignFaas(path);
 			if (assign == null) return false;
-
+		
 			var entity = document.Faas ?? new Faas();
 			var assigned = assign(entity, value);
 			if (assigned) document.Faas = entity;
 			return assigned;
 		}
 
-		public static bool TrySetFile(EcsDocument document, string path, object value)
+		public static Func<File, object, bool> TryAssignFile(string path)
 		{
 			Func<File, object, bool> assign = path switch
 			{
@@ -2281,17 +3738,168 @@ namespace Elastic.CommonSchema
 				"FileType" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Type = p),
 				"file.uid" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Uid = p),
 				"FileUid" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Uid = p),
+				"file.hash.md5" => static (e, v) => TryAssignHash("hash.md5")(e.Hash ??= new Hash(),v),
+				"FileHashMd5" => static (e, v) => TryAssignHash("hash.md5")(e.Hash ??= new Hash(),v),
+				"file.hash.sha1" => static (e, v) => TryAssignHash("hash.sha1")(e.Hash ??= new Hash(),v),
+				"FileHashSha1" => static (e, v) => TryAssignHash("hash.sha1")(e.Hash ??= new Hash(),v),
+				"file.hash.sha256" => static (e, v) => TryAssignHash("hash.sha256")(e.Hash ??= new Hash(),v),
+				"FileHashSha256" => static (e, v) => TryAssignHash("hash.sha256")(e.Hash ??= new Hash(),v),
+				"file.hash.sha384" => static (e, v) => TryAssignHash("hash.sha384")(e.Hash ??= new Hash(),v),
+				"FileHashSha384" => static (e, v) => TryAssignHash("hash.sha384")(e.Hash ??= new Hash(),v),
+				"file.hash.sha512" => static (e, v) => TryAssignHash("hash.sha512")(e.Hash ??= new Hash(),v),
+				"FileHashSha512" => static (e, v) => TryAssignHash("hash.sha512")(e.Hash ??= new Hash(),v),
+				"file.hash.ssdeep" => static (e, v) => TryAssignHash("hash.ssdeep")(e.Hash ??= new Hash(),v),
+				"FileHashSsdeep" => static (e, v) => TryAssignHash("hash.ssdeep")(e.Hash ??= new Hash(),v),
+				"file.hash.tlsh" => static (e, v) => TryAssignHash("hash.tlsh")(e.Hash ??= new Hash(),v),
+				"FileHashTlsh" => static (e, v) => TryAssignHash("hash.tlsh")(e.Hash ??= new Hash(),v),
+				"file.pe.architecture" => static (e, v) => TryAssignPe("pe.architecture")(e.Pe ??= new Pe(),v),
+				"FilePeArchitecture" => static (e, v) => TryAssignPe("pe.architecture")(e.Pe ??= new Pe(),v),
+				"file.pe.company" => static (e, v) => TryAssignPe("pe.company")(e.Pe ??= new Pe(),v),
+				"FilePeCompany" => static (e, v) => TryAssignPe("pe.company")(e.Pe ??= new Pe(),v),
+				"file.pe.description" => static (e, v) => TryAssignPe("pe.description")(e.Pe ??= new Pe(),v),
+				"FilePeDescription" => static (e, v) => TryAssignPe("pe.description")(e.Pe ??= new Pe(),v),
+				"file.pe.file_version" => static (e, v) => TryAssignPe("pe.file_version")(e.Pe ??= new Pe(),v),
+				"FilePeFileVersion" => static (e, v) => TryAssignPe("pe.file_version")(e.Pe ??= new Pe(),v),
+				"file.pe.go_import_hash" => static (e, v) => TryAssignPe("pe.go_import_hash")(e.Pe ??= new Pe(),v),
+				"FilePeGoImportHash" => static (e, v) => TryAssignPe("pe.go_import_hash")(e.Pe ??= new Pe(),v),
+				"file.pe.go_imports" => static (e, v) => TryAssignPe("pe.go_imports")(e.Pe ??= new Pe(),v),
+				"FilePeGoImports" => static (e, v) => TryAssignPe("pe.go_imports")(e.Pe ??= new Pe(),v),
+				"file.pe.go_imports_names_entropy" => static (e, v) => TryAssignPe("pe.go_imports_names_entropy")(e.Pe ??= new Pe(),v),
+				"FilePeGoImportsNamesEntropy" => static (e, v) => TryAssignPe("pe.go_imports_names_entropy")(e.Pe ??= new Pe(),v),
+				"file.pe.go_imports_names_var_entropy" => static (e, v) => TryAssignPe("pe.go_imports_names_var_entropy")(e.Pe ??= new Pe(),v),
+				"FilePeGoImportsNamesVarEntropy" => static (e, v) => TryAssignPe("pe.go_imports_names_var_entropy")(e.Pe ??= new Pe(),v),
+				"file.pe.go_stripped" => static (e, v) => TryAssignPe("pe.go_stripped")(e.Pe ??= new Pe(),v),
+				"FilePeGoStripped" => static (e, v) => TryAssignPe("pe.go_stripped")(e.Pe ??= new Pe(),v),
+				"file.pe.imphash" => static (e, v) => TryAssignPe("pe.imphash")(e.Pe ??= new Pe(),v),
+				"FilePeImphash" => static (e, v) => TryAssignPe("pe.imphash")(e.Pe ??= new Pe(),v),
+				"file.pe.import_hash" => static (e, v) => TryAssignPe("pe.import_hash")(e.Pe ??= new Pe(),v),
+				"FilePeImportHash" => static (e, v) => TryAssignPe("pe.import_hash")(e.Pe ??= new Pe(),v),
+				"file.pe.imports_names_entropy" => static (e, v) => TryAssignPe("pe.imports_names_entropy")(e.Pe ??= new Pe(),v),
+				"FilePeImportsNamesEntropy" => static (e, v) => TryAssignPe("pe.imports_names_entropy")(e.Pe ??= new Pe(),v),
+				"file.pe.imports_names_var_entropy" => static (e, v) => TryAssignPe("pe.imports_names_var_entropy")(e.Pe ??= new Pe(),v),
+				"FilePeImportsNamesVarEntropy" => static (e, v) => TryAssignPe("pe.imports_names_var_entropy")(e.Pe ??= new Pe(),v),
+				"file.pe.original_file_name" => static (e, v) => TryAssignPe("pe.original_file_name")(e.Pe ??= new Pe(),v),
+				"FilePeOriginalFileName" => static (e, v) => TryAssignPe("pe.original_file_name")(e.Pe ??= new Pe(),v),
+				"file.pe.pehash" => static (e, v) => TryAssignPe("pe.pehash")(e.Pe ??= new Pe(),v),
+				"FilePePehash" => static (e, v) => TryAssignPe("pe.pehash")(e.Pe ??= new Pe(),v),
+				"file.pe.product" => static (e, v) => TryAssignPe("pe.product")(e.Pe ??= new Pe(),v),
+				"FilePeProduct" => static (e, v) => TryAssignPe("pe.product")(e.Pe ??= new Pe(),v),
+				"file.x509.issuer.distinguished_name" => static (e, v) => TryAssignX509("x509.issuer.distinguished_name")(e.X509 ??= new X509(),v),
+				"FileX509IssuerDistinguishedName" => static (e, v) => TryAssignX509("x509.issuer.distinguished_name")(e.X509 ??= new X509(),v),
+				"file.x509.not_after" => static (e, v) => TryAssignX509("x509.not_after")(e.X509 ??= new X509(),v),
+				"FileX509NotAfter" => static (e, v) => TryAssignX509("x509.not_after")(e.X509 ??= new X509(),v),
+				"file.x509.not_before" => static (e, v) => TryAssignX509("x509.not_before")(e.X509 ??= new X509(),v),
+				"FileX509NotBefore" => static (e, v) => TryAssignX509("x509.not_before")(e.X509 ??= new X509(),v),
+				"file.x509.public_key_algorithm" => static (e, v) => TryAssignX509("x509.public_key_algorithm")(e.X509 ??= new X509(),v),
+				"FileX509PublicKeyAlgorithm" => static (e, v) => TryAssignX509("x509.public_key_algorithm")(e.X509 ??= new X509(),v),
+				"file.x509.public_key_curve" => static (e, v) => TryAssignX509("x509.public_key_curve")(e.X509 ??= new X509(),v),
+				"FileX509PublicKeyCurve" => static (e, v) => TryAssignX509("x509.public_key_curve")(e.X509 ??= new X509(),v),
+				"file.x509.public_key_exponent" => static (e, v) => TryAssignX509("x509.public_key_exponent")(e.X509 ??= new X509(),v),
+				"FileX509PublicKeyExponent" => static (e, v) => TryAssignX509("x509.public_key_exponent")(e.X509 ??= new X509(),v),
+				"file.x509.public_key_size" => static (e, v) => TryAssignX509("x509.public_key_size")(e.X509 ??= new X509(),v),
+				"FileX509PublicKeySize" => static (e, v) => TryAssignX509("x509.public_key_size")(e.X509 ??= new X509(),v),
+				"file.x509.serial_number" => static (e, v) => TryAssignX509("x509.serial_number")(e.X509 ??= new X509(),v),
+				"FileX509SerialNumber" => static (e, v) => TryAssignX509("x509.serial_number")(e.X509 ??= new X509(),v),
+				"file.x509.signature_algorithm" => static (e, v) => TryAssignX509("x509.signature_algorithm")(e.X509 ??= new X509(),v),
+				"FileX509SignatureAlgorithm" => static (e, v) => TryAssignX509("x509.signature_algorithm")(e.X509 ??= new X509(),v),
+				"file.x509.subject.distinguished_name" => static (e, v) => TryAssignX509("x509.subject.distinguished_name")(e.X509 ??= new X509(),v),
+				"FileX509SubjectDistinguishedName" => static (e, v) => TryAssignX509("x509.subject.distinguished_name")(e.X509 ??= new X509(),v),
+				"file.x509.version_number" => static (e, v) => TryAssignX509("x509.version_number")(e.X509 ??= new X509(),v),
+				"FileX509VersionNumber" => static (e, v) => TryAssignX509("x509.version_number")(e.X509 ??= new X509(),v),
+				"file.code_signature.digest_algorithm" => static (e, v) => TryAssignCodeSignature("code_signature.digest_algorithm")(e.CodeSignature ??= new CodeSignature(),v),
+				"FileCodeSignatureDigestAlgorithm" => static (e, v) => TryAssignCodeSignature("code_signature.digest_algorithm")(e.CodeSignature ??= new CodeSignature(),v),
+				"file.code_signature.exists" => static (e, v) => TryAssignCodeSignature("code_signature.exists")(e.CodeSignature ??= new CodeSignature(),v),
+				"FileCodeSignatureExists" => static (e, v) => TryAssignCodeSignature("code_signature.exists")(e.CodeSignature ??= new CodeSignature(),v),
+				"file.code_signature.signing_id" => static (e, v) => TryAssignCodeSignature("code_signature.signing_id")(e.CodeSignature ??= new CodeSignature(),v),
+				"FileCodeSignatureSigningId" => static (e, v) => TryAssignCodeSignature("code_signature.signing_id")(e.CodeSignature ??= new CodeSignature(),v),
+				"file.code_signature.status" => static (e, v) => TryAssignCodeSignature("code_signature.status")(e.CodeSignature ??= new CodeSignature(),v),
+				"FileCodeSignatureStatus" => static (e, v) => TryAssignCodeSignature("code_signature.status")(e.CodeSignature ??= new CodeSignature(),v),
+				"file.code_signature.subject_name" => static (e, v) => TryAssignCodeSignature("code_signature.subject_name")(e.CodeSignature ??= new CodeSignature(),v),
+				"FileCodeSignatureSubjectName" => static (e, v) => TryAssignCodeSignature("code_signature.subject_name")(e.CodeSignature ??= new CodeSignature(),v),
+				"file.code_signature.team_id" => static (e, v) => TryAssignCodeSignature("code_signature.team_id")(e.CodeSignature ??= new CodeSignature(),v),
+				"FileCodeSignatureTeamId" => static (e, v) => TryAssignCodeSignature("code_signature.team_id")(e.CodeSignature ??= new CodeSignature(),v),
+				"file.code_signature.timestamp" => static (e, v) => TryAssignCodeSignature("code_signature.timestamp")(e.CodeSignature ??= new CodeSignature(),v),
+				"FileCodeSignatureTimestamp" => static (e, v) => TryAssignCodeSignature("code_signature.timestamp")(e.CodeSignature ??= new CodeSignature(),v),
+				"file.code_signature.trusted" => static (e, v) => TryAssignCodeSignature("code_signature.trusted")(e.CodeSignature ??= new CodeSignature(),v),
+				"FileCodeSignatureTrusted" => static (e, v) => TryAssignCodeSignature("code_signature.trusted")(e.CodeSignature ??= new CodeSignature(),v),
+				"file.code_signature.valid" => static (e, v) => TryAssignCodeSignature("code_signature.valid")(e.CodeSignature ??= new CodeSignature(),v),
+				"FileCodeSignatureValid" => static (e, v) => TryAssignCodeSignature("code_signature.valid")(e.CodeSignature ??= new CodeSignature(),v),
+				"file.elf.architecture" => static (e, v) => TryAssignElf("elf.architecture")(e.Elf ??= new Elf(),v),
+				"FileElfArchitecture" => static (e, v) => TryAssignElf("elf.architecture")(e.Elf ??= new Elf(),v),
+				"file.elf.byte_order" => static (e, v) => TryAssignElf("elf.byte_order")(e.Elf ??= new Elf(),v),
+				"FileElfByteOrder" => static (e, v) => TryAssignElf("elf.byte_order")(e.Elf ??= new Elf(),v),
+				"file.elf.cpu_type" => static (e, v) => TryAssignElf("elf.cpu_type")(e.Elf ??= new Elf(),v),
+				"FileElfCpuType" => static (e, v) => TryAssignElf("elf.cpu_type")(e.Elf ??= new Elf(),v),
+				"file.elf.creation_date" => static (e, v) => TryAssignElf("elf.creation_date")(e.Elf ??= new Elf(),v),
+				"FileElfCreationDate" => static (e, v) => TryAssignElf("elf.creation_date")(e.Elf ??= new Elf(),v),
+				"file.elf.go_import_hash" => static (e, v) => TryAssignElf("elf.go_import_hash")(e.Elf ??= new Elf(),v),
+				"FileElfGoImportHash" => static (e, v) => TryAssignElf("elf.go_import_hash")(e.Elf ??= new Elf(),v),
+				"file.elf.go_imports" => static (e, v) => TryAssignElf("elf.go_imports")(e.Elf ??= new Elf(),v),
+				"FileElfGoImports" => static (e, v) => TryAssignElf("elf.go_imports")(e.Elf ??= new Elf(),v),
+				"file.elf.go_imports_names_entropy" => static (e, v) => TryAssignElf("elf.go_imports_names_entropy")(e.Elf ??= new Elf(),v),
+				"FileElfGoImportsNamesEntropy" => static (e, v) => TryAssignElf("elf.go_imports_names_entropy")(e.Elf ??= new Elf(),v),
+				"file.elf.go_imports_names_var_entropy" => static (e, v) => TryAssignElf("elf.go_imports_names_var_entropy")(e.Elf ??= new Elf(),v),
+				"FileElfGoImportsNamesVarEntropy" => static (e, v) => TryAssignElf("elf.go_imports_names_var_entropy")(e.Elf ??= new Elf(),v),
+				"file.elf.go_stripped" => static (e, v) => TryAssignElf("elf.go_stripped")(e.Elf ??= new Elf(),v),
+				"FileElfGoStripped" => static (e, v) => TryAssignElf("elf.go_stripped")(e.Elf ??= new Elf(),v),
+				"file.elf.header.abi_version" => static (e, v) => TryAssignElf("elf.header.abi_version")(e.Elf ??= new Elf(),v),
+				"FileElfHeaderAbiVersion" => static (e, v) => TryAssignElf("elf.header.abi_version")(e.Elf ??= new Elf(),v),
+				"file.elf.header.class" => static (e, v) => TryAssignElf("elf.header.class")(e.Elf ??= new Elf(),v),
+				"FileElfHeaderClass" => static (e, v) => TryAssignElf("elf.header.class")(e.Elf ??= new Elf(),v),
+				"file.elf.header.data" => static (e, v) => TryAssignElf("elf.header.data")(e.Elf ??= new Elf(),v),
+				"FileElfHeaderData" => static (e, v) => TryAssignElf("elf.header.data")(e.Elf ??= new Elf(),v),
+				"file.elf.header.entrypoint" => static (e, v) => TryAssignElf("elf.header.entrypoint")(e.Elf ??= new Elf(),v),
+				"FileElfHeaderEntrypoint" => static (e, v) => TryAssignElf("elf.header.entrypoint")(e.Elf ??= new Elf(),v),
+				"file.elf.header.object_version" => static (e, v) => TryAssignElf("elf.header.object_version")(e.Elf ??= new Elf(),v),
+				"FileElfHeaderObjectVersion" => static (e, v) => TryAssignElf("elf.header.object_version")(e.Elf ??= new Elf(),v),
+				"file.elf.header.os_abi" => static (e, v) => TryAssignElf("elf.header.os_abi")(e.Elf ??= new Elf(),v),
+				"FileElfHeaderOsAbi" => static (e, v) => TryAssignElf("elf.header.os_abi")(e.Elf ??= new Elf(),v),
+				"file.elf.header.type" => static (e, v) => TryAssignElf("elf.header.type")(e.Elf ??= new Elf(),v),
+				"FileElfHeaderType" => static (e, v) => TryAssignElf("elf.header.type")(e.Elf ??= new Elf(),v),
+				"file.elf.header.version" => static (e, v) => TryAssignElf("elf.header.version")(e.Elf ??= new Elf(),v),
+				"FileElfHeaderVersion" => static (e, v) => TryAssignElf("elf.header.version")(e.Elf ??= new Elf(),v),
+				"file.elf.import_hash" => static (e, v) => TryAssignElf("elf.import_hash")(e.Elf ??= new Elf(),v),
+				"FileElfImportHash" => static (e, v) => TryAssignElf("elf.import_hash")(e.Elf ??= new Elf(),v),
+				"file.elf.imports_names_entropy" => static (e, v) => TryAssignElf("elf.imports_names_entropy")(e.Elf ??= new Elf(),v),
+				"FileElfImportsNamesEntropy" => static (e, v) => TryAssignElf("elf.imports_names_entropy")(e.Elf ??= new Elf(),v),
+				"file.elf.imports_names_var_entropy" => static (e, v) => TryAssignElf("elf.imports_names_var_entropy")(e.Elf ??= new Elf(),v),
+				"FileElfImportsNamesVarEntropy" => static (e, v) => TryAssignElf("elf.imports_names_var_entropy")(e.Elf ??= new Elf(),v),
+				"file.elf.telfhash" => static (e, v) => TryAssignElf("elf.telfhash")(e.Elf ??= new Elf(),v),
+				"FileElfTelfhash" => static (e, v) => TryAssignElf("elf.telfhash")(e.Elf ??= new Elf(),v),
+				"file.macho.go_import_hash" => static (e, v) => TryAssignMacho("macho.go_import_hash")(e.Macho ??= new Macho(),v),
+				"FileMachoGoImportHash" => static (e, v) => TryAssignMacho("macho.go_import_hash")(e.Macho ??= new Macho(),v),
+				"file.macho.go_imports" => static (e, v) => TryAssignMacho("macho.go_imports")(e.Macho ??= new Macho(),v),
+				"FileMachoGoImports" => static (e, v) => TryAssignMacho("macho.go_imports")(e.Macho ??= new Macho(),v),
+				"file.macho.go_imports_names_entropy" => static (e, v) => TryAssignMacho("macho.go_imports_names_entropy")(e.Macho ??= new Macho(),v),
+				"FileMachoGoImportsNamesEntropy" => static (e, v) => TryAssignMacho("macho.go_imports_names_entropy")(e.Macho ??= new Macho(),v),
+				"file.macho.go_imports_names_var_entropy" => static (e, v) => TryAssignMacho("macho.go_imports_names_var_entropy")(e.Macho ??= new Macho(),v),
+				"FileMachoGoImportsNamesVarEntropy" => static (e, v) => TryAssignMacho("macho.go_imports_names_var_entropy")(e.Macho ??= new Macho(),v),
+				"file.macho.go_stripped" => static (e, v) => TryAssignMacho("macho.go_stripped")(e.Macho ??= new Macho(),v),
+				"FileMachoGoStripped" => static (e, v) => TryAssignMacho("macho.go_stripped")(e.Macho ??= new Macho(),v),
+				"file.macho.import_hash" => static (e, v) => TryAssignMacho("macho.import_hash")(e.Macho ??= new Macho(),v),
+				"FileMachoImportHash" => static (e, v) => TryAssignMacho("macho.import_hash")(e.Macho ??= new Macho(),v),
+				"file.macho.imports_names_entropy" => static (e, v) => TryAssignMacho("macho.imports_names_entropy")(e.Macho ??= new Macho(),v),
+				"FileMachoImportsNamesEntropy" => static (e, v) => TryAssignMacho("macho.imports_names_entropy")(e.Macho ??= new Macho(),v),
+				"file.macho.imports_names_var_entropy" => static (e, v) => TryAssignMacho("macho.imports_names_var_entropy")(e.Macho ??= new Macho(),v),
+				"FileMachoImportsNamesVarEntropy" => static (e, v) => TryAssignMacho("macho.imports_names_var_entropy")(e.Macho ??= new Macho(),v),
+				"file.macho.symhash" => static (e, v) => TryAssignMacho("macho.symhash")(e.Macho ??= new Macho(),v),
+				"FileMachoSymhash" => static (e, v) => TryAssignMacho("macho.symhash")(e.Macho ??= new Macho(),v),
 				_ => null
 			};
+			return assign;
+		}
+		public static bool TrySetFile(EcsDocument document, string path, object value)
+		{
+			var assign = TryAssignFile(path);
 			if (assign == null) return false;
-
+		
 			var entity = document.File ?? new File();
 			var assigned = assign(entity, value);
 			if (assigned) document.File = entity;
 			return assigned;
 		}
 
-		public static bool TrySetGeo(EcsDocument document, string path, object value)
+		public static Func<Geo, object, bool> TryAssignGeo(string path)
 		{
 			Func<Geo, object, bool> assign = path switch
 			{
@@ -2305,6 +3913,8 @@ namespace Elastic.CommonSchema
 				"GeoCountryIsoCode" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.CountryIsoCode = p),
 				"geo.country_name" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.CountryName = p),
 				"GeoCountryName" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.CountryName = p),
+				"geo.location" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Location = p),
+				"GeoLocation" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Location = p),
 				"geo.name" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Name = p),
 				"GeoName" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Name = p),
 				"geo.postal_code" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.PostalCode = p),
@@ -2317,15 +3927,20 @@ namespace Elastic.CommonSchema
 				"GeoTimezone" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Timezone = p),
 				_ => null
 			};
+			return assign;
+		}
+		public static bool TrySetGeo(IGeo document, string path, object value)
+		{
+			var assign = TryAssignGeo(path);
 			if (assign == null) return false;
-
+		
 			var entity = document.Geo ?? new Geo();
 			var assigned = assign(entity, value);
 			if (assigned) document.Geo = entity;
 			return assigned;
 		}
 
-		public static bool TrySetGroup(EcsDocument document, string path, object value)
+		public static Func<Group, object, bool> TryAssignGroup(string path)
 		{
 			Func<Group, object, bool> assign = path switch
 			{
@@ -2337,15 +3952,20 @@ namespace Elastic.CommonSchema
 				"GroupName" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Name = p),
 				_ => null
 			};
+			return assign;
+		}
+		public static bool TrySetGroup(IGroup document, string path, object value)
+		{
+			var assign = TryAssignGroup(path);
 			if (assign == null) return false;
-
+		
 			var entity = document.Group ?? new Group();
 			var assigned = assign(entity, value);
 			if (assigned) document.Group = entity;
 			return assigned;
 		}
 
-		public static bool TrySetHash(EcsDocument document, string path, object value)
+		public static Func<Hash, object, bool> TryAssignHash(string path)
 		{
 			Func<Hash, object, bool> assign = path switch
 			{
@@ -2365,15 +3985,20 @@ namespace Elastic.CommonSchema
 				"HashTlsh" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Tlsh = p),
 				_ => null
 			};
+			return assign;
+		}
+		public static bool TrySetHash(IHash document, string path, object value)
+		{
+			var assign = TryAssignHash(path);
 			if (assign == null) return false;
-
+		
 			var entity = document.Hash ?? new Hash();
 			var assigned = assign(entity, value);
 			if (assigned) document.Hash = entity;
 			return assigned;
 		}
 
-		public static bool TrySetHost(EcsDocument document, string path, object value)
+		public static Func<Host, object, bool> TryAssignHost(string path)
 		{
 			Func<Host, object, bool> assign = path switch
 			{
@@ -2409,17 +4034,70 @@ namespace Elastic.CommonSchema
 				"HostType" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Type = p),
 				"host.uptime" => static (e, v) => TrySetLong(e, v, static (ee, p) => ee.Uptime = p),
 				"HostUptime" => static (e, v) => TrySetLong(e, v, static (ee, p) => ee.Uptime = p),
+				"host.geo.city_name" => static (e, v) => TryAssignGeo("geo.city_name")(e.Geo ??= new Geo(),v),
+				"HostGeoCityName" => static (e, v) => TryAssignGeo("geo.city_name")(e.Geo ??= new Geo(),v),
+				"host.geo.continent_code" => static (e, v) => TryAssignGeo("geo.continent_code")(e.Geo ??= new Geo(),v),
+				"HostGeoContinentCode" => static (e, v) => TryAssignGeo("geo.continent_code")(e.Geo ??= new Geo(),v),
+				"host.geo.continent_name" => static (e, v) => TryAssignGeo("geo.continent_name")(e.Geo ??= new Geo(),v),
+				"HostGeoContinentName" => static (e, v) => TryAssignGeo("geo.continent_name")(e.Geo ??= new Geo(),v),
+				"host.geo.country_iso_code" => static (e, v) => TryAssignGeo("geo.country_iso_code")(e.Geo ??= new Geo(),v),
+				"HostGeoCountryIsoCode" => static (e, v) => TryAssignGeo("geo.country_iso_code")(e.Geo ??= new Geo(),v),
+				"host.geo.country_name" => static (e, v) => TryAssignGeo("geo.country_name")(e.Geo ??= new Geo(),v),
+				"HostGeoCountryName" => static (e, v) => TryAssignGeo("geo.country_name")(e.Geo ??= new Geo(),v),
+				"host.geo.location" => static (e, v) => TryAssignGeo("geo.location")(e.Geo ??= new Geo(),v),
+				"HostGeoLocation" => static (e, v) => TryAssignGeo("geo.location")(e.Geo ??= new Geo(),v),
+				"host.geo.name" => static (e, v) => TryAssignGeo("geo.name")(e.Geo ??= new Geo(),v),
+				"HostGeoName" => static (e, v) => TryAssignGeo("geo.name")(e.Geo ??= new Geo(),v),
+				"host.geo.postal_code" => static (e, v) => TryAssignGeo("geo.postal_code")(e.Geo ??= new Geo(),v),
+				"HostGeoPostalCode" => static (e, v) => TryAssignGeo("geo.postal_code")(e.Geo ??= new Geo(),v),
+				"host.geo.region_iso_code" => static (e, v) => TryAssignGeo("geo.region_iso_code")(e.Geo ??= new Geo(),v),
+				"HostGeoRegionIsoCode" => static (e, v) => TryAssignGeo("geo.region_iso_code")(e.Geo ??= new Geo(),v),
+				"host.geo.region_name" => static (e, v) => TryAssignGeo("geo.region_name")(e.Geo ??= new Geo(),v),
+				"HostGeoRegionName" => static (e, v) => TryAssignGeo("geo.region_name")(e.Geo ??= new Geo(),v),
+				"host.geo.timezone" => static (e, v) => TryAssignGeo("geo.timezone")(e.Geo ??= new Geo(),v),
+				"HostGeoTimezone" => static (e, v) => TryAssignGeo("geo.timezone")(e.Geo ??= new Geo(),v),
+				"host.os.family" => static (e, v) => TryAssignOs("os.family")(e.Os ??= new Os(),v),
+				"HostOsFamily" => static (e, v) => TryAssignOs("os.family")(e.Os ??= new Os(),v),
+				"host.os.full" => static (e, v) => TryAssignOs("os.full")(e.Os ??= new Os(),v),
+				"HostOsFull" => static (e, v) => TryAssignOs("os.full")(e.Os ??= new Os(),v),
+				"host.os.kernel" => static (e, v) => TryAssignOs("os.kernel")(e.Os ??= new Os(),v),
+				"HostOsKernel" => static (e, v) => TryAssignOs("os.kernel")(e.Os ??= new Os(),v),
+				"host.os.name" => static (e, v) => TryAssignOs("os.name")(e.Os ??= new Os(),v),
+				"HostOsName" => static (e, v) => TryAssignOs("os.name")(e.Os ??= new Os(),v),
+				"host.os.platform" => static (e, v) => TryAssignOs("os.platform")(e.Os ??= new Os(),v),
+				"HostOsPlatform" => static (e, v) => TryAssignOs("os.platform")(e.Os ??= new Os(),v),
+				"host.os.type" => static (e, v) => TryAssignOs("os.type")(e.Os ??= new Os(),v),
+				"HostOsType" => static (e, v) => TryAssignOs("os.type")(e.Os ??= new Os(),v),
+				"host.os.version" => static (e, v) => TryAssignOs("os.version")(e.Os ??= new Os(),v),
+				"HostOsVersion" => static (e, v) => TryAssignOs("os.version")(e.Os ??= new Os(),v),
+				"host.risk.calculated_level" => static (e, v) => TryAssignRisk("risk.calculated_level")(e.Risk ??= new Risk(),v),
+				"HostRiskCalculatedLevel" => static (e, v) => TryAssignRisk("risk.calculated_level")(e.Risk ??= new Risk(),v),
+				"host.risk.calculated_score" => static (e, v) => TryAssignRisk("risk.calculated_score")(e.Risk ??= new Risk(),v),
+				"HostRiskCalculatedScore" => static (e, v) => TryAssignRisk("risk.calculated_score")(e.Risk ??= new Risk(),v),
+				"host.risk.calculated_score_norm" => static (e, v) => TryAssignRisk("risk.calculated_score_norm")(e.Risk ??= new Risk(),v),
+				"HostRiskCalculatedScoreNorm" => static (e, v) => TryAssignRisk("risk.calculated_score_norm")(e.Risk ??= new Risk(),v),
+				"host.risk.static_level" => static (e, v) => TryAssignRisk("risk.static_level")(e.Risk ??= new Risk(),v),
+				"HostRiskStaticLevel" => static (e, v) => TryAssignRisk("risk.static_level")(e.Risk ??= new Risk(),v),
+				"host.risk.static_score" => static (e, v) => TryAssignRisk("risk.static_score")(e.Risk ??= new Risk(),v),
+				"HostRiskStaticScore" => static (e, v) => TryAssignRisk("risk.static_score")(e.Risk ??= new Risk(),v),
+				"host.risk.static_score_norm" => static (e, v) => TryAssignRisk("risk.static_score_norm")(e.Risk ??= new Risk(),v),
+				"HostRiskStaticScoreNorm" => static (e, v) => TryAssignRisk("risk.static_score_norm")(e.Risk ??= new Risk(),v),
 				_ => null
 			};
+			return assign;
+		}
+		public static bool TrySetHost(EcsDocument document, string path, object value)
+		{
+			var assign = TryAssignHost(path);
 			if (assign == null) return false;
-
+		
 			var entity = document.Host ?? new Host();
 			var assigned = assign(entity, value);
 			if (assigned) document.Host = entity;
 			return assigned;
 		}
 
-		public static bool TrySetHttp(EcsDocument document, string path, object value)
+		public static Func<Http, object, bool> TryAssignHttp(string path)
 		{
 			Func<Http, object, bool> assign = path switch
 			{
@@ -2451,15 +4129,20 @@ namespace Elastic.CommonSchema
 				"HttpVersion" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Version = p),
 				_ => null
 			};
+			return assign;
+		}
+		public static bool TrySetHttp(EcsDocument document, string path, object value)
+		{
+			var assign = TryAssignHttp(path);
 			if (assign == null) return false;
-
+		
 			var entity = document.Http ?? new Http();
 			var assigned = assign(entity, value);
 			if (assigned) document.Http = entity;
 			return assigned;
 		}
 
-		public static bool TrySetInterface(EcsDocument document, string path, object value)
+		public static Func<Interface, object, bool> TryAssignInterface(string path)
 		{
 			Func<Interface, object, bool> assign = path switch
 			{
@@ -2471,15 +4154,20 @@ namespace Elastic.CommonSchema
 				"InterfaceName" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Name = p),
 				_ => null
 			};
+			return assign;
+		}
+		public static bool TrySetInterface(EcsDocument document, string path, object value)
+		{
+			var assign = TryAssignInterface(path);
 			if (assign == null) return false;
-
+		
 			var entity = document.Interface ?? new Interface();
 			var assigned = assign(entity, value);
 			if (assigned) document.Interface = entity;
 			return assigned;
 		}
 
-		public static bool TrySetLog(EcsDocument document, string path, object value)
+		public static Func<Log, object, bool> TryAssignLog(string path)
 		{
 			Func<Log, object, bool> assign = path switch
 			{
@@ -2497,15 +4185,20 @@ namespace Elastic.CommonSchema
 				"LogOriginFunction" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.OriginFunction = p),
 				_ => null
 			};
+			return assign;
+		}
+		public static bool TrySetLog(EcsDocument document, string path, object value)
+		{
+			var assign = TryAssignLog(path);
 			if (assign == null) return false;
-
+		
 			var entity = document.Log ?? new Log();
 			var assigned = assign(entity, value);
 			if (assigned) document.Log = entity;
 			return assigned;
 		}
 
-		public static bool TrySetMacho(EcsDocument document, string path, object value)
+		public static Func<Macho, object, bool> TryAssignMacho(string path)
 		{
 			Func<Macho, object, bool> assign = path switch
 			{
@@ -2529,15 +4222,20 @@ namespace Elastic.CommonSchema
 				"MachoSymhash" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Symhash = p),
 				_ => null
 			};
+			return assign;
+		}
+		public static bool TrySetMacho(IMacho document, string path, object value)
+		{
+			var assign = TryAssignMacho(path);
 			if (assign == null) return false;
-
+		
 			var entity = document.Macho ?? new Macho();
 			var assigned = assign(entity, value);
 			if (assigned) document.Macho = entity;
 			return assigned;
 		}
 
-		public static bool TrySetNetwork(EcsDocument document, string path, object value)
+		public static Func<Network, object, bool> TryAssignNetwork(string path)
 		{
 			Func<Network, object, bool> assign = path switch
 			{
@@ -2563,17 +4261,26 @@ namespace Elastic.CommonSchema
 				"NetworkTransport" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Transport = p),
 				"network.type" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Type = p),
 				"NetworkType" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Type = p),
+				"network.vlan.id" => static (e, v) => TryAssignVlan("vlan.id")(e.Vlan ??= new Vlan(),v),
+				"NetworkVlanId" => static (e, v) => TryAssignVlan("vlan.id")(e.Vlan ??= new Vlan(),v),
+				"network.vlan.name" => static (e, v) => TryAssignVlan("vlan.name")(e.Vlan ??= new Vlan(),v),
+				"NetworkVlanName" => static (e, v) => TryAssignVlan("vlan.name")(e.Vlan ??= new Vlan(),v),
 				_ => null
 			};
+			return assign;
+		}
+		public static bool TrySetNetwork(EcsDocument document, string path, object value)
+		{
+			var assign = TryAssignNetwork(path);
 			if (assign == null) return false;
-
+		
 			var entity = document.Network ?? new Network();
 			var assigned = assign(entity, value);
 			if (assigned) document.Network = entity;
 			return assigned;
 		}
 
-		public static bool TrySetObserver(EcsDocument document, string path, object value)
+		public static Func<Observer, object, bool> TryAssignObserver(string path)
 		{
 			Func<Observer, object, bool> assign = path switch
 			{
@@ -2591,17 +4298,58 @@ namespace Elastic.CommonSchema
 				"ObserverVendor" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Vendor = p),
 				"observer.version" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Version = p),
 				"ObserverVersion" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Version = p),
+				"observer.geo.city_name" => static (e, v) => TryAssignGeo("geo.city_name")(e.Geo ??= new Geo(),v),
+				"ObserverGeoCityName" => static (e, v) => TryAssignGeo("geo.city_name")(e.Geo ??= new Geo(),v),
+				"observer.geo.continent_code" => static (e, v) => TryAssignGeo("geo.continent_code")(e.Geo ??= new Geo(),v),
+				"ObserverGeoContinentCode" => static (e, v) => TryAssignGeo("geo.continent_code")(e.Geo ??= new Geo(),v),
+				"observer.geo.continent_name" => static (e, v) => TryAssignGeo("geo.continent_name")(e.Geo ??= new Geo(),v),
+				"ObserverGeoContinentName" => static (e, v) => TryAssignGeo("geo.continent_name")(e.Geo ??= new Geo(),v),
+				"observer.geo.country_iso_code" => static (e, v) => TryAssignGeo("geo.country_iso_code")(e.Geo ??= new Geo(),v),
+				"ObserverGeoCountryIsoCode" => static (e, v) => TryAssignGeo("geo.country_iso_code")(e.Geo ??= new Geo(),v),
+				"observer.geo.country_name" => static (e, v) => TryAssignGeo("geo.country_name")(e.Geo ??= new Geo(),v),
+				"ObserverGeoCountryName" => static (e, v) => TryAssignGeo("geo.country_name")(e.Geo ??= new Geo(),v),
+				"observer.geo.location" => static (e, v) => TryAssignGeo("geo.location")(e.Geo ??= new Geo(),v),
+				"ObserverGeoLocation" => static (e, v) => TryAssignGeo("geo.location")(e.Geo ??= new Geo(),v),
+				"observer.geo.name" => static (e, v) => TryAssignGeo("geo.name")(e.Geo ??= new Geo(),v),
+				"ObserverGeoName" => static (e, v) => TryAssignGeo("geo.name")(e.Geo ??= new Geo(),v),
+				"observer.geo.postal_code" => static (e, v) => TryAssignGeo("geo.postal_code")(e.Geo ??= new Geo(),v),
+				"ObserverGeoPostalCode" => static (e, v) => TryAssignGeo("geo.postal_code")(e.Geo ??= new Geo(),v),
+				"observer.geo.region_iso_code" => static (e, v) => TryAssignGeo("geo.region_iso_code")(e.Geo ??= new Geo(),v),
+				"ObserverGeoRegionIsoCode" => static (e, v) => TryAssignGeo("geo.region_iso_code")(e.Geo ??= new Geo(),v),
+				"observer.geo.region_name" => static (e, v) => TryAssignGeo("geo.region_name")(e.Geo ??= new Geo(),v),
+				"ObserverGeoRegionName" => static (e, v) => TryAssignGeo("geo.region_name")(e.Geo ??= new Geo(),v),
+				"observer.geo.timezone" => static (e, v) => TryAssignGeo("geo.timezone")(e.Geo ??= new Geo(),v),
+				"ObserverGeoTimezone" => static (e, v) => TryAssignGeo("geo.timezone")(e.Geo ??= new Geo(),v),
+				"observer.os.family" => static (e, v) => TryAssignOs("os.family")(e.Os ??= new Os(),v),
+				"ObserverOsFamily" => static (e, v) => TryAssignOs("os.family")(e.Os ??= new Os(),v),
+				"observer.os.full" => static (e, v) => TryAssignOs("os.full")(e.Os ??= new Os(),v),
+				"ObserverOsFull" => static (e, v) => TryAssignOs("os.full")(e.Os ??= new Os(),v),
+				"observer.os.kernel" => static (e, v) => TryAssignOs("os.kernel")(e.Os ??= new Os(),v),
+				"ObserverOsKernel" => static (e, v) => TryAssignOs("os.kernel")(e.Os ??= new Os(),v),
+				"observer.os.name" => static (e, v) => TryAssignOs("os.name")(e.Os ??= new Os(),v),
+				"ObserverOsName" => static (e, v) => TryAssignOs("os.name")(e.Os ??= new Os(),v),
+				"observer.os.platform" => static (e, v) => TryAssignOs("os.platform")(e.Os ??= new Os(),v),
+				"ObserverOsPlatform" => static (e, v) => TryAssignOs("os.platform")(e.Os ??= new Os(),v),
+				"observer.os.type" => static (e, v) => TryAssignOs("os.type")(e.Os ??= new Os(),v),
+				"ObserverOsType" => static (e, v) => TryAssignOs("os.type")(e.Os ??= new Os(),v),
+				"observer.os.version" => static (e, v) => TryAssignOs("os.version")(e.Os ??= new Os(),v),
+				"ObserverOsVersion" => static (e, v) => TryAssignOs("os.version")(e.Os ??= new Os(),v),
 				_ => null
 			};
+			return assign;
+		}
+		public static bool TrySetObserver(EcsDocument document, string path, object value)
+		{
+			var assign = TryAssignObserver(path);
 			if (assign == null) return false;
-
+		
 			var entity = document.Observer ?? new Observer();
 			var assigned = assign(entity, value);
 			if (assigned) document.Observer = entity;
 			return assigned;
 		}
 
-		public static bool TrySetOrchestrator(EcsDocument document, string path, object value)
+		public static Func<Orchestrator, object, bool> TryAssignOrchestrator(string path)
 		{
 			Func<Orchestrator, object, bool> assign = path switch
 			{
@@ -2631,15 +4379,20 @@ namespace Elastic.CommonSchema
 				"OrchestratorType" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Type = p),
 				_ => null
 			};
+			return assign;
+		}
+		public static bool TrySetOrchestrator(EcsDocument document, string path, object value)
+		{
+			var assign = TryAssignOrchestrator(path);
 			if (assign == null) return false;
-
+		
 			var entity = document.Orchestrator ?? new Orchestrator();
 			var assigned = assign(entity, value);
 			if (assigned) document.Orchestrator = entity;
 			return assigned;
 		}
 
-		public static bool TrySetOrganization(EcsDocument document, string path, object value)
+		public static Func<Organization, object, bool> TryAssignOrganization(string path)
 		{
 			Func<Organization, object, bool> assign = path switch
 			{
@@ -2649,15 +4402,20 @@ namespace Elastic.CommonSchema
 				"OrganizationName" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Name = p),
 				_ => null
 			};
+			return assign;
+		}
+		public static bool TrySetOrganization(EcsDocument document, string path, object value)
+		{
+			var assign = TryAssignOrganization(path);
 			if (assign == null) return false;
-
+		
 			var entity = document.Organization ?? new Organization();
 			var assigned = assign(entity, value);
 			if (assigned) document.Organization = entity;
 			return assigned;
 		}
 
-		public static bool TrySetOs(EcsDocument document, string path, object value)
+		public static Func<Os, object, bool> TryAssignOs(string path)
 		{
 			Func<Os, object, bool> assign = path switch
 			{
@@ -2677,15 +4435,20 @@ namespace Elastic.CommonSchema
 				"OsVersion" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Version = p),
 				_ => null
 			};
+			return assign;
+		}
+		public static bool TrySetOs(IOs document, string path, object value)
+		{
+			var assign = TryAssignOs(path);
 			if (assign == null) return false;
-
+		
 			var entity = document.Os ?? new Os();
 			var assigned = assign(entity, value);
 			if (assigned) document.Os = entity;
 			return assigned;
 		}
 
-		public static bool TrySetPackage(EcsDocument document, string path, object value)
+		public static Func<Package, object, bool> TryAssignPackage(string path)
 		{
 			Func<Package, object, bool> assign = path switch
 			{
@@ -2717,15 +4480,20 @@ namespace Elastic.CommonSchema
 				"PackageVersion" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Version = p),
 				_ => null
 			};
+			return assign;
+		}
+		public static bool TrySetPackage(EcsDocument document, string path, object value)
+		{
+			var assign = TryAssignPackage(path);
 			if (assign == null) return false;
-
+		
 			var entity = document.Package ?? new Package();
 			var assigned = assign(entity, value);
 			if (assigned) document.Package = entity;
 			return assigned;
 		}
 
-		public static bool TrySetPe(EcsDocument document, string path, object value)
+		public static Func<Pe, object, bool> TryAssignPe(string path)
 		{
 			Func<Pe, object, bool> assign = path switch
 			{
@@ -2763,15 +4531,20 @@ namespace Elastic.CommonSchema
 				"PeProduct" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Product = p),
 				_ => null
 			};
+			return assign;
+		}
+		public static bool TrySetPe(IPe document, string path, object value)
+		{
+			var assign = TryAssignPe(path);
 			if (assign == null) return false;
-
+		
 			var entity = document.Pe ?? new Pe();
 			var assigned = assign(entity, value);
 			if (assigned) document.Pe = entity;
 			return assigned;
 		}
 
-		public static bool TrySetProcess(EcsDocument document, string path, object value)
+		public static Func<Process, object, bool> TryAssignProcess(string path)
 		{
 			Func<Process, object, bool> assign = path switch
 			{
@@ -2809,17 +4582,364 @@ namespace Elastic.CommonSchema
 				"ProcessVpid" => static (e, v) => TrySetLong(e, v, static (ee, p) => ee.Vpid = p),
 				"process.working_directory" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.WorkingDirectory = p),
 				"ProcessWorkingDirectory" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.WorkingDirectory = p),
+				"process.group.domain" => static (e, v) => TryAssignGroup("group.domain")(e.Group ??= new Group(),v),
+				"ProcessGroupDomain" => static (e, v) => TryAssignGroup("group.domain")(e.Group ??= new Group(),v),
+				"process.group.id" => static (e, v) => TryAssignGroup("group.id")(e.Group ??= new Group(),v),
+				"ProcessGroupId" => static (e, v) => TryAssignGroup("group.id")(e.Group ??= new Group(),v),
+				"process.group.name" => static (e, v) => TryAssignGroup("group.name")(e.Group ??= new Group(),v),
+				"ProcessGroupName" => static (e, v) => TryAssignGroup("group.name")(e.Group ??= new Group(),v),
+				"process.real_group.domain" => static (e, v) => TryAssignGroup("real_group.domain")(e.RealGroup ??= new Group(),v),
+				"ProcessRealGroupDomain" => static (e, v) => TryAssignGroup("real_group.domain")(e.RealGroup ??= new Group(),v),
+				"process.real_group.id" => static (e, v) => TryAssignGroup("real_group.id")(e.RealGroup ??= new Group(),v),
+				"ProcessRealGroupId" => static (e, v) => TryAssignGroup("real_group.id")(e.RealGroup ??= new Group(),v),
+				"process.real_group.name" => static (e, v) => TryAssignGroup("real_group.name")(e.RealGroup ??= new Group(),v),
+				"ProcessRealGroupName" => static (e, v) => TryAssignGroup("real_group.name")(e.RealGroup ??= new Group(),v),
+				"process.saved_group.domain" => static (e, v) => TryAssignGroup("saved_group.domain")(e.SavedGroup ??= new Group(),v),
+				"ProcessSavedGroupDomain" => static (e, v) => TryAssignGroup("saved_group.domain")(e.SavedGroup ??= new Group(),v),
+				"process.saved_group.id" => static (e, v) => TryAssignGroup("saved_group.id")(e.SavedGroup ??= new Group(),v),
+				"ProcessSavedGroupId" => static (e, v) => TryAssignGroup("saved_group.id")(e.SavedGroup ??= new Group(),v),
+				"process.saved_group.name" => static (e, v) => TryAssignGroup("saved_group.name")(e.SavedGroup ??= new Group(),v),
+				"ProcessSavedGroupName" => static (e, v) => TryAssignGroup("saved_group.name")(e.SavedGroup ??= new Group(),v),
+				"process.hash.md5" => static (e, v) => TryAssignHash("hash.md5")(e.Hash ??= new Hash(),v),
+				"ProcessHashMd5" => static (e, v) => TryAssignHash("hash.md5")(e.Hash ??= new Hash(),v),
+				"process.hash.sha1" => static (e, v) => TryAssignHash("hash.sha1")(e.Hash ??= new Hash(),v),
+				"ProcessHashSha1" => static (e, v) => TryAssignHash("hash.sha1")(e.Hash ??= new Hash(),v),
+				"process.hash.sha256" => static (e, v) => TryAssignHash("hash.sha256")(e.Hash ??= new Hash(),v),
+				"ProcessHashSha256" => static (e, v) => TryAssignHash("hash.sha256")(e.Hash ??= new Hash(),v),
+				"process.hash.sha384" => static (e, v) => TryAssignHash("hash.sha384")(e.Hash ??= new Hash(),v),
+				"ProcessHashSha384" => static (e, v) => TryAssignHash("hash.sha384")(e.Hash ??= new Hash(),v),
+				"process.hash.sha512" => static (e, v) => TryAssignHash("hash.sha512")(e.Hash ??= new Hash(),v),
+				"ProcessHashSha512" => static (e, v) => TryAssignHash("hash.sha512")(e.Hash ??= new Hash(),v),
+				"process.hash.ssdeep" => static (e, v) => TryAssignHash("hash.ssdeep")(e.Hash ??= new Hash(),v),
+				"ProcessHashSsdeep" => static (e, v) => TryAssignHash("hash.ssdeep")(e.Hash ??= new Hash(),v),
+				"process.hash.tlsh" => static (e, v) => TryAssignHash("hash.tlsh")(e.Hash ??= new Hash(),v),
+				"ProcessHashTlsh" => static (e, v) => TryAssignHash("hash.tlsh")(e.Hash ??= new Hash(),v),
+				"process.pe.architecture" => static (e, v) => TryAssignPe("pe.architecture")(e.Pe ??= new Pe(),v),
+				"ProcessPeArchitecture" => static (e, v) => TryAssignPe("pe.architecture")(e.Pe ??= new Pe(),v),
+				"process.pe.company" => static (e, v) => TryAssignPe("pe.company")(e.Pe ??= new Pe(),v),
+				"ProcessPeCompany" => static (e, v) => TryAssignPe("pe.company")(e.Pe ??= new Pe(),v),
+				"process.pe.description" => static (e, v) => TryAssignPe("pe.description")(e.Pe ??= new Pe(),v),
+				"ProcessPeDescription" => static (e, v) => TryAssignPe("pe.description")(e.Pe ??= new Pe(),v),
+				"process.pe.file_version" => static (e, v) => TryAssignPe("pe.file_version")(e.Pe ??= new Pe(),v),
+				"ProcessPeFileVersion" => static (e, v) => TryAssignPe("pe.file_version")(e.Pe ??= new Pe(),v),
+				"process.pe.go_import_hash" => static (e, v) => TryAssignPe("pe.go_import_hash")(e.Pe ??= new Pe(),v),
+				"ProcessPeGoImportHash" => static (e, v) => TryAssignPe("pe.go_import_hash")(e.Pe ??= new Pe(),v),
+				"process.pe.go_imports" => static (e, v) => TryAssignPe("pe.go_imports")(e.Pe ??= new Pe(),v),
+				"ProcessPeGoImports" => static (e, v) => TryAssignPe("pe.go_imports")(e.Pe ??= new Pe(),v),
+				"process.pe.go_imports_names_entropy" => static (e, v) => TryAssignPe("pe.go_imports_names_entropy")(e.Pe ??= new Pe(),v),
+				"ProcessPeGoImportsNamesEntropy" => static (e, v) => TryAssignPe("pe.go_imports_names_entropy")(e.Pe ??= new Pe(),v),
+				"process.pe.go_imports_names_var_entropy" => static (e, v) => TryAssignPe("pe.go_imports_names_var_entropy")(e.Pe ??= new Pe(),v),
+				"ProcessPeGoImportsNamesVarEntropy" => static (e, v) => TryAssignPe("pe.go_imports_names_var_entropy")(e.Pe ??= new Pe(),v),
+				"process.pe.go_stripped" => static (e, v) => TryAssignPe("pe.go_stripped")(e.Pe ??= new Pe(),v),
+				"ProcessPeGoStripped" => static (e, v) => TryAssignPe("pe.go_stripped")(e.Pe ??= new Pe(),v),
+				"process.pe.imphash" => static (e, v) => TryAssignPe("pe.imphash")(e.Pe ??= new Pe(),v),
+				"ProcessPeImphash" => static (e, v) => TryAssignPe("pe.imphash")(e.Pe ??= new Pe(),v),
+				"process.pe.import_hash" => static (e, v) => TryAssignPe("pe.import_hash")(e.Pe ??= new Pe(),v),
+				"ProcessPeImportHash" => static (e, v) => TryAssignPe("pe.import_hash")(e.Pe ??= new Pe(),v),
+				"process.pe.imports_names_entropy" => static (e, v) => TryAssignPe("pe.imports_names_entropy")(e.Pe ??= new Pe(),v),
+				"ProcessPeImportsNamesEntropy" => static (e, v) => TryAssignPe("pe.imports_names_entropy")(e.Pe ??= new Pe(),v),
+				"process.pe.imports_names_var_entropy" => static (e, v) => TryAssignPe("pe.imports_names_var_entropy")(e.Pe ??= new Pe(),v),
+				"ProcessPeImportsNamesVarEntropy" => static (e, v) => TryAssignPe("pe.imports_names_var_entropy")(e.Pe ??= new Pe(),v),
+				"process.pe.original_file_name" => static (e, v) => TryAssignPe("pe.original_file_name")(e.Pe ??= new Pe(),v),
+				"ProcessPeOriginalFileName" => static (e, v) => TryAssignPe("pe.original_file_name")(e.Pe ??= new Pe(),v),
+				"process.pe.pehash" => static (e, v) => TryAssignPe("pe.pehash")(e.Pe ??= new Pe(),v),
+				"ProcessPePehash" => static (e, v) => TryAssignPe("pe.pehash")(e.Pe ??= new Pe(),v),
+				"process.pe.product" => static (e, v) => TryAssignPe("pe.product")(e.Pe ??= new Pe(),v),
+				"ProcessPeProduct" => static (e, v) => TryAssignPe("pe.product")(e.Pe ??= new Pe(),v),
+				"process.code_signature.digest_algorithm" => static (e, v) => TryAssignCodeSignature("code_signature.digest_algorithm")(e.CodeSignature ??= new CodeSignature(),v),
+				"ProcessCodeSignatureDigestAlgorithm" => static (e, v) => TryAssignCodeSignature("code_signature.digest_algorithm")(e.CodeSignature ??= new CodeSignature(),v),
+				"process.code_signature.exists" => static (e, v) => TryAssignCodeSignature("code_signature.exists")(e.CodeSignature ??= new CodeSignature(),v),
+				"ProcessCodeSignatureExists" => static (e, v) => TryAssignCodeSignature("code_signature.exists")(e.CodeSignature ??= new CodeSignature(),v),
+				"process.code_signature.signing_id" => static (e, v) => TryAssignCodeSignature("code_signature.signing_id")(e.CodeSignature ??= new CodeSignature(),v),
+				"ProcessCodeSignatureSigningId" => static (e, v) => TryAssignCodeSignature("code_signature.signing_id")(e.CodeSignature ??= new CodeSignature(),v),
+				"process.code_signature.status" => static (e, v) => TryAssignCodeSignature("code_signature.status")(e.CodeSignature ??= new CodeSignature(),v),
+				"ProcessCodeSignatureStatus" => static (e, v) => TryAssignCodeSignature("code_signature.status")(e.CodeSignature ??= new CodeSignature(),v),
+				"process.code_signature.subject_name" => static (e, v) => TryAssignCodeSignature("code_signature.subject_name")(e.CodeSignature ??= new CodeSignature(),v),
+				"ProcessCodeSignatureSubjectName" => static (e, v) => TryAssignCodeSignature("code_signature.subject_name")(e.CodeSignature ??= new CodeSignature(),v),
+				"process.code_signature.team_id" => static (e, v) => TryAssignCodeSignature("code_signature.team_id")(e.CodeSignature ??= new CodeSignature(),v),
+				"ProcessCodeSignatureTeamId" => static (e, v) => TryAssignCodeSignature("code_signature.team_id")(e.CodeSignature ??= new CodeSignature(),v),
+				"process.code_signature.timestamp" => static (e, v) => TryAssignCodeSignature("code_signature.timestamp")(e.CodeSignature ??= new CodeSignature(),v),
+				"ProcessCodeSignatureTimestamp" => static (e, v) => TryAssignCodeSignature("code_signature.timestamp")(e.CodeSignature ??= new CodeSignature(),v),
+				"process.code_signature.trusted" => static (e, v) => TryAssignCodeSignature("code_signature.trusted")(e.CodeSignature ??= new CodeSignature(),v),
+				"ProcessCodeSignatureTrusted" => static (e, v) => TryAssignCodeSignature("code_signature.trusted")(e.CodeSignature ??= new CodeSignature(),v),
+				"process.code_signature.valid" => static (e, v) => TryAssignCodeSignature("code_signature.valid")(e.CodeSignature ??= new CodeSignature(),v),
+				"ProcessCodeSignatureValid" => static (e, v) => TryAssignCodeSignature("code_signature.valid")(e.CodeSignature ??= new CodeSignature(),v),
+				"process.elf.architecture" => static (e, v) => TryAssignElf("elf.architecture")(e.Elf ??= new Elf(),v),
+				"ProcessElfArchitecture" => static (e, v) => TryAssignElf("elf.architecture")(e.Elf ??= new Elf(),v),
+				"process.elf.byte_order" => static (e, v) => TryAssignElf("elf.byte_order")(e.Elf ??= new Elf(),v),
+				"ProcessElfByteOrder" => static (e, v) => TryAssignElf("elf.byte_order")(e.Elf ??= new Elf(),v),
+				"process.elf.cpu_type" => static (e, v) => TryAssignElf("elf.cpu_type")(e.Elf ??= new Elf(),v),
+				"ProcessElfCpuType" => static (e, v) => TryAssignElf("elf.cpu_type")(e.Elf ??= new Elf(),v),
+				"process.elf.creation_date" => static (e, v) => TryAssignElf("elf.creation_date")(e.Elf ??= new Elf(),v),
+				"ProcessElfCreationDate" => static (e, v) => TryAssignElf("elf.creation_date")(e.Elf ??= new Elf(),v),
+				"process.elf.go_import_hash" => static (e, v) => TryAssignElf("elf.go_import_hash")(e.Elf ??= new Elf(),v),
+				"ProcessElfGoImportHash" => static (e, v) => TryAssignElf("elf.go_import_hash")(e.Elf ??= new Elf(),v),
+				"process.elf.go_imports" => static (e, v) => TryAssignElf("elf.go_imports")(e.Elf ??= new Elf(),v),
+				"ProcessElfGoImports" => static (e, v) => TryAssignElf("elf.go_imports")(e.Elf ??= new Elf(),v),
+				"process.elf.go_imports_names_entropy" => static (e, v) => TryAssignElf("elf.go_imports_names_entropy")(e.Elf ??= new Elf(),v),
+				"ProcessElfGoImportsNamesEntropy" => static (e, v) => TryAssignElf("elf.go_imports_names_entropy")(e.Elf ??= new Elf(),v),
+				"process.elf.go_imports_names_var_entropy" => static (e, v) => TryAssignElf("elf.go_imports_names_var_entropy")(e.Elf ??= new Elf(),v),
+				"ProcessElfGoImportsNamesVarEntropy" => static (e, v) => TryAssignElf("elf.go_imports_names_var_entropy")(e.Elf ??= new Elf(),v),
+				"process.elf.go_stripped" => static (e, v) => TryAssignElf("elf.go_stripped")(e.Elf ??= new Elf(),v),
+				"ProcessElfGoStripped" => static (e, v) => TryAssignElf("elf.go_stripped")(e.Elf ??= new Elf(),v),
+				"process.elf.header.abi_version" => static (e, v) => TryAssignElf("elf.header.abi_version")(e.Elf ??= new Elf(),v),
+				"ProcessElfHeaderAbiVersion" => static (e, v) => TryAssignElf("elf.header.abi_version")(e.Elf ??= new Elf(),v),
+				"process.elf.header.class" => static (e, v) => TryAssignElf("elf.header.class")(e.Elf ??= new Elf(),v),
+				"ProcessElfHeaderClass" => static (e, v) => TryAssignElf("elf.header.class")(e.Elf ??= new Elf(),v),
+				"process.elf.header.data" => static (e, v) => TryAssignElf("elf.header.data")(e.Elf ??= new Elf(),v),
+				"ProcessElfHeaderData" => static (e, v) => TryAssignElf("elf.header.data")(e.Elf ??= new Elf(),v),
+				"process.elf.header.entrypoint" => static (e, v) => TryAssignElf("elf.header.entrypoint")(e.Elf ??= new Elf(),v),
+				"ProcessElfHeaderEntrypoint" => static (e, v) => TryAssignElf("elf.header.entrypoint")(e.Elf ??= new Elf(),v),
+				"process.elf.header.object_version" => static (e, v) => TryAssignElf("elf.header.object_version")(e.Elf ??= new Elf(),v),
+				"ProcessElfHeaderObjectVersion" => static (e, v) => TryAssignElf("elf.header.object_version")(e.Elf ??= new Elf(),v),
+				"process.elf.header.os_abi" => static (e, v) => TryAssignElf("elf.header.os_abi")(e.Elf ??= new Elf(),v),
+				"ProcessElfHeaderOsAbi" => static (e, v) => TryAssignElf("elf.header.os_abi")(e.Elf ??= new Elf(),v),
+				"process.elf.header.type" => static (e, v) => TryAssignElf("elf.header.type")(e.Elf ??= new Elf(),v),
+				"ProcessElfHeaderType" => static (e, v) => TryAssignElf("elf.header.type")(e.Elf ??= new Elf(),v),
+				"process.elf.header.version" => static (e, v) => TryAssignElf("elf.header.version")(e.Elf ??= new Elf(),v),
+				"ProcessElfHeaderVersion" => static (e, v) => TryAssignElf("elf.header.version")(e.Elf ??= new Elf(),v),
+				"process.elf.import_hash" => static (e, v) => TryAssignElf("elf.import_hash")(e.Elf ??= new Elf(),v),
+				"ProcessElfImportHash" => static (e, v) => TryAssignElf("elf.import_hash")(e.Elf ??= new Elf(),v),
+				"process.elf.imports_names_entropy" => static (e, v) => TryAssignElf("elf.imports_names_entropy")(e.Elf ??= new Elf(),v),
+				"ProcessElfImportsNamesEntropy" => static (e, v) => TryAssignElf("elf.imports_names_entropy")(e.Elf ??= new Elf(),v),
+				"process.elf.imports_names_var_entropy" => static (e, v) => TryAssignElf("elf.imports_names_var_entropy")(e.Elf ??= new Elf(),v),
+				"ProcessElfImportsNamesVarEntropy" => static (e, v) => TryAssignElf("elf.imports_names_var_entropy")(e.Elf ??= new Elf(),v),
+				"process.elf.telfhash" => static (e, v) => TryAssignElf("elf.telfhash")(e.Elf ??= new Elf(),v),
+				"ProcessElfTelfhash" => static (e, v) => TryAssignElf("elf.telfhash")(e.Elf ??= new Elf(),v),
+				"process.macho.go_import_hash" => static (e, v) => TryAssignMacho("macho.go_import_hash")(e.Macho ??= new Macho(),v),
+				"ProcessMachoGoImportHash" => static (e, v) => TryAssignMacho("macho.go_import_hash")(e.Macho ??= new Macho(),v),
+				"process.macho.go_imports" => static (e, v) => TryAssignMacho("macho.go_imports")(e.Macho ??= new Macho(),v),
+				"ProcessMachoGoImports" => static (e, v) => TryAssignMacho("macho.go_imports")(e.Macho ??= new Macho(),v),
+				"process.macho.go_imports_names_entropy" => static (e, v) => TryAssignMacho("macho.go_imports_names_entropy")(e.Macho ??= new Macho(),v),
+				"ProcessMachoGoImportsNamesEntropy" => static (e, v) => TryAssignMacho("macho.go_imports_names_entropy")(e.Macho ??= new Macho(),v),
+				"process.macho.go_imports_names_var_entropy" => static (e, v) => TryAssignMacho("macho.go_imports_names_var_entropy")(e.Macho ??= new Macho(),v),
+				"ProcessMachoGoImportsNamesVarEntropy" => static (e, v) => TryAssignMacho("macho.go_imports_names_var_entropy")(e.Macho ??= new Macho(),v),
+				"process.macho.go_stripped" => static (e, v) => TryAssignMacho("macho.go_stripped")(e.Macho ??= new Macho(),v),
+				"ProcessMachoGoStripped" => static (e, v) => TryAssignMacho("macho.go_stripped")(e.Macho ??= new Macho(),v),
+				"process.macho.import_hash" => static (e, v) => TryAssignMacho("macho.import_hash")(e.Macho ??= new Macho(),v),
+				"ProcessMachoImportHash" => static (e, v) => TryAssignMacho("macho.import_hash")(e.Macho ??= new Macho(),v),
+				"process.macho.imports_names_entropy" => static (e, v) => TryAssignMacho("macho.imports_names_entropy")(e.Macho ??= new Macho(),v),
+				"ProcessMachoImportsNamesEntropy" => static (e, v) => TryAssignMacho("macho.imports_names_entropy")(e.Macho ??= new Macho(),v),
+				"process.macho.imports_names_var_entropy" => static (e, v) => TryAssignMacho("macho.imports_names_var_entropy")(e.Macho ??= new Macho(),v),
+				"ProcessMachoImportsNamesVarEntropy" => static (e, v) => TryAssignMacho("macho.imports_names_var_entropy")(e.Macho ??= new Macho(),v),
+				"process.macho.symhash" => static (e, v) => TryAssignMacho("macho.symhash")(e.Macho ??= new Macho(),v),
+				"ProcessMachoSymhash" => static (e, v) => TryAssignMacho("macho.symhash")(e.Macho ??= new Macho(),v),
+				"process.entry_meta.source.address" => static (e, v) => TryAssignSource("source.address")(e.EntryMetaSource ??= new Source(),v),
+				"ProcessEntryMetaSourceAddress" => static (e, v) => TryAssignSource("source.address")(e.EntryMetaSource ??= new Source(),v),
+				"process.entry_meta.source.bytes" => static (e, v) => TryAssignSource("source.bytes")(e.EntryMetaSource ??= new Source(),v),
+				"ProcessEntryMetaSourceBytes" => static (e, v) => TryAssignSource("source.bytes")(e.EntryMetaSource ??= new Source(),v),
+				"process.entry_meta.source.domain" => static (e, v) => TryAssignSource("source.domain")(e.EntryMetaSource ??= new Source(),v),
+				"ProcessEntryMetaSourceDomain" => static (e, v) => TryAssignSource("source.domain")(e.EntryMetaSource ??= new Source(),v),
+				"process.entry_meta.source.ip" => static (e, v) => TryAssignSource("source.ip")(e.EntryMetaSource ??= new Source(),v),
+				"ProcessEntryMetaSourceIp" => static (e, v) => TryAssignSource("source.ip")(e.EntryMetaSource ??= new Source(),v),
+				"process.entry_meta.source.mac" => static (e, v) => TryAssignSource("source.mac")(e.EntryMetaSource ??= new Source(),v),
+				"ProcessEntryMetaSourceMac" => static (e, v) => TryAssignSource("source.mac")(e.EntryMetaSource ??= new Source(),v),
+				"process.entry_meta.source.nat.ip" => static (e, v) => TryAssignSource("source.nat.ip")(e.EntryMetaSource ??= new Source(),v),
+				"ProcessEntryMetaSourceNatIp" => static (e, v) => TryAssignSource("source.nat.ip")(e.EntryMetaSource ??= new Source(),v),
+				"process.entry_meta.source.nat.port" => static (e, v) => TryAssignSource("source.nat.port")(e.EntryMetaSource ??= new Source(),v),
+				"ProcessEntryMetaSourceNatPort" => static (e, v) => TryAssignSource("source.nat.port")(e.EntryMetaSource ??= new Source(),v),
+				"process.entry_meta.source.packets" => static (e, v) => TryAssignSource("source.packets")(e.EntryMetaSource ??= new Source(),v),
+				"ProcessEntryMetaSourcePackets" => static (e, v) => TryAssignSource("source.packets")(e.EntryMetaSource ??= new Source(),v),
+				"process.entry_meta.source.port" => static (e, v) => TryAssignSource("source.port")(e.EntryMetaSource ??= new Source(),v),
+				"ProcessEntryMetaSourcePort" => static (e, v) => TryAssignSource("source.port")(e.EntryMetaSource ??= new Source(),v),
+				"process.entry_meta.source.registered_domain" => static (e, v) => TryAssignSource("source.registered_domain")(e.EntryMetaSource ??= new Source(),v),
+				"ProcessEntryMetaSourceRegisteredDomain" => static (e, v) => TryAssignSource("source.registered_domain")(e.EntryMetaSource ??= new Source(),v),
+				"process.entry_meta.source.subdomain" => static (e, v) => TryAssignSource("source.subdomain")(e.EntryMetaSource ??= new Source(),v),
+				"ProcessEntryMetaSourceSubdomain" => static (e, v) => TryAssignSource("source.subdomain")(e.EntryMetaSource ??= new Source(),v),
+				"process.entry_meta.source.top_level_domain" => static (e, v) => TryAssignSource("source.top_level_domain")(e.EntryMetaSource ??= new Source(),v),
+				"ProcessEntryMetaSourceTopLevelDomain" => static (e, v) => TryAssignSource("source.top_level_domain")(e.EntryMetaSource ??= new Source(),v),
+				"process.entry_meta.source.as.number" => static (e, v) => TryAssignSource("source.as.number")(e.EntryMetaSource ??= new Source(),v),
+				"ProcessEntryMetaSourceAsNumber" => static (e, v) => TryAssignSource("source.as.number")(e.EntryMetaSource ??= new Source(),v),
+				"process.entry_meta.source.as.organization.name" => static (e, v) => TryAssignSource("source.as.organization.name")(e.EntryMetaSource ??= new Source(),v),
+				"ProcessEntryMetaSourceAsOrganizationName" => static (e, v) => TryAssignSource("source.as.organization.name")(e.EntryMetaSource ??= new Source(),v),
+				"process.entry_meta.source.geo.city_name" => static (e, v) => TryAssignSource("source.geo.city_name")(e.EntryMetaSource ??= new Source(),v),
+				"ProcessEntryMetaSourceGeoCityName" => static (e, v) => TryAssignSource("source.geo.city_name")(e.EntryMetaSource ??= new Source(),v),
+				"process.entry_meta.source.geo.continent_code" => static (e, v) => TryAssignSource("source.geo.continent_code")(e.EntryMetaSource ??= new Source(),v),
+				"ProcessEntryMetaSourceGeoContinentCode" => static (e, v) => TryAssignSource("source.geo.continent_code")(e.EntryMetaSource ??= new Source(),v),
+				"process.entry_meta.source.geo.continent_name" => static (e, v) => TryAssignSource("source.geo.continent_name")(e.EntryMetaSource ??= new Source(),v),
+				"ProcessEntryMetaSourceGeoContinentName" => static (e, v) => TryAssignSource("source.geo.continent_name")(e.EntryMetaSource ??= new Source(),v),
+				"process.entry_meta.source.geo.country_iso_code" => static (e, v) => TryAssignSource("source.geo.country_iso_code")(e.EntryMetaSource ??= new Source(),v),
+				"ProcessEntryMetaSourceGeoCountryIsoCode" => static (e, v) => TryAssignSource("source.geo.country_iso_code")(e.EntryMetaSource ??= new Source(),v),
+				"process.entry_meta.source.geo.country_name" => static (e, v) => TryAssignSource("source.geo.country_name")(e.EntryMetaSource ??= new Source(),v),
+				"ProcessEntryMetaSourceGeoCountryName" => static (e, v) => TryAssignSource("source.geo.country_name")(e.EntryMetaSource ??= new Source(),v),
+				"process.entry_meta.source.geo.location" => static (e, v) => TryAssignSource("source.geo.location")(e.EntryMetaSource ??= new Source(),v),
+				"ProcessEntryMetaSourceGeoLocation" => static (e, v) => TryAssignSource("source.geo.location")(e.EntryMetaSource ??= new Source(),v),
+				"process.entry_meta.source.geo.name" => static (e, v) => TryAssignSource("source.geo.name")(e.EntryMetaSource ??= new Source(),v),
+				"ProcessEntryMetaSourceGeoName" => static (e, v) => TryAssignSource("source.geo.name")(e.EntryMetaSource ??= new Source(),v),
+				"process.entry_meta.source.geo.postal_code" => static (e, v) => TryAssignSource("source.geo.postal_code")(e.EntryMetaSource ??= new Source(),v),
+				"ProcessEntryMetaSourceGeoPostalCode" => static (e, v) => TryAssignSource("source.geo.postal_code")(e.EntryMetaSource ??= new Source(),v),
+				"process.entry_meta.source.geo.region_iso_code" => static (e, v) => TryAssignSource("source.geo.region_iso_code")(e.EntryMetaSource ??= new Source(),v),
+				"ProcessEntryMetaSourceGeoRegionIsoCode" => static (e, v) => TryAssignSource("source.geo.region_iso_code")(e.EntryMetaSource ??= new Source(),v),
+				"process.entry_meta.source.geo.region_name" => static (e, v) => TryAssignSource("source.geo.region_name")(e.EntryMetaSource ??= new Source(),v),
+				"ProcessEntryMetaSourceGeoRegionName" => static (e, v) => TryAssignSource("source.geo.region_name")(e.EntryMetaSource ??= new Source(),v),
+				"process.entry_meta.source.geo.timezone" => static (e, v) => TryAssignSource("source.geo.timezone")(e.EntryMetaSource ??= new Source(),v),
+				"ProcessEntryMetaSourceGeoTimezone" => static (e, v) => TryAssignSource("source.geo.timezone")(e.EntryMetaSource ??= new Source(),v),
+				"process.entry_meta.source.user.domain" => static (e, v) => TryAssignSource("source.user.domain")(e.EntryMetaSource ??= new Source(),v),
+				"ProcessEntryMetaSourceUserDomain" => static (e, v) => TryAssignSource("source.user.domain")(e.EntryMetaSource ??= new Source(),v),
+				"process.entry_meta.source.user.email" => static (e, v) => TryAssignSource("source.user.email")(e.EntryMetaSource ??= new Source(),v),
+				"ProcessEntryMetaSourceUserEmail" => static (e, v) => TryAssignSource("source.user.email")(e.EntryMetaSource ??= new Source(),v),
+				"process.entry_meta.source.user.full_name" => static (e, v) => TryAssignSource("source.user.full_name")(e.EntryMetaSource ??= new Source(),v),
+				"ProcessEntryMetaSourceUserFullName" => static (e, v) => TryAssignSource("source.user.full_name")(e.EntryMetaSource ??= new Source(),v),
+				"process.entry_meta.source.user.hash" => static (e, v) => TryAssignSource("source.user.hash")(e.EntryMetaSource ??= new Source(),v),
+				"ProcessEntryMetaSourceUserHash" => static (e, v) => TryAssignSource("source.user.hash")(e.EntryMetaSource ??= new Source(),v),
+				"process.entry_meta.source.user.id" => static (e, v) => TryAssignSource("source.user.id")(e.EntryMetaSource ??= new Source(),v),
+				"ProcessEntryMetaSourceUserId" => static (e, v) => TryAssignSource("source.user.id")(e.EntryMetaSource ??= new Source(),v),
+				"process.entry_meta.source.user.name" => static (e, v) => TryAssignSource("source.user.name")(e.EntryMetaSource ??= new Source(),v),
+				"ProcessEntryMetaSourceUserName" => static (e, v) => TryAssignSource("source.user.name")(e.EntryMetaSource ??= new Source(),v),
+				"process.entry_meta.source.user.group.domain" => static (e, v) => TryAssignSource("source.user.group.domain")(e.EntryMetaSource ??= new Source(),v),
+				"ProcessEntryMetaSourceUserGroupDomain" => static (e, v) => TryAssignSource("source.user.group.domain")(e.EntryMetaSource ??= new Source(),v),
+				"process.entry_meta.source.user.group.id" => static (e, v) => TryAssignSource("source.user.group.id")(e.EntryMetaSource ??= new Source(),v),
+				"ProcessEntryMetaSourceUserGroupId" => static (e, v) => TryAssignSource("source.user.group.id")(e.EntryMetaSource ??= new Source(),v),
+				"process.entry_meta.source.user.group.name" => static (e, v) => TryAssignSource("source.user.group.name")(e.EntryMetaSource ??= new Source(),v),
+				"ProcessEntryMetaSourceUserGroupName" => static (e, v) => TryAssignSource("source.user.group.name")(e.EntryMetaSource ??= new Source(),v),
+				"process.entry_meta.source.user.risk.calculated_level" => static (e, v) => TryAssignSource("source.user.risk.calculated_level")(e.EntryMetaSource ??= new Source(),v),
+				"ProcessEntryMetaSourceUserRiskCalculatedLevel" => static (e, v) => TryAssignSource("source.user.risk.calculated_level")(e.EntryMetaSource ??= new Source(),v),
+				"process.entry_meta.source.user.risk.calculated_score" => static (e, v) => TryAssignSource("source.user.risk.calculated_score")(e.EntryMetaSource ??= new Source(),v),
+				"ProcessEntryMetaSourceUserRiskCalculatedScore" => static (e, v) => TryAssignSource("source.user.risk.calculated_score")(e.EntryMetaSource ??= new Source(),v),
+				"process.entry_meta.source.user.risk.calculated_score_norm" => static (e, v) => TryAssignSource("source.user.risk.calculated_score_norm")(e.EntryMetaSource ??= new Source(),v),
+				"ProcessEntryMetaSourceUserRiskCalculatedScoreNorm" => static (e, v) => TryAssignSource("source.user.risk.calculated_score_norm")(e.EntryMetaSource ??= new Source(),v),
+				"process.entry_meta.source.user.risk.static_level" => static (e, v) => TryAssignSource("source.user.risk.static_level")(e.EntryMetaSource ??= new Source(),v),
+				"ProcessEntryMetaSourceUserRiskStaticLevel" => static (e, v) => TryAssignSource("source.user.risk.static_level")(e.EntryMetaSource ??= new Source(),v),
+				"process.entry_meta.source.user.risk.static_score" => static (e, v) => TryAssignSource("source.user.risk.static_score")(e.EntryMetaSource ??= new Source(),v),
+				"ProcessEntryMetaSourceUserRiskStaticScore" => static (e, v) => TryAssignSource("source.user.risk.static_score")(e.EntryMetaSource ??= new Source(),v),
+				"process.entry_meta.source.user.risk.static_score_norm" => static (e, v) => TryAssignSource("source.user.risk.static_score_norm")(e.EntryMetaSource ??= new Source(),v),
+				"ProcessEntryMetaSourceUserRiskStaticScoreNorm" => static (e, v) => TryAssignSource("source.user.risk.static_score_norm")(e.EntryMetaSource ??= new Source(),v),
+				"process.user.domain" => static (e, v) => TryAssignUser("user.domain")(e.User ??= new User(),v),
+				"ProcessUserDomain" => static (e, v) => TryAssignUser("user.domain")(e.User ??= new User(),v),
+				"process.user.email" => static (e, v) => TryAssignUser("user.email")(e.User ??= new User(),v),
+				"ProcessUserEmail" => static (e, v) => TryAssignUser("user.email")(e.User ??= new User(),v),
+				"process.user.full_name" => static (e, v) => TryAssignUser("user.full_name")(e.User ??= new User(),v),
+				"ProcessUserFullName" => static (e, v) => TryAssignUser("user.full_name")(e.User ??= new User(),v),
+				"process.user.hash" => static (e, v) => TryAssignUser("user.hash")(e.User ??= new User(),v),
+				"ProcessUserHash" => static (e, v) => TryAssignUser("user.hash")(e.User ??= new User(),v),
+				"process.user.id" => static (e, v) => TryAssignUser("user.id")(e.User ??= new User(),v),
+				"ProcessUserId" => static (e, v) => TryAssignUser("user.id")(e.User ??= new User(),v),
+				"process.user.name" => static (e, v) => TryAssignUser("user.name")(e.User ??= new User(),v),
+				"ProcessUserName" => static (e, v) => TryAssignUser("user.name")(e.User ??= new User(),v),
+				"process.user.group.domain" => static (e, v) => TryAssignUser("user.group.domain")(e.User ??= new User(),v),
+				"ProcessUserGroupDomain" => static (e, v) => TryAssignUser("user.group.domain")(e.User ??= new User(),v),
+				"process.user.group.id" => static (e, v) => TryAssignUser("user.group.id")(e.User ??= new User(),v),
+				"ProcessUserGroupId" => static (e, v) => TryAssignUser("user.group.id")(e.User ??= new User(),v),
+				"process.user.group.name" => static (e, v) => TryAssignUser("user.group.name")(e.User ??= new User(),v),
+				"ProcessUserGroupName" => static (e, v) => TryAssignUser("user.group.name")(e.User ??= new User(),v),
+				"process.user.risk.calculated_level" => static (e, v) => TryAssignUser("user.risk.calculated_level")(e.User ??= new User(),v),
+				"ProcessUserRiskCalculatedLevel" => static (e, v) => TryAssignUser("user.risk.calculated_level")(e.User ??= new User(),v),
+				"process.user.risk.calculated_score" => static (e, v) => TryAssignUser("user.risk.calculated_score")(e.User ??= new User(),v),
+				"ProcessUserRiskCalculatedScore" => static (e, v) => TryAssignUser("user.risk.calculated_score")(e.User ??= new User(),v),
+				"process.user.risk.calculated_score_norm" => static (e, v) => TryAssignUser("user.risk.calculated_score_norm")(e.User ??= new User(),v),
+				"ProcessUserRiskCalculatedScoreNorm" => static (e, v) => TryAssignUser("user.risk.calculated_score_norm")(e.User ??= new User(),v),
+				"process.user.risk.static_level" => static (e, v) => TryAssignUser("user.risk.static_level")(e.User ??= new User(),v),
+				"ProcessUserRiskStaticLevel" => static (e, v) => TryAssignUser("user.risk.static_level")(e.User ??= new User(),v),
+				"process.user.risk.static_score" => static (e, v) => TryAssignUser("user.risk.static_score")(e.User ??= new User(),v),
+				"ProcessUserRiskStaticScore" => static (e, v) => TryAssignUser("user.risk.static_score")(e.User ??= new User(),v),
+				"process.user.risk.static_score_norm" => static (e, v) => TryAssignUser("user.risk.static_score_norm")(e.User ??= new User(),v),
+				"ProcessUserRiskStaticScoreNorm" => static (e, v) => TryAssignUser("user.risk.static_score_norm")(e.User ??= new User(),v),
+				"process.saved_user.domain" => static (e, v) => TryAssignUser("saved_user.domain")(e.SavedUser ??= new User(),v),
+				"ProcessSavedUserDomain" => static (e, v) => TryAssignUser("saved_user.domain")(e.SavedUser ??= new User(),v),
+				"process.saved_user.email" => static (e, v) => TryAssignUser("saved_user.email")(e.SavedUser ??= new User(),v),
+				"ProcessSavedUserEmail" => static (e, v) => TryAssignUser("saved_user.email")(e.SavedUser ??= new User(),v),
+				"process.saved_user.full_name" => static (e, v) => TryAssignUser("saved_user.full_name")(e.SavedUser ??= new User(),v),
+				"ProcessSavedUserFullName" => static (e, v) => TryAssignUser("saved_user.full_name")(e.SavedUser ??= new User(),v),
+				"process.saved_user.hash" => static (e, v) => TryAssignUser("saved_user.hash")(e.SavedUser ??= new User(),v),
+				"ProcessSavedUserHash" => static (e, v) => TryAssignUser("saved_user.hash")(e.SavedUser ??= new User(),v),
+				"process.saved_user.id" => static (e, v) => TryAssignUser("saved_user.id")(e.SavedUser ??= new User(),v),
+				"ProcessSavedUserId" => static (e, v) => TryAssignUser("saved_user.id")(e.SavedUser ??= new User(),v),
+				"process.saved_user.name" => static (e, v) => TryAssignUser("saved_user.name")(e.SavedUser ??= new User(),v),
+				"ProcessSavedUserName" => static (e, v) => TryAssignUser("saved_user.name")(e.SavedUser ??= new User(),v),
+				"process.saved_user.group.domain" => static (e, v) => TryAssignUser("saved_user.group.domain")(e.SavedUser ??= new User(),v),
+				"ProcessSavedUserGroupDomain" => static (e, v) => TryAssignUser("saved_user.group.domain")(e.SavedUser ??= new User(),v),
+				"process.saved_user.group.id" => static (e, v) => TryAssignUser("saved_user.group.id")(e.SavedUser ??= new User(),v),
+				"ProcessSavedUserGroupId" => static (e, v) => TryAssignUser("saved_user.group.id")(e.SavedUser ??= new User(),v),
+				"process.saved_user.group.name" => static (e, v) => TryAssignUser("saved_user.group.name")(e.SavedUser ??= new User(),v),
+				"ProcessSavedUserGroupName" => static (e, v) => TryAssignUser("saved_user.group.name")(e.SavedUser ??= new User(),v),
+				"process.saved_user.risk.calculated_level" => static (e, v) => TryAssignUser("saved_user.risk.calculated_level")(e.SavedUser ??= new User(),v),
+				"ProcessSavedUserRiskCalculatedLevel" => static (e, v) => TryAssignUser("saved_user.risk.calculated_level")(e.SavedUser ??= new User(),v),
+				"process.saved_user.risk.calculated_score" => static (e, v) => TryAssignUser("saved_user.risk.calculated_score")(e.SavedUser ??= new User(),v),
+				"ProcessSavedUserRiskCalculatedScore" => static (e, v) => TryAssignUser("saved_user.risk.calculated_score")(e.SavedUser ??= new User(),v),
+				"process.saved_user.risk.calculated_score_norm" => static (e, v) => TryAssignUser("saved_user.risk.calculated_score_norm")(e.SavedUser ??= new User(),v),
+				"ProcessSavedUserRiskCalculatedScoreNorm" => static (e, v) => TryAssignUser("saved_user.risk.calculated_score_norm")(e.SavedUser ??= new User(),v),
+				"process.saved_user.risk.static_level" => static (e, v) => TryAssignUser("saved_user.risk.static_level")(e.SavedUser ??= new User(),v),
+				"ProcessSavedUserRiskStaticLevel" => static (e, v) => TryAssignUser("saved_user.risk.static_level")(e.SavedUser ??= new User(),v),
+				"process.saved_user.risk.static_score" => static (e, v) => TryAssignUser("saved_user.risk.static_score")(e.SavedUser ??= new User(),v),
+				"ProcessSavedUserRiskStaticScore" => static (e, v) => TryAssignUser("saved_user.risk.static_score")(e.SavedUser ??= new User(),v),
+				"process.saved_user.risk.static_score_norm" => static (e, v) => TryAssignUser("saved_user.risk.static_score_norm")(e.SavedUser ??= new User(),v),
+				"ProcessSavedUserRiskStaticScoreNorm" => static (e, v) => TryAssignUser("saved_user.risk.static_score_norm")(e.SavedUser ??= new User(),v),
+				"process.real_user.domain" => static (e, v) => TryAssignUser("real_user.domain")(e.RealUser ??= new User(),v),
+				"ProcessRealUserDomain" => static (e, v) => TryAssignUser("real_user.domain")(e.RealUser ??= new User(),v),
+				"process.real_user.email" => static (e, v) => TryAssignUser("real_user.email")(e.RealUser ??= new User(),v),
+				"ProcessRealUserEmail" => static (e, v) => TryAssignUser("real_user.email")(e.RealUser ??= new User(),v),
+				"process.real_user.full_name" => static (e, v) => TryAssignUser("real_user.full_name")(e.RealUser ??= new User(),v),
+				"ProcessRealUserFullName" => static (e, v) => TryAssignUser("real_user.full_name")(e.RealUser ??= new User(),v),
+				"process.real_user.hash" => static (e, v) => TryAssignUser("real_user.hash")(e.RealUser ??= new User(),v),
+				"ProcessRealUserHash" => static (e, v) => TryAssignUser("real_user.hash")(e.RealUser ??= new User(),v),
+				"process.real_user.id" => static (e, v) => TryAssignUser("real_user.id")(e.RealUser ??= new User(),v),
+				"ProcessRealUserId" => static (e, v) => TryAssignUser("real_user.id")(e.RealUser ??= new User(),v),
+				"process.real_user.name" => static (e, v) => TryAssignUser("real_user.name")(e.RealUser ??= new User(),v),
+				"ProcessRealUserName" => static (e, v) => TryAssignUser("real_user.name")(e.RealUser ??= new User(),v),
+				"process.real_user.group.domain" => static (e, v) => TryAssignUser("real_user.group.domain")(e.RealUser ??= new User(),v),
+				"ProcessRealUserGroupDomain" => static (e, v) => TryAssignUser("real_user.group.domain")(e.RealUser ??= new User(),v),
+				"process.real_user.group.id" => static (e, v) => TryAssignUser("real_user.group.id")(e.RealUser ??= new User(),v),
+				"ProcessRealUserGroupId" => static (e, v) => TryAssignUser("real_user.group.id")(e.RealUser ??= new User(),v),
+				"process.real_user.group.name" => static (e, v) => TryAssignUser("real_user.group.name")(e.RealUser ??= new User(),v),
+				"ProcessRealUserGroupName" => static (e, v) => TryAssignUser("real_user.group.name")(e.RealUser ??= new User(),v),
+				"process.real_user.risk.calculated_level" => static (e, v) => TryAssignUser("real_user.risk.calculated_level")(e.RealUser ??= new User(),v),
+				"ProcessRealUserRiskCalculatedLevel" => static (e, v) => TryAssignUser("real_user.risk.calculated_level")(e.RealUser ??= new User(),v),
+				"process.real_user.risk.calculated_score" => static (e, v) => TryAssignUser("real_user.risk.calculated_score")(e.RealUser ??= new User(),v),
+				"ProcessRealUserRiskCalculatedScore" => static (e, v) => TryAssignUser("real_user.risk.calculated_score")(e.RealUser ??= new User(),v),
+				"process.real_user.risk.calculated_score_norm" => static (e, v) => TryAssignUser("real_user.risk.calculated_score_norm")(e.RealUser ??= new User(),v),
+				"ProcessRealUserRiskCalculatedScoreNorm" => static (e, v) => TryAssignUser("real_user.risk.calculated_score_norm")(e.RealUser ??= new User(),v),
+				"process.real_user.risk.static_level" => static (e, v) => TryAssignUser("real_user.risk.static_level")(e.RealUser ??= new User(),v),
+				"ProcessRealUserRiskStaticLevel" => static (e, v) => TryAssignUser("real_user.risk.static_level")(e.RealUser ??= new User(),v),
+				"process.real_user.risk.static_score" => static (e, v) => TryAssignUser("real_user.risk.static_score")(e.RealUser ??= new User(),v),
+				"ProcessRealUserRiskStaticScore" => static (e, v) => TryAssignUser("real_user.risk.static_score")(e.RealUser ??= new User(),v),
+				"process.real_user.risk.static_score_norm" => static (e, v) => TryAssignUser("real_user.risk.static_score_norm")(e.RealUser ??= new User(),v),
+				"ProcessRealUserRiskStaticScoreNorm" => static (e, v) => TryAssignUser("real_user.risk.static_score_norm")(e.RealUser ??= new User(),v),
+				"process.attested_user.domain" => static (e, v) => TryAssignUser("attested_user.domain")(e.AttestedUser ??= new User(),v),
+				"ProcessAttestedUserDomain" => static (e, v) => TryAssignUser("attested_user.domain")(e.AttestedUser ??= new User(),v),
+				"process.attested_user.email" => static (e, v) => TryAssignUser("attested_user.email")(e.AttestedUser ??= new User(),v),
+				"ProcessAttestedUserEmail" => static (e, v) => TryAssignUser("attested_user.email")(e.AttestedUser ??= new User(),v),
+				"process.attested_user.full_name" => static (e, v) => TryAssignUser("attested_user.full_name")(e.AttestedUser ??= new User(),v),
+				"ProcessAttestedUserFullName" => static (e, v) => TryAssignUser("attested_user.full_name")(e.AttestedUser ??= new User(),v),
+				"process.attested_user.hash" => static (e, v) => TryAssignUser("attested_user.hash")(e.AttestedUser ??= new User(),v),
+				"ProcessAttestedUserHash" => static (e, v) => TryAssignUser("attested_user.hash")(e.AttestedUser ??= new User(),v),
+				"process.attested_user.id" => static (e, v) => TryAssignUser("attested_user.id")(e.AttestedUser ??= new User(),v),
+				"ProcessAttestedUserId" => static (e, v) => TryAssignUser("attested_user.id")(e.AttestedUser ??= new User(),v),
+				"process.attested_user.name" => static (e, v) => TryAssignUser("attested_user.name")(e.AttestedUser ??= new User(),v),
+				"ProcessAttestedUserName" => static (e, v) => TryAssignUser("attested_user.name")(e.AttestedUser ??= new User(),v),
+				"process.attested_user.group.domain" => static (e, v) => TryAssignUser("attested_user.group.domain")(e.AttestedUser ??= new User(),v),
+				"ProcessAttestedUserGroupDomain" => static (e, v) => TryAssignUser("attested_user.group.domain")(e.AttestedUser ??= new User(),v),
+				"process.attested_user.group.id" => static (e, v) => TryAssignUser("attested_user.group.id")(e.AttestedUser ??= new User(),v),
+				"ProcessAttestedUserGroupId" => static (e, v) => TryAssignUser("attested_user.group.id")(e.AttestedUser ??= new User(),v),
+				"process.attested_user.group.name" => static (e, v) => TryAssignUser("attested_user.group.name")(e.AttestedUser ??= new User(),v),
+				"ProcessAttestedUserGroupName" => static (e, v) => TryAssignUser("attested_user.group.name")(e.AttestedUser ??= new User(),v),
+				"process.attested_user.risk.calculated_level" => static (e, v) => TryAssignUser("attested_user.risk.calculated_level")(e.AttestedUser ??= new User(),v),
+				"ProcessAttestedUserRiskCalculatedLevel" => static (e, v) => TryAssignUser("attested_user.risk.calculated_level")(e.AttestedUser ??= new User(),v),
+				"process.attested_user.risk.calculated_score" => static (e, v) => TryAssignUser("attested_user.risk.calculated_score")(e.AttestedUser ??= new User(),v),
+				"ProcessAttestedUserRiskCalculatedScore" => static (e, v) => TryAssignUser("attested_user.risk.calculated_score")(e.AttestedUser ??= new User(),v),
+				"process.attested_user.risk.calculated_score_norm" => static (e, v) => TryAssignUser("attested_user.risk.calculated_score_norm")(e.AttestedUser ??= new User(),v),
+				"ProcessAttestedUserRiskCalculatedScoreNorm" => static (e, v) => TryAssignUser("attested_user.risk.calculated_score_norm")(e.AttestedUser ??= new User(),v),
+				"process.attested_user.risk.static_level" => static (e, v) => TryAssignUser("attested_user.risk.static_level")(e.AttestedUser ??= new User(),v),
+				"ProcessAttestedUserRiskStaticLevel" => static (e, v) => TryAssignUser("attested_user.risk.static_level")(e.AttestedUser ??= new User(),v),
+				"process.attested_user.risk.static_score" => static (e, v) => TryAssignUser("attested_user.risk.static_score")(e.AttestedUser ??= new User(),v),
+				"ProcessAttestedUserRiskStaticScore" => static (e, v) => TryAssignUser("attested_user.risk.static_score")(e.AttestedUser ??= new User(),v),
+				"process.attested_user.risk.static_score_norm" => static (e, v) => TryAssignUser("attested_user.risk.static_score_norm")(e.AttestedUser ??= new User(),v),
+				"ProcessAttestedUserRiskStaticScoreNorm" => static (e, v) => TryAssignUser("attested_user.risk.static_score_norm")(e.AttestedUser ??= new User(),v),
 				_ => null
 			};
+			return assign;
+		}
+		public static bool TrySetProcess(EcsDocument document, string path, object value)
+		{
+			var assign = TryAssignProcess(path);
 			if (assign == null) return false;
-
+		
 			var entity = document.Process ?? new Process();
 			var assigned = assign(entity, value);
 			if (assigned) document.Process = entity;
 			return assigned;
 		}
 
-		public static bool TrySetRegistry(EcsDocument document, string path, object value)
+		public static Func<Registry, object, bool> TryAssignRegistry(string path)
 		{
 			Func<Registry, object, bool> assign = path switch
 			{
@@ -2837,29 +4957,39 @@ namespace Elastic.CommonSchema
 				"RegistryValue" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Value = p),
 				_ => null
 			};
+			return assign;
+		}
+		public static bool TrySetRegistry(EcsDocument document, string path, object value)
+		{
+			var assign = TryAssignRegistry(path);
 			if (assign == null) return false;
-
+		
 			var entity = document.Registry ?? new Registry();
 			var assigned = assign(entity, value);
 			if (assigned) document.Registry = entity;
 			return assigned;
 		}
 
-		public static bool TrySetRelated(EcsDocument document, string path, object value)
+		public static Func<Related, object, bool> TryAssignRelated(string path)
 		{
 			Func<Related, object, bool> assign = path switch
 			{
 				_ => null
 			};
+			return assign;
+		}
+		public static bool TrySetRelated(EcsDocument document, string path, object value)
+		{
+			var assign = TryAssignRelated(path);
 			if (assign == null) return false;
-
+		
 			var entity = document.Related ?? new Related();
 			var assigned = assign(entity, value);
 			if (assigned) document.Related = entity;
 			return assigned;
 		}
 
-		public static bool TrySetRisk(EcsDocument document, string path, object value)
+		public static Func<Risk, object, bool> TryAssignRisk(string path)
 		{
 			Func<Risk, object, bool> assign = path switch
 			{
@@ -2877,15 +5007,20 @@ namespace Elastic.CommonSchema
 				"RiskStaticScoreNorm" => static (e, v) => TrySetFloat(e, v, static (ee, p) => ee.StaticScoreNorm = p),
 				_ => null
 			};
+			return assign;
+		}
+		public static bool TrySetRisk(IRisk document, string path, object value)
+		{
+			var assign = TryAssignRisk(path);
 			if (assign == null) return false;
-
+		
 			var entity = document.Risk ?? new Risk();
 			var assigned = assign(entity, value);
 			if (assigned) document.Risk = entity;
 			return assigned;
 		}
 
-		public static bool TrySetRule(EcsDocument document, string path, object value)
+		public static Func<Rule, object, bool> TryAssignRule(string path)
 		{
 			Func<Rule, object, bool> assign = path switch
 			{
@@ -2909,15 +5044,20 @@ namespace Elastic.CommonSchema
 				"RuleVersion" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Version = p),
 				_ => null
 			};
+			return assign;
+		}
+		public static bool TrySetRule(EcsDocument document, string path, object value)
+		{
+			var assign = TryAssignRule(path);
 			if (assign == null) return false;
-
+		
 			var entity = document.Rule ?? new Rule();
 			var assigned = assign(entity, value);
 			if (assigned) document.Rule = entity;
 			return assigned;
 		}
 
-		public static bool TrySetServer(EcsDocument document, string path, object value)
+		public static Func<Server, object, bool> TryAssignServer(string path)
 		{
 			Func<Server, object, bool> assign = path switch
 			{
@@ -2945,17 +5085,78 @@ namespace Elastic.CommonSchema
 				"ServerSubdomain" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Subdomain = p),
 				"server.top_level_domain" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.TopLevelDomain = p),
 				"ServerTopLevelDomain" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.TopLevelDomain = p),
+				"server.as.number" => static (e, v) => TryAssignAs("as.number")(e.As ??= new As(),v),
+				"ServerAsNumber" => static (e, v) => TryAssignAs("as.number")(e.As ??= new As(),v),
+				"server.as.organization.name" => static (e, v) => TryAssignAs("as.organization.name")(e.As ??= new As(),v),
+				"ServerAsOrganizationName" => static (e, v) => TryAssignAs("as.organization.name")(e.As ??= new As(),v),
+				"server.geo.city_name" => static (e, v) => TryAssignGeo("geo.city_name")(e.Geo ??= new Geo(),v),
+				"ServerGeoCityName" => static (e, v) => TryAssignGeo("geo.city_name")(e.Geo ??= new Geo(),v),
+				"server.geo.continent_code" => static (e, v) => TryAssignGeo("geo.continent_code")(e.Geo ??= new Geo(),v),
+				"ServerGeoContinentCode" => static (e, v) => TryAssignGeo("geo.continent_code")(e.Geo ??= new Geo(),v),
+				"server.geo.continent_name" => static (e, v) => TryAssignGeo("geo.continent_name")(e.Geo ??= new Geo(),v),
+				"ServerGeoContinentName" => static (e, v) => TryAssignGeo("geo.continent_name")(e.Geo ??= new Geo(),v),
+				"server.geo.country_iso_code" => static (e, v) => TryAssignGeo("geo.country_iso_code")(e.Geo ??= new Geo(),v),
+				"ServerGeoCountryIsoCode" => static (e, v) => TryAssignGeo("geo.country_iso_code")(e.Geo ??= new Geo(),v),
+				"server.geo.country_name" => static (e, v) => TryAssignGeo("geo.country_name")(e.Geo ??= new Geo(),v),
+				"ServerGeoCountryName" => static (e, v) => TryAssignGeo("geo.country_name")(e.Geo ??= new Geo(),v),
+				"server.geo.location" => static (e, v) => TryAssignGeo("geo.location")(e.Geo ??= new Geo(),v),
+				"ServerGeoLocation" => static (e, v) => TryAssignGeo("geo.location")(e.Geo ??= new Geo(),v),
+				"server.geo.name" => static (e, v) => TryAssignGeo("geo.name")(e.Geo ??= new Geo(),v),
+				"ServerGeoName" => static (e, v) => TryAssignGeo("geo.name")(e.Geo ??= new Geo(),v),
+				"server.geo.postal_code" => static (e, v) => TryAssignGeo("geo.postal_code")(e.Geo ??= new Geo(),v),
+				"ServerGeoPostalCode" => static (e, v) => TryAssignGeo("geo.postal_code")(e.Geo ??= new Geo(),v),
+				"server.geo.region_iso_code" => static (e, v) => TryAssignGeo("geo.region_iso_code")(e.Geo ??= new Geo(),v),
+				"ServerGeoRegionIsoCode" => static (e, v) => TryAssignGeo("geo.region_iso_code")(e.Geo ??= new Geo(),v),
+				"server.geo.region_name" => static (e, v) => TryAssignGeo("geo.region_name")(e.Geo ??= new Geo(),v),
+				"ServerGeoRegionName" => static (e, v) => TryAssignGeo("geo.region_name")(e.Geo ??= new Geo(),v),
+				"server.geo.timezone" => static (e, v) => TryAssignGeo("geo.timezone")(e.Geo ??= new Geo(),v),
+				"ServerGeoTimezone" => static (e, v) => TryAssignGeo("geo.timezone")(e.Geo ??= new Geo(),v),
+				"server.user.domain" => static (e, v) => TryAssignUser("user.domain")(e.User ??= new User(),v),
+				"ServerUserDomain" => static (e, v) => TryAssignUser("user.domain")(e.User ??= new User(),v),
+				"server.user.email" => static (e, v) => TryAssignUser("user.email")(e.User ??= new User(),v),
+				"ServerUserEmail" => static (e, v) => TryAssignUser("user.email")(e.User ??= new User(),v),
+				"server.user.full_name" => static (e, v) => TryAssignUser("user.full_name")(e.User ??= new User(),v),
+				"ServerUserFullName" => static (e, v) => TryAssignUser("user.full_name")(e.User ??= new User(),v),
+				"server.user.hash" => static (e, v) => TryAssignUser("user.hash")(e.User ??= new User(),v),
+				"ServerUserHash" => static (e, v) => TryAssignUser("user.hash")(e.User ??= new User(),v),
+				"server.user.id" => static (e, v) => TryAssignUser("user.id")(e.User ??= new User(),v),
+				"ServerUserId" => static (e, v) => TryAssignUser("user.id")(e.User ??= new User(),v),
+				"server.user.name" => static (e, v) => TryAssignUser("user.name")(e.User ??= new User(),v),
+				"ServerUserName" => static (e, v) => TryAssignUser("user.name")(e.User ??= new User(),v),
+				"server.user.group.domain" => static (e, v) => TryAssignUser("user.group.domain")(e.User ??= new User(),v),
+				"ServerUserGroupDomain" => static (e, v) => TryAssignUser("user.group.domain")(e.User ??= new User(),v),
+				"server.user.group.id" => static (e, v) => TryAssignUser("user.group.id")(e.User ??= new User(),v),
+				"ServerUserGroupId" => static (e, v) => TryAssignUser("user.group.id")(e.User ??= new User(),v),
+				"server.user.group.name" => static (e, v) => TryAssignUser("user.group.name")(e.User ??= new User(),v),
+				"ServerUserGroupName" => static (e, v) => TryAssignUser("user.group.name")(e.User ??= new User(),v),
+				"server.user.risk.calculated_level" => static (e, v) => TryAssignUser("user.risk.calculated_level")(e.User ??= new User(),v),
+				"ServerUserRiskCalculatedLevel" => static (e, v) => TryAssignUser("user.risk.calculated_level")(e.User ??= new User(),v),
+				"server.user.risk.calculated_score" => static (e, v) => TryAssignUser("user.risk.calculated_score")(e.User ??= new User(),v),
+				"ServerUserRiskCalculatedScore" => static (e, v) => TryAssignUser("user.risk.calculated_score")(e.User ??= new User(),v),
+				"server.user.risk.calculated_score_norm" => static (e, v) => TryAssignUser("user.risk.calculated_score_norm")(e.User ??= new User(),v),
+				"ServerUserRiskCalculatedScoreNorm" => static (e, v) => TryAssignUser("user.risk.calculated_score_norm")(e.User ??= new User(),v),
+				"server.user.risk.static_level" => static (e, v) => TryAssignUser("user.risk.static_level")(e.User ??= new User(),v),
+				"ServerUserRiskStaticLevel" => static (e, v) => TryAssignUser("user.risk.static_level")(e.User ??= new User(),v),
+				"server.user.risk.static_score" => static (e, v) => TryAssignUser("user.risk.static_score")(e.User ??= new User(),v),
+				"ServerUserRiskStaticScore" => static (e, v) => TryAssignUser("user.risk.static_score")(e.User ??= new User(),v),
+				"server.user.risk.static_score_norm" => static (e, v) => TryAssignUser("user.risk.static_score_norm")(e.User ??= new User(),v),
+				"ServerUserRiskStaticScoreNorm" => static (e, v) => TryAssignUser("user.risk.static_score_norm")(e.User ??= new User(),v),
 				_ => null
 			};
+			return assign;
+		}
+		public static bool TrySetServer(EcsDocument document, string path, object value)
+		{
+			var assign = TryAssignServer(path);
 			if (assign == null) return false;
-
+		
 			var entity = document.Server ?? new Server();
 			var assigned = assign(entity, value);
 			if (assigned) document.Server = entity;
 			return assigned;
 		}
 
-		public static bool TrySetService(EcsDocument document, string path, object value)
+		public static Func<Service, object, bool> TryAssignService(string path)
 		{
 			Func<Service, object, bool> assign = path switch
 			{
@@ -2981,15 +5182,20 @@ namespace Elastic.CommonSchema
 				"ServiceVersion" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Version = p),
 				_ => null
 			};
+			return assign;
+		}
+		public static bool TrySetService(EcsDocument document, string path, object value)
+		{
+			var assign = TryAssignService(path);
 			if (assign == null) return false;
-
+		
 			var entity = document.Service ?? new Service();
 			var assigned = assign(entity, value);
 			if (assigned) document.Service = entity;
 			return assigned;
 		}
 
-		public static bool TrySetSource(EcsDocument document, string path, object value)
+		public static Func<Source, object, bool> TryAssignSource(string path)
 		{
 			Func<Source, object, bool> assign = path switch
 			{
@@ -3017,17 +5223,78 @@ namespace Elastic.CommonSchema
 				"SourceSubdomain" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Subdomain = p),
 				"source.top_level_domain" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.TopLevelDomain = p),
 				"SourceTopLevelDomain" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.TopLevelDomain = p),
+				"source.as.number" => static (e, v) => TryAssignAs("as.number")(e.As ??= new As(),v),
+				"SourceAsNumber" => static (e, v) => TryAssignAs("as.number")(e.As ??= new As(),v),
+				"source.as.organization.name" => static (e, v) => TryAssignAs("as.organization.name")(e.As ??= new As(),v),
+				"SourceAsOrganizationName" => static (e, v) => TryAssignAs("as.organization.name")(e.As ??= new As(),v),
+				"source.geo.city_name" => static (e, v) => TryAssignGeo("geo.city_name")(e.Geo ??= new Geo(),v),
+				"SourceGeoCityName" => static (e, v) => TryAssignGeo("geo.city_name")(e.Geo ??= new Geo(),v),
+				"source.geo.continent_code" => static (e, v) => TryAssignGeo("geo.continent_code")(e.Geo ??= new Geo(),v),
+				"SourceGeoContinentCode" => static (e, v) => TryAssignGeo("geo.continent_code")(e.Geo ??= new Geo(),v),
+				"source.geo.continent_name" => static (e, v) => TryAssignGeo("geo.continent_name")(e.Geo ??= new Geo(),v),
+				"SourceGeoContinentName" => static (e, v) => TryAssignGeo("geo.continent_name")(e.Geo ??= new Geo(),v),
+				"source.geo.country_iso_code" => static (e, v) => TryAssignGeo("geo.country_iso_code")(e.Geo ??= new Geo(),v),
+				"SourceGeoCountryIsoCode" => static (e, v) => TryAssignGeo("geo.country_iso_code")(e.Geo ??= new Geo(),v),
+				"source.geo.country_name" => static (e, v) => TryAssignGeo("geo.country_name")(e.Geo ??= new Geo(),v),
+				"SourceGeoCountryName" => static (e, v) => TryAssignGeo("geo.country_name")(e.Geo ??= new Geo(),v),
+				"source.geo.location" => static (e, v) => TryAssignGeo("geo.location")(e.Geo ??= new Geo(),v),
+				"SourceGeoLocation" => static (e, v) => TryAssignGeo("geo.location")(e.Geo ??= new Geo(),v),
+				"source.geo.name" => static (e, v) => TryAssignGeo("geo.name")(e.Geo ??= new Geo(),v),
+				"SourceGeoName" => static (e, v) => TryAssignGeo("geo.name")(e.Geo ??= new Geo(),v),
+				"source.geo.postal_code" => static (e, v) => TryAssignGeo("geo.postal_code")(e.Geo ??= new Geo(),v),
+				"SourceGeoPostalCode" => static (e, v) => TryAssignGeo("geo.postal_code")(e.Geo ??= new Geo(),v),
+				"source.geo.region_iso_code" => static (e, v) => TryAssignGeo("geo.region_iso_code")(e.Geo ??= new Geo(),v),
+				"SourceGeoRegionIsoCode" => static (e, v) => TryAssignGeo("geo.region_iso_code")(e.Geo ??= new Geo(),v),
+				"source.geo.region_name" => static (e, v) => TryAssignGeo("geo.region_name")(e.Geo ??= new Geo(),v),
+				"SourceGeoRegionName" => static (e, v) => TryAssignGeo("geo.region_name")(e.Geo ??= new Geo(),v),
+				"source.geo.timezone" => static (e, v) => TryAssignGeo("geo.timezone")(e.Geo ??= new Geo(),v),
+				"SourceGeoTimezone" => static (e, v) => TryAssignGeo("geo.timezone")(e.Geo ??= new Geo(),v),
+				"source.user.domain" => static (e, v) => TryAssignUser("user.domain")(e.User ??= new User(),v),
+				"SourceUserDomain" => static (e, v) => TryAssignUser("user.domain")(e.User ??= new User(),v),
+				"source.user.email" => static (e, v) => TryAssignUser("user.email")(e.User ??= new User(),v),
+				"SourceUserEmail" => static (e, v) => TryAssignUser("user.email")(e.User ??= new User(),v),
+				"source.user.full_name" => static (e, v) => TryAssignUser("user.full_name")(e.User ??= new User(),v),
+				"SourceUserFullName" => static (e, v) => TryAssignUser("user.full_name")(e.User ??= new User(),v),
+				"source.user.hash" => static (e, v) => TryAssignUser("user.hash")(e.User ??= new User(),v),
+				"SourceUserHash" => static (e, v) => TryAssignUser("user.hash")(e.User ??= new User(),v),
+				"source.user.id" => static (e, v) => TryAssignUser("user.id")(e.User ??= new User(),v),
+				"SourceUserId" => static (e, v) => TryAssignUser("user.id")(e.User ??= new User(),v),
+				"source.user.name" => static (e, v) => TryAssignUser("user.name")(e.User ??= new User(),v),
+				"SourceUserName" => static (e, v) => TryAssignUser("user.name")(e.User ??= new User(),v),
+				"source.user.group.domain" => static (e, v) => TryAssignUser("user.group.domain")(e.User ??= new User(),v),
+				"SourceUserGroupDomain" => static (e, v) => TryAssignUser("user.group.domain")(e.User ??= new User(),v),
+				"source.user.group.id" => static (e, v) => TryAssignUser("user.group.id")(e.User ??= new User(),v),
+				"SourceUserGroupId" => static (e, v) => TryAssignUser("user.group.id")(e.User ??= new User(),v),
+				"source.user.group.name" => static (e, v) => TryAssignUser("user.group.name")(e.User ??= new User(),v),
+				"SourceUserGroupName" => static (e, v) => TryAssignUser("user.group.name")(e.User ??= new User(),v),
+				"source.user.risk.calculated_level" => static (e, v) => TryAssignUser("user.risk.calculated_level")(e.User ??= new User(),v),
+				"SourceUserRiskCalculatedLevel" => static (e, v) => TryAssignUser("user.risk.calculated_level")(e.User ??= new User(),v),
+				"source.user.risk.calculated_score" => static (e, v) => TryAssignUser("user.risk.calculated_score")(e.User ??= new User(),v),
+				"SourceUserRiskCalculatedScore" => static (e, v) => TryAssignUser("user.risk.calculated_score")(e.User ??= new User(),v),
+				"source.user.risk.calculated_score_norm" => static (e, v) => TryAssignUser("user.risk.calculated_score_norm")(e.User ??= new User(),v),
+				"SourceUserRiskCalculatedScoreNorm" => static (e, v) => TryAssignUser("user.risk.calculated_score_norm")(e.User ??= new User(),v),
+				"source.user.risk.static_level" => static (e, v) => TryAssignUser("user.risk.static_level")(e.User ??= new User(),v),
+				"SourceUserRiskStaticLevel" => static (e, v) => TryAssignUser("user.risk.static_level")(e.User ??= new User(),v),
+				"source.user.risk.static_score" => static (e, v) => TryAssignUser("user.risk.static_score")(e.User ??= new User(),v),
+				"SourceUserRiskStaticScore" => static (e, v) => TryAssignUser("user.risk.static_score")(e.User ??= new User(),v),
+				"source.user.risk.static_score_norm" => static (e, v) => TryAssignUser("user.risk.static_score_norm")(e.User ??= new User(),v),
+				"SourceUserRiskStaticScoreNorm" => static (e, v) => TryAssignUser("user.risk.static_score_norm")(e.User ??= new User(),v),
 				_ => null
 			};
+			return assign;
+		}
+		public static bool TrySetSource(EcsDocument document, string path, object value)
+		{
+			var assign = TryAssignSource(path);
 			if (assign == null) return false;
-
+		
 			var entity = document.Source ?? new Source();
 			var assigned = assign(entity, value);
 			if (assigned) document.Source = entity;
 			return assigned;
 		}
 
-		public static bool TrySetThreat(EcsDocument document, string path, object value)
+		public static Func<Threat, object, bool> TryAssignThreat(string path)
 		{
 			Func<Threat, object, bool> assign = path switch
 			{
@@ -3087,17 +5354,298 @@ namespace Elastic.CommonSchema
 				"ThreatSoftwareReference" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.SoftwareReference = p),
 				"threat.software.type" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.SoftwareType = p),
 				"ThreatSoftwareType" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.SoftwareType = p),
+				"threat.indicator.x509.issuer.distinguished_name" => static (e, v) => TryAssignX509("x509.issuer.distinguished_name")(e.IndicatorX509 ??= new X509(),v),
+				"ThreatIndicatorX509IssuerDistinguishedName" => static (e, v) => TryAssignX509("x509.issuer.distinguished_name")(e.IndicatorX509 ??= new X509(),v),
+				"threat.indicator.x509.not_after" => static (e, v) => TryAssignX509("x509.not_after")(e.IndicatorX509 ??= new X509(),v),
+				"ThreatIndicatorX509NotAfter" => static (e, v) => TryAssignX509("x509.not_after")(e.IndicatorX509 ??= new X509(),v),
+				"threat.indicator.x509.not_before" => static (e, v) => TryAssignX509("x509.not_before")(e.IndicatorX509 ??= new X509(),v),
+				"ThreatIndicatorX509NotBefore" => static (e, v) => TryAssignX509("x509.not_before")(e.IndicatorX509 ??= new X509(),v),
+				"threat.indicator.x509.public_key_algorithm" => static (e, v) => TryAssignX509("x509.public_key_algorithm")(e.IndicatorX509 ??= new X509(),v),
+				"ThreatIndicatorX509PublicKeyAlgorithm" => static (e, v) => TryAssignX509("x509.public_key_algorithm")(e.IndicatorX509 ??= new X509(),v),
+				"threat.indicator.x509.public_key_curve" => static (e, v) => TryAssignX509("x509.public_key_curve")(e.IndicatorX509 ??= new X509(),v),
+				"ThreatIndicatorX509PublicKeyCurve" => static (e, v) => TryAssignX509("x509.public_key_curve")(e.IndicatorX509 ??= new X509(),v),
+				"threat.indicator.x509.public_key_exponent" => static (e, v) => TryAssignX509("x509.public_key_exponent")(e.IndicatorX509 ??= new X509(),v),
+				"ThreatIndicatorX509PublicKeyExponent" => static (e, v) => TryAssignX509("x509.public_key_exponent")(e.IndicatorX509 ??= new X509(),v),
+				"threat.indicator.x509.public_key_size" => static (e, v) => TryAssignX509("x509.public_key_size")(e.IndicatorX509 ??= new X509(),v),
+				"ThreatIndicatorX509PublicKeySize" => static (e, v) => TryAssignX509("x509.public_key_size")(e.IndicatorX509 ??= new X509(),v),
+				"threat.indicator.x509.serial_number" => static (e, v) => TryAssignX509("x509.serial_number")(e.IndicatorX509 ??= new X509(),v),
+				"ThreatIndicatorX509SerialNumber" => static (e, v) => TryAssignX509("x509.serial_number")(e.IndicatorX509 ??= new X509(),v),
+				"threat.indicator.x509.signature_algorithm" => static (e, v) => TryAssignX509("x509.signature_algorithm")(e.IndicatorX509 ??= new X509(),v),
+				"ThreatIndicatorX509SignatureAlgorithm" => static (e, v) => TryAssignX509("x509.signature_algorithm")(e.IndicatorX509 ??= new X509(),v),
+				"threat.indicator.x509.subject.distinguished_name" => static (e, v) => TryAssignX509("x509.subject.distinguished_name")(e.IndicatorX509 ??= new X509(),v),
+				"ThreatIndicatorX509SubjectDistinguishedName" => static (e, v) => TryAssignX509("x509.subject.distinguished_name")(e.IndicatorX509 ??= new X509(),v),
+				"threat.indicator.x509.version_number" => static (e, v) => TryAssignX509("x509.version_number")(e.IndicatorX509 ??= new X509(),v),
+				"ThreatIndicatorX509VersionNumber" => static (e, v) => TryAssignX509("x509.version_number")(e.IndicatorX509 ??= new X509(),v),
+				"threat.indicator.as.number" => static (e, v) => TryAssignAs("as.number")(e.IndicatorAs ??= new As(),v),
+				"ThreatIndicatorAsNumber" => static (e, v) => TryAssignAs("as.number")(e.IndicatorAs ??= new As(),v),
+				"threat.indicator.as.organization.name" => static (e, v) => TryAssignAs("as.organization.name")(e.IndicatorAs ??= new As(),v),
+				"ThreatIndicatorAsOrganizationName" => static (e, v) => TryAssignAs("as.organization.name")(e.IndicatorAs ??= new As(),v),
+				"threat.indicator.file.accessed" => static (e, v) => TryAssignFile("file.accessed")(e.IndicatorFile ??= new File(),v),
+				"ThreatIndicatorFileAccessed" => static (e, v) => TryAssignFile("file.accessed")(e.IndicatorFile ??= new File(),v),
+				"threat.indicator.file.created" => static (e, v) => TryAssignFile("file.created")(e.IndicatorFile ??= new File(),v),
+				"ThreatIndicatorFileCreated" => static (e, v) => TryAssignFile("file.created")(e.IndicatorFile ??= new File(),v),
+				"threat.indicator.file.ctime" => static (e, v) => TryAssignFile("file.ctime")(e.IndicatorFile ??= new File(),v),
+				"ThreatIndicatorFileCtime" => static (e, v) => TryAssignFile("file.ctime")(e.IndicatorFile ??= new File(),v),
+				"threat.indicator.file.device" => static (e, v) => TryAssignFile("file.device")(e.IndicatorFile ??= new File(),v),
+				"ThreatIndicatorFileDevice" => static (e, v) => TryAssignFile("file.device")(e.IndicatorFile ??= new File(),v),
+				"threat.indicator.file.directory" => static (e, v) => TryAssignFile("file.directory")(e.IndicatorFile ??= new File(),v),
+				"ThreatIndicatorFileDirectory" => static (e, v) => TryAssignFile("file.directory")(e.IndicatorFile ??= new File(),v),
+				"threat.indicator.file.drive_letter" => static (e, v) => TryAssignFile("file.drive_letter")(e.IndicatorFile ??= new File(),v),
+				"ThreatIndicatorFileDriveLetter" => static (e, v) => TryAssignFile("file.drive_letter")(e.IndicatorFile ??= new File(),v),
+				"threat.indicator.file.extension" => static (e, v) => TryAssignFile("file.extension")(e.IndicatorFile ??= new File(),v),
+				"ThreatIndicatorFileExtension" => static (e, v) => TryAssignFile("file.extension")(e.IndicatorFile ??= new File(),v),
+				"threat.indicator.file.fork_name" => static (e, v) => TryAssignFile("file.fork_name")(e.IndicatorFile ??= new File(),v),
+				"ThreatIndicatorFileForkName" => static (e, v) => TryAssignFile("file.fork_name")(e.IndicatorFile ??= new File(),v),
+				"threat.indicator.file.gid" => static (e, v) => TryAssignFile("file.gid")(e.IndicatorFile ??= new File(),v),
+				"ThreatIndicatorFileGid" => static (e, v) => TryAssignFile("file.gid")(e.IndicatorFile ??= new File(),v),
+				"threat.indicator.file.group" => static (e, v) => TryAssignFile("file.group")(e.IndicatorFile ??= new File(),v),
+				"ThreatIndicatorFileGroup" => static (e, v) => TryAssignFile("file.group")(e.IndicatorFile ??= new File(),v),
+				"threat.indicator.file.inode" => static (e, v) => TryAssignFile("file.inode")(e.IndicatorFile ??= new File(),v),
+				"ThreatIndicatorFileInode" => static (e, v) => TryAssignFile("file.inode")(e.IndicatorFile ??= new File(),v),
+				"threat.indicator.file.mime_type" => static (e, v) => TryAssignFile("file.mime_type")(e.IndicatorFile ??= new File(),v),
+				"ThreatIndicatorFileMimeType" => static (e, v) => TryAssignFile("file.mime_type")(e.IndicatorFile ??= new File(),v),
+				"threat.indicator.file.mode" => static (e, v) => TryAssignFile("file.mode")(e.IndicatorFile ??= new File(),v),
+				"ThreatIndicatorFileMode" => static (e, v) => TryAssignFile("file.mode")(e.IndicatorFile ??= new File(),v),
+				"threat.indicator.file.mtime" => static (e, v) => TryAssignFile("file.mtime")(e.IndicatorFile ??= new File(),v),
+				"ThreatIndicatorFileMtime" => static (e, v) => TryAssignFile("file.mtime")(e.IndicatorFile ??= new File(),v),
+				"threat.indicator.file.name" => static (e, v) => TryAssignFile("file.name")(e.IndicatorFile ??= new File(),v),
+				"ThreatIndicatorFileName" => static (e, v) => TryAssignFile("file.name")(e.IndicatorFile ??= new File(),v),
+				"threat.indicator.file.owner" => static (e, v) => TryAssignFile("file.owner")(e.IndicatorFile ??= new File(),v),
+				"ThreatIndicatorFileOwner" => static (e, v) => TryAssignFile("file.owner")(e.IndicatorFile ??= new File(),v),
+				"threat.indicator.file.path" => static (e, v) => TryAssignFile("file.path")(e.IndicatorFile ??= new File(),v),
+				"ThreatIndicatorFilePath" => static (e, v) => TryAssignFile("file.path")(e.IndicatorFile ??= new File(),v),
+				"threat.indicator.file.size" => static (e, v) => TryAssignFile("file.size")(e.IndicatorFile ??= new File(),v),
+				"ThreatIndicatorFileSize" => static (e, v) => TryAssignFile("file.size")(e.IndicatorFile ??= new File(),v),
+				"threat.indicator.file.target_path" => static (e, v) => TryAssignFile("file.target_path")(e.IndicatorFile ??= new File(),v),
+				"ThreatIndicatorFileTargetPath" => static (e, v) => TryAssignFile("file.target_path")(e.IndicatorFile ??= new File(),v),
+				"threat.indicator.file.type" => static (e, v) => TryAssignFile("file.type")(e.IndicatorFile ??= new File(),v),
+				"ThreatIndicatorFileType" => static (e, v) => TryAssignFile("file.type")(e.IndicatorFile ??= new File(),v),
+				"threat.indicator.file.uid" => static (e, v) => TryAssignFile("file.uid")(e.IndicatorFile ??= new File(),v),
+				"ThreatIndicatorFileUid" => static (e, v) => TryAssignFile("file.uid")(e.IndicatorFile ??= new File(),v),
+				"threat.indicator.file.hash.md5" => static (e, v) => TryAssignFile("file.hash.md5")(e.IndicatorFile ??= new File(),v),
+				"ThreatIndicatorFileHashMd5" => static (e, v) => TryAssignFile("file.hash.md5")(e.IndicatorFile ??= new File(),v),
+				"threat.indicator.file.hash.sha1" => static (e, v) => TryAssignFile("file.hash.sha1")(e.IndicatorFile ??= new File(),v),
+				"ThreatIndicatorFileHashSha1" => static (e, v) => TryAssignFile("file.hash.sha1")(e.IndicatorFile ??= new File(),v),
+				"threat.indicator.file.hash.sha256" => static (e, v) => TryAssignFile("file.hash.sha256")(e.IndicatorFile ??= new File(),v),
+				"ThreatIndicatorFileHashSha256" => static (e, v) => TryAssignFile("file.hash.sha256")(e.IndicatorFile ??= new File(),v),
+				"threat.indicator.file.hash.sha384" => static (e, v) => TryAssignFile("file.hash.sha384")(e.IndicatorFile ??= new File(),v),
+				"ThreatIndicatorFileHashSha384" => static (e, v) => TryAssignFile("file.hash.sha384")(e.IndicatorFile ??= new File(),v),
+				"threat.indicator.file.hash.sha512" => static (e, v) => TryAssignFile("file.hash.sha512")(e.IndicatorFile ??= new File(),v),
+				"ThreatIndicatorFileHashSha512" => static (e, v) => TryAssignFile("file.hash.sha512")(e.IndicatorFile ??= new File(),v),
+				"threat.indicator.file.hash.ssdeep" => static (e, v) => TryAssignFile("file.hash.ssdeep")(e.IndicatorFile ??= new File(),v),
+				"ThreatIndicatorFileHashSsdeep" => static (e, v) => TryAssignFile("file.hash.ssdeep")(e.IndicatorFile ??= new File(),v),
+				"threat.indicator.file.hash.tlsh" => static (e, v) => TryAssignFile("file.hash.tlsh")(e.IndicatorFile ??= new File(),v),
+				"ThreatIndicatorFileHashTlsh" => static (e, v) => TryAssignFile("file.hash.tlsh")(e.IndicatorFile ??= new File(),v),
+				"threat.indicator.file.pe.architecture" => static (e, v) => TryAssignFile("file.pe.architecture")(e.IndicatorFile ??= new File(),v),
+				"ThreatIndicatorFilePeArchitecture" => static (e, v) => TryAssignFile("file.pe.architecture")(e.IndicatorFile ??= new File(),v),
+				"threat.indicator.file.pe.company" => static (e, v) => TryAssignFile("file.pe.company")(e.IndicatorFile ??= new File(),v),
+				"ThreatIndicatorFilePeCompany" => static (e, v) => TryAssignFile("file.pe.company")(e.IndicatorFile ??= new File(),v),
+				"threat.indicator.file.pe.description" => static (e, v) => TryAssignFile("file.pe.description")(e.IndicatorFile ??= new File(),v),
+				"ThreatIndicatorFilePeDescription" => static (e, v) => TryAssignFile("file.pe.description")(e.IndicatorFile ??= new File(),v),
+				"threat.indicator.file.pe.file_version" => static (e, v) => TryAssignFile("file.pe.file_version")(e.IndicatorFile ??= new File(),v),
+				"ThreatIndicatorFilePeFileVersion" => static (e, v) => TryAssignFile("file.pe.file_version")(e.IndicatorFile ??= new File(),v),
+				"threat.indicator.file.pe.go_import_hash" => static (e, v) => TryAssignFile("file.pe.go_import_hash")(e.IndicatorFile ??= new File(),v),
+				"ThreatIndicatorFilePeGoImportHash" => static (e, v) => TryAssignFile("file.pe.go_import_hash")(e.IndicatorFile ??= new File(),v),
+				"threat.indicator.file.pe.go_imports" => static (e, v) => TryAssignFile("file.pe.go_imports")(e.IndicatorFile ??= new File(),v),
+				"ThreatIndicatorFilePeGoImports" => static (e, v) => TryAssignFile("file.pe.go_imports")(e.IndicatorFile ??= new File(),v),
+				"threat.indicator.file.pe.go_imports_names_entropy" => static (e, v) => TryAssignFile("file.pe.go_imports_names_entropy")(e.IndicatorFile ??= new File(),v),
+				"ThreatIndicatorFilePeGoImportsNamesEntropy" => static (e, v) => TryAssignFile("file.pe.go_imports_names_entropy")(e.IndicatorFile ??= new File(),v),
+				"threat.indicator.file.pe.go_imports_names_var_entropy" => static (e, v) => TryAssignFile("file.pe.go_imports_names_var_entropy")(e.IndicatorFile ??= new File(),v),
+				"ThreatIndicatorFilePeGoImportsNamesVarEntropy" => static (e, v) => TryAssignFile("file.pe.go_imports_names_var_entropy")(e.IndicatorFile ??= new File(),v),
+				"threat.indicator.file.pe.go_stripped" => static (e, v) => TryAssignFile("file.pe.go_stripped")(e.IndicatorFile ??= new File(),v),
+				"ThreatIndicatorFilePeGoStripped" => static (e, v) => TryAssignFile("file.pe.go_stripped")(e.IndicatorFile ??= new File(),v),
+				"threat.indicator.file.pe.imphash" => static (e, v) => TryAssignFile("file.pe.imphash")(e.IndicatorFile ??= new File(),v),
+				"ThreatIndicatorFilePeImphash" => static (e, v) => TryAssignFile("file.pe.imphash")(e.IndicatorFile ??= new File(),v),
+				"threat.indicator.file.pe.import_hash" => static (e, v) => TryAssignFile("file.pe.import_hash")(e.IndicatorFile ??= new File(),v),
+				"ThreatIndicatorFilePeImportHash" => static (e, v) => TryAssignFile("file.pe.import_hash")(e.IndicatorFile ??= new File(),v),
+				"threat.indicator.file.pe.imports_names_entropy" => static (e, v) => TryAssignFile("file.pe.imports_names_entropy")(e.IndicatorFile ??= new File(),v),
+				"ThreatIndicatorFilePeImportsNamesEntropy" => static (e, v) => TryAssignFile("file.pe.imports_names_entropy")(e.IndicatorFile ??= new File(),v),
+				"threat.indicator.file.pe.imports_names_var_entropy" => static (e, v) => TryAssignFile("file.pe.imports_names_var_entropy")(e.IndicatorFile ??= new File(),v),
+				"ThreatIndicatorFilePeImportsNamesVarEntropy" => static (e, v) => TryAssignFile("file.pe.imports_names_var_entropy")(e.IndicatorFile ??= new File(),v),
+				"threat.indicator.file.pe.original_file_name" => static (e, v) => TryAssignFile("file.pe.original_file_name")(e.IndicatorFile ??= new File(),v),
+				"ThreatIndicatorFilePeOriginalFileName" => static (e, v) => TryAssignFile("file.pe.original_file_name")(e.IndicatorFile ??= new File(),v),
+				"threat.indicator.file.pe.pehash" => static (e, v) => TryAssignFile("file.pe.pehash")(e.IndicatorFile ??= new File(),v),
+				"ThreatIndicatorFilePePehash" => static (e, v) => TryAssignFile("file.pe.pehash")(e.IndicatorFile ??= new File(),v),
+				"threat.indicator.file.pe.product" => static (e, v) => TryAssignFile("file.pe.product")(e.IndicatorFile ??= new File(),v),
+				"ThreatIndicatorFilePeProduct" => static (e, v) => TryAssignFile("file.pe.product")(e.IndicatorFile ??= new File(),v),
+				"threat.indicator.file.x509.issuer.distinguished_name" => static (e, v) => TryAssignFile("file.x509.issuer.distinguished_name")(e.IndicatorFile ??= new File(),v),
+				"ThreatIndicatorFileX509IssuerDistinguishedName" => static (e, v) => TryAssignFile("file.x509.issuer.distinguished_name")(e.IndicatorFile ??= new File(),v),
+				"threat.indicator.file.x509.not_after" => static (e, v) => TryAssignFile("file.x509.not_after")(e.IndicatorFile ??= new File(),v),
+				"ThreatIndicatorFileX509NotAfter" => static (e, v) => TryAssignFile("file.x509.not_after")(e.IndicatorFile ??= new File(),v),
+				"threat.indicator.file.x509.not_before" => static (e, v) => TryAssignFile("file.x509.not_before")(e.IndicatorFile ??= new File(),v),
+				"ThreatIndicatorFileX509NotBefore" => static (e, v) => TryAssignFile("file.x509.not_before")(e.IndicatorFile ??= new File(),v),
+				"threat.indicator.file.x509.public_key_algorithm" => static (e, v) => TryAssignFile("file.x509.public_key_algorithm")(e.IndicatorFile ??= new File(),v),
+				"ThreatIndicatorFileX509PublicKeyAlgorithm" => static (e, v) => TryAssignFile("file.x509.public_key_algorithm")(e.IndicatorFile ??= new File(),v),
+				"threat.indicator.file.x509.public_key_curve" => static (e, v) => TryAssignFile("file.x509.public_key_curve")(e.IndicatorFile ??= new File(),v),
+				"ThreatIndicatorFileX509PublicKeyCurve" => static (e, v) => TryAssignFile("file.x509.public_key_curve")(e.IndicatorFile ??= new File(),v),
+				"threat.indicator.file.x509.public_key_exponent" => static (e, v) => TryAssignFile("file.x509.public_key_exponent")(e.IndicatorFile ??= new File(),v),
+				"ThreatIndicatorFileX509PublicKeyExponent" => static (e, v) => TryAssignFile("file.x509.public_key_exponent")(e.IndicatorFile ??= new File(),v),
+				"threat.indicator.file.x509.public_key_size" => static (e, v) => TryAssignFile("file.x509.public_key_size")(e.IndicatorFile ??= new File(),v),
+				"ThreatIndicatorFileX509PublicKeySize" => static (e, v) => TryAssignFile("file.x509.public_key_size")(e.IndicatorFile ??= new File(),v),
+				"threat.indicator.file.x509.serial_number" => static (e, v) => TryAssignFile("file.x509.serial_number")(e.IndicatorFile ??= new File(),v),
+				"ThreatIndicatorFileX509SerialNumber" => static (e, v) => TryAssignFile("file.x509.serial_number")(e.IndicatorFile ??= new File(),v),
+				"threat.indicator.file.x509.signature_algorithm" => static (e, v) => TryAssignFile("file.x509.signature_algorithm")(e.IndicatorFile ??= new File(),v),
+				"ThreatIndicatorFileX509SignatureAlgorithm" => static (e, v) => TryAssignFile("file.x509.signature_algorithm")(e.IndicatorFile ??= new File(),v),
+				"threat.indicator.file.x509.subject.distinguished_name" => static (e, v) => TryAssignFile("file.x509.subject.distinguished_name")(e.IndicatorFile ??= new File(),v),
+				"ThreatIndicatorFileX509SubjectDistinguishedName" => static (e, v) => TryAssignFile("file.x509.subject.distinguished_name")(e.IndicatorFile ??= new File(),v),
+				"threat.indicator.file.x509.version_number" => static (e, v) => TryAssignFile("file.x509.version_number")(e.IndicatorFile ??= new File(),v),
+				"ThreatIndicatorFileX509VersionNumber" => static (e, v) => TryAssignFile("file.x509.version_number")(e.IndicatorFile ??= new File(),v),
+				"threat.indicator.file.code_signature.digest_algorithm" => static (e, v) => TryAssignFile("file.code_signature.digest_algorithm")(e.IndicatorFile ??= new File(),v),
+				"ThreatIndicatorFileCodeSignatureDigestAlgorithm" => static (e, v) => TryAssignFile("file.code_signature.digest_algorithm")(e.IndicatorFile ??= new File(),v),
+				"threat.indicator.file.code_signature.exists" => static (e, v) => TryAssignFile("file.code_signature.exists")(e.IndicatorFile ??= new File(),v),
+				"ThreatIndicatorFileCodeSignatureExists" => static (e, v) => TryAssignFile("file.code_signature.exists")(e.IndicatorFile ??= new File(),v),
+				"threat.indicator.file.code_signature.signing_id" => static (e, v) => TryAssignFile("file.code_signature.signing_id")(e.IndicatorFile ??= new File(),v),
+				"ThreatIndicatorFileCodeSignatureSigningId" => static (e, v) => TryAssignFile("file.code_signature.signing_id")(e.IndicatorFile ??= new File(),v),
+				"threat.indicator.file.code_signature.status" => static (e, v) => TryAssignFile("file.code_signature.status")(e.IndicatorFile ??= new File(),v),
+				"ThreatIndicatorFileCodeSignatureStatus" => static (e, v) => TryAssignFile("file.code_signature.status")(e.IndicatorFile ??= new File(),v),
+				"threat.indicator.file.code_signature.subject_name" => static (e, v) => TryAssignFile("file.code_signature.subject_name")(e.IndicatorFile ??= new File(),v),
+				"ThreatIndicatorFileCodeSignatureSubjectName" => static (e, v) => TryAssignFile("file.code_signature.subject_name")(e.IndicatorFile ??= new File(),v),
+				"threat.indicator.file.code_signature.team_id" => static (e, v) => TryAssignFile("file.code_signature.team_id")(e.IndicatorFile ??= new File(),v),
+				"ThreatIndicatorFileCodeSignatureTeamId" => static (e, v) => TryAssignFile("file.code_signature.team_id")(e.IndicatorFile ??= new File(),v),
+				"threat.indicator.file.code_signature.timestamp" => static (e, v) => TryAssignFile("file.code_signature.timestamp")(e.IndicatorFile ??= new File(),v),
+				"ThreatIndicatorFileCodeSignatureTimestamp" => static (e, v) => TryAssignFile("file.code_signature.timestamp")(e.IndicatorFile ??= new File(),v),
+				"threat.indicator.file.code_signature.trusted" => static (e, v) => TryAssignFile("file.code_signature.trusted")(e.IndicatorFile ??= new File(),v),
+				"ThreatIndicatorFileCodeSignatureTrusted" => static (e, v) => TryAssignFile("file.code_signature.trusted")(e.IndicatorFile ??= new File(),v),
+				"threat.indicator.file.code_signature.valid" => static (e, v) => TryAssignFile("file.code_signature.valid")(e.IndicatorFile ??= new File(),v),
+				"ThreatIndicatorFileCodeSignatureValid" => static (e, v) => TryAssignFile("file.code_signature.valid")(e.IndicatorFile ??= new File(),v),
+				"threat.indicator.file.elf.architecture" => static (e, v) => TryAssignFile("file.elf.architecture")(e.IndicatorFile ??= new File(),v),
+				"ThreatIndicatorFileElfArchitecture" => static (e, v) => TryAssignFile("file.elf.architecture")(e.IndicatorFile ??= new File(),v),
+				"threat.indicator.file.elf.byte_order" => static (e, v) => TryAssignFile("file.elf.byte_order")(e.IndicatorFile ??= new File(),v),
+				"ThreatIndicatorFileElfByteOrder" => static (e, v) => TryAssignFile("file.elf.byte_order")(e.IndicatorFile ??= new File(),v),
+				"threat.indicator.file.elf.cpu_type" => static (e, v) => TryAssignFile("file.elf.cpu_type")(e.IndicatorFile ??= new File(),v),
+				"ThreatIndicatorFileElfCpuType" => static (e, v) => TryAssignFile("file.elf.cpu_type")(e.IndicatorFile ??= new File(),v),
+				"threat.indicator.file.elf.creation_date" => static (e, v) => TryAssignFile("file.elf.creation_date")(e.IndicatorFile ??= new File(),v),
+				"ThreatIndicatorFileElfCreationDate" => static (e, v) => TryAssignFile("file.elf.creation_date")(e.IndicatorFile ??= new File(),v),
+				"threat.indicator.file.elf.go_import_hash" => static (e, v) => TryAssignFile("file.elf.go_import_hash")(e.IndicatorFile ??= new File(),v),
+				"ThreatIndicatorFileElfGoImportHash" => static (e, v) => TryAssignFile("file.elf.go_import_hash")(e.IndicatorFile ??= new File(),v),
+				"threat.indicator.file.elf.go_imports" => static (e, v) => TryAssignFile("file.elf.go_imports")(e.IndicatorFile ??= new File(),v),
+				"ThreatIndicatorFileElfGoImports" => static (e, v) => TryAssignFile("file.elf.go_imports")(e.IndicatorFile ??= new File(),v),
+				"threat.indicator.file.elf.go_imports_names_entropy" => static (e, v) => TryAssignFile("file.elf.go_imports_names_entropy")(e.IndicatorFile ??= new File(),v),
+				"ThreatIndicatorFileElfGoImportsNamesEntropy" => static (e, v) => TryAssignFile("file.elf.go_imports_names_entropy")(e.IndicatorFile ??= new File(),v),
+				"threat.indicator.file.elf.go_imports_names_var_entropy" => static (e, v) => TryAssignFile("file.elf.go_imports_names_var_entropy")(e.IndicatorFile ??= new File(),v),
+				"ThreatIndicatorFileElfGoImportsNamesVarEntropy" => static (e, v) => TryAssignFile("file.elf.go_imports_names_var_entropy")(e.IndicatorFile ??= new File(),v),
+				"threat.indicator.file.elf.go_stripped" => static (e, v) => TryAssignFile("file.elf.go_stripped")(e.IndicatorFile ??= new File(),v),
+				"ThreatIndicatorFileElfGoStripped" => static (e, v) => TryAssignFile("file.elf.go_stripped")(e.IndicatorFile ??= new File(),v),
+				"threat.indicator.file.elf.header.abi_version" => static (e, v) => TryAssignFile("file.elf.header.abi_version")(e.IndicatorFile ??= new File(),v),
+				"ThreatIndicatorFileElfHeaderAbiVersion" => static (e, v) => TryAssignFile("file.elf.header.abi_version")(e.IndicatorFile ??= new File(),v),
+				"threat.indicator.file.elf.header.class" => static (e, v) => TryAssignFile("file.elf.header.class")(e.IndicatorFile ??= new File(),v),
+				"ThreatIndicatorFileElfHeaderClass" => static (e, v) => TryAssignFile("file.elf.header.class")(e.IndicatorFile ??= new File(),v),
+				"threat.indicator.file.elf.header.data" => static (e, v) => TryAssignFile("file.elf.header.data")(e.IndicatorFile ??= new File(),v),
+				"ThreatIndicatorFileElfHeaderData" => static (e, v) => TryAssignFile("file.elf.header.data")(e.IndicatorFile ??= new File(),v),
+				"threat.indicator.file.elf.header.entrypoint" => static (e, v) => TryAssignFile("file.elf.header.entrypoint")(e.IndicatorFile ??= new File(),v),
+				"ThreatIndicatorFileElfHeaderEntrypoint" => static (e, v) => TryAssignFile("file.elf.header.entrypoint")(e.IndicatorFile ??= new File(),v),
+				"threat.indicator.file.elf.header.object_version" => static (e, v) => TryAssignFile("file.elf.header.object_version")(e.IndicatorFile ??= new File(),v),
+				"ThreatIndicatorFileElfHeaderObjectVersion" => static (e, v) => TryAssignFile("file.elf.header.object_version")(e.IndicatorFile ??= new File(),v),
+				"threat.indicator.file.elf.header.os_abi" => static (e, v) => TryAssignFile("file.elf.header.os_abi")(e.IndicatorFile ??= new File(),v),
+				"ThreatIndicatorFileElfHeaderOsAbi" => static (e, v) => TryAssignFile("file.elf.header.os_abi")(e.IndicatorFile ??= new File(),v),
+				"threat.indicator.file.elf.header.type" => static (e, v) => TryAssignFile("file.elf.header.type")(e.IndicatorFile ??= new File(),v),
+				"ThreatIndicatorFileElfHeaderType" => static (e, v) => TryAssignFile("file.elf.header.type")(e.IndicatorFile ??= new File(),v),
+				"threat.indicator.file.elf.header.version" => static (e, v) => TryAssignFile("file.elf.header.version")(e.IndicatorFile ??= new File(),v),
+				"ThreatIndicatorFileElfHeaderVersion" => static (e, v) => TryAssignFile("file.elf.header.version")(e.IndicatorFile ??= new File(),v),
+				"threat.indicator.file.elf.import_hash" => static (e, v) => TryAssignFile("file.elf.import_hash")(e.IndicatorFile ??= new File(),v),
+				"ThreatIndicatorFileElfImportHash" => static (e, v) => TryAssignFile("file.elf.import_hash")(e.IndicatorFile ??= new File(),v),
+				"threat.indicator.file.elf.imports_names_entropy" => static (e, v) => TryAssignFile("file.elf.imports_names_entropy")(e.IndicatorFile ??= new File(),v),
+				"ThreatIndicatorFileElfImportsNamesEntropy" => static (e, v) => TryAssignFile("file.elf.imports_names_entropy")(e.IndicatorFile ??= new File(),v),
+				"threat.indicator.file.elf.imports_names_var_entropy" => static (e, v) => TryAssignFile("file.elf.imports_names_var_entropy")(e.IndicatorFile ??= new File(),v),
+				"ThreatIndicatorFileElfImportsNamesVarEntropy" => static (e, v) => TryAssignFile("file.elf.imports_names_var_entropy")(e.IndicatorFile ??= new File(),v),
+				"threat.indicator.file.elf.telfhash" => static (e, v) => TryAssignFile("file.elf.telfhash")(e.IndicatorFile ??= new File(),v),
+				"ThreatIndicatorFileElfTelfhash" => static (e, v) => TryAssignFile("file.elf.telfhash")(e.IndicatorFile ??= new File(),v),
+				"threat.indicator.file.macho.go_import_hash" => static (e, v) => TryAssignFile("file.macho.go_import_hash")(e.IndicatorFile ??= new File(),v),
+				"ThreatIndicatorFileMachoGoImportHash" => static (e, v) => TryAssignFile("file.macho.go_import_hash")(e.IndicatorFile ??= new File(),v),
+				"threat.indicator.file.macho.go_imports" => static (e, v) => TryAssignFile("file.macho.go_imports")(e.IndicatorFile ??= new File(),v),
+				"ThreatIndicatorFileMachoGoImports" => static (e, v) => TryAssignFile("file.macho.go_imports")(e.IndicatorFile ??= new File(),v),
+				"threat.indicator.file.macho.go_imports_names_entropy" => static (e, v) => TryAssignFile("file.macho.go_imports_names_entropy")(e.IndicatorFile ??= new File(),v),
+				"ThreatIndicatorFileMachoGoImportsNamesEntropy" => static (e, v) => TryAssignFile("file.macho.go_imports_names_entropy")(e.IndicatorFile ??= new File(),v),
+				"threat.indicator.file.macho.go_imports_names_var_entropy" => static (e, v) => TryAssignFile("file.macho.go_imports_names_var_entropy")(e.IndicatorFile ??= new File(),v),
+				"ThreatIndicatorFileMachoGoImportsNamesVarEntropy" => static (e, v) => TryAssignFile("file.macho.go_imports_names_var_entropy")(e.IndicatorFile ??= new File(),v),
+				"threat.indicator.file.macho.go_stripped" => static (e, v) => TryAssignFile("file.macho.go_stripped")(e.IndicatorFile ??= new File(),v),
+				"ThreatIndicatorFileMachoGoStripped" => static (e, v) => TryAssignFile("file.macho.go_stripped")(e.IndicatorFile ??= new File(),v),
+				"threat.indicator.file.macho.import_hash" => static (e, v) => TryAssignFile("file.macho.import_hash")(e.IndicatorFile ??= new File(),v),
+				"ThreatIndicatorFileMachoImportHash" => static (e, v) => TryAssignFile("file.macho.import_hash")(e.IndicatorFile ??= new File(),v),
+				"threat.indicator.file.macho.imports_names_entropy" => static (e, v) => TryAssignFile("file.macho.imports_names_entropy")(e.IndicatorFile ??= new File(),v),
+				"ThreatIndicatorFileMachoImportsNamesEntropy" => static (e, v) => TryAssignFile("file.macho.imports_names_entropy")(e.IndicatorFile ??= new File(),v),
+				"threat.indicator.file.macho.imports_names_var_entropy" => static (e, v) => TryAssignFile("file.macho.imports_names_var_entropy")(e.IndicatorFile ??= new File(),v),
+				"ThreatIndicatorFileMachoImportsNamesVarEntropy" => static (e, v) => TryAssignFile("file.macho.imports_names_var_entropy")(e.IndicatorFile ??= new File(),v),
+				"threat.indicator.file.macho.symhash" => static (e, v) => TryAssignFile("file.macho.symhash")(e.IndicatorFile ??= new File(),v),
+				"ThreatIndicatorFileMachoSymhash" => static (e, v) => TryAssignFile("file.macho.symhash")(e.IndicatorFile ??= new File(),v),
+				"threat.indicator.geo.city_name" => static (e, v) => TryAssignGeo("geo.city_name")(e.IndicatorGeo ??= new Geo(),v),
+				"ThreatIndicatorGeoCityName" => static (e, v) => TryAssignGeo("geo.city_name")(e.IndicatorGeo ??= new Geo(),v),
+				"threat.indicator.geo.continent_code" => static (e, v) => TryAssignGeo("geo.continent_code")(e.IndicatorGeo ??= new Geo(),v),
+				"ThreatIndicatorGeoContinentCode" => static (e, v) => TryAssignGeo("geo.continent_code")(e.IndicatorGeo ??= new Geo(),v),
+				"threat.indicator.geo.continent_name" => static (e, v) => TryAssignGeo("geo.continent_name")(e.IndicatorGeo ??= new Geo(),v),
+				"ThreatIndicatorGeoContinentName" => static (e, v) => TryAssignGeo("geo.continent_name")(e.IndicatorGeo ??= new Geo(),v),
+				"threat.indicator.geo.country_iso_code" => static (e, v) => TryAssignGeo("geo.country_iso_code")(e.IndicatorGeo ??= new Geo(),v),
+				"ThreatIndicatorGeoCountryIsoCode" => static (e, v) => TryAssignGeo("geo.country_iso_code")(e.IndicatorGeo ??= new Geo(),v),
+				"threat.indicator.geo.country_name" => static (e, v) => TryAssignGeo("geo.country_name")(e.IndicatorGeo ??= new Geo(),v),
+				"ThreatIndicatorGeoCountryName" => static (e, v) => TryAssignGeo("geo.country_name")(e.IndicatorGeo ??= new Geo(),v),
+				"threat.indicator.geo.location" => static (e, v) => TryAssignGeo("geo.location")(e.IndicatorGeo ??= new Geo(),v),
+				"ThreatIndicatorGeoLocation" => static (e, v) => TryAssignGeo("geo.location")(e.IndicatorGeo ??= new Geo(),v),
+				"threat.indicator.geo.name" => static (e, v) => TryAssignGeo("geo.name")(e.IndicatorGeo ??= new Geo(),v),
+				"ThreatIndicatorGeoName" => static (e, v) => TryAssignGeo("geo.name")(e.IndicatorGeo ??= new Geo(),v),
+				"threat.indicator.geo.postal_code" => static (e, v) => TryAssignGeo("geo.postal_code")(e.IndicatorGeo ??= new Geo(),v),
+				"ThreatIndicatorGeoPostalCode" => static (e, v) => TryAssignGeo("geo.postal_code")(e.IndicatorGeo ??= new Geo(),v),
+				"threat.indicator.geo.region_iso_code" => static (e, v) => TryAssignGeo("geo.region_iso_code")(e.IndicatorGeo ??= new Geo(),v),
+				"ThreatIndicatorGeoRegionIsoCode" => static (e, v) => TryAssignGeo("geo.region_iso_code")(e.IndicatorGeo ??= new Geo(),v),
+				"threat.indicator.geo.region_name" => static (e, v) => TryAssignGeo("geo.region_name")(e.IndicatorGeo ??= new Geo(),v),
+				"ThreatIndicatorGeoRegionName" => static (e, v) => TryAssignGeo("geo.region_name")(e.IndicatorGeo ??= new Geo(),v),
+				"threat.indicator.geo.timezone" => static (e, v) => TryAssignGeo("geo.timezone")(e.IndicatorGeo ??= new Geo(),v),
+				"ThreatIndicatorGeoTimezone" => static (e, v) => TryAssignGeo("geo.timezone")(e.IndicatorGeo ??= new Geo(),v),
+				"threat.indicator.registry.data.bytes" => static (e, v) => TryAssignRegistry("registry.data.bytes")(e.IndicatorRegistry ??= new Registry(),v),
+				"ThreatIndicatorRegistryDataBytes" => static (e, v) => TryAssignRegistry("registry.data.bytes")(e.IndicatorRegistry ??= new Registry(),v),
+				"threat.indicator.registry.data.type" => static (e, v) => TryAssignRegistry("registry.data.type")(e.IndicatorRegistry ??= new Registry(),v),
+				"ThreatIndicatorRegistryDataType" => static (e, v) => TryAssignRegistry("registry.data.type")(e.IndicatorRegistry ??= new Registry(),v),
+				"threat.indicator.registry.hive" => static (e, v) => TryAssignRegistry("registry.hive")(e.IndicatorRegistry ??= new Registry(),v),
+				"ThreatIndicatorRegistryHive" => static (e, v) => TryAssignRegistry("registry.hive")(e.IndicatorRegistry ??= new Registry(),v),
+				"threat.indicator.registry.key" => static (e, v) => TryAssignRegistry("registry.key")(e.IndicatorRegistry ??= new Registry(),v),
+				"ThreatIndicatorRegistryKey" => static (e, v) => TryAssignRegistry("registry.key")(e.IndicatorRegistry ??= new Registry(),v),
+				"threat.indicator.registry.path" => static (e, v) => TryAssignRegistry("registry.path")(e.IndicatorRegistry ??= new Registry(),v),
+				"ThreatIndicatorRegistryPath" => static (e, v) => TryAssignRegistry("registry.path")(e.IndicatorRegistry ??= new Registry(),v),
+				"threat.indicator.registry.value" => static (e, v) => TryAssignRegistry("registry.value")(e.IndicatorRegistry ??= new Registry(),v),
+				"ThreatIndicatorRegistryValue" => static (e, v) => TryAssignRegistry("registry.value")(e.IndicatorRegistry ??= new Registry(),v),
+				"threat.indicator.url.domain" => static (e, v) => TryAssignUrl("url.domain")(e.IndicatorUrl ??= new Url(),v),
+				"ThreatIndicatorUrlDomain" => static (e, v) => TryAssignUrl("url.domain")(e.IndicatorUrl ??= new Url(),v),
+				"threat.indicator.url.extension" => static (e, v) => TryAssignUrl("url.extension")(e.IndicatorUrl ??= new Url(),v),
+				"ThreatIndicatorUrlExtension" => static (e, v) => TryAssignUrl("url.extension")(e.IndicatorUrl ??= new Url(),v),
+				"threat.indicator.url.fragment" => static (e, v) => TryAssignUrl("url.fragment")(e.IndicatorUrl ??= new Url(),v),
+				"ThreatIndicatorUrlFragment" => static (e, v) => TryAssignUrl("url.fragment")(e.IndicatorUrl ??= new Url(),v),
+				"threat.indicator.url.full" => static (e, v) => TryAssignUrl("url.full")(e.IndicatorUrl ??= new Url(),v),
+				"ThreatIndicatorUrlFull" => static (e, v) => TryAssignUrl("url.full")(e.IndicatorUrl ??= new Url(),v),
+				"threat.indicator.url.original" => static (e, v) => TryAssignUrl("url.original")(e.IndicatorUrl ??= new Url(),v),
+				"ThreatIndicatorUrlOriginal" => static (e, v) => TryAssignUrl("url.original")(e.IndicatorUrl ??= new Url(),v),
+				"threat.indicator.url.password" => static (e, v) => TryAssignUrl("url.password")(e.IndicatorUrl ??= new Url(),v),
+				"ThreatIndicatorUrlPassword" => static (e, v) => TryAssignUrl("url.password")(e.IndicatorUrl ??= new Url(),v),
+				"threat.indicator.url.path" => static (e, v) => TryAssignUrl("url.path")(e.IndicatorUrl ??= new Url(),v),
+				"ThreatIndicatorUrlPath" => static (e, v) => TryAssignUrl("url.path")(e.IndicatorUrl ??= new Url(),v),
+				"threat.indicator.url.port" => static (e, v) => TryAssignUrl("url.port")(e.IndicatorUrl ??= new Url(),v),
+				"ThreatIndicatorUrlPort" => static (e, v) => TryAssignUrl("url.port")(e.IndicatorUrl ??= new Url(),v),
+				"threat.indicator.url.query" => static (e, v) => TryAssignUrl("url.query")(e.IndicatorUrl ??= new Url(),v),
+				"ThreatIndicatorUrlQuery" => static (e, v) => TryAssignUrl("url.query")(e.IndicatorUrl ??= new Url(),v),
+				"threat.indicator.url.registered_domain" => static (e, v) => TryAssignUrl("url.registered_domain")(e.IndicatorUrl ??= new Url(),v),
+				"ThreatIndicatorUrlRegisteredDomain" => static (e, v) => TryAssignUrl("url.registered_domain")(e.IndicatorUrl ??= new Url(),v),
+				"threat.indicator.url.scheme" => static (e, v) => TryAssignUrl("url.scheme")(e.IndicatorUrl ??= new Url(),v),
+				"ThreatIndicatorUrlScheme" => static (e, v) => TryAssignUrl("url.scheme")(e.IndicatorUrl ??= new Url(),v),
+				"threat.indicator.url.subdomain" => static (e, v) => TryAssignUrl("url.subdomain")(e.IndicatorUrl ??= new Url(),v),
+				"ThreatIndicatorUrlSubdomain" => static (e, v) => TryAssignUrl("url.subdomain")(e.IndicatorUrl ??= new Url(),v),
+				"threat.indicator.url.top_level_domain" => static (e, v) => TryAssignUrl("url.top_level_domain")(e.IndicatorUrl ??= new Url(),v),
+				"ThreatIndicatorUrlTopLevelDomain" => static (e, v) => TryAssignUrl("url.top_level_domain")(e.IndicatorUrl ??= new Url(),v),
+				"threat.indicator.url.username" => static (e, v) => TryAssignUrl("url.username")(e.IndicatorUrl ??= new Url(),v),
+				"ThreatIndicatorUrlUsername" => static (e, v) => TryAssignUrl("url.username")(e.IndicatorUrl ??= new Url(),v),
 				_ => null
 			};
+			return assign;
+		}
+		public static bool TrySetThreat(EcsDocument document, string path, object value)
+		{
+			var assign = TryAssignThreat(path);
 			if (assign == null) return false;
-
+		
 			var entity = document.Threat ?? new Threat();
 			var assigned = assign(entity, value);
 			if (assigned) document.Threat = entity;
 			return assigned;
 		}
 
-		public static bool TrySetTls(EcsDocument document, string path, object value)
+		public static Func<Tls, object, bool> TryAssignTls(string path)
 		{
 			Func<Tls, object, bool> assign = path switch
 			{
@@ -3153,17 +5701,44 @@ namespace Elastic.CommonSchema
 				"TlsVersion" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Version = p),
 				"tls.version_protocol" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.VersionProtocol = p),
 				"TlsVersionProtocol" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.VersionProtocol = p),
+				"tls.client.x509.issuer.distinguished_name" => static (e, v) => TryAssignX509("x509.issuer.distinguished_name")(e.ClientX509 ??= new X509(),v),
+				"TlsClientX509IssuerDistinguishedName" => static (e, v) => TryAssignX509("x509.issuer.distinguished_name")(e.ClientX509 ??= new X509(),v),
+				"tls.client.x509.not_after" => static (e, v) => TryAssignX509("x509.not_after")(e.ClientX509 ??= new X509(),v),
+				"TlsClientX509NotAfter" => static (e, v) => TryAssignX509("x509.not_after")(e.ClientX509 ??= new X509(),v),
+				"tls.client.x509.not_before" => static (e, v) => TryAssignX509("x509.not_before")(e.ClientX509 ??= new X509(),v),
+				"TlsClientX509NotBefore" => static (e, v) => TryAssignX509("x509.not_before")(e.ClientX509 ??= new X509(),v),
+				"tls.client.x509.public_key_algorithm" => static (e, v) => TryAssignX509("x509.public_key_algorithm")(e.ClientX509 ??= new X509(),v),
+				"TlsClientX509PublicKeyAlgorithm" => static (e, v) => TryAssignX509("x509.public_key_algorithm")(e.ClientX509 ??= new X509(),v),
+				"tls.client.x509.public_key_curve" => static (e, v) => TryAssignX509("x509.public_key_curve")(e.ClientX509 ??= new X509(),v),
+				"TlsClientX509PublicKeyCurve" => static (e, v) => TryAssignX509("x509.public_key_curve")(e.ClientX509 ??= new X509(),v),
+				"tls.client.x509.public_key_exponent" => static (e, v) => TryAssignX509("x509.public_key_exponent")(e.ClientX509 ??= new X509(),v),
+				"TlsClientX509PublicKeyExponent" => static (e, v) => TryAssignX509("x509.public_key_exponent")(e.ClientX509 ??= new X509(),v),
+				"tls.client.x509.public_key_size" => static (e, v) => TryAssignX509("x509.public_key_size")(e.ClientX509 ??= new X509(),v),
+				"TlsClientX509PublicKeySize" => static (e, v) => TryAssignX509("x509.public_key_size")(e.ClientX509 ??= new X509(),v),
+				"tls.client.x509.serial_number" => static (e, v) => TryAssignX509("x509.serial_number")(e.ClientX509 ??= new X509(),v),
+				"TlsClientX509SerialNumber" => static (e, v) => TryAssignX509("x509.serial_number")(e.ClientX509 ??= new X509(),v),
+				"tls.client.x509.signature_algorithm" => static (e, v) => TryAssignX509("x509.signature_algorithm")(e.ClientX509 ??= new X509(),v),
+				"TlsClientX509SignatureAlgorithm" => static (e, v) => TryAssignX509("x509.signature_algorithm")(e.ClientX509 ??= new X509(),v),
+				"tls.client.x509.subject.distinguished_name" => static (e, v) => TryAssignX509("x509.subject.distinguished_name")(e.ClientX509 ??= new X509(),v),
+				"TlsClientX509SubjectDistinguishedName" => static (e, v) => TryAssignX509("x509.subject.distinguished_name")(e.ClientX509 ??= new X509(),v),
+				"tls.client.x509.version_number" => static (e, v) => TryAssignX509("x509.version_number")(e.ClientX509 ??= new X509(),v),
+				"TlsClientX509VersionNumber" => static (e, v) => TryAssignX509("x509.version_number")(e.ClientX509 ??= new X509(),v),
 				_ => null
 			};
+			return assign;
+		}
+		public static bool TrySetTls(EcsDocument document, string path, object value)
+		{
+			var assign = TryAssignTls(path);
 			if (assign == null) return false;
-
+		
 			var entity = document.Tls ?? new Tls();
 			var assigned = assign(entity, value);
 			if (assigned) document.Tls = entity;
 			return assigned;
 		}
 
-		public static bool TrySetUrl(EcsDocument document, string path, object value)
+		public static Func<Url, object, bool> TryAssignUrl(string path)
 		{
 			Func<Url, object, bool> assign = path switch
 			{
@@ -3197,15 +5772,20 @@ namespace Elastic.CommonSchema
 				"UrlUsername" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Username = p),
 				_ => null
 			};
+			return assign;
+		}
+		public static bool TrySetUrl(EcsDocument document, string path, object value)
+		{
+			var assign = TryAssignUrl(path);
 			if (assign == null) return false;
-
+		
 			var entity = document.Url ?? new Url();
 			var assigned = assign(entity, value);
 			if (assigned) document.Url = entity;
 			return assigned;
 		}
 
-		public static bool TrySetUser(EcsDocument document, string path, object value)
+		public static Func<User, object, bool> TryAssignUser(string path)
 		{
 			Func<User, object, bool> assign = path switch
 			{
@@ -3221,17 +5801,40 @@ namespace Elastic.CommonSchema
 				"UserId" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Id = p),
 				"user.name" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Name = p),
 				"UserName" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Name = p),
+				"user.group.domain" => static (e, v) => TryAssignGroup("group.domain")(e.Group ??= new Group(),v),
+				"UserGroupDomain" => static (e, v) => TryAssignGroup("group.domain")(e.Group ??= new Group(),v),
+				"user.group.id" => static (e, v) => TryAssignGroup("group.id")(e.Group ??= new Group(),v),
+				"UserGroupId" => static (e, v) => TryAssignGroup("group.id")(e.Group ??= new Group(),v),
+				"user.group.name" => static (e, v) => TryAssignGroup("group.name")(e.Group ??= new Group(),v),
+				"UserGroupName" => static (e, v) => TryAssignGroup("group.name")(e.Group ??= new Group(),v),
+				"user.risk.calculated_level" => static (e, v) => TryAssignRisk("risk.calculated_level")(e.Risk ??= new Risk(),v),
+				"UserRiskCalculatedLevel" => static (e, v) => TryAssignRisk("risk.calculated_level")(e.Risk ??= new Risk(),v),
+				"user.risk.calculated_score" => static (e, v) => TryAssignRisk("risk.calculated_score")(e.Risk ??= new Risk(),v),
+				"UserRiskCalculatedScore" => static (e, v) => TryAssignRisk("risk.calculated_score")(e.Risk ??= new Risk(),v),
+				"user.risk.calculated_score_norm" => static (e, v) => TryAssignRisk("risk.calculated_score_norm")(e.Risk ??= new Risk(),v),
+				"UserRiskCalculatedScoreNorm" => static (e, v) => TryAssignRisk("risk.calculated_score_norm")(e.Risk ??= new Risk(),v),
+				"user.risk.static_level" => static (e, v) => TryAssignRisk("risk.static_level")(e.Risk ??= new Risk(),v),
+				"UserRiskStaticLevel" => static (e, v) => TryAssignRisk("risk.static_level")(e.Risk ??= new Risk(),v),
+				"user.risk.static_score" => static (e, v) => TryAssignRisk("risk.static_score")(e.Risk ??= new Risk(),v),
+				"UserRiskStaticScore" => static (e, v) => TryAssignRisk("risk.static_score")(e.Risk ??= new Risk(),v),
+				"user.risk.static_score_norm" => static (e, v) => TryAssignRisk("risk.static_score_norm")(e.Risk ??= new Risk(),v),
+				"UserRiskStaticScoreNorm" => static (e, v) => TryAssignRisk("risk.static_score_norm")(e.Risk ??= new Risk(),v),
 				_ => null
 			};
+			return assign;
+		}
+		public static bool TrySetUser(IUser document, string path, object value)
+		{
+			var assign = TryAssignUser(path);
 			if (assign == null) return false;
-
+		
 			var entity = document.User ?? new User();
 			var assigned = assign(entity, value);
 			if (assigned) document.User = entity;
 			return assigned;
 		}
 
-		public static bool TrySetUserAgent(EcsDocument document, string path, object value)
+		public static Func<UserAgent, object, bool> TryAssignUserAgent(string path)
 		{
 			Func<UserAgent, object, bool> assign = path switch
 			{
@@ -3243,17 +5846,36 @@ namespace Elastic.CommonSchema
 				"UserAgentOriginal" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Original = p),
 				"user_agent.version" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Version = p),
 				"UserAgentVersion" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Version = p),
+				"user_agent.os.family" => static (e, v) => TryAssignOs("os.family")(e.Os ??= new Os(),v),
+				"UserAgentOsFamily" => static (e, v) => TryAssignOs("os.family")(e.Os ??= new Os(),v),
+				"user_agent.os.full" => static (e, v) => TryAssignOs("os.full")(e.Os ??= new Os(),v),
+				"UserAgentOsFull" => static (e, v) => TryAssignOs("os.full")(e.Os ??= new Os(),v),
+				"user_agent.os.kernel" => static (e, v) => TryAssignOs("os.kernel")(e.Os ??= new Os(),v),
+				"UserAgentOsKernel" => static (e, v) => TryAssignOs("os.kernel")(e.Os ??= new Os(),v),
+				"user_agent.os.name" => static (e, v) => TryAssignOs("os.name")(e.Os ??= new Os(),v),
+				"UserAgentOsName" => static (e, v) => TryAssignOs("os.name")(e.Os ??= new Os(),v),
+				"user_agent.os.platform" => static (e, v) => TryAssignOs("os.platform")(e.Os ??= new Os(),v),
+				"UserAgentOsPlatform" => static (e, v) => TryAssignOs("os.platform")(e.Os ??= new Os(),v),
+				"user_agent.os.type" => static (e, v) => TryAssignOs("os.type")(e.Os ??= new Os(),v),
+				"UserAgentOsType" => static (e, v) => TryAssignOs("os.type")(e.Os ??= new Os(),v),
+				"user_agent.os.version" => static (e, v) => TryAssignOs("os.version")(e.Os ??= new Os(),v),
+				"UserAgentOsVersion" => static (e, v) => TryAssignOs("os.version")(e.Os ??= new Os(),v),
 				_ => null
 			};
+			return assign;
+		}
+		public static bool TrySetUserAgent(EcsDocument document, string path, object value)
+		{
+			var assign = TryAssignUserAgent(path);
 			if (assign == null) return false;
-
+		
 			var entity = document.UserAgent ?? new UserAgent();
 			var assigned = assign(entity, value);
 			if (assigned) document.UserAgent = entity;
 			return assigned;
 		}
 
-		public static bool TrySetVlan(EcsDocument document, string path, object value)
+		public static Func<Vlan, object, bool> TryAssignVlan(string path)
 		{
 			Func<Vlan, object, bool> assign = path switch
 			{
@@ -3263,15 +5885,20 @@ namespace Elastic.CommonSchema
 				"VlanName" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Name = p),
 				_ => null
 			};
+			return assign;
+		}
+		public static bool TrySetVlan(IVlan document, string path, object value)
+		{
+			var assign = TryAssignVlan(path);
 			if (assign == null) return false;
-
+		
 			var entity = document.Vlan ?? new Vlan();
 			var assigned = assign(entity, value);
 			if (assigned) document.Vlan = entity;
 			return assigned;
 		}
 
-		public static bool TrySetVulnerability(EcsDocument document, string path, object value)
+		public static Func<Vulnerability, object, bool> TryAssignVulnerability(string path)
 		{
 			Func<Vulnerability, object, bool> assign = path switch
 			{
@@ -3301,15 +5928,20 @@ namespace Elastic.CommonSchema
 				"VulnerabilitySeverity" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Severity = p),
 				_ => null
 			};
+			return assign;
+		}
+		public static bool TrySetVulnerability(EcsDocument document, string path, object value)
+		{
+			var assign = TryAssignVulnerability(path);
 			if (assign == null) return false;
-
+		
 			var entity = document.Vulnerability ?? new Vulnerability();
 			var assigned = assign(entity, value);
 			if (assigned) document.Vulnerability = entity;
 			return assigned;
 		}
 
-		public static bool TrySetX509(EcsDocument document, string path, object value)
+		public static Func<X509, object, bool> TryAssignX509(string path)
 		{
 			Func<X509, object, bool> assign = path switch
 			{
@@ -3337,8 +5969,13 @@ namespace Elastic.CommonSchema
 				"X509VersionNumber" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.VersionNumber = p),
 				_ => null
 			};
+			return assign;
+		}
+		public static bool TrySetX509(IX509 document, string path, object value)
+		{
+			var assign = TryAssignX509(path);
 			if (assign == null) return false;
-
+		
 			var entity = document.X509 ?? new X509();
 			var assigned = assign(entity, value);
 			if (assigned) document.X509 = entity;

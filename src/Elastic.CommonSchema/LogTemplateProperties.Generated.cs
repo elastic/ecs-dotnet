@@ -33,7 +33,7 @@ namespace Elastic.CommonSchema
 		/// If the event source has no original timestamp, this value is typically populated by the first time the event was received by the pipeline.
 		/// Required field for all events.
 		/// <para><br/>This is a required field</para></para>
-		/// <example>5/23/2016 8:05:34AM</example>
+		/// <example>5/23/2016 8:05:34 AM</example>
 		///</summary>
 		public static string Timestamp = nameof(Timestamp);
 		///<summary>
@@ -201,6 +201,180 @@ namespace Elastic.CommonSchema
 		///</summary>
 		public static string ClientTopLevelDomain = nameof(ClientTopLevelDomain);
 		///<summary>
+		/// <para><c>client.as.number</c></para>
+		/// <para>Unique number allocated to the autonomous system. The autonomous system number (ASN) uniquely identifies each network on the Internet.</para>
+		/// <example>15169</example>
+		///</summary>
+		public static string ClientAsNumber = nameof(ClientAsNumber);
+		///<summary>
+		/// <para><c>client.as.organization.name</c></para>
+		/// <para>Organization name.</para>
+		/// <example>Google LLC</example>
+		///</summary>
+		public static string ClientAsOrganizationName = nameof(ClientAsOrganizationName);
+		///<summary>
+		/// <para><c>client.geo.city_name</c></para>
+		/// <para>City name.</para>
+		/// <example>Montreal</example>
+		///</summary>
+		public static string ClientGeoCityName = nameof(ClientGeoCityName);
+		///<summary>
+		/// <para><c>client.geo.continent_code</c></para>
+		/// <para>Two-letter code representing continent's name.</para>
+		/// <example>NA</example>
+		///</summary>
+		public static string ClientGeoContinentCode = nameof(ClientGeoContinentCode);
+		///<summary>
+		/// <para><c>client.geo.continent_name</c></para>
+		/// <para>Name of the continent.</para>
+		/// <example>North America</example>
+		///</summary>
+		public static string ClientGeoContinentName = nameof(ClientGeoContinentName);
+		///<summary>
+		/// <para><c>client.geo.country_iso_code</c></para>
+		/// <para>Country ISO code.</para>
+		/// <example>CA</example>
+		///</summary>
+		public static string ClientGeoCountryIsoCode = nameof(ClientGeoCountryIsoCode);
+		///<summary>
+		/// <para><c>client.geo.country_name</c></para>
+		/// <para>Country name.</para>
+		/// <example>Canada</example>
+		///</summary>
+		public static string ClientGeoCountryName = nameof(ClientGeoCountryName);
+		///<summary>
+		/// <para><c>client.geo.location</c></para>
+		/// <para>Longitude and latitude.</para>
+		/// <example>{ "lon": -73.614830, "lat": 45.505918 }</example>
+		///</summary>
+		public static string ClientGeoLocation = nameof(ClientGeoLocation);
+		///<summary>
+		/// <para><c>client.geo.name</c></para>
+		/// <para>User-defined description of a location, at the level of granularity they care about.
+		/// Could be the name of their data centers, the floor number, if this describes a local physical entity, city names.
+		/// Not typically used in automated geolocation.</para>
+		/// <example>boston-dc</example>
+		///</summary>
+		public static string ClientGeoName = nameof(ClientGeoName);
+		///<summary>
+		/// <para><c>client.geo.postal_code</c></para>
+		/// <para>Postal code associated with the location.
+		/// Values appropriate for this field may also be known as a postcode or ZIP code and will vary widely from country to country.</para>
+		/// <example>94040</example>
+		///</summary>
+		public static string ClientGeoPostalCode = nameof(ClientGeoPostalCode);
+		///<summary>
+		/// <para><c>client.geo.region_iso_code</c></para>
+		/// <para>Region ISO code.</para>
+		/// <example>CA-QC</example>
+		///</summary>
+		public static string ClientGeoRegionIsoCode = nameof(ClientGeoRegionIsoCode);
+		///<summary>
+		/// <para><c>client.geo.region_name</c></para>
+		/// <para>Region name.</para>
+		/// <example>Quebec</example>
+		///</summary>
+		public static string ClientGeoRegionName = nameof(ClientGeoRegionName);
+		///<summary>
+		/// <para><c>client.geo.timezone</c></para>
+		/// <para>The time zone of the location, such as IANA time zone name.</para>
+		/// <example>America/Argentina/Buenos_Aires</example>
+		///</summary>
+		public static string ClientGeoTimezone = nameof(ClientGeoTimezone);
+		///<summary>
+		/// <para><c>client.user.domain</c></para>
+		/// <para>Name of the directory the user is a member of.
+		/// For example, an LDAP or Active Directory domain name.</para>
+		/// <example></example>
+		///</summary>
+		public static string ClientUserDomain = nameof(ClientUserDomain);
+		///<summary>
+		/// <para><c>client.user.email</c></para>
+		/// <para>User email address.</para>
+		/// <example></example>
+		///</summary>
+		public static string ClientUserEmail = nameof(ClientUserEmail);
+		///<summary>
+		/// <para><c>client.user.full_name</c></para>
+		/// <para>User's full name, if available.</para>
+		/// <example>Albert Einstein</example>
+		///</summary>
+		public static string ClientUserFullName = nameof(ClientUserFullName);
+		///<summary>
+		/// <para><c>client.user.hash</c></para>
+		/// <para>Unique user hash to correlate information for a user in anonymized form.
+		/// Useful if `user.id` or `user.name` contain confidential information and cannot be used.</para>
+		/// <example></example>
+		///</summary>
+		public static string ClientUserHash = nameof(ClientUserHash);
+		///<summary>
+		/// <para><c>client.user.id</c></para>
+		/// <para>Unique identifier of the user.</para>
+		/// <example>S-1-5-21-202424912787-2692429404-2351956786-1000</example>
+		///</summary>
+		public static string ClientUserId = nameof(ClientUserId);
+		///<summary>
+		/// <para><c>client.user.name</c></para>
+		/// <para>Short name or login of the user.</para>
+		/// <example>a.einstein</example>
+		///</summary>
+		public static string ClientUserName = nameof(ClientUserName);
+		///<summary>
+		/// <para><c>client.user.group.domain</c></para>
+		/// <para>Name of the directory the group is a member of.
+		/// For example, an LDAP or Active Directory domain name.</para>
+		/// <example></example>
+		///</summary>
+		public static string ClientUserGroupDomain = nameof(ClientUserGroupDomain);
+		///<summary>
+		/// <para><c>client.user.group.id</c></para>
+		/// <para>Unique identifier for the group on the system/platform.</para>
+		/// <example></example>
+		///</summary>
+		public static string ClientUserGroupId = nameof(ClientUserGroupId);
+		///<summary>
+		/// <para><c>client.user.group.name</c></para>
+		/// <para>Name of the group.</para>
+		/// <example></example>
+		///</summary>
+		public static string ClientUserGroupName = nameof(ClientUserGroupName);
+		///<summary>
+		/// <para><c>client.user.risk.calculated_level</c></para>
+		/// <para>A risk classification level calculated by an internal system as part of entity analytics and entity risk scoring.</para>
+		/// <example>High</example>
+		///</summary>
+		public static string ClientUserRiskCalculatedLevel = nameof(ClientUserRiskCalculatedLevel);
+		///<summary>
+		/// <para><c>client.user.risk.calculated_score</c></para>
+		/// <para>A risk classification score calculated by an internal system as part of entity analytics and entity risk scoring.</para>
+		/// <example>880.73</example>
+		///</summary>
+		public static string ClientUserRiskCalculatedScore = nameof(ClientUserRiskCalculatedScore);
+		///<summary>
+		/// <para><c>client.user.risk.calculated_score_norm</c></para>
+		/// <para>A risk classification score calculated by an internal system as part of entity analytics and entity risk scoring, and normalized to a range of 0 to 100.</para>
+		/// <example>88.73</example>
+		///</summary>
+		public static string ClientUserRiskCalculatedScoreNorm = nameof(ClientUserRiskCalculatedScoreNorm);
+		///<summary>
+		/// <para><c>client.user.risk.static_level</c></para>
+		/// <para>A risk classification level obtained from outside the system, such as from some external Threat Intelligence Platform.</para>
+		/// <example>High</example>
+		///</summary>
+		public static string ClientUserRiskStaticLevel = nameof(ClientUserRiskStaticLevel);
+		///<summary>
+		/// <para><c>client.user.risk.static_score</c></para>
+		/// <para>A risk classification score obtained from outside the system, such as from some external Threat Intelligence Platform.</para>
+		/// <example>830.0</example>
+		///</summary>
+		public static string ClientUserRiskStaticScore = nameof(ClientUserRiskStaticScore);
+		///<summary>
+		/// <para><c>client.user.risk.static_score_norm</c></para>
+		/// <para>A risk classification score obtained from outside the system, such as from some external Threat Intelligence Platform, and normalized to a range of 0 to 100.</para>
+		/// <example>83.0</example>
+		///</summary>
+		public static string ClientUserRiskStaticScoreNorm = nameof(ClientUserRiskStaticScoreNorm);
+		///<summary>
 		/// <para><c>cloud.account.id</c></para>
 		/// <para>The cloud account or organization id used to identify different entities in a multi-tenant environment.
 		/// Examples: AWS account id, Google Cloud ORG Id, or other unique identifier.</para>
@@ -314,7 +488,7 @@ namespace Elastic.CommonSchema
 		///<summary>
 		/// <para><c>code_signature.timestamp</c></para>
 		/// <para>Date and time when the code signature was generated and signed.</para>
-		/// <example>1/1/2021 12:10:30PM</example>
+		/// <example>1/1/2021 12:10:30 PM</example>
 		///</summary>
 		public static string CodeSignatureTimestamp = nameof(CodeSignatureTimestamp);
 		///<summary>
@@ -507,6 +681,180 @@ namespace Elastic.CommonSchema
 		///</summary>
 		public static string DestinationTopLevelDomain = nameof(DestinationTopLevelDomain);
 		///<summary>
+		/// <para><c>destination.as.number</c></para>
+		/// <para>Unique number allocated to the autonomous system. The autonomous system number (ASN) uniquely identifies each network on the Internet.</para>
+		/// <example>15169</example>
+		///</summary>
+		public static string DestinationAsNumber = nameof(DestinationAsNumber);
+		///<summary>
+		/// <para><c>destination.as.organization.name</c></para>
+		/// <para>Organization name.</para>
+		/// <example>Google LLC</example>
+		///</summary>
+		public static string DestinationAsOrganizationName = nameof(DestinationAsOrganizationName);
+		///<summary>
+		/// <para><c>destination.geo.city_name</c></para>
+		/// <para>City name.</para>
+		/// <example>Montreal</example>
+		///</summary>
+		public static string DestinationGeoCityName = nameof(DestinationGeoCityName);
+		///<summary>
+		/// <para><c>destination.geo.continent_code</c></para>
+		/// <para>Two-letter code representing continent's name.</para>
+		/// <example>NA</example>
+		///</summary>
+		public static string DestinationGeoContinentCode = nameof(DestinationGeoContinentCode);
+		///<summary>
+		/// <para><c>destination.geo.continent_name</c></para>
+		/// <para>Name of the continent.</para>
+		/// <example>North America</example>
+		///</summary>
+		public static string DestinationGeoContinentName = nameof(DestinationGeoContinentName);
+		///<summary>
+		/// <para><c>destination.geo.country_iso_code</c></para>
+		/// <para>Country ISO code.</para>
+		/// <example>CA</example>
+		///</summary>
+		public static string DestinationGeoCountryIsoCode = nameof(DestinationGeoCountryIsoCode);
+		///<summary>
+		/// <para><c>destination.geo.country_name</c></para>
+		/// <para>Country name.</para>
+		/// <example>Canada</example>
+		///</summary>
+		public static string DestinationGeoCountryName = nameof(DestinationGeoCountryName);
+		///<summary>
+		/// <para><c>destination.geo.location</c></para>
+		/// <para>Longitude and latitude.</para>
+		/// <example>{ "lon": -73.614830, "lat": 45.505918 }</example>
+		///</summary>
+		public static string DestinationGeoLocation = nameof(DestinationGeoLocation);
+		///<summary>
+		/// <para><c>destination.geo.name</c></para>
+		/// <para>User-defined description of a location, at the level of granularity they care about.
+		/// Could be the name of their data centers, the floor number, if this describes a local physical entity, city names.
+		/// Not typically used in automated geolocation.</para>
+		/// <example>boston-dc</example>
+		///</summary>
+		public static string DestinationGeoName = nameof(DestinationGeoName);
+		///<summary>
+		/// <para><c>destination.geo.postal_code</c></para>
+		/// <para>Postal code associated with the location.
+		/// Values appropriate for this field may also be known as a postcode or ZIP code and will vary widely from country to country.</para>
+		/// <example>94040</example>
+		///</summary>
+		public static string DestinationGeoPostalCode = nameof(DestinationGeoPostalCode);
+		///<summary>
+		/// <para><c>destination.geo.region_iso_code</c></para>
+		/// <para>Region ISO code.</para>
+		/// <example>CA-QC</example>
+		///</summary>
+		public static string DestinationGeoRegionIsoCode = nameof(DestinationGeoRegionIsoCode);
+		///<summary>
+		/// <para><c>destination.geo.region_name</c></para>
+		/// <para>Region name.</para>
+		/// <example>Quebec</example>
+		///</summary>
+		public static string DestinationGeoRegionName = nameof(DestinationGeoRegionName);
+		///<summary>
+		/// <para><c>destination.geo.timezone</c></para>
+		/// <para>The time zone of the location, such as IANA time zone name.</para>
+		/// <example>America/Argentina/Buenos_Aires</example>
+		///</summary>
+		public static string DestinationGeoTimezone = nameof(DestinationGeoTimezone);
+		///<summary>
+		/// <para><c>destination.user.domain</c></para>
+		/// <para>Name of the directory the user is a member of.
+		/// For example, an LDAP or Active Directory domain name.</para>
+		/// <example></example>
+		///</summary>
+		public static string DestinationUserDomain = nameof(DestinationUserDomain);
+		///<summary>
+		/// <para><c>destination.user.email</c></para>
+		/// <para>User email address.</para>
+		/// <example></example>
+		///</summary>
+		public static string DestinationUserEmail = nameof(DestinationUserEmail);
+		///<summary>
+		/// <para><c>destination.user.full_name</c></para>
+		/// <para>User's full name, if available.</para>
+		/// <example>Albert Einstein</example>
+		///</summary>
+		public static string DestinationUserFullName = nameof(DestinationUserFullName);
+		///<summary>
+		/// <para><c>destination.user.hash</c></para>
+		/// <para>Unique user hash to correlate information for a user in anonymized form.
+		/// Useful if `user.id` or `user.name` contain confidential information and cannot be used.</para>
+		/// <example></example>
+		///</summary>
+		public static string DestinationUserHash = nameof(DestinationUserHash);
+		///<summary>
+		/// <para><c>destination.user.id</c></para>
+		/// <para>Unique identifier of the user.</para>
+		/// <example>S-1-5-21-202424912787-2692429404-2351956786-1000</example>
+		///</summary>
+		public static string DestinationUserId = nameof(DestinationUserId);
+		///<summary>
+		/// <para><c>destination.user.name</c></para>
+		/// <para>Short name or login of the user.</para>
+		/// <example>a.einstein</example>
+		///</summary>
+		public static string DestinationUserName = nameof(DestinationUserName);
+		///<summary>
+		/// <para><c>destination.user.group.domain</c></para>
+		/// <para>Name of the directory the group is a member of.
+		/// For example, an LDAP or Active Directory domain name.</para>
+		/// <example></example>
+		///</summary>
+		public static string DestinationUserGroupDomain = nameof(DestinationUserGroupDomain);
+		///<summary>
+		/// <para><c>destination.user.group.id</c></para>
+		/// <para>Unique identifier for the group on the system/platform.</para>
+		/// <example></example>
+		///</summary>
+		public static string DestinationUserGroupId = nameof(DestinationUserGroupId);
+		///<summary>
+		/// <para><c>destination.user.group.name</c></para>
+		/// <para>Name of the group.</para>
+		/// <example></example>
+		///</summary>
+		public static string DestinationUserGroupName = nameof(DestinationUserGroupName);
+		///<summary>
+		/// <para><c>destination.user.risk.calculated_level</c></para>
+		/// <para>A risk classification level calculated by an internal system as part of entity analytics and entity risk scoring.</para>
+		/// <example>High</example>
+		///</summary>
+		public static string DestinationUserRiskCalculatedLevel = nameof(DestinationUserRiskCalculatedLevel);
+		///<summary>
+		/// <para><c>destination.user.risk.calculated_score</c></para>
+		/// <para>A risk classification score calculated by an internal system as part of entity analytics and entity risk scoring.</para>
+		/// <example>880.73</example>
+		///</summary>
+		public static string DestinationUserRiskCalculatedScore = nameof(DestinationUserRiskCalculatedScore);
+		///<summary>
+		/// <para><c>destination.user.risk.calculated_score_norm</c></para>
+		/// <para>A risk classification score calculated by an internal system as part of entity analytics and entity risk scoring, and normalized to a range of 0 to 100.</para>
+		/// <example>88.73</example>
+		///</summary>
+		public static string DestinationUserRiskCalculatedScoreNorm = nameof(DestinationUserRiskCalculatedScoreNorm);
+		///<summary>
+		/// <para><c>destination.user.risk.static_level</c></para>
+		/// <para>A risk classification level obtained from outside the system, such as from some external Threat Intelligence Platform.</para>
+		/// <example>High</example>
+		///</summary>
+		public static string DestinationUserRiskStaticLevel = nameof(DestinationUserRiskStaticLevel);
+		///<summary>
+		/// <para><c>destination.user.risk.static_score</c></para>
+		/// <para>A risk classification score obtained from outside the system, such as from some external Threat Intelligence Platform.</para>
+		/// <example>830.0</example>
+		///</summary>
+		public static string DestinationUserRiskStaticScore = nameof(DestinationUserRiskStaticScore);
+		///<summary>
+		/// <para><c>destination.user.risk.static_score_norm</c></para>
+		/// <para>A risk classification score obtained from outside the system, such as from some external Threat Intelligence Platform, and normalized to a range of 0 to 100.</para>
+		/// <example>83.0</example>
+		///</summary>
+		public static string DestinationUserRiskStaticScoreNorm = nameof(DestinationUserRiskStaticScoreNorm);
+		///<summary>
 		/// <para><c>device.id</c></para>
 		/// <para>The unique identifier of a device. The identifier must not change across application sessions but stay fixed for an instance of a (mobile) device. 
 		/// On iOS, this value must be equal to the vendor identifier (https://developer.apple.com/documentation/uikit/uidevice/1620059-identifierforvendor). On Android, this value must be equal to the Firebase Installation ID or a globally unique UUID which is persisted across sessions in your application.
@@ -545,6 +893,208 @@ namespace Elastic.CommonSchema
 		/// <example>C:\Windows\System32\kernel32.dll</example>
 		///</summary>
 		public static string DllPath = nameof(DllPath);
+		///<summary>
+		/// <para><c>dll.hash.md5</c></para>
+		/// <para>MD5 hash.</para>
+		/// <example></example>
+		///</summary>
+		public static string DllHashMd5 = nameof(DllHashMd5);
+		///<summary>
+		/// <para><c>dll.hash.sha1</c></para>
+		/// <para>SHA1 hash.</para>
+		/// <example></example>
+		///</summary>
+		public static string DllHashSha1 = nameof(DllHashSha1);
+		///<summary>
+		/// <para><c>dll.hash.sha256</c></para>
+		/// <para>SHA256 hash.</para>
+		/// <example></example>
+		///</summary>
+		public static string DllHashSha256 = nameof(DllHashSha256);
+		///<summary>
+		/// <para><c>dll.hash.sha384</c></para>
+		/// <para>SHA384 hash.</para>
+		/// <example></example>
+		///</summary>
+		public static string DllHashSha384 = nameof(DllHashSha384);
+		///<summary>
+		/// <para><c>dll.hash.sha512</c></para>
+		/// <para>SHA512 hash.</para>
+		/// <example></example>
+		///</summary>
+		public static string DllHashSha512 = nameof(DllHashSha512);
+		///<summary>
+		/// <para><c>dll.hash.ssdeep</c></para>
+		/// <para>SSDEEP hash.</para>
+		/// <example></example>
+		///</summary>
+		public static string DllHashSsdeep = nameof(DllHashSsdeep);
+		///<summary>
+		/// <para><c>dll.hash.tlsh</c></para>
+		/// <para>TLSH hash.</para>
+		/// <example></example>
+		///</summary>
+		public static string DllHashTlsh = nameof(DllHashTlsh);
+		///<summary>
+		/// <para><c>dll.pe.architecture</c></para>
+		/// <para>CPU architecture target for the file.</para>
+		/// <example>x64</example>
+		///</summary>
+		public static string DllPeArchitecture = nameof(DllPeArchitecture);
+		///<summary>
+		/// <para><c>dll.pe.company</c></para>
+		/// <para>Internal company name of the file, provided at compile-time.</para>
+		/// <example>Microsoft Corporation</example>
+		///</summary>
+		public static string DllPeCompany = nameof(DllPeCompany);
+		///<summary>
+		/// <para><c>dll.pe.description</c></para>
+		/// <para>Internal description of the file, provided at compile-time.</para>
+		/// <example>Paint</example>
+		///</summary>
+		public static string DllPeDescription = nameof(DllPeDescription);
+		///<summary>
+		/// <para><c>dll.pe.file_version</c></para>
+		/// <para>Internal version of the file, provided at compile-time.</para>
+		/// <example>6.3.9600.17415</example>
+		///</summary>
+		public static string DllPeFileVersion = nameof(DllPeFileVersion);
+		///<summary>
+		/// <para><c>dll.pe.go_import_hash</c></para>
+		/// <para>A hash of the Go language imports in a PE file excluding standard library imports. An import hash can be used to fingerprint binaries even after recompilation or other code-level transformations have occurred, which would change more traditional hash values.
+		/// The algorithm used to calculate the Go symbol hash and a reference implementation are available [here](https://github.com/elastic/toutoumomoma).</para>
+		/// <example>10bddcb4cee42080f76c88d9ff964491</example>
+		///</summary>
+		public static string DllPeGoImportHash = nameof(DllPeGoImportHash);
+		///<summary>
+		/// <para><c>dll.pe.go_imports</c></para>
+		/// <para>List of imported Go language element names and types.</para>
+		/// <example></example>
+		///</summary>
+		public static string DllPeGoImports = nameof(DllPeGoImports);
+		///<summary>
+		/// <para><c>dll.pe.go_imports_names_entropy</c></para>
+		/// <para>Shannon entropy calculation from the list of Go imports.</para>
+		/// <example></example>
+		///</summary>
+		public static string DllPeGoImportsNamesEntropy = nameof(DllPeGoImportsNamesEntropy);
+		///<summary>
+		/// <para><c>dll.pe.go_imports_names_var_entropy</c></para>
+		/// <para>Variance for Shannon entropy calculation from the list of Go imports.</para>
+		/// <example></example>
+		///</summary>
+		public static string DllPeGoImportsNamesVarEntropy = nameof(DllPeGoImportsNamesVarEntropy);
+		///<summary>
+		/// <para><c>dll.pe.go_stripped</c></para>
+		/// <para>Set to true if the file is a Go executable that has had its symbols stripped or obfuscated and false if an unobfuscated Go executable.</para>
+		/// <example></example>
+		///</summary>
+		public static string DllPeGoStripped = nameof(DllPeGoStripped);
+		///<summary>
+		/// <para><c>dll.pe.imphash</c></para>
+		/// <para>A hash of the imports in a PE file. An imphash -- or import hash -- can be used to fingerprint binaries even after recompilation or other code-level transformations have occurred, which would change more traditional hash values.
+		/// Learn more at https://www.fireeye.com/blog/threat-research/2014/01/tracking-malware-import-hashing.html.</para>
+		/// <example>0c6803c4e922103c4dca5963aad36ddf</example>
+		///</summary>
+		public static string DllPeImphash = nameof(DllPeImphash);
+		///<summary>
+		/// <para><c>dll.pe.import_hash</c></para>
+		/// <para>A hash of the imports in a PE file. An import hash can be used to fingerprint binaries even after recompilation or other code-level transformations have occurred, which would change more traditional hash values.
+		/// This is a synonym for imphash.</para>
+		/// <example>d41d8cd98f00b204e9800998ecf8427e</example>
+		///</summary>
+		public static string DllPeImportHash = nameof(DllPeImportHash);
+		///<summary>
+		/// <para><c>dll.pe.imports_names_entropy</c></para>
+		/// <para>Shannon entropy calculation from the list of imported element names and types.</para>
+		/// <example></example>
+		///</summary>
+		public static string DllPeImportsNamesEntropy = nameof(DllPeImportsNamesEntropy);
+		///<summary>
+		/// <para><c>dll.pe.imports_names_var_entropy</c></para>
+		/// <para>Variance for Shannon entropy calculation from the list of imported element names and types.</para>
+		/// <example></example>
+		///</summary>
+		public static string DllPeImportsNamesVarEntropy = nameof(DllPeImportsNamesVarEntropy);
+		///<summary>
+		/// <para><c>dll.pe.original_file_name</c></para>
+		/// <para>Internal name of the file, provided at compile-time.</para>
+		/// <example>MSPAINT.EXE</example>
+		///</summary>
+		public static string DllPeOriginalFileName = nameof(DllPeOriginalFileName);
+		///<summary>
+		/// <para><c>dll.pe.pehash</c></para>
+		/// <para>A hash of the PE header and data from one or more PE sections. An pehash can be used to cluster files by transforming structural information about a file into a hash value.
+		/// Learn more at https://www.usenix.org/legacy/events/leet09/tech/full_papers/wicherski/wicherski_html/index.html.</para>
+		/// <example>73ff189b63cd6be375a7ff25179a38d347651975</example>
+		///</summary>
+		public static string DllPePehash = nameof(DllPePehash);
+		///<summary>
+		/// <para><c>dll.pe.product</c></para>
+		/// <para>Internal product name of the file, provided at compile-time.</para>
+		/// <example>Microsoft® Windows® Operating System</example>
+		///</summary>
+		public static string DllPeProduct = nameof(DllPeProduct);
+		///<summary>
+		/// <para><c>dll.code_signature.digest_algorithm</c></para>
+		/// <para>The hashing algorithm used to sign the process.
+		/// This value can distinguish signatures when a file is signed multiple times by the same signer but with a different digest algorithm.</para>
+		/// <example>sha256</example>
+		///</summary>
+		public static string DllCodeSignatureDigestAlgorithm = nameof(DllCodeSignatureDigestAlgorithm);
+		///<summary>
+		/// <para><c>dll.code_signature.exists</c></para>
+		/// <para>Boolean to capture if a signature is present.</para>
+		/// <example>true</example>
+		///</summary>
+		public static string DllCodeSignatureExists = nameof(DllCodeSignatureExists);
+		///<summary>
+		/// <para><c>dll.code_signature.signing_id</c></para>
+		/// <para>The identifier used to sign the process.
+		/// This is used to identify the application manufactured by a software vendor. The field is relevant to Apple *OS only.</para>
+		/// <example>com.apple.xpc.proxy</example>
+		///</summary>
+		public static string DllCodeSignatureSigningId = nameof(DllCodeSignatureSigningId);
+		///<summary>
+		/// <para><c>dll.code_signature.status</c></para>
+		/// <para>Additional information about the certificate status.
+		/// This is useful for logging cryptographic errors with the certificate validity or trust status. Leave unpopulated if the validity or trust of the certificate was unchecked.</para>
+		/// <example>ERROR_UNTRUSTED_ROOT</example>
+		///</summary>
+		public static string DllCodeSignatureStatus = nameof(DllCodeSignatureStatus);
+		///<summary>
+		/// <para><c>dll.code_signature.subject_name</c></para>
+		/// <para>Subject name of the code signer</para>
+		/// <example>Microsoft Corporation</example>
+		///</summary>
+		public static string DllCodeSignatureSubjectName = nameof(DllCodeSignatureSubjectName);
+		///<summary>
+		/// <para><c>dll.code_signature.team_id</c></para>
+		/// <para>The team identifier used to sign the process.
+		/// This is used to identify the team or vendor of a software product. The field is relevant to Apple *OS only.</para>
+		/// <example>EQHXZ8M8AV</example>
+		///</summary>
+		public static string DllCodeSignatureTeamId = nameof(DllCodeSignatureTeamId);
+		///<summary>
+		/// <para><c>dll.code_signature.timestamp</c></para>
+		/// <para>Date and time when the code signature was generated and signed.</para>
+		/// <example>1/1/2021 12:10:30 PM</example>
+		///</summary>
+		public static string DllCodeSignatureTimestamp = nameof(DllCodeSignatureTimestamp);
+		///<summary>
+		/// <para><c>dll.code_signature.trusted</c></para>
+		/// <para>Stores the trust status of the certificate chain.
+		/// Validating the trust of the certificate chain may be complicated, and this field should only be populated by tools that actively check the status.</para>
+		/// <example>true</example>
+		///</summary>
+		public static string DllCodeSignatureTrusted = nameof(DllCodeSignatureTrusted);
+		///<summary>
+		/// <para><c>dll.code_signature.valid</c></para>
+		/// <para>Boolean to capture if the digital signature is verified against the binary content.
+		/// Leave unpopulated if a certificate was unchecked.</para>
+		/// <example>true</example>
+		///</summary>
+		public static string DllCodeSignatureValid = nameof(DllCodeSignatureValid);
 		///<summary>
 		/// <para><c>dns.id</c></para>
 		/// <para>The DNS packet identifier assigned by the program that generated the query. The identifier is copied to the response.</para>
@@ -758,7 +1308,7 @@ namespace Elastic.CommonSchema
 		///<summary>
 		/// <para><c>email.delivery_timestamp</c></para>
 		/// <para>The date and time when the email message was received by the service or client.</para>
-		/// <example>11/10/2020 10:12:34PM</example>
+		/// <example>11/10/2020 10:12:34 PM</example>
 		///</summary>
 		public static string EmailDeliveryTimestamp = nameof(EmailDeliveryTimestamp);
 		///<summary>
@@ -783,7 +1333,7 @@ namespace Elastic.CommonSchema
 		///<summary>
 		/// <para><c>email.origination_timestamp</c></para>
 		/// <para>The date and time the email message was composed. Many email clients will fill in this value automatically when the message is sent by a user.</para>
-		/// <example>11/10/2020 10:12:34PM</example>
+		/// <example>11/10/2020 10:12:34 PM</example>
 		///</summary>
 		public static string EmailOriginationTimestamp = nameof(EmailOriginationTimestamp);
 		///<summary>
@@ -867,7 +1417,7 @@ namespace Elastic.CommonSchema
 		/// This field is distinct from `@timestamp` in that `@timestamp` typically contain the time extracted from the original event.
 		/// In most situations, these two timestamps will be slightly different. The difference can be used to calculate the delay between your source generating an event, and the time when your agent first processed it. This can be used to monitor your agent's or pipeline's ability to keep up with your event source.
 		/// In case the two timestamps are identical, `@timestamp` should be used.</para>
-		/// <example>5/23/2016 8:05:34AM</example>
+		/// <example>5/23/2016 8:05:34 AM</example>
 		///</summary>
 		public static string EventCreated = nameof(EventCreated);
 		///<summary>
@@ -908,7 +1458,7 @@ namespace Elastic.CommonSchema
 		/// <para>Timestamp when an event arrived in the central data store.
 		/// This is different from `@timestamp`, which is when the event originally occurred.  It's also different from `event.created`, which is meant to capture the first time an agent saw the event.
 		/// In normal conditions, assuming no tampering, the timestamps should chronologically look like this: `@timestamp` &lt; `event.created` &lt; `event.ingested`.</para>
-		/// <example>5/23/2016 8:05:35AM</example>
+		/// <example>5/23/2016 8:05:35 AM</example>
 		///</summary>
 		public static string EventIngested = nameof(EventIngested);
 		///<summary>
@@ -1229,6 +1779,460 @@ namespace Elastic.CommonSchema
 		///</summary>
 		public static string FileUid = nameof(FileUid);
 		///<summary>
+		/// <para><c>file.hash.md5</c></para>
+		/// <para>MD5 hash.</para>
+		/// <example></example>
+		///</summary>
+		public static string FileHashMd5 = nameof(FileHashMd5);
+		///<summary>
+		/// <para><c>file.hash.sha1</c></para>
+		/// <para>SHA1 hash.</para>
+		/// <example></example>
+		///</summary>
+		public static string FileHashSha1 = nameof(FileHashSha1);
+		///<summary>
+		/// <para><c>file.hash.sha256</c></para>
+		/// <para>SHA256 hash.</para>
+		/// <example></example>
+		///</summary>
+		public static string FileHashSha256 = nameof(FileHashSha256);
+		///<summary>
+		/// <para><c>file.hash.sha384</c></para>
+		/// <para>SHA384 hash.</para>
+		/// <example></example>
+		///</summary>
+		public static string FileHashSha384 = nameof(FileHashSha384);
+		///<summary>
+		/// <para><c>file.hash.sha512</c></para>
+		/// <para>SHA512 hash.</para>
+		/// <example></example>
+		///</summary>
+		public static string FileHashSha512 = nameof(FileHashSha512);
+		///<summary>
+		/// <para><c>file.hash.ssdeep</c></para>
+		/// <para>SSDEEP hash.</para>
+		/// <example></example>
+		///</summary>
+		public static string FileHashSsdeep = nameof(FileHashSsdeep);
+		///<summary>
+		/// <para><c>file.hash.tlsh</c></para>
+		/// <para>TLSH hash.</para>
+		/// <example></example>
+		///</summary>
+		public static string FileHashTlsh = nameof(FileHashTlsh);
+		///<summary>
+		/// <para><c>file.pe.architecture</c></para>
+		/// <para>CPU architecture target for the file.</para>
+		/// <example>x64</example>
+		///</summary>
+		public static string FilePeArchitecture = nameof(FilePeArchitecture);
+		///<summary>
+		/// <para><c>file.pe.company</c></para>
+		/// <para>Internal company name of the file, provided at compile-time.</para>
+		/// <example>Microsoft Corporation</example>
+		///</summary>
+		public static string FilePeCompany = nameof(FilePeCompany);
+		///<summary>
+		/// <para><c>file.pe.description</c></para>
+		/// <para>Internal description of the file, provided at compile-time.</para>
+		/// <example>Paint</example>
+		///</summary>
+		public static string FilePeDescription = nameof(FilePeDescription);
+		///<summary>
+		/// <para><c>file.pe.file_version</c></para>
+		/// <para>Internal version of the file, provided at compile-time.</para>
+		/// <example>6.3.9600.17415</example>
+		///</summary>
+		public static string FilePeFileVersion = nameof(FilePeFileVersion);
+		///<summary>
+		/// <para><c>file.pe.go_import_hash</c></para>
+		/// <para>A hash of the Go language imports in a PE file excluding standard library imports. An import hash can be used to fingerprint binaries even after recompilation or other code-level transformations have occurred, which would change more traditional hash values.
+		/// The algorithm used to calculate the Go symbol hash and a reference implementation are available [here](https://github.com/elastic/toutoumomoma).</para>
+		/// <example>10bddcb4cee42080f76c88d9ff964491</example>
+		///</summary>
+		public static string FilePeGoImportHash = nameof(FilePeGoImportHash);
+		///<summary>
+		/// <para><c>file.pe.go_imports</c></para>
+		/// <para>List of imported Go language element names and types.</para>
+		/// <example></example>
+		///</summary>
+		public static string FilePeGoImports = nameof(FilePeGoImports);
+		///<summary>
+		/// <para><c>file.pe.go_imports_names_entropy</c></para>
+		/// <para>Shannon entropy calculation from the list of Go imports.</para>
+		/// <example></example>
+		///</summary>
+		public static string FilePeGoImportsNamesEntropy = nameof(FilePeGoImportsNamesEntropy);
+		///<summary>
+		/// <para><c>file.pe.go_imports_names_var_entropy</c></para>
+		/// <para>Variance for Shannon entropy calculation from the list of Go imports.</para>
+		/// <example></example>
+		///</summary>
+		public static string FilePeGoImportsNamesVarEntropy = nameof(FilePeGoImportsNamesVarEntropy);
+		///<summary>
+		/// <para><c>file.pe.go_stripped</c></para>
+		/// <para>Set to true if the file is a Go executable that has had its symbols stripped or obfuscated and false if an unobfuscated Go executable.</para>
+		/// <example></example>
+		///</summary>
+		public static string FilePeGoStripped = nameof(FilePeGoStripped);
+		///<summary>
+		/// <para><c>file.pe.imphash</c></para>
+		/// <para>A hash of the imports in a PE file. An imphash -- or import hash -- can be used to fingerprint binaries even after recompilation or other code-level transformations have occurred, which would change more traditional hash values.
+		/// Learn more at https://www.fireeye.com/blog/threat-research/2014/01/tracking-malware-import-hashing.html.</para>
+		/// <example>0c6803c4e922103c4dca5963aad36ddf</example>
+		///</summary>
+		public static string FilePeImphash = nameof(FilePeImphash);
+		///<summary>
+		/// <para><c>file.pe.import_hash</c></para>
+		/// <para>A hash of the imports in a PE file. An import hash can be used to fingerprint binaries even after recompilation or other code-level transformations have occurred, which would change more traditional hash values.
+		/// This is a synonym for imphash.</para>
+		/// <example>d41d8cd98f00b204e9800998ecf8427e</example>
+		///</summary>
+		public static string FilePeImportHash = nameof(FilePeImportHash);
+		///<summary>
+		/// <para><c>file.pe.imports_names_entropy</c></para>
+		/// <para>Shannon entropy calculation from the list of imported element names and types.</para>
+		/// <example></example>
+		///</summary>
+		public static string FilePeImportsNamesEntropy = nameof(FilePeImportsNamesEntropy);
+		///<summary>
+		/// <para><c>file.pe.imports_names_var_entropy</c></para>
+		/// <para>Variance for Shannon entropy calculation from the list of imported element names and types.</para>
+		/// <example></example>
+		///</summary>
+		public static string FilePeImportsNamesVarEntropy = nameof(FilePeImportsNamesVarEntropy);
+		///<summary>
+		/// <para><c>file.pe.original_file_name</c></para>
+		/// <para>Internal name of the file, provided at compile-time.</para>
+		/// <example>MSPAINT.EXE</example>
+		///</summary>
+		public static string FilePeOriginalFileName = nameof(FilePeOriginalFileName);
+		///<summary>
+		/// <para><c>file.pe.pehash</c></para>
+		/// <para>A hash of the PE header and data from one or more PE sections. An pehash can be used to cluster files by transforming structural information about a file into a hash value.
+		/// Learn more at https://www.usenix.org/legacy/events/leet09/tech/full_papers/wicherski/wicherski_html/index.html.</para>
+		/// <example>73ff189b63cd6be375a7ff25179a38d347651975</example>
+		///</summary>
+		public static string FilePePehash = nameof(FilePePehash);
+		///<summary>
+		/// <para><c>file.pe.product</c></para>
+		/// <para>Internal product name of the file, provided at compile-time.</para>
+		/// <example>Microsoft® Windows® Operating System</example>
+		///</summary>
+		public static string FilePeProduct = nameof(FilePeProduct);
+		///<summary>
+		/// <para><c>file.x509.issuer.distinguished_name</c></para>
+		/// <para>Distinguished name (DN) of issuing certificate authority.</para>
+		/// <example>C=US, O=Example Inc, OU=www.example.com, CN=Example SHA2 High Assurance Server CA</example>
+		///</summary>
+		public static string FileX509IssuerDistinguishedName = nameof(FileX509IssuerDistinguishedName);
+		///<summary>
+		/// <para><c>file.x509.not_after</c></para>
+		/// <para>Time at which the certificate is no longer considered valid.</para>
+		/// <example>7/16/2020 3:15:39 AM</example>
+		///</summary>
+		public static string FileX509NotAfter = nameof(FileX509NotAfter);
+		///<summary>
+		/// <para><c>file.x509.not_before</c></para>
+		/// <para>Time at which the certificate is first considered valid.</para>
+		/// <example>8/16/2019 1:40:25 AM</example>
+		///</summary>
+		public static string FileX509NotBefore = nameof(FileX509NotBefore);
+		///<summary>
+		/// <para><c>file.x509.public_key_algorithm</c></para>
+		/// <para>Algorithm used to generate the public key.</para>
+		/// <example>RSA</example>
+		///</summary>
+		public static string FileX509PublicKeyAlgorithm = nameof(FileX509PublicKeyAlgorithm);
+		///<summary>
+		/// <para><c>file.x509.public_key_curve</c></para>
+		/// <para>The curve used by the elliptic curve public key algorithm. This is algorithm specific.</para>
+		/// <example>nistp521</example>
+		///</summary>
+		public static string FileX509PublicKeyCurve = nameof(FileX509PublicKeyCurve);
+		///<summary>
+		/// <para><c>file.x509.public_key_exponent</c></para>
+		/// <para>Exponent used to derive the public key. This is algorithm specific.
+		/// <para><br/>Stored but not available for search in Elasticsearch by default</para></para>
+		/// <example>65537</example>
+		///</summary>
+		public static string FileX509PublicKeyExponent = nameof(FileX509PublicKeyExponent);
+		///<summary>
+		/// <para><c>file.x509.public_key_size</c></para>
+		/// <para>The size of the public key space in bits.</para>
+		/// <example>2048</example>
+		///</summary>
+		public static string FileX509PublicKeySize = nameof(FileX509PublicKeySize);
+		///<summary>
+		/// <para><c>file.x509.serial_number</c></para>
+		/// <para>Unique serial number issued by the certificate authority. For consistency, if this value is alphanumeric, it should be formatted without colons and uppercase characters.</para>
+		/// <example>55FBB9C7DEBF09809D12CCAA</example>
+		///</summary>
+		public static string FileX509SerialNumber = nameof(FileX509SerialNumber);
+		///<summary>
+		/// <para><c>file.x509.signature_algorithm</c></para>
+		/// <para>Identifier for certificate signature algorithm. We recommend using names found in Go Lang Crypto library. See https://github.com/golang/go/blob/go1.14/src/crypto/x509/x509.go#L337-L353.</para>
+		/// <example>SHA256-RSA</example>
+		///</summary>
+		public static string FileX509SignatureAlgorithm = nameof(FileX509SignatureAlgorithm);
+		///<summary>
+		/// <para><c>file.x509.subject.distinguished_name</c></para>
+		/// <para>Distinguished name (DN) of the certificate subject entity.</para>
+		/// <example>C=US, ST=California, L=San Francisco, O=Example, Inc., CN=shared.global.example.net</example>
+		///</summary>
+		public static string FileX509SubjectDistinguishedName = nameof(FileX509SubjectDistinguishedName);
+		///<summary>
+		/// <para><c>file.x509.version_number</c></para>
+		/// <para>Version of x509 format.</para>
+		/// <example>3</example>
+		///</summary>
+		public static string FileX509VersionNumber = nameof(FileX509VersionNumber);
+		///<summary>
+		/// <para><c>file.code_signature.digest_algorithm</c></para>
+		/// <para>The hashing algorithm used to sign the process.
+		/// This value can distinguish signatures when a file is signed multiple times by the same signer but with a different digest algorithm.</para>
+		/// <example>sha256</example>
+		///</summary>
+		public static string FileCodeSignatureDigestAlgorithm = nameof(FileCodeSignatureDigestAlgorithm);
+		///<summary>
+		/// <para><c>file.code_signature.exists</c></para>
+		/// <para>Boolean to capture if a signature is present.</para>
+		/// <example>true</example>
+		///</summary>
+		public static string FileCodeSignatureExists = nameof(FileCodeSignatureExists);
+		///<summary>
+		/// <para><c>file.code_signature.signing_id</c></para>
+		/// <para>The identifier used to sign the process.
+		/// This is used to identify the application manufactured by a software vendor. The field is relevant to Apple *OS only.</para>
+		/// <example>com.apple.xpc.proxy</example>
+		///</summary>
+		public static string FileCodeSignatureSigningId = nameof(FileCodeSignatureSigningId);
+		///<summary>
+		/// <para><c>file.code_signature.status</c></para>
+		/// <para>Additional information about the certificate status.
+		/// This is useful for logging cryptographic errors with the certificate validity or trust status. Leave unpopulated if the validity or trust of the certificate was unchecked.</para>
+		/// <example>ERROR_UNTRUSTED_ROOT</example>
+		///</summary>
+		public static string FileCodeSignatureStatus = nameof(FileCodeSignatureStatus);
+		///<summary>
+		/// <para><c>file.code_signature.subject_name</c></para>
+		/// <para>Subject name of the code signer</para>
+		/// <example>Microsoft Corporation</example>
+		///</summary>
+		public static string FileCodeSignatureSubjectName = nameof(FileCodeSignatureSubjectName);
+		///<summary>
+		/// <para><c>file.code_signature.team_id</c></para>
+		/// <para>The team identifier used to sign the process.
+		/// This is used to identify the team or vendor of a software product. The field is relevant to Apple *OS only.</para>
+		/// <example>EQHXZ8M8AV</example>
+		///</summary>
+		public static string FileCodeSignatureTeamId = nameof(FileCodeSignatureTeamId);
+		///<summary>
+		/// <para><c>file.code_signature.timestamp</c></para>
+		/// <para>Date and time when the code signature was generated and signed.</para>
+		/// <example>1/1/2021 12:10:30 PM</example>
+		///</summary>
+		public static string FileCodeSignatureTimestamp = nameof(FileCodeSignatureTimestamp);
+		///<summary>
+		/// <para><c>file.code_signature.trusted</c></para>
+		/// <para>Stores the trust status of the certificate chain.
+		/// Validating the trust of the certificate chain may be complicated, and this field should only be populated by tools that actively check the status.</para>
+		/// <example>true</example>
+		///</summary>
+		public static string FileCodeSignatureTrusted = nameof(FileCodeSignatureTrusted);
+		///<summary>
+		/// <para><c>file.code_signature.valid</c></para>
+		/// <para>Boolean to capture if the digital signature is verified against the binary content.
+		/// Leave unpopulated if a certificate was unchecked.</para>
+		/// <example>true</example>
+		///</summary>
+		public static string FileCodeSignatureValid = nameof(FileCodeSignatureValid);
+		///<summary>
+		/// <para><c>file.elf.architecture</c></para>
+		/// <para>Machine architecture of the ELF file.</para>
+		/// <example>x86-64</example>
+		///</summary>
+		public static string FileElfArchitecture = nameof(FileElfArchitecture);
+		///<summary>
+		/// <para><c>file.elf.byte_order</c></para>
+		/// <para>Byte sequence of ELF file.</para>
+		/// <example>Little Endian</example>
+		///</summary>
+		public static string FileElfByteOrder = nameof(FileElfByteOrder);
+		///<summary>
+		/// <para><c>file.elf.cpu_type</c></para>
+		/// <para>CPU type of the ELF file.</para>
+		/// <example>Intel</example>
+		///</summary>
+		public static string FileElfCpuType = nameof(FileElfCpuType);
+		///<summary>
+		/// <para><c>file.elf.creation_date</c></para>
+		/// <para>Extracted when possible from the file's metadata. Indicates when it was built or compiled. It can also be faked by malware creators.</para>
+		/// <example></example>
+		///</summary>
+		public static string FileElfCreationDate = nameof(FileElfCreationDate);
+		///<summary>
+		/// <para><c>file.elf.go_import_hash</c></para>
+		/// <para>A hash of the Go language imports in an ELF file excluding standard library imports. An import hash can be used to fingerprint binaries even after recompilation or other code-level transformations have occurred, which would change more traditional hash values.
+		/// The algorithm used to calculate the Go symbol hash and a reference implementation are available [here](https://github.com/elastic/toutoumomoma).</para>
+		/// <example>10bddcb4cee42080f76c88d9ff964491</example>
+		///</summary>
+		public static string FileElfGoImportHash = nameof(FileElfGoImportHash);
+		///<summary>
+		/// <para><c>file.elf.go_imports</c></para>
+		/// <para>List of imported Go language element names and types.</para>
+		/// <example></example>
+		///</summary>
+		public static string FileElfGoImports = nameof(FileElfGoImports);
+		///<summary>
+		/// <para><c>file.elf.go_imports_names_entropy</c></para>
+		/// <para>Shannon entropy calculation from the list of Go imports.</para>
+		/// <example></example>
+		///</summary>
+		public static string FileElfGoImportsNamesEntropy = nameof(FileElfGoImportsNamesEntropy);
+		///<summary>
+		/// <para><c>file.elf.go_imports_names_var_entropy</c></para>
+		/// <para>Variance for Shannon entropy calculation from the list of Go imports.</para>
+		/// <example></example>
+		///</summary>
+		public static string FileElfGoImportsNamesVarEntropy = nameof(FileElfGoImportsNamesVarEntropy);
+		///<summary>
+		/// <para><c>file.elf.go_stripped</c></para>
+		/// <para>Set to true if the file is a Go executable that has had its symbols stripped or obfuscated and false if an unobfuscated Go executable.</para>
+		/// <example></example>
+		///</summary>
+		public static string FileElfGoStripped = nameof(FileElfGoStripped);
+		///<summary>
+		/// <para><c>file.elf.header.abi_version</c></para>
+		/// <para>Version of the ELF Application Binary Interface (ABI).</para>
+		/// <example></example>
+		///</summary>
+		public static string FileElfHeaderAbiVersion = nameof(FileElfHeaderAbiVersion);
+		///<summary>
+		/// <para><c>file.elf.header.class</c></para>
+		/// <para>Header class of the ELF file.</para>
+		/// <example></example>
+		///</summary>
+		public static string FileElfHeaderClass = nameof(FileElfHeaderClass);
+		///<summary>
+		/// <para><c>file.elf.header.data</c></para>
+		/// <para>Data table of the ELF header.</para>
+		/// <example></example>
+		///</summary>
+		public static string FileElfHeaderData = nameof(FileElfHeaderData);
+		///<summary>
+		/// <para><c>file.elf.header.entrypoint</c></para>
+		/// <para>Header entrypoint of the ELF file.</para>
+		/// <example></example>
+		///</summary>
+		public static string FileElfHeaderEntrypoint = nameof(FileElfHeaderEntrypoint);
+		///<summary>
+		/// <para><c>file.elf.header.object_version</c></para>
+		/// <para>"0x1" for original ELF files.</para>
+		/// <example></example>
+		///</summary>
+		public static string FileElfHeaderObjectVersion = nameof(FileElfHeaderObjectVersion);
+		///<summary>
+		/// <para><c>file.elf.header.os_abi</c></para>
+		/// <para>Application Binary Interface (ABI) of the Linux OS.</para>
+		/// <example></example>
+		///</summary>
+		public static string FileElfHeaderOsAbi = nameof(FileElfHeaderOsAbi);
+		///<summary>
+		/// <para><c>file.elf.header.type</c></para>
+		/// <para>Header type of the ELF file.</para>
+		/// <example></example>
+		///</summary>
+		public static string FileElfHeaderType = nameof(FileElfHeaderType);
+		///<summary>
+		/// <para><c>file.elf.header.version</c></para>
+		/// <para>Version of the ELF header.</para>
+		/// <example></example>
+		///</summary>
+		public static string FileElfHeaderVersion = nameof(FileElfHeaderVersion);
+		///<summary>
+		/// <para><c>file.elf.import_hash</c></para>
+		/// <para>A hash of the imports in an ELF file. An import hash can be used to fingerprint binaries even after recompilation or other code-level transformations have occurred, which would change more traditional hash values.
+		/// This is an ELF implementation of the Windows PE imphash.</para>
+		/// <example>d41d8cd98f00b204e9800998ecf8427e</example>
+		///</summary>
+		public static string FileElfImportHash = nameof(FileElfImportHash);
+		///<summary>
+		/// <para><c>file.elf.imports_names_entropy</c></para>
+		/// <para>Shannon entropy calculation from the list of imported element names and types.</para>
+		/// <example></example>
+		///</summary>
+		public static string FileElfImportsNamesEntropy = nameof(FileElfImportsNamesEntropy);
+		///<summary>
+		/// <para><c>file.elf.imports_names_var_entropy</c></para>
+		/// <para>Variance for Shannon entropy calculation from the list of imported element names and types.</para>
+		/// <example></example>
+		///</summary>
+		public static string FileElfImportsNamesVarEntropy = nameof(FileElfImportsNamesVarEntropy);
+		///<summary>
+		/// <para><c>file.elf.telfhash</c></para>
+		/// <para>telfhash symbol hash for ELF file.</para>
+		/// <example></example>
+		///</summary>
+		public static string FileElfTelfhash = nameof(FileElfTelfhash);
+		///<summary>
+		/// <para><c>file.macho.go_import_hash</c></para>
+		/// <para>A hash of the Go language imports in a Mach-O file excluding standard library imports. An import hash can be used to fingerprint binaries even after recompilation or other code-level transformations have occurred, which would change more traditional hash values.
+		/// The algorithm used to calculate the Go symbol hash and a reference implementation are available [here](https://github.com/elastic/toutoumomoma).</para>
+		/// <example>10bddcb4cee42080f76c88d9ff964491</example>
+		///</summary>
+		public static string FileMachoGoImportHash = nameof(FileMachoGoImportHash);
+		///<summary>
+		/// <para><c>file.macho.go_imports</c></para>
+		/// <para>List of imported Go language element names and types.</para>
+		/// <example></example>
+		///</summary>
+		public static string FileMachoGoImports = nameof(FileMachoGoImports);
+		///<summary>
+		/// <para><c>file.macho.go_imports_names_entropy</c></para>
+		/// <para>Shannon entropy calculation from the list of Go imports.</para>
+		/// <example></example>
+		///</summary>
+		public static string FileMachoGoImportsNamesEntropy = nameof(FileMachoGoImportsNamesEntropy);
+		///<summary>
+		/// <para><c>file.macho.go_imports_names_var_entropy</c></para>
+		/// <para>Variance for Shannon entropy calculation from the list of Go imports.</para>
+		/// <example></example>
+		///</summary>
+		public static string FileMachoGoImportsNamesVarEntropy = nameof(FileMachoGoImportsNamesVarEntropy);
+		///<summary>
+		/// <para><c>file.macho.go_stripped</c></para>
+		/// <para>Set to true if the file is a Go executable that has had its symbols stripped or obfuscated and false if an unobfuscated Go executable.</para>
+		/// <example></example>
+		///</summary>
+		public static string FileMachoGoStripped = nameof(FileMachoGoStripped);
+		///<summary>
+		/// <para><c>file.macho.import_hash</c></para>
+		/// <para>A hash of the imports in a Mach-O file. An import hash can be used to fingerprint binaries even after recompilation or other code-level transformations have occurred, which would change more traditional hash values.
+		/// This is a synonym for symhash.</para>
+		/// <example>d41d8cd98f00b204e9800998ecf8427e</example>
+		///</summary>
+		public static string FileMachoImportHash = nameof(FileMachoImportHash);
+		///<summary>
+		/// <para><c>file.macho.imports_names_entropy</c></para>
+		/// <para>Shannon entropy calculation from the list of imported element names and types.</para>
+		/// <example></example>
+		///</summary>
+		public static string FileMachoImportsNamesEntropy = nameof(FileMachoImportsNamesEntropy);
+		///<summary>
+		/// <para><c>file.macho.imports_names_var_entropy</c></para>
+		/// <para>Variance for Shannon entropy calculation from the list of imported element names and types.</para>
+		/// <example></example>
+		///</summary>
+		public static string FileMachoImportsNamesVarEntropy = nameof(FileMachoImportsNamesVarEntropy);
+		///<summary>
+		/// <para><c>file.macho.symhash</c></para>
+		/// <para>A hash of the imports in a Mach-O file. An import hash can be used to fingerprint binaries even after recompilation or other code-level transformations have occurred, which would change more traditional hash values.
+		/// This is a Mach-O implementation of the Windows PE imphash</para>
+		/// <example>d3ccf195b62a9279c3c19af1080497ec</example>
+		///</summary>
+		public static string FileMachoSymhash = nameof(FileMachoSymhash);
+		///<summary>
 		/// <para><c>geo.city_name</c></para>
 		/// <para>City name.</para>
 		/// <example>Montreal</example>
@@ -1258,6 +2262,12 @@ namespace Elastic.CommonSchema
 		/// <example>Canada</example>
 		///</summary>
 		public static string GeoCountryName = nameof(GeoCountryName);
+		///<summary>
+		/// <para><c>geo.location</c></para>
+		/// <para>Longitude and latitude.</para>
+		/// <example>{ "lon": -73.614830, "lat": 45.505918 }</example>
+		///</summary>
+		public static string GeoLocation = nameof(GeoLocation);
 		///<summary>
 		/// <para><c>geo.name</c></para>
 		/// <para>User-defined description of a location, at the level of granularity they care about.
@@ -1458,6 +2468,163 @@ namespace Elastic.CommonSchema
 		/// <example>1325</example>
 		///</summary>
 		public static string HostUptime = nameof(HostUptime);
+		///<summary>
+		/// <para><c>host.geo.city_name</c></para>
+		/// <para>City name.</para>
+		/// <example>Montreal</example>
+		///</summary>
+		public static string HostGeoCityName = nameof(HostGeoCityName);
+		///<summary>
+		/// <para><c>host.geo.continent_code</c></para>
+		/// <para>Two-letter code representing continent's name.</para>
+		/// <example>NA</example>
+		///</summary>
+		public static string HostGeoContinentCode = nameof(HostGeoContinentCode);
+		///<summary>
+		/// <para><c>host.geo.continent_name</c></para>
+		/// <para>Name of the continent.</para>
+		/// <example>North America</example>
+		///</summary>
+		public static string HostGeoContinentName = nameof(HostGeoContinentName);
+		///<summary>
+		/// <para><c>host.geo.country_iso_code</c></para>
+		/// <para>Country ISO code.</para>
+		/// <example>CA</example>
+		///</summary>
+		public static string HostGeoCountryIsoCode = nameof(HostGeoCountryIsoCode);
+		///<summary>
+		/// <para><c>host.geo.country_name</c></para>
+		/// <para>Country name.</para>
+		/// <example>Canada</example>
+		///</summary>
+		public static string HostGeoCountryName = nameof(HostGeoCountryName);
+		///<summary>
+		/// <para><c>host.geo.location</c></para>
+		/// <para>Longitude and latitude.</para>
+		/// <example>{ "lon": -73.614830, "lat": 45.505918 }</example>
+		///</summary>
+		public static string HostGeoLocation = nameof(HostGeoLocation);
+		///<summary>
+		/// <para><c>host.geo.name</c></para>
+		/// <para>User-defined description of a location, at the level of granularity they care about.
+		/// Could be the name of their data centers, the floor number, if this describes a local physical entity, city names.
+		/// Not typically used in automated geolocation.</para>
+		/// <example>boston-dc</example>
+		///</summary>
+		public static string HostGeoName = nameof(HostGeoName);
+		///<summary>
+		/// <para><c>host.geo.postal_code</c></para>
+		/// <para>Postal code associated with the location.
+		/// Values appropriate for this field may also be known as a postcode or ZIP code and will vary widely from country to country.</para>
+		/// <example>94040</example>
+		///</summary>
+		public static string HostGeoPostalCode = nameof(HostGeoPostalCode);
+		///<summary>
+		/// <para><c>host.geo.region_iso_code</c></para>
+		/// <para>Region ISO code.</para>
+		/// <example>CA-QC</example>
+		///</summary>
+		public static string HostGeoRegionIsoCode = nameof(HostGeoRegionIsoCode);
+		///<summary>
+		/// <para><c>host.geo.region_name</c></para>
+		/// <para>Region name.</para>
+		/// <example>Quebec</example>
+		///</summary>
+		public static string HostGeoRegionName = nameof(HostGeoRegionName);
+		///<summary>
+		/// <para><c>host.geo.timezone</c></para>
+		/// <para>The time zone of the location, such as IANA time zone name.</para>
+		/// <example>America/Argentina/Buenos_Aires</example>
+		///</summary>
+		public static string HostGeoTimezone = nameof(HostGeoTimezone);
+		///<summary>
+		/// <para><c>host.os.family</c></para>
+		/// <para>OS family (such as redhat, debian, freebsd, windows).</para>
+		/// <example>debian</example>
+		///</summary>
+		public static string HostOsFamily = nameof(HostOsFamily);
+		///<summary>
+		/// <para><c>host.os.full</c></para>
+		/// <para>Operating system name, including the version or code name.</para>
+		/// <example>Mac OS Mojave</example>
+		///</summary>
+		public static string HostOsFull = nameof(HostOsFull);
+		///<summary>
+		/// <para><c>host.os.kernel</c></para>
+		/// <para>Operating system kernel version as a raw string.</para>
+		/// <example>4.4.0-112-generic</example>
+		///</summary>
+		public static string HostOsKernel = nameof(HostOsKernel);
+		///<summary>
+		/// <para><c>host.os.name</c></para>
+		/// <para>Operating system name, without the version.</para>
+		/// <example>Mac OS X</example>
+		///</summary>
+		public static string HostOsName = nameof(HostOsName);
+		///<summary>
+		/// <para><c>host.os.platform</c></para>
+		/// <para>Operating system platform (such centos, ubuntu, windows).</para>
+		/// <example>darwin</example>
+		///</summary>
+		public static string HostOsPlatform = nameof(HostOsPlatform);
+		///<summary>
+		/// <para><c>host.os.type</c></para>
+		/// <para>Use the `os.type` field to categorize the operating system into one of the broad commercial families.
+		/// If the OS you're dealing with is not listed as an expected value, the field should not be populated. Please let us know by opening an issue with ECS, to propose its addition.
+		/// <para><br/>Expected Values:</para>
+		/// <list type="bullet">
+		/// <item>linux</item>
+		/// <item>macos</item>
+		/// <item>unix</item>
+		/// <item>windows</item>
+		/// <item>ios</item>
+		/// <item>android</item>
+		/// </list></para>
+		/// <example>macos</example>
+		///</summary>
+		public static string HostOsType = nameof(HostOsType);
+		///<summary>
+		/// <para><c>host.os.version</c></para>
+		/// <para>Operating system version as a raw string.</para>
+		/// <example>10.14.1</example>
+		///</summary>
+		public static string HostOsVersion = nameof(HostOsVersion);
+		///<summary>
+		/// <para><c>host.risk.calculated_level</c></para>
+		/// <para>A risk classification level calculated by an internal system as part of entity analytics and entity risk scoring.</para>
+		/// <example>High</example>
+		///</summary>
+		public static string HostRiskCalculatedLevel = nameof(HostRiskCalculatedLevel);
+		///<summary>
+		/// <para><c>host.risk.calculated_score</c></para>
+		/// <para>A risk classification score calculated by an internal system as part of entity analytics and entity risk scoring.</para>
+		/// <example>880.73</example>
+		///</summary>
+		public static string HostRiskCalculatedScore = nameof(HostRiskCalculatedScore);
+		///<summary>
+		/// <para><c>host.risk.calculated_score_norm</c></para>
+		/// <para>A risk classification score calculated by an internal system as part of entity analytics and entity risk scoring, and normalized to a range of 0 to 100.</para>
+		/// <example>88.73</example>
+		///</summary>
+		public static string HostRiskCalculatedScoreNorm = nameof(HostRiskCalculatedScoreNorm);
+		///<summary>
+		/// <para><c>host.risk.static_level</c></para>
+		/// <para>A risk classification level obtained from outside the system, such as from some external Threat Intelligence Platform.</para>
+		/// <example>High</example>
+		///</summary>
+		public static string HostRiskStaticLevel = nameof(HostRiskStaticLevel);
+		///<summary>
+		/// <para><c>host.risk.static_score</c></para>
+		/// <para>A risk classification score obtained from outside the system, such as from some external Threat Intelligence Platform.</para>
+		/// <example>830.0</example>
+		///</summary>
+		public static string HostRiskStaticScore = nameof(HostRiskStaticScore);
+		///<summary>
+		/// <para><c>host.risk.static_score_norm</c></para>
+		/// <para>A risk classification score obtained from outside the system, such as from some external Threat Intelligence Platform, and normalized to a range of 0 to 100.</para>
+		/// <example>83.0</example>
+		///</summary>
+		public static string HostRiskStaticScoreNorm = nameof(HostRiskStaticScoreNorm);
 		///<summary>
 		/// <para><c>http.request.body.bytes</c></para>
 		/// <para>Size in bytes of the request body.</para>
@@ -1743,6 +2910,18 @@ namespace Elastic.CommonSchema
 		///</summary>
 		public static string NetworkType = nameof(NetworkType);
 		///<summary>
+		/// <para><c>network.vlan.id</c></para>
+		/// <para>VLAN ID as reported by the observer.</para>
+		/// <example>10</example>
+		///</summary>
+		public static string NetworkVlanId = nameof(NetworkVlanId);
+		///<summary>
+		/// <para><c>network.vlan.name</c></para>
+		/// <para>Optional VLAN name as reported by the observer.</para>
+		/// <example>outside</example>
+		///</summary>
+		public static string NetworkVlanName = nameof(NetworkVlanName);
+		///<summary>
 		/// <para><c>observer.hostname</c></para>
 		/// <para>Hostname of the observer.</para>
 		/// <example></example>
@@ -1787,6 +2966,127 @@ namespace Elastic.CommonSchema
 		/// <example></example>
 		///</summary>
 		public static string ObserverVersion = nameof(ObserverVersion);
+		///<summary>
+		/// <para><c>observer.geo.city_name</c></para>
+		/// <para>City name.</para>
+		/// <example>Montreal</example>
+		///</summary>
+		public static string ObserverGeoCityName = nameof(ObserverGeoCityName);
+		///<summary>
+		/// <para><c>observer.geo.continent_code</c></para>
+		/// <para>Two-letter code representing continent's name.</para>
+		/// <example>NA</example>
+		///</summary>
+		public static string ObserverGeoContinentCode = nameof(ObserverGeoContinentCode);
+		///<summary>
+		/// <para><c>observer.geo.continent_name</c></para>
+		/// <para>Name of the continent.</para>
+		/// <example>North America</example>
+		///</summary>
+		public static string ObserverGeoContinentName = nameof(ObserverGeoContinentName);
+		///<summary>
+		/// <para><c>observer.geo.country_iso_code</c></para>
+		/// <para>Country ISO code.</para>
+		/// <example>CA</example>
+		///</summary>
+		public static string ObserverGeoCountryIsoCode = nameof(ObserverGeoCountryIsoCode);
+		///<summary>
+		/// <para><c>observer.geo.country_name</c></para>
+		/// <para>Country name.</para>
+		/// <example>Canada</example>
+		///</summary>
+		public static string ObserverGeoCountryName = nameof(ObserverGeoCountryName);
+		///<summary>
+		/// <para><c>observer.geo.location</c></para>
+		/// <para>Longitude and latitude.</para>
+		/// <example>{ "lon": -73.614830, "lat": 45.505918 }</example>
+		///</summary>
+		public static string ObserverGeoLocation = nameof(ObserverGeoLocation);
+		///<summary>
+		/// <para><c>observer.geo.name</c></para>
+		/// <para>User-defined description of a location, at the level of granularity they care about.
+		/// Could be the name of their data centers, the floor number, if this describes a local physical entity, city names.
+		/// Not typically used in automated geolocation.</para>
+		/// <example>boston-dc</example>
+		///</summary>
+		public static string ObserverGeoName = nameof(ObserverGeoName);
+		///<summary>
+		/// <para><c>observer.geo.postal_code</c></para>
+		/// <para>Postal code associated with the location.
+		/// Values appropriate for this field may also be known as a postcode or ZIP code and will vary widely from country to country.</para>
+		/// <example>94040</example>
+		///</summary>
+		public static string ObserverGeoPostalCode = nameof(ObserverGeoPostalCode);
+		///<summary>
+		/// <para><c>observer.geo.region_iso_code</c></para>
+		/// <para>Region ISO code.</para>
+		/// <example>CA-QC</example>
+		///</summary>
+		public static string ObserverGeoRegionIsoCode = nameof(ObserverGeoRegionIsoCode);
+		///<summary>
+		/// <para><c>observer.geo.region_name</c></para>
+		/// <para>Region name.</para>
+		/// <example>Quebec</example>
+		///</summary>
+		public static string ObserverGeoRegionName = nameof(ObserverGeoRegionName);
+		///<summary>
+		/// <para><c>observer.geo.timezone</c></para>
+		/// <para>The time zone of the location, such as IANA time zone name.</para>
+		/// <example>America/Argentina/Buenos_Aires</example>
+		///</summary>
+		public static string ObserverGeoTimezone = nameof(ObserverGeoTimezone);
+		///<summary>
+		/// <para><c>observer.os.family</c></para>
+		/// <para>OS family (such as redhat, debian, freebsd, windows).</para>
+		/// <example>debian</example>
+		///</summary>
+		public static string ObserverOsFamily = nameof(ObserverOsFamily);
+		///<summary>
+		/// <para><c>observer.os.full</c></para>
+		/// <para>Operating system name, including the version or code name.</para>
+		/// <example>Mac OS Mojave</example>
+		///</summary>
+		public static string ObserverOsFull = nameof(ObserverOsFull);
+		///<summary>
+		/// <para><c>observer.os.kernel</c></para>
+		/// <para>Operating system kernel version as a raw string.</para>
+		/// <example>4.4.0-112-generic</example>
+		///</summary>
+		public static string ObserverOsKernel = nameof(ObserverOsKernel);
+		///<summary>
+		/// <para><c>observer.os.name</c></para>
+		/// <para>Operating system name, without the version.</para>
+		/// <example>Mac OS X</example>
+		///</summary>
+		public static string ObserverOsName = nameof(ObserverOsName);
+		///<summary>
+		/// <para><c>observer.os.platform</c></para>
+		/// <para>Operating system platform (such centos, ubuntu, windows).</para>
+		/// <example>darwin</example>
+		///</summary>
+		public static string ObserverOsPlatform = nameof(ObserverOsPlatform);
+		///<summary>
+		/// <para><c>observer.os.type</c></para>
+		/// <para>Use the `os.type` field to categorize the operating system into one of the broad commercial families.
+		/// If the OS you're dealing with is not listed as an expected value, the field should not be populated. Please let us know by opening an issue with ECS, to propose its addition.
+		/// <para><br/>Expected Values:</para>
+		/// <list type="bullet">
+		/// <item>linux</item>
+		/// <item>macos</item>
+		/// <item>unix</item>
+		/// <item>windows</item>
+		/// <item>ios</item>
+		/// <item>android</item>
+		/// </list></para>
+		/// <example>macos</example>
+		///</summary>
+		public static string ObserverOsType = nameof(ObserverOsType);
+		///<summary>
+		/// <para><c>observer.os.version</c></para>
+		/// <para>Operating system version as a raw string.</para>
+		/// <example>10.14.1</example>
+		///</summary>
+		public static string ObserverOsVersion = nameof(ObserverOsVersion);
 		///<summary>
 		/// <para><c>orchestrator.api_version</c></para>
 		/// <para>API version being used to carry out the action</para>
@@ -2121,7 +3421,7 @@ namespace Elastic.CommonSchema
 		///<summary>
 		/// <para><c>process.end</c></para>
 		/// <para>The time the process ended.</para>
-		/// <example>5/23/2016 8:05:34AM</example>
+		/// <example>5/23/2016 8:05:34 AM</example>
 		///</summary>
 		public static string ProcessEnd = nameof(ProcessEnd);
 		///<summary>
@@ -2176,7 +3476,7 @@ namespace Elastic.CommonSchema
 		///<summary>
 		/// <para><c>process.start</c></para>
 		/// <para>The time the process started.</para>
-		/// <example>5/23/2016 8:05:34AM</example>
+		/// <example>5/23/2016 8:05:34 AM</example>
 		///</summary>
 		public static string ProcessStart = nameof(ProcessStart);
 		///<summary>
@@ -2217,6 +3517,1078 @@ namespace Elastic.CommonSchema
 		/// <example>/home/alice</example>
 		///</summary>
 		public static string ProcessWorkingDirectory = nameof(ProcessWorkingDirectory);
+		///<summary>
+		/// <para><c>process.group.domain</c></para>
+		/// <para>Name of the directory the group is a member of.
+		/// For example, an LDAP or Active Directory domain name.</para>
+		/// <example></example>
+		///</summary>
+		public static string ProcessGroupDomain = nameof(ProcessGroupDomain);
+		///<summary>
+		/// <para><c>process.group.id</c></para>
+		/// <para>Unique identifier for the group on the system/platform.</para>
+		/// <example></example>
+		///</summary>
+		public static string ProcessGroupId = nameof(ProcessGroupId);
+		///<summary>
+		/// <para><c>process.group.name</c></para>
+		/// <para>Name of the group.</para>
+		/// <example></example>
+		///</summary>
+		public static string ProcessGroupName = nameof(ProcessGroupName);
+		///<summary>
+		/// <para><c>process.real_group.domain</c></para>
+		/// <para>Name of the directory the group is a member of.
+		/// For example, an LDAP or Active Directory domain name.</para>
+		/// <example></example>
+		///</summary>
+		public static string ProcessRealGroupDomain = nameof(ProcessRealGroupDomain);
+		///<summary>
+		/// <para><c>process.real_group.id</c></para>
+		/// <para>Unique identifier for the group on the system/platform.</para>
+		/// <example></example>
+		///</summary>
+		public static string ProcessRealGroupId = nameof(ProcessRealGroupId);
+		///<summary>
+		/// <para><c>process.real_group.name</c></para>
+		/// <para>Name of the group.</para>
+		/// <example></example>
+		///</summary>
+		public static string ProcessRealGroupName = nameof(ProcessRealGroupName);
+		///<summary>
+		/// <para><c>process.saved_group.domain</c></para>
+		/// <para>Name of the directory the group is a member of.
+		/// For example, an LDAP or Active Directory domain name.</para>
+		/// <example></example>
+		///</summary>
+		public static string ProcessSavedGroupDomain = nameof(ProcessSavedGroupDomain);
+		///<summary>
+		/// <para><c>process.saved_group.id</c></para>
+		/// <para>Unique identifier for the group on the system/platform.</para>
+		/// <example></example>
+		///</summary>
+		public static string ProcessSavedGroupId = nameof(ProcessSavedGroupId);
+		///<summary>
+		/// <para><c>process.saved_group.name</c></para>
+		/// <para>Name of the group.</para>
+		/// <example></example>
+		///</summary>
+		public static string ProcessSavedGroupName = nameof(ProcessSavedGroupName);
+		///<summary>
+		/// <para><c>process.hash.md5</c></para>
+		/// <para>MD5 hash.</para>
+		/// <example></example>
+		///</summary>
+		public static string ProcessHashMd5 = nameof(ProcessHashMd5);
+		///<summary>
+		/// <para><c>process.hash.sha1</c></para>
+		/// <para>SHA1 hash.</para>
+		/// <example></example>
+		///</summary>
+		public static string ProcessHashSha1 = nameof(ProcessHashSha1);
+		///<summary>
+		/// <para><c>process.hash.sha256</c></para>
+		/// <para>SHA256 hash.</para>
+		/// <example></example>
+		///</summary>
+		public static string ProcessHashSha256 = nameof(ProcessHashSha256);
+		///<summary>
+		/// <para><c>process.hash.sha384</c></para>
+		/// <para>SHA384 hash.</para>
+		/// <example></example>
+		///</summary>
+		public static string ProcessHashSha384 = nameof(ProcessHashSha384);
+		///<summary>
+		/// <para><c>process.hash.sha512</c></para>
+		/// <para>SHA512 hash.</para>
+		/// <example></example>
+		///</summary>
+		public static string ProcessHashSha512 = nameof(ProcessHashSha512);
+		///<summary>
+		/// <para><c>process.hash.ssdeep</c></para>
+		/// <para>SSDEEP hash.</para>
+		/// <example></example>
+		///</summary>
+		public static string ProcessHashSsdeep = nameof(ProcessHashSsdeep);
+		///<summary>
+		/// <para><c>process.hash.tlsh</c></para>
+		/// <para>TLSH hash.</para>
+		/// <example></example>
+		///</summary>
+		public static string ProcessHashTlsh = nameof(ProcessHashTlsh);
+		///<summary>
+		/// <para><c>process.pe.architecture</c></para>
+		/// <para>CPU architecture target for the file.</para>
+		/// <example>x64</example>
+		///</summary>
+		public static string ProcessPeArchitecture = nameof(ProcessPeArchitecture);
+		///<summary>
+		/// <para><c>process.pe.company</c></para>
+		/// <para>Internal company name of the file, provided at compile-time.</para>
+		/// <example>Microsoft Corporation</example>
+		///</summary>
+		public static string ProcessPeCompany = nameof(ProcessPeCompany);
+		///<summary>
+		/// <para><c>process.pe.description</c></para>
+		/// <para>Internal description of the file, provided at compile-time.</para>
+		/// <example>Paint</example>
+		///</summary>
+		public static string ProcessPeDescription = nameof(ProcessPeDescription);
+		///<summary>
+		/// <para><c>process.pe.file_version</c></para>
+		/// <para>Internal version of the file, provided at compile-time.</para>
+		/// <example>6.3.9600.17415</example>
+		///</summary>
+		public static string ProcessPeFileVersion = nameof(ProcessPeFileVersion);
+		///<summary>
+		/// <para><c>process.pe.go_import_hash</c></para>
+		/// <para>A hash of the Go language imports in a PE file excluding standard library imports. An import hash can be used to fingerprint binaries even after recompilation or other code-level transformations have occurred, which would change more traditional hash values.
+		/// The algorithm used to calculate the Go symbol hash and a reference implementation are available [here](https://github.com/elastic/toutoumomoma).</para>
+		/// <example>10bddcb4cee42080f76c88d9ff964491</example>
+		///</summary>
+		public static string ProcessPeGoImportHash = nameof(ProcessPeGoImportHash);
+		///<summary>
+		/// <para><c>process.pe.go_imports</c></para>
+		/// <para>List of imported Go language element names and types.</para>
+		/// <example></example>
+		///</summary>
+		public static string ProcessPeGoImports = nameof(ProcessPeGoImports);
+		///<summary>
+		/// <para><c>process.pe.go_imports_names_entropy</c></para>
+		/// <para>Shannon entropy calculation from the list of Go imports.</para>
+		/// <example></example>
+		///</summary>
+		public static string ProcessPeGoImportsNamesEntropy = nameof(ProcessPeGoImportsNamesEntropy);
+		///<summary>
+		/// <para><c>process.pe.go_imports_names_var_entropy</c></para>
+		/// <para>Variance for Shannon entropy calculation from the list of Go imports.</para>
+		/// <example></example>
+		///</summary>
+		public static string ProcessPeGoImportsNamesVarEntropy = nameof(ProcessPeGoImportsNamesVarEntropy);
+		///<summary>
+		/// <para><c>process.pe.go_stripped</c></para>
+		/// <para>Set to true if the file is a Go executable that has had its symbols stripped or obfuscated and false if an unobfuscated Go executable.</para>
+		/// <example></example>
+		///</summary>
+		public static string ProcessPeGoStripped = nameof(ProcessPeGoStripped);
+		///<summary>
+		/// <para><c>process.pe.imphash</c></para>
+		/// <para>A hash of the imports in a PE file. An imphash -- or import hash -- can be used to fingerprint binaries even after recompilation or other code-level transformations have occurred, which would change more traditional hash values.
+		/// Learn more at https://www.fireeye.com/blog/threat-research/2014/01/tracking-malware-import-hashing.html.</para>
+		/// <example>0c6803c4e922103c4dca5963aad36ddf</example>
+		///</summary>
+		public static string ProcessPeImphash = nameof(ProcessPeImphash);
+		///<summary>
+		/// <para><c>process.pe.import_hash</c></para>
+		/// <para>A hash of the imports in a PE file. An import hash can be used to fingerprint binaries even after recompilation or other code-level transformations have occurred, which would change more traditional hash values.
+		/// This is a synonym for imphash.</para>
+		/// <example>d41d8cd98f00b204e9800998ecf8427e</example>
+		///</summary>
+		public static string ProcessPeImportHash = nameof(ProcessPeImportHash);
+		///<summary>
+		/// <para><c>process.pe.imports_names_entropy</c></para>
+		/// <para>Shannon entropy calculation from the list of imported element names and types.</para>
+		/// <example></example>
+		///</summary>
+		public static string ProcessPeImportsNamesEntropy = nameof(ProcessPeImportsNamesEntropy);
+		///<summary>
+		/// <para><c>process.pe.imports_names_var_entropy</c></para>
+		/// <para>Variance for Shannon entropy calculation from the list of imported element names and types.</para>
+		/// <example></example>
+		///</summary>
+		public static string ProcessPeImportsNamesVarEntropy = nameof(ProcessPeImportsNamesVarEntropy);
+		///<summary>
+		/// <para><c>process.pe.original_file_name</c></para>
+		/// <para>Internal name of the file, provided at compile-time.</para>
+		/// <example>MSPAINT.EXE</example>
+		///</summary>
+		public static string ProcessPeOriginalFileName = nameof(ProcessPeOriginalFileName);
+		///<summary>
+		/// <para><c>process.pe.pehash</c></para>
+		/// <para>A hash of the PE header and data from one or more PE sections. An pehash can be used to cluster files by transforming structural information about a file into a hash value.
+		/// Learn more at https://www.usenix.org/legacy/events/leet09/tech/full_papers/wicherski/wicherski_html/index.html.</para>
+		/// <example>73ff189b63cd6be375a7ff25179a38d347651975</example>
+		///</summary>
+		public static string ProcessPePehash = nameof(ProcessPePehash);
+		///<summary>
+		/// <para><c>process.pe.product</c></para>
+		/// <para>Internal product name of the file, provided at compile-time.</para>
+		/// <example>Microsoft® Windows® Operating System</example>
+		///</summary>
+		public static string ProcessPeProduct = nameof(ProcessPeProduct);
+		///<summary>
+		/// <para><c>process.code_signature.digest_algorithm</c></para>
+		/// <para>The hashing algorithm used to sign the process.
+		/// This value can distinguish signatures when a file is signed multiple times by the same signer but with a different digest algorithm.</para>
+		/// <example>sha256</example>
+		///</summary>
+		public static string ProcessCodeSignatureDigestAlgorithm = nameof(ProcessCodeSignatureDigestAlgorithm);
+		///<summary>
+		/// <para><c>process.code_signature.exists</c></para>
+		/// <para>Boolean to capture if a signature is present.</para>
+		/// <example>true</example>
+		///</summary>
+		public static string ProcessCodeSignatureExists = nameof(ProcessCodeSignatureExists);
+		///<summary>
+		/// <para><c>process.code_signature.signing_id</c></para>
+		/// <para>The identifier used to sign the process.
+		/// This is used to identify the application manufactured by a software vendor. The field is relevant to Apple *OS only.</para>
+		/// <example>com.apple.xpc.proxy</example>
+		///</summary>
+		public static string ProcessCodeSignatureSigningId = nameof(ProcessCodeSignatureSigningId);
+		///<summary>
+		/// <para><c>process.code_signature.status</c></para>
+		/// <para>Additional information about the certificate status.
+		/// This is useful for logging cryptographic errors with the certificate validity or trust status. Leave unpopulated if the validity or trust of the certificate was unchecked.</para>
+		/// <example>ERROR_UNTRUSTED_ROOT</example>
+		///</summary>
+		public static string ProcessCodeSignatureStatus = nameof(ProcessCodeSignatureStatus);
+		///<summary>
+		/// <para><c>process.code_signature.subject_name</c></para>
+		/// <para>Subject name of the code signer</para>
+		/// <example>Microsoft Corporation</example>
+		///</summary>
+		public static string ProcessCodeSignatureSubjectName = nameof(ProcessCodeSignatureSubjectName);
+		///<summary>
+		/// <para><c>process.code_signature.team_id</c></para>
+		/// <para>The team identifier used to sign the process.
+		/// This is used to identify the team or vendor of a software product. The field is relevant to Apple *OS only.</para>
+		/// <example>EQHXZ8M8AV</example>
+		///</summary>
+		public static string ProcessCodeSignatureTeamId = nameof(ProcessCodeSignatureTeamId);
+		///<summary>
+		/// <para><c>process.code_signature.timestamp</c></para>
+		/// <para>Date and time when the code signature was generated and signed.</para>
+		/// <example>1/1/2021 12:10:30 PM</example>
+		///</summary>
+		public static string ProcessCodeSignatureTimestamp = nameof(ProcessCodeSignatureTimestamp);
+		///<summary>
+		/// <para><c>process.code_signature.trusted</c></para>
+		/// <para>Stores the trust status of the certificate chain.
+		/// Validating the trust of the certificate chain may be complicated, and this field should only be populated by tools that actively check the status.</para>
+		/// <example>true</example>
+		///</summary>
+		public static string ProcessCodeSignatureTrusted = nameof(ProcessCodeSignatureTrusted);
+		///<summary>
+		/// <para><c>process.code_signature.valid</c></para>
+		/// <para>Boolean to capture if the digital signature is verified against the binary content.
+		/// Leave unpopulated if a certificate was unchecked.</para>
+		/// <example>true</example>
+		///</summary>
+		public static string ProcessCodeSignatureValid = nameof(ProcessCodeSignatureValid);
+		///<summary>
+		/// <para><c>process.elf.architecture</c></para>
+		/// <para>Machine architecture of the ELF file.</para>
+		/// <example>x86-64</example>
+		///</summary>
+		public static string ProcessElfArchitecture = nameof(ProcessElfArchitecture);
+		///<summary>
+		/// <para><c>process.elf.byte_order</c></para>
+		/// <para>Byte sequence of ELF file.</para>
+		/// <example>Little Endian</example>
+		///</summary>
+		public static string ProcessElfByteOrder = nameof(ProcessElfByteOrder);
+		///<summary>
+		/// <para><c>process.elf.cpu_type</c></para>
+		/// <para>CPU type of the ELF file.</para>
+		/// <example>Intel</example>
+		///</summary>
+		public static string ProcessElfCpuType = nameof(ProcessElfCpuType);
+		///<summary>
+		/// <para><c>process.elf.creation_date</c></para>
+		/// <para>Extracted when possible from the file's metadata. Indicates when it was built or compiled. It can also be faked by malware creators.</para>
+		/// <example></example>
+		///</summary>
+		public static string ProcessElfCreationDate = nameof(ProcessElfCreationDate);
+		///<summary>
+		/// <para><c>process.elf.go_import_hash</c></para>
+		/// <para>A hash of the Go language imports in an ELF file excluding standard library imports. An import hash can be used to fingerprint binaries even after recompilation or other code-level transformations have occurred, which would change more traditional hash values.
+		/// The algorithm used to calculate the Go symbol hash and a reference implementation are available [here](https://github.com/elastic/toutoumomoma).</para>
+		/// <example>10bddcb4cee42080f76c88d9ff964491</example>
+		///</summary>
+		public static string ProcessElfGoImportHash = nameof(ProcessElfGoImportHash);
+		///<summary>
+		/// <para><c>process.elf.go_imports</c></para>
+		/// <para>List of imported Go language element names and types.</para>
+		/// <example></example>
+		///</summary>
+		public static string ProcessElfGoImports = nameof(ProcessElfGoImports);
+		///<summary>
+		/// <para><c>process.elf.go_imports_names_entropy</c></para>
+		/// <para>Shannon entropy calculation from the list of Go imports.</para>
+		/// <example></example>
+		///</summary>
+		public static string ProcessElfGoImportsNamesEntropy = nameof(ProcessElfGoImportsNamesEntropy);
+		///<summary>
+		/// <para><c>process.elf.go_imports_names_var_entropy</c></para>
+		/// <para>Variance for Shannon entropy calculation from the list of Go imports.</para>
+		/// <example></example>
+		///</summary>
+		public static string ProcessElfGoImportsNamesVarEntropy = nameof(ProcessElfGoImportsNamesVarEntropy);
+		///<summary>
+		/// <para><c>process.elf.go_stripped</c></para>
+		/// <para>Set to true if the file is a Go executable that has had its symbols stripped or obfuscated and false if an unobfuscated Go executable.</para>
+		/// <example></example>
+		///</summary>
+		public static string ProcessElfGoStripped = nameof(ProcessElfGoStripped);
+		///<summary>
+		/// <para><c>process.elf.header.abi_version</c></para>
+		/// <para>Version of the ELF Application Binary Interface (ABI).</para>
+		/// <example></example>
+		///</summary>
+		public static string ProcessElfHeaderAbiVersion = nameof(ProcessElfHeaderAbiVersion);
+		///<summary>
+		/// <para><c>process.elf.header.class</c></para>
+		/// <para>Header class of the ELF file.</para>
+		/// <example></example>
+		///</summary>
+		public static string ProcessElfHeaderClass = nameof(ProcessElfHeaderClass);
+		///<summary>
+		/// <para><c>process.elf.header.data</c></para>
+		/// <para>Data table of the ELF header.</para>
+		/// <example></example>
+		///</summary>
+		public static string ProcessElfHeaderData = nameof(ProcessElfHeaderData);
+		///<summary>
+		/// <para><c>process.elf.header.entrypoint</c></para>
+		/// <para>Header entrypoint of the ELF file.</para>
+		/// <example></example>
+		///</summary>
+		public static string ProcessElfHeaderEntrypoint = nameof(ProcessElfHeaderEntrypoint);
+		///<summary>
+		/// <para><c>process.elf.header.object_version</c></para>
+		/// <para>"0x1" for original ELF files.</para>
+		/// <example></example>
+		///</summary>
+		public static string ProcessElfHeaderObjectVersion = nameof(ProcessElfHeaderObjectVersion);
+		///<summary>
+		/// <para><c>process.elf.header.os_abi</c></para>
+		/// <para>Application Binary Interface (ABI) of the Linux OS.</para>
+		/// <example></example>
+		///</summary>
+		public static string ProcessElfHeaderOsAbi = nameof(ProcessElfHeaderOsAbi);
+		///<summary>
+		/// <para><c>process.elf.header.type</c></para>
+		/// <para>Header type of the ELF file.</para>
+		/// <example></example>
+		///</summary>
+		public static string ProcessElfHeaderType = nameof(ProcessElfHeaderType);
+		///<summary>
+		/// <para><c>process.elf.header.version</c></para>
+		/// <para>Version of the ELF header.</para>
+		/// <example></example>
+		///</summary>
+		public static string ProcessElfHeaderVersion = nameof(ProcessElfHeaderVersion);
+		///<summary>
+		/// <para><c>process.elf.import_hash</c></para>
+		/// <para>A hash of the imports in an ELF file. An import hash can be used to fingerprint binaries even after recompilation or other code-level transformations have occurred, which would change more traditional hash values.
+		/// This is an ELF implementation of the Windows PE imphash.</para>
+		/// <example>d41d8cd98f00b204e9800998ecf8427e</example>
+		///</summary>
+		public static string ProcessElfImportHash = nameof(ProcessElfImportHash);
+		///<summary>
+		/// <para><c>process.elf.imports_names_entropy</c></para>
+		/// <para>Shannon entropy calculation from the list of imported element names and types.</para>
+		/// <example></example>
+		///</summary>
+		public static string ProcessElfImportsNamesEntropy = nameof(ProcessElfImportsNamesEntropy);
+		///<summary>
+		/// <para><c>process.elf.imports_names_var_entropy</c></para>
+		/// <para>Variance for Shannon entropy calculation from the list of imported element names and types.</para>
+		/// <example></example>
+		///</summary>
+		public static string ProcessElfImportsNamesVarEntropy = nameof(ProcessElfImportsNamesVarEntropy);
+		///<summary>
+		/// <para><c>process.elf.telfhash</c></para>
+		/// <para>telfhash symbol hash for ELF file.</para>
+		/// <example></example>
+		///</summary>
+		public static string ProcessElfTelfhash = nameof(ProcessElfTelfhash);
+		///<summary>
+		/// <para><c>process.macho.go_import_hash</c></para>
+		/// <para>A hash of the Go language imports in a Mach-O file excluding standard library imports. An import hash can be used to fingerprint binaries even after recompilation or other code-level transformations have occurred, which would change more traditional hash values.
+		/// The algorithm used to calculate the Go symbol hash and a reference implementation are available [here](https://github.com/elastic/toutoumomoma).</para>
+		/// <example>10bddcb4cee42080f76c88d9ff964491</example>
+		///</summary>
+		public static string ProcessMachoGoImportHash = nameof(ProcessMachoGoImportHash);
+		///<summary>
+		/// <para><c>process.macho.go_imports</c></para>
+		/// <para>List of imported Go language element names and types.</para>
+		/// <example></example>
+		///</summary>
+		public static string ProcessMachoGoImports = nameof(ProcessMachoGoImports);
+		///<summary>
+		/// <para><c>process.macho.go_imports_names_entropy</c></para>
+		/// <para>Shannon entropy calculation from the list of Go imports.</para>
+		/// <example></example>
+		///</summary>
+		public static string ProcessMachoGoImportsNamesEntropy = nameof(ProcessMachoGoImportsNamesEntropy);
+		///<summary>
+		/// <para><c>process.macho.go_imports_names_var_entropy</c></para>
+		/// <para>Variance for Shannon entropy calculation from the list of Go imports.</para>
+		/// <example></example>
+		///</summary>
+		public static string ProcessMachoGoImportsNamesVarEntropy = nameof(ProcessMachoGoImportsNamesVarEntropy);
+		///<summary>
+		/// <para><c>process.macho.go_stripped</c></para>
+		/// <para>Set to true if the file is a Go executable that has had its symbols stripped or obfuscated and false if an unobfuscated Go executable.</para>
+		/// <example></example>
+		///</summary>
+		public static string ProcessMachoGoStripped = nameof(ProcessMachoGoStripped);
+		///<summary>
+		/// <para><c>process.macho.import_hash</c></para>
+		/// <para>A hash of the imports in a Mach-O file. An import hash can be used to fingerprint binaries even after recompilation or other code-level transformations have occurred, which would change more traditional hash values.
+		/// This is a synonym for symhash.</para>
+		/// <example>d41d8cd98f00b204e9800998ecf8427e</example>
+		///</summary>
+		public static string ProcessMachoImportHash = nameof(ProcessMachoImportHash);
+		///<summary>
+		/// <para><c>process.macho.imports_names_entropy</c></para>
+		/// <para>Shannon entropy calculation from the list of imported element names and types.</para>
+		/// <example></example>
+		///</summary>
+		public static string ProcessMachoImportsNamesEntropy = nameof(ProcessMachoImportsNamesEntropy);
+		///<summary>
+		/// <para><c>process.macho.imports_names_var_entropy</c></para>
+		/// <para>Variance for Shannon entropy calculation from the list of imported element names and types.</para>
+		/// <example></example>
+		///</summary>
+		public static string ProcessMachoImportsNamesVarEntropy = nameof(ProcessMachoImportsNamesVarEntropy);
+		///<summary>
+		/// <para><c>process.macho.symhash</c></para>
+		/// <para>A hash of the imports in a Mach-O file. An import hash can be used to fingerprint binaries even after recompilation or other code-level transformations have occurred, which would change more traditional hash values.
+		/// This is a Mach-O implementation of the Windows PE imphash</para>
+		/// <example>d3ccf195b62a9279c3c19af1080497ec</example>
+		///</summary>
+		public static string ProcessMachoSymhash = nameof(ProcessMachoSymhash);
+		///<summary>
+		/// <para><c>process.entry_meta.source.address</c></para>
+		/// <para>Some event source addresses are defined ambiguously. The event will sometimes list an IP, a domain or a unix socket.  You should always store the raw address in the `.address` field.
+		/// Then it should be duplicated to `.ip` or `.domain`, depending on which one it is.</para>
+		/// <example></example>
+		///</summary>
+		public static string ProcessEntryMetaSourceAddress = nameof(ProcessEntryMetaSourceAddress);
+		///<summary>
+		/// <para><c>process.entry_meta.source.bytes</c></para>
+		/// <para>Bytes sent from the source to the destination.</para>
+		/// <example>184</example>
+		///</summary>
+		public static string ProcessEntryMetaSourceBytes = nameof(ProcessEntryMetaSourceBytes);
+		///<summary>
+		/// <para><c>process.entry_meta.source.domain</c></para>
+		/// <para>The domain name of the source system.
+		/// This value may be a host name, a fully qualified domain name, or another host naming format. The value may derive from the original event or be added from enrichment.</para>
+		/// <example>foo.example.com</example>
+		///</summary>
+		public static string ProcessEntryMetaSourceDomain = nameof(ProcessEntryMetaSourceDomain);
+		///<summary>
+		/// <para><c>process.entry_meta.source.ip</c></para>
+		/// <para>IP address of the source (IPv4 or IPv6).</para>
+		/// <example></example>
+		///</summary>
+		public static string ProcessEntryMetaSourceIp = nameof(ProcessEntryMetaSourceIp);
+		///<summary>
+		/// <para><c>process.entry_meta.source.mac</c></para>
+		/// <para>MAC address of the source.
+		/// The notation format from RFC 7042 is suggested: Each octet (that is, 8-bit byte) is represented by two [uppercase] hexadecimal digits giving the value of the octet as an unsigned integer. Successive octets are separated by a hyphen.
+		/// <para>pattern: </para></para>
+		/// <example>00-00-5E-00-53-23</example>
+		///</summary>
+		public static string ProcessEntryMetaSourceMac = nameof(ProcessEntryMetaSourceMac);
+		///<summary>
+		/// <para><c>process.entry_meta.source.nat.ip</c></para>
+		/// <para>Translated ip of source based NAT sessions (e.g. internal client to internet)
+		/// Typically connections traversing load balancers, firewalls, or routers.</para>
+		/// <example></example>
+		///</summary>
+		public static string ProcessEntryMetaSourceNatIp = nameof(ProcessEntryMetaSourceNatIp);
+		///<summary>
+		/// <para><c>process.entry_meta.source.nat.port</c></para>
+		/// <para>Translated port of source based NAT sessions. (e.g. internal client to internet)
+		/// Typically used with load balancers, firewalls, or routers.</para>
+		/// <example></example>
+		///</summary>
+		public static string ProcessEntryMetaSourceNatPort = nameof(ProcessEntryMetaSourceNatPort);
+		///<summary>
+		/// <para><c>process.entry_meta.source.packets</c></para>
+		/// <para>Packets sent from the source to the destination.</para>
+		/// <example>12</example>
+		///</summary>
+		public static string ProcessEntryMetaSourcePackets = nameof(ProcessEntryMetaSourcePackets);
+		///<summary>
+		/// <para><c>process.entry_meta.source.port</c></para>
+		/// <para>Port of the source.</para>
+		/// <example></example>
+		///</summary>
+		public static string ProcessEntryMetaSourcePort = nameof(ProcessEntryMetaSourcePort);
+		///<summary>
+		/// <para><c>process.entry_meta.source.registered_domain</c></para>
+		/// <para>The highest registered source domain, stripped of the subdomain.
+		/// For example, the registered domain for "foo.example.com" is "example.com".
+		/// This value can be determined precisely with a list like the public suffix list (http://publicsuffix.org). Trying to approximate this by simply taking the last two labels will not work well for TLDs such as "co.uk".</para>
+		/// <example>example.com</example>
+		///</summary>
+		public static string ProcessEntryMetaSourceRegisteredDomain = nameof(ProcessEntryMetaSourceRegisteredDomain);
+		///<summary>
+		/// <para><c>process.entry_meta.source.subdomain</c></para>
+		/// <para>The subdomain portion of a fully qualified domain name includes all of the names except the host name under the registered_domain.  In a partially qualified domain, or if the the qualification level of the full name cannot be determined, subdomain contains all of the names below the registered domain.
+		/// For example the subdomain portion of "www.east.mydomain.co.uk" is "east". If the domain has multiple levels of subdomain, such as "sub2.sub1.example.com", the subdomain field should contain "sub2.sub1", with no trailing period.</para>
+		/// <example>east</example>
+		///</summary>
+		public static string ProcessEntryMetaSourceSubdomain = nameof(ProcessEntryMetaSourceSubdomain);
+		///<summary>
+		/// <para><c>process.entry_meta.source.top_level_domain</c></para>
+		/// <para>The effective top level domain (eTLD), also known as the domain suffix, is the last part of the domain name. For example, the top level domain for example.com is "com".
+		/// This value can be determined precisely with a list like the public suffix list (http://publicsuffix.org). Trying to approximate this by simply taking the last label will not work well for effective TLDs such as "co.uk".</para>
+		/// <example>co.uk</example>
+		///</summary>
+		public static string ProcessEntryMetaSourceTopLevelDomain = nameof(ProcessEntryMetaSourceTopLevelDomain);
+		///<summary>
+		/// <para><c>process.entry_meta.source.as.number</c></para>
+		/// <para>Unique number allocated to the autonomous system. The autonomous system number (ASN) uniquely identifies each network on the Internet.</para>
+		/// <example>15169</example>
+		///</summary>
+		public static string ProcessEntryMetaSourceAsNumber = nameof(ProcessEntryMetaSourceAsNumber);
+		///<summary>
+		/// <para><c>process.entry_meta.source.as.organization.name</c></para>
+		/// <para>Organization name.</para>
+		/// <example>Google LLC</example>
+		///</summary>
+		public static string ProcessEntryMetaSourceAsOrganizationName = nameof(ProcessEntryMetaSourceAsOrganizationName);
+		///<summary>
+		/// <para><c>process.entry_meta.source.geo.city_name</c></para>
+		/// <para>City name.</para>
+		/// <example>Montreal</example>
+		///</summary>
+		public static string ProcessEntryMetaSourceGeoCityName = nameof(ProcessEntryMetaSourceGeoCityName);
+		///<summary>
+		/// <para><c>process.entry_meta.source.geo.continent_code</c></para>
+		/// <para>Two-letter code representing continent's name.</para>
+		/// <example>NA</example>
+		///</summary>
+		public static string ProcessEntryMetaSourceGeoContinentCode = nameof(ProcessEntryMetaSourceGeoContinentCode);
+		///<summary>
+		/// <para><c>process.entry_meta.source.geo.continent_name</c></para>
+		/// <para>Name of the continent.</para>
+		/// <example>North America</example>
+		///</summary>
+		public static string ProcessEntryMetaSourceGeoContinentName = nameof(ProcessEntryMetaSourceGeoContinentName);
+		///<summary>
+		/// <para><c>process.entry_meta.source.geo.country_iso_code</c></para>
+		/// <para>Country ISO code.</para>
+		/// <example>CA</example>
+		///</summary>
+		public static string ProcessEntryMetaSourceGeoCountryIsoCode = nameof(ProcessEntryMetaSourceGeoCountryIsoCode);
+		///<summary>
+		/// <para><c>process.entry_meta.source.geo.country_name</c></para>
+		/// <para>Country name.</para>
+		/// <example>Canada</example>
+		///</summary>
+		public static string ProcessEntryMetaSourceGeoCountryName = nameof(ProcessEntryMetaSourceGeoCountryName);
+		///<summary>
+		/// <para><c>process.entry_meta.source.geo.location</c></para>
+		/// <para>Longitude and latitude.</para>
+		/// <example>{ "lon": -73.614830, "lat": 45.505918 }</example>
+		///</summary>
+		public static string ProcessEntryMetaSourceGeoLocation = nameof(ProcessEntryMetaSourceGeoLocation);
+		///<summary>
+		/// <para><c>process.entry_meta.source.geo.name</c></para>
+		/// <para>User-defined description of a location, at the level of granularity they care about.
+		/// Could be the name of their data centers, the floor number, if this describes a local physical entity, city names.
+		/// Not typically used in automated geolocation.</para>
+		/// <example>boston-dc</example>
+		///</summary>
+		public static string ProcessEntryMetaSourceGeoName = nameof(ProcessEntryMetaSourceGeoName);
+		///<summary>
+		/// <para><c>process.entry_meta.source.geo.postal_code</c></para>
+		/// <para>Postal code associated with the location.
+		/// Values appropriate for this field may also be known as a postcode or ZIP code and will vary widely from country to country.</para>
+		/// <example>94040</example>
+		///</summary>
+		public static string ProcessEntryMetaSourceGeoPostalCode = nameof(ProcessEntryMetaSourceGeoPostalCode);
+		///<summary>
+		/// <para><c>process.entry_meta.source.geo.region_iso_code</c></para>
+		/// <para>Region ISO code.</para>
+		/// <example>CA-QC</example>
+		///</summary>
+		public static string ProcessEntryMetaSourceGeoRegionIsoCode = nameof(ProcessEntryMetaSourceGeoRegionIsoCode);
+		///<summary>
+		/// <para><c>process.entry_meta.source.geo.region_name</c></para>
+		/// <para>Region name.</para>
+		/// <example>Quebec</example>
+		///</summary>
+		public static string ProcessEntryMetaSourceGeoRegionName = nameof(ProcessEntryMetaSourceGeoRegionName);
+		///<summary>
+		/// <para><c>process.entry_meta.source.geo.timezone</c></para>
+		/// <para>The time zone of the location, such as IANA time zone name.</para>
+		/// <example>America/Argentina/Buenos_Aires</example>
+		///</summary>
+		public static string ProcessEntryMetaSourceGeoTimezone = nameof(ProcessEntryMetaSourceGeoTimezone);
+		///<summary>
+		/// <para><c>process.entry_meta.source.user.domain</c></para>
+		/// <para>Name of the directory the user is a member of.
+		/// For example, an LDAP or Active Directory domain name.</para>
+		/// <example></example>
+		///</summary>
+		public static string ProcessEntryMetaSourceUserDomain = nameof(ProcessEntryMetaSourceUserDomain);
+		///<summary>
+		/// <para><c>process.entry_meta.source.user.email</c></para>
+		/// <para>User email address.</para>
+		/// <example></example>
+		///</summary>
+		public static string ProcessEntryMetaSourceUserEmail = nameof(ProcessEntryMetaSourceUserEmail);
+		///<summary>
+		/// <para><c>process.entry_meta.source.user.full_name</c></para>
+		/// <para>User's full name, if available.</para>
+		/// <example>Albert Einstein</example>
+		///</summary>
+		public static string ProcessEntryMetaSourceUserFullName = nameof(ProcessEntryMetaSourceUserFullName);
+		///<summary>
+		/// <para><c>process.entry_meta.source.user.hash</c></para>
+		/// <para>Unique user hash to correlate information for a user in anonymized form.
+		/// Useful if `user.id` or `user.name` contain confidential information and cannot be used.</para>
+		/// <example></example>
+		///</summary>
+		public static string ProcessEntryMetaSourceUserHash = nameof(ProcessEntryMetaSourceUserHash);
+		///<summary>
+		/// <para><c>process.entry_meta.source.user.id</c></para>
+		/// <para>Unique identifier of the user.</para>
+		/// <example>S-1-5-21-202424912787-2692429404-2351956786-1000</example>
+		///</summary>
+		public static string ProcessEntryMetaSourceUserId = nameof(ProcessEntryMetaSourceUserId);
+		///<summary>
+		/// <para><c>process.entry_meta.source.user.name</c></para>
+		/// <para>Short name or login of the user.</para>
+		/// <example>a.einstein</example>
+		///</summary>
+		public static string ProcessEntryMetaSourceUserName = nameof(ProcessEntryMetaSourceUserName);
+		///<summary>
+		/// <para><c>process.entry_meta.source.user.group.domain</c></para>
+		/// <para>Name of the directory the group is a member of.
+		/// For example, an LDAP or Active Directory domain name.</para>
+		/// <example></example>
+		///</summary>
+		public static string ProcessEntryMetaSourceUserGroupDomain = nameof(ProcessEntryMetaSourceUserGroupDomain);
+		///<summary>
+		/// <para><c>process.entry_meta.source.user.group.id</c></para>
+		/// <para>Unique identifier for the group on the system/platform.</para>
+		/// <example></example>
+		///</summary>
+		public static string ProcessEntryMetaSourceUserGroupId = nameof(ProcessEntryMetaSourceUserGroupId);
+		///<summary>
+		/// <para><c>process.entry_meta.source.user.group.name</c></para>
+		/// <para>Name of the group.</para>
+		/// <example></example>
+		///</summary>
+		public static string ProcessEntryMetaSourceUserGroupName = nameof(ProcessEntryMetaSourceUserGroupName);
+		///<summary>
+		/// <para><c>process.entry_meta.source.user.risk.calculated_level</c></para>
+		/// <para>A risk classification level calculated by an internal system as part of entity analytics and entity risk scoring.</para>
+		/// <example>High</example>
+		///</summary>
+		public static string ProcessEntryMetaSourceUserRiskCalculatedLevel = nameof(ProcessEntryMetaSourceUserRiskCalculatedLevel);
+		///<summary>
+		/// <para><c>process.entry_meta.source.user.risk.calculated_score</c></para>
+		/// <para>A risk classification score calculated by an internal system as part of entity analytics and entity risk scoring.</para>
+		/// <example>880.73</example>
+		///</summary>
+		public static string ProcessEntryMetaSourceUserRiskCalculatedScore = nameof(ProcessEntryMetaSourceUserRiskCalculatedScore);
+		///<summary>
+		/// <para><c>process.entry_meta.source.user.risk.calculated_score_norm</c></para>
+		/// <para>A risk classification score calculated by an internal system as part of entity analytics and entity risk scoring, and normalized to a range of 0 to 100.</para>
+		/// <example>88.73</example>
+		///</summary>
+		public static string ProcessEntryMetaSourceUserRiskCalculatedScoreNorm = nameof(ProcessEntryMetaSourceUserRiskCalculatedScoreNorm);
+		///<summary>
+		/// <para><c>process.entry_meta.source.user.risk.static_level</c></para>
+		/// <para>A risk classification level obtained from outside the system, such as from some external Threat Intelligence Platform.</para>
+		/// <example>High</example>
+		///</summary>
+		public static string ProcessEntryMetaSourceUserRiskStaticLevel = nameof(ProcessEntryMetaSourceUserRiskStaticLevel);
+		///<summary>
+		/// <para><c>process.entry_meta.source.user.risk.static_score</c></para>
+		/// <para>A risk classification score obtained from outside the system, such as from some external Threat Intelligence Platform.</para>
+		/// <example>830.0</example>
+		///</summary>
+		public static string ProcessEntryMetaSourceUserRiskStaticScore = nameof(ProcessEntryMetaSourceUserRiskStaticScore);
+		///<summary>
+		/// <para><c>process.entry_meta.source.user.risk.static_score_norm</c></para>
+		/// <para>A risk classification score obtained from outside the system, such as from some external Threat Intelligence Platform, and normalized to a range of 0 to 100.</para>
+		/// <example>83.0</example>
+		///</summary>
+		public static string ProcessEntryMetaSourceUserRiskStaticScoreNorm = nameof(ProcessEntryMetaSourceUserRiskStaticScoreNorm);
+		///<summary>
+		/// <para><c>process.user.domain</c></para>
+		/// <para>Name of the directory the user is a member of.
+		/// For example, an LDAP or Active Directory domain name.</para>
+		/// <example></example>
+		///</summary>
+		public static string ProcessUserDomain = nameof(ProcessUserDomain);
+		///<summary>
+		/// <para><c>process.user.email</c></para>
+		/// <para>User email address.</para>
+		/// <example></example>
+		///</summary>
+		public static string ProcessUserEmail = nameof(ProcessUserEmail);
+		///<summary>
+		/// <para><c>process.user.full_name</c></para>
+		/// <para>User's full name, if available.</para>
+		/// <example>Albert Einstein</example>
+		///</summary>
+		public static string ProcessUserFullName = nameof(ProcessUserFullName);
+		///<summary>
+		/// <para><c>process.user.hash</c></para>
+		/// <para>Unique user hash to correlate information for a user in anonymized form.
+		/// Useful if `user.id` or `user.name` contain confidential information and cannot be used.</para>
+		/// <example></example>
+		///</summary>
+		public static string ProcessUserHash = nameof(ProcessUserHash);
+		///<summary>
+		/// <para><c>process.user.id</c></para>
+		/// <para>Unique identifier of the user.</para>
+		/// <example>S-1-5-21-202424912787-2692429404-2351956786-1000</example>
+		///</summary>
+		public static string ProcessUserId = nameof(ProcessUserId);
+		///<summary>
+		/// <para><c>process.user.name</c></para>
+		/// <para>Short name or login of the user.</para>
+		/// <example>a.einstein</example>
+		///</summary>
+		public static string ProcessUserName = nameof(ProcessUserName);
+		///<summary>
+		/// <para><c>process.user.group.domain</c></para>
+		/// <para>Name of the directory the group is a member of.
+		/// For example, an LDAP or Active Directory domain name.</para>
+		/// <example></example>
+		///</summary>
+		public static string ProcessUserGroupDomain = nameof(ProcessUserGroupDomain);
+		///<summary>
+		/// <para><c>process.user.group.id</c></para>
+		/// <para>Unique identifier for the group on the system/platform.</para>
+		/// <example></example>
+		///</summary>
+		public static string ProcessUserGroupId = nameof(ProcessUserGroupId);
+		///<summary>
+		/// <para><c>process.user.group.name</c></para>
+		/// <para>Name of the group.</para>
+		/// <example></example>
+		///</summary>
+		public static string ProcessUserGroupName = nameof(ProcessUserGroupName);
+		///<summary>
+		/// <para><c>process.user.risk.calculated_level</c></para>
+		/// <para>A risk classification level calculated by an internal system as part of entity analytics and entity risk scoring.</para>
+		/// <example>High</example>
+		///</summary>
+		public static string ProcessUserRiskCalculatedLevel = nameof(ProcessUserRiskCalculatedLevel);
+		///<summary>
+		/// <para><c>process.user.risk.calculated_score</c></para>
+		/// <para>A risk classification score calculated by an internal system as part of entity analytics and entity risk scoring.</para>
+		/// <example>880.73</example>
+		///</summary>
+		public static string ProcessUserRiskCalculatedScore = nameof(ProcessUserRiskCalculatedScore);
+		///<summary>
+		/// <para><c>process.user.risk.calculated_score_norm</c></para>
+		/// <para>A risk classification score calculated by an internal system as part of entity analytics and entity risk scoring, and normalized to a range of 0 to 100.</para>
+		/// <example>88.73</example>
+		///</summary>
+		public static string ProcessUserRiskCalculatedScoreNorm = nameof(ProcessUserRiskCalculatedScoreNorm);
+		///<summary>
+		/// <para><c>process.user.risk.static_level</c></para>
+		/// <para>A risk classification level obtained from outside the system, such as from some external Threat Intelligence Platform.</para>
+		/// <example>High</example>
+		///</summary>
+		public static string ProcessUserRiskStaticLevel = nameof(ProcessUserRiskStaticLevel);
+		///<summary>
+		/// <para><c>process.user.risk.static_score</c></para>
+		/// <para>A risk classification score obtained from outside the system, such as from some external Threat Intelligence Platform.</para>
+		/// <example>830.0</example>
+		///</summary>
+		public static string ProcessUserRiskStaticScore = nameof(ProcessUserRiskStaticScore);
+		///<summary>
+		/// <para><c>process.user.risk.static_score_norm</c></para>
+		/// <para>A risk classification score obtained from outside the system, such as from some external Threat Intelligence Platform, and normalized to a range of 0 to 100.</para>
+		/// <example>83.0</example>
+		///</summary>
+		public static string ProcessUserRiskStaticScoreNorm = nameof(ProcessUserRiskStaticScoreNorm);
+		///<summary>
+		/// <para><c>process.saved_user.domain</c></para>
+		/// <para>Name of the directory the user is a member of.
+		/// For example, an LDAP or Active Directory domain name.</para>
+		/// <example></example>
+		///</summary>
+		public static string ProcessSavedUserDomain = nameof(ProcessSavedUserDomain);
+		///<summary>
+		/// <para><c>process.saved_user.email</c></para>
+		/// <para>User email address.</para>
+		/// <example></example>
+		///</summary>
+		public static string ProcessSavedUserEmail = nameof(ProcessSavedUserEmail);
+		///<summary>
+		/// <para><c>process.saved_user.full_name</c></para>
+		/// <para>User's full name, if available.</para>
+		/// <example>Albert Einstein</example>
+		///</summary>
+		public static string ProcessSavedUserFullName = nameof(ProcessSavedUserFullName);
+		///<summary>
+		/// <para><c>process.saved_user.hash</c></para>
+		/// <para>Unique user hash to correlate information for a user in anonymized form.
+		/// Useful if `user.id` or `user.name` contain confidential information and cannot be used.</para>
+		/// <example></example>
+		///</summary>
+		public static string ProcessSavedUserHash = nameof(ProcessSavedUserHash);
+		///<summary>
+		/// <para><c>process.saved_user.id</c></para>
+		/// <para>Unique identifier of the user.</para>
+		/// <example>S-1-5-21-202424912787-2692429404-2351956786-1000</example>
+		///</summary>
+		public static string ProcessSavedUserId = nameof(ProcessSavedUserId);
+		///<summary>
+		/// <para><c>process.saved_user.name</c></para>
+		/// <para>Short name or login of the user.</para>
+		/// <example>a.einstein</example>
+		///</summary>
+		public static string ProcessSavedUserName = nameof(ProcessSavedUserName);
+		///<summary>
+		/// <para><c>process.saved_user.group.domain</c></para>
+		/// <para>Name of the directory the group is a member of.
+		/// For example, an LDAP or Active Directory domain name.</para>
+		/// <example></example>
+		///</summary>
+		public static string ProcessSavedUserGroupDomain = nameof(ProcessSavedUserGroupDomain);
+		///<summary>
+		/// <para><c>process.saved_user.group.id</c></para>
+		/// <para>Unique identifier for the group on the system/platform.</para>
+		/// <example></example>
+		///</summary>
+		public static string ProcessSavedUserGroupId = nameof(ProcessSavedUserGroupId);
+		///<summary>
+		/// <para><c>process.saved_user.group.name</c></para>
+		/// <para>Name of the group.</para>
+		/// <example></example>
+		///</summary>
+		public static string ProcessSavedUserGroupName = nameof(ProcessSavedUserGroupName);
+		///<summary>
+		/// <para><c>process.saved_user.risk.calculated_level</c></para>
+		/// <para>A risk classification level calculated by an internal system as part of entity analytics and entity risk scoring.</para>
+		/// <example>High</example>
+		///</summary>
+		public static string ProcessSavedUserRiskCalculatedLevel = nameof(ProcessSavedUserRiskCalculatedLevel);
+		///<summary>
+		/// <para><c>process.saved_user.risk.calculated_score</c></para>
+		/// <para>A risk classification score calculated by an internal system as part of entity analytics and entity risk scoring.</para>
+		/// <example>880.73</example>
+		///</summary>
+		public static string ProcessSavedUserRiskCalculatedScore = nameof(ProcessSavedUserRiskCalculatedScore);
+		///<summary>
+		/// <para><c>process.saved_user.risk.calculated_score_norm</c></para>
+		/// <para>A risk classification score calculated by an internal system as part of entity analytics and entity risk scoring, and normalized to a range of 0 to 100.</para>
+		/// <example>88.73</example>
+		///</summary>
+		public static string ProcessSavedUserRiskCalculatedScoreNorm = nameof(ProcessSavedUserRiskCalculatedScoreNorm);
+		///<summary>
+		/// <para><c>process.saved_user.risk.static_level</c></para>
+		/// <para>A risk classification level obtained from outside the system, such as from some external Threat Intelligence Platform.</para>
+		/// <example>High</example>
+		///</summary>
+		public static string ProcessSavedUserRiskStaticLevel = nameof(ProcessSavedUserRiskStaticLevel);
+		///<summary>
+		/// <para><c>process.saved_user.risk.static_score</c></para>
+		/// <para>A risk classification score obtained from outside the system, such as from some external Threat Intelligence Platform.</para>
+		/// <example>830.0</example>
+		///</summary>
+		public static string ProcessSavedUserRiskStaticScore = nameof(ProcessSavedUserRiskStaticScore);
+		///<summary>
+		/// <para><c>process.saved_user.risk.static_score_norm</c></para>
+		/// <para>A risk classification score obtained from outside the system, such as from some external Threat Intelligence Platform, and normalized to a range of 0 to 100.</para>
+		/// <example>83.0</example>
+		///</summary>
+		public static string ProcessSavedUserRiskStaticScoreNorm = nameof(ProcessSavedUserRiskStaticScoreNorm);
+		///<summary>
+		/// <para><c>process.real_user.domain</c></para>
+		/// <para>Name of the directory the user is a member of.
+		/// For example, an LDAP or Active Directory domain name.</para>
+		/// <example></example>
+		///</summary>
+		public static string ProcessRealUserDomain = nameof(ProcessRealUserDomain);
+		///<summary>
+		/// <para><c>process.real_user.email</c></para>
+		/// <para>User email address.</para>
+		/// <example></example>
+		///</summary>
+		public static string ProcessRealUserEmail = nameof(ProcessRealUserEmail);
+		///<summary>
+		/// <para><c>process.real_user.full_name</c></para>
+		/// <para>User's full name, if available.</para>
+		/// <example>Albert Einstein</example>
+		///</summary>
+		public static string ProcessRealUserFullName = nameof(ProcessRealUserFullName);
+		///<summary>
+		/// <para><c>process.real_user.hash</c></para>
+		/// <para>Unique user hash to correlate information for a user in anonymized form.
+		/// Useful if `user.id` or `user.name` contain confidential information and cannot be used.</para>
+		/// <example></example>
+		///</summary>
+		public static string ProcessRealUserHash = nameof(ProcessRealUserHash);
+		///<summary>
+		/// <para><c>process.real_user.id</c></para>
+		/// <para>Unique identifier of the user.</para>
+		/// <example>S-1-5-21-202424912787-2692429404-2351956786-1000</example>
+		///</summary>
+		public static string ProcessRealUserId = nameof(ProcessRealUserId);
+		///<summary>
+		/// <para><c>process.real_user.name</c></para>
+		/// <para>Short name or login of the user.</para>
+		/// <example>a.einstein</example>
+		///</summary>
+		public static string ProcessRealUserName = nameof(ProcessRealUserName);
+		///<summary>
+		/// <para><c>process.real_user.group.domain</c></para>
+		/// <para>Name of the directory the group is a member of.
+		/// For example, an LDAP or Active Directory domain name.</para>
+		/// <example></example>
+		///</summary>
+		public static string ProcessRealUserGroupDomain = nameof(ProcessRealUserGroupDomain);
+		///<summary>
+		/// <para><c>process.real_user.group.id</c></para>
+		/// <para>Unique identifier for the group on the system/platform.</para>
+		/// <example></example>
+		///</summary>
+		public static string ProcessRealUserGroupId = nameof(ProcessRealUserGroupId);
+		///<summary>
+		/// <para><c>process.real_user.group.name</c></para>
+		/// <para>Name of the group.</para>
+		/// <example></example>
+		///</summary>
+		public static string ProcessRealUserGroupName = nameof(ProcessRealUserGroupName);
+		///<summary>
+		/// <para><c>process.real_user.risk.calculated_level</c></para>
+		/// <para>A risk classification level calculated by an internal system as part of entity analytics and entity risk scoring.</para>
+		/// <example>High</example>
+		///</summary>
+		public static string ProcessRealUserRiskCalculatedLevel = nameof(ProcessRealUserRiskCalculatedLevel);
+		///<summary>
+		/// <para><c>process.real_user.risk.calculated_score</c></para>
+		/// <para>A risk classification score calculated by an internal system as part of entity analytics and entity risk scoring.</para>
+		/// <example>880.73</example>
+		///</summary>
+		public static string ProcessRealUserRiskCalculatedScore = nameof(ProcessRealUserRiskCalculatedScore);
+		///<summary>
+		/// <para><c>process.real_user.risk.calculated_score_norm</c></para>
+		/// <para>A risk classification score calculated by an internal system as part of entity analytics and entity risk scoring, and normalized to a range of 0 to 100.</para>
+		/// <example>88.73</example>
+		///</summary>
+		public static string ProcessRealUserRiskCalculatedScoreNorm = nameof(ProcessRealUserRiskCalculatedScoreNorm);
+		///<summary>
+		/// <para><c>process.real_user.risk.static_level</c></para>
+		/// <para>A risk classification level obtained from outside the system, such as from some external Threat Intelligence Platform.</para>
+		/// <example>High</example>
+		///</summary>
+		public static string ProcessRealUserRiskStaticLevel = nameof(ProcessRealUserRiskStaticLevel);
+		///<summary>
+		/// <para><c>process.real_user.risk.static_score</c></para>
+		/// <para>A risk classification score obtained from outside the system, such as from some external Threat Intelligence Platform.</para>
+		/// <example>830.0</example>
+		///</summary>
+		public static string ProcessRealUserRiskStaticScore = nameof(ProcessRealUserRiskStaticScore);
+		///<summary>
+		/// <para><c>process.real_user.risk.static_score_norm</c></para>
+		/// <para>A risk classification score obtained from outside the system, such as from some external Threat Intelligence Platform, and normalized to a range of 0 to 100.</para>
+		/// <example>83.0</example>
+		///</summary>
+		public static string ProcessRealUserRiskStaticScoreNorm = nameof(ProcessRealUserRiskStaticScoreNorm);
+		///<summary>
+		/// <para><c>process.attested_user.domain</c></para>
+		/// <para>Name of the directory the user is a member of.
+		/// For example, an LDAP or Active Directory domain name.</para>
+		/// <example></example>
+		///</summary>
+		public static string ProcessAttestedUserDomain = nameof(ProcessAttestedUserDomain);
+		///<summary>
+		/// <para><c>process.attested_user.email</c></para>
+		/// <para>User email address.</para>
+		/// <example></example>
+		///</summary>
+		public static string ProcessAttestedUserEmail = nameof(ProcessAttestedUserEmail);
+		///<summary>
+		/// <para><c>process.attested_user.full_name</c></para>
+		/// <para>User's full name, if available.</para>
+		/// <example>Albert Einstein</example>
+		///</summary>
+		public static string ProcessAttestedUserFullName = nameof(ProcessAttestedUserFullName);
+		///<summary>
+		/// <para><c>process.attested_user.hash</c></para>
+		/// <para>Unique user hash to correlate information for a user in anonymized form.
+		/// Useful if `user.id` or `user.name` contain confidential information and cannot be used.</para>
+		/// <example></example>
+		///</summary>
+		public static string ProcessAttestedUserHash = nameof(ProcessAttestedUserHash);
+		///<summary>
+		/// <para><c>process.attested_user.id</c></para>
+		/// <para>Unique identifier of the user.</para>
+		/// <example>S-1-5-21-202424912787-2692429404-2351956786-1000</example>
+		///</summary>
+		public static string ProcessAttestedUserId = nameof(ProcessAttestedUserId);
+		///<summary>
+		/// <para><c>process.attested_user.name</c></para>
+		/// <para>Short name or login of the user.</para>
+		/// <example>a.einstein</example>
+		///</summary>
+		public static string ProcessAttestedUserName = nameof(ProcessAttestedUserName);
+		///<summary>
+		/// <para><c>process.attested_user.group.domain</c></para>
+		/// <para>Name of the directory the group is a member of.
+		/// For example, an LDAP or Active Directory domain name.</para>
+		/// <example></example>
+		///</summary>
+		public static string ProcessAttestedUserGroupDomain = nameof(ProcessAttestedUserGroupDomain);
+		///<summary>
+		/// <para><c>process.attested_user.group.id</c></para>
+		/// <para>Unique identifier for the group on the system/platform.</para>
+		/// <example></example>
+		///</summary>
+		public static string ProcessAttestedUserGroupId = nameof(ProcessAttestedUserGroupId);
+		///<summary>
+		/// <para><c>process.attested_user.group.name</c></para>
+		/// <para>Name of the group.</para>
+		/// <example></example>
+		///</summary>
+		public static string ProcessAttestedUserGroupName = nameof(ProcessAttestedUserGroupName);
+		///<summary>
+		/// <para><c>process.attested_user.risk.calculated_level</c></para>
+		/// <para>A risk classification level calculated by an internal system as part of entity analytics and entity risk scoring.</para>
+		/// <example>High</example>
+		///</summary>
+		public static string ProcessAttestedUserRiskCalculatedLevel = nameof(ProcessAttestedUserRiskCalculatedLevel);
+		///<summary>
+		/// <para><c>process.attested_user.risk.calculated_score</c></para>
+		/// <para>A risk classification score calculated by an internal system as part of entity analytics and entity risk scoring.</para>
+		/// <example>880.73</example>
+		///</summary>
+		public static string ProcessAttestedUserRiskCalculatedScore = nameof(ProcessAttestedUserRiskCalculatedScore);
+		///<summary>
+		/// <para><c>process.attested_user.risk.calculated_score_norm</c></para>
+		/// <para>A risk classification score calculated by an internal system as part of entity analytics and entity risk scoring, and normalized to a range of 0 to 100.</para>
+		/// <example>88.73</example>
+		///</summary>
+		public static string ProcessAttestedUserRiskCalculatedScoreNorm = nameof(ProcessAttestedUserRiskCalculatedScoreNorm);
+		///<summary>
+		/// <para><c>process.attested_user.risk.static_level</c></para>
+		/// <para>A risk classification level obtained from outside the system, such as from some external Threat Intelligence Platform.</para>
+		/// <example>High</example>
+		///</summary>
+		public static string ProcessAttestedUserRiskStaticLevel = nameof(ProcessAttestedUserRiskStaticLevel);
+		///<summary>
+		/// <para><c>process.attested_user.risk.static_score</c></para>
+		/// <para>A risk classification score obtained from outside the system, such as from some external Threat Intelligence Platform.</para>
+		/// <example>830.0</example>
+		///</summary>
+		public static string ProcessAttestedUserRiskStaticScore = nameof(ProcessAttestedUserRiskStaticScore);
+		///<summary>
+		/// <para><c>process.attested_user.risk.static_score_norm</c></para>
+		/// <para>A risk classification score obtained from outside the system, such as from some external Threat Intelligence Platform, and normalized to a range of 0 to 100.</para>
+		/// <example>83.0</example>
+		///</summary>
+		public static string ProcessAttestedUserRiskStaticScoreNorm = nameof(ProcessAttestedUserRiskStaticScoreNorm);
 		///<summary>
 		/// <para><c>registry.data.bytes</c></para>
 		/// <para>Original bytes written with base64 encoding.
@@ -2428,6 +4800,180 @@ namespace Elastic.CommonSchema
 		///</summary>
 		public static string ServerTopLevelDomain = nameof(ServerTopLevelDomain);
 		///<summary>
+		/// <para><c>server.as.number</c></para>
+		/// <para>Unique number allocated to the autonomous system. The autonomous system number (ASN) uniquely identifies each network on the Internet.</para>
+		/// <example>15169</example>
+		///</summary>
+		public static string ServerAsNumber = nameof(ServerAsNumber);
+		///<summary>
+		/// <para><c>server.as.organization.name</c></para>
+		/// <para>Organization name.</para>
+		/// <example>Google LLC</example>
+		///</summary>
+		public static string ServerAsOrganizationName = nameof(ServerAsOrganizationName);
+		///<summary>
+		/// <para><c>server.geo.city_name</c></para>
+		/// <para>City name.</para>
+		/// <example>Montreal</example>
+		///</summary>
+		public static string ServerGeoCityName = nameof(ServerGeoCityName);
+		///<summary>
+		/// <para><c>server.geo.continent_code</c></para>
+		/// <para>Two-letter code representing continent's name.</para>
+		/// <example>NA</example>
+		///</summary>
+		public static string ServerGeoContinentCode = nameof(ServerGeoContinentCode);
+		///<summary>
+		/// <para><c>server.geo.continent_name</c></para>
+		/// <para>Name of the continent.</para>
+		/// <example>North America</example>
+		///</summary>
+		public static string ServerGeoContinentName = nameof(ServerGeoContinentName);
+		///<summary>
+		/// <para><c>server.geo.country_iso_code</c></para>
+		/// <para>Country ISO code.</para>
+		/// <example>CA</example>
+		///</summary>
+		public static string ServerGeoCountryIsoCode = nameof(ServerGeoCountryIsoCode);
+		///<summary>
+		/// <para><c>server.geo.country_name</c></para>
+		/// <para>Country name.</para>
+		/// <example>Canada</example>
+		///</summary>
+		public static string ServerGeoCountryName = nameof(ServerGeoCountryName);
+		///<summary>
+		/// <para><c>server.geo.location</c></para>
+		/// <para>Longitude and latitude.</para>
+		/// <example>{ "lon": -73.614830, "lat": 45.505918 }</example>
+		///</summary>
+		public static string ServerGeoLocation = nameof(ServerGeoLocation);
+		///<summary>
+		/// <para><c>server.geo.name</c></para>
+		/// <para>User-defined description of a location, at the level of granularity they care about.
+		/// Could be the name of their data centers, the floor number, if this describes a local physical entity, city names.
+		/// Not typically used in automated geolocation.</para>
+		/// <example>boston-dc</example>
+		///</summary>
+		public static string ServerGeoName = nameof(ServerGeoName);
+		///<summary>
+		/// <para><c>server.geo.postal_code</c></para>
+		/// <para>Postal code associated with the location.
+		/// Values appropriate for this field may also be known as a postcode or ZIP code and will vary widely from country to country.</para>
+		/// <example>94040</example>
+		///</summary>
+		public static string ServerGeoPostalCode = nameof(ServerGeoPostalCode);
+		///<summary>
+		/// <para><c>server.geo.region_iso_code</c></para>
+		/// <para>Region ISO code.</para>
+		/// <example>CA-QC</example>
+		///</summary>
+		public static string ServerGeoRegionIsoCode = nameof(ServerGeoRegionIsoCode);
+		///<summary>
+		/// <para><c>server.geo.region_name</c></para>
+		/// <para>Region name.</para>
+		/// <example>Quebec</example>
+		///</summary>
+		public static string ServerGeoRegionName = nameof(ServerGeoRegionName);
+		///<summary>
+		/// <para><c>server.geo.timezone</c></para>
+		/// <para>The time zone of the location, such as IANA time zone name.</para>
+		/// <example>America/Argentina/Buenos_Aires</example>
+		///</summary>
+		public static string ServerGeoTimezone = nameof(ServerGeoTimezone);
+		///<summary>
+		/// <para><c>server.user.domain</c></para>
+		/// <para>Name of the directory the user is a member of.
+		/// For example, an LDAP or Active Directory domain name.</para>
+		/// <example></example>
+		///</summary>
+		public static string ServerUserDomain = nameof(ServerUserDomain);
+		///<summary>
+		/// <para><c>server.user.email</c></para>
+		/// <para>User email address.</para>
+		/// <example></example>
+		///</summary>
+		public static string ServerUserEmail = nameof(ServerUserEmail);
+		///<summary>
+		/// <para><c>server.user.full_name</c></para>
+		/// <para>User's full name, if available.</para>
+		/// <example>Albert Einstein</example>
+		///</summary>
+		public static string ServerUserFullName = nameof(ServerUserFullName);
+		///<summary>
+		/// <para><c>server.user.hash</c></para>
+		/// <para>Unique user hash to correlate information for a user in anonymized form.
+		/// Useful if `user.id` or `user.name` contain confidential information and cannot be used.</para>
+		/// <example></example>
+		///</summary>
+		public static string ServerUserHash = nameof(ServerUserHash);
+		///<summary>
+		/// <para><c>server.user.id</c></para>
+		/// <para>Unique identifier of the user.</para>
+		/// <example>S-1-5-21-202424912787-2692429404-2351956786-1000</example>
+		///</summary>
+		public static string ServerUserId = nameof(ServerUserId);
+		///<summary>
+		/// <para><c>server.user.name</c></para>
+		/// <para>Short name or login of the user.</para>
+		/// <example>a.einstein</example>
+		///</summary>
+		public static string ServerUserName = nameof(ServerUserName);
+		///<summary>
+		/// <para><c>server.user.group.domain</c></para>
+		/// <para>Name of the directory the group is a member of.
+		/// For example, an LDAP or Active Directory domain name.</para>
+		/// <example></example>
+		///</summary>
+		public static string ServerUserGroupDomain = nameof(ServerUserGroupDomain);
+		///<summary>
+		/// <para><c>server.user.group.id</c></para>
+		/// <para>Unique identifier for the group on the system/platform.</para>
+		/// <example></example>
+		///</summary>
+		public static string ServerUserGroupId = nameof(ServerUserGroupId);
+		///<summary>
+		/// <para><c>server.user.group.name</c></para>
+		/// <para>Name of the group.</para>
+		/// <example></example>
+		///</summary>
+		public static string ServerUserGroupName = nameof(ServerUserGroupName);
+		///<summary>
+		/// <para><c>server.user.risk.calculated_level</c></para>
+		/// <para>A risk classification level calculated by an internal system as part of entity analytics and entity risk scoring.</para>
+		/// <example>High</example>
+		///</summary>
+		public static string ServerUserRiskCalculatedLevel = nameof(ServerUserRiskCalculatedLevel);
+		///<summary>
+		/// <para><c>server.user.risk.calculated_score</c></para>
+		/// <para>A risk classification score calculated by an internal system as part of entity analytics and entity risk scoring.</para>
+		/// <example>880.73</example>
+		///</summary>
+		public static string ServerUserRiskCalculatedScore = nameof(ServerUserRiskCalculatedScore);
+		///<summary>
+		/// <para><c>server.user.risk.calculated_score_norm</c></para>
+		/// <para>A risk classification score calculated by an internal system as part of entity analytics and entity risk scoring, and normalized to a range of 0 to 100.</para>
+		/// <example>88.73</example>
+		///</summary>
+		public static string ServerUserRiskCalculatedScoreNorm = nameof(ServerUserRiskCalculatedScoreNorm);
+		///<summary>
+		/// <para><c>server.user.risk.static_level</c></para>
+		/// <para>A risk classification level obtained from outside the system, such as from some external Threat Intelligence Platform.</para>
+		/// <example>High</example>
+		///</summary>
+		public static string ServerUserRiskStaticLevel = nameof(ServerUserRiskStaticLevel);
+		///<summary>
+		/// <para><c>server.user.risk.static_score</c></para>
+		/// <para>A risk classification score obtained from outside the system, such as from some external Threat Intelligence Platform.</para>
+		/// <example>830.0</example>
+		///</summary>
+		public static string ServerUserRiskStaticScore = nameof(ServerUserRiskStaticScore);
+		///<summary>
+		/// <para><c>server.user.risk.static_score_norm</c></para>
+		/// <para>A risk classification score obtained from outside the system, such as from some external Threat Intelligence Platform, and normalized to a range of 0 to 100.</para>
+		/// <example>83.0</example>
+		///</summary>
+		public static string ServerUserRiskStaticScoreNorm = nameof(ServerUserRiskStaticScoreNorm);
+		///<summary>
 		/// <para><c>service.address</c></para>
 		/// <para>Address where data about this service was collected from.
 		/// This should be a URI, network address (ipv4:port or [ipv6]:port) or a resource path (sockets).</para>
@@ -2588,6 +5134,180 @@ namespace Elastic.CommonSchema
 		///</summary>
 		public static string SourceTopLevelDomain = nameof(SourceTopLevelDomain);
 		///<summary>
+		/// <para><c>source.as.number</c></para>
+		/// <para>Unique number allocated to the autonomous system. The autonomous system number (ASN) uniquely identifies each network on the Internet.</para>
+		/// <example>15169</example>
+		///</summary>
+		public static string SourceAsNumber = nameof(SourceAsNumber);
+		///<summary>
+		/// <para><c>source.as.organization.name</c></para>
+		/// <para>Organization name.</para>
+		/// <example>Google LLC</example>
+		///</summary>
+		public static string SourceAsOrganizationName = nameof(SourceAsOrganizationName);
+		///<summary>
+		/// <para><c>source.geo.city_name</c></para>
+		/// <para>City name.</para>
+		/// <example>Montreal</example>
+		///</summary>
+		public static string SourceGeoCityName = nameof(SourceGeoCityName);
+		///<summary>
+		/// <para><c>source.geo.continent_code</c></para>
+		/// <para>Two-letter code representing continent's name.</para>
+		/// <example>NA</example>
+		///</summary>
+		public static string SourceGeoContinentCode = nameof(SourceGeoContinentCode);
+		///<summary>
+		/// <para><c>source.geo.continent_name</c></para>
+		/// <para>Name of the continent.</para>
+		/// <example>North America</example>
+		///</summary>
+		public static string SourceGeoContinentName = nameof(SourceGeoContinentName);
+		///<summary>
+		/// <para><c>source.geo.country_iso_code</c></para>
+		/// <para>Country ISO code.</para>
+		/// <example>CA</example>
+		///</summary>
+		public static string SourceGeoCountryIsoCode = nameof(SourceGeoCountryIsoCode);
+		///<summary>
+		/// <para><c>source.geo.country_name</c></para>
+		/// <para>Country name.</para>
+		/// <example>Canada</example>
+		///</summary>
+		public static string SourceGeoCountryName = nameof(SourceGeoCountryName);
+		///<summary>
+		/// <para><c>source.geo.location</c></para>
+		/// <para>Longitude and latitude.</para>
+		/// <example>{ "lon": -73.614830, "lat": 45.505918 }</example>
+		///</summary>
+		public static string SourceGeoLocation = nameof(SourceGeoLocation);
+		///<summary>
+		/// <para><c>source.geo.name</c></para>
+		/// <para>User-defined description of a location, at the level of granularity they care about.
+		/// Could be the name of their data centers, the floor number, if this describes a local physical entity, city names.
+		/// Not typically used in automated geolocation.</para>
+		/// <example>boston-dc</example>
+		///</summary>
+		public static string SourceGeoName = nameof(SourceGeoName);
+		///<summary>
+		/// <para><c>source.geo.postal_code</c></para>
+		/// <para>Postal code associated with the location.
+		/// Values appropriate for this field may also be known as a postcode or ZIP code and will vary widely from country to country.</para>
+		/// <example>94040</example>
+		///</summary>
+		public static string SourceGeoPostalCode = nameof(SourceGeoPostalCode);
+		///<summary>
+		/// <para><c>source.geo.region_iso_code</c></para>
+		/// <para>Region ISO code.</para>
+		/// <example>CA-QC</example>
+		///</summary>
+		public static string SourceGeoRegionIsoCode = nameof(SourceGeoRegionIsoCode);
+		///<summary>
+		/// <para><c>source.geo.region_name</c></para>
+		/// <para>Region name.</para>
+		/// <example>Quebec</example>
+		///</summary>
+		public static string SourceGeoRegionName = nameof(SourceGeoRegionName);
+		///<summary>
+		/// <para><c>source.geo.timezone</c></para>
+		/// <para>The time zone of the location, such as IANA time zone name.</para>
+		/// <example>America/Argentina/Buenos_Aires</example>
+		///</summary>
+		public static string SourceGeoTimezone = nameof(SourceGeoTimezone);
+		///<summary>
+		/// <para><c>source.user.domain</c></para>
+		/// <para>Name of the directory the user is a member of.
+		/// For example, an LDAP or Active Directory domain name.</para>
+		/// <example></example>
+		///</summary>
+		public static string SourceUserDomain = nameof(SourceUserDomain);
+		///<summary>
+		/// <para><c>source.user.email</c></para>
+		/// <para>User email address.</para>
+		/// <example></example>
+		///</summary>
+		public static string SourceUserEmail = nameof(SourceUserEmail);
+		///<summary>
+		/// <para><c>source.user.full_name</c></para>
+		/// <para>User's full name, if available.</para>
+		/// <example>Albert Einstein</example>
+		///</summary>
+		public static string SourceUserFullName = nameof(SourceUserFullName);
+		///<summary>
+		/// <para><c>source.user.hash</c></para>
+		/// <para>Unique user hash to correlate information for a user in anonymized form.
+		/// Useful if `user.id` or `user.name` contain confidential information and cannot be used.</para>
+		/// <example></example>
+		///</summary>
+		public static string SourceUserHash = nameof(SourceUserHash);
+		///<summary>
+		/// <para><c>source.user.id</c></para>
+		/// <para>Unique identifier of the user.</para>
+		/// <example>S-1-5-21-202424912787-2692429404-2351956786-1000</example>
+		///</summary>
+		public static string SourceUserId = nameof(SourceUserId);
+		///<summary>
+		/// <para><c>source.user.name</c></para>
+		/// <para>Short name or login of the user.</para>
+		/// <example>a.einstein</example>
+		///</summary>
+		public static string SourceUserName = nameof(SourceUserName);
+		///<summary>
+		/// <para><c>source.user.group.domain</c></para>
+		/// <para>Name of the directory the group is a member of.
+		/// For example, an LDAP or Active Directory domain name.</para>
+		/// <example></example>
+		///</summary>
+		public static string SourceUserGroupDomain = nameof(SourceUserGroupDomain);
+		///<summary>
+		/// <para><c>source.user.group.id</c></para>
+		/// <para>Unique identifier for the group on the system/platform.</para>
+		/// <example></example>
+		///</summary>
+		public static string SourceUserGroupId = nameof(SourceUserGroupId);
+		///<summary>
+		/// <para><c>source.user.group.name</c></para>
+		/// <para>Name of the group.</para>
+		/// <example></example>
+		///</summary>
+		public static string SourceUserGroupName = nameof(SourceUserGroupName);
+		///<summary>
+		/// <para><c>source.user.risk.calculated_level</c></para>
+		/// <para>A risk classification level calculated by an internal system as part of entity analytics and entity risk scoring.</para>
+		/// <example>High</example>
+		///</summary>
+		public static string SourceUserRiskCalculatedLevel = nameof(SourceUserRiskCalculatedLevel);
+		///<summary>
+		/// <para><c>source.user.risk.calculated_score</c></para>
+		/// <para>A risk classification score calculated by an internal system as part of entity analytics and entity risk scoring.</para>
+		/// <example>880.73</example>
+		///</summary>
+		public static string SourceUserRiskCalculatedScore = nameof(SourceUserRiskCalculatedScore);
+		///<summary>
+		/// <para><c>source.user.risk.calculated_score_norm</c></para>
+		/// <para>A risk classification score calculated by an internal system as part of entity analytics and entity risk scoring, and normalized to a range of 0 to 100.</para>
+		/// <example>88.73</example>
+		///</summary>
+		public static string SourceUserRiskCalculatedScoreNorm = nameof(SourceUserRiskCalculatedScoreNorm);
+		///<summary>
+		/// <para><c>source.user.risk.static_level</c></para>
+		/// <para>A risk classification level obtained from outside the system, such as from some external Threat Intelligence Platform.</para>
+		/// <example>High</example>
+		///</summary>
+		public static string SourceUserRiskStaticLevel = nameof(SourceUserRiskStaticLevel);
+		///<summary>
+		/// <para><c>source.user.risk.static_score</c></para>
+		/// <para>A risk classification score obtained from outside the system, such as from some external Threat Intelligence Platform.</para>
+		/// <example>830.0</example>
+		///</summary>
+		public static string SourceUserRiskStaticScore = nameof(SourceUserRiskStaticScore);
+		///<summary>
+		/// <para><c>source.user.risk.static_score_norm</c></para>
+		/// <para>A risk classification score obtained from outside the system, such as from some external Threat Intelligence Platform, and normalized to a range of 0 to 100.</para>
+		/// <example>83.0</example>
+		///</summary>
+		public static string SourceUserRiskStaticScoreNorm = nameof(SourceUserRiskStaticScoreNorm);
+		///<summary>
 		/// <para><c>threat.feed.dashboard_id</c></para>
 		/// <para>The saved object ID of the dashboard belonging to the threat feed for displaying dashboard links to threat feeds in Kibana.</para>
 		/// <example>5ba16340-72e6-11eb-a3e3-b3cc7c78a70f</example>
@@ -2667,7 +5387,7 @@ namespace Elastic.CommonSchema
 		///<summary>
 		/// <para><c>threat.indicator.first_seen</c></para>
 		/// <para>The date and time when intelligence source first reported sighting this indicator.</para>
-		/// <example>11/5/2020 5:25:47PM</example>
+		/// <example>11/5/2020 5:25:47 PM</example>
 		///</summary>
 		public static string ThreatIndicatorFirstSeen = nameof(ThreatIndicatorFirstSeen);
 		///<summary>
@@ -2679,7 +5399,7 @@ namespace Elastic.CommonSchema
 		///<summary>
 		/// <para><c>threat.indicator.last_seen</c></para>
 		/// <para>The date and time when intelligence source last reported sighting this indicator.</para>
-		/// <example>11/5/2020 5:25:47PM</example>
+		/// <example>11/5/2020 5:25:47 PM</example>
 		///</summary>
 		public static string ThreatIndicatorLastSeen = nameof(ThreatIndicatorLastSeen);
 		///<summary>
@@ -2706,7 +5426,7 @@ namespace Elastic.CommonSchema
 		///<summary>
 		/// <para><c>threat.indicator.modified_at</c></para>
 		/// <para>The date and time when intelligence source last modified information for this indicator.</para>
-		/// <example>11/5/2020 5:25:47PM</example>
+		/// <example>11/5/2020 5:25:47 PM</example>
 		///</summary>
 		public static string ThreatIndicatorModifiedAt = nameof(ThreatIndicatorModifiedAt);
 		///<summary>
@@ -2806,6 +5526,877 @@ namespace Elastic.CommonSchema
 		///</summary>
 		public static string ThreatSoftwareType = nameof(ThreatSoftwareType);
 		///<summary>
+		/// <para><c>threat.indicator.x509.issuer.distinguished_name</c></para>
+		/// <para>Distinguished name (DN) of issuing certificate authority.</para>
+		/// <example>C=US, O=Example Inc, OU=www.example.com, CN=Example SHA2 High Assurance Server CA</example>
+		///</summary>
+		public static string ThreatIndicatorX509IssuerDistinguishedName = nameof(ThreatIndicatorX509IssuerDistinguishedName);
+		///<summary>
+		/// <para><c>threat.indicator.x509.not_after</c></para>
+		/// <para>Time at which the certificate is no longer considered valid.</para>
+		/// <example>7/16/2020 3:15:39 AM</example>
+		///</summary>
+		public static string ThreatIndicatorX509NotAfter = nameof(ThreatIndicatorX509NotAfter);
+		///<summary>
+		/// <para><c>threat.indicator.x509.not_before</c></para>
+		/// <para>Time at which the certificate is first considered valid.</para>
+		/// <example>8/16/2019 1:40:25 AM</example>
+		///</summary>
+		public static string ThreatIndicatorX509NotBefore = nameof(ThreatIndicatorX509NotBefore);
+		///<summary>
+		/// <para><c>threat.indicator.x509.public_key_algorithm</c></para>
+		/// <para>Algorithm used to generate the public key.</para>
+		/// <example>RSA</example>
+		///</summary>
+		public static string ThreatIndicatorX509PublicKeyAlgorithm = nameof(ThreatIndicatorX509PublicKeyAlgorithm);
+		///<summary>
+		/// <para><c>threat.indicator.x509.public_key_curve</c></para>
+		/// <para>The curve used by the elliptic curve public key algorithm. This is algorithm specific.</para>
+		/// <example>nistp521</example>
+		///</summary>
+		public static string ThreatIndicatorX509PublicKeyCurve = nameof(ThreatIndicatorX509PublicKeyCurve);
+		///<summary>
+		/// <para><c>threat.indicator.x509.public_key_exponent</c></para>
+		/// <para>Exponent used to derive the public key. This is algorithm specific.
+		/// <para><br/>Stored but not available for search in Elasticsearch by default</para></para>
+		/// <example>65537</example>
+		///</summary>
+		public static string ThreatIndicatorX509PublicKeyExponent = nameof(ThreatIndicatorX509PublicKeyExponent);
+		///<summary>
+		/// <para><c>threat.indicator.x509.public_key_size</c></para>
+		/// <para>The size of the public key space in bits.</para>
+		/// <example>2048</example>
+		///</summary>
+		public static string ThreatIndicatorX509PublicKeySize = nameof(ThreatIndicatorX509PublicKeySize);
+		///<summary>
+		/// <para><c>threat.indicator.x509.serial_number</c></para>
+		/// <para>Unique serial number issued by the certificate authority. For consistency, if this value is alphanumeric, it should be formatted without colons and uppercase characters.</para>
+		/// <example>55FBB9C7DEBF09809D12CCAA</example>
+		///</summary>
+		public static string ThreatIndicatorX509SerialNumber = nameof(ThreatIndicatorX509SerialNumber);
+		///<summary>
+		/// <para><c>threat.indicator.x509.signature_algorithm</c></para>
+		/// <para>Identifier for certificate signature algorithm. We recommend using names found in Go Lang Crypto library. See https://github.com/golang/go/blob/go1.14/src/crypto/x509/x509.go#L337-L353.</para>
+		/// <example>SHA256-RSA</example>
+		///</summary>
+		public static string ThreatIndicatorX509SignatureAlgorithm = nameof(ThreatIndicatorX509SignatureAlgorithm);
+		///<summary>
+		/// <para><c>threat.indicator.x509.subject.distinguished_name</c></para>
+		/// <para>Distinguished name (DN) of the certificate subject entity.</para>
+		/// <example>C=US, ST=California, L=San Francisco, O=Example, Inc., CN=shared.global.example.net</example>
+		///</summary>
+		public static string ThreatIndicatorX509SubjectDistinguishedName = nameof(ThreatIndicatorX509SubjectDistinguishedName);
+		///<summary>
+		/// <para><c>threat.indicator.x509.version_number</c></para>
+		/// <para>Version of x509 format.</para>
+		/// <example>3</example>
+		///</summary>
+		public static string ThreatIndicatorX509VersionNumber = nameof(ThreatIndicatorX509VersionNumber);
+		///<summary>
+		/// <para><c>threat.indicator.as.number</c></para>
+		/// <para>Unique number allocated to the autonomous system. The autonomous system number (ASN) uniquely identifies each network on the Internet.</para>
+		/// <example>15169</example>
+		///</summary>
+		public static string ThreatIndicatorAsNumber = nameof(ThreatIndicatorAsNumber);
+		///<summary>
+		/// <para><c>threat.indicator.as.organization.name</c></para>
+		/// <para>Organization name.</para>
+		/// <example>Google LLC</example>
+		///</summary>
+		public static string ThreatIndicatorAsOrganizationName = nameof(ThreatIndicatorAsOrganizationName);
+		///<summary>
+		/// <para><c>threat.indicator.file.accessed</c></para>
+		/// <para>Last time the file was accessed.
+		/// Note that not all filesystems keep track of access time.</para>
+		/// <example></example>
+		///</summary>
+		public static string ThreatIndicatorFileAccessed = nameof(ThreatIndicatorFileAccessed);
+		///<summary>
+		/// <para><c>threat.indicator.file.created</c></para>
+		/// <para>File creation time.
+		/// Note that not all filesystems store the creation time.</para>
+		/// <example></example>
+		///</summary>
+		public static string ThreatIndicatorFileCreated = nameof(ThreatIndicatorFileCreated);
+		///<summary>
+		/// <para><c>threat.indicator.file.ctime</c></para>
+		/// <para>Last time the file attributes or metadata changed.
+		/// Note that changes to the file content will update `mtime`. This implies `ctime` will be adjusted at the same time, since `mtime` is an attribute of the file.</para>
+		/// <example></example>
+		///</summary>
+		public static string ThreatIndicatorFileCtime = nameof(ThreatIndicatorFileCtime);
+		///<summary>
+		/// <para><c>threat.indicator.file.device</c></para>
+		/// <para>Device that is the source of the file.</para>
+		/// <example>sda</example>
+		///</summary>
+		public static string ThreatIndicatorFileDevice = nameof(ThreatIndicatorFileDevice);
+		///<summary>
+		/// <para><c>threat.indicator.file.directory</c></para>
+		/// <para>Directory where the file is located. It should include the drive letter, when appropriate.</para>
+		/// <example>/home/alice</example>
+		///</summary>
+		public static string ThreatIndicatorFileDirectory = nameof(ThreatIndicatorFileDirectory);
+		///<summary>
+		/// <para><c>threat.indicator.file.drive_letter</c></para>
+		/// <para>Drive letter where the file is located. This field is only relevant on Windows.
+		/// The value should be uppercase, and not include the colon.</para>
+		/// <example>C</example>
+		///</summary>
+		public static string ThreatIndicatorFileDriveLetter = nameof(ThreatIndicatorFileDriveLetter);
+		///<summary>
+		/// <para><c>threat.indicator.file.extension</c></para>
+		/// <para>File extension, excluding the leading dot.
+		/// Note that when the file name has multiple extensions (example.tar.gz), only the last one should be captured ("gz", not "tar.gz").</para>
+		/// <example>png</example>
+		///</summary>
+		public static string ThreatIndicatorFileExtension = nameof(ThreatIndicatorFileExtension);
+		///<summary>
+		/// <para><c>threat.indicator.file.fork_name</c></para>
+		/// <para>A fork is additional data associated with a filesystem object.
+		/// On Linux, a resource fork is used to store additional data with a filesystem object. A file always has at least one fork for the data portion, and additional forks may exist.
+		/// On NTFS, this is analogous to an Alternate Data Stream (ADS), and the default data stream for a file is just called $DATA. Zone.Identifier is commonly used by Windows to track contents downloaded from the Internet. An ADS is typically of the form: `C:\path\to\filename.extension:some_fork_name`, and `some_fork_name` is the value that should populate `fork_name`. `filename.extension` should populate `file.name`, and `extension` should populate `file.extension`. The full path, `file.path`, will include the fork name.</para>
+		/// <example>Zone.Identifer</example>
+		///</summary>
+		public static string ThreatIndicatorFileForkName = nameof(ThreatIndicatorFileForkName);
+		///<summary>
+		/// <para><c>threat.indicator.file.gid</c></para>
+		/// <para>Primary group ID (GID) of the file.</para>
+		/// <example>1001</example>
+		///</summary>
+		public static string ThreatIndicatorFileGid = nameof(ThreatIndicatorFileGid);
+		///<summary>
+		/// <para><c>threat.indicator.file.group</c></para>
+		/// <para>Primary group name of the file.</para>
+		/// <example>alice</example>
+		///</summary>
+		public static string ThreatIndicatorFileGroup = nameof(ThreatIndicatorFileGroup);
+		///<summary>
+		/// <para><c>threat.indicator.file.inode</c></para>
+		/// <para>Inode representing the file in the filesystem.</para>
+		/// <example>256383</example>
+		///</summary>
+		public static string ThreatIndicatorFileInode = nameof(ThreatIndicatorFileInode);
+		///<summary>
+		/// <para><c>threat.indicator.file.mime_type</c></para>
+		/// <para>MIME type should identify the format of the file or stream of bytes using https://www.iana.org/assignments/media-types/media-types.xhtml[IANA official types], where possible. When more than one type is applicable, the most specific type should be used.</para>
+		/// <example></example>
+		///</summary>
+		public static string ThreatIndicatorFileMimeType = nameof(ThreatIndicatorFileMimeType);
+		///<summary>
+		/// <para><c>threat.indicator.file.mode</c></para>
+		/// <para>Mode of the file in octal representation.</para>
+		/// <example>0640</example>
+		///</summary>
+		public static string ThreatIndicatorFileMode = nameof(ThreatIndicatorFileMode);
+		///<summary>
+		/// <para><c>threat.indicator.file.mtime</c></para>
+		/// <para>Last time the file content was modified.</para>
+		/// <example></example>
+		///</summary>
+		public static string ThreatIndicatorFileMtime = nameof(ThreatIndicatorFileMtime);
+		///<summary>
+		/// <para><c>threat.indicator.file.name</c></para>
+		/// <para>Name of the file including the extension, without the directory.</para>
+		/// <example>example.png</example>
+		///</summary>
+		public static string ThreatIndicatorFileName = nameof(ThreatIndicatorFileName);
+		///<summary>
+		/// <para><c>threat.indicator.file.owner</c></para>
+		/// <para>File owner's username.</para>
+		/// <example>alice</example>
+		///</summary>
+		public static string ThreatIndicatorFileOwner = nameof(ThreatIndicatorFileOwner);
+		///<summary>
+		/// <para><c>threat.indicator.file.path</c></para>
+		/// <para>Full path to the file, including the file name. It should include the drive letter, when appropriate.</para>
+		/// <example>/home/alice/example.png</example>
+		///</summary>
+		public static string ThreatIndicatorFilePath = nameof(ThreatIndicatorFilePath);
+		///<summary>
+		/// <para><c>threat.indicator.file.size</c></para>
+		/// <para>File size in bytes.
+		/// Only relevant when `file.type` is "file".</para>
+		/// <example>16384</example>
+		///</summary>
+		public static string ThreatIndicatorFileSize = nameof(ThreatIndicatorFileSize);
+		///<summary>
+		/// <para><c>threat.indicator.file.target_path</c></para>
+		/// <para>Target path for symlinks.</para>
+		/// <example></example>
+		///</summary>
+		public static string ThreatIndicatorFileTargetPath = nameof(ThreatIndicatorFileTargetPath);
+		///<summary>
+		/// <para><c>threat.indicator.file.type</c></para>
+		/// <para>File type (file, dir, or symlink).</para>
+		/// <example>file</example>
+		///</summary>
+		public static string ThreatIndicatorFileType = nameof(ThreatIndicatorFileType);
+		///<summary>
+		/// <para><c>threat.indicator.file.uid</c></para>
+		/// <para>The user ID (UID) or security identifier (SID) of the file owner.</para>
+		/// <example>1001</example>
+		///</summary>
+		public static string ThreatIndicatorFileUid = nameof(ThreatIndicatorFileUid);
+		///<summary>
+		/// <para><c>threat.indicator.file.hash.md5</c></para>
+		/// <para>MD5 hash.</para>
+		/// <example></example>
+		///</summary>
+		public static string ThreatIndicatorFileHashMd5 = nameof(ThreatIndicatorFileHashMd5);
+		///<summary>
+		/// <para><c>threat.indicator.file.hash.sha1</c></para>
+		/// <para>SHA1 hash.</para>
+		/// <example></example>
+		///</summary>
+		public static string ThreatIndicatorFileHashSha1 = nameof(ThreatIndicatorFileHashSha1);
+		///<summary>
+		/// <para><c>threat.indicator.file.hash.sha256</c></para>
+		/// <para>SHA256 hash.</para>
+		/// <example></example>
+		///</summary>
+		public static string ThreatIndicatorFileHashSha256 = nameof(ThreatIndicatorFileHashSha256);
+		///<summary>
+		/// <para><c>threat.indicator.file.hash.sha384</c></para>
+		/// <para>SHA384 hash.</para>
+		/// <example></example>
+		///</summary>
+		public static string ThreatIndicatorFileHashSha384 = nameof(ThreatIndicatorFileHashSha384);
+		///<summary>
+		/// <para><c>threat.indicator.file.hash.sha512</c></para>
+		/// <para>SHA512 hash.</para>
+		/// <example></example>
+		///</summary>
+		public static string ThreatIndicatorFileHashSha512 = nameof(ThreatIndicatorFileHashSha512);
+		///<summary>
+		/// <para><c>threat.indicator.file.hash.ssdeep</c></para>
+		/// <para>SSDEEP hash.</para>
+		/// <example></example>
+		///</summary>
+		public static string ThreatIndicatorFileHashSsdeep = nameof(ThreatIndicatorFileHashSsdeep);
+		///<summary>
+		/// <para><c>threat.indicator.file.hash.tlsh</c></para>
+		/// <para>TLSH hash.</para>
+		/// <example></example>
+		///</summary>
+		public static string ThreatIndicatorFileHashTlsh = nameof(ThreatIndicatorFileHashTlsh);
+		///<summary>
+		/// <para><c>threat.indicator.file.pe.architecture</c></para>
+		/// <para>CPU architecture target for the file.</para>
+		/// <example>x64</example>
+		///</summary>
+		public static string ThreatIndicatorFilePeArchitecture = nameof(ThreatIndicatorFilePeArchitecture);
+		///<summary>
+		/// <para><c>threat.indicator.file.pe.company</c></para>
+		/// <para>Internal company name of the file, provided at compile-time.</para>
+		/// <example>Microsoft Corporation</example>
+		///</summary>
+		public static string ThreatIndicatorFilePeCompany = nameof(ThreatIndicatorFilePeCompany);
+		///<summary>
+		/// <para><c>threat.indicator.file.pe.description</c></para>
+		/// <para>Internal description of the file, provided at compile-time.</para>
+		/// <example>Paint</example>
+		///</summary>
+		public static string ThreatIndicatorFilePeDescription = nameof(ThreatIndicatorFilePeDescription);
+		///<summary>
+		/// <para><c>threat.indicator.file.pe.file_version</c></para>
+		/// <para>Internal version of the file, provided at compile-time.</para>
+		/// <example>6.3.9600.17415</example>
+		///</summary>
+		public static string ThreatIndicatorFilePeFileVersion = nameof(ThreatIndicatorFilePeFileVersion);
+		///<summary>
+		/// <para><c>threat.indicator.file.pe.go_import_hash</c></para>
+		/// <para>A hash of the Go language imports in a PE file excluding standard library imports. An import hash can be used to fingerprint binaries even after recompilation or other code-level transformations have occurred, which would change more traditional hash values.
+		/// The algorithm used to calculate the Go symbol hash and a reference implementation are available [here](https://github.com/elastic/toutoumomoma).</para>
+		/// <example>10bddcb4cee42080f76c88d9ff964491</example>
+		///</summary>
+		public static string ThreatIndicatorFilePeGoImportHash = nameof(ThreatIndicatorFilePeGoImportHash);
+		///<summary>
+		/// <para><c>threat.indicator.file.pe.go_imports</c></para>
+		/// <para>List of imported Go language element names and types.</para>
+		/// <example></example>
+		///</summary>
+		public static string ThreatIndicatorFilePeGoImports = nameof(ThreatIndicatorFilePeGoImports);
+		///<summary>
+		/// <para><c>threat.indicator.file.pe.go_imports_names_entropy</c></para>
+		/// <para>Shannon entropy calculation from the list of Go imports.</para>
+		/// <example></example>
+		///</summary>
+		public static string ThreatIndicatorFilePeGoImportsNamesEntropy = nameof(ThreatIndicatorFilePeGoImportsNamesEntropy);
+		///<summary>
+		/// <para><c>threat.indicator.file.pe.go_imports_names_var_entropy</c></para>
+		/// <para>Variance for Shannon entropy calculation from the list of Go imports.</para>
+		/// <example></example>
+		///</summary>
+		public static string ThreatIndicatorFilePeGoImportsNamesVarEntropy = nameof(ThreatIndicatorFilePeGoImportsNamesVarEntropy);
+		///<summary>
+		/// <para><c>threat.indicator.file.pe.go_stripped</c></para>
+		/// <para>Set to true if the file is a Go executable that has had its symbols stripped or obfuscated and false if an unobfuscated Go executable.</para>
+		/// <example></example>
+		///</summary>
+		public static string ThreatIndicatorFilePeGoStripped = nameof(ThreatIndicatorFilePeGoStripped);
+		///<summary>
+		/// <para><c>threat.indicator.file.pe.imphash</c></para>
+		/// <para>A hash of the imports in a PE file. An imphash -- or import hash -- can be used to fingerprint binaries even after recompilation or other code-level transformations have occurred, which would change more traditional hash values.
+		/// Learn more at https://www.fireeye.com/blog/threat-research/2014/01/tracking-malware-import-hashing.html.</para>
+		/// <example>0c6803c4e922103c4dca5963aad36ddf</example>
+		///</summary>
+		public static string ThreatIndicatorFilePeImphash = nameof(ThreatIndicatorFilePeImphash);
+		///<summary>
+		/// <para><c>threat.indicator.file.pe.import_hash</c></para>
+		/// <para>A hash of the imports in a PE file. An import hash can be used to fingerprint binaries even after recompilation or other code-level transformations have occurred, which would change more traditional hash values.
+		/// This is a synonym for imphash.</para>
+		/// <example>d41d8cd98f00b204e9800998ecf8427e</example>
+		///</summary>
+		public static string ThreatIndicatorFilePeImportHash = nameof(ThreatIndicatorFilePeImportHash);
+		///<summary>
+		/// <para><c>threat.indicator.file.pe.imports_names_entropy</c></para>
+		/// <para>Shannon entropy calculation from the list of imported element names and types.</para>
+		/// <example></example>
+		///</summary>
+		public static string ThreatIndicatorFilePeImportsNamesEntropy = nameof(ThreatIndicatorFilePeImportsNamesEntropy);
+		///<summary>
+		/// <para><c>threat.indicator.file.pe.imports_names_var_entropy</c></para>
+		/// <para>Variance for Shannon entropy calculation from the list of imported element names and types.</para>
+		/// <example></example>
+		///</summary>
+		public static string ThreatIndicatorFilePeImportsNamesVarEntropy = nameof(ThreatIndicatorFilePeImportsNamesVarEntropy);
+		///<summary>
+		/// <para><c>threat.indicator.file.pe.original_file_name</c></para>
+		/// <para>Internal name of the file, provided at compile-time.</para>
+		/// <example>MSPAINT.EXE</example>
+		///</summary>
+		public static string ThreatIndicatorFilePeOriginalFileName = nameof(ThreatIndicatorFilePeOriginalFileName);
+		///<summary>
+		/// <para><c>threat.indicator.file.pe.pehash</c></para>
+		/// <para>A hash of the PE header and data from one or more PE sections. An pehash can be used to cluster files by transforming structural information about a file into a hash value.
+		/// Learn more at https://www.usenix.org/legacy/events/leet09/tech/full_papers/wicherski/wicherski_html/index.html.</para>
+		/// <example>73ff189b63cd6be375a7ff25179a38d347651975</example>
+		///</summary>
+		public static string ThreatIndicatorFilePePehash = nameof(ThreatIndicatorFilePePehash);
+		///<summary>
+		/// <para><c>threat.indicator.file.pe.product</c></para>
+		/// <para>Internal product name of the file, provided at compile-time.</para>
+		/// <example>Microsoft® Windows® Operating System</example>
+		///</summary>
+		public static string ThreatIndicatorFilePeProduct = nameof(ThreatIndicatorFilePeProduct);
+		///<summary>
+		/// <para><c>threat.indicator.file.x509.issuer.distinguished_name</c></para>
+		/// <para>Distinguished name (DN) of issuing certificate authority.</para>
+		/// <example>C=US, O=Example Inc, OU=www.example.com, CN=Example SHA2 High Assurance Server CA</example>
+		///</summary>
+		public static string ThreatIndicatorFileX509IssuerDistinguishedName = nameof(ThreatIndicatorFileX509IssuerDistinguishedName);
+		///<summary>
+		/// <para><c>threat.indicator.file.x509.not_after</c></para>
+		/// <para>Time at which the certificate is no longer considered valid.</para>
+		/// <example>7/16/2020 3:15:39 AM</example>
+		///</summary>
+		public static string ThreatIndicatorFileX509NotAfter = nameof(ThreatIndicatorFileX509NotAfter);
+		///<summary>
+		/// <para><c>threat.indicator.file.x509.not_before</c></para>
+		/// <para>Time at which the certificate is first considered valid.</para>
+		/// <example>8/16/2019 1:40:25 AM</example>
+		///</summary>
+		public static string ThreatIndicatorFileX509NotBefore = nameof(ThreatIndicatorFileX509NotBefore);
+		///<summary>
+		/// <para><c>threat.indicator.file.x509.public_key_algorithm</c></para>
+		/// <para>Algorithm used to generate the public key.</para>
+		/// <example>RSA</example>
+		///</summary>
+		public static string ThreatIndicatorFileX509PublicKeyAlgorithm = nameof(ThreatIndicatorFileX509PublicKeyAlgorithm);
+		///<summary>
+		/// <para><c>threat.indicator.file.x509.public_key_curve</c></para>
+		/// <para>The curve used by the elliptic curve public key algorithm. This is algorithm specific.</para>
+		/// <example>nistp521</example>
+		///</summary>
+		public static string ThreatIndicatorFileX509PublicKeyCurve = nameof(ThreatIndicatorFileX509PublicKeyCurve);
+		///<summary>
+		/// <para><c>threat.indicator.file.x509.public_key_exponent</c></para>
+		/// <para>Exponent used to derive the public key. This is algorithm specific.
+		/// <para><br/>Stored but not available for search in Elasticsearch by default</para></para>
+		/// <example>65537</example>
+		///</summary>
+		public static string ThreatIndicatorFileX509PublicKeyExponent = nameof(ThreatIndicatorFileX509PublicKeyExponent);
+		///<summary>
+		/// <para><c>threat.indicator.file.x509.public_key_size</c></para>
+		/// <para>The size of the public key space in bits.</para>
+		/// <example>2048</example>
+		///</summary>
+		public static string ThreatIndicatorFileX509PublicKeySize = nameof(ThreatIndicatorFileX509PublicKeySize);
+		///<summary>
+		/// <para><c>threat.indicator.file.x509.serial_number</c></para>
+		/// <para>Unique serial number issued by the certificate authority. For consistency, if this value is alphanumeric, it should be formatted without colons and uppercase characters.</para>
+		/// <example>55FBB9C7DEBF09809D12CCAA</example>
+		///</summary>
+		public static string ThreatIndicatorFileX509SerialNumber = nameof(ThreatIndicatorFileX509SerialNumber);
+		///<summary>
+		/// <para><c>threat.indicator.file.x509.signature_algorithm</c></para>
+		/// <para>Identifier for certificate signature algorithm. We recommend using names found in Go Lang Crypto library. See https://github.com/golang/go/blob/go1.14/src/crypto/x509/x509.go#L337-L353.</para>
+		/// <example>SHA256-RSA</example>
+		///</summary>
+		public static string ThreatIndicatorFileX509SignatureAlgorithm = nameof(ThreatIndicatorFileX509SignatureAlgorithm);
+		///<summary>
+		/// <para><c>threat.indicator.file.x509.subject.distinguished_name</c></para>
+		/// <para>Distinguished name (DN) of the certificate subject entity.</para>
+		/// <example>C=US, ST=California, L=San Francisco, O=Example, Inc., CN=shared.global.example.net</example>
+		///</summary>
+		public static string ThreatIndicatorFileX509SubjectDistinguishedName = nameof(ThreatIndicatorFileX509SubjectDistinguishedName);
+		///<summary>
+		/// <para><c>threat.indicator.file.x509.version_number</c></para>
+		/// <para>Version of x509 format.</para>
+		/// <example>3</example>
+		///</summary>
+		public static string ThreatIndicatorFileX509VersionNumber = nameof(ThreatIndicatorFileX509VersionNumber);
+		///<summary>
+		/// <para><c>threat.indicator.file.code_signature.digest_algorithm</c></para>
+		/// <para>The hashing algorithm used to sign the process.
+		/// This value can distinguish signatures when a file is signed multiple times by the same signer but with a different digest algorithm.</para>
+		/// <example>sha256</example>
+		///</summary>
+		public static string ThreatIndicatorFileCodeSignatureDigestAlgorithm = nameof(ThreatIndicatorFileCodeSignatureDigestAlgorithm);
+		///<summary>
+		/// <para><c>threat.indicator.file.code_signature.exists</c></para>
+		/// <para>Boolean to capture if a signature is present.</para>
+		/// <example>true</example>
+		///</summary>
+		public static string ThreatIndicatorFileCodeSignatureExists = nameof(ThreatIndicatorFileCodeSignatureExists);
+		///<summary>
+		/// <para><c>threat.indicator.file.code_signature.signing_id</c></para>
+		/// <para>The identifier used to sign the process.
+		/// This is used to identify the application manufactured by a software vendor. The field is relevant to Apple *OS only.</para>
+		/// <example>com.apple.xpc.proxy</example>
+		///</summary>
+		public static string ThreatIndicatorFileCodeSignatureSigningId = nameof(ThreatIndicatorFileCodeSignatureSigningId);
+		///<summary>
+		/// <para><c>threat.indicator.file.code_signature.status</c></para>
+		/// <para>Additional information about the certificate status.
+		/// This is useful for logging cryptographic errors with the certificate validity or trust status. Leave unpopulated if the validity or trust of the certificate was unchecked.</para>
+		/// <example>ERROR_UNTRUSTED_ROOT</example>
+		///</summary>
+		public static string ThreatIndicatorFileCodeSignatureStatus = nameof(ThreatIndicatorFileCodeSignatureStatus);
+		///<summary>
+		/// <para><c>threat.indicator.file.code_signature.subject_name</c></para>
+		/// <para>Subject name of the code signer</para>
+		/// <example>Microsoft Corporation</example>
+		///</summary>
+		public static string ThreatIndicatorFileCodeSignatureSubjectName = nameof(ThreatIndicatorFileCodeSignatureSubjectName);
+		///<summary>
+		/// <para><c>threat.indicator.file.code_signature.team_id</c></para>
+		/// <para>The team identifier used to sign the process.
+		/// This is used to identify the team or vendor of a software product. The field is relevant to Apple *OS only.</para>
+		/// <example>EQHXZ8M8AV</example>
+		///</summary>
+		public static string ThreatIndicatorFileCodeSignatureTeamId = nameof(ThreatIndicatorFileCodeSignatureTeamId);
+		///<summary>
+		/// <para><c>threat.indicator.file.code_signature.timestamp</c></para>
+		/// <para>Date and time when the code signature was generated and signed.</para>
+		/// <example>1/1/2021 12:10:30 PM</example>
+		///</summary>
+		public static string ThreatIndicatorFileCodeSignatureTimestamp = nameof(ThreatIndicatorFileCodeSignatureTimestamp);
+		///<summary>
+		/// <para><c>threat.indicator.file.code_signature.trusted</c></para>
+		/// <para>Stores the trust status of the certificate chain.
+		/// Validating the trust of the certificate chain may be complicated, and this field should only be populated by tools that actively check the status.</para>
+		/// <example>true</example>
+		///</summary>
+		public static string ThreatIndicatorFileCodeSignatureTrusted = nameof(ThreatIndicatorFileCodeSignatureTrusted);
+		///<summary>
+		/// <para><c>threat.indicator.file.code_signature.valid</c></para>
+		/// <para>Boolean to capture if the digital signature is verified against the binary content.
+		/// Leave unpopulated if a certificate was unchecked.</para>
+		/// <example>true</example>
+		///</summary>
+		public static string ThreatIndicatorFileCodeSignatureValid = nameof(ThreatIndicatorFileCodeSignatureValid);
+		///<summary>
+		/// <para><c>threat.indicator.file.elf.architecture</c></para>
+		/// <para>Machine architecture of the ELF file.</para>
+		/// <example>x86-64</example>
+		///</summary>
+		public static string ThreatIndicatorFileElfArchitecture = nameof(ThreatIndicatorFileElfArchitecture);
+		///<summary>
+		/// <para><c>threat.indicator.file.elf.byte_order</c></para>
+		/// <para>Byte sequence of ELF file.</para>
+		/// <example>Little Endian</example>
+		///</summary>
+		public static string ThreatIndicatorFileElfByteOrder = nameof(ThreatIndicatorFileElfByteOrder);
+		///<summary>
+		/// <para><c>threat.indicator.file.elf.cpu_type</c></para>
+		/// <para>CPU type of the ELF file.</para>
+		/// <example>Intel</example>
+		///</summary>
+		public static string ThreatIndicatorFileElfCpuType = nameof(ThreatIndicatorFileElfCpuType);
+		///<summary>
+		/// <para><c>threat.indicator.file.elf.creation_date</c></para>
+		/// <para>Extracted when possible from the file's metadata. Indicates when it was built or compiled. It can also be faked by malware creators.</para>
+		/// <example></example>
+		///</summary>
+		public static string ThreatIndicatorFileElfCreationDate = nameof(ThreatIndicatorFileElfCreationDate);
+		///<summary>
+		/// <para><c>threat.indicator.file.elf.go_import_hash</c></para>
+		/// <para>A hash of the Go language imports in an ELF file excluding standard library imports. An import hash can be used to fingerprint binaries even after recompilation or other code-level transformations have occurred, which would change more traditional hash values.
+		/// The algorithm used to calculate the Go symbol hash and a reference implementation are available [here](https://github.com/elastic/toutoumomoma).</para>
+		/// <example>10bddcb4cee42080f76c88d9ff964491</example>
+		///</summary>
+		public static string ThreatIndicatorFileElfGoImportHash = nameof(ThreatIndicatorFileElfGoImportHash);
+		///<summary>
+		/// <para><c>threat.indicator.file.elf.go_imports</c></para>
+		/// <para>List of imported Go language element names and types.</para>
+		/// <example></example>
+		///</summary>
+		public static string ThreatIndicatorFileElfGoImports = nameof(ThreatIndicatorFileElfGoImports);
+		///<summary>
+		/// <para><c>threat.indicator.file.elf.go_imports_names_entropy</c></para>
+		/// <para>Shannon entropy calculation from the list of Go imports.</para>
+		/// <example></example>
+		///</summary>
+		public static string ThreatIndicatorFileElfGoImportsNamesEntropy = nameof(ThreatIndicatorFileElfGoImportsNamesEntropy);
+		///<summary>
+		/// <para><c>threat.indicator.file.elf.go_imports_names_var_entropy</c></para>
+		/// <para>Variance for Shannon entropy calculation from the list of Go imports.</para>
+		/// <example></example>
+		///</summary>
+		public static string ThreatIndicatorFileElfGoImportsNamesVarEntropy = nameof(ThreatIndicatorFileElfGoImportsNamesVarEntropy);
+		///<summary>
+		/// <para><c>threat.indicator.file.elf.go_stripped</c></para>
+		/// <para>Set to true if the file is a Go executable that has had its symbols stripped or obfuscated and false if an unobfuscated Go executable.</para>
+		/// <example></example>
+		///</summary>
+		public static string ThreatIndicatorFileElfGoStripped = nameof(ThreatIndicatorFileElfGoStripped);
+		///<summary>
+		/// <para><c>threat.indicator.file.elf.header.abi_version</c></para>
+		/// <para>Version of the ELF Application Binary Interface (ABI).</para>
+		/// <example></example>
+		///</summary>
+		public static string ThreatIndicatorFileElfHeaderAbiVersion = nameof(ThreatIndicatorFileElfHeaderAbiVersion);
+		///<summary>
+		/// <para><c>threat.indicator.file.elf.header.class</c></para>
+		/// <para>Header class of the ELF file.</para>
+		/// <example></example>
+		///</summary>
+		public static string ThreatIndicatorFileElfHeaderClass = nameof(ThreatIndicatorFileElfHeaderClass);
+		///<summary>
+		/// <para><c>threat.indicator.file.elf.header.data</c></para>
+		/// <para>Data table of the ELF header.</para>
+		/// <example></example>
+		///</summary>
+		public static string ThreatIndicatorFileElfHeaderData = nameof(ThreatIndicatorFileElfHeaderData);
+		///<summary>
+		/// <para><c>threat.indicator.file.elf.header.entrypoint</c></para>
+		/// <para>Header entrypoint of the ELF file.</para>
+		/// <example></example>
+		///</summary>
+		public static string ThreatIndicatorFileElfHeaderEntrypoint = nameof(ThreatIndicatorFileElfHeaderEntrypoint);
+		///<summary>
+		/// <para><c>threat.indicator.file.elf.header.object_version</c></para>
+		/// <para>"0x1" for original ELF files.</para>
+		/// <example></example>
+		///</summary>
+		public static string ThreatIndicatorFileElfHeaderObjectVersion = nameof(ThreatIndicatorFileElfHeaderObjectVersion);
+		///<summary>
+		/// <para><c>threat.indicator.file.elf.header.os_abi</c></para>
+		/// <para>Application Binary Interface (ABI) of the Linux OS.</para>
+		/// <example></example>
+		///</summary>
+		public static string ThreatIndicatorFileElfHeaderOsAbi = nameof(ThreatIndicatorFileElfHeaderOsAbi);
+		///<summary>
+		/// <para><c>threat.indicator.file.elf.header.type</c></para>
+		/// <para>Header type of the ELF file.</para>
+		/// <example></example>
+		///</summary>
+		public static string ThreatIndicatorFileElfHeaderType = nameof(ThreatIndicatorFileElfHeaderType);
+		///<summary>
+		/// <para><c>threat.indicator.file.elf.header.version</c></para>
+		/// <para>Version of the ELF header.</para>
+		/// <example></example>
+		///</summary>
+		public static string ThreatIndicatorFileElfHeaderVersion = nameof(ThreatIndicatorFileElfHeaderVersion);
+		///<summary>
+		/// <para><c>threat.indicator.file.elf.import_hash</c></para>
+		/// <para>A hash of the imports in an ELF file. An import hash can be used to fingerprint binaries even after recompilation or other code-level transformations have occurred, which would change more traditional hash values.
+		/// This is an ELF implementation of the Windows PE imphash.</para>
+		/// <example>d41d8cd98f00b204e9800998ecf8427e</example>
+		///</summary>
+		public static string ThreatIndicatorFileElfImportHash = nameof(ThreatIndicatorFileElfImportHash);
+		///<summary>
+		/// <para><c>threat.indicator.file.elf.imports_names_entropy</c></para>
+		/// <para>Shannon entropy calculation from the list of imported element names and types.</para>
+		/// <example></example>
+		///</summary>
+		public static string ThreatIndicatorFileElfImportsNamesEntropy = nameof(ThreatIndicatorFileElfImportsNamesEntropy);
+		///<summary>
+		/// <para><c>threat.indicator.file.elf.imports_names_var_entropy</c></para>
+		/// <para>Variance for Shannon entropy calculation from the list of imported element names and types.</para>
+		/// <example></example>
+		///</summary>
+		public static string ThreatIndicatorFileElfImportsNamesVarEntropy = nameof(ThreatIndicatorFileElfImportsNamesVarEntropy);
+		///<summary>
+		/// <para><c>threat.indicator.file.elf.telfhash</c></para>
+		/// <para>telfhash symbol hash for ELF file.</para>
+		/// <example></example>
+		///</summary>
+		public static string ThreatIndicatorFileElfTelfhash = nameof(ThreatIndicatorFileElfTelfhash);
+		///<summary>
+		/// <para><c>threat.indicator.file.macho.go_import_hash</c></para>
+		/// <para>A hash of the Go language imports in a Mach-O file excluding standard library imports. An import hash can be used to fingerprint binaries even after recompilation or other code-level transformations have occurred, which would change more traditional hash values.
+		/// The algorithm used to calculate the Go symbol hash and a reference implementation are available [here](https://github.com/elastic/toutoumomoma).</para>
+		/// <example>10bddcb4cee42080f76c88d9ff964491</example>
+		///</summary>
+		public static string ThreatIndicatorFileMachoGoImportHash = nameof(ThreatIndicatorFileMachoGoImportHash);
+		///<summary>
+		/// <para><c>threat.indicator.file.macho.go_imports</c></para>
+		/// <para>List of imported Go language element names and types.</para>
+		/// <example></example>
+		///</summary>
+		public static string ThreatIndicatorFileMachoGoImports = nameof(ThreatIndicatorFileMachoGoImports);
+		///<summary>
+		/// <para><c>threat.indicator.file.macho.go_imports_names_entropy</c></para>
+		/// <para>Shannon entropy calculation from the list of Go imports.</para>
+		/// <example></example>
+		///</summary>
+		public static string ThreatIndicatorFileMachoGoImportsNamesEntropy = nameof(ThreatIndicatorFileMachoGoImportsNamesEntropy);
+		///<summary>
+		/// <para><c>threat.indicator.file.macho.go_imports_names_var_entropy</c></para>
+		/// <para>Variance for Shannon entropy calculation from the list of Go imports.</para>
+		/// <example></example>
+		///</summary>
+		public static string ThreatIndicatorFileMachoGoImportsNamesVarEntropy = nameof(ThreatIndicatorFileMachoGoImportsNamesVarEntropy);
+		///<summary>
+		/// <para><c>threat.indicator.file.macho.go_stripped</c></para>
+		/// <para>Set to true if the file is a Go executable that has had its symbols stripped or obfuscated and false if an unobfuscated Go executable.</para>
+		/// <example></example>
+		///</summary>
+		public static string ThreatIndicatorFileMachoGoStripped = nameof(ThreatIndicatorFileMachoGoStripped);
+		///<summary>
+		/// <para><c>threat.indicator.file.macho.import_hash</c></para>
+		/// <para>A hash of the imports in a Mach-O file. An import hash can be used to fingerprint binaries even after recompilation or other code-level transformations have occurred, which would change more traditional hash values.
+		/// This is a synonym for symhash.</para>
+		/// <example>d41d8cd98f00b204e9800998ecf8427e</example>
+		///</summary>
+		public static string ThreatIndicatorFileMachoImportHash = nameof(ThreatIndicatorFileMachoImportHash);
+		///<summary>
+		/// <para><c>threat.indicator.file.macho.imports_names_entropy</c></para>
+		/// <para>Shannon entropy calculation from the list of imported element names and types.</para>
+		/// <example></example>
+		///</summary>
+		public static string ThreatIndicatorFileMachoImportsNamesEntropy = nameof(ThreatIndicatorFileMachoImportsNamesEntropy);
+		///<summary>
+		/// <para><c>threat.indicator.file.macho.imports_names_var_entropy</c></para>
+		/// <para>Variance for Shannon entropy calculation from the list of imported element names and types.</para>
+		/// <example></example>
+		///</summary>
+		public static string ThreatIndicatorFileMachoImportsNamesVarEntropy = nameof(ThreatIndicatorFileMachoImportsNamesVarEntropy);
+		///<summary>
+		/// <para><c>threat.indicator.file.macho.symhash</c></para>
+		/// <para>A hash of the imports in a Mach-O file. An import hash can be used to fingerprint binaries even after recompilation or other code-level transformations have occurred, which would change more traditional hash values.
+		/// This is a Mach-O implementation of the Windows PE imphash</para>
+		/// <example>d3ccf195b62a9279c3c19af1080497ec</example>
+		///</summary>
+		public static string ThreatIndicatorFileMachoSymhash = nameof(ThreatIndicatorFileMachoSymhash);
+		///<summary>
+		/// <para><c>threat.indicator.geo.city_name</c></para>
+		/// <para>City name.</para>
+		/// <example>Montreal</example>
+		///</summary>
+		public static string ThreatIndicatorGeoCityName = nameof(ThreatIndicatorGeoCityName);
+		///<summary>
+		/// <para><c>threat.indicator.geo.continent_code</c></para>
+		/// <para>Two-letter code representing continent's name.</para>
+		/// <example>NA</example>
+		///</summary>
+		public static string ThreatIndicatorGeoContinentCode = nameof(ThreatIndicatorGeoContinentCode);
+		///<summary>
+		/// <para><c>threat.indicator.geo.continent_name</c></para>
+		/// <para>Name of the continent.</para>
+		/// <example>North America</example>
+		///</summary>
+		public static string ThreatIndicatorGeoContinentName = nameof(ThreatIndicatorGeoContinentName);
+		///<summary>
+		/// <para><c>threat.indicator.geo.country_iso_code</c></para>
+		/// <para>Country ISO code.</para>
+		/// <example>CA</example>
+		///</summary>
+		public static string ThreatIndicatorGeoCountryIsoCode = nameof(ThreatIndicatorGeoCountryIsoCode);
+		///<summary>
+		/// <para><c>threat.indicator.geo.country_name</c></para>
+		/// <para>Country name.</para>
+		/// <example>Canada</example>
+		///</summary>
+		public static string ThreatIndicatorGeoCountryName = nameof(ThreatIndicatorGeoCountryName);
+		///<summary>
+		/// <para><c>threat.indicator.geo.location</c></para>
+		/// <para>Longitude and latitude.</para>
+		/// <example>{ "lon": -73.614830, "lat": 45.505918 }</example>
+		///</summary>
+		public static string ThreatIndicatorGeoLocation = nameof(ThreatIndicatorGeoLocation);
+		///<summary>
+		/// <para><c>threat.indicator.geo.name</c></para>
+		/// <para>User-defined description of a location, at the level of granularity they care about.
+		/// Could be the name of their data centers, the floor number, if this describes a local physical entity, city names.
+		/// Not typically used in automated geolocation.</para>
+		/// <example>boston-dc</example>
+		///</summary>
+		public static string ThreatIndicatorGeoName = nameof(ThreatIndicatorGeoName);
+		///<summary>
+		/// <para><c>threat.indicator.geo.postal_code</c></para>
+		/// <para>Postal code associated with the location.
+		/// Values appropriate for this field may also be known as a postcode or ZIP code and will vary widely from country to country.</para>
+		/// <example>94040</example>
+		///</summary>
+		public static string ThreatIndicatorGeoPostalCode = nameof(ThreatIndicatorGeoPostalCode);
+		///<summary>
+		/// <para><c>threat.indicator.geo.region_iso_code</c></para>
+		/// <para>Region ISO code.</para>
+		/// <example>CA-QC</example>
+		///</summary>
+		public static string ThreatIndicatorGeoRegionIsoCode = nameof(ThreatIndicatorGeoRegionIsoCode);
+		///<summary>
+		/// <para><c>threat.indicator.geo.region_name</c></para>
+		/// <para>Region name.</para>
+		/// <example>Quebec</example>
+		///</summary>
+		public static string ThreatIndicatorGeoRegionName = nameof(ThreatIndicatorGeoRegionName);
+		///<summary>
+		/// <para><c>threat.indicator.geo.timezone</c></para>
+		/// <para>The time zone of the location, such as IANA time zone name.</para>
+		/// <example>America/Argentina/Buenos_Aires</example>
+		///</summary>
+		public static string ThreatIndicatorGeoTimezone = nameof(ThreatIndicatorGeoTimezone);
+		///<summary>
+		/// <para><c>threat.indicator.registry.data.bytes</c></para>
+		/// <para>Original bytes written with base64 encoding.
+		/// For Windows registry operations, such as SetValueEx and RegQueryValueEx, this corresponds to the data pointed by `lp_data`. This is optional but provides better recoverability and should be populated for REG_BINARY encoded values.</para>
+		/// <example>ZQBuAC0AVQBTAAAAZQBuAAAAAAA=</example>
+		///</summary>
+		public static string ThreatIndicatorRegistryDataBytes = nameof(ThreatIndicatorRegistryDataBytes);
+		///<summary>
+		/// <para><c>threat.indicator.registry.data.type</c></para>
+		/// <para>Standard registry type for encoding contents</para>
+		/// <example>REG_SZ</example>
+		///</summary>
+		public static string ThreatIndicatorRegistryDataType = nameof(ThreatIndicatorRegistryDataType);
+		///<summary>
+		/// <para><c>threat.indicator.registry.hive</c></para>
+		/// <para>Abbreviated name for the hive.</para>
+		/// <example>HKLM</example>
+		///</summary>
+		public static string ThreatIndicatorRegistryHive = nameof(ThreatIndicatorRegistryHive);
+		///<summary>
+		/// <para><c>threat.indicator.registry.key</c></para>
+		/// <para>Hive-relative path of keys.</para>
+		/// <example>SOFTWARE\Microsoft\Windows NT\CurrentVersion\Image File Execution Options\winword.exe</example>
+		///</summary>
+		public static string ThreatIndicatorRegistryKey = nameof(ThreatIndicatorRegistryKey);
+		///<summary>
+		/// <para><c>threat.indicator.registry.path</c></para>
+		/// <para>Full path, including hive, key and value</para>
+		/// <example>HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Image File Execution Options\winword.exe\Debugger</example>
+		///</summary>
+		public static string ThreatIndicatorRegistryPath = nameof(ThreatIndicatorRegistryPath);
+		///<summary>
+		/// <para><c>threat.indicator.registry.value</c></para>
+		/// <para>Name of the value written.</para>
+		/// <example>Debugger</example>
+		///</summary>
+		public static string ThreatIndicatorRegistryValue = nameof(ThreatIndicatorRegistryValue);
+		///<summary>
+		/// <para><c>threat.indicator.url.domain</c></para>
+		/// <para>Domain of the url, such as "www.elastic.co".
+		/// In some cases a URL may refer to an IP and/or port directly, without a domain name. In this case, the IP address would go to the `domain` field.
+		/// If the URL contains a literal IPv6 address enclosed by `[` and `]` (IETF RFC 2732), the `[` and `]` characters should also be captured in the `domain` field.</para>
+		/// <example>www.elastic.co</example>
+		///</summary>
+		public static string ThreatIndicatorUrlDomain = nameof(ThreatIndicatorUrlDomain);
+		///<summary>
+		/// <para><c>threat.indicator.url.extension</c></para>
+		/// <para>The field contains the file extension from the original request url, excluding the leading dot.
+		/// The file extension is only set if it exists, as not every url has a file extension.
+		/// The leading period must not be included. For example, the value must be "png", not ".png".
+		/// Note that when the file name has multiple extensions (example.tar.gz), only the last one should be captured ("gz", not "tar.gz").</para>
+		/// <example>png</example>
+		///</summary>
+		public static string ThreatIndicatorUrlExtension = nameof(ThreatIndicatorUrlExtension);
+		///<summary>
+		/// <para><c>threat.indicator.url.fragment</c></para>
+		/// <para>Portion of the url after the `#`, such as "top".
+		/// The `#` is not part of the fragment.</para>
+		/// <example></example>
+		///</summary>
+		public static string ThreatIndicatorUrlFragment = nameof(ThreatIndicatorUrlFragment);
+		///<summary>
+		/// <para><c>threat.indicator.url.full</c></para>
+		/// <para>If full URLs are important to your use case, they should be stored in `url.full`, whether this field is reconstructed or present in the event source.</para>
+		/// <example>https://www.elastic.co:443/search?q=elasticsearch#top</example>
+		///</summary>
+		public static string ThreatIndicatorUrlFull = nameof(ThreatIndicatorUrlFull);
+		///<summary>
+		/// <para><c>threat.indicator.url.original</c></para>
+		/// <para>Unmodified original url as seen in the event source.
+		/// Note that in network monitoring, the observed URL may be a full URL, whereas in access logs, the URL is often just represented as a path.
+		/// This field is meant to represent the URL as it was observed, complete or not.</para>
+		/// <example>https://www.elastic.co:443/search?q=elasticsearch#top or /search?q=elasticsearch</example>
+		///</summary>
+		public static string ThreatIndicatorUrlOriginal = nameof(ThreatIndicatorUrlOriginal);
+		///<summary>
+		/// <para><c>threat.indicator.url.password</c></para>
+		/// <para>Password of the request.</para>
+		/// <example></example>
+		///</summary>
+		public static string ThreatIndicatorUrlPassword = nameof(ThreatIndicatorUrlPassword);
+		///<summary>
+		/// <para><c>threat.indicator.url.path</c></para>
+		/// <para>Path of the request, such as "/search".</para>
+		/// <example></example>
+		///</summary>
+		public static string ThreatIndicatorUrlPath = nameof(ThreatIndicatorUrlPath);
+		///<summary>
+		/// <para><c>threat.indicator.url.port</c></para>
+		/// <para>Port of the request, such as 443.</para>
+		/// <example>443</example>
+		///</summary>
+		public static string ThreatIndicatorUrlPort = nameof(ThreatIndicatorUrlPort);
+		///<summary>
+		/// <para><c>threat.indicator.url.query</c></para>
+		/// <para>The query field describes the query string of the request, such as "q=elasticsearch".
+		/// The `?` is excluded from the query string. If a URL contains no `?`, there is no query field. If there is a `?` but no query, the query field exists with an empty string. The `exists` query can be used to differentiate between the two cases.</para>
+		/// <example></example>
+		///</summary>
+		public static string ThreatIndicatorUrlQuery = nameof(ThreatIndicatorUrlQuery);
+		///<summary>
+		/// <para><c>threat.indicator.url.registered_domain</c></para>
+		/// <para>The highest registered url domain, stripped of the subdomain.
+		/// For example, the registered domain for "foo.example.com" is "example.com".
+		/// This value can be determined precisely with a list like the public suffix list (http://publicsuffix.org). Trying to approximate this by simply taking the last two labels will not work well for TLDs such as "co.uk".</para>
+		/// <example>example.com</example>
+		///</summary>
+		public static string ThreatIndicatorUrlRegisteredDomain = nameof(ThreatIndicatorUrlRegisteredDomain);
+		///<summary>
+		/// <para><c>threat.indicator.url.scheme</c></para>
+		/// <para>Scheme of the request, such as "https".
+		/// Note: The `:` is not part of the scheme.</para>
+		/// <example>https</example>
+		///</summary>
+		public static string ThreatIndicatorUrlScheme = nameof(ThreatIndicatorUrlScheme);
+		///<summary>
+		/// <para><c>threat.indicator.url.subdomain</c></para>
+		/// <para>The subdomain portion of a fully qualified domain name includes all of the names except the host name under the registered_domain.  In a partially qualified domain, or if the the qualification level of the full name cannot be determined, subdomain contains all of the names below the registered domain.
+		/// For example the subdomain portion of "www.east.mydomain.co.uk" is "east". If the domain has multiple levels of subdomain, such as "sub2.sub1.example.com", the subdomain field should contain "sub2.sub1", with no trailing period.</para>
+		/// <example>east</example>
+		///</summary>
+		public static string ThreatIndicatorUrlSubdomain = nameof(ThreatIndicatorUrlSubdomain);
+		///<summary>
+		/// <para><c>threat.indicator.url.top_level_domain</c></para>
+		/// <para>The effective top level domain (eTLD), also known as the domain suffix, is the last part of the domain name. For example, the top level domain for example.com is "com".
+		/// This value can be determined precisely with a list like the public suffix list (http://publicsuffix.org). Trying to approximate this by simply taking the last label will not work well for effective TLDs such as "co.uk".</para>
+		/// <example>co.uk</example>
+		///</summary>
+		public static string ThreatIndicatorUrlTopLevelDomain = nameof(ThreatIndicatorUrlTopLevelDomain);
+		///<summary>
+		/// <para><c>threat.indicator.url.username</c></para>
+		/// <para>Username of the request.</para>
+		/// <example></example>
+		///</summary>
+		public static string ThreatIndicatorUrlUsername = nameof(ThreatIndicatorUrlUsername);
+		///<summary>
 		/// <para><c>tls.cipher</c></para>
 		/// <para>String indicating the cipher used during the current connection.</para>
 		/// <example>TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256</example>
@@ -2850,13 +6441,13 @@ namespace Elastic.CommonSchema
 		///<summary>
 		/// <para><c>tls.client.not_after</c></para>
 		/// <para>Date/Time indicating when client certificate is no longer considered valid.</para>
-		/// <example>1/1/2021 12:00:00AM</example>
+		/// <example>1/1/2021 12:00:00 AM</example>
 		///</summary>
 		public static string TlsClientNotAfter = nameof(TlsClientNotAfter);
 		///<summary>
 		/// <para><c>tls.client.not_before</c></para>
 		/// <para>Date/Time indicating when client certificate is first considered valid.</para>
-		/// <example>1/1/1970 12:00:00AM</example>
+		/// <example>1/1/1970 12:00:00 AM</example>
 		///</summary>
 		public static string TlsClientNotBefore = nameof(TlsClientNotBefore);
 		///<summary>
@@ -2934,13 +6525,13 @@ namespace Elastic.CommonSchema
 		///<summary>
 		/// <para><c>tls.server.not_after</c></para>
 		/// <para>Timestamp indicating when server certificate is no longer considered valid.</para>
-		/// <example>1/1/2021 12:00:00AM</example>
+		/// <example>1/1/2021 12:00:00 AM</example>
 		///</summary>
 		public static string TlsServerNotAfter = nameof(TlsServerNotAfter);
 		///<summary>
 		/// <para><c>tls.server.not_before</c></para>
 		/// <para>Timestamp indicating when server certificate is first considered valid.</para>
-		/// <example>1/1/1970 12:00:00AM</example>
+		/// <example>1/1/1970 12:00:00 AM</example>
 		///</summary>
 		public static string TlsServerNotBefore = nameof(TlsServerNotBefore);
 		///<summary>
@@ -2961,6 +6552,73 @@ namespace Elastic.CommonSchema
 		/// <example>tls</example>
 		///</summary>
 		public static string TlsVersionProtocol = nameof(TlsVersionProtocol);
+		///<summary>
+		/// <para><c>tls.client.x509.issuer.distinguished_name</c></para>
+		/// <para>Distinguished name (DN) of issuing certificate authority.</para>
+		/// <example>C=US, O=Example Inc, OU=www.example.com, CN=Example SHA2 High Assurance Server CA</example>
+		///</summary>
+		public static string TlsClientX509IssuerDistinguishedName = nameof(TlsClientX509IssuerDistinguishedName);
+		///<summary>
+		/// <para><c>tls.client.x509.not_after</c></para>
+		/// <para>Time at which the certificate is no longer considered valid.</para>
+		/// <example>7/16/2020 3:15:39 AM</example>
+		///</summary>
+		public static string TlsClientX509NotAfter = nameof(TlsClientX509NotAfter);
+		///<summary>
+		/// <para><c>tls.client.x509.not_before</c></para>
+		/// <para>Time at which the certificate is first considered valid.</para>
+		/// <example>8/16/2019 1:40:25 AM</example>
+		///</summary>
+		public static string TlsClientX509NotBefore = nameof(TlsClientX509NotBefore);
+		///<summary>
+		/// <para><c>tls.client.x509.public_key_algorithm</c></para>
+		/// <para>Algorithm used to generate the public key.</para>
+		/// <example>RSA</example>
+		///</summary>
+		public static string TlsClientX509PublicKeyAlgorithm = nameof(TlsClientX509PublicKeyAlgorithm);
+		///<summary>
+		/// <para><c>tls.client.x509.public_key_curve</c></para>
+		/// <para>The curve used by the elliptic curve public key algorithm. This is algorithm specific.</para>
+		/// <example>nistp521</example>
+		///</summary>
+		public static string TlsClientX509PublicKeyCurve = nameof(TlsClientX509PublicKeyCurve);
+		///<summary>
+		/// <para><c>tls.client.x509.public_key_exponent</c></para>
+		/// <para>Exponent used to derive the public key. This is algorithm specific.
+		/// <para><br/>Stored but not available for search in Elasticsearch by default</para></para>
+		/// <example>65537</example>
+		///</summary>
+		public static string TlsClientX509PublicKeyExponent = nameof(TlsClientX509PublicKeyExponent);
+		///<summary>
+		/// <para><c>tls.client.x509.public_key_size</c></para>
+		/// <para>The size of the public key space in bits.</para>
+		/// <example>2048</example>
+		///</summary>
+		public static string TlsClientX509PublicKeySize = nameof(TlsClientX509PublicKeySize);
+		///<summary>
+		/// <para><c>tls.client.x509.serial_number</c></para>
+		/// <para>Unique serial number issued by the certificate authority. For consistency, if this value is alphanumeric, it should be formatted without colons and uppercase characters.</para>
+		/// <example>55FBB9C7DEBF09809D12CCAA</example>
+		///</summary>
+		public static string TlsClientX509SerialNumber = nameof(TlsClientX509SerialNumber);
+		///<summary>
+		/// <para><c>tls.client.x509.signature_algorithm</c></para>
+		/// <para>Identifier for certificate signature algorithm. We recommend using names found in Go Lang Crypto library. See https://github.com/golang/go/blob/go1.14/src/crypto/x509/x509.go#L337-L353.</para>
+		/// <example>SHA256-RSA</example>
+		///</summary>
+		public static string TlsClientX509SignatureAlgorithm = nameof(TlsClientX509SignatureAlgorithm);
+		///<summary>
+		/// <para><c>tls.client.x509.subject.distinguished_name</c></para>
+		/// <para>Distinguished name (DN) of the certificate subject entity.</para>
+		/// <example>C=US, ST=California, L=San Francisco, O=Example, Inc., CN=shared.global.example.net</example>
+		///</summary>
+		public static string TlsClientX509SubjectDistinguishedName = nameof(TlsClientX509SubjectDistinguishedName);
+		///<summary>
+		/// <para><c>tls.client.x509.version_number</c></para>
+		/// <para>Version of x509 format.</para>
+		/// <example>3</example>
+		///</summary>
+		public static string TlsClientX509VersionNumber = nameof(TlsClientX509VersionNumber);
 		///<summary>
 		/// <para><c>url.domain</c></para>
 		/// <para>Domain of the url, such as "www.elastic.co".
@@ -3098,6 +6756,61 @@ namespace Elastic.CommonSchema
 		///</summary>
 		public static string UserName = nameof(UserName);
 		///<summary>
+		/// <para><c>user.group.domain</c></para>
+		/// <para>Name of the directory the group is a member of.
+		/// For example, an LDAP or Active Directory domain name.</para>
+		/// <example></example>
+		///</summary>
+		public static string UserGroupDomain = nameof(UserGroupDomain);
+		///<summary>
+		/// <para><c>user.group.id</c></para>
+		/// <para>Unique identifier for the group on the system/platform.</para>
+		/// <example></example>
+		///</summary>
+		public static string UserGroupId = nameof(UserGroupId);
+		///<summary>
+		/// <para><c>user.group.name</c></para>
+		/// <para>Name of the group.</para>
+		/// <example></example>
+		///</summary>
+		public static string UserGroupName = nameof(UserGroupName);
+		///<summary>
+		/// <para><c>user.risk.calculated_level</c></para>
+		/// <para>A risk classification level calculated by an internal system as part of entity analytics and entity risk scoring.</para>
+		/// <example>High</example>
+		///</summary>
+		public static string UserRiskCalculatedLevel = nameof(UserRiskCalculatedLevel);
+		///<summary>
+		/// <para><c>user.risk.calculated_score</c></para>
+		/// <para>A risk classification score calculated by an internal system as part of entity analytics and entity risk scoring.</para>
+		/// <example>880.73</example>
+		///</summary>
+		public static string UserRiskCalculatedScore = nameof(UserRiskCalculatedScore);
+		///<summary>
+		/// <para><c>user.risk.calculated_score_norm</c></para>
+		/// <para>A risk classification score calculated by an internal system as part of entity analytics and entity risk scoring, and normalized to a range of 0 to 100.</para>
+		/// <example>88.73</example>
+		///</summary>
+		public static string UserRiskCalculatedScoreNorm = nameof(UserRiskCalculatedScoreNorm);
+		///<summary>
+		/// <para><c>user.risk.static_level</c></para>
+		/// <para>A risk classification level obtained from outside the system, such as from some external Threat Intelligence Platform.</para>
+		/// <example>High</example>
+		///</summary>
+		public static string UserRiskStaticLevel = nameof(UserRiskStaticLevel);
+		///<summary>
+		/// <para><c>user.risk.static_score</c></para>
+		/// <para>A risk classification score obtained from outside the system, such as from some external Threat Intelligence Platform.</para>
+		/// <example>830.0</example>
+		///</summary>
+		public static string UserRiskStaticScore = nameof(UserRiskStaticScore);
+		///<summary>
+		/// <para><c>user.risk.static_score_norm</c></para>
+		/// <para>A risk classification score obtained from outside the system, such as from some external Threat Intelligence Platform, and normalized to a range of 0 to 100.</para>
+		/// <example>83.0</example>
+		///</summary>
+		public static string UserRiskStaticScoreNorm = nameof(UserRiskStaticScoreNorm);
+		///<summary>
 		/// <para><c>user_agent.device.name</c></para>
 		/// <para>Name of the device.</para>
 		/// <example>iPhone</example>
@@ -3121,6 +6834,58 @@ namespace Elastic.CommonSchema
 		/// <example>12.0</example>
 		///</summary>
 		public static string UserAgentVersion = nameof(UserAgentVersion);
+		///<summary>
+		/// <para><c>user_agent.os.family</c></para>
+		/// <para>OS family (such as redhat, debian, freebsd, windows).</para>
+		/// <example>debian</example>
+		///</summary>
+		public static string UserAgentOsFamily = nameof(UserAgentOsFamily);
+		///<summary>
+		/// <para><c>user_agent.os.full</c></para>
+		/// <para>Operating system name, including the version or code name.</para>
+		/// <example>Mac OS Mojave</example>
+		///</summary>
+		public static string UserAgentOsFull = nameof(UserAgentOsFull);
+		///<summary>
+		/// <para><c>user_agent.os.kernel</c></para>
+		/// <para>Operating system kernel version as a raw string.</para>
+		/// <example>4.4.0-112-generic</example>
+		///</summary>
+		public static string UserAgentOsKernel = nameof(UserAgentOsKernel);
+		///<summary>
+		/// <para><c>user_agent.os.name</c></para>
+		/// <para>Operating system name, without the version.</para>
+		/// <example>Mac OS X</example>
+		///</summary>
+		public static string UserAgentOsName = nameof(UserAgentOsName);
+		///<summary>
+		/// <para><c>user_agent.os.platform</c></para>
+		/// <para>Operating system platform (such centos, ubuntu, windows).</para>
+		/// <example>darwin</example>
+		///</summary>
+		public static string UserAgentOsPlatform = nameof(UserAgentOsPlatform);
+		///<summary>
+		/// <para><c>user_agent.os.type</c></para>
+		/// <para>Use the `os.type` field to categorize the operating system into one of the broad commercial families.
+		/// If the OS you're dealing with is not listed as an expected value, the field should not be populated. Please let us know by opening an issue with ECS, to propose its addition.
+		/// <para><br/>Expected Values:</para>
+		/// <list type="bullet">
+		/// <item>linux</item>
+		/// <item>macos</item>
+		/// <item>unix</item>
+		/// <item>windows</item>
+		/// <item>ios</item>
+		/// <item>android</item>
+		/// </list></para>
+		/// <example>macos</example>
+		///</summary>
+		public static string UserAgentOsType = nameof(UserAgentOsType);
+		///<summary>
+		/// <para><c>user_agent.os.version</c></para>
+		/// <para>Operating system version as a raw string.</para>
+		/// <example>10.14.1</example>
+		///</summary>
+		public static string UserAgentOsVersion = nameof(UserAgentOsVersion);
 		///<summary>
 		/// <para><c>vlan.id</c></para>
 		/// <para>VLAN ID as reported by the observer.</para>
@@ -3218,13 +6983,13 @@ namespace Elastic.CommonSchema
 		///<summary>
 		/// <para><c>x509.not_after</c></para>
 		/// <para>Time at which the certificate is no longer considered valid.</para>
-		/// <example>7/16/2020 3:15:39AM</example>
+		/// <example>7/16/2020 3:15:39 AM</example>
 		///</summary>
 		public static string X509NotAfter = nameof(X509NotAfter);
 		///<summary>
 		/// <para><c>x509.not_before</c></para>
 		/// <para>Time at which the certificate is first considered valid.</para>
-		/// <example>8/16/2019 1:40:25AM</example>
+		/// <example>8/16/2019 1:40:25 AM</example>
 		///</summary>
 		public static string X509NotBefore = nameof(X509NotBefore);
 		///<summary>
@@ -3305,6 +7070,34 @@ namespace Elastic.CommonSchema
 			"client.registered_domain", ClientRegisteredDomain,
 			"client.subdomain", ClientSubdomain,
 			"client.top_level_domain", ClientTopLevelDomain,
+			"client.as.number", ClientAsNumber,
+			"client.as.organization.name", ClientAsOrganizationName,
+			"client.geo.city_name", ClientGeoCityName,
+			"client.geo.continent_code", ClientGeoContinentCode,
+			"client.geo.continent_name", ClientGeoContinentName,
+			"client.geo.country_iso_code", ClientGeoCountryIsoCode,
+			"client.geo.country_name", ClientGeoCountryName,
+			"client.geo.location", ClientGeoLocation,
+			"client.geo.name", ClientGeoName,
+			"client.geo.postal_code", ClientGeoPostalCode,
+			"client.geo.region_iso_code", ClientGeoRegionIsoCode,
+			"client.geo.region_name", ClientGeoRegionName,
+			"client.geo.timezone", ClientGeoTimezone,
+			"client.user.domain", ClientUserDomain,
+			"client.user.email", ClientUserEmail,
+			"client.user.full_name", ClientUserFullName,
+			"client.user.hash", ClientUserHash,
+			"client.user.id", ClientUserId,
+			"client.user.name", ClientUserName,
+			"client.user.group.domain", ClientUserGroupDomain,
+			"client.user.group.id", ClientUserGroupId,
+			"client.user.group.name", ClientUserGroupName,
+			"client.user.risk.calculated_level", ClientUserRiskCalculatedLevel,
+			"client.user.risk.calculated_score", ClientUserRiskCalculatedScore,
+			"client.user.risk.calculated_score_norm", ClientUserRiskCalculatedScoreNorm,
+			"client.user.risk.static_level", ClientUserRiskStaticLevel,
+			"client.user.risk.static_score", ClientUserRiskStaticScore,
+			"client.user.risk.static_score_norm", ClientUserRiskStaticScoreNorm,
 			"cloud.account.id", CloudAccountId,
 			"cloud.account.name", CloudAccountName,
 			"cloud.availability_zone", CloudAvailabilityZone,
@@ -3351,12 +7144,72 @@ namespace Elastic.CommonSchema
 			"destination.registered_domain", DestinationRegisteredDomain,
 			"destination.subdomain", DestinationSubdomain,
 			"destination.top_level_domain", DestinationTopLevelDomain,
+			"destination.as.number", DestinationAsNumber,
+			"destination.as.organization.name", DestinationAsOrganizationName,
+			"destination.geo.city_name", DestinationGeoCityName,
+			"destination.geo.continent_code", DestinationGeoContinentCode,
+			"destination.geo.continent_name", DestinationGeoContinentName,
+			"destination.geo.country_iso_code", DestinationGeoCountryIsoCode,
+			"destination.geo.country_name", DestinationGeoCountryName,
+			"destination.geo.location", DestinationGeoLocation,
+			"destination.geo.name", DestinationGeoName,
+			"destination.geo.postal_code", DestinationGeoPostalCode,
+			"destination.geo.region_iso_code", DestinationGeoRegionIsoCode,
+			"destination.geo.region_name", DestinationGeoRegionName,
+			"destination.geo.timezone", DestinationGeoTimezone,
+			"destination.user.domain", DestinationUserDomain,
+			"destination.user.email", DestinationUserEmail,
+			"destination.user.full_name", DestinationUserFullName,
+			"destination.user.hash", DestinationUserHash,
+			"destination.user.id", DestinationUserId,
+			"destination.user.name", DestinationUserName,
+			"destination.user.group.domain", DestinationUserGroupDomain,
+			"destination.user.group.id", DestinationUserGroupId,
+			"destination.user.group.name", DestinationUserGroupName,
+			"destination.user.risk.calculated_level", DestinationUserRiskCalculatedLevel,
+			"destination.user.risk.calculated_score", DestinationUserRiskCalculatedScore,
+			"destination.user.risk.calculated_score_norm", DestinationUserRiskCalculatedScoreNorm,
+			"destination.user.risk.static_level", DestinationUserRiskStaticLevel,
+			"destination.user.risk.static_score", DestinationUserRiskStaticScore,
+			"destination.user.risk.static_score_norm", DestinationUserRiskStaticScoreNorm,
 			"device.id", DeviceId,
 			"device.manufacturer", DeviceManufacturer,
 			"device.model.identifier", DeviceModelIdentifier,
 			"device.model.name", DeviceModelName,
 			"dll.name", DllName,
 			"dll.path", DllPath,
+			"dll.hash.md5", DllHashMd5,
+			"dll.hash.sha1", DllHashSha1,
+			"dll.hash.sha256", DllHashSha256,
+			"dll.hash.sha384", DllHashSha384,
+			"dll.hash.sha512", DllHashSha512,
+			"dll.hash.ssdeep", DllHashSsdeep,
+			"dll.hash.tlsh", DllHashTlsh,
+			"dll.pe.architecture", DllPeArchitecture,
+			"dll.pe.company", DllPeCompany,
+			"dll.pe.description", DllPeDescription,
+			"dll.pe.file_version", DllPeFileVersion,
+			"dll.pe.go_import_hash", DllPeGoImportHash,
+			"dll.pe.go_imports", DllPeGoImports,
+			"dll.pe.go_imports_names_entropy", DllPeGoImportsNamesEntropy,
+			"dll.pe.go_imports_names_var_entropy", DllPeGoImportsNamesVarEntropy,
+			"dll.pe.go_stripped", DllPeGoStripped,
+			"dll.pe.imphash", DllPeImphash,
+			"dll.pe.import_hash", DllPeImportHash,
+			"dll.pe.imports_names_entropy", DllPeImportsNamesEntropy,
+			"dll.pe.imports_names_var_entropy", DllPeImportsNamesVarEntropy,
+			"dll.pe.original_file_name", DllPeOriginalFileName,
+			"dll.pe.pehash", DllPePehash,
+			"dll.pe.product", DllPeProduct,
+			"dll.code_signature.digest_algorithm", DllCodeSignatureDigestAlgorithm,
+			"dll.code_signature.exists", DllCodeSignatureExists,
+			"dll.code_signature.signing_id", DllCodeSignatureSigningId,
+			"dll.code_signature.status", DllCodeSignatureStatus,
+			"dll.code_signature.subject_name", DllCodeSignatureSubjectName,
+			"dll.code_signature.team_id", DllCodeSignatureTeamId,
+			"dll.code_signature.timestamp", DllCodeSignatureTimestamp,
+			"dll.code_signature.trusted", DllCodeSignatureTrusted,
+			"dll.code_signature.valid", DllCodeSignatureValid,
 			"dns.id", DnsId,
 			"dns.op_code", DnsOpCode,
 			"dns.question.class", DnsQuestionClass,
@@ -3455,11 +7308,85 @@ namespace Elastic.CommonSchema
 			"file.target_path", FileTargetPath,
 			"file.type", FileType,
 			"file.uid", FileUid,
+			"file.hash.md5", FileHashMd5,
+			"file.hash.sha1", FileHashSha1,
+			"file.hash.sha256", FileHashSha256,
+			"file.hash.sha384", FileHashSha384,
+			"file.hash.sha512", FileHashSha512,
+			"file.hash.ssdeep", FileHashSsdeep,
+			"file.hash.tlsh", FileHashTlsh,
+			"file.pe.architecture", FilePeArchitecture,
+			"file.pe.company", FilePeCompany,
+			"file.pe.description", FilePeDescription,
+			"file.pe.file_version", FilePeFileVersion,
+			"file.pe.go_import_hash", FilePeGoImportHash,
+			"file.pe.go_imports", FilePeGoImports,
+			"file.pe.go_imports_names_entropy", FilePeGoImportsNamesEntropy,
+			"file.pe.go_imports_names_var_entropy", FilePeGoImportsNamesVarEntropy,
+			"file.pe.go_stripped", FilePeGoStripped,
+			"file.pe.imphash", FilePeImphash,
+			"file.pe.import_hash", FilePeImportHash,
+			"file.pe.imports_names_entropy", FilePeImportsNamesEntropy,
+			"file.pe.imports_names_var_entropy", FilePeImportsNamesVarEntropy,
+			"file.pe.original_file_name", FilePeOriginalFileName,
+			"file.pe.pehash", FilePePehash,
+			"file.pe.product", FilePeProduct,
+			"file.x509.issuer.distinguished_name", FileX509IssuerDistinguishedName,
+			"file.x509.not_after", FileX509NotAfter,
+			"file.x509.not_before", FileX509NotBefore,
+			"file.x509.public_key_algorithm", FileX509PublicKeyAlgorithm,
+			"file.x509.public_key_curve", FileX509PublicKeyCurve,
+			"file.x509.public_key_exponent", FileX509PublicKeyExponent,
+			"file.x509.public_key_size", FileX509PublicKeySize,
+			"file.x509.serial_number", FileX509SerialNumber,
+			"file.x509.signature_algorithm", FileX509SignatureAlgorithm,
+			"file.x509.subject.distinguished_name", FileX509SubjectDistinguishedName,
+			"file.x509.version_number", FileX509VersionNumber,
+			"file.code_signature.digest_algorithm", FileCodeSignatureDigestAlgorithm,
+			"file.code_signature.exists", FileCodeSignatureExists,
+			"file.code_signature.signing_id", FileCodeSignatureSigningId,
+			"file.code_signature.status", FileCodeSignatureStatus,
+			"file.code_signature.subject_name", FileCodeSignatureSubjectName,
+			"file.code_signature.team_id", FileCodeSignatureTeamId,
+			"file.code_signature.timestamp", FileCodeSignatureTimestamp,
+			"file.code_signature.trusted", FileCodeSignatureTrusted,
+			"file.code_signature.valid", FileCodeSignatureValid,
+			"file.elf.architecture", FileElfArchitecture,
+			"file.elf.byte_order", FileElfByteOrder,
+			"file.elf.cpu_type", FileElfCpuType,
+			"file.elf.creation_date", FileElfCreationDate,
+			"file.elf.go_import_hash", FileElfGoImportHash,
+			"file.elf.go_imports", FileElfGoImports,
+			"file.elf.go_imports_names_entropy", FileElfGoImportsNamesEntropy,
+			"file.elf.go_imports_names_var_entropy", FileElfGoImportsNamesVarEntropy,
+			"file.elf.go_stripped", FileElfGoStripped,
+			"file.elf.header.abi_version", FileElfHeaderAbiVersion,
+			"file.elf.header.class", FileElfHeaderClass,
+			"file.elf.header.data", FileElfHeaderData,
+			"file.elf.header.entrypoint", FileElfHeaderEntrypoint,
+			"file.elf.header.object_version", FileElfHeaderObjectVersion,
+			"file.elf.header.os_abi", FileElfHeaderOsAbi,
+			"file.elf.header.type", FileElfHeaderType,
+			"file.elf.header.version", FileElfHeaderVersion,
+			"file.elf.import_hash", FileElfImportHash,
+			"file.elf.imports_names_entropy", FileElfImportsNamesEntropy,
+			"file.elf.imports_names_var_entropy", FileElfImportsNamesVarEntropy,
+			"file.elf.telfhash", FileElfTelfhash,
+			"file.macho.go_import_hash", FileMachoGoImportHash,
+			"file.macho.go_imports", FileMachoGoImports,
+			"file.macho.go_imports_names_entropy", FileMachoGoImportsNamesEntropy,
+			"file.macho.go_imports_names_var_entropy", FileMachoGoImportsNamesVarEntropy,
+			"file.macho.go_stripped", FileMachoGoStripped,
+			"file.macho.import_hash", FileMachoImportHash,
+			"file.macho.imports_names_entropy", FileMachoImportsNamesEntropy,
+			"file.macho.imports_names_var_entropy", FileMachoImportsNamesVarEntropy,
+			"file.macho.symhash", FileMachoSymhash,
 			"geo.city_name", GeoCityName,
 			"geo.continent_code", GeoContinentCode,
 			"geo.continent_name", GeoContinentName,
 			"geo.country_iso_code", GeoCountryIsoCode,
 			"geo.country_name", GeoCountryName,
+			"geo.location", GeoLocation,
 			"geo.name", GeoName,
 			"geo.postal_code", GeoPostalCode,
 			"geo.region_iso_code", GeoRegionIsoCode,
@@ -3491,6 +7418,30 @@ namespace Elastic.CommonSchema
 			"host.pid_ns_ino", HostPidNsIno,
 			"host.type", HostType,
 			"host.uptime", HostUptime,
+			"host.geo.city_name", HostGeoCityName,
+			"host.geo.continent_code", HostGeoContinentCode,
+			"host.geo.continent_name", HostGeoContinentName,
+			"host.geo.country_iso_code", HostGeoCountryIsoCode,
+			"host.geo.country_name", HostGeoCountryName,
+			"host.geo.location", HostGeoLocation,
+			"host.geo.name", HostGeoName,
+			"host.geo.postal_code", HostGeoPostalCode,
+			"host.geo.region_iso_code", HostGeoRegionIsoCode,
+			"host.geo.region_name", HostGeoRegionName,
+			"host.geo.timezone", HostGeoTimezone,
+			"host.os.family", HostOsFamily,
+			"host.os.full", HostOsFull,
+			"host.os.kernel", HostOsKernel,
+			"host.os.name", HostOsName,
+			"host.os.platform", HostOsPlatform,
+			"host.os.type", HostOsType,
+			"host.os.version", HostOsVersion,
+			"host.risk.calculated_level", HostRiskCalculatedLevel,
+			"host.risk.calculated_score", HostRiskCalculatedScore,
+			"host.risk.calculated_score_norm", HostRiskCalculatedScoreNorm,
+			"host.risk.static_level", HostRiskStaticLevel,
+			"host.risk.static_score", HostRiskStaticScore,
+			"host.risk.static_score_norm", HostRiskStaticScoreNorm,
 			"http.request.body.bytes", HttpRequestBodyBytes,
 			"http.request.body.content", HttpRequestBodyContent,
 			"http.request.bytes", HttpRequestBytes,
@@ -3533,6 +7484,8 @@ namespace Elastic.CommonSchema
 			"network.protocol", NetworkProtocol,
 			"network.transport", NetworkTransport,
 			"network.type", NetworkType,
+			"network.vlan.id", NetworkVlanId,
+			"network.vlan.name", NetworkVlanName,
 			"observer.hostname", ObserverHostname,
 			"observer.name", ObserverName,
 			"observer.product", ObserverProduct,
@@ -3540,6 +7493,24 @@ namespace Elastic.CommonSchema
 			"observer.type", ObserverType,
 			"observer.vendor", ObserverVendor,
 			"observer.version", ObserverVersion,
+			"observer.geo.city_name", ObserverGeoCityName,
+			"observer.geo.continent_code", ObserverGeoContinentCode,
+			"observer.geo.continent_name", ObserverGeoContinentName,
+			"observer.geo.country_iso_code", ObserverGeoCountryIsoCode,
+			"observer.geo.country_name", ObserverGeoCountryName,
+			"observer.geo.location", ObserverGeoLocation,
+			"observer.geo.name", ObserverGeoName,
+			"observer.geo.postal_code", ObserverGeoPostalCode,
+			"observer.geo.region_iso_code", ObserverGeoRegionIsoCode,
+			"observer.geo.region_name", ObserverGeoRegionName,
+			"observer.geo.timezone", ObserverGeoTimezone,
+			"observer.os.family", ObserverOsFamily,
+			"observer.os.full", ObserverOsFull,
+			"observer.os.kernel", ObserverOsKernel,
+			"observer.os.name", ObserverOsName,
+			"observer.os.platform", ObserverOsPlatform,
+			"observer.os.type", ObserverOsType,
+			"observer.os.version", ObserverOsVersion,
 			"orchestrator.api_version", OrchestratorApiVersion,
 			"orchestrator.cluster.id", OrchestratorClusterId,
 			"orchestrator.cluster.name", OrchestratorClusterName,
@@ -3607,6 +7578,177 @@ namespace Elastic.CommonSchema
 			"process.uptime", ProcessUptime,
 			"process.vpid", ProcessVpid,
 			"process.working_directory", ProcessWorkingDirectory,
+			"process.group.domain", ProcessGroupDomain,
+			"process.group.id", ProcessGroupId,
+			"process.group.name", ProcessGroupName,
+			"process.real_group.domain", ProcessRealGroupDomain,
+			"process.real_group.id", ProcessRealGroupId,
+			"process.real_group.name", ProcessRealGroupName,
+			"process.saved_group.domain", ProcessSavedGroupDomain,
+			"process.saved_group.id", ProcessSavedGroupId,
+			"process.saved_group.name", ProcessSavedGroupName,
+			"process.hash.md5", ProcessHashMd5,
+			"process.hash.sha1", ProcessHashSha1,
+			"process.hash.sha256", ProcessHashSha256,
+			"process.hash.sha384", ProcessHashSha384,
+			"process.hash.sha512", ProcessHashSha512,
+			"process.hash.ssdeep", ProcessHashSsdeep,
+			"process.hash.tlsh", ProcessHashTlsh,
+			"process.pe.architecture", ProcessPeArchitecture,
+			"process.pe.company", ProcessPeCompany,
+			"process.pe.description", ProcessPeDescription,
+			"process.pe.file_version", ProcessPeFileVersion,
+			"process.pe.go_import_hash", ProcessPeGoImportHash,
+			"process.pe.go_imports", ProcessPeGoImports,
+			"process.pe.go_imports_names_entropy", ProcessPeGoImportsNamesEntropy,
+			"process.pe.go_imports_names_var_entropy", ProcessPeGoImportsNamesVarEntropy,
+			"process.pe.go_stripped", ProcessPeGoStripped,
+			"process.pe.imphash", ProcessPeImphash,
+			"process.pe.import_hash", ProcessPeImportHash,
+			"process.pe.imports_names_entropy", ProcessPeImportsNamesEntropy,
+			"process.pe.imports_names_var_entropy", ProcessPeImportsNamesVarEntropy,
+			"process.pe.original_file_name", ProcessPeOriginalFileName,
+			"process.pe.pehash", ProcessPePehash,
+			"process.pe.product", ProcessPeProduct,
+			"process.code_signature.digest_algorithm", ProcessCodeSignatureDigestAlgorithm,
+			"process.code_signature.exists", ProcessCodeSignatureExists,
+			"process.code_signature.signing_id", ProcessCodeSignatureSigningId,
+			"process.code_signature.status", ProcessCodeSignatureStatus,
+			"process.code_signature.subject_name", ProcessCodeSignatureSubjectName,
+			"process.code_signature.team_id", ProcessCodeSignatureTeamId,
+			"process.code_signature.timestamp", ProcessCodeSignatureTimestamp,
+			"process.code_signature.trusted", ProcessCodeSignatureTrusted,
+			"process.code_signature.valid", ProcessCodeSignatureValid,
+			"process.elf.architecture", ProcessElfArchitecture,
+			"process.elf.byte_order", ProcessElfByteOrder,
+			"process.elf.cpu_type", ProcessElfCpuType,
+			"process.elf.creation_date", ProcessElfCreationDate,
+			"process.elf.go_import_hash", ProcessElfGoImportHash,
+			"process.elf.go_imports", ProcessElfGoImports,
+			"process.elf.go_imports_names_entropy", ProcessElfGoImportsNamesEntropy,
+			"process.elf.go_imports_names_var_entropy", ProcessElfGoImportsNamesVarEntropy,
+			"process.elf.go_stripped", ProcessElfGoStripped,
+			"process.elf.header.abi_version", ProcessElfHeaderAbiVersion,
+			"process.elf.header.class", ProcessElfHeaderClass,
+			"process.elf.header.data", ProcessElfHeaderData,
+			"process.elf.header.entrypoint", ProcessElfHeaderEntrypoint,
+			"process.elf.header.object_version", ProcessElfHeaderObjectVersion,
+			"process.elf.header.os_abi", ProcessElfHeaderOsAbi,
+			"process.elf.header.type", ProcessElfHeaderType,
+			"process.elf.header.version", ProcessElfHeaderVersion,
+			"process.elf.import_hash", ProcessElfImportHash,
+			"process.elf.imports_names_entropy", ProcessElfImportsNamesEntropy,
+			"process.elf.imports_names_var_entropy", ProcessElfImportsNamesVarEntropy,
+			"process.elf.telfhash", ProcessElfTelfhash,
+			"process.macho.go_import_hash", ProcessMachoGoImportHash,
+			"process.macho.go_imports", ProcessMachoGoImports,
+			"process.macho.go_imports_names_entropy", ProcessMachoGoImportsNamesEntropy,
+			"process.macho.go_imports_names_var_entropy", ProcessMachoGoImportsNamesVarEntropy,
+			"process.macho.go_stripped", ProcessMachoGoStripped,
+			"process.macho.import_hash", ProcessMachoImportHash,
+			"process.macho.imports_names_entropy", ProcessMachoImportsNamesEntropy,
+			"process.macho.imports_names_var_entropy", ProcessMachoImportsNamesVarEntropy,
+			"process.macho.symhash", ProcessMachoSymhash,
+			"process.entry_meta.source.address", ProcessEntryMetaSourceAddress,
+			"process.entry_meta.source.bytes", ProcessEntryMetaSourceBytes,
+			"process.entry_meta.source.domain", ProcessEntryMetaSourceDomain,
+			"process.entry_meta.source.ip", ProcessEntryMetaSourceIp,
+			"process.entry_meta.source.mac", ProcessEntryMetaSourceMac,
+			"process.entry_meta.source.nat.ip", ProcessEntryMetaSourceNatIp,
+			"process.entry_meta.source.nat.port", ProcessEntryMetaSourceNatPort,
+			"process.entry_meta.source.packets", ProcessEntryMetaSourcePackets,
+			"process.entry_meta.source.port", ProcessEntryMetaSourcePort,
+			"process.entry_meta.source.registered_domain", ProcessEntryMetaSourceRegisteredDomain,
+			"process.entry_meta.source.subdomain", ProcessEntryMetaSourceSubdomain,
+			"process.entry_meta.source.top_level_domain", ProcessEntryMetaSourceTopLevelDomain,
+			"process.entry_meta.source.as.number", ProcessEntryMetaSourceAsNumber,
+			"process.entry_meta.source.as.organization.name", ProcessEntryMetaSourceAsOrganizationName,
+			"process.entry_meta.source.geo.city_name", ProcessEntryMetaSourceGeoCityName,
+			"process.entry_meta.source.geo.continent_code", ProcessEntryMetaSourceGeoContinentCode,
+			"process.entry_meta.source.geo.continent_name", ProcessEntryMetaSourceGeoContinentName,
+			"process.entry_meta.source.geo.country_iso_code", ProcessEntryMetaSourceGeoCountryIsoCode,
+			"process.entry_meta.source.geo.country_name", ProcessEntryMetaSourceGeoCountryName,
+			"process.entry_meta.source.geo.location", ProcessEntryMetaSourceGeoLocation,
+			"process.entry_meta.source.geo.name", ProcessEntryMetaSourceGeoName,
+			"process.entry_meta.source.geo.postal_code", ProcessEntryMetaSourceGeoPostalCode,
+			"process.entry_meta.source.geo.region_iso_code", ProcessEntryMetaSourceGeoRegionIsoCode,
+			"process.entry_meta.source.geo.region_name", ProcessEntryMetaSourceGeoRegionName,
+			"process.entry_meta.source.geo.timezone", ProcessEntryMetaSourceGeoTimezone,
+			"process.entry_meta.source.user.domain", ProcessEntryMetaSourceUserDomain,
+			"process.entry_meta.source.user.email", ProcessEntryMetaSourceUserEmail,
+			"process.entry_meta.source.user.full_name", ProcessEntryMetaSourceUserFullName,
+			"process.entry_meta.source.user.hash", ProcessEntryMetaSourceUserHash,
+			"process.entry_meta.source.user.id", ProcessEntryMetaSourceUserId,
+			"process.entry_meta.source.user.name", ProcessEntryMetaSourceUserName,
+			"process.entry_meta.source.user.group.domain", ProcessEntryMetaSourceUserGroupDomain,
+			"process.entry_meta.source.user.group.id", ProcessEntryMetaSourceUserGroupId,
+			"process.entry_meta.source.user.group.name", ProcessEntryMetaSourceUserGroupName,
+			"process.entry_meta.source.user.risk.calculated_level", ProcessEntryMetaSourceUserRiskCalculatedLevel,
+			"process.entry_meta.source.user.risk.calculated_score", ProcessEntryMetaSourceUserRiskCalculatedScore,
+			"process.entry_meta.source.user.risk.calculated_score_norm", ProcessEntryMetaSourceUserRiskCalculatedScoreNorm,
+			"process.entry_meta.source.user.risk.static_level", ProcessEntryMetaSourceUserRiskStaticLevel,
+			"process.entry_meta.source.user.risk.static_score", ProcessEntryMetaSourceUserRiskStaticScore,
+			"process.entry_meta.source.user.risk.static_score_norm", ProcessEntryMetaSourceUserRiskStaticScoreNorm,
+			"process.user.domain", ProcessUserDomain,
+			"process.user.email", ProcessUserEmail,
+			"process.user.full_name", ProcessUserFullName,
+			"process.user.hash", ProcessUserHash,
+			"process.user.id", ProcessUserId,
+			"process.user.name", ProcessUserName,
+			"process.user.group.domain", ProcessUserGroupDomain,
+			"process.user.group.id", ProcessUserGroupId,
+			"process.user.group.name", ProcessUserGroupName,
+			"process.user.risk.calculated_level", ProcessUserRiskCalculatedLevel,
+			"process.user.risk.calculated_score", ProcessUserRiskCalculatedScore,
+			"process.user.risk.calculated_score_norm", ProcessUserRiskCalculatedScoreNorm,
+			"process.user.risk.static_level", ProcessUserRiskStaticLevel,
+			"process.user.risk.static_score", ProcessUserRiskStaticScore,
+			"process.user.risk.static_score_norm", ProcessUserRiskStaticScoreNorm,
+			"process.saved_user.domain", ProcessSavedUserDomain,
+			"process.saved_user.email", ProcessSavedUserEmail,
+			"process.saved_user.full_name", ProcessSavedUserFullName,
+			"process.saved_user.hash", ProcessSavedUserHash,
+			"process.saved_user.id", ProcessSavedUserId,
+			"process.saved_user.name", ProcessSavedUserName,
+			"process.saved_user.group.domain", ProcessSavedUserGroupDomain,
+			"process.saved_user.group.id", ProcessSavedUserGroupId,
+			"process.saved_user.group.name", ProcessSavedUserGroupName,
+			"process.saved_user.risk.calculated_level", ProcessSavedUserRiskCalculatedLevel,
+			"process.saved_user.risk.calculated_score", ProcessSavedUserRiskCalculatedScore,
+			"process.saved_user.risk.calculated_score_norm", ProcessSavedUserRiskCalculatedScoreNorm,
+			"process.saved_user.risk.static_level", ProcessSavedUserRiskStaticLevel,
+			"process.saved_user.risk.static_score", ProcessSavedUserRiskStaticScore,
+			"process.saved_user.risk.static_score_norm", ProcessSavedUserRiskStaticScoreNorm,
+			"process.real_user.domain", ProcessRealUserDomain,
+			"process.real_user.email", ProcessRealUserEmail,
+			"process.real_user.full_name", ProcessRealUserFullName,
+			"process.real_user.hash", ProcessRealUserHash,
+			"process.real_user.id", ProcessRealUserId,
+			"process.real_user.name", ProcessRealUserName,
+			"process.real_user.group.domain", ProcessRealUserGroupDomain,
+			"process.real_user.group.id", ProcessRealUserGroupId,
+			"process.real_user.group.name", ProcessRealUserGroupName,
+			"process.real_user.risk.calculated_level", ProcessRealUserRiskCalculatedLevel,
+			"process.real_user.risk.calculated_score", ProcessRealUserRiskCalculatedScore,
+			"process.real_user.risk.calculated_score_norm", ProcessRealUserRiskCalculatedScoreNorm,
+			"process.real_user.risk.static_level", ProcessRealUserRiskStaticLevel,
+			"process.real_user.risk.static_score", ProcessRealUserRiskStaticScore,
+			"process.real_user.risk.static_score_norm", ProcessRealUserRiskStaticScoreNorm,
+			"process.attested_user.domain", ProcessAttestedUserDomain,
+			"process.attested_user.email", ProcessAttestedUserEmail,
+			"process.attested_user.full_name", ProcessAttestedUserFullName,
+			"process.attested_user.hash", ProcessAttestedUserHash,
+			"process.attested_user.id", ProcessAttestedUserId,
+			"process.attested_user.name", ProcessAttestedUserName,
+			"process.attested_user.group.domain", ProcessAttestedUserGroupDomain,
+			"process.attested_user.group.id", ProcessAttestedUserGroupId,
+			"process.attested_user.group.name", ProcessAttestedUserGroupName,
+			"process.attested_user.risk.calculated_level", ProcessAttestedUserRiskCalculatedLevel,
+			"process.attested_user.risk.calculated_score", ProcessAttestedUserRiskCalculatedScore,
+			"process.attested_user.risk.calculated_score_norm", ProcessAttestedUserRiskCalculatedScoreNorm,
+			"process.attested_user.risk.static_level", ProcessAttestedUserRiskStaticLevel,
+			"process.attested_user.risk.static_score", ProcessAttestedUserRiskStaticScore,
+			"process.attested_user.risk.static_score_norm", ProcessAttestedUserRiskStaticScoreNorm,
 			"registry.data.bytes", RegistryDataBytes,
 			"registry.data.type", RegistryDataType,
 			"registry.hive", RegistryHive,
@@ -3640,6 +7782,34 @@ namespace Elastic.CommonSchema
 			"server.registered_domain", ServerRegisteredDomain,
 			"server.subdomain", ServerSubdomain,
 			"server.top_level_domain", ServerTopLevelDomain,
+			"server.as.number", ServerAsNumber,
+			"server.as.organization.name", ServerAsOrganizationName,
+			"server.geo.city_name", ServerGeoCityName,
+			"server.geo.continent_code", ServerGeoContinentCode,
+			"server.geo.continent_name", ServerGeoContinentName,
+			"server.geo.country_iso_code", ServerGeoCountryIsoCode,
+			"server.geo.country_name", ServerGeoCountryName,
+			"server.geo.location", ServerGeoLocation,
+			"server.geo.name", ServerGeoName,
+			"server.geo.postal_code", ServerGeoPostalCode,
+			"server.geo.region_iso_code", ServerGeoRegionIsoCode,
+			"server.geo.region_name", ServerGeoRegionName,
+			"server.geo.timezone", ServerGeoTimezone,
+			"server.user.domain", ServerUserDomain,
+			"server.user.email", ServerUserEmail,
+			"server.user.full_name", ServerUserFullName,
+			"server.user.hash", ServerUserHash,
+			"server.user.id", ServerUserId,
+			"server.user.name", ServerUserName,
+			"server.user.group.domain", ServerUserGroupDomain,
+			"server.user.group.id", ServerUserGroupId,
+			"server.user.group.name", ServerUserGroupName,
+			"server.user.risk.calculated_level", ServerUserRiskCalculatedLevel,
+			"server.user.risk.calculated_score", ServerUserRiskCalculatedScore,
+			"server.user.risk.calculated_score_norm", ServerUserRiskCalculatedScoreNorm,
+			"server.user.risk.static_level", ServerUserRiskStaticLevel,
+			"server.user.risk.static_score", ServerUserRiskStaticScore,
+			"server.user.risk.static_score_norm", ServerUserRiskStaticScoreNorm,
 			"service.address", ServiceAddress,
 			"service.environment", ServiceEnvironment,
 			"service.ephemeral_id", ServiceEphemeralId,
@@ -3662,6 +7832,34 @@ namespace Elastic.CommonSchema
 			"source.registered_domain", SourceRegisteredDomain,
 			"source.subdomain", SourceSubdomain,
 			"source.top_level_domain", SourceTopLevelDomain,
+			"source.as.number", SourceAsNumber,
+			"source.as.organization.name", SourceAsOrganizationName,
+			"source.geo.city_name", SourceGeoCityName,
+			"source.geo.continent_code", SourceGeoContinentCode,
+			"source.geo.continent_name", SourceGeoContinentName,
+			"source.geo.country_iso_code", SourceGeoCountryIsoCode,
+			"source.geo.country_name", SourceGeoCountryName,
+			"source.geo.location", SourceGeoLocation,
+			"source.geo.name", SourceGeoName,
+			"source.geo.postal_code", SourceGeoPostalCode,
+			"source.geo.region_iso_code", SourceGeoRegionIsoCode,
+			"source.geo.region_name", SourceGeoRegionName,
+			"source.geo.timezone", SourceGeoTimezone,
+			"source.user.domain", SourceUserDomain,
+			"source.user.email", SourceUserEmail,
+			"source.user.full_name", SourceUserFullName,
+			"source.user.hash", SourceUserHash,
+			"source.user.id", SourceUserId,
+			"source.user.name", SourceUserName,
+			"source.user.group.domain", SourceUserGroupDomain,
+			"source.user.group.id", SourceUserGroupId,
+			"source.user.group.name", SourceUserGroupName,
+			"source.user.risk.calculated_level", SourceUserRiskCalculatedLevel,
+			"source.user.risk.calculated_score", SourceUserRiskCalculatedScore,
+			"source.user.risk.calculated_score_norm", SourceUserRiskCalculatedScoreNorm,
+			"source.user.risk.static_level", SourceUserRiskStaticLevel,
+			"source.user.risk.static_score", SourceUserRiskStaticScore,
+			"source.user.risk.static_score_norm", SourceUserRiskStaticScoreNorm,
 			"threat.feed.dashboard_id", ThreatFeedDashboardId,
 			"threat.feed.description", ThreatFeedDescription,
 			"threat.feed.name", ThreatFeedName,
@@ -3690,6 +7888,144 @@ namespace Elastic.CommonSchema
 			"threat.software.name", ThreatSoftwareName,
 			"threat.software.reference", ThreatSoftwareReference,
 			"threat.software.type", ThreatSoftwareType,
+			"threat.indicator.x509.issuer.distinguished_name", ThreatIndicatorX509IssuerDistinguishedName,
+			"threat.indicator.x509.not_after", ThreatIndicatorX509NotAfter,
+			"threat.indicator.x509.not_before", ThreatIndicatorX509NotBefore,
+			"threat.indicator.x509.public_key_algorithm", ThreatIndicatorX509PublicKeyAlgorithm,
+			"threat.indicator.x509.public_key_curve", ThreatIndicatorX509PublicKeyCurve,
+			"threat.indicator.x509.public_key_exponent", ThreatIndicatorX509PublicKeyExponent,
+			"threat.indicator.x509.public_key_size", ThreatIndicatorX509PublicKeySize,
+			"threat.indicator.x509.serial_number", ThreatIndicatorX509SerialNumber,
+			"threat.indicator.x509.signature_algorithm", ThreatIndicatorX509SignatureAlgorithm,
+			"threat.indicator.x509.subject.distinguished_name", ThreatIndicatorX509SubjectDistinguishedName,
+			"threat.indicator.x509.version_number", ThreatIndicatorX509VersionNumber,
+			"threat.indicator.as.number", ThreatIndicatorAsNumber,
+			"threat.indicator.as.organization.name", ThreatIndicatorAsOrganizationName,
+			"threat.indicator.file.accessed", ThreatIndicatorFileAccessed,
+			"threat.indicator.file.created", ThreatIndicatorFileCreated,
+			"threat.indicator.file.ctime", ThreatIndicatorFileCtime,
+			"threat.indicator.file.device", ThreatIndicatorFileDevice,
+			"threat.indicator.file.directory", ThreatIndicatorFileDirectory,
+			"threat.indicator.file.drive_letter", ThreatIndicatorFileDriveLetter,
+			"threat.indicator.file.extension", ThreatIndicatorFileExtension,
+			"threat.indicator.file.fork_name", ThreatIndicatorFileForkName,
+			"threat.indicator.file.gid", ThreatIndicatorFileGid,
+			"threat.indicator.file.group", ThreatIndicatorFileGroup,
+			"threat.indicator.file.inode", ThreatIndicatorFileInode,
+			"threat.indicator.file.mime_type", ThreatIndicatorFileMimeType,
+			"threat.indicator.file.mode", ThreatIndicatorFileMode,
+			"threat.indicator.file.mtime", ThreatIndicatorFileMtime,
+			"threat.indicator.file.name", ThreatIndicatorFileName,
+			"threat.indicator.file.owner", ThreatIndicatorFileOwner,
+			"threat.indicator.file.path", ThreatIndicatorFilePath,
+			"threat.indicator.file.size", ThreatIndicatorFileSize,
+			"threat.indicator.file.target_path", ThreatIndicatorFileTargetPath,
+			"threat.indicator.file.type", ThreatIndicatorFileType,
+			"threat.indicator.file.uid", ThreatIndicatorFileUid,
+			"threat.indicator.file.hash.md5", ThreatIndicatorFileHashMd5,
+			"threat.indicator.file.hash.sha1", ThreatIndicatorFileHashSha1,
+			"threat.indicator.file.hash.sha256", ThreatIndicatorFileHashSha256,
+			"threat.indicator.file.hash.sha384", ThreatIndicatorFileHashSha384,
+			"threat.indicator.file.hash.sha512", ThreatIndicatorFileHashSha512,
+			"threat.indicator.file.hash.ssdeep", ThreatIndicatorFileHashSsdeep,
+			"threat.indicator.file.hash.tlsh", ThreatIndicatorFileHashTlsh,
+			"threat.indicator.file.pe.architecture", ThreatIndicatorFilePeArchitecture,
+			"threat.indicator.file.pe.company", ThreatIndicatorFilePeCompany,
+			"threat.indicator.file.pe.description", ThreatIndicatorFilePeDescription,
+			"threat.indicator.file.pe.file_version", ThreatIndicatorFilePeFileVersion,
+			"threat.indicator.file.pe.go_import_hash", ThreatIndicatorFilePeGoImportHash,
+			"threat.indicator.file.pe.go_imports", ThreatIndicatorFilePeGoImports,
+			"threat.indicator.file.pe.go_imports_names_entropy", ThreatIndicatorFilePeGoImportsNamesEntropy,
+			"threat.indicator.file.pe.go_imports_names_var_entropy", ThreatIndicatorFilePeGoImportsNamesVarEntropy,
+			"threat.indicator.file.pe.go_stripped", ThreatIndicatorFilePeGoStripped,
+			"threat.indicator.file.pe.imphash", ThreatIndicatorFilePeImphash,
+			"threat.indicator.file.pe.import_hash", ThreatIndicatorFilePeImportHash,
+			"threat.indicator.file.pe.imports_names_entropy", ThreatIndicatorFilePeImportsNamesEntropy,
+			"threat.indicator.file.pe.imports_names_var_entropy", ThreatIndicatorFilePeImportsNamesVarEntropy,
+			"threat.indicator.file.pe.original_file_name", ThreatIndicatorFilePeOriginalFileName,
+			"threat.indicator.file.pe.pehash", ThreatIndicatorFilePePehash,
+			"threat.indicator.file.pe.product", ThreatIndicatorFilePeProduct,
+			"threat.indicator.file.x509.issuer.distinguished_name", ThreatIndicatorFileX509IssuerDistinguishedName,
+			"threat.indicator.file.x509.not_after", ThreatIndicatorFileX509NotAfter,
+			"threat.indicator.file.x509.not_before", ThreatIndicatorFileX509NotBefore,
+			"threat.indicator.file.x509.public_key_algorithm", ThreatIndicatorFileX509PublicKeyAlgorithm,
+			"threat.indicator.file.x509.public_key_curve", ThreatIndicatorFileX509PublicKeyCurve,
+			"threat.indicator.file.x509.public_key_exponent", ThreatIndicatorFileX509PublicKeyExponent,
+			"threat.indicator.file.x509.public_key_size", ThreatIndicatorFileX509PublicKeySize,
+			"threat.indicator.file.x509.serial_number", ThreatIndicatorFileX509SerialNumber,
+			"threat.indicator.file.x509.signature_algorithm", ThreatIndicatorFileX509SignatureAlgorithm,
+			"threat.indicator.file.x509.subject.distinguished_name", ThreatIndicatorFileX509SubjectDistinguishedName,
+			"threat.indicator.file.x509.version_number", ThreatIndicatorFileX509VersionNumber,
+			"threat.indicator.file.code_signature.digest_algorithm", ThreatIndicatorFileCodeSignatureDigestAlgorithm,
+			"threat.indicator.file.code_signature.exists", ThreatIndicatorFileCodeSignatureExists,
+			"threat.indicator.file.code_signature.signing_id", ThreatIndicatorFileCodeSignatureSigningId,
+			"threat.indicator.file.code_signature.status", ThreatIndicatorFileCodeSignatureStatus,
+			"threat.indicator.file.code_signature.subject_name", ThreatIndicatorFileCodeSignatureSubjectName,
+			"threat.indicator.file.code_signature.team_id", ThreatIndicatorFileCodeSignatureTeamId,
+			"threat.indicator.file.code_signature.timestamp", ThreatIndicatorFileCodeSignatureTimestamp,
+			"threat.indicator.file.code_signature.trusted", ThreatIndicatorFileCodeSignatureTrusted,
+			"threat.indicator.file.code_signature.valid", ThreatIndicatorFileCodeSignatureValid,
+			"threat.indicator.file.elf.architecture", ThreatIndicatorFileElfArchitecture,
+			"threat.indicator.file.elf.byte_order", ThreatIndicatorFileElfByteOrder,
+			"threat.indicator.file.elf.cpu_type", ThreatIndicatorFileElfCpuType,
+			"threat.indicator.file.elf.creation_date", ThreatIndicatorFileElfCreationDate,
+			"threat.indicator.file.elf.go_import_hash", ThreatIndicatorFileElfGoImportHash,
+			"threat.indicator.file.elf.go_imports", ThreatIndicatorFileElfGoImports,
+			"threat.indicator.file.elf.go_imports_names_entropy", ThreatIndicatorFileElfGoImportsNamesEntropy,
+			"threat.indicator.file.elf.go_imports_names_var_entropy", ThreatIndicatorFileElfGoImportsNamesVarEntropy,
+			"threat.indicator.file.elf.go_stripped", ThreatIndicatorFileElfGoStripped,
+			"threat.indicator.file.elf.header.abi_version", ThreatIndicatorFileElfHeaderAbiVersion,
+			"threat.indicator.file.elf.header.class", ThreatIndicatorFileElfHeaderClass,
+			"threat.indicator.file.elf.header.data", ThreatIndicatorFileElfHeaderData,
+			"threat.indicator.file.elf.header.entrypoint", ThreatIndicatorFileElfHeaderEntrypoint,
+			"threat.indicator.file.elf.header.object_version", ThreatIndicatorFileElfHeaderObjectVersion,
+			"threat.indicator.file.elf.header.os_abi", ThreatIndicatorFileElfHeaderOsAbi,
+			"threat.indicator.file.elf.header.type", ThreatIndicatorFileElfHeaderType,
+			"threat.indicator.file.elf.header.version", ThreatIndicatorFileElfHeaderVersion,
+			"threat.indicator.file.elf.import_hash", ThreatIndicatorFileElfImportHash,
+			"threat.indicator.file.elf.imports_names_entropy", ThreatIndicatorFileElfImportsNamesEntropy,
+			"threat.indicator.file.elf.imports_names_var_entropy", ThreatIndicatorFileElfImportsNamesVarEntropy,
+			"threat.indicator.file.elf.telfhash", ThreatIndicatorFileElfTelfhash,
+			"threat.indicator.file.macho.go_import_hash", ThreatIndicatorFileMachoGoImportHash,
+			"threat.indicator.file.macho.go_imports", ThreatIndicatorFileMachoGoImports,
+			"threat.indicator.file.macho.go_imports_names_entropy", ThreatIndicatorFileMachoGoImportsNamesEntropy,
+			"threat.indicator.file.macho.go_imports_names_var_entropy", ThreatIndicatorFileMachoGoImportsNamesVarEntropy,
+			"threat.indicator.file.macho.go_stripped", ThreatIndicatorFileMachoGoStripped,
+			"threat.indicator.file.macho.import_hash", ThreatIndicatorFileMachoImportHash,
+			"threat.indicator.file.macho.imports_names_entropy", ThreatIndicatorFileMachoImportsNamesEntropy,
+			"threat.indicator.file.macho.imports_names_var_entropy", ThreatIndicatorFileMachoImportsNamesVarEntropy,
+			"threat.indicator.file.macho.symhash", ThreatIndicatorFileMachoSymhash,
+			"threat.indicator.geo.city_name", ThreatIndicatorGeoCityName,
+			"threat.indicator.geo.continent_code", ThreatIndicatorGeoContinentCode,
+			"threat.indicator.geo.continent_name", ThreatIndicatorGeoContinentName,
+			"threat.indicator.geo.country_iso_code", ThreatIndicatorGeoCountryIsoCode,
+			"threat.indicator.geo.country_name", ThreatIndicatorGeoCountryName,
+			"threat.indicator.geo.location", ThreatIndicatorGeoLocation,
+			"threat.indicator.geo.name", ThreatIndicatorGeoName,
+			"threat.indicator.geo.postal_code", ThreatIndicatorGeoPostalCode,
+			"threat.indicator.geo.region_iso_code", ThreatIndicatorGeoRegionIsoCode,
+			"threat.indicator.geo.region_name", ThreatIndicatorGeoRegionName,
+			"threat.indicator.geo.timezone", ThreatIndicatorGeoTimezone,
+			"threat.indicator.registry.data.bytes", ThreatIndicatorRegistryDataBytes,
+			"threat.indicator.registry.data.type", ThreatIndicatorRegistryDataType,
+			"threat.indicator.registry.hive", ThreatIndicatorRegistryHive,
+			"threat.indicator.registry.key", ThreatIndicatorRegistryKey,
+			"threat.indicator.registry.path", ThreatIndicatorRegistryPath,
+			"threat.indicator.registry.value", ThreatIndicatorRegistryValue,
+			"threat.indicator.url.domain", ThreatIndicatorUrlDomain,
+			"threat.indicator.url.extension", ThreatIndicatorUrlExtension,
+			"threat.indicator.url.fragment", ThreatIndicatorUrlFragment,
+			"threat.indicator.url.full", ThreatIndicatorUrlFull,
+			"threat.indicator.url.original", ThreatIndicatorUrlOriginal,
+			"threat.indicator.url.password", ThreatIndicatorUrlPassword,
+			"threat.indicator.url.path", ThreatIndicatorUrlPath,
+			"threat.indicator.url.port", ThreatIndicatorUrlPort,
+			"threat.indicator.url.query", ThreatIndicatorUrlQuery,
+			"threat.indicator.url.registered_domain", ThreatIndicatorUrlRegisteredDomain,
+			"threat.indicator.url.scheme", ThreatIndicatorUrlScheme,
+			"threat.indicator.url.subdomain", ThreatIndicatorUrlSubdomain,
+			"threat.indicator.url.top_level_domain", ThreatIndicatorUrlTopLevelDomain,
+			"threat.indicator.url.username", ThreatIndicatorUrlUsername,
 			"tls.cipher", TlsCipher,
 			"tls.client.certificate", TlsClientCertificate,
 			"tls.client.hash.md5", TlsClientHashMd5,
@@ -3716,6 +8052,17 @@ namespace Elastic.CommonSchema
 			"tls.server.subject", TlsServerSubject,
 			"tls.version", TlsVersion,
 			"tls.version_protocol", TlsVersionProtocol,
+			"tls.client.x509.issuer.distinguished_name", TlsClientX509IssuerDistinguishedName,
+			"tls.client.x509.not_after", TlsClientX509NotAfter,
+			"tls.client.x509.not_before", TlsClientX509NotBefore,
+			"tls.client.x509.public_key_algorithm", TlsClientX509PublicKeyAlgorithm,
+			"tls.client.x509.public_key_curve", TlsClientX509PublicKeyCurve,
+			"tls.client.x509.public_key_exponent", TlsClientX509PublicKeyExponent,
+			"tls.client.x509.public_key_size", TlsClientX509PublicKeySize,
+			"tls.client.x509.serial_number", TlsClientX509SerialNumber,
+			"tls.client.x509.signature_algorithm", TlsClientX509SignatureAlgorithm,
+			"tls.client.x509.subject.distinguished_name", TlsClientX509SubjectDistinguishedName,
+			"tls.client.x509.version_number", TlsClientX509VersionNumber,
 			"url.domain", UrlDomain,
 			"url.extension", UrlExtension,
 			"url.fragment", UrlFragment,
@@ -3736,10 +8083,26 @@ namespace Elastic.CommonSchema
 			"user.hash", UserHash,
 			"user.id", UserId,
 			"user.name", UserName,
+			"user.group.domain", UserGroupDomain,
+			"user.group.id", UserGroupId,
+			"user.group.name", UserGroupName,
+			"user.risk.calculated_level", UserRiskCalculatedLevel,
+			"user.risk.calculated_score", UserRiskCalculatedScore,
+			"user.risk.calculated_score_norm", UserRiskCalculatedScoreNorm,
+			"user.risk.static_level", UserRiskStaticLevel,
+			"user.risk.static_score", UserRiskStaticScore,
+			"user.risk.static_score_norm", UserRiskStaticScoreNorm,
 			"user_agent.device.name", UserAgentDeviceName,
 			"user_agent.name", UserAgentName,
 			"user_agent.original", UserAgentOriginal,
 			"user_agent.version", UserAgentVersion,
+			"user_agent.os.family", UserAgentOsFamily,
+			"user_agent.os.full", UserAgentOsFull,
+			"user_agent.os.kernel", UserAgentOsKernel,
+			"user_agent.os.name", UserAgentOsName,
+			"user_agent.os.platform", UserAgentOsPlatform,
+			"user_agent.os.type", UserAgentOsType,
+			"user_agent.os.version", UserAgentOsVersion,
 			"vlan.id", VlanId,
 			"vlan.name", VlanName,
 			"vulnerability.classification", VulnerabilityClassification,
