@@ -38,16 +38,17 @@ public class HttpContextEnricher : ILogEventEnricher
 	/// <summary> Enrich the log event.</summary>
 	public void Enrich(LogEvent logEvent, ILogEventPropertyFactory propertyFactory)
 	{
-		var r = new HttpContextEnrichments();
-		if (Adapter.HasContext)
-		{
-			r.Http = Adapter.Http;
-			r.Server = Adapter.Server;
-			r.Url = Adapter.Url;
-			r.UserAgent = Adapter.UserAgent;
-			r.Client = Adapter.Client;
-			r.User = Adapter.User;
-		}
+		if (!Adapter.HasContext)
+			return;
+
+		var r = new HttpContextEnrichments {
+			Http = Adapter.Http,
+			Server = Adapter.Server,
+			Url = Adapter.Url,
+			UserAgent = Adapter.UserAgent,
+			Client = Adapter.Client,
+			User = Adapter.User
+		};
 
 		logEvent.AddPropertyIfAbsent(new LogEventProperty(PropertyName, new ScalarValue(r)));
 	}

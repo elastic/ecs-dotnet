@@ -25,7 +25,7 @@
 
   <ItemGroup>
     <None Remove="Lib\UAParser.regexes.yaml" />
-    <EmbeddedResource Include="Lib\UAParser.regexes.yaml" />
+    <EmbeddedResource Include="Lib\UAParser.regexes.yaml" LogicalName="UAParser.regexes.yaml" />
   </ItemGroup>
 
 </Project>
