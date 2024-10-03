@@ -26,10 +26,7 @@ namespace Elastic.Ingest.Elasticsearch.CommonSchema
 		public EcsDataStreamChannel(
 			DataStreamChannelOptions<TEcsDocument> options,
 			ICollection<IChannelCallbacks<TEcsDocument, BulkResponse>>? callbackListeners
-		) : base(options, callbackListeners) =>
-			options.WriteEvent = async (stream, ctx, @event) =>
-				await JsonSerializer.SerializeAsync(stream, @event, typeof(TEcsDocument), EcsJsonConfiguration.SerializerOptions, ctx)
-					.ConfigureAwait(false);
+		) : base(options, callbackListeners) { }
 
 		/// <summary>
 		/// Bootstrap the target data stream. Will register the appropriate index and component templates

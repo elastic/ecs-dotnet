@@ -18,10 +18,7 @@ namespace Elastic.Ingest.Elasticsearch.CommonSchema
 		where TEcsDocument : EcsDocument
 	{
 		/// <inheritdoc cref="EcsIndexChannel{TEcsDocument}"/>
-		public EcsIndexChannel(IndexChannelOptions<TEcsDocument> options) : base(options) =>
-			options.WriteEvent = async (stream, ctx, @event) =>
-				await JsonSerializer.SerializeAsync(stream, @event, typeof(TEcsDocument), EcsJsonConfiguration.SerializerOptions, ctx)
-					.ConfigureAwait(false);
+		public EcsIndexChannel(IndexChannelOptions<TEcsDocument> options) : base(options) { }
 
 		/// <summary>
 		/// Bootstrap the target index. Will register the appropriate index and component templates

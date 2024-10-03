@@ -169,7 +169,6 @@ namespace Elastic.Extensions.Logging
 				{
 					IndexFormat = loggerOptions.Index.Format,
 					IndexOffset = loggerOptions.Index.IndexOffset,
-					WriteEvent = async (stream, ctx, logEvent) => await logEvent.SerializeAsync(stream, ctx).ConfigureAwait(false),
 					TimestampLookup = l => l.Timestamp,
 				};
 				SetupChannelOptions(_channelConfigurations, indexChannelOptions);

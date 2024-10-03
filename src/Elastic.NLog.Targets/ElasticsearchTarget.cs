@@ -55,7 +55,7 @@ namespace NLog.Targets
 
 		/// <summary>
 		/// Gets or sets the format string for the Elastic search index. The current <c>DateTimeOffset</c> is passed as parameter 0.
-		/// 
+		///
 		/// <para> Example: "dotnet-{0:yyyy.MM.dd}"</para>
 		/// <para> If no {0} parameter is defined the index name is effectively fixed</para>
 		/// </summary>
@@ -213,8 +213,7 @@ namespace NLog.Targets
 			var dataStreamNamespace = DataStreamNamespace?.Render(LogEventInfo.CreateNullEvent()) ?? string.Empty;
 			var channelOptions = new DataStreamChannelOptions<NLogEcsDocument>(transport)
 			{
-				DataStream = new DataStreamName(dataStreamType, dataStreamSet, dataStreamNamespace),
-				WriteEvent = async (stream, ctx, logEvent) => await logEvent.SerializeAsync(stream, ctx).ConfigureAwait(false),
+				DataStream = new DataStreamName(dataStreamType, dataStreamSet, dataStreamNamespace)
 			};
 			SetupChannelOptions(channelOptions);
 			var channel = new EcsDataStreamChannel<NLogEcsDocument>(channelOptions, new[] { new InternalLoggerCallbackListener<NLogEcsDocument>() });
@@ -228,9 +227,8 @@ namespace NLog.Targets
 			{
 				IndexFormat = indexFormat,
 				IndexOffset = indexOffset,
-				WriteEvent = async (stream, ctx, logEvent) => await logEvent.SerializeAsync(stream, ctx).ConfigureAwait(false),
 				TimestampLookup = l => l.Timestamp,
-				OperationMode = indexOperation,
+				OperationMode = indexOperation
 			};
 
 			if (_hasIndexEventId)
@@ -251,7 +249,7 @@ namespace NLog.Targets
 
 		/// <inheritdoc />
 		protected override void Write(LogEventInfo logEvent)
-		{ 
+		{
 			var ecsDoc = _layout.RenderEcsDocument(logEvent);
 			_channel?.TryWrite(ecsDoc);
 		}
