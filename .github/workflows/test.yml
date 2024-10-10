@@ -24,6 +24,7 @@ concurrency:
 
 env:
   ELASTIC_STACK_VERSION: '8.4.0'
+  NUGET_PACKAGES: ${{ github.workspace }}/.nuget/packages
 
 jobs:
 
@@ -34,11 +35,11 @@ jobs:
     - uses: actions/checkout@v4
     - name: Bootstrap Action Workspace
       uses: ./.github/workflows/bootstrap
-            
+      
     - uses: actions/cache@v4
       with:
-        path: ~/.nuget/packages
-        key: ${{ runner.os }}-nuget-${{ hashFiles('**/packages.lock.json') }}
+        path: ${{ github.workspace }}/.nuget/packages
+        key: ${{ runner.os }}-nuget-${{ hashFiles('**/*.[cf]sproj*') }}-${{ hashFiles('**/*.Build.props') }}
         restore-keys: |
           ${{ runner.os }}-nuget-
             
