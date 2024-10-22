@@ -16,10 +16,11 @@
 
     <LangVersion>latest</LangVersion>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
-    <DefineConstants Condition="'$(TargetFramework)'=='net461'">$(DefineConstants);FULLFRAMEWORK</DefineConstants>
+    <DefineConstants Condition="'$(TargetFramework)'=='net462'">$(DefineConstants);FULLFRAMEWORK</DefineConstants>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="MinVer" Version="2.3.1" PrivateAssets="all" />
-    <PackageReference Include="Microsoft.NETFramework.ReferenceAssemblies.net461" Version="1.0.3" PrivateAssets="all"/>
+    <PackageReference Condition="'$(TargetFramework)'=='net462'"
+      Include="Microsoft.NETFramework.ReferenceAssemblies.net462" Version="1.0.3" PrivateAssets="all"/>
   </ItemGroup>
 </Project>
