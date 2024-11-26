@@ -151,7 +151,7 @@ namespace Elastic.Serilog.Sinks
 			};
 
 		private static ElasticsearchSinkOptions CreateSinkOptions(
-			TransportConfiguration transportConfig,
+			TransportConfigurationDescriptor transportConfig,
 			BootstrapMethod bootstrapMethod, string? dataStream, string? ilmPolicy, bool? includeHost,
 			bool? includeActivity, bool? includeProcess, bool? includeUser, ICollection<string>? filterProperties
 		)
@@ -187,7 +187,7 @@ namespace Elastic.Serilog.Sinks
 			return sinkOptions;
 		}
 
-		private static void SetTransportConfig(TransportConfiguration transportConfig,
+		private static void SetTransportConfig(TransportConfigurationDescriptor transportConfig,
 			string? apiKey, string? username, string? password,
 			Uri? proxy, string? proxyUsername, string? proxyPassword, string? fingerprint, bool debugMode
 		)
@@ -209,7 +209,6 @@ namespace Elastic.Serilog.Sinks
 				transportConfig.Authentication(new ApiKey(apiKey));
 		}
 
-
 		/// <summary>
 		/// Write logs directly to Elastic Cloud ( https://cloud.elastic.co/ ).
 		/// <para><paramref name="cloudId"/> describes your deployments endpoints (can be found in the Admin Console)</para>
@@ -222,7 +221,7 @@ namespace Elastic.Serilog.Sinks
 			string username,
 			string password,
 			Action<ElasticsearchSinkOptions>? configureOptions = null,
-			Action<TransportConfiguration>? configureTransport = null,
+			Action<TransportConfigurationDescriptor>? configureTransport = null,
 			LoggingLevelSwitch? levelSwitch = null,
 			LogEventLevel restrictedToMinimumLevel = LevelAlias.Minimum
 		)

@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -8,14 +7,12 @@ using Elastic.Channels.Diagnostics;
 using Elastic.Clients.Elasticsearch;
 using Elastic.Clients.Elasticsearch.IndexManagement;
 using Elastic.CommonSchema;
-using Elastic.Serilog.Sinks;
 using Elastic.Elasticsearch.Xunit.XunitPlumbing;
 using FluentAssertions;
 using Serilog;
 using Serilog.Core;
 using Xunit.Abstractions;
 using DataStreamName = Elastic.Ingest.Elasticsearch.DataStreams.DataStreamName;
-using BulkResponse = Elastic.Ingest.Elasticsearch.Serialization.BulkResponse;
 
 namespace Elastic.Serilog.Sinks.IntegrationTests
 {
@@ -27,7 +24,7 @@ namespace Elastic.Serilog.Sinks.IntegrationTests
 
 		public SerilogOutputTests(SerilogCluster cluster, ITestOutputHelper output) : base(cluster, output)
 		{
-			var logs = new List<Action<Logger>>
+			var logs = new Action<Logger>[]
 			{
 				l => l.Information("Hello Information"),
 				l => l.Debug("Hello Debug"),
@@ -45,7 +42,7 @@ namespace Elastic.Serilog.Sinks.IntegrationTests
 					c.BufferOptions = new BufferOptions
 					{
 						WaitHandle = _waitHandle,
-						OutboundBufferMaxSize = logs.Count
+						OutboundBufferMaxSize = logs.Length
 					};
 				},
 				ChannelDiagnosticsCallback = (l) => _listener = l
@@ -60,7 +57,6 @@ namespace Elastic.Serilog.Sinks.IntegrationTests
 			foreach (var a in logs) a(logger);
 		}
 
-
 		[I] public async Task AssertLogs()
 		{
 			if (!_waitHandle.WaitHandle.WaitOne(TimeSpan.FromSeconds(10)))
@@ -73,11 +69,10 @@ namespace Elastic.Serilog.Sinks.IntegrationTests
 			var search = await Client.SearchAsync<EcsDocument>(new SearchRequest(indexName));
 
 			// Informational should be filtered
-			search.Documents.Count().Should().Be(4);
+			search.Documents.Count.Should().Be(4);
 
 			var messages = search.Documents.Select(e => e.Message);
 			messages.Should().Contain("Hello Error");
 		}
-
 	}
 }

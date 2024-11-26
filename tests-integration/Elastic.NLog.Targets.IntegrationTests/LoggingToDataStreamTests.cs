@@ -50,7 +50,7 @@ namespace NLog.Targets.Elastic.IntegrationTests
 
 			await Client.Indices.RefreshAsync(dataStream);
 
-			var response = Client.Search<EcsDocument>(new SearchRequest(dataStream));
+			var response = await Client.SearchAsync<EcsDocument>(new SearchRequest(dataStream));
 
 			response.IsValidResponse.Should().BeTrue("{0}", response.DebugInformation);
 			response.Total.Should().BeGreaterThan(0);

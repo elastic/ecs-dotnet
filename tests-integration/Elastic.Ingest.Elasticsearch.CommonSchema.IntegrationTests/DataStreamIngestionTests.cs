@@ -55,11 +55,7 @@ public class DataStreamIngestionTests : IntegrationTestBase
 		var hit = searchResult.Hits.First();
 		hit.Index.Should().StartWith($".ds-{targetDataStream}-");
 
-		// the following throws in the 8.0.4 version of the client
-		// The JSON value could not be converted to Elastic.Clients.Elasticsearch.HealthStatus. Path: $.data_stre...
-		// await Client.Indices.GetDataStreamAsync(new GetDataStreamRequest(targetDataStream.ToString())
-		var getDataStream =
-			await Client.Transport.RequestAsync<StringResponse>(HttpMethod.GET, $"/_data_stream/{targetDataStream}");
+		var getDataStream = await Client.Indices.GetDataStreamAsync(new GetDataStreamRequest(targetDataStream.ToString()));
 
 		getDataStream.ApiCallDetails.HttpStatusCode.Should()
 			.Be(200, "{0}", getDataStream.ApiCallDetails.DebugInformation);

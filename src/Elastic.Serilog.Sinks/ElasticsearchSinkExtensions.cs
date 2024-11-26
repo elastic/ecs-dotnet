@@ -47,7 +47,7 @@ namespace Elastic.Serilog.Sinks
 			this LoggerSinkConfiguration loggerConfiguration,
 			ICollection<Uri> nodes,
 			Action<ElasticsearchSinkOptions>? configureOptions = null,
-			Action<TransportConfiguration>? configureTransport = null,
+			Action<TransportConfigurationDescriptor>? configureTransport = null,
 			bool useSniffing = false,
 			LoggingLevelSwitch? levelSwitch = null,
 			LogEventLevel restrictedToMinimumLevel = LevelAlias.Minimum
@@ -72,7 +72,7 @@ namespace Elastic.Serilog.Sinks
 			this LoggerSinkConfiguration loggerConfiguration,
 			ICollection<Uri> nodes,
 			Action<ElasticsearchSinkOptions<TEcsDocument>>? configureOptions = null,
-			Action<TransportConfiguration>? configureTransport = null,
+			Action<TransportConfigurationDescriptor>? configureTransport = null,
 			bool useSniffing = false,
 			LoggingLevelSwitch? levelSwitch = null,
 			LogEventLevel restrictedToMinimumLevel = LevelAlias.Minimum
@@ -97,7 +97,7 @@ namespace Elastic.Serilog.Sinks
 			string cloudId,
 			string apiKey,
 			Action<ElasticsearchSinkOptions>? configureOptions = null,
-			Action<TransportConfiguration>? configureTransport = null,
+			Action<TransportConfigurationDescriptor>? configureTransport = null,
 			LoggingLevelSwitch? levelSwitch = null,
 			LogEventLevel restrictedToMinimumLevel = LevelAlias.Minimum
 		)
@@ -122,7 +122,7 @@ namespace Elastic.Serilog.Sinks
 			string cloudId,
 			string apiKey,
 			Action<ElasticsearchSinkOptions<TEcsDocument>>? configureOptions = null,
-			Action<TransportConfiguration>? configureTransport = null,
+			Action<TransportConfigurationDescriptor>? configureTransport = null,
 			LoggingLevelSwitch? levelSwitch = null,
 			LogEventLevel restrictedToMinimumLevel = LevelAlias.Minimum
 		) where TEcsDocument : EcsDocument, new()
@@ -147,7 +147,7 @@ namespace Elastic.Serilog.Sinks
 			string username,
 			string password,
 			Action<ElasticsearchSinkOptions>? configureOptions = null,
-			Action<TransportConfiguration>? configureTransport = null,
+			Action<TransportConfigurationDescriptor>? configureTransport = null,
 			LoggingLevelSwitch? levelSwitch = null,
 			LogEventLevel restrictedToMinimumLevel = LevelAlias.Minimum
 		)
@@ -173,7 +173,7 @@ namespace Elastic.Serilog.Sinks
 			string username,
 			string password,
 			Action<ElasticsearchSinkOptions<TEcsDocument>>? configureOptions = null,
-			Action<TransportConfiguration>? configureTransport = null,
+			Action<TransportConfigurationDescriptor>? configureTransport = null,
 			LoggingLevelSwitch? levelSwitch = null,
 			LogEventLevel restrictedToMinimumLevel = LevelAlias.Minimum
 		) where TEcsDocument : EcsDocument, new()

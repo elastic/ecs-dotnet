@@ -22,7 +22,6 @@ public class AppSettingsConfigTests : JsonConfigTestBase
 
 		transportConfig.NodePool.Nodes.Should().NotBeNullOrEmpty()
 			.And.Contain(n => n.Uri.ToString() == "http://elastichost:9200/");
-
 	}
 
 	[Fact]
@@ -45,18 +44,14 @@ public class AppSettingsConfigTests : JsonConfigTestBase
 						"proxy": "http://localhost:8200",
 						"proxyUsername": "x",
 						"proxyPassword": "y",
-
 						"debugMode": true,
-
 						"apiKey": "api-key",
-
 						"maxRetries": 2,
 						"maxConcurrency": 20,
 						"maxInflight": 1000000,
 						"maxExportSize": 10000,
 						"maxLifeTime": "00:01:00",
 						"fullMode": "DropNewest"
-
 					}
 				""");
 
@@ -91,7 +86,6 @@ public class AppSettingsConfigTests : JsonConfigTestBase
 		//because debugMode was set
 		transportConfig.DisableDirectStreaming.Should().Be(true);
 		transportConfig.Authentication.Should().NotBeNull();
-
 	}
 
 	[Fact]
@@ -114,16 +108,13 @@ public class AppSettingsConfigTests : JsonConfigTestBase
 						"proxy": "http://localhost:8200",
 						"proxyUsername": "x",
 						"proxyPassword": "y",
-
 						"debugMode": true,
-
 						"maxRetries": 2,
 						"maxConcurrency": 20,
 						"maxInflight": 1000000,
 						"maxExportSize": 10000,
 						"maxLifeTime": "00:01:00",
 						"fullMode": "DropNewest"
-
 					}
 				""");
 
@@ -158,6 +149,5 @@ public class AppSettingsConfigTests : JsonConfigTestBase
 		//because debugMode was set
 		transportConfig.DisableDirectStreaming.Should().Be(true);
 		transportConfig.Authentication.Should().NotBeNull();
-
 	}
 }
