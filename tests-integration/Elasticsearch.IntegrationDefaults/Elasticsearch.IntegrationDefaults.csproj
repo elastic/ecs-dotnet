@@ -9,9 +9,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Elastic.Clients.Elasticsearch" Version="8.12.1" />
-    <PackageReference Include="Elastic.Elasticsearch.Xunit" Version="0.4.3" />
-    <PackageReference Include="Elastic.Ingest.Elasticsearch" Version="0.7.2" />
+    <PackageReference Include="Elastic.Clients.Elasticsearch" Version="8.16.2" />
+    <PackageReference Include="Elastic.Elasticsearch.Xunit" Version="0.5.0" />
+    <PackageReference Include="Elastic.Ingest.Elasticsearch" Version="0.7.5" />
 
   </ItemGroup>
 

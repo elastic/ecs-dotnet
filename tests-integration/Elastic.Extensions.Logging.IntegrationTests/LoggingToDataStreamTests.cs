@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -50,7 +50,7 @@ namespace Elastic.Extensions.Logging.IntegrationTests
 
 			await Client.Indices.RefreshAsync(dataStream);
 
-			var response = Client.Search<EcsDocument>(new SearchRequest(dataStream));
+			var response = await Client.SearchAsync<EcsDocument>(new SearchRequest(dataStream));
 
 			response.IsValidResponse.Should().BeTrue("{0}", response.DebugInformation);
 			response.Total.Should().BeGreaterThan(0);
@@ -83,7 +83,7 @@ namespace Elastic.Extensions.Logging.IntegrationTests
 
 			await Client.Indices.RefreshAsync(dataStream);
 
-			var response = Client.Search<LogEvent>(new SearchRequest(dataStream));
+			var response = await Client.SearchAsync<LogEvent>(new SearchRequest(dataStream));
 
 			response.IsValidResponse.Should().BeTrue("{0}", response.DebugInformation);
 			response.Total.Should().BeGreaterThan(0);
@@ -111,7 +111,7 @@ namespace Elastic.Extensions.Logging.IntegrationTests
 
 			await Client.Indices.RefreshAsync(dataStream);
 
-			var response = Client.Search<LogEvent>(new SearchRequest(dataStream));
+			var response = await Client.SearchAsync<LogEvent>(new SearchRequest(dataStream));
 
 			response.IsValidResponse.Should().BeTrue("{0}", response.DebugInformation);
 			response.Total.Should().BeGreaterThan(0);

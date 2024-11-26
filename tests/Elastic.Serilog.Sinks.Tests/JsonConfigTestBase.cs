@@ -1,4 +1,4 @@
-﻿using System.Reflection;
+using System.Reflection;
 using Elastic.CommonSchema;
 using Elastic.CommonSchema.Serilog;
 using Elastic.Ingest.Elasticsearch.CommonSchema;
@@ -31,20 +31,20 @@ public class JsonConfigTestBase
 		sink = sinks?.FirstOrDefault() as ElasticsearchSink<EcsDocument> ?? throw new NullReferenceException();
 		formatterConfig = Reflect<EcsTextFormatterConfiguration<EcsDocument>>(sink, "_formatterConfiguration");
 		channel = Reflect<EcsDataStreamChannel<EcsDocument>>(sink, "_channel");
-		var transport = channel.Options.Transport;
-		transportConfig = transport.GetType().GetProperty("Configuration")?.GetValue(transport) as TransportConfiguration ?? throw new NullReferenceException();
+
+		var transport = channel.Options.Transport as ITransport<ITransportConfiguration> ?? throw new NullReferenceException();
+		transportConfig = transport.Configuration;
 
 		sink.Should().NotBeNull();
 		formatterConfig.Should().NotBeNull();
 		channel.Should().NotBeNull();
 		transportConfig.Should().NotBeNull();
-
-
 	}
+
 	private static TReturn Reflect<TReturn>(object obj, string fieldName) where TReturn : class =>
 		obj.GetType().BaseType?.GetRuntimeFields().FirstOrDefault(f => f.Name == fieldName)?.GetValue(obj) as TReturn ?? throw new NullReferenceException(fieldName);
 
-	protected string CreateJson(string to, string argsBlock) =>
+	protected static string CreateJson(string to, string argsBlock) =>
 		// language=json
 		$$"""
 		  {

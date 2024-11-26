@@ -5,6 +5,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using BenchmarkDotNet.Configs;
 using BenchmarkDotNet.Diagnosers;
 using BenchmarkDotNet.Environments;
@@ -49,7 +50,7 @@ namespace Elastic.CommonSchema.BenchmarkDotNetExporter.IntegrationTests
 		}
 
 		[Fact]
-		public void BenchmarkingPersistsResults()
+		public async Task BenchmarkingPersistsResults()
 		{
 			var url = Client.ElasticsearchClientSettings.NodePool.Nodes.First().Uri;
 			IChannelDiagnosticsListener listener = null;
@@ -81,13 +82,13 @@ namespace Elastic.CommonSchema.BenchmarkDotNetExporter.IntegrationTests
 			//	throw new Exception(template.DebugInformation);
 
 			var indexName = $"benchmarks-dotnet-{options.DataStreamNamespace}";
-			var indexExists = Client.Indices.Exists(indexName);
+			var indexExists = await Client.Indices.ExistsAsync(indexName);
 			if (!indexExists.IsValidResponse)
 				throw new Exception(indexExists.DebugInformation);
 
-			Client.Indices.Refresh(indexName);
+			await Client.Indices.RefreshAsync(indexName);
 
-			var searchResponse = Client.Search<BenchmarkDocument>(s => s.Index(indexName).TrackTotalHits(new TrackHits(true)));
+			var searchResponse = await Client.SearchAsync<BenchmarkDocument>(s => s.Index(indexName).TrackTotalHits(new TrackHits(true)));
 			if (!searchResponse.IsValidResponse || searchResponse.Total == 0)
 				throw new Exception(searchResponse.DebugInformation);
 
