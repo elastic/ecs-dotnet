@@ -20,10 +20,6 @@ using Elastic.Transport.Products.Elasticsearch;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 
-#if NETSTANDARD2_1_OR_GREATER
-using System.Buffers;
-#endif
-
 namespace Elastic.Extensions.Logging
 {
 	/// <summary>
@@ -35,14 +31,14 @@ namespace Elastic.Extensions.Logging
 	{
 		private readonly IChannelSetup[] _channelConfigurations;
 		private readonly IOptionsMonitor<ElasticsearchLoggerOptions> _options;
-		private readonly IDisposable _optionsReloadToken;
+		private readonly IDisposable? _optionsReloadToken;
 		private IExternalScopeProvider? _scopeProvider;
 		private IBufferedChannel<LogEvent> _shipper;
 
 		private static readonly LogEventWriter LogEventWriterInstance = new()
 		{
 			WriteToStreamAsync = static async (stream, logEvent, ctx) => await logEvent.SerializeAsync(stream, ctx).ConfigureAwait(false),
-#if NETSTANDARD2_1_OR_GREATER
+#if NETSTANDARD2_1_OR_GREATER || NET8_0_OR_GREATER
 			WriteToArrayBuffer = static (arrayBufferWriter, logEvent) =>
 			{
 				var serialized = logEvent.SerializeToUtf8Bytes(); // TODO - Performance optimisation to avoid array allocation
@@ -84,7 +80,7 @@ namespace Elastic.Extensions.Logging
 		/// <inheritdoc cref="IDisposable.Dispose"/>
 		public void Dispose()
 		{
-			_optionsReloadToken.Dispose();
+			_optionsReloadToken?.Dispose();
 			_shipper.Dispose();
 		}
 
@@ -216,8 +212,8 @@ namespace Elastic.Extensions.Logging
 
 		private sealed class LogEventWriter : IElasticsearchEventWriter<LogEvent>
 		{
-#if NETSTANDARD2_1_OR_GREATER
-			public Action<ArrayBufferWriter<byte>, LogEvent>? WriteToArrayBuffer { get; set; }
+#if NETSTANDARD2_1_OR_GREATER || NET8_0_OR_GREATER
+			public Action<System.Buffers.ArrayBufferWriter<byte>, LogEvent>? WriteToArrayBuffer { get; set; }
 #endif
 
 			public Func<Stream, LogEvent, CancellationToken, Task>? WriteToStreamAsync { get; set; }

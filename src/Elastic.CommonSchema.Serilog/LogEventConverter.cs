@@ -183,11 +183,11 @@ namespace Elastic.CommonSchema.Serilog
 			switch (propertyValue)
 			{
 				case SequenceValue values:
-					return values.Elements.Select(PropertyValueToObject).ToArray();
+					return values.Elements.Select((e) => PropertyValueToObject(e)).ToArray();
 				case ScalarValue sv:
 					return sv.Value;
 				case DictionaryValue dv:
-					return dv.Elements.ToDictionary(keySelector: kvp => kvp.Key.Value.ToString(),
+					return dv.Elements.ToDictionary(keySelector: kvp => kvp.Key.Value.ToString() ?? string.Empty,
 						elementSelector: (kvp) => PropertyValueToObject(kvp.Value));
 				case StructureValue ov:
 				{
