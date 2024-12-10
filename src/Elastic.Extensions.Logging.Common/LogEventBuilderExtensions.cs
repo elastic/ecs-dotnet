@@ -21,7 +21,7 @@ public static class LogEventBuilderExtensions
 
 			var scopeValues = (scope as IEnumerable<KeyValuePair<string, object>>)?.ToList();
 			var scopeName = scopeValues != null && scopeValues.Any(kv => kv.Key == "{OriginalFormat}")
-				? scope.ToString()
+				? (scope.ToString() ?? string.Empty)
 				: FormatValue(scope, options, 0, scope.GetType().Name);
 			log.Scopes.Add(scopeName);
 
@@ -139,7 +139,7 @@ public static class LogEventBuilderExtensions
 				if (depth < 1 && value is IEnumerable enumerable)
 					return FormatEnumerable(enumerable, depth, options);
 
-				return defaultFallback ?? value.ToString();
+				return defaultFallback ?? value.ToString() ?? string.Empty;
 		}
 	}
 
