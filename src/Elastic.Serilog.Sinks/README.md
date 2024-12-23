@@ -42,7 +42,7 @@ Writing to `Elastic Cloud`:
 |-------|-------------|
 | `Transport` | An instance of `Elastic.Transport` that dictates where and how wer are communicating to. Defaults to `http://localhost:9200` |
 | `DataStream` | Where to write data, defaults to the `logs-dotnet-default` datastream. |
-| `BootstrapMethod` | Wheter the sink should attempt to install component and index templates to ensure the datastream has ECS mappings. Can be be either `None` (the default), `Silent` (attempt but fail silently), `Failure` (attempt and fail with exceptions if bootstrapping fails). |
+| `BootstrapMethod` | Whether the sink should attempt to install component and index templates to ensure the datastream has ECS mappings. Can be be either `None` (the default), `Silent` (attempt but fail silently), `Failure` (attempt and fail with exceptions if bootstrapping fails). |
 | `TextFormatting`| Allows explicit control of over the `EcsTextFormatterConfiguration` used to emit ECS json documents. See [`Elastic.CommonSchema.Serilog`](https://github.com/elastic/ecs-dotnet/tree/main/src/Elastic.CommonSchema.Serilog) for available options. |
 | `ConfigureChannel` | A callback receiving the `DatastreamChannelOptions` which allows you to control sizing, backpressure etc. See [`Elastic.Ingest.Elasticsearch`](https://github.com/elastic/elastic-ingest-dotnet/blob/main/src/Elastic.Ingest.Elasticsearch/README.md#elasticingestelasticsearch) for more information.
 
