@@ -14,9 +14,7 @@ runs:
     # Install .NET version as mandated by global.json
     - uses: actions/setup-dotnet@v4
       with:
-        dotnet-version: |
-          8.0.x
-          6.0.x
+        global-json-file: global.json
 
     # Setup git config
     - uses: elastic/oblt-actions/git/setup@v1
