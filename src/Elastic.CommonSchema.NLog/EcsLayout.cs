@@ -33,20 +33,12 @@ namespace Elastic.CommonSchema.NLog
 	{
 		/// <summary> An NLOG layout implementation that renders logs as ECS json</summary>
 		public const string Name = nameof(EcsLayout);
-		private static bool? _nlogApmLoaded;
 		private static Agent _defaultAgent;
 		private Agent _previousAgent;
 		private Service _previousService;
 		private Host _previousHost;
 		private Server _previousServer;
 		private Process _previousProcess;
-
-		private static bool NLogApmLoaded()
-		{
-			if (_nlogApmLoaded.HasValue) return _nlogApmLoaded.Value;
-			_nlogApmLoaded = Type.GetType("Elastic.Apm.NLog.ApmTraceIdLayoutRenderer, Elastic.Apm.NLog") != null;
-			return _nlogApmLoaded.Value;
-		}
 
 		private readonly Layout _disableThreadAgnostic = "${threadid:cached=true}";
 
@@ -119,11 +111,19 @@ namespace Elastic.CommonSchema.NLog
 			base.InitializeLayout();
 		}
 
-		private static bool NLogWeb5Registered() =>
-			ConfigurationItemFactory.Default.LayoutRenderers.TryGetDefinition("aspnet-request-duration", out _);
+		private static bool NLogApmLoaded() => Type.GetType("Elastic.Apm.NLog.ApmTraceIdLayoutRenderer, Elastic.Apm.NLog") != null;
 
-		private static bool NLogWeb4Registered() =>
-			ConfigurationItemFactory.Default.LayoutRenderers.TryGetDefinition("aspnet-request-url", out _);
+#if NETFRAMEWORK
+		private static bool NLogWeb4Registered() => Type.GetType("NLog.Web.LayoutRenderers.AspNetRequestCookieLayoutRenderer, NLog.Web") != null;
+#else
+		private static bool NLogWeb4Registered() => Type.GetType("NLog.Web.LayoutRenderers.AspNetRequestCookieLayoutRenderer, NLog.Web.AspNetCore") != null;
+#endif
+
+#if NETFRAMEWORK
+		private static bool NLogWeb5Registered() => Type.GetType("NLog.Web.LayoutRenderers.AspNetRequestDurationLayoutRenderer, NLog.Web") != null;
+#else
+		private static bool NLogWeb5Registered() => Type.GetType("NLog.Web.LayoutRenderers.AspNetRequestDurationLayoutRenderer, NLog.Web.AspNetCore") != null;
+#endif
 
 		/// <summary></summary>
 		// ReSharper disable UnusedMember.Global
