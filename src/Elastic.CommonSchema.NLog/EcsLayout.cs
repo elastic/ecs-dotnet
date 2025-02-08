@@ -68,7 +68,7 @@ namespace Elastic.CommonSchema.NLog
 			_defaultAgent = EcsDocument.CreateAgent(typeof(EcsLayout));
 
 			// These values are set by the Elastic.Apm.NLog package
-			if (NLogApmLoaded())
+			if (NLogApmLoaded.Value)
 			{
 				ApmTraceId = "${ElasticApmTraceId}";
 				ApmTransactionId = "${ElasticApmTransactionId}";
@@ -88,7 +88,7 @@ namespace Elastic.CommonSchema.NLog
 		{
 			if (CanIncludeAspNetProperties())
 			{
-				if (NLogWeb5Registered())
+				if (NLogWeb5Registered.Value)
 					EventDurationMs = "${aspnet-request-duration}";
 
 				HttpRequestId = "${aspnet-TraceIdentifier}";
@@ -104,25 +104,25 @@ namespace Elastic.CommonSchema.NLog
 				UrlQuery = "${aspnet-request-url:IncludeScheme=false:IncludeHost=false:IncludePath=false:IncludeQueryString=true}";
 				UrlUserName = "${aspnet-user-identity}";
 
-				if (!NLogApmLoaded())
+				if (!NLogApmLoaded.Value)
 					ApmTraceId = "${scopeproperty:item=RequestId:whenEmpty=${aspnet-TraceIdentifier}}";
 			}
 
 			base.InitializeLayout();
 		}
 
-		private static bool NLogApmLoaded() => Type.GetType("Elastic.Apm.NLog.ApmTraceIdLayoutRenderer, Elastic.Apm.NLog") != null;
+		private static Lazy<bool> NLogApmLoaded { get; } = new Lazy<bool>(() => Type.GetType("Elastic.Apm.NLog.ApmTraceIdLayoutRenderer, Elastic.Apm.NLog") != null);
 
 #if NETFRAMEWORK
-		private static bool NLogWeb4Registered() => Type.GetType("NLog.Web.LayoutRenderers.AspNetRequestCookieLayoutRenderer, NLog.Web") != null;
+		private static Lazy<bool> NLogWeb4Registered { get; } = new Lazy<bool>(() => Type.GetType("NLog.Web.LayoutRenderers.AspNetRequestCookieLayoutRenderer, NLog.Web") != null);
 #else
-		private static bool NLogWeb4Registered() => Type.GetType("NLog.Web.LayoutRenderers.AspNetRequestCookieLayoutRenderer, NLog.Web.AspNetCore") != null;
+		private static Lazy<bool> NLogWeb4Registered { get; } = new Lazy<bool>(() => Type.GetType("NLog.Web.LayoutRenderers.AspNetRequestCookieLayoutRenderer, NLog.Web.AspNetCore") != null);
 #endif
 
 #if NETFRAMEWORK
-		private static bool NLogWeb5Registered() => Type.GetType("NLog.Web.LayoutRenderers.AspNetRequestDurationLayoutRenderer, NLog.Web") != null;
+		private static Lazy<bool> NLogWeb5Registered { get; } = new Lazy<bool>(() => Type.GetType("NLog.Web.LayoutRenderers.AspNetRequestDurationLayoutRenderer, NLog.Web") != null);
 #else
-		private static bool NLogWeb5Registered() => Type.GetType("NLog.Web.LayoutRenderers.AspNetRequestDurationLayoutRenderer, NLog.Web.AspNetCore") != null;
+		private static Lazy<bool> NLogWeb5Registered { get; } = new Lazy<bool>(() => Type.GetType("NLog.Web.LayoutRenderers.AspNetRequestDurationLayoutRenderer, NLog.Web.AspNetCore") != null);
 #endif
 
 		/// <summary></summary>
@@ -216,7 +216,7 @@ namespace Elastic.CommonSchema.NLog
 		/// <summary>
 		/// Tests if aspnet properties would be rendered
 		/// </summary>
-		public bool CanIncludeAspNetProperties() => IncludeAspNetProperties && NLogWeb4Registered();
+		public bool CanIncludeAspNetProperties() => IncludeAspNetProperties && NLogWeb4Registered.Value;
 
 		/// <summary></summary>
 		[ArrayParameter(typeof(TargetPropertyWithContext), "label")]
