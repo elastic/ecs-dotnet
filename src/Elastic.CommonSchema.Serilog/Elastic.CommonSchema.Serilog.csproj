@@ -2,7 +2,7 @@
 
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFrameworks>netstandard2.0;netstandard2.1;net461</TargetFrameworks>
+    <TargetFrameworks>netstandard2.0;netstandard2.1;net462;net8.0</TargetFrameworks>
     <Title>Elastic Common Schema (ECS) Serilog Formatter</Title>
     <Description>Serilog TextFormatter that formats log events in accordance with Elastic Common Schema (ECS).</Description>
     <IsPackable>True</IsPackable>
@@ -10,21 +10,10 @@
     <LangVersion>latest</LangVersion>
   </PropertyGroup>
   <ItemGroup>
-    <None Remove="Lib\UAParser.regexes.yaml" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Lib\UAParser.regexes.yaml">
-      <LogicalName>UAParser.regexes.yaml</LogicalName>
-    </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\Elastic.CommonSchema\Elastic.CommonSchema.csproj" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Serilog" Version="2.9.0.0" />
-    <PackageReference Condition="$(DefineConstants.Contains(NETSTANDARD))" Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.1.0.0" />
-    <PackageReference Condition="$(DefineConstants.Contains(NETSTANDARD))" Include="Microsoft.AspNetCore.Http.Extensions" Version="2.1.0.0" />
-    <Reference Condition="$(DefineConstants.Contains(FULLFRAMEWORK))" Include="System.Web" />
     <PackageReference Include="PolySharp" Version="1.13.2" PrivateAssets="all">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>

@@ -91,7 +91,7 @@ public abstract class SecurityPrivilegesTestsBase : SerilogTestBase<SecurityClus
 			l => l.Fatal("Hello Fatal")
 		};
 
-		var apiKey = cluster.CreateApiKey(Client, ApiKeyJson);
+		var apiKey = SecurityCluster.CreateApiKey(Client, ApiKeyJson);
 
 		ApiScopedClient = cluster.CreateElasticsearchClient(output,
 			s=>s.Authentication(new ApiKey(apiKey.Encoded))

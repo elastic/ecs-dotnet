@@ -59,7 +59,7 @@ internal partial class EcsEntityJsonConverter
 
 internal partial class LogEntityJsonConverter
 {
-	private class LogFileOriginInvalid
+	internal class LogFileOriginInvalid
 	{
 		[JsonPropertyName("name"), DataMember(Name = "name")]
 		public string? Name { get; set; }
@@ -67,7 +67,7 @@ internal partial class LogEntityJsonConverter
 		[JsonPropertyName("line"), DataMember(Name = "line")]
 		public int? Line { get; set; }
 	}
-	private class LogOriginInvalid
+	internal class LogOriginInvalid
 	{
 		[JsonPropertyName("function"), DataMember(Name = "function")]
 		public string? Function { get; set; }

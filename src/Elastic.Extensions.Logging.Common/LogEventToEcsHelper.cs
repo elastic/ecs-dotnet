@@ -1,10 +1,13 @@
+using Elastic.CommonSchema;
 using Microsoft.Extensions.Logging;
 
-namespace Elastic.Extensions.Logging
+namespace Elastic.Extensions.Logging.Common
 {
-	internal static class LogEventToEcsHelper
+	/// <summary> Extensions for <see cref="LogLevel"/> so they can be projected into ECS format in different formats </summary>
+	public static class LogLevelExtensions
 	{
-		public static int GetSeverity(LogLevel logLevel) =>
+		/// <summary> projects to <see cref="LogTemplateProperties.EventSeverity"/></summary>
+		public static int ToEcsSeverity(this LogLevel logLevel) =>
 			logLevel switch
 			{
 				LogLevel.Critical => 2,
@@ -17,7 +20,8 @@ namespace Elastic.Extensions.Logging
 				_ => 7
 			};
 
-		public static string GetLogLevelString(LogLevel logLevel) =>
+		/// <summary> projects to <see cref="LogTemplateProperties.LogLevel"/></summary>
+		public static string ToEcsLogLevelString(this LogLevel logLevel) =>
 			logLevel switch
 			{
 				LogLevel.Critical => nameof(LogLevel.Critical),

@@ -24,7 +24,7 @@ using Elastic.CommonSchema.Serialization;
 namespace Elastic.CommonSchema
 {
 	///<inheritdoc cref="BaseFieldSet"/>
-	public partial class EcsDocument : BaseFieldSet 
+	public partial class EcsDocument : BaseFieldSet , IAs, ICodeSignature, IElf, IGeo, IGroup, IHash, IMacho, IOs, IPe, IRisk, IUser, IVlan, IX509
 	{
 
 		/// <summary>

@@ -1,6 +1,6 @@
 # Elastic.NLog.Targets
 
-A [NLog](https://nlog-project.org/) target that writes logs directly to [Elasticsearch](https://www.elastic.co/elasticsearch/) or [Elastic Cloud](https://www.elastic.co/cloud/)
+A [NLog](https://nlog-project.org/) target that writes logs directly to [Elasticsearch](https://www.elastic.co/elasticsearch/) or [Elastic Cloud](https://www.elastic.co/cloud/) using the Elastic Common Schema.
 
 ## Packages
 
@@ -21,7 +21,6 @@ var logger = LogManager.GetCurrentClassLogger();
 ```xml
 <nlog>
   <extensions>
-    <add assembly="Elastic.Apm.NLog"/>
     <add assembly="Elastic.CommonSchema.NLog"/>
     <add assembly="Elastic.NLog.Targets"/>
   </extensions>
@@ -53,6 +52,7 @@ var logger = LogManager.GetCurrentClassLogger();
     - Cloud - Pool seeded with CloudId
   - _NodeUris_ - URIs of the Elasticsearch nodes in the connection pool (comma delimited)
   - _CloudId_ - When using NodePoolType = Cloud
+  - _BootstrapMethod_ - Whether to configure / bootstrap the destination, which requires user has management capabilities (None, Silent, Failure). Default = None
 
 * **Export Authentication**
   - _ApiKey_ - When using NodePoolType = Cloud and authentication via API key.
@@ -67,9 +67,15 @@ var logger = LogManager.GetCurrentClassLogger();
   - _ExportMaxRetries_ - Max number of times to retry an export. Default = 3
 
 * **Export DataStream**
-  - _DataStreamType_ - Generic type describing the data. Defaults = 'logs'
+  - _DataStreamType_ - Generic type describing the data. Default = 'logs'
   - _DataStreamSet_ - Describes the data ingested and its structure. Default = 'dotnet'
   - _DataStreamNamespace_ - User-configurable arbitrary grouping. Default = 'default'
+
+* **Export Index**
+  - _IndexFormat_ - Format string for the Elastic search index (Ex. `dotnet-{0:yyyy.MM.dd}` or blank means disabled). Default = ''
+  - _IndexOffsetHours_ - Time offset to use for the index (Ex. `0` for UTC or blank means system local). Default = ''
+  - _IndexOperation_ - Operation header for each bulk operation (Auto, Index, Create). Default = Auto
+  - _IndexEventId_ - Optional override of the per document `_id`
 
 Notice that export depends on in-memory queue, that is lost on application-crash / -exit.
 If higher gurantee of delivery is required, then consider using [Elastic.CommonSchema.NLog](https://www.nuget.org/packages/Elastic.CommonSchema.NLog)
@@ -113,3 +119,9 @@ Example app.config on .NET Framework:
 ```xml
   <target name="elastic" type="ElasticSearch" nodeUris="${environment:ELASTIC_SERVER_URL}">
 ```
+
+## Copyright and License
+
+This software is Copyright (c) 2014-2020 by Elasticsearch BV.
+
+This is free software, licensed under: [The Apache License Version 2.0](https://github.com/elastic/ecs-dotnet/blob/main/license.txt).

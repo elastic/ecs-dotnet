@@ -74,6 +74,15 @@ jobs:
     - name: Bootstrap Action Workspace
       uses: ./.github/workflows/bootstrap
 
+    - name: Build the solution
+      run: ./build.sh build -s true
+
+    - name: Run tests
+      run: ./build.sh test -s true
+
+    - name: Run integration tests
+      run: ./build.sh integrate -s true
+    
     - name: Run release -c false 
       run: ./build.sh release -c false --token ${{ secrets.GITHUB_TOKEN }}
 

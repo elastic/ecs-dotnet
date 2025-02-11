@@ -14,7 +14,10 @@ runs:
     # Install .NET version as mandated by global.json
     - uses: actions/setup-dotnet@v4
       with:
-          global-json-file: global.json
-      
+        global-json-file: global.json
+        dotnet-version: |
+          6.x
+          8.x
+
     # Setup git config
-    - uses: elastic/apm-pipeline-library/.github/actions/setup-git@current
+    - uses: elastic/oblt-actions/git/setup@v1

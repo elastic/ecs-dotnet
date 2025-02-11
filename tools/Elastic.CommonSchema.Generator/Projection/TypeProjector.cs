@@ -1,8 +1,12 @@
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using CsQuery.Engine.PseudoClassSelectors;
 using Elastic.CommonSchema.Generator.Schema;
 using Elastic.CommonSchema.Generator.Schema.DTO;
+using Microsoft.CodeAnalysis;
+using YamlDotNet.Core.Tokens;
 
 namespace Elastic.CommonSchema.Generator.Projection
 {
@@ -25,6 +29,10 @@ namespace Elastic.CommonSchema.Generator.Projection
 		public ReadOnlyCollection<string> Warnings { get; set; }
 		public IReadOnlyCollection<IndexTemplate> IndexTemplates { get; set; }
 		public IReadOnlyCollection<IndexComponent> IndexComponents { get; set; }
+
+		public List<AssignableEntityInterface> AssignableInterfaces { get; set; }
+
+		public List<PropDispatch> AssignablePropDispatches { get; set; }
 		// ReSharper restore PropertyCanBeMadeInitOnly.Global
 	}
 
@@ -97,12 +105,39 @@ namespace Elastic.CommonSchema.Generator.Projection
 
 			var nestedEntityTypes = CreateEntityTypes();
 
+			var entities = EntityClasses.Values;
+			var assignables = entities
+				.Concat(nestedEntityTypes.Values)
+				.Where(e => e.EntityReferences.Count > 0)
+				.SelectMany(e => e.EntityReferences.Select(r => (EntityClass: e, EntityPropertyReference: r)).ToList())
+				.Select(r =>
+				{
+					var prop = r.EntityPropertyReference;
+					var sharedKey = prop.Key.Split('.') switch
+					{
+						[.. { Length: > 1 } ] a => string.Join('.', a[1..]).PascalCase(),
+						_ => prop.Key.PascalCase()
+					};
+					if (r.EntityPropertyReference.Value.Entity is SelfReferentialReusedEntityClass s)
+						sharedKey = s.Name;
+					return (Key: sharedKey, r.EntityClass, r.EntityPropertyReference);
+				})
+				.GroupBy(e => e.Key)
+				.SelectMany(g =>
+					g.Select(r => r.EntityPropertyReference.Value).DistinctBy(r=>r.ClrType)
+						.Select(r => new AssignableEntityInterface(g.Key, r, g.Select(r=>r.EntityClass).ToList()))
+					)
+				//.DistinctBy(g=>g.Name)
+				.ToList();
+			foreach (var entity in entities)
+				entity.AssignableInterfaces = assignables.Where(a => a.Entities.Contains(entity)).DistinctBy(a=>a.Name).ToList();
+
 			Projection = new CommonSchemaTypesProjection
 			{
 				Version = Schema.Version,
 				GitRef = Schema.GitRef,
 				FieldSets = FieldSetsBaseClasses.Values.Where(e=>e.FieldSet.Root != true || e.FieldSet.Name == "base" ).ToList(),
-				EntityClasses = EntityClasses.Values.Where(e=>e.Name != "EcsDocument" && e.BaseFieldSet.FieldSet.Root != true).ToList(),
+				EntityClasses = EntityClasses.Values.Where(e => e.Name != "EcsDocument" && e.BaseFieldSet.FieldSet.Root != true).ToList(),
 				EntitiesWithPropertiesAtRoot = new Dictionary<EntityClass, string[]>
 				{
 					{ EntityClasses.Values.First(e=>e.Name == "Log"), new []{"level"}},
@@ -112,10 +147,27 @@ namespace Elastic.CommonSchema.Generator.Projection
 				InlineObjects = InlineObjects.Values.ToList(),
 				NestedEntityClasses = nestedEntityTypes.Values.ToList(),
 				Warnings = Warnings.AsReadOnly(),
-				IndexTemplates = Schema.Templates.Select(kv=>new IndexTemplate(kv.Key, kv.Value, Schema.Version)).OrderBy(t=>t.Name).ToList(),
-				IndexComponents = Schema.Components.Select(kv=>new IndexComponent(kv.Key, kv.Value, Schema.Version)).OrderBy(t=>t.Name).ToList(),
-
+				IndexTemplates = Schema.Templates.Select(kv => new IndexTemplate(kv.Key, kv.Value, Schema.Version)).OrderBy(t=>t.Name).ToList(),
+				IndexComponents = Schema.Components.Select(kv => new IndexComponent(kv.Key, kv.Value, Schema.Version)).OrderBy(t=>t.Name).ToList(),
+				AssignableInterfaces = assignables
 			};
+
+			var assignableToEcsDocument = Projection.EntityClasses.Select(e=> assignables.FirstOrDefault(a=>a.Property.Entity == e && a.Property.Name == e.Name)).Where(a => a != null).ToList();
+			Projection.Base.AssignableInterfaces = assignableToEcsDocument;
+
+			var allEntities = Projection.EntityClasses.Concat(Projection.NestedEntityClasses).ToDictionary(kv=>kv.Name);
+			var assignable = Projection.AssignableInterfaces.ToDictionary(e => e.Name.Substring(1, e.Name.Length - 1));
+			var propDispatches = new List<PropDispatch>();
+			foreach (var (name, entity) in allEntities)
+			{
+				var found = assignable.TryGetValue(name, out var a);
+				if (found && a.Property.IsArray)
+					continue;
+				if (entity is SelfReferentialReusedEntityClass)
+					continue;
+				propDispatches.Add(new PropDispatch(entity, a));
+			}
+			Projection.AssignablePropDispatches = propDispatches;
 			return Projection;
 		}
 
@@ -177,7 +229,7 @@ namespace Elastic.CommonSchema.Generator.Projection
 				var nestedPath = parentPaths.FirstOrDefault(p => nestedEntityClasses.ContainsKey(p));
 				var entityPath = parentPaths.FirstOrDefault(p => EntityClasses.ContainsKey(p));
 				var description = entity is SelfReferentialReusedEntityClass s ? s.ReuseDescription : entity.BaseFieldSet.FieldSet.Description;
-				var isArray = entity is SelfReferentialReusedEntityClass ss && ss.IsArray;
+				var isArray = entity is SelfReferentialReusedEntityClass { IsArray: true };
 				if (!string.IsNullOrEmpty(nestedPath))
 				{
 					var nestedEntityClassRef = new EntityPropertyReference(nestedPath, fullName, entity, description, isArray);
@@ -226,10 +278,10 @@ namespace Elastic.CommonSchema.Generator.Projection
 							currentPropertyReferences[fullPath] =
 								currentPropertyReferences.TryGetValue(fullPath, out var p)
 									? p
-									: new InlineObjectPropertyReference(parentPath, fullPath, InlineObjects[fullPath], field);
+									: new InlineObjectPropertyReference(field, parentPath, fullPath, InlineObjects[fullPath]);
 						}
 						else
-							currentPropertyReferences[fullPath] = new ValueTypePropertyReference(parentPath, fullPath, field);
+							currentPropertyReferences[fullPath] = new ValueTypePropertyReference(field, parentPath, fullPath);
 					}
 					else
 					{
@@ -255,13 +307,13 @@ namespace Elastic.CommonSchema.Generator.Projection
 							currentPropertyReferences[path] =
 								currentPropertyReferences.TryGetValue(path, out var p)
 									? p
-									: new InlineObjectPropertyReference(parentPath, path, InlineObjects[path], field);
+									: new InlineObjectPropertyReference(field, parentPath, path, InlineObjects[path]);
 							currentPropertyReferences = InlineObjects[path].Properties;
 							parentPath = path;
 							foundInlineObjectPath = true;
 						}
 						if (!foundInlineObjectPath) parentPath = name;
-						currentPropertyReferences[fullPath] = new ValueTypePropertyReference(parentPath, fullPath, field);
+						currentPropertyReferences[fullPath] = new ValueTypePropertyReference(field, parentPath, fullPath);
 					}
 				}
 			}

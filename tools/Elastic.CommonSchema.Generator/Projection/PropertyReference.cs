@@ -1,30 +1,28 @@
+using System;
 using System.Linq;
 using System.Text.RegularExpressions;
 using Elastic.CommonSchema.Generator.Schema.DTO;
 
 namespace Elastic.CommonSchema.Generator.Projection
 {
-	public abstract class PropertyReference
+	public abstract class PropertyReference(Field field, string localPath, string fullPath)
 	{
-		protected PropertyReference(string localPath, string fullPath)
-		{
-			LocalPath = localPath;
-			FullPath = fullPath;
-		}
-
+		protected string LocalPath { get; } = localPath;
+		public string FullPath { get; } = fullPath;
+		public string LogTemplateAlternative => FullPath.PascalCase();
 		public string JsonProperty => FullPath.GetLocalProperty(LocalPath);
 		public string Name => JsonProperty.PascalCase();
 
+		public virtual bool IsArray { get; } = field?.Normalize.Contains("array") ?? false;
+		public virtual string Description { get; } = GetFieldDescription(field);
+		public virtual string Example { get; } = NormalizeDescription(field?.Example?.ToString() ?? string.Empty);
+		public virtual string ClrType { get; } = field?.GetClrType();
 
-		public string LocalPath { get; }
-		public string FullPath { get; }
-		public string LogTemplateAlternative => FullPath.PascalCase();
-
-		public abstract string Description { get; }
-		public abstract string Example { get; }
+		public virtual bool IsAssignable => !IsArray && !string.IsNullOrWhiteSpace(ClrType);
 
 		protected static string NormalizeDescription(string description)
 		{
+			if (description == null) return string.Empty;
 			var multiLineDescription = Regex.Replace(description, @"\n", "\r\n		/// ");
 			multiLineDescription = multiLineDescription.Replace("<", "&lt;").Replace(">", "&gt;");
 			multiLineDescription = multiLineDescription.Replace("ATT&CK", "ATT&amp;CK");
@@ -38,8 +36,9 @@ namespace Elastic.CommonSchema.Generator.Projection
 		/// </summary>
 		/// <param name="field"></param>
 		/// <returns></returns>
-		protected static string GetFieldDescription(Field field)
+		private static string GetFieldDescription(Field field)
 		{
+			if (field == null) return string.Empty;
 			var multiLineDescription = NormalizeDescription(field.Description);
 
 			var description = $@"{multiLineDescription}";
@@ -74,60 +73,91 @@ namespace Elastic.CommonSchema.Generator.Projection
 			}
 			return description;
 		}
+
 	}
 
-	public class ValueTypePropertyReference : PropertyReference
+	public class NestedValueTypePropertyReference : ValueTypePropertyReference
 	{
-		public ValueTypePropertyReference(string parentPath, string fullPath, Field field) : base(parentPath, fullPath)
+		internal NestedValueTypePropertyReference(Field field, string parentPath, string fullPath, EntityPropertyReference property)
+			: base(field, parentPath, fullPath)
 		{
-			ClrType = field.GetClrType();
-			ReadJsonType = ClrType.PascalCase();
-			CastFromObject = field.GetCastFromObject();
-			Description = GetFieldDescription(field);
-			Example = NormalizeDescription(field.Example?.ToString() ?? string.Empty);
+			Entity = property.Entity;
+			ContainerPath = property.Name;
+			ContainerPathEntity = property.Entity.Name;
+
 		}
+		public EntityClass Entity { get; }
 
-		public string CastFromObject { get; }
-		public string ReadJsonType { get; }
-		public string ClrType { get; }
-		public override string Description { get; }
-		public override string Example { get; }
+		public string ContainerPath { get; }
+		public string ContainerPathEntity { get; }
 	}
 
-	public class InlineObjectPropertyReference : PropertyReference
+	public class ValueTypePropertyReference
+		: PropertyReference
 	{
-		public InlineObjectPropertyReference(string parentPath, string fullPath, InlineObject inlineObject, Field field) : base(parentPath, fullPath)
+		public ValueTypePropertyReference(Field field, string parentPath, string fullPath) : base(field, parentPath, fullPath)
 		{
-			InlineObject = inlineObject;
 			Field = field;
-			Description = GetFieldDescription(field);
-			Example = NormalizeDescription(field.Example?.ToString() ?? string.Empty);
+			ReadJsonType = field.GetClrType().PascalCase();
 		}
 
-		public InlineObject InlineObject { get; }
-		public Field Field { get; }
+		public ValueTypePropertyReference(ValueTypePropertyReference self, string localPath, string fullPath)
+			: base(self.Field, localPath, fullPath)
+		{
+			Field = self.Field;
+			ReadJsonType = self.ReadJsonType;
+			SelfReferential = true;
 
-		public string ClrType => Field.Normalize.Contains("array") ? $"{InlineObject.Name}[]" : $"{InlineObject.Name}";
-		public override string Description { get; }
-		public override string Example { get; }
+		}
+
+		public Field Field { get; }
+		public string ReadJsonType { get; }
+		public bool SelfReferential { get; }
+
+		public override bool IsAssignable => base.IsAssignable && !SelfReferential;
+
+		// creates deeply nested entity value type property references with updated paths
+		public ValueTypePropertyReference CreateSettableTypePropertyReference(EntityPropertyReference property)
+		{
+			var propertyKey = property.FullPath.Split('.').First();
+			var pre = string.Join('.', property.FullPath.Split('.')[1..]);
+			var post = string.Join('.', FullPath.Split('.')[1..]);
+			var entityKey = string.Join('.', property.FullPath.Split('.')[..^1]);
+			var fullPath = $"{propertyKey}.{pre}.{post}";
+
+			return new NestedValueTypePropertyReference(Field, entityKey, fullPath, property);
+		}
+	}
+
+	public class InlineObjectPropertyReference(Field field, string parentPath, string fullPath, InlineObject inlineObject)
+		: PropertyReference(field, parentPath, fullPath)
+	{
+		public InlineObject InlineObject { get; } = inlineObject;
+		public Field Field { get; } = field;
+
+		public override string ClrType => IsArray ? $"{InlineObject.Name}[]" : $"{InlineObject.Name}";
 	}
 
 	public class EntityPropertyReference : PropertyReference
 	{
-		public EntityPropertyReference(string parentPath, string fullPath, EntityClass entity, string description, bool isArray) : base(parentPath, fullPath)
+		public EntityPropertyReference(string parentPath, string fullPath, EntityClass entity, string description, bool isArray)
+			: base(null, parentPath, fullPath)
 		{
 			var multiLineDescription = NormalizeDescription(description);
 			Entity = entity;
 			Description = multiLineDescription;
 			Example = "";
 			ClrType = Entity.Name;
-			if (isArray) ClrType += "[]";
-
+			IsArray = isArray;
+			if (isArray) ClrType = $"{Entity.Name}[]";
 		}
 
 		public EntityClass Entity { get; }
 
-		public string ClrType { get; }
+		public override bool IsAssignable => base.IsAssignable && Entity is not SelfReferentialReusedEntityClass;
+
+		public override string ClrType { get; }
+		public override bool IsArray { get; }
 		public override string Description { get; }
 		public override string Example { get; }
 	}

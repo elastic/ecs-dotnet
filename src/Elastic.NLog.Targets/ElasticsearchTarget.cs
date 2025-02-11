@@ -4,9 +4,11 @@ using System.Linq;
 using Elastic.Channels;
 using Elastic.Channels.Buffers;
 using Elastic.Channels.Diagnostics;
+using Elastic.CommonSchema.NLog;
 using Elastic.Ingest.Elasticsearch;
 using Elastic.Ingest.Elasticsearch.CommonSchema;
 using Elastic.Ingest.Elasticsearch.DataStreams;
+using Elastic.Ingest.Elasticsearch.Indices;
 using Elastic.Ingest.Elasticsearch.Serialization;
 using Elastic.Transport;
 using Elastic.Transport.Products.Elasticsearch;
@@ -24,7 +26,7 @@ namespace NLog.Targets
 		/// <inheritdoc />
 		public override Layout Layout { get => _layout; set => _layout = value as Elastic.CommonSchema.NLog.EcsLayout ?? _layout; }
 		private Elastic.CommonSchema.NLog.EcsLayout _layout = new Elastic.CommonSchema.NLog.EcsLayout();
-		private EcsDataStreamChannel<NLogEcsDocument>? _channel;
+		private IBufferedChannel<NLogEcsDocument>? _channel;
 
 		/// <summary>
 		/// Gets or sets the connection pool type. Default for multiple nodes is <c>Sniffing</c>; other supported values are
@@ -50,6 +52,41 @@ namespace NLog.Targets
 		public Layout? DataStreamSet { get; set; } = "dotnet";
 		/// <summary> User-configurable arbitrary grouping</summary>
 		public Layout? DataStreamNamespace { get; set; } = "default";
+
+		/// <summary>
+		/// Gets or sets the format string for the Elastic search index. The current <c>DateTimeOffset</c> is passed as parameter 0.
+		///
+		/// <para> Example: "dotnet-{0:yyyy.MM.dd}"</para>
+		/// <para> If no {0} parameter is defined the index name is effectively fixed</para>
+		/// </summary>
+		public Layout? IndexFormat { get; set; }
+
+		/// <summary>
+		/// Gets or sets the offset to use for the index <c>DateTimeOffset</c>. Default value is null, which uses the system local offset.
+		/// Use "0" for UTC.
+		/// </summary>
+		public Layout? IndexOffsetHours { get; set; }
+
+		/// <summary>
+		/// Control the operation header for each bulk operation. Default value is Auto.
+		///
+		/// <para> Can explicit specify Auto, Index or Create</para>
+		/// </summary>
+		public OperationMode IndexOperation { get; set; }
+
+		/// <summary>
+		/// Gets or sets the optional override of the per document `_id`.
+		/// </summary>
+		public Layout? IndexEventId
+		{
+			get => _layout.EventId;
+			set
+			{
+				_layout.EventId = value;
+				_hasIndexEventId = value is not null;
+			}
+		}
+		private bool _hasIndexEventId;
 
 		/// <summary>
 		/// The maximum number of in flight instances that can be queued in memory. If this threshold is reached, events will be dropped
@@ -124,7 +161,7 @@ namespace NLog.Targets
 		/// <summary>
 		/// Provide callbacks to further configure <see cref="DataStreamChannelOptions{TEvent}"/>
 		/// </summary>
-		public Action<DataStreamChannelOptions<NLogEcsDocument>>? ConfigureChannel { get; set; }
+		public Action<ElasticsearchChannelOptionsBase<NLogEcsDocument>>? ConfigureChannel { get; set; }
 
 		/// <inheritdoc cref="IChannelDiagnosticsListener"/>
 		public IChannelDiagnosticsListener? DiagnosticsListener => _channel?.DiagnosticsListener;
@@ -132,23 +169,29 @@ namespace NLog.Targets
 		/// <inheritdoc />
 		protected override void InitializeTarget()
 		{
-			var ilmPolicy = IlmPolicy?.Render(LogEventInfo.CreateNullEvent());
-			var dataStreamType = DataStreamType?.Render(LogEventInfo.CreateNullEvent()) ?? string.Empty;
-			var dataStreamSet = DataStreamSet?.Render(LogEventInfo.CreateNullEvent()) ?? string.Empty;
-			var dataStreamNamespace = DataStreamNamespace?.Render(LogEventInfo.CreateNullEvent()) ?? string.Empty;
+			var indexFormat = IndexFormat?.Render(LogEventInfo.CreateNullEvent()) ?? string.Empty;
+			var indexOffsetHours = IndexOffsetHours?.Render(LogEventInfo.CreateNullEvent()) ?? string.Empty;
+			var indexOffset = string.IsNullOrEmpty(indexOffsetHours) ? default(TimeSpan?) : TimeSpan.FromHours(int.Parse(indexOffsetHours));
 
 			var connectionPool = CreateNodePool();
-			var config = new TransportConfiguration(connectionPool, productRegistration: ElasticsearchProductRegistration.Default);
+			var config = new TransportConfigurationDescriptor(connectionPool, productRegistration: ElasticsearchProductRegistration.Default);
 			// Cloud sets authentication as required parameter in the constructor
 			if (NodePoolType != ElasticPoolType.Cloud)
 				config = SetAuthenticationOnTransport(config);
 
-			var transport = new DistributedTransport<TransportConfiguration>(config);
-			var channelOptions = new DataStreamChannelOptions<NLogEcsDocument>(transport)
+			var transport = new DistributedTransport<ITransportConfiguration>(config);
+			if (!string.IsNullOrEmpty(indexFormat))
 			{
-				DataStream = new DataStreamName(dataStreamType, dataStreamSet, dataStreamNamespace),
-				WriteEvent = async (stream, ctx, logEvent) => await logEvent.SerializeAsync(stream, ctx).ConfigureAwait(false),
-			};
+				_channel = CreateIndexChannel(transport, indexFormat, indexOffset, IndexOperation);
+			}
+			else
+			{
+				_channel = CreateDataStreamChannel(transport);
+			}
+		}
+
+		private void SetupChannelOptions(ElasticsearchChannelOptionsBase<NLogEcsDocument> channelOptions)
+		{
 			if (InboundBufferMaxSize > 0)
 				channelOptions.BufferOptions.InboundBufferMaxSize = InboundBufferMaxSize;
 			if (OutboundBufferMaxSize > 0)
@@ -160,10 +203,41 @@ namespace NLog.Targets
 			if (ExportMaxRetries >= 0)
 				channelOptions.BufferOptions.ExportMaxRetries = ExportMaxRetries;
 			ConfigureChannel?.Invoke(channelOptions);
+		}
 
+		private EcsDataStreamChannel<NLogEcsDocument> CreateDataStreamChannel(DistributedTransport<ITransportConfiguration> transport)
+		{
+			var ilmPolicy = IlmPolicy?.Render(LogEventInfo.CreateNullEvent());
+			var dataStreamType = DataStreamType?.Render(LogEventInfo.CreateNullEvent()) ?? string.Empty;
+			var dataStreamSet = DataStreamSet?.Render(LogEventInfo.CreateNullEvent()) ?? string.Empty;
+			var dataStreamNamespace = DataStreamNamespace?.Render(LogEventInfo.CreateNullEvent()) ?? string.Empty;
+			var channelOptions = new DataStreamChannelOptions<NLogEcsDocument>(transport)
+			{
+				DataStream = new DataStreamName(dataStreamType, dataStreamSet, dataStreamNamespace)
+			};
+			SetupChannelOptions(channelOptions);
 			var channel = new EcsDataStreamChannel<NLogEcsDocument>(channelOptions, new[] { new InternalLoggerCallbackListener<NLogEcsDocument>() });
 			channel.BootstrapElasticsearch(BootstrapMethod, ilmPolicy);
-			_channel = channel;
+			return channel;
+		}
+
+		private EcsIndexChannel<NLogEcsDocument> CreateIndexChannel(DistributedTransport<ITransportConfiguration> transport, string indexFormat, TimeSpan? indexOffset, OperationMode indexOperation)
+		{
+			var indexChannelOptions = new IndexChannelOptions<NLogEcsDocument>(transport)
+			{
+				IndexFormat = indexFormat,
+				IndexOffset = indexOffset,
+				TimestampLookup = l => l.Timestamp,
+				OperationMode = indexOperation
+			};
+
+			if (_hasIndexEventId)
+			{
+				indexChannelOptions.BulkOperationIdLookup = (logEvent) => (logEvent.Event?.Id)!;
+			}
+
+			SetupChannelOptions(indexChannelOptions);
+			return new EcsIndexChannel<NLogEcsDocument>(indexChannelOptions);
 		}
 
 		/// <inheritdoc />
@@ -175,7 +249,7 @@ namespace NLog.Targets
 
 		/// <inheritdoc />
 		protected override void Write(LogEventInfo logEvent)
-		{ 
+		{
 			var ecsDoc = _layout.RenderEcsDocument(logEvent);
 			_channel?.TryWrite(ecsDoc);
 		}
@@ -226,7 +300,7 @@ namespace NLog.Targets
 			}
 		}
 
-		private TransportConfiguration SetAuthenticationOnTransport(TransportConfiguration config)
+		private TransportConfigurationDescriptor SetAuthenticationOnTransport(TransportConfigurationDescriptor config)
 		{
 			var apiKey = ApiKey?.Render(LogEventInfo.CreateNullEvent()) ?? string.Empty;
 			var username = Username?.Render(LogEventInfo.CreateNullEvent()) ?? string.Empty;

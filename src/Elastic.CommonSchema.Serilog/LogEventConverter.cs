@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Serilog.Events;
+using static Elastic.CommonSchema.Serilog.SpecialProperties;
 
 namespace Elastic.CommonSchema.Serilog
 {
@@ -49,7 +50,7 @@ namespace Elastic.CommonSchema.Serilog
 			var user = GetUser(logEvent, configuration);
 			if (user != null) ecsEvent.User = user;
 
-			ecsEvent.Message = logEvent.RenderMessage();
+			ecsEvent.Message = logEvent.RenderMessage(configuration.MessageFormatProvider);
 			ecsEvent.Log = GetLog(logEvent);
 			ecsEvent.Agent = GetAgent(logEvent) ?? DefaultAgent;
 			ecsEvent.Event = GetEvent(logEvent);
@@ -182,11 +183,11 @@ namespace Elastic.CommonSchema.Serilog
 			switch (propertyValue)
 			{
 				case SequenceValue values:
-					return values.Elements.Select(PropertyValueToObject).ToArray();
+					return values.Elements.Select((e) => PropertyValueToObject(e)).ToArray();
 				case ScalarValue sv:
 					return sv.Value;
 				case DictionaryValue dv:
-					return dv.Elements.ToDictionary(keySelector: kvp => kvp.Key.Value.ToString(),
+					return dv.Elements.ToDictionary(keySelector: kvp => kvp.Key.Value.ToString() ?? string.Empty,
 						elementSelector: (kvp) => PropertyValueToObject(kvp.Value));
 				case StructureValue ov:
 				{
@@ -312,7 +313,7 @@ namespace Elastic.CommonSchema.Serilog
 		private static Http? GetHttp(LogEvent e, IEcsTextFormatterConfiguration configuration)
 		{
 			if (e.TryGetScalarPropertyValue(SpecialKeys.HttpContext, out var httpContext)
-			    && httpContext.Value is HttpContextEnricher.HttpContextEnrichments enriched)
+			    && httpContext.Value is HttpContextEnrichments enriched)
 				return enriched.Http;
 
 			var http = configuration.MapHttpAdapter?.Http;
@@ -346,7 +347,7 @@ namespace Elastic.CommonSchema.Serilog
 		private static Url? GetUrl(LogEvent e, IEcsTextFormatterConfiguration configuration)
 		{
 			if (e.TryGetScalarPropertyValue(SpecialKeys.HttpContext, out var httpContext)
-			    && httpContext.Value is HttpContextEnricher.HttpContextEnrichments enriched)
+			    && httpContext.Value is HttpContextEnrichments enriched)
 				return enriched.Url;
 
 			var url = configuration.MapHttpAdapter?.Url;
@@ -375,7 +376,7 @@ namespace Elastic.CommonSchema.Serilog
 		private static UserAgent? GetUserAgent(LogEvent e, IEcsTextFormatterConfiguration configuration)
 		{
 			if (e.TryGetScalarPropertyValue(SpecialKeys.HttpContext, out var httpContext)
-			    && httpContext.Value is HttpContextEnricher.HttpContextEnrichments enriched)
+			    && httpContext.Value is HttpContextEnrichments enriched)
 				return enriched.UserAgent;
 
 			return configuration.MapHttpAdapter?.UserAgent;
@@ -384,7 +385,7 @@ namespace Elastic.CommonSchema.Serilog
 		private static User? GetUser(LogEvent e, IEcsTextFormatterConfiguration configuration)
 		{
 			if (e.TryGetScalarPropertyValue(SpecialKeys.HttpContext, out var httpContext)
-			    && httpContext.Value is HttpContextEnricher.HttpContextEnrichments enriched)
+			    && httpContext.Value is HttpContextEnrichments enriched)
 				return enriched.User;
 
 			return configuration.MapHttpAdapter?.User;
@@ -393,7 +394,7 @@ namespace Elastic.CommonSchema.Serilog
 		private static Client? GetClient(LogEvent e, IEcsTextFormatterConfiguration configuration)
 		{
 			if (e.TryGetScalarPropertyValue(SpecialKeys.HttpContext, out var httpContext)
-			    && httpContext.Value is HttpContextEnricher.HttpContextEnrichments enriched)
+			    && httpContext.Value is HttpContextEnrichments enriched)
 				return enriched.Client;
 
 			return configuration.MapHttpAdapter?.Client;

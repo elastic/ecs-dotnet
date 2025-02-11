@@ -24,15 +24,15 @@ namespace Elastic.CommonSchema
 {
 
 	///<inheritdoc cref="CloudFieldSet"/>
-	public class CloudOrigin : CloudFieldSet {
+	public class CloudOrigin : CloudFieldSet  {
 	}
 
 	///<inheritdoc cref="CloudFieldSet"/>
-	public class CloudTarget : CloudFieldSet {
+	public class CloudTarget : CloudFieldSet  {
 	}
 
 	///<inheritdoc cref="ProcessFieldSet"/>
-	public class ProcessParent : ProcessFieldSet {
+	public class ProcessParent : ProcessFieldSet  {
 
 		///<summary>
 		/// <para><c>process.parent.group_leader</c></para>
@@ -43,7 +43,7 @@ namespace Elastic.CommonSchema
 	}
 
 	///<inheritdoc cref="ProcessFieldSet"/>
-	public class ProcessEntryLeader : ProcessFieldSet {
+	public class ProcessEntryLeader : ProcessFieldSet  {
 
 		///<summary>
 		/// <para><c>process.entry_leader.parent</c></para>
@@ -54,7 +54,7 @@ namespace Elastic.CommonSchema
 	}
 
 	///<inheritdoc cref="ProcessFieldSet"/>
-	public class ProcessSessionLeader : ProcessFieldSet {
+	public class ProcessSessionLeader : ProcessFieldSet  {
 
 		///<summary>
 		/// <para><c>process.session_leader.parent</c></para>
@@ -65,15 +65,15 @@ namespace Elastic.CommonSchema
 	}
 
 	///<inheritdoc cref="ProcessFieldSet"/>
-	public class ProcessGroupLeader : ProcessFieldSet {
+	public class ProcessGroupLeader : ProcessFieldSet  {
 	}
 
 	///<inheritdoc cref="ProcessFieldSet"/>
-	public class ProcessParentGroupLeader : ProcessFieldSet {
+	public class ProcessParentGroupLeader : ProcessFieldSet  {
 	}
 
 	///<inheritdoc cref="ProcessFieldSet"/>
-	public class ProcessEntryLeaderParent : ProcessFieldSet {
+	public class ProcessEntryLeaderParent : ProcessFieldSet  {
 
 		///<summary>
 		/// <para><c>process.entry_leader.parent.session_leader</c></para>
@@ -84,7 +84,7 @@ namespace Elastic.CommonSchema
 	}
 
 	///<inheritdoc cref="ProcessFieldSet"/>
-	public class ProcessSessionLeaderParent : ProcessFieldSet {
+	public class ProcessSessionLeaderParent : ProcessFieldSet  {
 
 		///<summary>
 		/// <para><c>process.session_leader.parent.session_leader</c></para>
@@ -95,47 +95,47 @@ namespace Elastic.CommonSchema
 	}
 
 	///<inheritdoc cref="ProcessFieldSet"/>
-	public class ProcessEntryLeaderParentSessionLeader : ProcessFieldSet {
+	public class ProcessEntryLeaderParentSessionLeader : ProcessFieldSet  {
 	}
 
 	///<inheritdoc cref="ProcessFieldSet"/>
-	public class ProcessSessionLeaderParentSessionLeader : ProcessFieldSet {
+	public class ProcessSessionLeaderParentSessionLeader : ProcessFieldSet  {
 	}
 
 	///<inheritdoc cref="ProcessFieldSet"/>
-	public class ProcessPrevious : ProcessFieldSet {
+	public class ProcessPrevious : ProcessFieldSet  {
 	}
 
 	///<inheritdoc cref="ServiceFieldSet"/>
-	public class ServiceOrigin : ServiceFieldSet {
+	public class ServiceOrigin : ServiceFieldSet  {
 	}
 
 	///<inheritdoc cref="ServiceFieldSet"/>
-	public class ServiceTarget : ServiceFieldSet {
+	public class ServiceTarget : ServiceFieldSet  {
 	}
 
 	///<inheritdoc cref="UserFieldSet"/>
-	public class UserTarget : UserFieldSet {
+	public class UserTarget : UserFieldSet  {
 	}
 
 	///<inheritdoc cref="UserFieldSet"/>
-	public class UserEffective : UserFieldSet {
+	public class UserEffective : UserFieldSet  {
 	}
 
 	///<inheritdoc cref="UserFieldSet"/>
-	public class UserChanges : UserFieldSet {
+	public class UserChanges : UserFieldSet  {
 	}
 
 	///<inheritdoc cref="AgentFieldSet"/>
-	public class Agent : AgentFieldSet {
+	public class Agent : AgentFieldSet  {
 	}
 
 	///<inheritdoc cref="AsFieldSet"/>
-	public class As : AsFieldSet {
+	public class As : AsFieldSet  {
 	}
 
 	///<inheritdoc cref="ClientFieldSet"/>
-	public class Client : ClientFieldSet {
+	public class Client : ClientFieldSet , IAs, IGeo, IUser {
 
 		///<summary>
 		/// <para><c>client.as</c></para>
@@ -160,7 +160,7 @@ namespace Elastic.CommonSchema
 	}
 
 	///<inheritdoc cref="CloudFieldSet"/>
-	public class Cloud : CloudFieldSet {
+	public class Cloud : CloudFieldSet , ICloudOrigin, ICloudTarget {
 
 		///<summary>
 		/// <para><c>cloud.origin</c></para>
@@ -178,19 +178,19 @@ namespace Elastic.CommonSchema
 	}
 
 	///<inheritdoc cref="CodeSignatureFieldSet"/>
-	public class CodeSignature : CodeSignatureFieldSet {
+	public class CodeSignature : CodeSignatureFieldSet  {
 	}
 
 	///<inheritdoc cref="ContainerFieldSet"/>
-	public class Container : ContainerFieldSet {
+	public class Container : ContainerFieldSet  {
 	}
 
 	///<inheritdoc cref="DataStreamFieldSet"/>
-	public class DataStream : DataStreamFieldSet {
+	public class DataStream : DataStreamFieldSet  {
 	}
 
 	///<inheritdoc cref="DestinationFieldSet"/>
-	public class Destination : DestinationFieldSet {
+	public class Destination : DestinationFieldSet , IAs, IGeo, IUser {
 
 		///<summary>
 		/// <para><c>destination.as</c></para>
@@ -215,11 +215,11 @@ namespace Elastic.CommonSchema
 	}
 
 	///<inheritdoc cref="DeviceFieldSet"/>
-	public class Device : DeviceFieldSet {
+	public class Device : DeviceFieldSet  {
 	}
 
 	///<inheritdoc cref="DllFieldSet"/>
-	public class Dll : DllFieldSet {
+	public class Dll : DllFieldSet , IHash, IPe, ICodeSignature {
 
 		///<summary>
 		/// <para><c>dll.hash</c></para>
@@ -244,35 +244,35 @@ namespace Elastic.CommonSchema
 	}
 
 	///<inheritdoc cref="DnsFieldSet"/>
-	public class Dns : DnsFieldSet {
+	public class Dns : DnsFieldSet  {
 	}
 
 	///<inheritdoc cref="EcsFieldSet"/>
-	public partial class Ecs : EcsFieldSet {
+	public partial class Ecs : EcsFieldSet  {
 	}
 
 	///<inheritdoc cref="ElfFieldSet"/>
-	public class Elf : ElfFieldSet {
+	public class Elf : ElfFieldSet  {
 	}
 
 	///<inheritdoc cref="EmailFieldSet"/>
-	public class Email : EmailFieldSet {
+	public class Email : EmailFieldSet  {
 	}
 
 	///<inheritdoc cref="ErrorFieldSet"/>
-	public class Error : ErrorFieldSet {
+	public class Error : ErrorFieldSet  {
 	}
 
 	///<inheritdoc cref="EventFieldSet"/>
-	public class Event : EventFieldSet {
+	public class Event : EventFieldSet  {
 	}
 
 	///<inheritdoc cref="FaasFieldSet"/>
-	public class Faas : FaasFieldSet {
+	public class Faas : FaasFieldSet  {
 	}
 
 	///<inheritdoc cref="FileFieldSet"/>
-	public class File : FileFieldSet {
+	public class File : FileFieldSet , IHash, IPe, ICodeSignature, IX509, IElf, IMacho {
 
 		///<summary>
 		/// <para><c>file.hash</c></para>
@@ -318,19 +318,19 @@ namespace Elastic.CommonSchema
 	}
 
 	///<inheritdoc cref="GeoFieldSet"/>
-	public class Geo : GeoFieldSet {
+	public class Geo : GeoFieldSet  {
 	}
 
 	///<inheritdoc cref="GroupFieldSet"/>
-	public class Group : GroupFieldSet {
+	public class Group : GroupFieldSet  {
 	}
 
 	///<inheritdoc cref="HashFieldSet"/>
-	public class Hash : HashFieldSet {
+	public class Hash : HashFieldSet  {
 	}
 
 	///<inheritdoc cref="HostFieldSet"/>
-	public class Host : HostFieldSet {
+	public class Host : HostFieldSet , IGeo, IOs, IRisk {
 
 		///<summary>
 		/// <para><c>host.geo</c></para>
@@ -355,23 +355,23 @@ namespace Elastic.CommonSchema
 	}
 
 	///<inheritdoc cref="HttpFieldSet"/>
-	public class Http : HttpFieldSet {
+	public class Http : HttpFieldSet  {
 	}
 
 	///<inheritdoc cref="InterfaceFieldSet"/>
-	public class Interface : InterfaceFieldSet {
+	public class Interface : InterfaceFieldSet  {
 	}
 
 	///<inheritdoc cref="LogFieldSet"/>
-	public partial class Log : LogFieldSet {
+	public partial class Log : LogFieldSet  {
 	}
 
 	///<inheritdoc cref="MachoFieldSet"/>
-	public class Macho : MachoFieldSet {
+	public class Macho : MachoFieldSet  {
 	}
 
 	///<inheritdoc cref="NetworkFieldSet"/>
-	public class Network : NetworkFieldSet {
+	public class Network : NetworkFieldSet , IVlan {
 
 		///<summary>
 		/// <para><c>network.vlan</c></para>
@@ -382,7 +382,7 @@ namespace Elastic.CommonSchema
 	}
 
 	///<inheritdoc cref="ObserverFieldSet"/>
-	public class Observer : ObserverFieldSet {
+	public class Observer : ObserverFieldSet , IGeo, IOs {
 
 		///<summary>
 		/// <para><c>observer.geo</c></para>
@@ -400,27 +400,27 @@ namespace Elastic.CommonSchema
 	}
 
 	///<inheritdoc cref="OrchestratorFieldSet"/>
-	public class Orchestrator : OrchestratorFieldSet {
+	public class Orchestrator : OrchestratorFieldSet  {
 	}
 
 	///<inheritdoc cref="OrganizationFieldSet"/>
-	public class Organization : OrganizationFieldSet {
+	public class Organization : OrganizationFieldSet  {
 	}
 
 	///<inheritdoc cref="OsFieldSet"/>
-	public class Os : OsFieldSet {
+	public class Os : OsFieldSet  {
 	}
 
 	///<inheritdoc cref="PackageFieldSet"/>
-	public class Package : PackageFieldSet {
+	public class Package : PackageFieldSet  {
 	}
 
 	///<inheritdoc cref="PeFieldSet"/>
-	public class Pe : PeFieldSet {
+	public class Pe : PeFieldSet  {
 	}
 
 	///<inheritdoc cref="ProcessFieldSet"/>
-	public class Process : ProcessFieldSet {
+	public class Process : ProcessFieldSet , IUser, IHash, IPe, ICodeSignature, IElf, IMacho, IGroup, IRealGroup, ISavedGroup, ISupplementalGroups, IAttestedGroups, IEntryMetaSource, ISavedUser, IRealUser, IAttestedUser, IProcessParent, IProcessEntryLeader, IProcessSessionLeader, IProcessGroupLeader, IProcessPrevious {
 
 		///<summary>
 		/// <para><c>process.group</c></para>
@@ -564,23 +564,23 @@ namespace Elastic.CommonSchema
 	}
 
 	///<inheritdoc cref="RegistryFieldSet"/>
-	public class Registry : RegistryFieldSet {
+	public class Registry : RegistryFieldSet  {
 	}
 
 	///<inheritdoc cref="RelatedFieldSet"/>
-	public class Related : RelatedFieldSet {
+	public class Related : RelatedFieldSet  {
 	}
 
 	///<inheritdoc cref="RiskFieldSet"/>
-	public class Risk : RiskFieldSet {
+	public class Risk : RiskFieldSet  {
 	}
 
 	///<inheritdoc cref="RuleFieldSet"/>
-	public class Rule : RuleFieldSet {
+	public class Rule : RuleFieldSet  {
 	}
 
 	///<inheritdoc cref="ServerFieldSet"/>
-	public class Server : ServerFieldSet {
+	public class Server : ServerFieldSet , IAs, IGeo, IUser {
 
 		///<summary>
 		/// <para><c>server.as</c></para>
@@ -605,7 +605,7 @@ namespace Elastic.CommonSchema
 	}
 
 	///<inheritdoc cref="ServiceFieldSet"/>
-	public class Service : ServiceFieldSet {
+	public class Service : ServiceFieldSet , IServiceOrigin, IServiceTarget {
 
 		///<summary>
 		/// <para><c>service.origin</c></para>
@@ -623,7 +623,7 @@ namespace Elastic.CommonSchema
 	}
 
 	///<inheritdoc cref="SourceFieldSet"/>
-	public class Source : SourceFieldSet {
+	public class Source : SourceFieldSet , IAs, IGeo, IUser {
 
 		///<summary>
 		/// <para><c>source.as</c></para>
@@ -648,7 +648,7 @@ namespace Elastic.CommonSchema
 	}
 
 	///<inheritdoc cref="ThreatFieldSet"/>
-	public class Threat : ThreatFieldSet {
+	public class Threat : ThreatFieldSet , IIndicatorX509, IIndicatorAs, IIndicatorFile, IIndicatorGeo, IIndicatorRegistry, IIndicatorUrl {
 
 		///<summary>
 		/// <para><c>threat.indicator.x509</c></para>
@@ -694,7 +694,7 @@ namespace Elastic.CommonSchema
 	}
 
 	///<inheritdoc cref="TlsFieldSet"/>
-	public class Tls : TlsFieldSet {
+	public class Tls : TlsFieldSet , IClientX509, IServerX509 {
 
 		///<summary>
 		/// <para><c>tls.client.x509</c></para>
@@ -712,11 +712,11 @@ namespace Elastic.CommonSchema
 	}
 
 	///<inheritdoc cref="UrlFieldSet"/>
-	public class Url : UrlFieldSet {
+	public class Url : UrlFieldSet  {
 	}
 
 	///<inheritdoc cref="UserFieldSet"/>
-	public class User : UserFieldSet {
+	public class User : UserFieldSet , IRisk, IGroup, IUserTarget, IUserEffective, IUserChanges {
 
 		///<summary>
 		/// <para><c>user.group</c></para>
@@ -755,7 +755,7 @@ namespace Elastic.CommonSchema
 	}
 
 	///<inheritdoc cref="UserAgentFieldSet"/>
-	public class UserAgent : UserAgentFieldSet {
+	public class UserAgent : UserAgentFieldSet , IOs {
 
 		///<summary>
 		/// <para><c>user_agent.os</c></para>
@@ -766,14 +766,14 @@ namespace Elastic.CommonSchema
 	}
 
 	///<inheritdoc cref="VlanFieldSet"/>
-	public class Vlan : VlanFieldSet {
+	public class Vlan : VlanFieldSet  {
 	}
 
 	///<inheritdoc cref="VulnerabilityFieldSet"/>
-	public class Vulnerability : VulnerabilityFieldSet {
+	public class Vulnerability : VulnerabilityFieldSet  {
 	}
 
 	///<inheritdoc cref="X509FieldSet"/>
-	public class X509 : X509FieldSet {
+	public class X509 : X509FieldSet  {
 	}
 }

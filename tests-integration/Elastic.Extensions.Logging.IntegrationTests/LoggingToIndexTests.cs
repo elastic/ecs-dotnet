@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -47,7 +47,7 @@ namespace Elastic.Extensions.Logging.IntegrationTests
 
 			await Client.Indices.RefreshAsync($"{indexPrefix}-*");
 
-			var response = Client.Search<LogEvent>(new SearchRequest($"{indexPrefix}-*"));
+			var response = await Client.SearchAsync<LogEvent>(new SearchRequest($"{indexPrefix}-*"));
 
 			response.IsValidResponse.Should().BeTrue("{0}", response.DebugInformation);
 			response.Total.Should().BeGreaterThan(0);
@@ -75,7 +75,7 @@ namespace Elastic.Extensions.Logging.IntegrationTests
 
 			await Client.Indices.RefreshAsync($"{indexPrefix}-*");
 
-			var response = Client.Search<LogEvent>(new SearchRequest($"{indexPrefix}-*"));
+			var response = await Client.SearchAsync<LogEvent>(new SearchRequest($"{indexPrefix}-*"));
 
 			response.IsValidResponse.Should().BeTrue("{0}", response.DebugInformation);
 			response.Total.Should().BeGreaterThan(0);

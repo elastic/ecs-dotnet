@@ -2,13 +2,13 @@
 // Elasticsearch B.V licenses this file to you under the Apache 2.0 License.
 // See the LICENSE file in the project root for more information
 
-using System;
-using System.Collections.Generic;
 using System.Runtime.Serialization;
 using System.Text.Json.Serialization;
 using Elastic.CommonSchema;
 using Elastic.CommonSchema.Serialization;
 
+// kept in this namespace for bwc
+// ReSharper disable once CheckNamespace
 namespace Elastic.Extensions.Logging
 {
 	/// <summary>
