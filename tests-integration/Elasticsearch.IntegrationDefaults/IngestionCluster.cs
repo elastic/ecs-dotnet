@@ -2,7 +2,6 @@
 // Elasticsearch B.V licenses this file to you under the Apache 2.0 License.
 // See the LICENSE file in the project root for more information
 
-using System.Net.Security;
 using Elastic.Clients.Elasticsearch;
 using Elastic.Elasticsearch.Ephemeral;
 using Elastic.Elasticsearch.Xunit;

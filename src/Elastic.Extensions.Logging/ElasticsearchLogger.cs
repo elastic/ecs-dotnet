@@ -43,14 +43,14 @@ namespace Elastic.Extensions.Logging
 			_scopeProvider = scopeProvider;
 		}
 
-		private class EmptyDisposable : IDisposable
+		private sealed class EmptyDisposable : IDisposable
 		{
 			public void Dispose() { }
 		}
 		private readonly IDisposable _emptyScope = new EmptyDisposable();
 
 		/// <inheritdoc cref="ILogger.BeginScope{TState}"/>
-		public IDisposable BeginScope<TState>(TState state) => _scopeProvider?.Push(state) ?? _emptyScope;
+		IDisposable ILogger.BeginScope<TState>(TState state) => _scopeProvider?.Push(state) ?? _emptyScope;
 
 		/// <inheritdoc cref="ILogger.IsEnabled"/>
 		public bool IsEnabled(LogLevel logLevel) => _options.IsEnabled;

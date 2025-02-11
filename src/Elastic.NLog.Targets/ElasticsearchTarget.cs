@@ -174,12 +174,12 @@ namespace NLog.Targets
 			var indexOffset = string.IsNullOrEmpty(indexOffsetHours) ? default(TimeSpan?) : TimeSpan.FromHours(int.Parse(indexOffsetHours));
 
 			var connectionPool = CreateNodePool();
-			var config = new TransportConfiguration(connectionPool, productRegistration: ElasticsearchProductRegistration.Default);
+			var config = new TransportConfigurationDescriptor(connectionPool, productRegistration: ElasticsearchProductRegistration.Default);
 			// Cloud sets authentication as required parameter in the constructor
 			if (NodePoolType != ElasticPoolType.Cloud)
 				config = SetAuthenticationOnTransport(config);
 
-			var transport = new DistributedTransport<TransportConfiguration>(config);
+			var transport = new DistributedTransport<ITransportConfiguration>(config);
 			if (!string.IsNullOrEmpty(indexFormat))
 			{
 				_channel = CreateIndexChannel(transport, indexFormat, indexOffset, IndexOperation);
@@ -205,7 +205,7 @@ namespace NLog.Targets
 			ConfigureChannel?.Invoke(channelOptions);
 		}
 
-		private EcsDataStreamChannel<NLogEcsDocument> CreateDataStreamChannel(DistributedTransport<TransportConfiguration> transport)
+		private EcsDataStreamChannel<NLogEcsDocument> CreateDataStreamChannel(DistributedTransport<ITransportConfiguration> transport)
 		{
 			var ilmPolicy = IlmPolicy?.Render(LogEventInfo.CreateNullEvent());
 			var dataStreamType = DataStreamType?.Render(LogEventInfo.CreateNullEvent()) ?? string.Empty;
@@ -221,7 +221,7 @@ namespace NLog.Targets
 			return channel;
 		}
 
-		private EcsIndexChannel<NLogEcsDocument> CreateIndexChannel(DistributedTransport<TransportConfiguration> transport, string indexFormat, TimeSpan? indexOffset, OperationMode indexOperation)
+		private EcsIndexChannel<NLogEcsDocument> CreateIndexChannel(DistributedTransport<ITransportConfiguration> transport, string indexFormat, TimeSpan? indexOffset, OperationMode indexOperation)
 		{
 			var indexChannelOptions = new IndexChannelOptions<NLogEcsDocument>(transport)
 			{
@@ -300,7 +300,7 @@ namespace NLog.Targets
 			}
 		}
 
-		private TransportConfiguration SetAuthenticationOnTransport(TransportConfiguration config)
+		private TransportConfigurationDescriptor SetAuthenticationOnTransport(TransportConfigurationDescriptor config)
 		{
 			var apiKey = ApiKey?.Render(LogEventInfo.CreateNullEvent()) ?? string.Empty;
 			var username = Username?.Render(LogEventInfo.CreateNullEvent()) ?? string.Empty;

@@ -2,19 +2,13 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
-using System.Threading.Tasks;
 using Elastic.Channels;
 using Elastic.Channels.Diagnostics;
-using Elastic.Clients.Elasticsearch;
-using Elastic.Clients.Elasticsearch.IndexManagement;
-using Elastic.Serilog.Sinks;
 using Elastic.Elasticsearch.Xunit.XunitPlumbing;
 using FluentAssertions;
 using Serilog;
-using Serilog.Core;
 using Xunit.Abstractions;
 using DataStreamName = Elastic.Ingest.Elasticsearch.DataStreams.DataStreamName;
-using BulkResponse = Elastic.Ingest.Elasticsearch.Serialization.BulkResponse;
 
 namespace Elastic.Serilog.Sinks.IntegrationTests
 {
@@ -26,8 +20,10 @@ namespace Elastic.Serilog.Sinks.IntegrationTests
 
 		private static ICollection<Uri> AlterNodes(ICollection<Uri> uris) => uris.Select(u =>
 			{
-				var builder = new UriBuilder(u);
-				builder.Scheme = "https";
+				var builder = new UriBuilder(u)
+				{
+					Scheme = "https"
+				};
 				return builder.Uri;
 			})
 			.ToList();
@@ -51,14 +47,10 @@ namespace Elastic.Serilog.Sinks.IntegrationTests
 			};
 		}
 
-
 		[I] public void AssertLogs()
 		{
-			List<string> messages = new();
-			global::Serilog.Debugging.SelfLog.Enable(msg =>
-			{
-				messages.Add(msg);
-			});
+			List<string> messages = [];
+			global::Serilog.Debugging.SelfLog.Enable(messages.Add);
 
 			var loggerConfig = new LoggerConfiguration()
 				.MinimumLevel.Information()
@@ -74,6 +66,5 @@ namespace Elastic.Serilog.Sinks.IntegrationTests
 			messages.Should().NotBeEmpty();
 			global::Serilog.Debugging.SelfLog.Disable();
 		}
-
 	}
 }

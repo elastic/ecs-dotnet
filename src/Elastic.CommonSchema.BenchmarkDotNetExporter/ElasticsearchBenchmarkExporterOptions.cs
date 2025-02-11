@@ -1,4 +1,4 @@
-﻿// Licensed to Elasticsearch B.V under one or more agreements.
+// Licensed to Elasticsearch B.V under one or more agreements.
 // Elasticsearch B.V licenses this file to you under the Apache 2.0 License.
 // See the LICENSE file in the project root for more information
 
@@ -145,9 +145,9 @@ namespace Elastic.CommonSchema.BenchmarkDotNetExporter
 		}
 
 
-		internal TransportConfiguration CreateTransportConfiguration()
+		internal TransportConfigurationDescriptor CreateTransportConfiguration()
 		{
-			var settings = new TransportConfiguration(CreateNodePool(), productRegistration: ElasticsearchProductRegistration.Default);
+			var settings = new TransportConfigurationDescriptor(CreateNodePool(), productRegistration: ElasticsearchProductRegistration.Default);
 			if (EnableDebugMode)
 				settings.EnableDebugMode();
 			return settings;

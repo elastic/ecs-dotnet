@@ -4,8 +4,10 @@
 
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading;
+using System.Threading.Tasks;
 using Elastic.Channels;
 using Elastic.Channels.Diagnostics;
 using Elastic.Extensions.Logging.Options;
@@ -29,9 +31,23 @@ namespace Elastic.Extensions.Logging
 	{
 		private readonly IChannelSetup[] _channelConfigurations;
 		private readonly IOptionsMonitor<ElasticsearchLoggerOptions> _options;
-		private readonly IDisposable _optionsReloadToken;
+		private readonly IDisposable? _optionsReloadToken;
 		private IExternalScopeProvider? _scopeProvider;
 		private IBufferedChannel<LogEvent> _shipper;
+
+		private static readonly LogEventWriter LogEventWriterInstance = new()
+		{
+			WriteToStreamAsync = static async (stream, logEvent, ctx) => await logEvent.SerializeAsync(stream, ctx).ConfigureAwait(false),
+#if NETSTANDARD2_1_OR_GREATER || NET8_0_OR_GREATER
+			WriteToArrayBuffer = static (arrayBufferWriter, logEvent) =>
+			{
+				var serialized = logEvent.SerializeToUtf8Bytes(); // TODO - Performance optimisation to avoid array allocation
+				var span = arrayBufferWriter.GetSpan(serialized.Length);
+				serialized.AsSpan().CopyTo(span);
+				arrayBufferWriter.Advance(serialized.Length);
+			}
+#endif
+		};
 
 		/// <inheritdoc cref="IChannelDiagnosticsListener"/>
 		public IChannelDiagnosticsListener? DiagnosticsListener { get; }
@@ -64,7 +80,7 @@ namespace Elastic.Extensions.Logging
 		/// <inheritdoc cref="IDisposable.Dispose"/>
 		public void Dispose()
 		{
-			_optionsReloadToken.Dispose();
+			_optionsReloadToken?.Dispose();
 			_shipper.Dispose();
 		}
 
@@ -132,16 +148,16 @@ namespace Elastic.Extensions.Logging
 			if (loggerOptions.Transport != null) return loggerOptions.Transport;
 
 			var connectionPool = CreateNodePool(loggerOptions);
-			var config = new TransportConfiguration(connectionPool, productRegistration: ElasticsearchProductRegistration.Default);
+			var config = new TransportConfigurationDescriptor(connectionPool, productRegistration: ElasticsearchProductRegistration.Default);
 			// Cloud sets authentication as required parameter in the constructor
 			if (loggerOptions.ShipTo.NodePoolType != NodePoolType.Cloud)
 				config = SetAuthenticationOnTransport(loggerOptions, config);
 
-			var transport = new DistributedTransport<TransportConfiguration>(config);
+			var transport = new DistributedTransport<ITransportConfiguration>(config);
 			return transport;
 		}
 
-		private static TransportConfiguration SetAuthenticationOnTransport(ElasticsearchLoggerOptions loggerOptions, TransportConfiguration config)
+		private static TransportConfigurationDescriptor SetAuthenticationOnTransport(ElasticsearchLoggerOptions loggerOptions, TransportConfigurationDescriptor config)
 		{
 			var apiKey = loggerOptions.ShipTo.ApiKey;
 			var username = loggerOptions.ShipTo.Username;
@@ -177,11 +193,13 @@ namespace Elastic.Extensions.Logging
 			else
 			{
 				var dataStreamNameOptions = loggerOptions.DataStream ?? new DataStreamNameOptions();
+
 				var indexChannelOptions = new DataStreamChannelOptions<LogEvent>(transport)
 				{
 					DataStream = new DataStreamName(dataStreamNameOptions.Type, dataStreamNameOptions.DataSet, dataStreamNameOptions.Namespace),
-					WriteEvent = async (stream, ctx, logEvent) => await logEvent.SerializeAsync(stream, ctx).ConfigureAwait(false),
+					EventWriter = LogEventWriterInstance
 				};
+
 				SetupChannelOptions(_channelConfigurations, indexChannelOptions);
 				var channel = new EcsDataStreamChannel<LogEvent>(indexChannelOptions);
 				channel.BootstrapElasticsearch(loggerOptions.BootstrapMethod, loggerOptions.IlmPolicy);
@@ -191,5 +209,14 @@ namespace Elastic.Extensions.Logging
 
 		/// <inheritdoc cref="IChannelProvider.GetChannel"/>
 		public IBufferedChannel<LogEvent> GetChannel() => _shipper;
+
+		private sealed class LogEventWriter : IElasticsearchEventWriter<LogEvent>
+		{
+#if NETSTANDARD2_1_OR_GREATER || NET8_0_OR_GREATER
+			public Action<System.Buffers.ArrayBufferWriter<byte>, LogEvent>? WriteToArrayBuffer { get; set; }
+#endif
+
+			public Func<Stream, LogEvent, CancellationToken, Task>? WriteToStreamAsync { get; set; }
+		}
 	}
 }

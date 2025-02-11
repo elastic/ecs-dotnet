@@ -33,7 +33,7 @@ namespace Elastic.CommonSchema.BenchmarkDotNetExporter
 		{
 			Options = options;
 			var config = Options.CreateTransportConfiguration();
-			Transport = new DistributedTransport<TransportConfiguration>(config);
+			Transport = new DistributedTransport<ITransportConfiguration>(config);
 		}
 
 		// ReSharper disable once UnusedMember.Global
@@ -41,11 +41,10 @@ namespace Elastic.CommonSchema.BenchmarkDotNetExporter
 		public ElasticsearchBenchmarkExporter(ElasticsearchBenchmarkExporterOptions options, Func<ElasticsearchBenchmarkExporterOptions, TransportConfiguration> configure)
 		{
 			Options = options;
-			Transport = new DistributedTransport<TransportConfiguration>(configure(Options));
+			Transport = new DistributedTransport<ITransportConfiguration>(configure(Options));
 		}
 
-
-		private ITransport<TransportConfiguration> Transport { get; }
+		private ITransport<ITransportConfiguration> Transport { get; }
 		private ElasticsearchBenchmarkExporterOptions Options { get; }
 
 		// We only log when we cannot write to Elasticsearch
