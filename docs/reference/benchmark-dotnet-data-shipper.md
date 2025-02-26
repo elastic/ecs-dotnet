@@ -1,22 +1,24 @@
-[[benchmark-dotnet-data-shipper]]
-=== BenchmarkDotnet Exporter
+---
+mapped_pages:
+  - https://www.elastic.co/guide/en/ecs-logging/dotnet/current/benchmark-dotnet-data-shipper.html
+---
 
-An exporter for https://github.com/dotnet/BenchmarkDotNet[BenchmarkDotnet] that will index benchmarking results directly into Elasticsearch.
+# BenchmarkDotnet exporter [benchmark-dotnet-data-shipper]
 
-==== Installation
+An exporter for [BenchmarkDotnet](https://github.com/dotnet/BenchmarkDotNet) that will index benchmarking results directly into Elasticsearch.
 
-Add a reference to the http://nuget.org/packages/Elastic.CommonSchema.BenchmarkDotNetExporter[Elastic.CommonSchema.BenchmarkDotNetExporter] package:
+## Installation [_installation_8]
 
-[source,xml]
-[subs="attributes"]
-----
-<PackageReference Include="Elastic.CommonSchema.BenchmarkDotNetExporter" Version="{ecs-logging-dotnet-version}" />
-----
+Add a reference to the [Elastic.CommonSchema.BenchmarkDotNetExporter](http://nuget.org/packages/Elastic.CommonSchema.BenchmarkDotNetExporter) package:
 
-==== Usage
+```xml
+<PackageReference Include="Elastic.CommonSchema.BenchmarkDotNetExporter" Version="8.6.0" />
+```
 
-[source,csharp]
-----
+
+## Usage [_usage_8]
+
+```csharp
 var options = new ElasticsearchBenchmarkExporterOptions(url)
 {
 	GitBranch = "externally-provided-branch",
@@ -27,24 +29,20 @@ var exporter = new ElasticsearchBenchmarkExporter(options);
 
 var config = CreateDefaultConfig().With(exporter);
 BenchmarkRunner.Run(typeof(Md5VsSha256), config);
+```
 
-----
+The code snippet above configures the `ElasticsearchBenchmarkExporter` with the supplied `ElasticsearchBenchmarkExporterOptions`. It is possible to configure the exporter to use [Elastic Cloud](https://www.elastic.co/cloud/) as follows:
 
-The code snippet above configures the `ElasticsearchBenchmarkExporter` with the supplied `ElasticsearchBenchmarkExporterOptions`. It is possible to configure the exporter to use https://www.elastic.co/cloud/[Elastic Cloud] as follows:
-
-[source,csharp]
-----
+```csharp
 var options = new ElasticsearchBenchmarkExporterOptions(url)
 {
 	CloudId = "CLOUD_ID_HERE"
 };
-
-----
+```
 
 Example _source from a search in Elasticsearch after a benchmark run:
 
-[source,json]
-----
+```json
 {
   "_index":"benchmark-dotnet-2020-01-01",
   "_type":"_doc",
@@ -218,4 +216,6 @@ Example _source from a search in Elasticsearch after a benchmark run:
     }
   }
 }
-----
+```
+
+

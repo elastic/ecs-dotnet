@@ -1,0 +1,24 @@
+toc:
+  - file: index.md
+  - file: setup.md
+  - file: ecs-dotnet.md
+    children:
+      - file: _usage.md
+      - file: intro_to_xyz.md
+      - file: _extending_ecsdocument.md
+  - file: _formatters.md
+    children:
+      - file: serilog-formatter.md
+      - file: nlog-formatter.md
+      - file: log4net-formatter.md
+  - file: data-shippers.md
+    children:
+      - file: _elasticsearch_security.md
+      - file: ecs-ingest-channels.md
+      - file: serilog-data-shipper.md
+      - file: extensions-logging-data-shipper.md
+      - file: benchmark-dotnet-data-shipper.md
+  - file: _enrichers_2.md
+    children:
+      - file: apm-serilog-enricher.md
+      - file: apm-nlog-enricher.md

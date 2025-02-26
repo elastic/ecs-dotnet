@@ -1,26 +1,28 @@
-[[log4net-formatter]]
-=== log4net
+---
+mapped_pages:
+  - https://www.elastic.co/guide/en/ecs-logging/dotnet/current/log4net-formatter.html
+---
+
+# log4net [log4net-formatter]
 
 This Layout implementation formats a log4net event into a JSON representation that adheres to the Elastic Common Schema specification.
 
-==== Installation
+## Installation [_installation_4]
 
-Add a reference to the http://nuget.org/packages/Elastic.CommonSchema.Log4net[Elastic.CommonSchema.Log4net] package:
+Add a reference to the [Elastic.CommonSchema.Log4net](http://nuget.org/packages/Elastic.CommonSchema.Log4net) package:
 
-[source,xml]
-[subs="attributes"]
-----
-<PackageReference Include="Elastic.CommonSchema.Log4net" Version="{ecs-logging-dotnet-version}" />
-----
+```xml
+<PackageReference Include="Elastic.CommonSchema.Log4net" Version="8.6.0" />
+```
 
-==== Usage 
 
-===== Setup using configuration
+## Usage [_usage_4]
 
-Specify layout type in appender's configuration:
+### Setup using configuration [_setup_using_configuration]
 
-[source,xml]
-----
+Specify layout type in appender’s configuration:
+
+```xml
 <log4net>
     <root>
         <level value="INFO" />
@@ -30,33 +32,31 @@ Specify layout type in appender's configuration:
         <layout type="Elastic.CommonSchema.Log4net.EcsLayout, Elastic.CommonSchema.Log4net" />
     </appender>
 </log4net>
+```
 
-----
 
-===== Setup programatically
+### Setup programatically [_setup_programatically_2]
 
-[source,csharp]
-----
+```csharp
 var hierarchy = (Hierarchy)LogManager.CreateRepository(Guid.NewGuid().ToString());
 var appender = new ConsoleAppender { Layout = new EcsLayout() }; // Use the ECS layout.
 hierarchy.Root.AddAppender(appender);
 hierarchy.Root.Level = Level.All;
 hierarchy.Configured = true;
+```
 
-----
+The `Layout = new EcsLayout()` line then instructs log4net to use ECS layout. The sample above uses the console appender, but you are free to use any appender of your choice, perhaps consider using a filesystem target and [Elastic Filebeat](https://www.elastic.co/downloads/beats/filebeat) for durable and reliable ingestion.
 
-The `Layout = new EcsLayout()` line then instructs log4net to use ECS layout.
-The sample above uses the console appender, but you are free to use any appender of your choice, perhaps consider using a
-filesystem target and https://www.elastic.co/downloads/beats/filebeat[Elastic Filebeat] for durable and reliable ingestion.
 
-==== ECS Aware Properties
 
-Any valid ECS log template properties that is available under `LogTemplateProperties.*` e.g `LogTemplateProperties.TraceId`
-is supported and will directly set the appropriate ECS field.
+## ECS Aware Properties [_ecs_aware_properties]
 
-==== Output
+Any valid ECS log template properties that is available under `LogTemplateProperties.*` e.g `LogTemplateProperties.TraceId` is supported and will directly set the appropriate ECS field.
 
-Apart from {ecs-ref}/ecs-guidelines.html#_general_guidelines[mandatory fields], the output contains additional data:
+
+## Output [_output]
+
+Apart from [mandatory fields](ecs://docs/reference/ecs-guidelines.md#_general_guidelines), the output contains additional data:
 
 * `log.origin.file.name` is taken from `LocationInformation`
 * `log.origin.file.line` is taken from `LocationInformation`
@@ -65,7 +65,7 @@ Apart from {ecs-ref}/ecs-guidelines.html#_general_guidelines[mandatory fields], 
 * `event.timezone` is equal to local timezone
 * `host.hostname` is taken from `HostName` property
 * `process.thread.id` is taken from `ThreadName` if it has numeric value
-* `process.thread.name` is taken from `ThreadName` if it doesn't have numeric value
+* `process.thread.name` is taken from `ThreadName` if it doesn’t have numeric value
 * `service.name` is taken from entry or calling assembly
 * `service.version` is taken from entry or calling assembly
 * `error.message` is taken from `ExceptionObject`
@@ -75,8 +75,7 @@ Apart from {ecs-ref}/ecs-guidelines.html#_general_guidelines[mandatory fields], 
 
 Sample log event output (formatted for readability):
 
-[source,json]
-----
+```json
 {
     "@timestamp": "2022-08-28T14:06:28.5121651+02:00",
     "log.level": "INFO",
@@ -117,4 +116,6 @@ Sample log event output (formatted for readability):
         "version": "1.0.0.0"
     }
 }
-----
+```
+
+
