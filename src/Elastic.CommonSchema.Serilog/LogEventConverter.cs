@@ -21,10 +21,10 @@ namespace Elastic.CommonSchema.Serilog
 		/// <summary>
 		/// Converts a <see cref="LogEvent"/> to an <typeparamref name="TEcsDocument"/>
 		/// </summary>
-		public static TEcsDocument ConvertToEcs<TEcsDocument>(LogEvent logEvent, IEcsTextFormatterConfiguration<TEcsDocument> configuration)
+		public static TEcsDocument ConvertToEcs<TEcsDocument>(LogEvent logEvent, IEcsTextFormatterConfiguration<TEcsDocument> configuration, EcsDocumentCreationCache? initialCache = null)
 			where TEcsDocument : EcsDocument, new()
 		{
-			var ecsEvent = EcsDocument.CreateNewWithDefaults<TEcsDocument>(logEvent.Timestamp, logEvent.Exception, configuration);
+			var ecsEvent = EcsDocument.CreateNewWithDefaults<TEcsDocument>(logEvent.Timestamp, logEvent.Exception, configuration, initialCache);
 
 			if (logEvent.TryGetScalarString(SpecialKeys.MachineName, out var machineName))
 			{
