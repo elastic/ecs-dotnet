@@ -57,7 +57,9 @@ The other useful value to configure is a tag for the environment, e.g. Developme
 {
   "Logging": {
     "Elasticsearch": {
-      "NodeUris": [ "https://elastic-staging.example.com:9200" ],
+	  "ShipTo": {
+		"NodeUris": [ "https://elastic-staging.example.com:9200" ]
+	  },
       "Tags": [ "Staging" ]
     }
   }
