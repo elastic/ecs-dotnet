@@ -56,7 +56,7 @@ Any valid ECS log template properties that is available under `LogTemplateProper
 
 ## Output [_output]
 
-Apart from [mandatory fields](ecs://docs/reference/ecs-guidelines.md#_general_guidelines), the output contains additional data:
+Apart from [mandatory fields](ecs://reference/ecs-guidelines.md#_general_guidelines), the output contains additional data:
 
 * `log.origin.file.name` is taken from `LocationInformation`
 * `log.origin.file.line` is taken from `LocationInformation`

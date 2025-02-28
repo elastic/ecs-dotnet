@@ -7,7 +7,7 @@ mapped_pages:
 
 Elastic logger provider for Microsoft.Extensions.Logging.
 
-Writes direct to Elasticsearch using the [Elastic Common Schema (ECS)][Elastic Common Schema (ECS)](ecs://docs/reference/index.md)), with semantic logging of structured data from message and scope values. The results can be viewed and queried in the Kibana console.
+Writes direct to Elasticsearch using the [Elastic Common Schema (ECS)][Elastic Common Schema (ECS)](ecs://reference/index.md)), with semantic logging of structured data from message and scope values. The results can be viewed and queried in the Kibana console.
 
 ## Installation [_installation_7]
 
@@ -147,7 +147,7 @@ If `CloudId` is provided, the `ConnectionPoolType` defaults to `Cloud`:
 
 ## Output - Elastic Common Schema (ECS) [_output_elastic_common_schema_ecs]
 
-Log messages sent to Elasticsearch follow the [Elastic Common Schema (ECS)][Elastic Common Schema (ECS)](ecs://docs/reference/index.md)).
+Log messages sent to Elasticsearch follow the [Elastic Common Schema (ECS)][Elastic Common Schema (ECS)](ecs://reference/index.md)).
 
 
 ## Example document [_example_document]

@@ -10,7 +10,7 @@ mapped_pages:
 ECS logging are integrations for your favorite .NET logging libraries. They make it easy to format your logs into ECS-compatible JSON.
 
 ::::{tip}
-Want to learn more about ECS, ECS logging, and other available language plugins? See the [ECS logging overview](ecs-logging://docs/reference/intro.md).
+Want to learn more about ECS, ECS logging, and other available language plugins? See the [ECS logging overview](ecs-logging://reference/intro.md).
 ::::
 
 
