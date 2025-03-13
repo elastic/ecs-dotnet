@@ -29,7 +29,7 @@ Use [Elastic.Ingest.Elasticsearch.CommonSchema](https://github.com/elastic/ecs-d
 The version of the Elastic.CommonSchema package matches the published ECS version, with the same corresponding branch names:
 
 * Nested Schema (The C# types are generated from this YAML file): [https://github.com/elastic/ecs/blob/v1.4.0/generated/ecs/ecs_nested.yml](https://github.com/elastic/ecs/blob/v1.4.0/generated/ecs/ecs_nested.yml)
-* .NET types: [https://github.com/elastic/ecs-dotnet/tree/v1.4.0](https://github.com/elastic/ecs-dotnet/tree/v1.4.0)
+* .NET types: [https://github.com/elastic/ecs-dotnet/tree/v1.4.0](https://github.com/elastic/ecs-dotnet)
 
 The version numbers of the NuGet package must match the exact version of ECS used within Elasticsearch. Attempting to use mismatched versions, for example a NuGet package with version 1.2.0 against an Elasticsearch index configured to use an ECS template with version 1.1.0, will result in indexing and data problems.
 
