@@ -65,7 +65,7 @@ Enrichers can be installed next to `Log Formatters` and `Data Shippers` to autom
 
 The libraries reuse the same components that power other .NET libraries from Elastic—​ensuring a common way to both configure and monitor Elastic’s .NET libraries.
 
-![ECS.NET Artichtecture overview](../images/ecs-dotnet-overview.png "")
+![ECS.NET Artichtecture overview](images/ecs-dotnet-overview.png "")
 
 At its core all data shippers depend on [Elastic.Transport](https://github.com/elastic/elastic-transport-net) to coordinate HttpRequests. This library is also the heart of Elastic’s clients and ensures we share best practices and configuration options.
 
