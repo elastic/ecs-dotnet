@@ -53,6 +53,10 @@ var logger = LogManager.GetCurrentClassLogger();
   - _NodeUris_ - URIs of the Elasticsearch nodes in the connection pool (comma delimited)
   - _CloudId_ - When using NodePoolType = Cloud
   - _BootstrapMethod_ - Whether to configure / bootstrap the destination, which requires user has management capabilities (None, Silent, Failure). Default = None
+  - _CertificateFingerprint_ - 	Fingerprint to validate the certificate sent by the server. Hex string representing the SHA256 public key fingerprint (optional)
+  - _ProxyUrl_ - If your connection has to go through proxy, use this method to specify the proxy url (optional)
+  - _ProxyUsername_ - If your connection has to go through proxy, use this method to specify the proxy-login username (optional)
+  - _ProxyPassword_ - If your connection has to go through proxy, use this method to specify the proxy-login password (optional)
 
 * **Export Authentication**
   - _ApiKey_ - When using NodePoolType = Cloud and authentication via API key.
