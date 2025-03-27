@@ -53,6 +53,9 @@ namespace NLog.Targets
 		/// <summary> User-configurable arbitrary grouping</summary>
 		public Layout? DataStreamNamespace { get; set; } = "default";
 
+		/// <inheritdoc cref="ITransportConfiguration.CertificateFingerprint"/>
+		public Layout? CertificateFingerprint { get; set; }
+
 		/// <summary>
 		/// Gets or sets the format string for the Elastic search index. The current <c>DateTimeOffset</c> is passed as parameter 0.
 		///
@@ -122,6 +125,12 @@ namespace NLog.Targets
 		public int ExportMaxRetries { get; set; } = -1;
 
 		/// <summary>
+		/// Turns on settings that aid in debugging like DisableDirectStreaming() and PrettyJson()
+		/// so that the original request and response JSON can be inspected. It also always asks the server for the full stack trace on errors
+		/// </summary>
+		public bool EnableDebugMode { get; set; }
+
+		/// <summary>
 		/// The ILM Policy to apply, see the following for more details:
 		/// <para>https://www.elastic.co/guide/en/elasticsearch/reference/current/index-lifecycle-management.html</para>
 		/// Defaults to `logs` which is shipped by default with Elasticsearch
@@ -159,6 +168,21 @@ namespace NLog.Targets
 		public Layout? Username { get; set; }
 
 		/// <summary>
+		/// If your connection has to go through proxy, use this method to specify the proxy url
+		/// </summary>
+		public Layout? ProxyUrl { get; set; }
+
+		/// <summary>
+		/// If your connection has to go through proxy, use this method to specify the proxy-login username
+		/// </summary>
+		public Layout? ProxyUsername { get; set; }
+
+		/// <summary>
+		/// If your connection has to go through proxy, use this method to specify the proxy-login password
+		/// </summary>
+		public Layout? ProxyPassword { get; set; }
+
+		/// <summary>
 		/// Provide callbacks to further configure <see cref="DataStreamChannelOptions{TEvent}"/>
 		/// </summary>
 		public Action<ElasticsearchChannelOptionsBase<NLogEcsDocument>>? ConfigureChannel { get; set; }
@@ -178,6 +202,24 @@ namespace NLog.Targets
 			// Cloud sets authentication as required parameter in the constructor
 			if (NodePoolType != ElasticPoolType.Cloud)
 				config = SetAuthenticationOnTransport(config);
+
+			if (EnableDebugMode)
+				config = config.EnableDebugMode();
+
+			var proxyUrl = ProxyUrl?.Render(LogEventInfo.CreateNullEvent()) ?? string.Empty;
+			if (!string.IsNullOrEmpty(proxyUrl))
+			{
+				var proxyUserName = ProxyUsername?.Render(LogEventInfo.CreateNullEvent()) ?? string.Empty;
+				var proxyPassword = ProxyPassword?.Render(LogEventInfo.CreateNullEvent()) ?? string.Empty;
+				if (!string.IsNullOrEmpty(proxyUserName) || !string.IsNullOrEmpty(proxyPassword))
+					config = config.Proxy(new Uri(proxyUrl), proxyUserName, proxyPassword);
+				else
+					config = config.Proxy(new Uri(proxyUrl));
+			}
+
+			var certificateFingerprint = CertificateFingerprint?.Render(LogEventInfo.CreateNullEvent()) ?? string.Empty;
+			if (!string.IsNullOrEmpty(certificateFingerprint))
+				config = config.CertificateFingerprint(certificateFingerprint);
 
 			var transport = new DistributedTransport<ITransportConfiguration>(config);
 			if (!string.IsNullOrEmpty(indexFormat))
