@@ -148,6 +148,6 @@ In case of issues, you can enable the [Serilog Self-Log feature](https://github.
 * That doesn’t mean you can not introduce your own additional properties though.
 * `Elastic.Serilog.Sinks` has no durable mode.
 * If you need higher guarantees on log delivery use [`Serilog.Sinks.File`](https://github.com/serilog/serilog-sinks-file) with our [ECS log formatter](https://www.nuget.org/packages/Elastic.CommonSchema.Serilog/) for Serilog and use [filebeat](https://www.elastic.co/beats/filebeat) to ship these logs.
-* Check out [Elastic Agent and Fleet](docs-content://reference/ingestion-tools/fleet/index.md) to simplify collecting logs and metrics on the edge.
+* Check out [Elastic Agent and Fleet](docs-content://reference/fleet/index.md) to simplify collecting logs and metrics on the edge.
 
 If you miss a particular feature from `Serilog.Sinks.Elasticsearch` in `Elastic.Serilog.Sinks` please open a [feature request](https://github.com/elastic/ecs-dotnet/issues/new?assignees=&labels=enhancement&template=feature_request.md&title=%5BFEATURE%5D)! We’d love to grow this sink organically moving forward.
