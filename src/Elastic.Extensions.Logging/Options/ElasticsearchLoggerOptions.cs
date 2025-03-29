@@ -47,6 +47,9 @@ namespace Elastic.Extensions.Logging.Options
 		/// </summary>
 		public BootstrapMethod BootstrapMethod { get; set; } = BootstrapMethod.None;
 
+		/// <inheritdoc cref="ITransportConfiguration.CertificateFingerprint"/>
+		public string? CertificateFingerprint { get; set; }
+
 		/// <summary>
 		/// The ILM Policy to apply, see the following for more details:
 		/// <para>https://www.elastic.co/guide/en/elasticsearch/reference/current/index-lifecycle-management.html</para>
