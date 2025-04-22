@@ -6,6 +6,7 @@ updates:
     directories:
       - "/"
       - "/.github/actions/*"
+      - "/.github/workflows/*"
     reviewers:
       - "elastic/observablt-ci"
     schedule:
