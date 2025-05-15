@@ -1,4 +1,6 @@
 project: 'ECS Logging .NET'
+products:
+  - id: ecs-logging
 cross_links:
   - apm-agent-dotnet
   - beats
