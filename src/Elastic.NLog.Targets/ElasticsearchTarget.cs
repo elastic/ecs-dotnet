@@ -295,8 +295,7 @@ namespace NLog.Targets
 						+ $"'{nameof(Username)}' and '{nameof(Password)}");
 				//case ElasticPoolType.StickySniffing:
 				default:
-					throw new NLogConfigurationException($"Unrecognised ElasticSearch connection pool type '{NodePoolType}' specified in the configuration.",
-						nameof(NodePoolType));
+					throw new NLogConfigurationException($"Unrecognised ElasticSearch connection pool type '{NodePoolType}' specified in the configuration.");
 			}
 		}
 
