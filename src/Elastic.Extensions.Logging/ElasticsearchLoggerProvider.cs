@@ -153,6 +153,9 @@ namespace Elastic.Extensions.Logging
 			if (loggerOptions.ShipTo.NodePoolType != NodePoolType.Cloud)
 				config = SetAuthenticationOnTransport(loggerOptions, config);
 
+			if (!string.IsNullOrEmpty(loggerOptions.CertificateFingerprint))
+				config = config.CertificateFingerprint(loggerOptions.CertificateFingerprint!);
+
 			var transport = new DistributedTransport<ITransportConfiguration>(config);
 			return transport;
 		}
