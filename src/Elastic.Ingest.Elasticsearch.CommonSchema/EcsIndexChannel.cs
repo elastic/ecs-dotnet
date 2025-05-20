@@ -43,7 +43,7 @@ namespace Elastic.Ingest.Elasticsearch.CommonSchema
 			if (!string.IsNullOrEmpty(ilmPolicy))
 			{
 				// create a component template that sets index.lifecycle.name
-				var (settingsName, settingsBody) = GetDefaultComponentSettings(name, ilmPolicy);
+				var (settingsName, settingsBody) = GetDefaultComponentSettings(bootstrapMethod, name, ilmPolicy);
 				if (!PutComponentTemplate(bootstrapMethod, settingsName, settingsBody))
 					return false;
 				additionalComponents.Add(settingsName);
@@ -79,7 +79,7 @@ namespace Elastic.Ingest.Elasticsearch.CommonSchema
 			if (!string.IsNullOrEmpty(ilmPolicy))
 			{
 				// create a component template that sets  index.lifecycle.name
-				var (settingsName, settingsBody) = GetDefaultComponentSettings(name, ilmPolicy);
+				var (settingsName, settingsBody) = GetDefaultComponentSettings(bootstrapMethod, name, ilmPolicy);
 				if (!await PutComponentTemplateAsync(bootstrapMethod, settingsName, settingsBody, ctx).ConfigureAwait(false))
 					return false;
 				additionalComponents.Add(settingsName);
