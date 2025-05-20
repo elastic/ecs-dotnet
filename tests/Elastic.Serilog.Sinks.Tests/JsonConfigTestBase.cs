@@ -13,7 +13,7 @@ namespace Elastic.Serilog.Sinks.Tests;
 public class JsonConfigTestBase
 {
 	protected static void GetBits(string json,
-		out ElasticsearchSink<EcsDocument> sink,
+		out ElasticsearchSink<LogEventEcsDocument> sink,
 		out EcsTextFormatterConfiguration<EcsDocument> formatterConfig,
 		out EcsDataStreamChannel<EcsDocument> channel,
 		out ITransportConfiguration transportConfig)
@@ -28,7 +28,7 @@ public class JsonConfigTestBase
 		var field = loggerConfig.GetType().GetField("_logEventSinks", BindingFlags.Instance | BindingFlags.NonPublic);
 		var sinks = field?.GetValue(loggerConfig) as IList<ILogEventSink>;
 		sinks.Should().HaveCount(1);
-		sink = sinks?.FirstOrDefault() as ElasticsearchSink<EcsDocument> ?? throw new NullReferenceException();
+		sink = sinks?.FirstOrDefault() as ElasticsearchSink<LogEventEcsDocument> ?? throw new NullReferenceException();
 		formatterConfig = Reflect<EcsTextFormatterConfiguration<EcsDocument>>(sink, "_formatterConfiguration");
 		channel = Reflect<EcsDataStreamChannel<EcsDocument>>(sink, "_channel");
 

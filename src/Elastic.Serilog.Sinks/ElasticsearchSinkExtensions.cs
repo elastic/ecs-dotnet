@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using Elastic.CommonSchema;
+using Elastic.CommonSchema.Serilog;
 using Elastic.Transport;
 using Serilog;
 using Serilog.Configuration;
@@ -31,7 +32,7 @@ namespace Elastic.Serilog.Sinks
 		/// <para>This generic overload using <typeparamref name="TEcsDocument"/> allows you to use your own <see cref="EcsDocument"/> subclasses</para>
 		/// </summary>
 		public static LoggerConfiguration Elasticsearch<TEcsDocument>(this LoggerSinkConfiguration loggerConfiguration, ElasticsearchSinkOptions<TEcsDocument>? options = null)
-			where TEcsDocument : EcsDocument, new() =>
+			where TEcsDocument : LogEventEcsDocument, new() =>
 			loggerConfiguration.Sink(
 				new ElasticsearchSink<TEcsDocument>(options ?? new ElasticsearchSinkOptions<TEcsDocument>())
 				, restrictedToMinimumLevel: options?.MinimumLevel ?? LevelAlias.Minimum
@@ -76,7 +77,7 @@ namespace Elastic.Serilog.Sinks
 			bool useSniffing = false,
 			LoggingLevelSwitch? levelSwitch = null,
 			LogEventLevel restrictedToMinimumLevel = LevelAlias.Minimum
-		) where TEcsDocument : EcsDocument, new()
+		) where TEcsDocument : LogEventEcsDocument, new()
 		{
 			var transportConfig = useSniffing ? TransportHelper.Sniffing(nodes) :  TransportHelper.Static(nodes);
 			configureTransport?.Invoke(transportConfig);
@@ -125,7 +126,7 @@ namespace Elastic.Serilog.Sinks
 			Action<TransportConfigurationDescriptor>? configureTransport = null,
 			LoggingLevelSwitch? levelSwitch = null,
 			LogEventLevel restrictedToMinimumLevel = LevelAlias.Minimum
-		) where TEcsDocument : EcsDocument, new()
+		) where TEcsDocument : LogEventEcsDocument, new()
 		{
 			var transportConfig = TransportHelper.Cloud(cloudId, apiKey);
 			configureTransport?.Invoke(transportConfig);
@@ -176,7 +177,7 @@ namespace Elastic.Serilog.Sinks
 			Action<TransportConfigurationDescriptor>? configureTransport = null,
 			LoggingLevelSwitch? levelSwitch = null,
 			LogEventLevel restrictedToMinimumLevel = LevelAlias.Minimum
-		) where TEcsDocument : EcsDocument, new()
+		) where TEcsDocument : LogEventEcsDocument, new()
 		{
 			var transportConfig = TransportHelper.Cloud(cloudId, username, password);
 			configureTransport?.Invoke(transportConfig);

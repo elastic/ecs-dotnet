@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Elastic.Channels;
 using Elastic.Channels.Buffers;
 using Elastic.Channels.Diagnostics;
 using Elastic.CommonSchema;
@@ -44,7 +45,7 @@ namespace Elastic.Serilog.Sinks
 	/// <summary>
 	/// Provides configuration options to <see cref="ElasticsearchSink"/> to control how and where data gets written
 	/// </summary>
-	public class ElasticsearchSinkOptions : ElasticsearchSinkOptions<EcsDocument>
+	public class ElasticsearchSinkOptions : ElasticsearchSinkOptions<LogEventEcsDocument>
 	{
 		/// <inheritdoc cref="ElasticsearchSinkOptions"/>
 		public ElasticsearchSinkOptions() { }
@@ -56,7 +57,7 @@ namespace Elastic.Serilog.Sinks
 	/// <inheritdoc cref="ElasticsearchSinkOptions{TEcsDocument}"/>
 	public class ElasticsearchSinkOptions<TEcsDocument>
 		: IElasticsearchSinkOptions
-		where TEcsDocument : EcsDocument, new()
+		where TEcsDocument : LogEventEcsDocument, new()
 	{
 		/// <inheritdoc cref="ElasticsearchSinkOptions"/>
 		public ElasticsearchSinkOptions() : this(new DistributedTransport(TransportHelper.Default())) { }
@@ -110,18 +111,19 @@ namespace Elastic.Serilog.Sinks
 	/// <summary>
 	/// This sink allows you to write serilog logs directly to Elasticsearch or Elastic Cloud
 	/// </summary>
-	public class ElasticsearchSink : ElasticsearchSink<EcsDocument>
+	public class ElasticsearchSink : ElasticsearchSink<LogEventEcsDocument>
 	{
 		/// <inheritdoc cref="ElasticsearchSink"/>>
 		public ElasticsearchSink(ElasticsearchSinkOptions options) : base(options) {}
 	}
 
 	/// <inheritdoc cref="ElasticsearchSink"/>>
-	public class ElasticsearchSink<TEcsDocument> : ILogEventSink, IDisposable
-		where TEcsDocument : EcsDocument, new()
+	public class ElasticsearchSink<TEcsDocument> : ILogEventSink, IDisposable, ISetLoggingFailureListener
+		where TEcsDocument : LogEventEcsDocument, new()
 	{
 		private readonly EcsTextFormatterConfiguration<TEcsDocument> _formatterConfiguration;
 		private readonly EcsDataStreamChannel<TEcsDocument> _channel;
+		private ILoggingFailureListener _failureListener = SelfLog.FailureListener;
 
 		/// <inheritdoc cref="IElasticsearchSinkOptions"/>
 		public IElasticsearchSinkOptions Options { get; }
@@ -133,7 +135,9 @@ namespace Elastic.Serilog.Sinks
 			_formatterConfiguration = options.TextFormatting;
 			var channelOptions = new DataStreamChannelOptions<TEcsDocument>(options.Transport)
 			{
-				DataStream = options.DataStream
+				DataStream = options.DataStream,
+				ExportMaxRetriesCallback = EmitExportFailures
+
 			};
 			options.ConfigureChannel?.Invoke(channelOptions);
 			_channel = new EcsDataStreamChannel<TEcsDocument>(channelOptions, new [] { new SelfLogCallbackListener<TEcsDocument>(options)});
@@ -142,18 +146,46 @@ namespace Elastic.Serilog.Sinks
 			_channel.BootstrapElasticsearch(options.BootstrapMethod, options.IlmPolicy);
 		}
 
+		private void EmitExportFailures(IReadOnlyCollection<TEcsDocument> documents)
+		{
+			var logs = documents
+				.Select(d => d.LogEvent)
+				.ToArray();
+			_failureListener.OnLoggingFailed(
+				this,
+				LoggingFailureKind.Temporary,
+				"Failure to export events over to Elasticsearch.",
+				logs,
+				exception: null
+			);
+		}
+
 		/// <inheritdoc cref="ILogEventSink.Emit"/>
 		public void Emit(LogEvent logEvent)
 		{
 			var ecsDoc = LogEventConverter.ConvertToEcs(logEvent, _formatterConfiguration);
-			_channel.TryWrite(ecsDoc);
+			ecsDoc.LogEvent = logEvent;
+			if (!_channel.TryWrite(ecsDoc))
+			{
+				_failureListener.OnLoggingFailed(
+					this,
+					LoggingFailureKind.Temporary,
+					"Failure to push event over the channel.",
+					[logEvent],
+					exception: null
+				);
+			}
 		}
 
 		/// <summary> Disposes and flushed <see cref="EcsDataStreamChannel{TEcsDocument}"/> </summary>
 		public void Dispose() => _channel.Dispose();
+
+		void ISetLoggingFailureListener.SetFailureListener(ILoggingFailureListener failureListener) =>
+			_failureListener = failureListener ?? throw new ArgumentNullException(nameof(failureListener));
 	}
 
-	internal class SelfLogCallbackListener<TEcsDocument> : IChannelCallbacks<TEcsDocument, BulkResponse> where TEcsDocument : EcsDocument, new()
+	internal class SelfLogCallbackListener<TEcsDocument> : IChannelCallbacks<TEcsDocument, BulkResponse>
+		where TEcsDocument : LogEventEcsDocument, new()
 	{
 		public Action<Exception>? ExportExceptionCallback { get; }
 		public Action<BulkResponse, IWriteTrackingBuffer>? ExportResponseCallback { get; }
