@@ -53,7 +53,7 @@ Log.Logger = new LoggerConfiguration()
 	{
 		BootstrapMethod = BootstrapMethod.Failure,
 		DataStream = new DataStreamName("logs", "console-example"),
-		TextFormatting = new EcsTextFormatterConfiguration
+		TextFormatting = new EcsTextFormatterConfiguration<LogEventEcsDocument>
 		{
 			MapCustom = (e, _) => e
 		},

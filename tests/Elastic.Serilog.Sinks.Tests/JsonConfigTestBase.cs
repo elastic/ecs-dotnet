@@ -13,9 +13,9 @@ namespace Elastic.Serilog.Sinks.Tests;
 public class JsonConfigTestBase
 {
 	protected static void GetBits(string json,
-		out ElasticsearchSink<EcsDocument> sink,
-		out EcsTextFormatterConfiguration<EcsDocument> formatterConfig,
-		out EcsDataStreamChannel<EcsDocument> channel,
+		out ElasticsearchSink<LogEventEcsDocument> sink,
+		out EcsTextFormatterConfiguration<LogEventEcsDocument> formatterConfig,
+		out EcsDataStreamChannel<LogEventEcsDocument> channel,
 		out ITransportConfiguration transportConfig)
 	{
 		var config = new ConfigurationBuilder()
@@ -28,9 +28,9 @@ public class JsonConfigTestBase
 		var field = loggerConfig.GetType().GetField("_logEventSinks", BindingFlags.Instance | BindingFlags.NonPublic);
 		var sinks = field?.GetValue(loggerConfig) as IList<ILogEventSink>;
 		sinks.Should().HaveCount(1);
-		sink = sinks?.FirstOrDefault() as ElasticsearchSink<EcsDocument> ?? throw new NullReferenceException();
-		formatterConfig = Reflect<EcsTextFormatterConfiguration<EcsDocument>>(sink, "_formatterConfiguration");
-		channel = Reflect<EcsDataStreamChannel<EcsDocument>>(sink, "_channel");
+		sink = sinks?.FirstOrDefault() as ElasticsearchSink<LogEventEcsDocument> ?? throw new NullReferenceException();
+		formatterConfig = Reflect<EcsTextFormatterConfiguration<LogEventEcsDocument>>(sink, "_formatterConfiguration");
+		channel = Reflect<EcsDataStreamChannel<LogEventEcsDocument>>(sink, "_channel");
 
 		var transport = channel.Options.Transport as ITransport<ITransportConfiguration> ?? throw new NullReferenceException();
 		transportConfig = transport.Configuration;

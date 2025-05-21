@@ -6,11 +6,21 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using System.Text.Json.Serialization;
 using Serilog.Events;
 using static Elastic.CommonSchema.Serilog.SpecialProperties;
 
 namespace Elastic.CommonSchema.Serilog
 {
+	/// A specialized instance of <see cref="EcsDocument"/> that holds on to the original <see cref="LogEvent"/>
+	/// <para> This property won't be emitted to JSON but is used to report back to serilog failure pipelines</para>
+	public class LogEventEcsDocument : EcsDocument
+	{
+		/// The original <see cref="LogEvent"/> for bookkeeping, not send over to Elasticsearch
+		[JsonIgnore]
+		public LogEvent LogEvent { get; set; } = null!;
+	}
+
 	/// <summary>
 	/// Elastic Common Schema converter for LogEvent
 	/// </summary>
@@ -178,7 +188,7 @@ namespace Elastic.CommonSchema.Serilog
 			}
 		}
 
-		private static object PropertyValueToObject(LogEventPropertyValue propertyValue)
+		private static object? PropertyValueToObject(LogEventPropertyValue propertyValue)
 		{
 			switch (propertyValue)
 			{
@@ -187,7 +197,7 @@ namespace Elastic.CommonSchema.Serilog
 				case ScalarValue sv:
 					return sv.Value;
 				case DictionaryValue dv:
-					return dv.Elements.ToDictionary(keySelector: kvp => kvp.Key.Value.ToString() ?? string.Empty,
+					return dv.Elements.ToDictionary(keySelector: kvp => kvp.Key?.Value?.ToString() ?? string.Empty,
 						elementSelector: (kvp) => PropertyValueToObject(kvp.Value));
 				case StructureValue ov:
 				{

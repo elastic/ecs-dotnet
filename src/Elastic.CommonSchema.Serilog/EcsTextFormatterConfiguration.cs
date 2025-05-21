@@ -81,8 +81,5 @@ namespace Elastic.CommonSchema.Serilog
 
 	// ReSharper disable once ClassNeverInstantiated.Global
 	/// <inheritdoc cref="IEcsTextFormatterConfiguration{TEcsDocument}"/>
-	public class EcsTextFormatterConfiguration : EcsTextFormatterConfiguration<EcsDocument>
-	{
-
-	}
+	public class EcsTextFormatterConfiguration : EcsTextFormatterConfiguration<EcsDocument>;
 }
