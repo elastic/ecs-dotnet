@@ -22,7 +22,7 @@ using Log = Serilog.Log;
 Elastic.Apm.Agent.Setup(new AgentComponents());
 
 // -- Start an Elasticsearch Instance --
-using var cluster = new EphemeralCluster("8.4.0");
+using var cluster = new EphemeralCluster("9.0.0");
 var client = CreateClient(cluster);
 //check if an instance is already running before starting
 if (!(await client.InfoAsync()).IsValidResponse)

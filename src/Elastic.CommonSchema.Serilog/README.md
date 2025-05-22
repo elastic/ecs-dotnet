@@ -40,7 +40,7 @@ An example of the output is given below:
   "@timestamp": "2019-11-22T14:59:02.5903135+11:00",
   "log.level": "Information",
   "message": "Info \"X\" 2.2",
-  "ecs.version": "8.6.0",
+  "ecs.version": "9.0.0",
   "log": { "logger": "Elastic.CommonSchema.Serilog.Tests.MessageTests" },
   "labels": {
     "MessageTemplate": "Info {ValueX} {SomeY}",
