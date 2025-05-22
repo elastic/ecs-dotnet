@@ -88,7 +88,7 @@ namespace Elastic.CommonSchema.BenchmarkDotNetExporter.IntegrationTests
 
 			await Client.Indices.RefreshAsync(indexName);
 
-			var searchResponse = await Client.SearchAsync<BenchmarkDocument>(s => s.Index(indexName).TrackTotalHits(new TrackHits(true)));
+			var searchResponse = await Client.SearchAsync<BenchmarkDocument>(s => s.Indices(indexName).TrackTotalHits(new TrackHits(true)));
 			if (!searchResponse.IsValidResponse || searchResponse.Total == 0)
 				throw new Exception(searchResponse.DebugInformation);
 
