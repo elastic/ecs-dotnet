@@ -28,9 +28,9 @@ namespace Elastic.CommonSchema
 	{
 
 		/// <summary>
-		/// Elastic Common Schema version 8.11.0
+		/// Elastic Common Schema version 9.0.0
 		/// </summary>
-		public static string Version => "8.11.0";
+		public static string Version => "9.0.0";
 
 		/// <summary>
 		/// Container for additional metadata against this event.
@@ -231,6 +231,10 @@ namespace Elastic.CommonSchema
 		///<summary>vlan</summary>
 		[JsonPropertyName("vlan"), DataMember(Name = "vlan")]
 		public Vlan? Vlan { get; set; }
+
+		///<summary>volume</summary>
+		[JsonPropertyName("volume"), DataMember(Name = "volume")]
+		public Volume? Volume { get; set; }
 
 		///<summary>vulnerability</summary>
 		[JsonPropertyName("vulnerability"), DataMember(Name = "vulnerability")]

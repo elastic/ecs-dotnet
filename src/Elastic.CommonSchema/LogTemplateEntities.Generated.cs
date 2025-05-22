@@ -121,6 +121,8 @@ namespace Elastic.CommonSchema
 		public static string UserAgent = nameof(UserAgent);
 		///<summary>Static field name to supply an instance of <see cref="Elastic.CommonSchema.Vlan"/> </summary>
 		public static string Vlan = nameof(Vlan);
+		///<summary>Static field name to supply an instance of <see cref="Elastic.CommonSchema.Volume"/> </summary>
+		public static string Volume = nameof(Volume);
 		///<summary>Static field name to supply an instance of <see cref="Elastic.CommonSchema.Vulnerability"/> </summary>
 		public static string Vulnerability = nameof(Vulnerability);
 		///<summary>Static field name to supply an instance of <see cref="Elastic.CommonSchema.X509"/> </summary>
@@ -177,6 +179,7 @@ namespace Elastic.CommonSchema
 			"user", "User",
 			"useragent", "UserAgent",
 			"vlan", "Vlan",
+			"volume", "Volume",
 			"vulnerability", "Vulnerability",
 			"x509", "X509",
 		};

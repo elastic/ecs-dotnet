@@ -2,6 +2,8 @@
 
 A [NLog](https://nlog-project.org/) target that writes logs directly to [Elasticsearch](https://www.elastic.co/elasticsearch/) or [Elastic Cloud](https://www.elastic.co/cloud/) using the Elastic Common Schema.
 
+**NOTE:** To use version `9.0.0` of this package you need atleast version `8.15.0` of the Elastic Stack.
+
 ## Packages
 
 The .NET assemblies are published to NuGet under the package name [Elastic.NLog.Targets](http://nuget.org/packages/Elastic.NLog.Targets)

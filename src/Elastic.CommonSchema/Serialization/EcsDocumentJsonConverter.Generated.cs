@@ -89,6 +89,7 @@ namespace Elastic.CommonSchema.Serialization
 				"user" => ReadProp<User>(ref reader, "user", EcsJsonContext.Default.User, ecsEvent, (b, v) => b.User = v),
 				"user_agent" => ReadProp<UserAgent>(ref reader, "user_agent", EcsJsonContext.Default.UserAgent, ecsEvent, (b, v) => b.UserAgent = v),
 				"vlan" => ReadProp<Vlan>(ref reader, "vlan", EcsJsonContext.Default.Vlan, ecsEvent, (b, v) => b.Vlan = v),
+				"volume" => ReadProp<Volume>(ref reader, "volume", EcsJsonContext.Default.Volume, ecsEvent, (b, v) => b.Volume = v),
 				"vulnerability" => ReadProp<Vulnerability>(ref reader, "vulnerability", EcsJsonContext.Default.Vulnerability, ecsEvent, (b, v) => b.Vulnerability = v),
 				"x509" => ReadProp<X509>(ref reader, "x509", EcsJsonContext.Default.X509, ecsEvent, (b, v) => b.X509 = v),
 				_ =>
@@ -170,6 +171,7 @@ namespace Elastic.CommonSchema.Serialization
 			WriteProp(writer, "user", value.User, EcsJsonContext.Default.User, options);
 			WriteProp(writer, "user_agent", value.UserAgent, EcsJsonContext.Default.UserAgent, options);
 			WriteProp(writer, "vlan", value.Vlan, EcsJsonContext.Default.Vlan, options);
+			WriteProp(writer, "volume", value.Volume, EcsJsonContext.Default.Volume, options);
 			WriteProp(writer, "vulnerability", value.Vulnerability, EcsJsonContext.Default.Vulnerability, options);
 			WriteProp(writer, "x509", value.X509, EcsJsonContext.Default.X509, options);
 			WriteProp(writer, "metadata", value.Metadata, options);

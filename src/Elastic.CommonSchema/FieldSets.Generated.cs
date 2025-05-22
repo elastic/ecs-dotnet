@@ -264,7 +264,7 @@ namespace Elastic.CommonSchema
 		/// <para><c>client.registered_domain</c></para>
 		/// <para>The highest registered client domain, stripped of the subdomain.
 		/// For example, the registered domain for "foo.example.com" is "example.com".
-		/// This value can be determined precisely with a list like the public suffix list (http://publicsuffix.org). Trying to approximate this by simply taking the last two labels will not work well for TLDs such as "co.uk".</para>
+		/// This value can be determined precisely with a list like the public suffix list (https://publicsuffix.org). Trying to approximate this by simply taking the last two labels will not work well for TLDs such as "co.uk".</para>
 		/// <example>example.com</example>
 		///</summary>
 		[JsonPropertyName("registered_domain"), DataMember(Name = "registered_domain")]
@@ -282,7 +282,7 @@ namespace Elastic.CommonSchema
 		///<summary>
 		/// <para><c>client.top_level_domain</c></para>
 		/// <para>The effective top level domain (eTLD), also known as the domain suffix, is the last part of the domain name. For example, the top level domain for example.com is "com".
-		/// This value can be determined precisely with a list like the public suffix list (http://publicsuffix.org). Trying to approximate this by simply taking the last label will not work well for effective TLDs such as "co.uk".</para>
+		/// This value can be determined precisely with a list like the public suffix list (https://publicsuffix.org). Trying to approximate this by simply taking the last label will not work well for effective TLDs such as "co.uk".</para>
 		/// <example>co.uk</example>
 		///</summary>
 		[JsonPropertyName("top_level_domain"), DataMember(Name = "top_level_domain")]
@@ -409,6 +409,15 @@ namespace Elastic.CommonSchema
 		///</summary>
 		[JsonPropertyName("exists"), DataMember(Name = "exists")]
 		public bool? Exists { get; set; }
+
+		///<summary>
+		/// <para><c>code_signature.flags</c></para>
+		/// <para>The flags used to sign the process.
+		/// <para><br/>This field is beta and subject to change.</para></para>
+		/// <example>570522385</example>
+		///</summary>
+		[JsonPropertyName("flags"), DataMember(Name = "flags")]
+		public string? Flags { get; set; }
 
 		///<summary>
 		/// <para><c>code_signature.signing_id</c></para>
@@ -591,7 +600,7 @@ namespace Elastic.CommonSchema
 	}
 
 	///<summary>
-	/// The data_stream fields take part in defining the new data stream naming scheme.&#xA;In the new data stream naming scheme the value of the data stream fields combine to the name of the actual data stream in the following manner: `{data_stream.type}-{data_stream.dataset}-{data_stream.namespace}`. This means the fields can only contain characters that are valid as part of names of data streams. More details about this can be found in this https://www.elastic.co/blog/an-introduction-to-the-elastic-data-stream-naming-scheme[blog post].&#xA;An Elasticsearch data stream consists of one or more backing indices, and a data stream name forms part of the backing indices names. Due to this convention, data streams must also follow index naming restrictions. For example, data stream names cannot include `\`, `/`, `*`, `?`, `&quot;`, `&lt;`, `&gt;`, `|`, ` ` (space character), `,`, or `#`. Please see the Elasticsearch reference for additional https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-create-index.html#indices-create-api-path-params[restrictions].
+	/// The data_stream fields take part in defining the new data stream naming scheme.&#xA;In the new data stream naming scheme the value of the data stream fields combine to the name of the actual data stream in the following manner: `{data_stream.type}-{data_stream.dataset}-{data_stream.namespace}`. This means the fields can only contain characters that are valid as part of names of data streams. More details about this can be found in this https://www.elastic.co/blog/an-introduction-to-the-elastic-data-stream-naming-scheme[blog post].&#xA;An Elasticsearch data stream consists of one or more backing indices, and a data stream name forms part of the backing indices names. Due to this convention, data streams must also follow index naming restrictions. For example, data stream names cannot include `\`, `/`, `*`, `?`, `&quot;`, `&lt;`, `&gt;`, `|`, ` ` (space character), `,`, or `#`. Please see the Elasticsearch reference for additional restrictions: https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-create-index.html#indices-create-api-path-params.
 	///</summary>
 	public abstract class DataStreamFieldSet {
 
@@ -716,7 +725,7 @@ namespace Elastic.CommonSchema
 		/// <para><c>destination.registered_domain</c></para>
 		/// <para>The highest registered destination domain, stripped of the subdomain.
 		/// For example, the registered domain for "foo.example.com" is "example.com".
-		/// This value can be determined precisely with a list like the public suffix list (http://publicsuffix.org). Trying to approximate this by simply taking the last two labels will not work well for TLDs such as "co.uk".</para>
+		/// This value can be determined precisely with a list like the public suffix list (https://publicsuffix.org). Trying to approximate this by simply taking the last two labels will not work well for TLDs such as "co.uk".</para>
 		/// <example>example.com</example>
 		///</summary>
 		[JsonPropertyName("registered_domain"), DataMember(Name = "registered_domain")]
@@ -734,7 +743,7 @@ namespace Elastic.CommonSchema
 		///<summary>
 		/// <para><c>destination.top_level_domain</c></para>
 		/// <para>The effective top level domain (eTLD), also known as the domain suffix, is the last part of the domain name. For example, the top level domain for example.com is "com".
-		/// This value can be determined precisely with a list like the public suffix list (http://publicsuffix.org). Trying to approximate this by simply taking the last label will not work well for effective TLDs such as "co.uk".</para>
+		/// This value can be determined precisely with a list like the public suffix list (https://publicsuffix.org). Trying to approximate this by simply taking the last label will not work well for effective TLDs such as "co.uk".</para>
 		/// <example>co.uk</example>
 		///</summary>
 		[JsonPropertyName("top_level_domain"), DataMember(Name = "top_level_domain")]
@@ -742,13 +751,13 @@ namespace Elastic.CommonSchema
 	}
 
 	///<summary>
-	/// Fields that describe a device instance and its characteristics.  Data collected for applications and processes running on a (mobile) device can be enriched with these fields to describe the identity, type and other characteristics of the device.&#xA;This field group definition is based on the Device namespace of the OpenTelemetry Semantic Conventions (https://opentelemetry.io/docs/reference/specification/resource/semantic_conventions/device/).
+	/// Fields that describe a device instance and its characteristics. Data collected for applications and processes running on a (mobile) device can be enriched with these fields to describe the identity, type and other characteristics of the device.&#xA;This field group definition is based on the Device namespace of the OpenTelemetry Semantic Conventions (https://opentelemetry.io/docs/reference/specification/resource/semantic_conventions/device/).
 	///</summary>
 	public abstract class DeviceFieldSet {
 
 		///<summary>
 		/// <para><c>device.id</c></para>
-		/// <para>The unique identifier of a device. The identifier must not change across application sessions but stay fixed for an instance of a (mobile) device. 
+		/// <para>The unique identifier of a device. The identifier must not change across application sessions but stay fixed for an instance of a (mobile) device.
 		/// On iOS, this value must be equal to the vendor identifier (https://developer.apple.com/documentation/uikit/uidevice/1620059-identifierforvendor). On Android, this value must be equal to the Firebase Installation ID or a globally unique UUID which is persisted across sessions in your application.
 		/// For GDPR and data protection law reasons this identifier should not carry information that would allow to identify a user.</para>
 		/// <example>00000000-54b3-e7c7-0000-000046bffd97</example>
@@ -779,6 +788,15 @@ namespace Elastic.CommonSchema
 		///</summary>
 		[JsonPropertyName("model.name"), DataMember(Name = "model.name")]
 		public string? ModelName { get; set; }
+
+		///<summary>
+		/// <para><c>device.serial_number</c></para>
+		/// <para>The unique serial number serves as a distinct identifier for each device, aiding in inventory management and device authentication.
+		/// <para><br/>This field is beta and subject to change.</para></para>
+		/// <example>DJGAQS4CW5</example>
+		///</summary>
+		[JsonPropertyName("serial_number"), DataMember(Name = "serial_number")]
+		public string? SerialNumber { get; set; }
 	}
 
 	///<summary>
@@ -794,6 +812,24 @@ namespace Elastic.CommonSchema
 		///</summary>
 		[JsonPropertyName("name"), DataMember(Name = "name")]
 		public string? Name { get; set; }
+
+		///<summary>
+		/// <para><c>dll.origin_referrer_url</c></para>
+		/// <para>The URL of the webpage that linked to the dll file.
+		/// <para><br/>This field is beta and subject to change.</para></para>
+		/// <example>http://example.com/article1.html</example>
+		///</summary>
+		[JsonPropertyName("origin_referrer_url"), DataMember(Name = "origin_referrer_url")]
+		public string? OriginReferrerUrl { get; set; }
+
+		///<summary>
+		/// <para><c>dll.origin_url</c></para>
+		/// <para>The URL where the dll file is hosted.
+		/// <para><br/>This field is beta and subject to change.</para></para>
+		/// <example>http://example.com/files/example.dll</example>
+		///</summary>
+		[JsonPropertyName("origin_url"), DataMember(Name = "origin_url")]
+		public string? OriginUrl { get; set; }
 
 		///<summary>
 		/// <para><c>dll.path</c></para>
@@ -864,7 +900,7 @@ namespace Elastic.CommonSchema
 		/// <para><c>dns.question.registered_domain</c></para>
 		/// <para>The highest registered domain, stripped of the subdomain.
 		/// For example, the registered domain for "foo.example.com" is "example.com".
-		/// This value can be determined precisely with a list like the public suffix list (http://publicsuffix.org). Trying to approximate this by simply taking the last two labels will not work well for TLDs such as "co.uk".</para>
+		/// This value can be determined precisely with a list like the public suffix list (https://publicsuffix.org). Trying to approximate this by simply taking the last two labels will not work well for TLDs such as "co.uk".</para>
 		/// <example>example.com</example>
 		///</summary>
 		[JsonPropertyName("question.registered_domain"), DataMember(Name = "question.registered_domain")]
@@ -882,7 +918,7 @@ namespace Elastic.CommonSchema
 		///<summary>
 		/// <para><c>dns.question.top_level_domain</c></para>
 		/// <para>The effective top level domain (eTLD), also known as the domain suffix, is the last part of the domain name. For example, the top level domain for example.com is "com".
-		/// This value can be determined precisely with a list like the public suffix list (http://publicsuffix.org). Trying to approximate this by simply taking the last label will not work well for effective TLDs such as "co.uk".</para>
+		/// This value can be determined precisely with a list like the public suffix list (https://publicsuffix.org). Trying to approximate this by simply taking the last label will not work well for effective TLDs such as "co.uk".</para>
 		/// <example>co.uk</example>
 		///</summary>
 		[JsonPropertyName("question.top_level_domain"), DataMember(Name = "question.top_level_domain")]
@@ -998,7 +1034,7 @@ namespace Elastic.CommonSchema
 		///<summary>
 		/// <para><c>elf.go_import_hash</c></para>
 		/// <para>A hash of the Go language imports in an ELF file excluding standard library imports. An import hash can be used to fingerprint binaries even after recompilation or other code-level transformations have occurred, which would change more traditional hash values.
-		/// The algorithm used to calculate the Go symbol hash and a reference implementation are available [here](https://github.com/elastic/toutoumomoma).</para>
+		/// The algorithm used to calculate the Go symbol hash and a reference implementation are available here: https://github.com/elastic/toutoumomoma</para>
 		/// <example>10bddcb4cee42080f76c88d9ff964491</example>
 		///</summary>
 		[JsonPropertyName("go_import_hash"), DataMember(Name = "go_import_hash")]
@@ -1858,7 +1894,7 @@ namespace Elastic.CommonSchema
 
 		///<summary>
 		/// <para><c>file.mime_type</c></para>
-		/// <para>MIME type should identify the format of the file or stream of bytes using https://www.iana.org/assignments/media-types/media-types.xhtml[IANA official types], where possible. When more than one type is applicable, the most specific type should be used.</para>
+		/// <para>MIME type should identify the format of the file or stream of bytes using IANA official types: https://www.iana.org/assignments/media-types/media-types.xhtml, where possible. When more than one type is applicable, the most specific type should be used.</para>
 		/// <example></example>
 		///</summary>
 		[JsonPropertyName("mime_type"), DataMember(Name = "mime_type")]
@@ -1887,6 +1923,24 @@ namespace Elastic.CommonSchema
 		///</summary>
 		[JsonPropertyName("name"), DataMember(Name = "name")]
 		public string? Name { get; set; }
+
+		///<summary>
+		/// <para><c>file.origin_referrer_url</c></para>
+		/// <para>The URL of the webpage that linked to the file.
+		/// <para><br/>This field is beta and subject to change.</para></para>
+		/// <example>http://example.com/article1.html</example>
+		///</summary>
+		[JsonPropertyName("origin_referrer_url"), DataMember(Name = "origin_referrer_url")]
+		public string? OriginReferrerUrl { get; set; }
+
+		///<summary>
+		/// <para><c>file.origin_url</c></para>
+		/// <para>The URL where the file is hosted.
+		/// <para><br/>This field is beta and subject to change.</para></para>
+		/// <example>http://example.com/imgs/article1_img1.jpg</example>
+		///</summary>
+		[JsonPropertyName("origin_url"), DataMember(Name = "origin_url")]
+		public string? OriginUrl { get; set; }
 
 		///<summary>
 		/// <para><c>file.owner</c></para>
@@ -2072,6 +2126,15 @@ namespace Elastic.CommonSchema
 	public abstract class HashFieldSet {
 
 		///<summary>
+		/// <para><c>hash.cdhash</c></para>
+		/// <para>Code directory hash, utilized to uniquely identify and authenticate the integrity of the executable code.
+		/// <para><br/>This field is beta and subject to change.</para></para>
+		/// <example>3783b4052fd474dbe30676b45c329e7a6d44acd9</example>
+		///</summary>
+		[JsonPropertyName("cdhash"), DataMember(Name = "cdhash")]
+		public string? Cdhash { get; set; }
+
+		///<summary>
 		/// <para><c>hash.md5</c></para>
 		/// <para>MD5 hash.</para>
 		/// <example></example>
@@ -2143,8 +2206,7 @@ namespace Elastic.CommonSchema
 
 		///<summary>
 		/// <para><c>host.boot.id</c></para>
-		/// <para>Linux boot uuid taken from /proc/sys/kernel/random/boot_id. Note the boot_id value from /proc may or may not be the same in containers as on the host. Some container runtimes will bind mount a new boot_id value onto the proc file in each container.
-		/// <para><br/>This field is beta and subject to change.</para></para>
+		/// <para>Linux boot uuid taken from /proc/sys/kernel/random/boot_id. Note the boot_id value from /proc may or may not be the same in containers as on the host. Some container runtimes will bind mount a new boot_id value onto the proc file in each container.</para>
 		/// <example>88a1f0ed-5ae5-41ee-af6b-41921c311872</example>
 		///</summary>
 		[JsonPropertyName("boot.id"), DataMember(Name = "boot.id")]
@@ -2265,8 +2327,7 @@ namespace Elastic.CommonSchema
 
 		///<summary>
 		/// <para><c>host.pid_ns_ino</c></para>
-		/// <para>This is the inode number of the namespace in the namespace file system (nsfs). Unsigned int inum in include/linux/ns_common.h.
-		/// <para><br/>This field is beta and subject to change.</para></para>
+		/// <para>This is the inode number of the namespace in the namespace file system (nsfs). Unsigned int inum in include/linux/ns_common.h.</para>
 		/// <example>256383</example>
 		///</summary>
 		[JsonPropertyName("pid_ns_ino"), DataMember(Name = "pid_ns_ino")]
@@ -2508,7 +2569,7 @@ namespace Elastic.CommonSchema
 		///<summary>
 		/// <para><c>macho.go_import_hash</c></para>
 		/// <para>A hash of the Go language imports in a Mach-O file excluding standard library imports. An import hash can be used to fingerprint binaries even after recompilation or other code-level transformations have occurred, which would change more traditional hash values.
-		/// The algorithm used to calculate the Go symbol hash and a reference implementation are available [here](https://github.com/elastic/toutoumomoma).</para>
+		/// The algorithm used to calculate the Go symbol hash and a reference implementation are available here: https://github.com/elastic/toutoumomoma</para>
 		/// <example>10bddcb4cee42080f76c88d9ff964491</example>
 		///</summary>
 		[JsonPropertyName("go_import_hash"), DataMember(Name = "go_import_hash")]
@@ -3193,7 +3254,7 @@ namespace Elastic.CommonSchema
 		///<summary>
 		/// <para><c>pe.go_import_hash</c></para>
 		/// <para>A hash of the Go language imports in a PE file excluding standard library imports. An import hash can be used to fingerprint binaries even after recompilation or other code-level transformations have occurred, which would change more traditional hash values.
-		/// The algorithm used to calculate the Go symbol hash and a reference implementation are available [here](https://github.com/elastic/toutoumomoma).</para>
+		/// The algorithm used to calculate the Go symbol hash and a reference implementation are available here: https://github.com/elastic/toutoumomoma</para>
 		/// <example>10bddcb4cee42080f76c88d9ff964491</example>
 		///</summary>
 		[JsonPropertyName("go_import_hash"), DataMember(Name = "go_import_hash")]
@@ -3361,8 +3422,7 @@ namespace Elastic.CommonSchema
 		///<summary>
 		/// <para><c>process.env_vars</c></para>
 		/// <para>Array of environment variable bindings. Captured from a snapshot of the environment at the time of execution.
-		/// May be filtered to protect sensitive information.
-		/// <para><br/>This field is beta and subject to change.</para></para>
+		/// May be filtered to protect sensitive information.</para>
 		/// <example>["PATH=/usr/local/bin:/usr/bin", "USER=ubuntu"]</example>
 		///</summary>
 		[JsonPropertyName("env_vars"), DataMember(Name = "env_vars")]
@@ -3403,15 +3463,6 @@ namespace Elastic.CommonSchema
 		///</summary>
 		[JsonPropertyName("name"), DataMember(Name = "name")]
 		public string? Name { get; set; }
-
-		///<summary>
-		/// <para><c>process.pgid</c></para>
-		/// <para>Deprecated for removal in next major version release. This field is superseded by `process.group_leader.pid`.
-		/// Identifier of the group of processes the process belongs to.</para>
-		/// <example></example>
-		///</summary>
-		[JsonPropertyName("pgid"), DataMember(Name = "pgid")]
-		public long? Pgid { get; set; }
 
 		///<summary>
 		/// <para><c>process.pid</c></para>
@@ -3500,8 +3551,7 @@ namespace Elastic.CommonSchema
 		///<summary>
 		/// <para><c>process.io</c></para>
 		/// <para>A chunk of input or output (IO) from a single process.
-		/// This field only appears on the top level process object, which is the process that wrote the output or read the input.
-		/// <para><br/>This field is beta and subject to change.</para></para>
+		/// This field only appears on the top level process object, which is the process that wrote the output or read the input.</para>
 		/// <example></example>
 		///</summary>
 		[JsonPropertyName("io"), DataMember(Name = "io")]
@@ -3619,7 +3669,7 @@ namespace Elastic.CommonSchema
 	}
 
 	///<summary>
-	/// Fields for describing risk score and risk level of entities such as hosts and users.  These fields are not allowed to be nested under `event.*`. Please continue to use  `event.risk_score` and `event.risk_score_norm` for event risk.
+	/// Fields for describing risk score and risk level of entities such as hosts and users. These fields are not allowed to be nested under `event.*`. Please continue to use `event.risk_score` and `event.risk_score_norm` for event risk.
 	///</summary>
 	public abstract class RiskFieldSet {
 
@@ -3846,7 +3896,7 @@ namespace Elastic.CommonSchema
 		/// <para><c>server.registered_domain</c></para>
 		/// <para>The highest registered server domain, stripped of the subdomain.
 		/// For example, the registered domain for "foo.example.com" is "example.com".
-		/// This value can be determined precisely with a list like the public suffix list (http://publicsuffix.org). Trying to approximate this by simply taking the last two labels will not work well for TLDs such as "co.uk".</para>
+		/// This value can be determined precisely with a list like the public suffix list (https://publicsuffix.org). Trying to approximate this by simply taking the last two labels will not work well for TLDs such as "co.uk".</para>
 		/// <example>example.com</example>
 		///</summary>
 		[JsonPropertyName("registered_domain"), DataMember(Name = "registered_domain")]
@@ -3864,7 +3914,7 @@ namespace Elastic.CommonSchema
 		///<summary>
 		/// <para><c>server.top_level_domain</c></para>
 		/// <para>The effective top level domain (eTLD), also known as the domain suffix, is the last part of the domain name. For example, the top level domain for example.com is "com".
-		/// This value can be determined precisely with a list like the public suffix list (http://publicsuffix.org). Trying to approximate this by simply taking the last label will not work well for effective TLDs such as "co.uk".</para>
+		/// This value can be determined precisely with a list like the public suffix list (https://publicsuffix.org). Trying to approximate this by simply taking the last label will not work well for effective TLDs such as "co.uk".</para>
 		/// <example>co.uk</example>
 		///</summary>
 		[JsonPropertyName("top_level_domain"), DataMember(Name = "top_level_domain")]
@@ -4074,7 +4124,7 @@ namespace Elastic.CommonSchema
 		/// <para><c>source.registered_domain</c></para>
 		/// <para>The highest registered source domain, stripped of the subdomain.
 		/// For example, the registered domain for "foo.example.com" is "example.com".
-		/// This value can be determined precisely with a list like the public suffix list (http://publicsuffix.org). Trying to approximate this by simply taking the last two labels will not work well for TLDs such as "co.uk".</para>
+		/// This value can be determined precisely with a list like the public suffix list (https://publicsuffix.org). Trying to approximate this by simply taking the last two labels will not work well for TLDs such as "co.uk".</para>
 		/// <example>example.com</example>
 		///</summary>
 		[JsonPropertyName("registered_domain"), DataMember(Name = "registered_domain")]
@@ -4092,7 +4142,7 @@ namespace Elastic.CommonSchema
 		///<summary>
 		/// <para><c>source.top_level_domain</c></para>
 		/// <para>The effective top level domain (eTLD), also known as the domain suffix, is the last part of the domain name. For example, the top level domain for example.com is "com".
-		/// This value can be determined precisely with a list like the public suffix list (http://publicsuffix.org). Trying to approximate this by simply taking the last label will not work well for effective TLDs such as "co.uk".</para>
+		/// This value can be determined precisely with a list like the public suffix list (https://publicsuffix.org). Trying to approximate this by simply taking the last label will not work well for effective TLDs such as "co.uk".</para>
 		/// <example>co.uk</example>
 		///</summary>
 		[JsonPropertyName("top_level_domain"), DataMember(Name = "top_level_domain")]
@@ -4219,6 +4269,15 @@ namespace Elastic.CommonSchema
 		///</summary>
 		[JsonPropertyName("indicator.first_seen"), DataMember(Name = "indicator.first_seen")]
 		public DateTimeOffset? IndicatorFirstSeen { get; set; }
+
+		///<summary>
+		/// <para><c>threat.indicator.id</c></para>
+		/// <para>The ID of the indicator used by this threat to conduct behavior commonly modeled using MITRE ATT&amp;CK®. This field can have multiple values to allow for the identification of the same indicator across systems that use different ID formats.
+		/// While not required, a common approach is to use a STIX 2.x indicator ID.</para>
+		/// <example>[indicator--d7008e06-ab86-415a-9803-3c81ce2d3c37]</example>
+		///</summary>
+		[JsonPropertyName("indicator.id"), DataMember(Name = "indicator.id")]
+		public string[]? IndicatorId { get; set; }
 
 		///<summary>
 		/// <para><c>threat.indicator.ip</c></para>
@@ -4827,7 +4886,7 @@ namespace Elastic.CommonSchema
 		/// <para><c>url.registered_domain</c></para>
 		/// <para>The highest registered url domain, stripped of the subdomain.
 		/// For example, the registered domain for "foo.example.com" is "example.com".
-		/// This value can be determined precisely with a list like the public suffix list (http://publicsuffix.org). Trying to approximate this by simply taking the last two labels will not work well for TLDs such as "co.uk".</para>
+		/// This value can be determined precisely with a list like the public suffix list (https://publicsuffix.org). Trying to approximate this by simply taking the last two labels will not work well for TLDs such as "co.uk".</para>
 		/// <example>example.com</example>
 		///</summary>
 		[JsonPropertyName("registered_domain"), DataMember(Name = "registered_domain")]
@@ -4854,7 +4913,7 @@ namespace Elastic.CommonSchema
 		///<summary>
 		/// <para><c>url.top_level_domain</c></para>
 		/// <para>The effective top level domain (eTLD), also known as the domain suffix, is the last part of the domain name. For example, the top level domain for example.com is "com".
-		/// This value can be determined precisely with a list like the public suffix list (http://publicsuffix.org). Trying to approximate this by simply taking the last label will not work well for effective TLDs such as "co.uk".</para>
+		/// This value can be determined precisely with a list like the public suffix list (https://publicsuffix.org). Trying to approximate this by simply taking the last label will not work well for effective TLDs such as "co.uk".</para>
 		/// <example>co.uk</example>
 		///</summary>
 		[JsonPropertyName("top_level_domain"), DataMember(Name = "top_level_domain")]
@@ -4994,13 +5053,158 @@ namespace Elastic.CommonSchema
 	}
 
 	///<summary>
+	/// Fields related to storage volume details.
+	///</summary>
+	public abstract class VolumeFieldSet {
+
+		///<summary>
+		/// <para><c>volume.bus_type</c></para>
+		/// <para>Bus type of the device, such as `Nvme`, `Usb`, or `FileBackedVirtual`.</para>
+		/// <example>FileBackedVirtual</example>
+		///</summary>
+		[JsonPropertyName("bus_type"), DataMember(Name = "bus_type")]
+		public string? BusType { get; set; }
+
+		///<summary>
+		/// <para><c>volume.default_access</c></para>
+		/// <para>Describes the default access(es) of the volume.</para>
+		/// <example></example>
+		///</summary>
+		[JsonPropertyName("default_access"), DataMember(Name = "default_access")]
+		public string? DefaultAccess { get; set; }
+
+		///<summary>
+		/// <para><c>volume.device_name</c></para>
+		/// <para>Full path of the volume device.
+		/// Only populate this field for POSIX system volumes.</para>
+		/// <example></example>
+		///</summary>
+		[JsonPropertyName("device_name"), DataMember(Name = "device_name")]
+		public string? DeviceName { get; set; }
+
+		///<summary>
+		/// <para><c>volume.device_type</c></para>
+		/// <para>Volume device type.
+		/// The most frequently seen volume device types are `Disk File System` and `CD-ROM File System`.</para>
+		/// <example>CD-ROM File System</example>
+		///</summary>
+		[JsonPropertyName("device_type"), DataMember(Name = "device_type")]
+		public string? DeviceType { get; set; }
+
+		///<summary>
+		/// <para><c>volume.dos_name</c></para>
+		/// <para>The MS-DOS name of a device.
+		/// DOS device name is in the format of driver letters, such as `C:`. The field is relevant to Windows systems only.</para>
+		/// <example>E:</example>
+		///</summary>
+		[JsonPropertyName("dos_name"), DataMember(Name = "dos_name")]
+		public string? DosName { get; set; }
+
+		///<summary>
+		/// <para><c>volume.file_system_type</c></para>
+		/// <para>Volume device file system type.
+		/// The most common volume file system types are `NTFS` and `UDF`.</para>
+		/// <example></example>
+		///</summary>
+		[JsonPropertyName("file_system_type"), DataMember(Name = "file_system_type")]
+		public string? FileSystemType { get; set; }
+
+		///<summary>
+		/// <para><c>volume.mount_name</c></para>
+		/// <para>Mount name of the volume device.
+		/// Only populate this field for POSIX system volumes.</para>
+		/// <example></example>
+		///</summary>
+		[JsonPropertyName("mount_name"), DataMember(Name = "mount_name")]
+		public string? MountName { get; set; }
+
+		///<summary>
+		/// <para><c>volume.nt_name</c></para>
+		/// <para>The NT device name.
+		/// NT device name uses a format of `\Device\HarddiskVolume2`. The field is relevant to Windows systems only.</para>
+		/// <example>\Device\Cdrom1</example>
+		///</summary>
+		[JsonPropertyName("nt_name"), DataMember(Name = "nt_name")]
+		public string? NtName { get; set; }
+
+		///<summary>
+		/// <para><c>volume.product_id</c></para>
+		/// <para>ProductID of the device.
+		/// The vendor provides the ProductID for the volume, if any.</para>
+		/// <example></example>
+		///</summary>
+		[JsonPropertyName("product_id"), DataMember(Name = "product_id")]
+		public string? ProductId { get; set; }
+
+		///<summary>
+		/// <para><c>volume.product_name</c></para>
+		/// <para>Product name of the volume.
+		/// The volume device vendor provides this value.</para>
+		/// <example>Virtual DVD-ROM</example>
+		///</summary>
+		[JsonPropertyName("product_name"), DataMember(Name = "product_name")]
+		public string? ProductName { get; set; }
+
+		///<summary>
+		/// <para><c>volume.removable</c></para>
+		/// <para>Indicates if the volume is removable.</para>
+		/// <example></example>
+		///</summary>
+		[JsonPropertyName("removable"), DataMember(Name = "removable")]
+		public bool? Removable { get; set; }
+
+		///<summary>
+		/// <para><c>volume.serial_number</c></para>
+		/// <para>Serial number identifier for the volume device.
+		/// The serial number is provided by the vendor of the device, if any.</para>
+		/// <example></example>
+		///</summary>
+		[JsonPropertyName("serial_number"), DataMember(Name = "serial_number")]
+		public string? SerialNumber { get; set; }
+
+		///<summary>
+		/// <para><c>volume.size</c></para>
+		/// <para>Size of the volume device in bytes.</para>
+		/// <example></example>
+		///</summary>
+		[JsonPropertyName("size"), DataMember(Name = "size")]
+		public long? Size { get; set; }
+
+		///<summary>
+		/// <para><c>volume.vendor_id</c></para>
+		/// <para>VendorID of the volume device.
+		/// The volume device vendor provides this value.</para>
+		/// <example></example>
+		///</summary>
+		[JsonPropertyName("vendor_id"), DataMember(Name = "vendor_id")]
+		public string? VendorId { get; set; }
+
+		///<summary>
+		/// <para><c>volume.vendor_name</c></para>
+		/// <para>Vendor name of the volume device.
+		/// The value is provided by the vendor of the device.</para>
+		/// <example>Msft</example>
+		///</summary>
+		[JsonPropertyName("vendor_name"), DataMember(Name = "vendor_name")]
+		public string? VendorName { get; set; }
+
+		///<summary>
+		/// <para><c>volume.writable</c></para>
+		/// <para>Indicates if the volume is writable.</para>
+		/// <example></example>
+		///</summary>
+		[JsonPropertyName("writable"), DataMember(Name = "writable")]
+		public bool? Writable { get; set; }
+	}
+
+	///<summary>
 	/// The vulnerability fields describe information about a vulnerability that is relevant to an event.
 	///</summary>
 	public abstract class VulnerabilityFieldSet {
 
 		///<summary>
 		/// <para><c>vulnerability.category</c></para>
-		/// <para>The type of system or architecture that the vulnerability affects. These may be platform-specific (for example, Debian or SUSE) or general (for example, Database or Firewall). For example (https://qualysguard.qualys.com/qwebhelp/fo_portal/knowledgebase/vulnerability_categories.htm[Qualys vulnerability categories])
+		/// <para>The type of system or architecture that the vulnerability affects. These may be platform-specific (for example, Debian or SUSE) or general (for example, Database or Firewall). For example (https://qualysguard.qualys.com/qwebhelp/fo_portal/knowledgebase/vulnerability_categories.htm)
 		/// This field must be an array.</para>
 		/// <example>["Firewall"]</example>
 		///</summary>
@@ -5017,7 +5221,7 @@ namespace Elastic.CommonSchema
 
 		///<summary>
 		/// <para><c>vulnerability.description</c></para>
-		/// <para>The description of the vulnerability that provides additional context of the vulnerability. For example (https://cve.mitre.org/about/faqs.html#cve_entry_descriptions_created[Common Vulnerabilities and Exposure CVE description])</para>
+		/// <para>The description of the vulnerability that provides additional context of the vulnerability. For example (https://cve.mitre.org/about/faqs.html#cve_entry_descriptions_created)</para>
 		/// <example>In macOS before 2.12.6, there is a vulnerability in the RPC...</example>
 		///</summary>
 		[JsonPropertyName("description"), DataMember(Name = "description")]
@@ -5033,7 +5237,7 @@ namespace Elastic.CommonSchema
 
 		///<summary>
 		/// <para><c>vulnerability.id</c></para>
-		/// <para>The identification (ID) is the number portion of a vulnerability entry. It includes a unique identification number for the vulnerability. For example (https://cve.mitre.org/about/faqs.html#what_is_cve_id)[Common Vulnerabilities and Exposure CVE ID]</para>
+		/// <para>The identification (ID) is the number portion of a vulnerability entry. It includes a unique identification number for the vulnerability. For example (https://cve.mitre.org/about/faqs.html#what_is_cve_id)</para>
 		/// <example>CVE-2019-00001</example>
 		///</summary>
 		[JsonPropertyName("id"), DataMember(Name = "id")]
@@ -5228,7 +5432,7 @@ namespace Elastic.CommonSchema
 
 		///<summary>
 		/// <para><c>x509.serial_number</c></para>
-		/// <para>Unique serial number issued by the certificate authority. For consistency, if this value is alphanumeric, it should be formatted without colons and uppercase characters.</para>
+		/// <para>Unique serial number issued by the certificate authority. For consistency, this must be encoded in base 16 and formatted without colons and uppercase characters.</para>
 		/// <example>55FBB9C7DEBF09809D12CCAA</example>
 		///</summary>
 		[JsonPropertyName("serial_number"), DataMember(Name = "serial_number")]

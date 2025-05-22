@@ -8,6 +8,8 @@ with semantic logging of structured data from message and scope values. The resu
 The logger uses the [Elasticsearch.Net low level client](https://github.com/elastic/elasticsearch-net) to
 manage the network connection to Elasticsearch.
 
+**NOTE:** To use version `9.0.0` of this package you need atleast version `8.15.0` of the Elastic Stack.
+
 ## Usage
 
 Add a reference to the `Elastic.Extensions.Logging` package:
