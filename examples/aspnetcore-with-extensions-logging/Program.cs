@@ -4,7 +4,7 @@ using Elastic.Clients.Elasticsearch;
 using Elastic.Elasticsearch.Ephemeral;
 using Elastic.Extensions.Logging;
 
-using var cluster = new EphemeralCluster("8.4.0");
+using var cluster = new EphemeralCluster("9.0.0");
 var client = CreateClient(cluster);
 //check if an instance is already running before starting
 if (!(await client.InfoAsync()).IsValidResponse)

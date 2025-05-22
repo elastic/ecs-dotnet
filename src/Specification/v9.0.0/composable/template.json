@@ -1,0 +1,78 @@
+{
+  "_meta": {
+    "description": "Sample composable template that includes all ECS fields",
+    "ecs_version": "9.0.0"
+  },
+  "composed_of": [
+    "ecs_9.0.0_base",
+    "ecs_9.0.0_agent",
+    "ecs_9.0.0_client",
+    "ecs_9.0.0_cloud",
+    "ecs_9.0.0_container",
+    "ecs_9.0.0_data_stream",
+    "ecs_9.0.0_destination",
+    "ecs_9.0.0_device",
+    "ecs_9.0.0_dll",
+    "ecs_9.0.0_dns",
+    "ecs_9.0.0_ecs",
+    "ecs_9.0.0_email",
+    "ecs_9.0.0_error",
+    "ecs_9.0.0_event",
+    "ecs_9.0.0_faas",
+    "ecs_9.0.0_file",
+    "ecs_9.0.0_group",
+    "ecs_9.0.0_host",
+    "ecs_9.0.0_http",
+    "ecs_9.0.0_log",
+    "ecs_9.0.0_network",
+    "ecs_9.0.0_observer",
+    "ecs_9.0.0_orchestrator",
+    "ecs_9.0.0_organization",
+    "ecs_9.0.0_package",
+    "ecs_9.0.0_process",
+    "ecs_9.0.0_registry",
+    "ecs_9.0.0_related",
+    "ecs_9.0.0_rule",
+    "ecs_9.0.0_server",
+    "ecs_9.0.0_service",
+    "ecs_9.0.0_source",
+    "ecs_9.0.0_threat",
+    "ecs_9.0.0_tls",
+    "ecs_9.0.0_tracing",
+    "ecs_9.0.0_url",
+    "ecs_9.0.0_user_agent",
+    "ecs_9.0.0_user",
+    "ecs_9.0.0_volume",
+    "ecs_9.0.0_vulnerability"
+  ],
+  "index_patterns": [
+    "try-ecs-*"
+  ],
+  "priority": 1,
+  "template": {
+    "mappings": {
+      "date_detection": false,
+      "dynamic_templates": [
+        {
+          "strings_as_keyword": {
+            "mapping": {
+              "ignore_above": 1024,
+              "type": "keyword"
+            },
+            "match_mapping_type": "string"
+          }
+        }
+      ]
+    },
+    "settings": {
+      "index": {
+        "codec": "best_compression",
+        "mapping": {
+          "total_fields": {
+            "limit": 2000
+          }
+        }
+      }
+    }
+  }
+}

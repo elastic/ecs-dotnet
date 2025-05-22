@@ -2,7 +2,7 @@
 
 A specialization of [`Elastic.Ingest.Elasticsearch`](https://www.nuget.org/packages/Elastic.Ingest.Elasticsearch#readme-body-tab) that offers two channel implementations that make it easy to write ECS formatted data and bootstrap the target datastreams/indices with ECS mappings and settings.
 
-
+**NOTE:** To use version `9.0.0` of this package you need atleast version `8.15.0` of the Elastic Stack.
 
 ## `EcsDataStreamChannel<TEvent>`
 

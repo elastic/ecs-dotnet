@@ -22,12 +22,12 @@ using System.Text.Json.Serialization;
 namespace Elastic.CommonSchema.Elasticsearch
 {
 /// <summary>
-/// Elastic Common Schema version v8.11.0 index templates to be used with Elasticsearch.
+/// Elastic Common Schema version v9.0.0 index templates to be used with Elasticsearch.
 /// </summary>
 public static class IndexTemplates
 {
 	/// <summary>
-	 /// Elastic Common Schema version v8.11.0 Composable index template  
+	 /// Elastic Common Schema version v9.0.0 Composable index template  
 	 /// See the Put Index Template API documentation: https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-templates.html
 	 /// </summary>
 	 /// <returns>Index template string that can be used with the Put Index Template API.</returns>
@@ -38,54 +38,55 @@ public static class IndexTemplates
 		 		 
 		return @"{
   ""_meta"": {
-    ""description"": ""Template installed by ECS.NET 8.11.0 (https://github.com/elastic/ecs-dotnet)"",
-    ""ecs_version"": ""8.11.0""
+    ""description"": ""Template installed by ECS.NET 9.0.0 (https://github.com/elastic/ecs-dotnet)"",
+    ""ecs_version"": ""9.0.0""
   },
   ""composed_of"": [
-    ""ecs_8.11.0_base"",
-    ""ecs_8.11.0_agent"",
-    ""ecs_8.11.0_client"",
-    ""ecs_8.11.0_cloud"",
-    ""ecs_8.11.0_container"",
-    ""ecs_8.11.0_data_stream"",
-    ""ecs_8.11.0_destination"",
-    ""ecs_8.11.0_device"",
-    ""ecs_8.11.0_dll"",
-    ""ecs_8.11.0_dns"",
-    ""ecs_8.11.0_ecs"",
-    ""ecs_8.11.0_email"",
-    ""ecs_8.11.0_error"",
-    ""ecs_8.11.0_event"",
-    ""ecs_8.11.0_faas"",
-    ""ecs_8.11.0_file"",
-    ""ecs_8.11.0_group"",
-    ""ecs_8.11.0_host"",
-    ""ecs_8.11.0_http"",
-    ""ecs_8.11.0_log"",
-    ""ecs_8.11.0_network"",
-    ""ecs_8.11.0_observer"",
-    ""ecs_8.11.0_orchestrator"",
-    ""ecs_8.11.0_organization"",
-    ""ecs_8.11.0_package"",
-    ""ecs_8.11.0_process"",
-    ""ecs_8.11.0_registry"",
-    ""ecs_8.11.0_related"",
-    ""ecs_8.11.0_rule"",
-    ""ecs_8.11.0_server"",
-    ""ecs_8.11.0_service"",
-    ""ecs_8.11.0_source"",
-    ""ecs_8.11.0_threat"",
-    ""ecs_8.11.0_tls"",
-    ""ecs_8.11.0_tracing"",
-    ""ecs_8.11.0_url"",
-    ""ecs_8.11.0_user_agent"",
-    ""ecs_8.11.0_user"",
-    ""ecs_8.11.0_vulnerability""" + userComponents + @"
+    ""ecs_9.0.0_base"",
+    ""ecs_9.0.0_agent"",
+    ""ecs_9.0.0_client"",
+    ""ecs_9.0.0_cloud"",
+    ""ecs_9.0.0_container"",
+    ""ecs_9.0.0_data_stream"",
+    ""ecs_9.0.0_destination"",
+    ""ecs_9.0.0_device"",
+    ""ecs_9.0.0_dll"",
+    ""ecs_9.0.0_dns"",
+    ""ecs_9.0.0_ecs"",
+    ""ecs_9.0.0_email"",
+    ""ecs_9.0.0_error"",
+    ""ecs_9.0.0_event"",
+    ""ecs_9.0.0_faas"",
+    ""ecs_9.0.0_file"",
+    ""ecs_9.0.0_group"",
+    ""ecs_9.0.0_host"",
+    ""ecs_9.0.0_http"",
+    ""ecs_9.0.0_log"",
+    ""ecs_9.0.0_network"",
+    ""ecs_9.0.0_observer"",
+    ""ecs_9.0.0_orchestrator"",
+    ""ecs_9.0.0_organization"",
+    ""ecs_9.0.0_package"",
+    ""ecs_9.0.0_process"",
+    ""ecs_9.0.0_registry"",
+    ""ecs_9.0.0_related"",
+    ""ecs_9.0.0_rule"",
+    ""ecs_9.0.0_server"",
+    ""ecs_9.0.0_service"",
+    ""ecs_9.0.0_source"",
+    ""ecs_9.0.0_threat"",
+    ""ecs_9.0.0_tls"",
+    ""ecs_9.0.0_tracing"",
+    ""ecs_9.0.0_url"",
+    ""ecs_9.0.0_user_agent"",
+    ""ecs_9.0.0_user"",
+    ""ecs_9.0.0_volume"",
+    ""ecs_9.0.0_vulnerability""" + userComponents + @"
   ],
   ""index_patterns"": [
     """ + indexPattern + @"""
   ],
-  ""priority"": 527104,
+  ""priority"": 589824,
   ""data_stream"": {},
   ""template"": {
     ""mappings"": {
@@ -118,7 +119,7 @@ public static class IndexTemplates
 	 }
 
  	/// <summary>
-	 /// Elastic Common Schema version v8.11.0 Legacy index template  
+	 /// Elastic Common Schema version v9.0.0 Legacy index template  
 	 /// See the Put Index Template API documentation: https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-templates.html
 	 /// </summary>
 	 /// <returns>Index template string that can be used with the Put Index Template API.</returns>
@@ -131,7 +132,7 @@ public static class IndexTemplates
   ],
   ""mappings"": {
     ""_meta"": {
-      ""version"": ""8.11.0""
+      ""version"": ""9.0.0""
     },
     ""date_detection"": false,
     ""dynamic_templates"": [
@@ -350,6 +351,7 @@ public static class IndexTemplates
               },
               ""roles"": {
                 ""ignore_above"": 1024,
+                ""synthetic_source_keep"": ""none"",
                 ""type"": ""keyword""
               }
             }
@@ -608,6 +610,7 @@ public static class IndexTemplates
               },
               ""tag"": {
                 ""ignore_above"": 1024,
+                ""synthetic_source_keep"": ""none"",
                 ""type"": ""keyword""
               }
             }
@@ -840,6 +843,7 @@ public static class IndexTemplates
               },
               ""roles"": {
                 ""ignore_above"": 1024,
+                ""synthetic_source_keep"": ""none"",
                 ""type"": ""keyword""
               }
             }
@@ -867,6 +871,10 @@ public static class IndexTemplates
                 ""type"": ""keyword""
               }
             }
+          },
+          ""serial_number"": {
+            ""ignore_above"": 1024,
+            ""type"": ""keyword""
           }
         }
       },
@@ -880,6 +888,10 @@ public static class IndexTemplates
               },
               ""exists"": {
                 ""type"": ""boolean""
+              },
+              ""flags"": {
+                ""ignore_above"": 1024,
+                ""type"": ""keyword""
               },
               ""signing_id"": {
                 ""ignore_above"": 1024,
@@ -910,6 +922,10 @@ public static class IndexTemplates
           },
           ""hash"": {
             ""properties"": {
+              ""cdhash"": {
+                ""ignore_above"": 1024,
+                ""type"": ""keyword""
+              },
               ""md5"": {
                 ""ignore_above"": 1024,
                 ""type"": ""keyword""
@@ -942,6 +958,14 @@ public static class IndexTemplates
           },
           ""name"": {
             ""ignore_above"": 1024,
+            ""type"": ""keyword""
+          },
+          ""origin_referrer_url"": {
+            ""ignore_above"": 8192,
+            ""type"": ""keyword""
+          },
+          ""origin_url"": {
+            ""ignore_above"": 8192,
             ""type"": ""keyword""
           },
           ""path"": {
@@ -1064,6 +1088,7 @@ public static class IndexTemplates
           },
           ""header_flags"": {
             ""ignore_above"": 1024,
+            ""synthetic_source_keep"": ""none"",
             ""type"": ""keyword""
           },
           ""id"": {
@@ -1135,6 +1160,10 @@ public static class IndexTemplates
                   },
                   ""hash"": {
                     ""properties"": {
+                      ""cdhash"": {
+                        ""ignore_above"": 1024,
+                        ""type"": ""keyword""
+                      },
                       ""md5"": {
                         ""ignore_above"": 1024,
                         ""type"": ""keyword""
@@ -1185,6 +1214,7 @@ public static class IndexTemplates
             ""properties"": {
               ""address"": {
                 ""ignore_above"": 1024,
+                ""synthetic_source_keep"": ""none"",
                 ""type"": ""keyword""
               }
             }
@@ -1193,6 +1223,7 @@ public static class IndexTemplates
             ""properties"": {
               ""address"": {
                 ""ignore_above"": 1024,
+                ""synthetic_source_keep"": ""none"",
                 ""type"": ""keyword""
               }
             }
@@ -1212,6 +1243,7 @@ public static class IndexTemplates
             ""properties"": {
               ""address"": {
                 ""ignore_above"": 1024,
+                ""synthetic_source_keep"": ""none"",
                 ""type"": ""keyword""
               }
             }
@@ -1230,6 +1262,7 @@ public static class IndexTemplates
             ""properties"": {
               ""address"": {
                 ""ignore_above"": 1024,
+                ""synthetic_source_keep"": ""none"",
                 ""type"": ""keyword""
               }
             }
@@ -1238,6 +1271,7 @@ public static class IndexTemplates
             ""properties"": {
               ""address"": {
                 ""ignore_above"": 1024,
+                ""synthetic_source_keep"": ""none"",
                 ""type"": ""keyword""
               }
             }
@@ -1255,6 +1289,7 @@ public static class IndexTemplates
             ""properties"": {
               ""address"": {
                 ""ignore_above"": 1024,
+                ""synthetic_source_keep"": ""none"",
                 ""type"": ""keyword""
               }
             }
@@ -1304,6 +1339,7 @@ public static class IndexTemplates
           },
           ""category"": {
             ""ignore_above"": 1024,
+            ""synthetic_source_keep"": ""none"",
             ""type"": ""keyword""
           },
           ""code"": {
@@ -1384,10 +1420,11 @@ public static class IndexTemplates
           },
           ""type"": {
             ""ignore_above"": 1024,
+            ""synthetic_source_keep"": ""none"",
             ""type"": ""keyword""
           },
           ""url"": {
-            ""ignore_above"": 1024,
+            ""ignore_above"": 2083,
             ""type"": ""keyword""
           }
         }
@@ -1434,6 +1471,7 @@ public static class IndexTemplates
           },
           ""attributes"": {
             ""ignore_above"": 1024,
+            ""synthetic_source_keep"": ""none"",
             ""type"": ""keyword""
           },
           ""code_signature"": {
@@ -1444,6 +1482,10 @@ public static class IndexTemplates
               },
               ""exists"": {
                 ""type"": ""boolean""
+              },
+              ""flags"": {
+                ""ignore_above"": 1024,
+                ""type"": ""keyword""
               },
               ""signing_id"": {
                 ""ignore_above"": 1024,
@@ -1654,6 +1696,10 @@ public static class IndexTemplates
           },
           ""hash"": {
             ""properties"": {
+              ""cdhash"": {
+                ""ignore_above"": 1024,
+                ""type"": ""keyword""
+              },
               ""md5"": {
                 ""ignore_above"": 1024,
                 ""type"": ""keyword""
@@ -1759,6 +1805,14 @@ public static class IndexTemplates
           },
           ""name"": {
             ""ignore_above"": 1024,
+            ""type"": ""keyword""
+          },
+          ""origin_referrer_url"": {
+            ""ignore_above"": 8192,
+            ""type"": ""keyword""
+          },
+          ""origin_url"": {
+            ""ignore_above"": 8192,
             ""type"": ""keyword""
           },
           ""owner"": {
@@ -2108,6 +2162,7 @@ public static class IndexTemplates
           },
           ""mac"": {
             ""ignore_above"": 1024,
+            ""synthetic_source_keep"": ""none"",
             ""type"": ""keyword""
           },
           ""name"": {
@@ -2596,6 +2651,7 @@ public static class IndexTemplates
           },
           ""mac"": {
             ""ignore_above"": 1024,
+            ""synthetic_source_keep"": ""none"",
             ""type"": ""keyword""
           },
           ""name"": {
@@ -2704,6 +2760,7 @@ public static class IndexTemplates
             ""properties"": {
               ""annotation"": {
                 ""ignore_above"": 1024,
+                ""synthetic_source_keep"": ""none"",
                 ""type"": ""keyword""
               },
               ""id"": {
@@ -2715,6 +2772,7 @@ public static class IndexTemplates
               },
               ""label"": {
                 ""ignore_above"": 1024,
+                ""synthetic_source_keep"": ""none"",
                 ""type"": ""keyword""
               },
               ""name"": {
@@ -2829,6 +2887,10 @@ public static class IndexTemplates
               },
               ""exists"": {
                 ""type"": ""boolean""
+              },
+              ""flags"": {
+                ""ignore_above"": 1024,
+                ""type"": ""keyword""
               },
               ""signing_id"": {
                 ""ignore_above"": 1024,
@@ -3273,6 +3335,7 @@ public static class IndexTemplates
           },
           ""env_vars"": {
             ""ignore_above"": 1024,
+            ""synthetic_source_keep"": ""none"",
             ""type"": ""keyword""
           },
           ""executable"": {
@@ -3286,6 +3349,18 @@ public static class IndexTemplates
           },
           ""exit_code"": {
             ""type"": ""long""
+          },
+          ""group"": {
+            ""properties"": {
+              ""id"": {
+                ""ignore_above"": 1024,
+                ""type"": ""keyword""
+              },
+              ""name"": {
+                ""ignore_above"": 1024,
+                ""type"": ""keyword""
+              }
+            }
           },
           ""group_leader"": {
             ""properties"": {
@@ -3468,6 +3543,10 @@ public static class IndexTemplates
           },
           ""hash"": {
             ""properties"": {
+              ""cdhash"": {
+                ""ignore_above"": 1024,
+                ""type"": ""keyword""
+              },
               ""md5"": {
                 ""ignore_above"": 1024,
                 ""type"": ""keyword""
@@ -3617,6 +3696,10 @@ public static class IndexTemplates
                   },
                   ""exists"": {
                     ""type"": ""boolean""
+                  },
+                  ""flags"": {
+                    ""ignore_above"": 1024,
+                    ""type"": ""keyword""
                   },
                   ""signing_id"": {
                     ""ignore_above"": 1024,
@@ -3849,6 +3932,10 @@ public static class IndexTemplates
               },
               ""hash"": {
                 ""properties"": {
+                  ""cdhash"": {
+                    ""ignore_above"": 1024,
+                    ""type"": ""keyword""
+                  },
                   ""md5"": {
                     ""ignore_above"": 1024,
                     ""type"": ""keyword""
@@ -4035,9 +4122,6 @@ public static class IndexTemplates
                   }
                 }
               },
-              ""pgid"": {
-                ""type"": ""long""
-              },
               ""pid"": {
                 ""type"": ""long""
               },
@@ -4120,10 +4204,12 @@ public static class IndexTemplates
                     ""properties"": {
                       ""effective"": {
                         ""ignore_above"": 1024,
+                        ""synthetic_source_keep"": ""none"",
                         ""type"": ""keyword""
                       },
                       ""permitted"": {
                         ""ignore_above"": 1024,
+                        ""synthetic_source_keep"": ""none"",
                         ""type"": ""keyword""
                       }
                     }
@@ -4280,9 +4366,6 @@ public static class IndexTemplates
                 ""type"": ""nested""
               }
             }
-          },
-          ""pgid"": {
-            ""type"": ""long""
           },
           ""pid"": {
             ""type"": ""long""
@@ -4599,10 +4682,12 @@ public static class IndexTemplates
                 ""properties"": {
                   ""effective"": {
                     ""ignore_above"": 1024,
+                    ""synthetic_source_keep"": ""none"",
                     ""type"": ""keyword""
                   },
                   ""permitted"": {
                     ""ignore_above"": 1024,
+                    ""synthetic_source_keep"": ""none"",
                     ""type"": ""keyword""
                   }
                 }
@@ -4719,10 +4804,12 @@ public static class IndexTemplates
         ""properties"": {
           ""hash"": {
             ""ignore_above"": 1024,
+            ""synthetic_source_keep"": ""none"",
             ""type"": ""keyword""
           },
           ""hosts"": {
             ""ignore_above"": 1024,
+            ""synthetic_source_keep"": ""none"",
             ""type"": ""keyword""
           },
           ""ip"": {
@@ -4730,6 +4817,7 @@ public static class IndexTemplates
           },
           ""user"": {
             ""ignore_above"": 1024,
+            ""synthetic_source_keep"": ""none"",
             ""type"": ""keyword""
           }
         }
@@ -4738,6 +4826,7 @@ public static class IndexTemplates
         ""properties"": {
           ""author"": {
             ""ignore_above"": 1024,
+            ""synthetic_source_keep"": ""none"",
             ""type"": ""keyword""
           },
           ""category"": {
@@ -4947,6 +5036,7 @@ public static class IndexTemplates
               },
               ""roles"": {
                 ""ignore_above"": 1024,
+                ""synthetic_source_keep"": ""none"",
                 ""type"": ""keyword""
               }
             }
@@ -4987,6 +5077,7 @@ public static class IndexTemplates
               },
               ""roles"": {
                 ""ignore_above"": 1024,
+                ""synthetic_source_keep"": ""none"",
                 ""type"": ""keyword""
               }
             }
@@ -5025,6 +5116,7 @@ public static class IndexTemplates
                   },
                   ""roles"": {
                     ""ignore_above"": 1024,
+                    ""synthetic_source_keep"": ""none"",
                     ""type"": ""keyword""
                   }
                 }
@@ -5081,6 +5173,7 @@ public static class IndexTemplates
                   },
                   ""roles"": {
                     ""ignore_above"": 1024,
+                    ""synthetic_source_keep"": ""none"",
                     ""type"": ""keyword""
                   }
                 }
@@ -5278,6 +5371,7 @@ public static class IndexTemplates
               },
               ""roles"": {
                 ""ignore_above"": 1024,
+                ""synthetic_source_keep"": ""none"",
                 ""type"": ""keyword""
               }
             }
@@ -5294,6 +5388,7 @@ public static class IndexTemplates
       },
       ""tags"": {
         ""ignore_above"": 1024,
+        ""synthetic_source_keep"": ""none"",
         ""type"": ""keyword""
       },
       ""threat"": {
@@ -5345,6 +5440,7 @@ public static class IndexTemplates
                       },
                       ""attributes"": {
                         ""ignore_above"": 1024,
+                        ""synthetic_source_keep"": ""none"",
                         ""type"": ""keyword""
                       },
                       ""code_signature"": {
@@ -5355,6 +5451,10 @@ public static class IndexTemplates
                           },
                           ""exists"": {
                             ""type"": ""boolean""
+                          },
+                          ""flags"": {
+                            ""ignore_above"": 1024,
+                            ""type"": ""keyword""
                           },
                           ""signing_id"": {
                             ""ignore_above"": 1024,
@@ -5565,6 +5665,10 @@ public static class IndexTemplates
                       },
                       ""hash"": {
                         ""properties"": {
+                          ""cdhash"": {
+                            ""ignore_above"": 1024,
+                            ""type"": ""keyword""
+                          },
                           ""md5"": {
                             ""ignore_above"": 1024,
                             ""type"": ""keyword""
@@ -5612,6 +5716,14 @@ public static class IndexTemplates
                       },
                       ""name"": {
                         ""ignore_above"": 1024,
+                        ""type"": ""keyword""
+                      },
+                      ""origin_referrer_url"": {
+                        ""ignore_above"": 8192,
+                        ""type"": ""keyword""
+                      },
+                      ""origin_url"": {
+                        ""ignore_above"": 8192,
                         ""type"": ""keyword""
                       },
                       ""owner"": {
@@ -6013,7 +6125,7 @@ public static class IndexTemplates
                         ""type"": ""long""
                       },
                       ""query"": {
-                        ""ignore_above"": 1024,
+                        ""ignore_above"": 2083,
                         ""type"": ""keyword""
                       },
                       ""registered_domain"": {
@@ -6205,6 +6317,7 @@ public static class IndexTemplates
             ""properties"": {
               ""alias"": {
                 ""ignore_above"": 1024,
+                ""synthetic_source_keep"": ""none"",
                 ""type"": ""keyword""
               },
               ""id"": {
@@ -6266,6 +6379,7 @@ public static class IndexTemplates
                   },
                   ""attributes"": {
                     ""ignore_above"": 1024,
+                    ""synthetic_source_keep"": ""none"",
                     ""type"": ""keyword""
                   },
                   ""code_signature"": {
@@ -6276,6 +6390,10 @@ public static class IndexTemplates
                       },
                       ""exists"": {
                         ""type"": ""boolean""
+                      },
+                      ""flags"": {
+                        ""ignore_above"": 1024,
+                        ""type"": ""keyword""
                       },
                       ""signing_id"": {
                         ""ignore_above"": 1024,
@@ -6486,6 +6604,10 @@ public static class IndexTemplates
                   },
                   ""hash"": {
                     ""properties"": {
+                      ""cdhash"": {
+                        ""ignore_above"": 1024,
+                        ""type"": ""keyword""
+                      },
                       ""md5"": {
                         ""ignore_above"": 1024,
                         ""type"": ""keyword""
@@ -6533,6 +6655,14 @@ public static class IndexTemplates
                   },
                   ""name"": {
                     ""ignore_above"": 1024,
+                    ""type"": ""keyword""
+                  },
+                  ""origin_referrer_url"": {
+                    ""ignore_above"": 8192,
+                    ""type"": ""keyword""
+                  },
+                  ""origin_url"": {
+                    ""ignore_above"": 8192,
                     ""type"": ""keyword""
                   },
                   ""owner"": {
@@ -6812,6 +6942,11 @@ public static class IndexTemplates
                   }
                 }
               },
+              ""id"": {
+                ""ignore_above"": 1024,
+                ""synthetic_source_keep"": ""none"",
+                ""type"": ""keyword""
+              },
               ""ip"": {
                 ""type"": ""ip""
               },
@@ -6934,7 +7069,7 @@ public static class IndexTemplates
                     ""type"": ""long""
                   },
                   ""query"": {
-                    ""ignore_above"": 1024,
+                    ""ignore_above"": 2083,
                     ""type"": ""keyword""
                   },
                   ""registered_domain"": {
@@ -7071,6 +7206,7 @@ public static class IndexTemplates
             ""properties"": {
               ""alias"": {
                 ""ignore_above"": 1024,
+                ""synthetic_source_keep"": ""none"",
                 ""type"": ""keyword""
               },
               ""id"": {
@@ -7083,6 +7219,7 @@ public static class IndexTemplates
               },
               ""platforms"": {
                 ""ignore_above"": 1024,
+                ""synthetic_source_keep"": ""none"",
                 ""type"": ""keyword""
               },
               ""reference"": {
@@ -7554,7 +7691,7 @@ public static class IndexTemplates
             ""type"": ""long""
           },
           ""query"": {
-            ""ignore_above"": 1024,
+            ""ignore_above"": 2083,
             ""type"": ""keyword""
           },
           ""registered_domain"": {
@@ -7635,6 +7772,7 @@ public static class IndexTemplates
               },
               ""roles"": {
                 ""ignore_above"": 1024,
+                ""synthetic_source_keep"": ""none"",
                 ""type"": ""keyword""
               }
             }
@@ -7697,6 +7835,7 @@ public static class IndexTemplates
               },
               ""roles"": {
                 ""ignore_above"": 1024,
+                ""synthetic_source_keep"": ""none"",
                 ""type"": ""keyword""
               }
             }
@@ -7773,6 +7912,7 @@ public static class IndexTemplates
           },
           ""roles"": {
             ""ignore_above"": 1024,
+            ""synthetic_source_keep"": ""none"",
             ""type"": ""keyword""
           },
           ""target"": {
@@ -7829,6 +7969,7 @@ public static class IndexTemplates
               },
               ""roles"": {
                 ""ignore_above"": 1024,
+                ""synthetic_source_keep"": ""none"",
                 ""type"": ""keyword""
               }
             }
@@ -7906,10 +8047,76 @@ public static class IndexTemplates
           }
         }
       },
+      ""volume"": {
+        ""properties"": {
+          ""bus_type"": {
+            ""ignore_above"": 1024,
+            ""type"": ""keyword""
+          },
+          ""default_access"": {
+            ""ignore_above"": 1024,
+            ""type"": ""keyword""
+          },
+          ""device_name"": {
+            ""ignore_above"": 1024,
+            ""type"": ""keyword""
+          },
+          ""device_type"": {
+            ""ignore_above"": 1024,
+            ""type"": ""keyword""
+          },
+          ""dos_name"": {
+            ""ignore_above"": 1024,
+            ""type"": ""keyword""
+          },
+          ""file_system_type"": {
+            ""ignore_above"": 1024,
+            ""type"": ""keyword""
+          },
+          ""mount_name"": {
+            ""ignore_above"": 1024,
+            ""type"": ""keyword""
+          },
+          ""nt_name"": {
+            ""ignore_above"": 1024,
+            ""type"": ""keyword""
+          },
+          ""product_id"": {
+            ""ignore_above"": 1024,
+            ""type"": ""keyword""
+          },
+          ""product_name"": {
+            ""ignore_above"": 1024,
+            ""type"": ""keyword""
+          },
+          ""removable"": {
+            ""type"": ""boolean""
+          },
+          ""serial_number"": {
+            ""ignore_above"": 1024,
+            ""type"": ""keyword""
+          },
+          ""size"": {
+            ""type"": ""long""
+          },
+          ""vendor_id"": {
+            ""ignore_above"": 1024,
+            ""type"": ""keyword""
+          },
+          ""vendor_name"": {
+            ""ignore_above"": 1024,
+            ""type"": ""keyword""
+          },
+          ""writable"": {
+            ""type"": ""boolean""
+          }
+        }
+      },
       ""vulnerability"": {
         ""properties"": {
           ""category"": {
             ""ignore_above"": 1024,
+            ""synthetic_source_keep"": ""none"",
             ""type"": ""keyword""
           },
           ""classification"": {

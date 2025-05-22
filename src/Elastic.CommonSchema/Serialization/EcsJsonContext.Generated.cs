@@ -61,6 +61,7 @@ namespace Elastic.CommonSchema.Serialization;
 [JsonSerializable(typeof(User))]
 [JsonSerializable(typeof(UserAgent))]
 [JsonSerializable(typeof(Vlan))]
+[JsonSerializable(typeof(Volume))]
 [JsonSerializable(typeof(Vulnerability))]
 [JsonSerializable(typeof(X509))]
 [JsonSerializable(typeof(LogEntityJsonConverter.LogOriginInvalid))]

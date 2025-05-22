@@ -191,6 +191,12 @@ namespace Elastic.CommonSchema
 		public ProcessPrevious[]? Previous { get; set; }
 	}
 
+	///<summary> Interface for entities that can assign an IProcessResponsible: Process</summary>
+	public interface IProcessResponsible {
+		///<summary>responsible</summary>
+		public ProcessResponsible? Responsible { get; set; }
+	}
+
 	///<summary> Interface for entities that can assign an IServiceOrigin: Service</summary>
 	public interface IServiceOrigin {
 		///<summary>origin</summary>

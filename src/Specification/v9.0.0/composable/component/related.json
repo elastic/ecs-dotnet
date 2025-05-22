@@ -1,0 +1,34 @@
+{
+  "_meta": {
+    "documentation": "https://www.elastic.co/guide/en/ecs/current/ecs-related.html",
+    "ecs_version": "9.0.0"
+  },
+  "template": {
+    "mappings": {
+      "properties": {
+        "related": {
+          "properties": {
+            "hash": {
+              "ignore_above": 1024,
+              "synthetic_source_keep": "none",
+              "type": "keyword"
+            },
+            "hosts": {
+              "ignore_above": 1024,
+              "synthetic_source_keep": "none",
+              "type": "keyword"
+            },
+            "ip": {
+              "type": "ip"
+            },
+            "user": {
+              "ignore_above": 1024,
+              "synthetic_source_keep": "none",
+              "type": "keyword"
+            }
+          }
+        }
+      }
+    }
+  }
+}

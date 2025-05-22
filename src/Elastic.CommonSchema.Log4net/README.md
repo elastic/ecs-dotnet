@@ -68,7 +68,7 @@ Sample log event output (formatted for readability):
     "@timestamp": "2022-08-28T14:06:28.5121651+02:00",
     "log.level": "INFO",
     "message": "Hi! Welcome to example!",
-    "ecs.version": "8.6.0",
+    "ecs.version": "9.0.0",
     "log": {
         "logger": "Elastic.CommonSchema.Log4net.Example.Program",
         "original": null,

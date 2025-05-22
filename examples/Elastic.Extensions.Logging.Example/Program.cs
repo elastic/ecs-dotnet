@@ -59,7 +59,7 @@ namespace Elastic.Extensions.Logging.Example
 
 		public static async Task Main(string[] args)
 		{
-			using var cluster = new EphemeralCluster("8.4.0");
+			using var cluster = new EphemeralCluster("9.0.0");
 			var client = CreateClient(cluster);
 			if (!(await client.RootNodeInfoAsync()).IsValid)
 				cluster.Start(TimeSpan.FromMinutes(1));

@@ -72,7 +72,7 @@ On run, the console will show various events written in ECS format, an example g
     "ip": "::1"
   },
   "ecs": {
-    "version": "8.3.1"
+    "version": "9.0.0"
   },
   "event": {
     "severity": 2,

@@ -2,6 +2,8 @@
 
 A [Serilog](https://serilog.net/) sink that writes logs directly to [Elasticsearch](https://www.elastic.co/elasticsearch/) or [Elastic Cloud](https://www.elastic.co/cloud/) using the Elastic Common Schema.
 
+**NOTE:** To use version `9.0.0` of the sink you need atleast version `8.15.0` of the Elastic Stack.
+
 ## Example
 
 There's a few ways that you can extend a `Serilog` `LoggerConfiguration`:

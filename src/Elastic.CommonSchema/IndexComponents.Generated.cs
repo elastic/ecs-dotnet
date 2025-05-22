@@ -22,243 +22,249 @@ using System.Text.Json.Serialization;
 namespace Elastic.CommonSchema.Elasticsearch
 {
 	/// <summary>
-	/// Elastic Common Schema version v8.11.0 index templates to be used with Elasticsearch.
+	/// Elastic Common Schema version v9.0.0 index templates to be used with Elasticsearch.
 	/// </summary>
 	public static class IndexComponents
 	{
 		/// <summary>
-		/// Elastic Common Schema version v8.11.0 ecs_8.11.0_agent component template  
+		/// Elastic Common Schema version v9.0.0 ecs_9.0.0_agent component template  
 		/// </summary>
 		/// <returns>Index template string that can be used with the Put Index Template API.</returns>
-		public static string Agent => Components["ecs_8.11.0_agent"];
+		public static string Agent => Components["ecs_9.0.0_agent"];
 
 		/// <summary>
-		/// Elastic Common Schema version v8.11.0 ecs_8.11.0_base component template  
+		/// Elastic Common Schema version v9.0.0 ecs_9.0.0_base component template  
 		/// </summary>
 		/// <returns>Index template string that can be used with the Put Index Template API.</returns>
-		public static string Base => Components["ecs_8.11.0_base"];
+		public static string Base => Components["ecs_9.0.0_base"];
 
 		/// <summary>
-		/// Elastic Common Schema version v8.11.0 ecs_8.11.0_client component template  
+		/// Elastic Common Schema version v9.0.0 ecs_9.0.0_client component template  
 		/// </summary>
 		/// <returns>Index template string that can be used with the Put Index Template API.</returns>
-		public static string Client => Components["ecs_8.11.0_client"];
+		public static string Client => Components["ecs_9.0.0_client"];
 
 		/// <summary>
-		/// Elastic Common Schema version v8.11.0 ecs_8.11.0_cloud component template  
+		/// Elastic Common Schema version v9.0.0 ecs_9.0.0_cloud component template  
 		/// </summary>
 		/// <returns>Index template string that can be used with the Put Index Template API.</returns>
-		public static string Cloud => Components["ecs_8.11.0_cloud"];
+		public static string Cloud => Components["ecs_9.0.0_cloud"];
 
 		/// <summary>
-		/// Elastic Common Schema version v8.11.0 ecs_8.11.0_container component template  
+		/// Elastic Common Schema version v9.0.0 ecs_9.0.0_container component template  
 		/// </summary>
 		/// <returns>Index template string that can be used with the Put Index Template API.</returns>
-		public static string Container => Components["ecs_8.11.0_container"];
+		public static string Container => Components["ecs_9.0.0_container"];
 
 		/// <summary>
-		/// Elastic Common Schema version v8.11.0 ecs_8.11.0_data_stream component template  
+		/// Elastic Common Schema version v9.0.0 ecs_9.0.0_data_stream component template  
 		/// </summary>
 		/// <returns>Index template string that can be used with the Put Index Template API.</returns>
-		public static string DataStream => Components["ecs_8.11.0_data_stream"];
+		public static string DataStream => Components["ecs_9.0.0_data_stream"];
 
 		/// <summary>
-		/// Elastic Common Schema version v8.11.0 ecs_8.11.0_destination component template  
+		/// Elastic Common Schema version v9.0.0 ecs_9.0.0_destination component template  
 		/// </summary>
 		/// <returns>Index template string that can be used with the Put Index Template API.</returns>
-		public static string Destination => Components["ecs_8.11.0_destination"];
+		public static string Destination => Components["ecs_9.0.0_destination"];
 
 		/// <summary>
-		/// Elastic Common Schema version v8.11.0 ecs_8.11.0_device component template  
+		/// Elastic Common Schema version v9.0.0 ecs_9.0.0_device component template  
 		/// </summary>
 		/// <returns>Index template string that can be used with the Put Index Template API.</returns>
-		public static string Device => Components["ecs_8.11.0_device"];
+		public static string Device => Components["ecs_9.0.0_device"];
 
 		/// <summary>
-		/// Elastic Common Schema version v8.11.0 ecs_8.11.0_dll component template  
+		/// Elastic Common Schema version v9.0.0 ecs_9.0.0_dll component template  
 		/// </summary>
 		/// <returns>Index template string that can be used with the Put Index Template API.</returns>
-		public static string Dll => Components["ecs_8.11.0_dll"];
+		public static string Dll => Components["ecs_9.0.0_dll"];
 
 		/// <summary>
-		/// Elastic Common Schema version v8.11.0 ecs_8.11.0_dns component template  
+		/// Elastic Common Schema version v9.0.0 ecs_9.0.0_dns component template  
 		/// </summary>
 		/// <returns>Index template string that can be used with the Put Index Template API.</returns>
-		public static string Dns => Components["ecs_8.11.0_dns"];
+		public static string Dns => Components["ecs_9.0.0_dns"];
 
 		/// <summary>
-		/// Elastic Common Schema version v8.11.0 ecs_8.11.0_ecs component template  
+		/// Elastic Common Schema version v9.0.0 ecs_9.0.0_ecs component template  
 		/// </summary>
 		/// <returns>Index template string that can be used with the Put Index Template API.</returns>
-		public static string Ecs => Components["ecs_8.11.0_ecs"];
+		public static string Ecs => Components["ecs_9.0.0_ecs"];
 
 		/// <summary>
-		/// Elastic Common Schema version v8.11.0 ecs_8.11.0_email component template  
+		/// Elastic Common Schema version v9.0.0 ecs_9.0.0_email component template  
 		/// </summary>
 		/// <returns>Index template string that can be used with the Put Index Template API.</returns>
-		public static string Email => Components["ecs_8.11.0_email"];
+		public static string Email => Components["ecs_9.0.0_email"];
 
 		/// <summary>
-		/// Elastic Common Schema version v8.11.0 ecs_8.11.0_error component template  
+		/// Elastic Common Schema version v9.0.0 ecs_9.0.0_error component template  
 		/// </summary>
 		/// <returns>Index template string that can be used with the Put Index Template API.</returns>
-		public static string Error => Components["ecs_8.11.0_error"];
+		public static string Error => Components["ecs_9.0.0_error"];
 
 		/// <summary>
-		/// Elastic Common Schema version v8.11.0 ecs_8.11.0_event component template  
+		/// Elastic Common Schema version v9.0.0 ecs_9.0.0_event component template  
 		/// </summary>
 		/// <returns>Index template string that can be used with the Put Index Template API.</returns>
-		public static string Event => Components["ecs_8.11.0_event"];
+		public static string Event => Components["ecs_9.0.0_event"];
 
 		/// <summary>
-		/// Elastic Common Schema version v8.11.0 ecs_8.11.0_faas component template  
+		/// Elastic Common Schema version v9.0.0 ecs_9.0.0_faas component template  
 		/// </summary>
 		/// <returns>Index template string that can be used with the Put Index Template API.</returns>
-		public static string Faas => Components["ecs_8.11.0_faas"];
+		public static string Faas => Components["ecs_9.0.0_faas"];
 
 		/// <summary>
-		/// Elastic Common Schema version v8.11.0 ecs_8.11.0_file component template  
+		/// Elastic Common Schema version v9.0.0 ecs_9.0.0_file component template  
 		/// </summary>
 		/// <returns>Index template string that can be used with the Put Index Template API.</returns>
-		public static string File => Components["ecs_8.11.0_file"];
+		public static string File => Components["ecs_9.0.0_file"];
 
 		/// <summary>
-		/// Elastic Common Schema version v8.11.0 ecs_8.11.0_group component template  
+		/// Elastic Common Schema version v9.0.0 ecs_9.0.0_group component template  
 		/// </summary>
 		/// <returns>Index template string that can be used with the Put Index Template API.</returns>
-		public static string Group => Components["ecs_8.11.0_group"];
+		public static string Group => Components["ecs_9.0.0_group"];
 
 		/// <summary>
-		/// Elastic Common Schema version v8.11.0 ecs_8.11.0_host component template  
+		/// Elastic Common Schema version v9.0.0 ecs_9.0.0_host component template  
 		/// </summary>
 		/// <returns>Index template string that can be used with the Put Index Template API.</returns>
-		public static string Host => Components["ecs_8.11.0_host"];
+		public static string Host => Components["ecs_9.0.0_host"];
 
 		/// <summary>
-		/// Elastic Common Schema version v8.11.0 ecs_8.11.0_http component template  
+		/// Elastic Common Schema version v9.0.0 ecs_9.0.0_http component template  
 		/// </summary>
 		/// <returns>Index template string that can be used with the Put Index Template API.</returns>
-		public static string Http => Components["ecs_8.11.0_http"];
+		public static string Http => Components["ecs_9.0.0_http"];
 
 		/// <summary>
-		/// Elastic Common Schema version v8.11.0 ecs_8.11.0_log component template  
+		/// Elastic Common Schema version v9.0.0 ecs_9.0.0_log component template  
 		/// </summary>
 		/// <returns>Index template string that can be used with the Put Index Template API.</returns>
-		public static string Log => Components["ecs_8.11.0_log"];
+		public static string Log => Components["ecs_9.0.0_log"];
 
 		/// <summary>
-		/// Elastic Common Schema version v8.11.0 ecs_8.11.0_network component template  
+		/// Elastic Common Schema version v9.0.0 ecs_9.0.0_network component template  
 		/// </summary>
 		/// <returns>Index template string that can be used with the Put Index Template API.</returns>
-		public static string Network => Components["ecs_8.11.0_network"];
+		public static string Network => Components["ecs_9.0.0_network"];
 
 		/// <summary>
-		/// Elastic Common Schema version v8.11.0 ecs_8.11.0_observer component template  
+		/// Elastic Common Schema version v9.0.0 ecs_9.0.0_observer component template  
 		/// </summary>
 		/// <returns>Index template string that can be used with the Put Index Template API.</returns>
-		public static string Observer => Components["ecs_8.11.0_observer"];
+		public static string Observer => Components["ecs_9.0.0_observer"];
 
 		/// <summary>
-		/// Elastic Common Schema version v8.11.0 ecs_8.11.0_orchestrator component template  
+		/// Elastic Common Schema version v9.0.0 ecs_9.0.0_orchestrator component template  
 		/// </summary>
 		/// <returns>Index template string that can be used with the Put Index Template API.</returns>
-		public static string Orchestrator => Components["ecs_8.11.0_orchestrator"];
+		public static string Orchestrator => Components["ecs_9.0.0_orchestrator"];
 
 		/// <summary>
-		/// Elastic Common Schema version v8.11.0 ecs_8.11.0_organization component template  
+		/// Elastic Common Schema version v9.0.0 ecs_9.0.0_organization component template  
 		/// </summary>
 		/// <returns>Index template string that can be used with the Put Index Template API.</returns>
-		public static string Organization => Components["ecs_8.11.0_organization"];
+		public static string Organization => Components["ecs_9.0.0_organization"];
 
 		/// <summary>
-		/// Elastic Common Schema version v8.11.0 ecs_8.11.0_package component template  
+		/// Elastic Common Schema version v9.0.0 ecs_9.0.0_package component template  
 		/// </summary>
 		/// <returns>Index template string that can be used with the Put Index Template API.</returns>
-		public static string Package => Components["ecs_8.11.0_package"];
+		public static string Package => Components["ecs_9.0.0_package"];
 
 		/// <summary>
-		/// Elastic Common Schema version v8.11.0 ecs_8.11.0_process component template  
+		/// Elastic Common Schema version v9.0.0 ecs_9.0.0_process component template  
 		/// </summary>
 		/// <returns>Index template string that can be used with the Put Index Template API.</returns>
-		public static string Process => Components["ecs_8.11.0_process"];
+		public static string Process => Components["ecs_9.0.0_process"];
 
 		/// <summary>
-		/// Elastic Common Schema version v8.11.0 ecs_8.11.0_registry component template  
+		/// Elastic Common Schema version v9.0.0 ecs_9.0.0_registry component template  
 		/// </summary>
 		/// <returns>Index template string that can be used with the Put Index Template API.</returns>
-		public static string Registry => Components["ecs_8.11.0_registry"];
+		public static string Registry => Components["ecs_9.0.0_registry"];
 
 		/// <summary>
-		/// Elastic Common Schema version v8.11.0 ecs_8.11.0_related component template  
+		/// Elastic Common Schema version v9.0.0 ecs_9.0.0_related component template  
 		/// </summary>
 		/// <returns>Index template string that can be used with the Put Index Template API.</returns>
-		public static string Related => Components["ecs_8.11.0_related"];
+		public static string Related => Components["ecs_9.0.0_related"];
 
 		/// <summary>
-		/// Elastic Common Schema version v8.11.0 ecs_8.11.0_rule component template  
+		/// Elastic Common Schema version v9.0.0 ecs_9.0.0_rule component template  
 		/// </summary>
 		/// <returns>Index template string that can be used with the Put Index Template API.</returns>
-		public static string Rule => Components["ecs_8.11.0_rule"];
+		public static string Rule => Components["ecs_9.0.0_rule"];
 
 		/// <summary>
-		/// Elastic Common Schema version v8.11.0 ecs_8.11.0_server component template  
+		/// Elastic Common Schema version v9.0.0 ecs_9.0.0_server component template  
 		/// </summary>
 		/// <returns>Index template string that can be used with the Put Index Template API.</returns>
-		public static string Server => Components["ecs_8.11.0_server"];
+		public static string Server => Components["ecs_9.0.0_server"];
 
 		/// <summary>
-		/// Elastic Common Schema version v8.11.0 ecs_8.11.0_service component template  
+		/// Elastic Common Schema version v9.0.0 ecs_9.0.0_service component template  
 		/// </summary>
 		/// <returns>Index template string that can be used with the Put Index Template API.</returns>
-		public static string Service => Components["ecs_8.11.0_service"];
+		public static string Service => Components["ecs_9.0.0_service"];
 
 		/// <summary>
-		/// Elastic Common Schema version v8.11.0 ecs_8.11.0_source component template  
+		/// Elastic Common Schema version v9.0.0 ecs_9.0.0_source component template  
 		/// </summary>
 		/// <returns>Index template string that can be used with the Put Index Template API.</returns>
-		public static string Source => Components["ecs_8.11.0_source"];
+		public static string Source => Components["ecs_9.0.0_source"];
 
 		/// <summary>
-		/// Elastic Common Schema version v8.11.0 ecs_8.11.0_threat component template  
+		/// Elastic Common Schema version v9.0.0 ecs_9.0.0_threat component template  
 		/// </summary>
 		/// <returns>Index template string that can be used with the Put Index Template API.</returns>
-		public static string Threat => Components["ecs_8.11.0_threat"];
+		public static string Threat => Components["ecs_9.0.0_threat"];
 
 		/// <summary>
-		/// Elastic Common Schema version v8.11.0 ecs_8.11.0_tls component template  
+		/// Elastic Common Schema version v9.0.0 ecs_9.0.0_tls component template  
 		/// </summary>
 		/// <returns>Index template string that can be used with the Put Index Template API.</returns>
-		public static string Tls => Components["ecs_8.11.0_tls"];
+		public static string Tls => Components["ecs_9.0.0_tls"];
 
 		/// <summary>
-		/// Elastic Common Schema version v8.11.0 ecs_8.11.0_tracing component template  
+		/// Elastic Common Schema version v9.0.0 ecs_9.0.0_tracing component template  
 		/// </summary>
 		/// <returns>Index template string that can be used with the Put Index Template API.</returns>
-		public static string Tracing => Components["ecs_8.11.0_tracing"];
+		public static string Tracing => Components["ecs_9.0.0_tracing"];
 
 		/// <summary>
-		/// Elastic Common Schema version v8.11.0 ecs_8.11.0_url component template  
+		/// Elastic Common Schema version v9.0.0 ecs_9.0.0_url component template  
 		/// </summary>
 		/// <returns>Index template string that can be used with the Put Index Template API.</returns>
-		public static string Url => Components["ecs_8.11.0_url"];
+		public static string Url => Components["ecs_9.0.0_url"];
 
 		/// <summary>
-		/// Elastic Common Schema version v8.11.0 ecs_8.11.0_user component template  
+		/// Elastic Common Schema version v9.0.0 ecs_9.0.0_user component template  
 		/// </summary>
 		/// <returns>Index template string that can be used with the Put Index Template API.</returns>
-		public static string User => Components["ecs_8.11.0_user"];
+		public static string User => Components["ecs_9.0.0_user"];
 
 		/// <summary>
-		/// Elastic Common Schema version v8.11.0 ecs_8.11.0_user_agent component template  
+		/// Elastic Common Schema version v9.0.0 ecs_9.0.0_user_agent component template  
 		/// </summary>
 		/// <returns>Index template string that can be used with the Put Index Template API.</returns>
-		public static string UserAgent => Components["ecs_8.11.0_user_agent"];
+		public static string UserAgent => Components["ecs_9.0.0_user_agent"];
 
 		/// <summary>
-		/// Elastic Common Schema version v8.11.0 ecs_8.11.0_vulnerability component template  
+		/// Elastic Common Schema version v9.0.0 ecs_9.0.0_volume component template  
 		/// </summary>
 		/// <returns>Index template string that can be used with the Put Index Template API.</returns>
-		public static string Vulnerability => Components["ecs_8.11.0_vulnerability"];
+		public static string Volume => Components["ecs_9.0.0_volume"];
+
+		/// <summary>
+		/// Elastic Common Schema version v9.0.0 ecs_9.0.0_vulnerability component template  
+		/// </summary>
+		/// <returns>Index template string that can be used with the Put Index Template API.</returns>
+		public static string Vulnerability => Components["ecs_9.0.0_vulnerability"];
 
 
 		/// <summary>
@@ -267,11 +273,11 @@ namespace Elastic.CommonSchema.Elasticsearch
      	public static IReadOnlyDictionary<string, string> Components { get; } = new Dictionary<string, string>
      	{
 		{	
-				"ecs_8.11.0_agent", 
+				"ecs_9.0.0_agent", 
 				@"{
   ""_meta"": {
     ""documentation"": ""https://www.elastic.co/guide/en/ecs/current/ecs-agent.html"",
-    ""ecs_version"": ""8.11.0""
+    ""ecs_version"": ""9.0.0""
   },
   ""template"": {
     ""mappings"": {
@@ -315,11 +321,11 @@ namespace Elastic.CommonSchema.Elasticsearch
 "
 			},
 		{	
-				"ecs_8.11.0_base", 
+				"ecs_9.0.0_base", 
 				@"{
   ""_meta"": {
     ""documentation"": ""https://www.elastic.co/guide/en/ecs/current/ecs-base.html"",
-    ""ecs_version"": ""8.11.0""
+    ""ecs_version"": ""9.0.0""
   },
   ""template"": {
     ""mappings"": {
@@ -335,6 +341,7 @@ namespace Elastic.CommonSchema.Elasticsearch
         },
         ""tags"": {
           ""ignore_above"": 1024,
+          ""synthetic_source_keep"": ""none"",
           ""type"": ""keyword""
         }
       }
@@ -344,11 +351,11 @@ namespace Elastic.CommonSchema.Elasticsearch
 "
 			},
 		{	
-				"ecs_8.11.0_client", 
+				"ecs_9.0.0_client", 
 				@"{
   ""_meta"": {
     ""documentation"": ""https://www.elastic.co/guide/en/ecs/current/ecs-client.html"",
-    ""ecs_version"": ""8.11.0""
+    ""ecs_version"": ""9.0.0""
   },
   ""template"": {
     ""mappings"": {
@@ -522,6 +529,7 @@ namespace Elastic.CommonSchema.Elasticsearch
                 },
                 ""roles"": {
                   ""ignore_above"": 1024,
+                  ""synthetic_source_keep"": ""none"",
                   ""type"": ""keyword""
                 }
               }
@@ -535,11 +543,11 @@ namespace Elastic.CommonSchema.Elasticsearch
 "
 			},
 		{	
-				"ecs_8.11.0_cloud", 
+				"ecs_9.0.0_cloud", 
 				@"{
   ""_meta"": {
     ""documentation"": ""https://www.elastic.co/guide/en/ecs/current/ecs-cloud.html"",
-    ""ecs_version"": ""8.11.0""
+    ""ecs_version"": ""9.0.0""
   },
   ""template"": {
     ""mappings"": {
@@ -755,11 +763,11 @@ namespace Elastic.CommonSchema.Elasticsearch
 "
 			},
 		{	
-				"ecs_8.11.0_container", 
+				"ecs_9.0.0_container", 
 				@"{
   ""_meta"": {
     ""documentation"": ""https://www.elastic.co/guide/en/ecs/current/ecs-container.html"",
-    ""ecs_version"": ""8.11.0""
+    ""ecs_version"": ""9.0.0""
   },
   ""template"": {
     ""mappings"": {
@@ -812,6 +820,7 @@ namespace Elastic.CommonSchema.Elasticsearch
                 },
                 ""tag"": {
                   ""ignore_above"": 1024,
+                  ""synthetic_source_keep"": ""none"",
                   ""type"": ""keyword""
                 }
               }
@@ -869,11 +878,11 @@ namespace Elastic.CommonSchema.Elasticsearch
 "
 			},
 		{	
-				"ecs_8.11.0_data_stream", 
+				"ecs_9.0.0_data_stream", 
 				@"{
   ""_meta"": {
     ""documentation"": ""https://www.elastic.co/guide/en/ecs/current/ecs-data_stream.html"",
-    ""ecs_version"": ""8.11.0""
+    ""ecs_version"": ""9.0.0""
   },
   ""template"": {
     ""mappings"": {
@@ -898,11 +907,11 @@ namespace Elastic.CommonSchema.Elasticsearch
 "
 			},
 		{	
-				"ecs_8.11.0_destination", 
+				"ecs_9.0.0_destination", 
 				@"{
   ""_meta"": {
     ""documentation"": ""https://www.elastic.co/guide/en/ecs/current/ecs-destination.html"",
-    ""ecs_version"": ""8.11.0""
+    ""ecs_version"": ""9.0.0""
   },
   ""template"": {
     ""mappings"": {
@@ -1076,6 +1085,7 @@ namespace Elastic.CommonSchema.Elasticsearch
                 },
                 ""roles"": {
                   ""ignore_above"": 1024,
+                  ""synthetic_source_keep"": ""none"",
                   ""type"": ""keyword""
                 }
               }
@@ -1089,11 +1099,11 @@ namespace Elastic.CommonSchema.Elasticsearch
 "
 			},
 		{	
-				"ecs_8.11.0_device", 
+				"ecs_9.0.0_device", 
 				@"{
   ""_meta"": {
     ""documentation"": ""https://www.elastic.co/guide/en/ecs/current/ecs-device.html"",
-    ""ecs_version"": ""8.11.0""
+    ""ecs_version"": ""9.0.0""
   },
   ""template"": {
     ""mappings"": {
@@ -1119,6 +1129,10 @@ namespace Elastic.CommonSchema.Elasticsearch
                   ""type"": ""keyword""
                 }
               }
+            },
+            ""serial_number"": {
+              ""ignore_above"": 1024,
+              ""type"": ""keyword""
             }
           }
         }
@@ -1129,11 +1143,11 @@ namespace Elastic.CommonSchema.Elasticsearch
 "
 			},
 		{	
-				"ecs_8.11.0_dll", 
+				"ecs_9.0.0_dll", 
 				@"{
   ""_meta"": {
     ""documentation"": ""https://www.elastic.co/guide/en/ecs/current/ecs-dll.html"",
-    ""ecs_version"": ""8.11.0""
+    ""ecs_version"": ""9.0.0""
   },
   ""template"": {
     ""mappings"": {
@@ -1148,6 +1162,10 @@ namespace Elastic.CommonSchema.Elasticsearch
                 },
                 ""exists"": {
                   ""type"": ""boolean""
+                },
+                ""flags"": {
+                  ""ignore_above"": 1024,
+                  ""type"": ""keyword""
                 },
                 ""signing_id"": {
                   ""ignore_above"": 1024,
@@ -1178,6 +1196,10 @@ namespace Elastic.CommonSchema.Elasticsearch
             },
             ""hash"": {
               ""properties"": {
+                ""cdhash"": {
+                  ""ignore_above"": 1024,
+                  ""type"": ""keyword""
+                },
                 ""md5"": {
                   ""ignore_above"": 1024,
                   ""type"": ""keyword""
@@ -1210,6 +1232,14 @@ namespace Elastic.CommonSchema.Elasticsearch
             },
             ""name"": {
               ""ignore_above"": 1024,
+              ""type"": ""keyword""
+            },
+            ""origin_referrer_url"": {
+              ""ignore_above"": 8192,
+              ""type"": ""keyword""
+            },
+            ""origin_url"": {
+              ""ignore_above"": 8192,
               ""type"": ""keyword""
             },
             ""path"": {
@@ -1311,11 +1341,11 @@ namespace Elastic.CommonSchema.Elasticsearch
 "
 			},
 		{	
-				"ecs_8.11.0_dns", 
+				"ecs_9.0.0_dns", 
 				@"{
   ""_meta"": {
     ""documentation"": ""https://www.elastic.co/guide/en/ecs/current/ecs-dns.html"",
-    ""ecs_version"": ""8.11.0""
+    ""ecs_version"": ""9.0.0""
   },
   ""template"": {
     ""mappings"": {
@@ -1348,6 +1378,7 @@ namespace Elastic.CommonSchema.Elasticsearch
             },
             ""header_flags"": {
               ""ignore_above"": 1024,
+              ""synthetic_source_keep"": ""none"",
               ""type"": ""keyword""
             },
             ""id"": {
@@ -1406,11 +1437,11 @@ namespace Elastic.CommonSchema.Elasticsearch
 "
 			},
 		{	
-				"ecs_8.11.0_ecs", 
+				"ecs_9.0.0_ecs", 
 				@"{
   ""_meta"": {
     ""documentation"": ""https://www.elastic.co/guide/en/ecs/current/ecs-ecs.html"",
-    ""ecs_version"": ""8.11.0""
+    ""ecs_version"": ""9.0.0""
   },
   ""template"": {
     ""mappings"": {
@@ -1430,11 +1461,11 @@ namespace Elastic.CommonSchema.Elasticsearch
 "
 			},
 		{	
-				"ecs_8.11.0_email", 
+				"ecs_9.0.0_email", 
 				@"{
   ""_meta"": {
     ""documentation"": ""https://www.elastic.co/guide/en/ecs/current/ecs-email.html"",
-    ""ecs_version"": ""8.11.0""
+    ""ecs_version"": ""9.0.0""
   },
   ""template"": {
     ""mappings"": {
@@ -1451,6 +1482,10 @@ namespace Elastic.CommonSchema.Elasticsearch
                     },
                     ""hash"": {
                       ""properties"": {
+                        ""cdhash"": {
+                          ""ignore_above"": 1024,
+                          ""type"": ""keyword""
+                        },
                         ""md5"": {
                           ""ignore_above"": 1024,
                           ""type"": ""keyword""
@@ -1501,6 +1536,7 @@ namespace Elastic.CommonSchema.Elasticsearch
               ""properties"": {
                 ""address"": {
                   ""ignore_above"": 1024,
+                  ""synthetic_source_keep"": ""none"",
                   ""type"": ""keyword""
                 }
               }
@@ -1509,6 +1545,7 @@ namespace Elastic.CommonSchema.Elasticsearch
               ""properties"": {
                 ""address"": {
                   ""ignore_above"": 1024,
+                  ""synthetic_source_keep"": ""none"",
                   ""type"": ""keyword""
                 }
               }
@@ -1528,6 +1565,7 @@ namespace Elastic.CommonSchema.Elasticsearch
               ""properties"": {
                 ""address"": {
                   ""ignore_above"": 1024,
+                  ""synthetic_source_keep"": ""none"",
                   ""type"": ""keyword""
                 }
               }
@@ -1546,6 +1584,7 @@ namespace Elastic.CommonSchema.Elasticsearch
               ""properties"": {
                 ""address"": {
                   ""ignore_above"": 1024,
+                  ""synthetic_source_keep"": ""none"",
                   ""type"": ""keyword""
                 }
               }
@@ -1554,6 +1593,7 @@ namespace Elastic.CommonSchema.Elasticsearch
               ""properties"": {
                 ""address"": {
                   ""ignore_above"": 1024,
+                  ""synthetic_source_keep"": ""none"",
                   ""type"": ""keyword""
                 }
               }
@@ -1571,6 +1611,7 @@ namespace Elastic.CommonSchema.Elasticsearch
               ""properties"": {
                 ""address"": {
                   ""ignore_above"": 1024,
+                  ""synthetic_source_keep"": ""none"",
                   ""type"": ""keyword""
                 }
               }
@@ -1588,11 +1629,11 @@ namespace Elastic.CommonSchema.Elasticsearch
 "
 			},
 		{	
-				"ecs_8.11.0_error", 
+				"ecs_9.0.0_error", 
 				@"{
   ""_meta"": {
     ""documentation"": ""https://www.elastic.co/guide/en/ecs/current/ecs-error.html"",
-    ""ecs_version"": ""8.11.0""
+    ""ecs_version"": ""9.0.0""
   },
   ""template"": {
     ""mappings"": {
@@ -1631,11 +1672,11 @@ namespace Elastic.CommonSchema.Elasticsearch
 "
 			},
 		{	
-				"ecs_8.11.0_event", 
+				"ecs_9.0.0_event", 
 				@"{
   ""_meta"": {
     ""documentation"": ""https://www.elastic.co/guide/en/ecs/current/ecs-event.html"",
-    ""ecs_version"": ""8.11.0""
+    ""ecs_version"": ""9.0.0""
   },
   ""template"": {
     ""mappings"": {
@@ -1652,6 +1693,7 @@ namespace Elastic.CommonSchema.Elasticsearch
             },
             ""category"": {
               ""ignore_above"": 1024,
+              ""synthetic_source_keep"": ""none"",
               ""type"": ""keyword""
             },
             ""code"": {
@@ -1732,10 +1774,11 @@ namespace Elastic.CommonSchema.Elasticsearch
             },
             ""type"": {
               ""ignore_above"": 1024,
+              ""synthetic_source_keep"": ""none"",
               ""type"": ""keyword""
             },
             ""url"": {
-              ""ignore_above"": 1024,
+              ""ignore_above"": 2083,
               ""type"": ""keyword""
             }
           }
@@ -1747,11 +1790,11 @@ namespace Elastic.CommonSchema.Elasticsearch
 "
 			},
 		{	
-				"ecs_8.11.0_faas", 
+				"ecs_9.0.0_faas", 
 				@"{
   ""_meta"": {
     ""documentation"": ""https://www.elastic.co/guide/en/ecs/current/ecs-faas.html"",
-    ""ecs_version"": ""8.11.0""
+    ""ecs_version"": ""9.0.0""
   },
   ""template"": {
     ""mappings"": {
@@ -1798,11 +1841,11 @@ namespace Elastic.CommonSchema.Elasticsearch
 "
 			},
 		{	
-				"ecs_8.11.0_file", 
+				"ecs_9.0.0_file", 
 				@"{
   ""_meta"": {
     ""documentation"": ""https://www.elastic.co/guide/en/ecs/current/ecs-file.html"",
-    ""ecs_version"": ""8.11.0""
+    ""ecs_version"": ""9.0.0""
   },
   ""template"": {
     ""mappings"": {
@@ -1814,6 +1857,7 @@ namespace Elastic.CommonSchema.Elasticsearch
             },
             ""attributes"": {
               ""ignore_above"": 1024,
+              ""synthetic_source_keep"": ""none"",
               ""type"": ""keyword""
             },
             ""code_signature"": {
@@ -1824,6 +1868,10 @@ namespace Elastic.CommonSchema.Elasticsearch
                 },
                 ""exists"": {
                   ""type"": ""boolean""
+                },
+                ""flags"": {
+                  ""ignore_above"": 1024,
+                  ""type"": ""keyword""
                 },
                 ""signing_id"": {
                   ""ignore_above"": 1024,
@@ -2034,6 +2082,10 @@ namespace Elastic.CommonSchema.Elasticsearch
             },
             ""hash"": {
               ""properties"": {
+                ""cdhash"": {
+                  ""ignore_above"": 1024,
+                  ""type"": ""keyword""
+                },
                 ""md5"": {
                   ""ignore_above"": 1024,
                   ""type"": ""keyword""
@@ -2139,6 +2191,14 @@ namespace Elastic.CommonSchema.Elasticsearch
             },
             ""name"": {
               ""ignore_above"": 1024,
+              ""type"": ""keyword""
+            },
+            ""origin_referrer_url"": {
+              ""ignore_above"": 8192,
+              ""type"": ""keyword""
+            },
+            ""origin_url"": {
+              ""ignore_above"": 8192,
               ""type"": ""keyword""
             },
             ""owner"": {
@@ -2375,11 +2435,11 @@ namespace Elastic.CommonSchema.Elasticsearch
 "
 			},
 		{	
-				"ecs_8.11.0_group", 
+				"ecs_9.0.0_group", 
 				@"{
   ""_meta"": {
     ""documentation"": ""https://www.elastic.co/guide/en/ecs/current/ecs-group.html"",
-    ""ecs_version"": ""8.11.0""
+    ""ecs_version"": ""9.0.0""
   },
   ""template"": {
     ""mappings"": {
@@ -2407,11 +2467,11 @@ namespace Elastic.CommonSchema.Elasticsearch
 "
 			},
 		{	
-				"ecs_8.11.0_host", 
+				"ecs_9.0.0_host", 
 				@"{
   ""_meta"": {
     ""documentation"": ""https://www.elastic.co/guide/en/ecs/current/ecs-host.html"",
-    ""ecs_version"": ""8.11.0""
+    ""ecs_version"": ""9.0.0""
   },
   ""template"": {
     ""mappings"": {
@@ -2520,6 +2580,7 @@ namespace Elastic.CommonSchema.Elasticsearch
             },
             ""mac"": {
               ""ignore_above"": 1024,
+              ""synthetic_source_keep"": ""none"",
               ""type"": ""keyword""
             },
             ""name"": {
@@ -2636,11 +2697,11 @@ namespace Elastic.CommonSchema.Elasticsearch
 "
 			},
 		{	
-				"ecs_8.11.0_http", 
+				"ecs_9.0.0_http", 
 				@"{
   ""_meta"": {
     ""documentation"": ""https://www.elastic.co/guide/en/ecs/current/ecs-http.html"",
-    ""ecs_version"": ""8.11.0""
+    ""ecs_version"": ""9.0.0""
   },
   ""template"": {
     ""mappings"": {
@@ -2727,11 +2788,11 @@ namespace Elastic.CommonSchema.Elasticsearch
 "
 			},
 		{	
-				"ecs_8.11.0_log", 
+				"ecs_9.0.0_log", 
 				@"{
   ""_meta"": {
     ""documentation"": ""https://www.elastic.co/guide/en/ecs/current/ecs-log.html"",
-    ""ecs_version"": ""8.11.0""
+    ""ecs_version"": ""9.0.0""
   },
   ""template"": {
     ""mappings"": {
@@ -2835,11 +2896,11 @@ namespace Elastic.CommonSchema.Elasticsearch
 "
 			},
 		{	
-				"ecs_8.11.0_network", 
+				"ecs_9.0.0_network", 
 				@"{
   ""_meta"": {
     ""documentation"": ""https://www.elastic.co/guide/en/ecs/current/ecs-network.html"",
-    ""ecs_version"": ""8.11.0""
+    ""ecs_version"": ""9.0.0""
   },
   ""template"": {
     ""mappings"": {
@@ -2925,11 +2986,11 @@ namespace Elastic.CommonSchema.Elasticsearch
 "
 			},
 		{	
-				"ecs_8.11.0_observer", 
+				"ecs_9.0.0_observer", 
 				@"{
   ""_meta"": {
     ""documentation"": ""https://www.elastic.co/guide/en/ecs/current/ecs-observer.html"",
-    ""ecs_version"": ""8.11.0""
+    ""ecs_version"": ""9.0.0""
   },
   ""template"": {
     ""mappings"": {
@@ -3066,6 +3127,7 @@ namespace Elastic.CommonSchema.Elasticsearch
             },
             ""mac"": {
               ""ignore_above"": 1024,
+              ""synthetic_source_keep"": ""none"",
               ""type"": ""keyword""
             },
             ""name"": {
@@ -3143,11 +3205,11 @@ namespace Elastic.CommonSchema.Elasticsearch
 "
 			},
 		{	
-				"ecs_8.11.0_orchestrator", 
+				"ecs_9.0.0_orchestrator", 
 				@"{
   ""_meta"": {
     ""documentation"": ""https://www.elastic.co/guide/en/ecs/current/ecs-orchestrator.html"",
-    ""ecs_version"": ""8.11.0""
+    ""ecs_version"": ""9.0.0""
   },
   ""template"": {
     ""mappings"": {
@@ -3190,6 +3252,7 @@ namespace Elastic.CommonSchema.Elasticsearch
               ""properties"": {
                 ""annotation"": {
                   ""ignore_above"": 1024,
+                  ""synthetic_source_keep"": ""none"",
                   ""type"": ""keyword""
                 },
                 ""id"": {
@@ -3201,6 +3264,7 @@ namespace Elastic.CommonSchema.Elasticsearch
                 },
                 ""label"": {
                   ""ignore_above"": 1024,
+                  ""synthetic_source_keep"": ""none"",
                   ""type"": ""keyword""
                 },
                 ""name"": {
@@ -3234,11 +3298,11 @@ namespace Elastic.CommonSchema.Elasticsearch
 "
 			},
 		{	
-				"ecs_8.11.0_organization", 
+				"ecs_9.0.0_organization", 
 				@"{
   ""_meta"": {
     ""documentation"": ""https://www.elastic.co/guide/en/ecs/current/ecs-organization.html"",
-    ""ecs_version"": ""8.11.0""
+    ""ecs_version"": ""9.0.0""
   },
   ""template"": {
     ""mappings"": {
@@ -3267,11 +3331,11 @@ namespace Elastic.CommonSchema.Elasticsearch
 "
 			},
 		{	
-				"ecs_8.11.0_package", 
+				"ecs_9.0.0_package", 
 				@"{
   ""_meta"": {
     ""documentation"": ""https://www.elastic.co/guide/en/ecs/current/ecs-package.html"",
-    ""ecs_version"": ""8.11.0""
+    ""ecs_version"": ""9.0.0""
   },
   ""template"": {
     ""mappings"": {
@@ -3337,11 +3401,11 @@ namespace Elastic.CommonSchema.Elasticsearch
 "
 			},
 		{	
-				"ecs_8.11.0_process", 
+				"ecs_9.0.0_process", 
 				@"{
   ""_meta"": {
     ""documentation"": ""https://www.elastic.co/guide/en/ecs/current/ecs-process.html"",
-    ""ecs_version"": ""8.11.0""
+    ""ecs_version"": ""9.0.0""
   },
   ""template"": {
     ""mappings"": {
@@ -3363,6 +3427,10 @@ namespace Elastic.CommonSchema.Elasticsearch
                 },
                 ""exists"": {
                   ""type"": ""boolean""
+                },
+                ""flags"": {
+                  ""ignore_above"": 1024,
+                  ""type"": ""keyword""
                 },
                 ""signing_id"": {
                   ""ignore_above"": 1024,
@@ -3807,6 +3875,7 @@ namespace Elastic.CommonSchema.Elasticsearch
             },
             ""env_vars"": {
               ""ignore_above"": 1024,
+              ""synthetic_source_keep"": ""none"",
               ""type"": ""keyword""
             },
             ""executable"": {
@@ -3820,6 +3889,18 @@ namespace Elastic.CommonSchema.Elasticsearch
             },
             ""exit_code"": {
               ""type"": ""long""
+            },
+            ""group"": {
+              ""properties"": {
+                ""id"": {
+                  ""ignore_above"": 1024,
+                  ""type"": ""keyword""
+                },
+                ""name"": {
+                  ""ignore_above"": 1024,
+                  ""type"": ""keyword""
+                }
+              }
             },
             ""group_leader"": {
               ""properties"": {
@@ -4002,6 +4083,10 @@ namespace Elastic.CommonSchema.Elasticsearch
             },
             ""hash"": {
               ""properties"": {
+                ""cdhash"": {
+                  ""ignore_above"": 1024,
+                  ""type"": ""keyword""
+                },
                 ""md5"": {
                   ""ignore_above"": 1024,
                   ""type"": ""keyword""
@@ -4151,6 +4236,10 @@ namespace Elastic.CommonSchema.Elasticsearch
                     },
                     ""exists"": {
                       ""type"": ""boolean""
+                    },
+                    ""flags"": {
+                      ""ignore_above"": 1024,
+                      ""type"": ""keyword""
                     },
                     ""signing_id"": {
                       ""ignore_above"": 1024,
@@ -4383,6 +4472,10 @@ namespace Elastic.CommonSchema.Elasticsearch
                 },
                 ""hash"": {
                   ""properties"": {
+                    ""cdhash"": {
+                      ""ignore_above"": 1024,
+                      ""type"": ""keyword""
+                    },
                     ""md5"": {
                       ""ignore_above"": 1024,
                       ""type"": ""keyword""
@@ -4569,9 +4662,6 @@ namespace Elastic.CommonSchema.Elasticsearch
                     }
                   }
                 },
-                ""pgid"": {
-                  ""type"": ""long""
-                },
                 ""pid"": {
                   ""type"": ""long""
                 },
@@ -4654,10 +4744,12 @@ namespace Elastic.CommonSchema.Elasticsearch
                       ""properties"": {
                         ""effective"": {
                           ""ignore_above"": 1024,
+                          ""synthetic_source_keep"": ""none"",
                           ""type"": ""keyword""
                         },
                         ""permitted"": {
                           ""ignore_above"": 1024,
+                          ""synthetic_source_keep"": ""none"",
                           ""type"": ""keyword""
                         }
                       }
@@ -4814,9 +4906,6 @@ namespace Elastic.CommonSchema.Elasticsearch
                   ""type"": ""nested""
                 }
               }
-            },
-            ""pgid"": {
-              ""type"": ""long""
             },
             ""pid"": {
               ""type"": ""long""
@@ -5133,10 +5222,12 @@ namespace Elastic.CommonSchema.Elasticsearch
                   ""properties"": {
                     ""effective"": {
                       ""ignore_above"": 1024,
+                      ""synthetic_source_keep"": ""none"",
                       ""type"": ""keyword""
                     },
                     ""permitted"": {
                       ""ignore_above"": 1024,
+                      ""synthetic_source_keep"": ""none"",
                       ""type"": ""keyword""
                     }
                   }
@@ -5221,11 +5312,11 @@ namespace Elastic.CommonSchema.Elasticsearch
 "
 			},
 		{	
-				"ecs_8.11.0_registry", 
+				"ecs_9.0.0_registry", 
 				@"{
   ""_meta"": {
     ""documentation"": ""https://www.elastic.co/guide/en/ecs/current/ecs-registry.html"",
-    ""ecs_version"": ""8.11.0""
+    ""ecs_version"": ""9.0.0""
   },
   ""template"": {
     ""mappings"": {
@@ -5272,11 +5363,11 @@ namespace Elastic.CommonSchema.Elasticsearch
 "
 			},
 		{	
-				"ecs_8.11.0_related", 
+				"ecs_9.0.0_related", 
 				@"{
   ""_meta"": {
     ""documentation"": ""https://www.elastic.co/guide/en/ecs/current/ecs-related.html"",
-    ""ecs_version"": ""8.11.0""
+    ""ecs_version"": ""9.0.0""
   },
   ""template"": {
     ""mappings"": {
@@ -5285,10 +5376,12 @@ namespace Elastic.CommonSchema.Elasticsearch
           ""properties"": {
             ""hash"": {
               ""ignore_above"": 1024,
+              ""synthetic_source_keep"": ""none"",
               ""type"": ""keyword""
             },
             ""hosts"": {
               ""ignore_above"": 1024,
+              ""synthetic_source_keep"": ""none"",
               ""type"": ""keyword""
             },
             ""ip"": {
@@ -5296,6 +5389,7 @@ namespace Elastic.CommonSchema.Elasticsearch
             },
             ""user"": {
               ""ignore_above"": 1024,
+              ""synthetic_source_keep"": ""none"",
               ""type"": ""keyword""
             }
           }
@@ -5307,11 +5401,11 @@ namespace Elastic.CommonSchema.Elasticsearch
 "
 			},
 		{	
-				"ecs_8.11.0_rule", 
+				"ecs_9.0.0_rule", 
 				@"{
   ""_meta"": {
     ""documentation"": ""https://www.elastic.co/guide/en/ecs/current/ecs-rule.html"",
-    ""ecs_version"": ""8.11.0""
+    ""ecs_version"": ""9.0.0""
   },
   ""template"": {
     ""mappings"": {
@@ -5320,6 +5414,7 @@ namespace Elastic.CommonSchema.Elasticsearch
           ""properties"": {
             ""author"": {
               ""ignore_above"": 1024,
+              ""synthetic_source_keep"": ""none"",
               ""type"": ""keyword""
             },
             ""category"": {
@@ -5367,11 +5462,11 @@ namespace Elastic.CommonSchema.Elasticsearch
 "
 			},
 		{	
-				"ecs_8.11.0_server", 
+				"ecs_9.0.0_server", 
 				@"{
   ""_meta"": {
     ""documentation"": ""https://www.elastic.co/guide/en/ecs/current/ecs-server.html"",
-    ""ecs_version"": ""8.11.0""
+    ""ecs_version"": ""9.0.0""
   },
   ""template"": {
     ""mappings"": {
@@ -5545,6 +5640,7 @@ namespace Elastic.CommonSchema.Elasticsearch
                 },
                 ""roles"": {
                   ""ignore_above"": 1024,
+                  ""synthetic_source_keep"": ""none"",
                   ""type"": ""keyword""
                 }
               }
@@ -5558,11 +5654,11 @@ namespace Elastic.CommonSchema.Elasticsearch
 "
 			},
 		{	
-				"ecs_8.11.0_service", 
+				"ecs_9.0.0_service", 
 				@"{
   ""_meta"": {
     ""documentation"": ""https://www.elastic.co/guide/en/ecs/current/ecs-service.html"",
-    ""ecs_version"": ""8.11.0""
+    ""ecs_version"": ""9.0.0""
   },
   ""template"": {
     ""mappings"": {
@@ -5601,6 +5697,7 @@ namespace Elastic.CommonSchema.Elasticsearch
                 },
                 ""roles"": {
                   ""ignore_above"": 1024,
+                  ""synthetic_source_keep"": ""none"",
                   ""type"": ""keyword""
                 }
               }
@@ -5639,6 +5736,7 @@ namespace Elastic.CommonSchema.Elasticsearch
                     },
                     ""roles"": {
                       ""ignore_above"": 1024,
+                      ""synthetic_source_keep"": ""none"",
                       ""type"": ""keyword""
                     }
                   }
@@ -5695,6 +5793,7 @@ namespace Elastic.CommonSchema.Elasticsearch
                     },
                     ""roles"": {
                       ""ignore_above"": 1024,
+                      ""synthetic_source_keep"": ""none"",
                       ""type"": ""keyword""
                     }
                   }
@@ -5730,11 +5829,11 @@ namespace Elastic.CommonSchema.Elasticsearch
 "
 			},
 		{	
-				"ecs_8.11.0_source", 
+				"ecs_9.0.0_source", 
 				@"{
   ""_meta"": {
     ""documentation"": ""https://www.elastic.co/guide/en/ecs/current/ecs-source.html"",
-    ""ecs_version"": ""8.11.0""
+    ""ecs_version"": ""9.0.0""
   },
   ""template"": {
     ""mappings"": {
@@ -5908,6 +6007,7 @@ namespace Elastic.CommonSchema.Elasticsearch
                 },
                 ""roles"": {
                   ""ignore_above"": 1024,
+                  ""synthetic_source_keep"": ""none"",
                   ""type"": ""keyword""
                 }
               }
@@ -5921,11 +6021,11 @@ namespace Elastic.CommonSchema.Elasticsearch
 "
 			},
 		{	
-				"ecs_8.11.0_threat", 
+				"ecs_9.0.0_threat", 
 				@"{
   ""_meta"": {
     ""documentation"": ""https://www.elastic.co/guide/en/ecs/current/ecs-threat.html"",
-    ""ecs_version"": ""8.11.0""
+    ""ecs_version"": ""9.0.0""
   },
   ""template"": {
     ""mappings"": {
@@ -5979,6 +6079,7 @@ namespace Elastic.CommonSchema.Elasticsearch
                         },
                         ""attributes"": {
                           ""ignore_above"": 1024,
+                          ""synthetic_source_keep"": ""none"",
                           ""type"": ""keyword""
                         },
                         ""code_signature"": {
@@ -5989,6 +6090,10 @@ namespace Elastic.CommonSchema.Elasticsearch
                             },
                             ""exists"": {
                               ""type"": ""boolean""
+                            },
+                            ""flags"": {
+                              ""ignore_above"": 1024,
+                              ""type"": ""keyword""
                             },
                             ""signing_id"": {
                               ""ignore_above"": 1024,
@@ -6199,6 +6304,10 @@ namespace Elastic.CommonSchema.Elasticsearch
                         },
                         ""hash"": {
                           ""properties"": {
+                            ""cdhash"": {
+                              ""ignore_above"": 1024,
+                              ""type"": ""keyword""
+                            },
                             ""md5"": {
                               ""ignore_above"": 1024,
                               ""type"": ""keyword""
@@ -6246,6 +6355,14 @@ namespace Elastic.CommonSchema.Elasticsearch
                         },
                         ""name"": {
                           ""ignore_above"": 1024,
+                          ""type"": ""keyword""
+                        },
+                        ""origin_referrer_url"": {
+                          ""ignore_above"": 8192,
+                          ""type"": ""keyword""
+                        },
+                        ""origin_url"": {
+                          ""ignore_above"": 8192,
                           ""type"": ""keyword""
                         },
                         ""owner"": {
@@ -6647,7 +6764,7 @@ namespace Elastic.CommonSchema.Elasticsearch
                           ""type"": ""long""
                         },
                         ""query"": {
-                          ""ignore_above"": 1024,
+                          ""ignore_above"": 2083,
                           ""type"": ""keyword""
                         },
                         ""registered_domain"": {
@@ -6839,6 +6956,7 @@ namespace Elastic.CommonSchema.Elasticsearch
               ""properties"": {
                 ""alias"": {
                   ""ignore_above"": 1024,
+                  ""synthetic_source_keep"": ""none"",
                   ""type"": ""keyword""
                 },
                 ""id"": {
@@ -6900,6 +7018,7 @@ namespace Elastic.CommonSchema.Elasticsearch
                     },
                     ""attributes"": {
                       ""ignore_above"": 1024,
+                      ""synthetic_source_keep"": ""none"",
                       ""type"": ""keyword""
                     },
                     ""code_signature"": {
@@ -6910,6 +7029,10 @@ namespace Elastic.CommonSchema.Elasticsearch
                         },
                         ""exists"": {
                           ""type"": ""boolean""
+                        },
+                        ""flags"": {
+                          ""ignore_above"": 1024,
+                          ""type"": ""keyword""
                         },
                         ""signing_id"": {
                           ""ignore_above"": 1024,
@@ -7120,6 +7243,10 @@ namespace Elastic.CommonSchema.Elasticsearch
                     },
                     ""hash"": {
                       ""properties"": {
+                        ""cdhash"": {
+                          ""ignore_above"": 1024,
+                          ""type"": ""keyword""
+                        },
                         ""md5"": {
                           ""ignore_above"": 1024,
                           ""type"": ""keyword""
@@ -7167,6 +7294,14 @@ namespace Elastic.CommonSchema.Elasticsearch
                     },
                     ""name"": {
                       ""ignore_above"": 1024,
+                      ""type"": ""keyword""
+                    },
+                    ""origin_referrer_url"": {
+                      ""ignore_above"": 8192,
+                      ""type"": ""keyword""
+                    },
+                    ""origin_url"": {
+                      ""ignore_above"": 8192,
                       ""type"": ""keyword""
                     },
                     ""owner"": {
@@ -7446,6 +7581,11 @@ namespace Elastic.CommonSchema.Elasticsearch
                     }
                   }
                 },
+                ""id"": {
+                  ""ignore_above"": 1024,
+                  ""synthetic_source_keep"": ""none"",
+                  ""type"": ""keyword""
+                },
                 ""ip"": {
                   ""type"": ""ip""
                 },
@@ -7568,7 +7708,7 @@ namespace Elastic.CommonSchema.Elasticsearch
                       ""type"": ""long""
                     },
                     ""query"": {
-                      ""ignore_above"": 1024,
+                      ""ignore_above"": 2083,
                       ""type"": ""keyword""
                     },
                     ""registered_domain"": {
@@ -7705,6 +7845,7 @@ namespace Elastic.CommonSchema.Elasticsearch
               ""properties"": {
                 ""alias"": {
                   ""ignore_above"": 1024,
+                  ""synthetic_source_keep"": ""none"",
                   ""type"": ""keyword""
                 },
                 ""id"": {
@@ -7717,6 +7858,7 @@ namespace Elastic.CommonSchema.Elasticsearch
                 },
                 ""platforms"": {
                   ""ignore_above"": 1024,
+                  ""synthetic_source_keep"": ""none"",
                   ""type"": ""keyword""
                 },
                 ""reference"": {
@@ -7796,11 +7938,11 @@ namespace Elastic.CommonSchema.Elasticsearch
 "
 			},
 		{	
-				"ecs_8.11.0_tls", 
+				"ecs_9.0.0_tls", 
 				@"{
   ""_meta"": {
     ""documentation"": ""https://www.elastic.co/guide/en/ecs/current/ecs-tls.html"",
-    ""ecs_version"": ""8.11.0""
+    ""ecs_version"": ""9.0.0""
   },
   ""template"": {
     ""mappings"": {
@@ -8154,11 +8296,11 @@ namespace Elastic.CommonSchema.Elasticsearch
 "
 			},
 		{	
-				"ecs_8.11.0_tracing", 
+				"ecs_9.0.0_tracing", 
 				@"{
   ""_meta"": {
     ""documentation"": ""https://www.elastic.co/guide/en/ecs/current/ecs-tracing.html"",
-    ""ecs_version"": ""8.11.0""
+    ""ecs_version"": ""9.0.0""
   },
   ""template"": {
     ""mappings"": {
@@ -8194,11 +8336,11 @@ namespace Elastic.CommonSchema.Elasticsearch
 "
 			},
 		{	
-				"ecs_8.11.0_url", 
+				"ecs_9.0.0_url", 
 				@"{
   ""_meta"": {
     ""documentation"": ""https://www.elastic.co/guide/en/ecs/current/ecs-url.html"",
-    ""ecs_version"": ""8.11.0""
+    ""ecs_version"": ""9.0.0""
   },
   ""template"": {
     ""mappings"": {
@@ -8244,7 +8386,7 @@ namespace Elastic.CommonSchema.Elasticsearch
               ""type"": ""long""
             },
             ""query"": {
-              ""ignore_above"": 1024,
+              ""ignore_above"": 2083,
               ""type"": ""keyword""
             },
             ""registered_domain"": {
@@ -8276,11 +8418,11 @@ namespace Elastic.CommonSchema.Elasticsearch
 "
 			},
 		{	
-				"ecs_8.11.0_user", 
+				"ecs_9.0.0_user", 
 				@"{
   ""_meta"": {
     ""documentation"": ""https://www.elastic.co/guide/en/ecs/current/ecs-user.html"",
-    ""ecs_version"": ""8.11.0""
+    ""ecs_version"": ""9.0.0""
   },
   ""template"": {
     ""mappings"": {
@@ -8341,6 +8483,7 @@ namespace Elastic.CommonSchema.Elasticsearch
                 },
                 ""roles"": {
                   ""ignore_above"": 1024,
+                  ""synthetic_source_keep"": ""none"",
                   ""type"": ""keyword""
                 }
               }
@@ -8403,6 +8546,7 @@ namespace Elastic.CommonSchema.Elasticsearch
                 },
                 ""roles"": {
                   ""ignore_above"": 1024,
+                  ""synthetic_source_keep"": ""none"",
                   ""type"": ""keyword""
                 }
               }
@@ -8479,6 +8623,7 @@ namespace Elastic.CommonSchema.Elasticsearch
             },
             ""roles"": {
               ""ignore_above"": 1024,
+              ""synthetic_source_keep"": ""none"",
               ""type"": ""keyword""
             },
             ""target"": {
@@ -8535,6 +8680,7 @@ namespace Elastic.CommonSchema.Elasticsearch
                 },
                 ""roles"": {
                   ""ignore_above"": 1024,
+                  ""synthetic_source_keep"": ""none"",
                   ""type"": ""keyword""
                 }
               }
@@ -8548,11 +8694,11 @@ namespace Elastic.CommonSchema.Elasticsearch
 "
 			},
 		{	
-				"ecs_8.11.0_user_agent", 
+				"ecs_9.0.0_user_agent", 
 				@"{
   ""_meta"": {
     ""documentation"": ""https://www.elastic.co/guide/en/ecs/current/ecs-user_agent.html"",
-    ""ecs_version"": ""8.11.0""
+    ""ecs_version"": ""9.0.0""
   },
   ""template"": {
     ""mappings"": {
@@ -8635,11 +8781,92 @@ namespace Elastic.CommonSchema.Elasticsearch
 "
 			},
 		{	
-				"ecs_8.11.0_vulnerability", 
+				"ecs_9.0.0_volume", 
+				@"{
+  ""_meta"": {
+    ""documentation"": ""https://www.elastic.co/guide/en/ecs/current/ecs-volume.html"",
+    ""ecs_version"": ""9.0.0""
+  },
+  ""template"": {
+    ""mappings"": {
+      ""properties"": {
+        ""volume"": {
+          ""properties"": {
+            ""bus_type"": {
+              ""ignore_above"": 1024,
+              ""type"": ""keyword""
+            },
+            ""default_access"": {
+              ""ignore_above"": 1024,
+              ""type"": ""keyword""
+            },
+            ""device_name"": {
+              ""ignore_above"": 1024,
+              ""type"": ""keyword""
+            },
+            ""device_type"": {
+              ""ignore_above"": 1024,
+              ""type"": ""keyword""
+            },
+            ""dos_name"": {
+              ""ignore_above"": 1024,
+              ""type"": ""keyword""
+            },
+            ""file_system_type"": {
+              ""ignore_above"": 1024,
+              ""type"": ""keyword""
+            },
+            ""mount_name"": {
+              ""ignore_above"": 1024,
+              ""type"": ""keyword""
+            },
+            ""nt_name"": {
+              ""ignore_above"": 1024,
+              ""type"": ""keyword""
+            },
+            ""product_id"": {
+              ""ignore_above"": 1024,
+              ""type"": ""keyword""
+            },
+            ""product_name"": {
+              ""ignore_above"": 1024,
+              ""type"": ""keyword""
+            },
+            ""removable"": {
+              ""type"": ""boolean""
+            },
+            ""serial_number"": {
+              ""ignore_above"": 1024,
+              ""type"": ""keyword""
+            },
+            ""size"": {
+              ""type"": ""long""
+            },
+            ""vendor_id"": {
+              ""ignore_above"": 1024,
+              ""type"": ""keyword""
+            },
+            ""vendor_name"": {
+              ""ignore_above"": 1024,
+              ""type"": ""keyword""
+            },
+            ""writable"": {
+              ""type"": ""boolean""
+            }
+          }
+        }
+      }
+    }
+  }
+}
+"
+			},
+		{	
+				"ecs_9.0.0_vulnerability", 
 				@"{
   ""_meta"": {
     ""documentation"": ""https://www.elastic.co/guide/en/ecs/current/ecs-vulnerability.html"",
-    ""ecs_version"": ""8.11.0""
+    ""ecs_version"": ""9.0.0""
   },
   ""template"": {
     ""mappings"": {
@@ -8648,6 +8875,7 @@ namespace Elastic.CommonSchema.Elasticsearch
           ""properties"": {
             ""category"": {
               ""ignore_above"": 1024,
+              ""synthetic_source_keep"": ""none"",
               ""type"": ""keyword""
             },
             ""classification"": {
