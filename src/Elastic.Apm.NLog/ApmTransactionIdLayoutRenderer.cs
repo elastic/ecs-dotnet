@@ -13,7 +13,6 @@ namespace Elastic.Apm.NLog;
 /// Provides ElasticApmTransactionId as special logging variable to render the current Elastic APM Transaction Id
 /// </summary>
 [LayoutRenderer(Name)]
-[ThreadSafe]
 public class ApmTransactionIdLayoutRenderer : LayoutRenderer
 {
 	/// <summary>
