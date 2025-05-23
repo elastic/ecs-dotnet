@@ -27,7 +27,6 @@ namespace Elastic.CommonSchema.NLog
 
 	/// <summary> An NLOG layout implementation that renders logs as ECS json</summary>
 	[Layout(Name)]
-	[ThreadSafe]
 	[ThreadAgnostic]
 	public class EcsLayout : Layout
 	{
@@ -392,15 +391,14 @@ namespace Elastic.CommonSchema.NLog
 
 			if (IncludeScopeProperties)
 			{
-				foreach (var key in MappedDiagnosticsLogicalContext.GetNames())
+				foreach (var scopeProperty in ScopeContext.GetAllProperties())
 				{
-					if (string.IsNullOrEmpty(key) || ExcludeProperties.Contains(key))
+					if (string.IsNullOrEmpty(scopeProperty.Key) || ExcludeProperties.Contains(scopeProperty.Key))
 						continue;
 
-					var propertyValue = MappedDiagnosticsLogicalContext.GetObject(key);
-					if (!TryPopulateWhenSafe(metadata, key, propertyValue))
+					if (!TryPopulateWhenSafe(metadata, scopeProperty.Key, scopeProperty.Value))
 					{
-						Populate(metadata, key, propertyValue.ToString());
+						Populate(metadata, scopeProperty.Key, scopeProperty.Value.ToString());
 					}
 				}
 			}
