@@ -7,8 +7,8 @@ namespace Elastic.CommonSchema.NLog
 	/// </summary>
 	internal static class ActivityExtensions
 	{
-		private static readonly ActivitySpanId EmptySpanId = default;
-		private static readonly ActivityTraceId EmptyTraceId = default;
+		private static readonly string EmptySpanIdToHexString = default(System.Diagnostics.ActivitySpanId).ToHexString();
+		private static readonly string EmptyTraceIdToHexString = default(System.Diagnostics.ActivityTraceId).ToHexString();
 
 		public static string GetSpanId(this Activity activity) =>
 			activity.IdFormat == ActivityIdFormat.W3C ?
@@ -27,25 +27,20 @@ namespace Elastic.CommonSchema.NLog
 
 		private static string SpanIdToHexString(ActivitySpanId spanId)
 		{
-			if (EmptySpanId.Equals(spanId))
+			var spanIdString = spanId.ToHexString();
+			if (ReferenceEquals(EmptySpanIdToHexString, spanIdString))
 				return string.Empty;
-
-			var spanHexString = spanId.ToHexString();
-			if (ReferenceEquals(spanHexString, EmptySpanId.ToHexString()))
-				return string.Empty;
-
-			return spanHexString;
+			else
+				return spanIdString;
 		}
 
 		private static string TraceIdToHexString(ActivityTraceId traceId)
 		{
-			if (EmptyTraceId.Equals(traceId))
+			var traceIdString = traceId.ToHexString();
+			if (ReferenceEquals(EmptyTraceIdToHexString, traceIdString))
 				return string.Empty;
-
-			var traceHexString = traceId.ToHexString();
-			return ReferenceEquals(traceHexString, EmptyTraceId.ToHexString())
-				? string.Empty
-				: traceHexString;
+			else
+				return traceIdString;
 		}
 	}
 }
