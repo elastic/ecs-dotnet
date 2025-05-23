@@ -228,7 +228,7 @@ namespace Elastic.CommonSchema.NLog.Tests
 		[Fact]
 		public void MetadataWithSameKeys() => TestLogger((logger, getLogEvents) =>
 		{
-			using (MappedDiagnosticsLogicalContext.SetScoped("DupKey", "Mdlc"))
+			using (ScopeContext.PushProperty("DupKey", "Mdlc"))
 			{
 				logger.Info("Info {DupKey}", "LoggerArg");
 

@@ -1,4 +1,4 @@
-﻿// Licensed to Elasticsearch B.V under one or more agreements.
+// Licensed to Elasticsearch B.V under one or more agreements.
 // Elasticsearch B.V licenses this file to you under the Apache 2.0 License.
 // See the LICENSE file in the project root for more information
 
@@ -14,8 +14,15 @@ namespace Elastic.Apm.NLog.Tests
 	{
 		public NLogTests()
 		{
-			var assembly = typeof(ApmTraceIdLayoutRenderer).Assembly;
-			global::NLog.Config.ConfigurationItemFactory.Default.RegisterItemsFromAssembly(assembly);
+			global::NLog.LogManager.Setup().SetupExtensions(ext =>
+			{
+				ext.RegisterLayoutRenderer<ApmTraceIdLayoutRenderer>(ApmTraceIdLayoutRenderer.Name);
+				ext.RegisterLayoutRenderer<ApmTransactionIdLayoutRenderer>(ApmTransactionIdLayoutRenderer.Name);
+				ext.RegisterLayoutRenderer<ApmSpanIdLayoutRenderer>(ApmSpanIdLayoutRenderer.Name);
+				ext.RegisterLayoutRenderer<ApmServiceNameLayoutRenderer>(ApmServiceNameLayoutRenderer.Name);
+				ext.RegisterLayoutRenderer<ApmServiceVersionLayoutRenderer>(ApmServiceVersionLayoutRenderer.Name);
+				ext.RegisterLayoutRenderer<ApmServiceNodeNameLayoutRenderer>(ApmServiceNodeNameLayoutRenderer.Name);
+			});
 
 			var configuration = new MockConfiguration("my-service", "my-service-node-name", "0.2.1");
 			if (!Agent.IsConfigured)
@@ -33,9 +40,9 @@ namespace Elastic.Apm.NLog.Tests
 			var target = new MemoryTarget();
 			target.Layout = "${ElasticApmTraceId}|${ElasticApmTransactionId}|${ElasticApmSpanId}|${message}";
 
-			global::NLog.Config.SimpleConfigurator.ConfigureForTargetLogging(target, LogLevel.Debug);
+			var logFactory = new global::NLog.LogFactory().Setup().LoadConfiguration(cfg => cfg.ForLogger().WriteTo(target)).LogFactory;
 
-			var logger = LogManager.GetLogger("Example");
+			var logger = logFactory.GetLogger("Example");
 
 			logger.Debug("PreTransaction");
 
@@ -72,9 +79,9 @@ namespace Elastic.Apm.NLog.Tests
 			var target = new MemoryTarget();
 			target.Layout = "${ElasticApmServiceName}|${ElasticApmServiceNodeName}|${ElasticApmServiceVersion}|${message}";
 
-			global::NLog.Config.SimpleConfigurator.ConfigureForTargetLogging(target, LogLevel.Debug);
+			var logFactory = new global::NLog.LogFactory().Setup().LoadConfiguration(cfg => cfg.ForLogger().WriteTo(target)).LogFactory;
 
-			var logger = LogManager.GetLogger("Example");
+			var logger = logFactory.GetLogger("Example");
 
 			logger.Debug("Some log");
 
