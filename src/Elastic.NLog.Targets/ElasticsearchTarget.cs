@@ -290,10 +290,26 @@ namespace NLog.Targets
 		}
 
 		/// <inheritdoc />
-		protected override void Write(LogEventInfo logEvent)
+		protected override void Write(NLog.Common.AsyncLogEventInfo logEvent)
 		{
-			var ecsDoc = _layout.RenderEcsDocument(logEvent);
-			_channel?.TryWrite(ecsDoc);
+			try
+			{
+				var ecsDoc = _layout.RenderEcsDocument(logEvent.LogEvent);
+				if (_channel?.TryWrite(ecsDoc) == true)
+				{
+					logEvent.Continuation(null);
+				}
+				else
+				{
+					NLog.Common.InternalLogger.Error("ElasticSearch - Failed writing to Elastic channel (Buffer full)");
+					logEvent.Continuation(new System.Threading.Tasks.TaskCanceledException("Failed writing to Elastic channel (Buffer full)"));
+				}
+			}
+			catch (Exception ex)
+			{
+				logEvent.Continuation(ex);
+				throw;
+			}
 		}
 
 		private NodePool CreateNodePool()
@@ -358,18 +374,18 @@ namespace NLog.Targets
 	{
 		public Action<Exception>? ExportExceptionCallback { get; }
 		public Action<BulkResponse, IWriteTrackingBuffer>? ExportResponseCallback { get; }
+		public Action? PublishToInboundChannelFailureCallback { get; }
+		public Action? PublishToOutboundChannelFailureCallback { get; }
 
 		// ReSharper disable UnassignedGetOnlyAutoProperty
 		public Action<int, int>? ExportItemsAttemptCallback { get; }
 		public Action<IReadOnlyCollection<TNLogEcsDocument>>? ExportMaxRetriesCallback { get; }
 		public Action<IReadOnlyCollection<TNLogEcsDocument>>? ExportRetryCallback { get; }
 		public Action? PublishToInboundChannelCallback { get; }
-		public Action? PublishToInboundChannelFailureCallback { get; }
 		public Action? PublishToOutboundChannelCallback { get; }
 		public Action? OutboundChannelStartedCallback { get; }
 		public Action? OutboundChannelExitedCallback { get; }
 		public Action? InboundChannelStartedCallback { get; }
-		public Action? PublishToOutboundChannelFailureCallback { get; }
 		public Action? ExportBufferCallback { get; }
 		public Action<int>? ExportRetryableCountCallback { get; }
 		// ReSharper enable UnassignedGetOnlyAutoProperty
@@ -379,6 +395,14 @@ namespace NLog.Targets
 			ExportExceptionCallback = ex =>
 			{
 				NLog.Common.InternalLogger.Error(ex, "ElasticSearch - Export Exception");
+			};
+			PublishToInboundChannelFailureCallback = () =>
+			{
+				NLog.Common.InternalLogger.Error("ElasticSearch - Inbound Channel Failure (Buffer full)");
+			};
+			PublishToOutboundChannelFailureCallback = () =>
+			{
+				NLog.Common.InternalLogger.Error("ElasticSearch - Outbound Channel Failure (Flush failed)");
 			};
 			ExportResponseCallback = (response, _) =>
 			{
