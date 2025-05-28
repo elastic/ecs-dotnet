@@ -10,6 +10,7 @@
     <PackageReference Include="Moq" Version="4.12.0"/>
     <PackageReference Include="Serilog.Sinks.XUnit" Version="3.0.3"/>
     <PackageReference Include="Serilog.Sinks.InMemory" Version="0.5.0"/>
+    <PackageReference Update="xunit" Version="2.9.3" />
   </ItemGroup>
 
   <ItemGroup>

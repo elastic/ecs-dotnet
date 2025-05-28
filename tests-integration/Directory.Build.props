@@ -8,7 +8,8 @@
     
     <SignAssembly>true</SignAssembly>
     <AssemblyOriginatorKeyFile>..\..\build\keys\keypair.snk</AssemblyOriginatorKeyFile>
-  </PropertyGroup> 
+    <NoWarn>xUnit1041</NoWarn>
+  </PropertyGroup>
   <ItemGroup Condition="$([System.Text.RegularExpressions.Regex]::IsMatch($(ProjectName), '^(.*)Tests$'))">
 
     <PackageReference Include="JunitXml.TestLogger" Version="3.0.114" PrivateAssets="All" />

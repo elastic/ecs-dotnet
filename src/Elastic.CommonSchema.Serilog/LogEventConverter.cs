@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Text.Json.Serialization;
+using Elastic.CommonSchema.Serialization;
 using Serilog.Events;
 using static Elastic.CommonSchema.Serilog.SpecialProperties;
 
@@ -14,6 +15,7 @@ namespace Elastic.CommonSchema.Serilog
 {
 	/// A specialized instance of <see cref="EcsDocument"/> that holds on to the original <see cref="LogEvent"/>
 	/// <para> This property won't be emitted to JSON but is used to report back to serilog failure pipelines</para>
+	[JsonConverter(typeof(EcsDocumentJsonConverterFactory))]
 	public class LogEventEcsDocument : EcsDocument
 	{
 		/// The original <see cref="LogEvent"/> for bookkeeping, not send over to Elasticsearch
