@@ -10,4 +10,8 @@
     <ProjectReference Include="..\Elastic.CommonSchema.Tests\Elastic.CommonSchema.Tests.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <PackageReference Update="xunit" Version="2.9.3" />
+  </ItemGroup>
+
 </Project>

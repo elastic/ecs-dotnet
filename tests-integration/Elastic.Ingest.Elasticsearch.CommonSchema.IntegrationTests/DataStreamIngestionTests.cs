@@ -17,7 +17,9 @@ namespace Elastic.Ingest.Elasticsearch.CommonSchema.IntegrationTests;
 
 public class DataStreamIngestionTests : IntegrationTestBase
 {
+#pragma warning disable xUnit1041
 	public DataStreamIngestionTests(IngestionCluster cluster, ITestOutputHelper output) : base(cluster, output)
+#pragma warning restore xUnit1041
 	{
 	}
 

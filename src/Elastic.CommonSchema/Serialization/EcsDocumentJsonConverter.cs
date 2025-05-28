@@ -102,7 +102,5 @@ namespace Elastic.CommonSchema.Serialization
 	/// <summary> A JsonConverter for <see cref="EcsDocument"/> that supports the
 	/// https://github.com/elastic/ecs-logging specification
 	/// </summary>
-	public class EcsDocumentJsonConverter : EcsDocumentJsonConverter<EcsDocument>
-	{
-	}
+	public class EcsDocumentJsonConverter : EcsDocumentJsonConverter<EcsDocument>;
 }

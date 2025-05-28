@@ -9,6 +9,7 @@
   
   <ItemGroup>
     <PackageReference Include="Serilog.Sinks.ColoredConsole" Version="3.0.1" />
+    <PackageReference Update="xunit" Version="2.9.3" />
   </ItemGroup>
   
   <ItemGroup>
