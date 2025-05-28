@@ -13,4 +13,8 @@
     <ProjectReference Include="..\..\src\Elastic.Ingest.Elasticsearch.CommonSchema\Elastic.Ingest.Elasticsearch.CommonSchema.csproj" />
     <ProjectReference Include="..\Elasticsearch.IntegrationDefaults\Elasticsearch.IntegrationDefaults.csproj" />
   </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Update="xunit" Version="2.9.3" />
+  </ItemGroup>
 </Project>
