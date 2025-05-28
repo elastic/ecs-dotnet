@@ -1,21 +1,21 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
-    <PropertyGroup>
-        <TargetFrameworks>net8.0</TargetFrameworks>
-        <IsPackable>false</IsPackable>
-    </PropertyGroup>
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <IsPackable>false</IsPackable>
+  </PropertyGroup>
 
-    <ItemGroup>
-        <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
-    </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1"/>
+  </ItemGroup>
 
-    <ItemGroup>
-      <ProjectReference Include="..\..\src\Elastic.CommonSchema\Elastic.CommonSchema.csproj" />
-    </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\Elastic.CommonSchema\Elastic.CommonSchema.csproj"/>
+  </ItemGroup>
 
-    <ItemGroup>
-      <EmbeddedResource Include="Specs\spec.json" />
-      <None Include="Specs\spec_version.txt" />
-    </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Specs\spec.json"/>
+    <None Include="Specs\spec_version.txt"/>
+  </ItemGroup>
 
 </Project>

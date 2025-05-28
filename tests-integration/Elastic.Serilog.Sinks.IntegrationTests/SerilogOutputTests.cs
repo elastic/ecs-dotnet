@@ -73,6 +73,9 @@ namespace Elastic.Serilog.Sinks.IntegrationTests
 
 			var messages = search.Documents.Select(e => e.Message);
 			messages.Should().Contain("Hello Error");
+
+			search.Documents.First().Log.Should().NotBeNull();
+			search.Documents.First().Log!.Level.Should().NotBeNullOrEmpty();
 		}
 	}
 }

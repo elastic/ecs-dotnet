@@ -12,6 +12,7 @@
   <ItemGroup>
     <PackageReference Include="BenchmarkDotNet" Version="0.13.1"/>
     <PackageReference Include="BenchmarkDotNet.Annotations" Version="0.13.1"/>
+    <PackageReference Update="xunit" Version="2.9.3" />
   </ItemGroup>
 
   <ItemGroup>
