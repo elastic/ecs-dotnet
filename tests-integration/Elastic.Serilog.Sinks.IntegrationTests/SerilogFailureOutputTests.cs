@@ -66,7 +66,7 @@ namespace Elastic.Serilog.Sinks.IntegrationTests
 
 			TestCorrelator.GetLogEventsFromCurrentContext()
 				.Should().ContainSingle()
-				.Should().Be("My log message!");
+				.Should().Be("Hello world");
 		}
 	}
 }
