@@ -5,6 +5,7 @@
 using System;
 using System.Reflection;
 using FluentAssertions;
+using NLog;
 using NLog.Config;
 using Xunit;
 using Xunit.Abstractions;
@@ -17,25 +18,16 @@ namespace Elastic.CommonSchema.NLog.Tests
 
 		private void TestLayout(bool withNLogWeb, Action<EcsLayout> setup, Action<EcsLayout> act)
 		{
-			// Setup basic factory without automatic loading of NLog extensions.
-			ConfigurationItemFactory.Default = new(typeof(ConfigurationItemFactory).Assembly);
-
-			try
+			if (withNLogWeb)
 			{
-				if (withNLogWeb)
-				{
-					var nlogWebAssemblyName = new AssemblyName("NLog.Web.AspNetCore");
-					var nlogWebAssembly = Assembly.Load(nlogWebAssemblyName);
-					ConfigurationItemFactory.Default.RegisterItemsFromAssembly(nlogWebAssembly);
-				}
+				var nlogWebAssemblyName = new AssemblyName("NLog.Web.AspNetCore");
+				var nlogWebAssembly = Assembly.Load(nlogWebAssemblyName);
+#pragma warning disable CS0618 // Type or member is obsolete
+				ConfigurationItemFactory.Default.RegisterItemsFromAssembly(nlogWebAssembly);
+#pragma warning restore CS0618 // Type or member is obsolete
+			}
 
-				TestLoggerAndLayout(setup, (layout, logger, events) => act(layout));
-			}
-			finally
-			{
-				// Cleanup for the sake of other tests.
-				ConfigurationItemFactory.Default = null;
-			}
+			TestLoggerAndLayout(setup, (layout, logger, events) => act(layout));
 		}
 
 		[Theory]
