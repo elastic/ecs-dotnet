@@ -156,7 +156,7 @@ namespace Elastic.Serilog.Sinks
 				.ToArray();
 			_failureListener.OnLoggingFailed(
 				this,
-				LoggingFailureKind.Temporary,
+				LoggingFailureKind.Permanent,
 				"Failure to export events over to Elasticsearch.",
 				logs,
 				exception: null
@@ -172,7 +172,7 @@ namespace Elastic.Serilog.Sinks
 			{
 				_failureListener.OnLoggingFailed(
 					this,
-					LoggingFailureKind.Temporary,
+					LoggingFailureKind.Permanent,
 					"Failure to push event over the channel.",
 					[logEvent],
 					exception: null

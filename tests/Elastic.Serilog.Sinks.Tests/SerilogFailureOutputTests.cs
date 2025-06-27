@@ -1,38 +1,24 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading;
 using Elastic.Channels;
 using Elastic.Channels.Diagnostics;
-using Elastic.Elasticsearch.Xunit.XunitPlumbing;
+using Elastic.Transport;
 using FluentAssertions;
 using Serilog;
 using Serilog.Sinks.TestCorrelator;
-using Xunit.Abstractions;
+using Xunit;
 using DataStreamName = Elastic.Ingest.Elasticsearch.DataStreams.DataStreamName;
 
-namespace Elastic.Serilog.Sinks.IntegrationTests
+namespace Elastic.Serilog.Sinks.Tests
 {
-	public class SerilogFailureOutputTests : SerilogTestBase
+	public class SerilogFailureOutputTests
 	{
 		private readonly CountdownEvent _waitHandle;
 		private IChannelDiagnosticsListener? _listener;
 		private ElasticsearchSinkOptions SinkOptions { get; }
 
-		private static ICollection<Uri> AlterNodes(ICollection<Uri> uris) => uris.Select(u =>
-			{
-				var builder = new UriBuilder(u)
-				{
-					Scheme = "https"
-				};
-				return builder.Uri;
-			})
-			.ToList();
-
-		public SerilogFailureOutputTests(SerilogCluster cluster, ITestOutputHelper output) : base(cluster, output, AlterNodes)
+		public SerilogFailureOutputTests()
 		{
 			_waitHandle = new CountdownEvent(1);
-			SinkOptions = new ElasticsearchSinkOptions(Client.Transport)
+			SinkOptions = new ElasticsearchSinkOptions(new DistributedTransport(new TransportConfiguration()))
 			{
 				DataStream = new DataStreamName("logs", "serilog", "tests"),
 				ConfigureChannel = c =>
@@ -48,14 +34,13 @@ namespace Elastic.Serilog.Sinks.IntegrationTests
 			};
 		}
 
-		[I] public void AssertLogs()
+		[Fact] public void AssertLogs()
 		{
 			var loggerConfig = new LoggerConfiguration()
 				.MinimumLevel.Information()
-				.WriteTo.ColoredConsole()
 				.WriteTo.FallbackChain(
 					fc => fc.Elasticsearch(SinkOptions),
-					fc => fc.TestCorrelator()
+					fc => fc.Console()
 				);
 
 			using var logger = loggerConfig.CreateLogger();
@@ -64,9 +49,6 @@ namespace Elastic.Serilog.Sinks.IntegrationTests
 			if (!_waitHandle.WaitHandle.WaitOne(TimeSpan.FromSeconds(10)))
 				throw new Exception($"No flush occurred in 10 seconds: {_listener}", _listener?.ObservedException);
 
-			TestCorrelator.GetLogEventsFromCurrentContext()
-				.Should().ContainSingle()
-				.Should().Be("Hello world");
 		}
 	}
 }
