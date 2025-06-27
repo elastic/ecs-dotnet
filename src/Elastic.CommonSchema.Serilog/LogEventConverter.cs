@@ -264,7 +264,13 @@ namespace Elastic.CommonSchema.Serilog
 			var hasElapsedMs = e.TryGetScalarPropertyValue(SpecialKeys.Elapsed, out var elapsedMsObj)
 				|| e.TryGetScalarPropertyValue(SpecialKeys.ElapsedMilliseconds, out elapsedMsObj);
 
-			var elapsedMs = hasElapsedMs ? (double?)Convert.ToDouble(elapsedMsObj!.Value) : null;
+			var elapsedMs = hasElapsedMs ?
+				elapsedMsObj!.Value is TimeSpan ts
+					? ts.TotalMilliseconds
+					: elapsedMsObj.Value is double d
+						? d
+						: elapsedMsObj.Value is long  l ? l : ToDouble()
+				: null;
 
 			var evnt = new Event
 			{
@@ -300,6 +306,19 @@ namespace Elastic.CommonSchema.Serilog
 			}
 
 			return evnt;
+
+			double? ToDouble()
+			{
+				try
+				{
+					return Convert.ToDouble(elapsedMsObj.Value);
+				}
+				catch
+				{
+					// ignored
+				}
+				return null;
+			}
 		}
 
 		private static Agent? GetAgent(LogEvent e)
