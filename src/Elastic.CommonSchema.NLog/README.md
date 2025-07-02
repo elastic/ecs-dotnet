@@ -76,7 +76,7 @@ the NLog FileTarget and [Elastic Filebeat](https://www.elastic.co/downloads/beat
 
 * **Host Options**
   -	_HostId_ -
-  -	_HostIp_ - Default: `${local-ip:cachedSeconds=60}`
+  -	_HostIp_ - 
   -	_HostName_ - Default: `${machinename}`
 
 * **Log Origin Options**
@@ -100,7 +100,8 @@ the NLog FileTarget and [Elastic Filebeat](https://www.elastic.co/downloads/beat
   - _UrlUserName_ - Default: `${aspnet-user-identity}`
 
 * **Trace Options**
-  - _ApmTraceId_ - Default: `${ElasticApmTraceId}`
+  - _ApmTraceId_ - Default: `System.Diagnostics.Activity.Current.TraceId`
+  - _ApmSpanId_ - Default: `System.Diagnostics.Activity.Current.SpanId`
 
 * **Transaction Options**
   - _ApmTransactionId_ - Default: `${ElasticApmTransactionId}`

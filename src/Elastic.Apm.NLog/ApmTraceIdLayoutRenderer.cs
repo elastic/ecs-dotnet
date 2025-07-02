@@ -13,7 +13,6 @@ namespace Elastic.Apm.NLog;
 /// Provides ElasticApmTraceId as special logging variable to render the current Elastic APM Trace Id
 /// </summary>
 [LayoutRenderer(Name)]
-[ThreadSafe]
 public class ApmTraceIdLayoutRenderer : LayoutRenderer
 {
 	/// <summary>
