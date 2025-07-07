@@ -9,7 +9,7 @@ namespace Elastic.Apm.NLog;
 /// Provides ElasticApmServiceVersion as special logging variable to render the current Elastic APM Service Version
 /// </summary>
 [LayoutRenderer(Name)]
-[ThreadSafe, ThreadAgnostic]
+[ThreadAgnostic]
 public class ApmServiceVersionLayoutRenderer : LayoutRenderer
 {
 	/// <summary>

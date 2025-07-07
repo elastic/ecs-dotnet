@@ -13,7 +13,7 @@ namespace Elastic.Apm.NLog;
 /// Provides ElasticApmServiceName as special logging variable to render the current Elastic APM Service Name
 /// </summary>
 [LayoutRenderer(Name)]
-[ThreadSafe, ThreadAgnostic]
+[ThreadAgnostic]
 public class ApmServiceNameLayoutRenderer : LayoutRenderer
 {
 	/// <summary>
