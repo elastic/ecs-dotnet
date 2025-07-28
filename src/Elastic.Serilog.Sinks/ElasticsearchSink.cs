@@ -136,11 +136,7 @@ namespace Elastic.Serilog.Sinks
 			var channelOptions = new DataStreamChannelOptions<TEcsDocument>(options.Transport)
 			{
 				DataStream = options.DataStream,
-				ExportMaxRetriesCallback = EmitExportFailures,
-				ExportExceptionCallback = _ =>
-				{
-
-				}
+				ExportMaxRetriesCallback = EmitExportFailures
 			};
 			options.ConfigureChannel?.Invoke(channelOptions);
 			_channel = new EcsDataStreamChannel<TEcsDocument>(channelOptions, new [] { new SelfLogCallbackListener<TEcsDocument>(options)});
