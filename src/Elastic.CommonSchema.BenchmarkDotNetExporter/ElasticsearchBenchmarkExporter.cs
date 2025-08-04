@@ -13,6 +13,7 @@ using BenchmarkDotNet.Loggers;
 using BenchmarkDotNet.Reports;
 using Elastic.Channels;
 using Elastic.CommonSchema.BenchmarkDotNetExporter.Domain;
+using Elastic.CommonSchema.Serialization;
 using Elastic.Ingest.Elasticsearch.CommonSchema;
 using Elastic.Ingest.Elasticsearch.DataStreams;
 using Elastic.Transport;
@@ -69,6 +70,7 @@ namespace Elastic.CommonSchema.BenchmarkDotNetExporter
 					OutboundBufferMaxSize = benchmarksCount,
 					OutboundBufferMaxLifetime = TimeSpan.FromSeconds(5)
 				},
+				SerializerContext = EcsJsonContext.Default,
 				ExportExceptionCallback = e => observedException ??= e,
 				ExportResponseCallback = (response, _) =>
 				{

@@ -10,6 +10,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Elastic.Channels;
 using Elastic.Channels.Diagnostics;
+using Elastic.CommonSchema.Serialization;
 using Elastic.Extensions.Logging.Options;
 using Elastic.Ingest.Elasticsearch;
 using Elastic.Ingest.Elasticsearch.CommonSchema;
@@ -189,6 +190,7 @@ namespace Elastic.Extensions.Logging
 					IndexFormat = loggerOptions.Index.Format,
 					IndexOffset = loggerOptions.Index.IndexOffset,
 					TimestampLookup = l => l.Timestamp,
+					SerializerContext = EcsJsonContext.Default,
 				};
 				SetupChannelOptions(_channelConfigurations, indexChannelOptions);
 				return new EcsIndexChannel<LogEvent>(indexChannelOptions);
@@ -200,7 +202,8 @@ namespace Elastic.Extensions.Logging
 				var indexChannelOptions = new DataStreamChannelOptions<LogEvent>(transport)
 				{
 					DataStream = new DataStreamName(dataStreamNameOptions.Type, dataStreamNameOptions.DataSet, dataStreamNameOptions.Namespace),
-					EventWriter = LogEventWriterInstance
+					EventWriter = LogEventWriterInstance,
+					SerializerContext = EcsJsonContext.Default,
 				};
 
 				SetupChannelOptions(_channelConfigurations, indexChannelOptions);
