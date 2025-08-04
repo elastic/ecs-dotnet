@@ -14,6 +14,8 @@ using System.Text.Json.Serialization;
 
 namespace Elastic.CommonSchema.Serialization;
 
+[JsonSerializable(typeof(EcsDocument))]
+[JsonSerializable(typeof(Labels))]
 [JsonSerializable(typeof(Agent))]
 [JsonSerializable(typeof(As))]
 [JsonSerializable(typeof(Client))]
