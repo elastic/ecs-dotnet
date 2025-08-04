@@ -17,6 +17,8 @@ using System.Text.Json.Serialization;
 
 namespace Elastic.CommonSchema.Serialization;
 
+[JsonSerializable(typeof(EcsDocument))]
+[JsonSerializable(typeof(Labels))]
 @foreach (var property in Model.Base.EntityProperties)
 {
 <text>[JsonSerializable(typeof(@property.Entity.Name))]
