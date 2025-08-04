@@ -182,7 +182,7 @@ namespace Elastic.CommonSchema
 		/// <para><c>client.registered_domain</c></para>
 		/// <para>The highest registered client domain, stripped of the subdomain.
 		/// For example, the registered domain for "foo.example.com" is "example.com".
-		/// This value can be determined precisely with a list like the public suffix list (https://publicsuffix.org). Trying to approximate this by simply taking the last two labels will not work well for TLDs such as "co.uk".</para>
+		/// This value can be determined precisely with a list like the public suffix list (http://publicsuffix.org). Trying to approximate this by simply taking the last two labels will not work well for TLDs such as "co.uk".</para>
 		/// <example>example.com</example>
 		///</summary>
 		public static string ClientRegisteredDomain = nameof(ClientRegisteredDomain);
@@ -196,7 +196,7 @@ namespace Elastic.CommonSchema
 		///<summary>
 		/// <para><c>client.top_level_domain</c></para>
 		/// <para>The effective top level domain (eTLD), also known as the domain suffix, is the last part of the domain name. For example, the top level domain for example.com is "com".
-		/// This value can be determined precisely with a list like the public suffix list (https://publicsuffix.org). Trying to approximate this by simply taking the last label will not work well for effective TLDs such as "co.uk".</para>
+		/// This value can be determined precisely with a list like the public suffix list (http://publicsuffix.org). Trying to approximate this by simply taking the last label will not work well for effective TLDs such as "co.uk".</para>
 		/// <example>co.uk</example>
 		///</summary>
 		public static string ClientTopLevelDomain = nameof(ClientTopLevelDomain);
@@ -459,13 +459,6 @@ namespace Elastic.CommonSchema
 		///</summary>
 		public static string CodeSignatureExists = nameof(CodeSignatureExists);
 		///<summary>
-		/// <para><c>code_signature.flags</c></para>
-		/// <para>The flags used to sign the process.
-		/// <para><br/>This field is beta and subject to change.</para></para>
-		/// <example>570522385</example>
-		///</summary>
-		public static string CodeSignatureFlags = nameof(CodeSignatureFlags);
-		///<summary>
 		/// <para><c>code_signature.signing_id</c></para>
 		/// <para>The identifier used to sign the process.
 		/// This is used to identify the application manufactured by a software vendor. The field is relevant to Apple *OS only.</para>
@@ -669,7 +662,7 @@ namespace Elastic.CommonSchema
 		/// <para><c>destination.registered_domain</c></para>
 		/// <para>The highest registered destination domain, stripped of the subdomain.
 		/// For example, the registered domain for "foo.example.com" is "example.com".
-		/// This value can be determined precisely with a list like the public suffix list (https://publicsuffix.org). Trying to approximate this by simply taking the last two labels will not work well for TLDs such as "co.uk".</para>
+		/// This value can be determined precisely with a list like the public suffix list (http://publicsuffix.org). Trying to approximate this by simply taking the last two labels will not work well for TLDs such as "co.uk".</para>
 		/// <example>example.com</example>
 		///</summary>
 		public static string DestinationRegisteredDomain = nameof(DestinationRegisteredDomain);
@@ -683,7 +676,7 @@ namespace Elastic.CommonSchema
 		///<summary>
 		/// <para><c>destination.top_level_domain</c></para>
 		/// <para>The effective top level domain (eTLD), also known as the domain suffix, is the last part of the domain name. For example, the top level domain for example.com is "com".
-		/// This value can be determined precisely with a list like the public suffix list (https://publicsuffix.org). Trying to approximate this by simply taking the last label will not work well for effective TLDs such as "co.uk".</para>
+		/// This value can be determined precisely with a list like the public suffix list (http://publicsuffix.org). Trying to approximate this by simply taking the last label will not work well for effective TLDs such as "co.uk".</para>
 		/// <example>co.uk</example>
 		///</summary>
 		public static string DestinationTopLevelDomain = nameof(DestinationTopLevelDomain);
@@ -863,7 +856,7 @@ namespace Elastic.CommonSchema
 		public static string DestinationUserRiskStaticScoreNorm = nameof(DestinationUserRiskStaticScoreNorm);
 		///<summary>
 		/// <para><c>device.id</c></para>
-		/// <para>The unique identifier of a device. The identifier must not change across application sessions but stay fixed for an instance of a (mobile) device.
+		/// <para>The unique identifier of a device. The identifier must not change across application sessions but stay fixed for an instance of a (mobile) device. 
 		/// On iOS, this value must be equal to the vendor identifier (https://developer.apple.com/documentation/uikit/uidevice/1620059-identifierforvendor). On Android, this value must be equal to the Firebase Installation ID or a globally unique UUID which is persisted across sessions in your application.
 		/// For GDPR and data protection law reasons this identifier should not carry information that would allow to identify a user.</para>
 		/// <example>00000000-54b3-e7c7-0000-000046bffd97</example>
@@ -888,13 +881,6 @@ namespace Elastic.CommonSchema
 		///</summary>
 		public static string DeviceModelName = nameof(DeviceModelName);
 		///<summary>
-		/// <para><c>device.serial_number</c></para>
-		/// <para>The unique serial number serves as a distinct identifier for each device, aiding in inventory management and device authentication.
-		/// <para><br/>This field is beta and subject to change.</para></para>
-		/// <example>DJGAQS4CW5</example>
-		///</summary>
-		public static string DeviceSerialNumber = nameof(DeviceSerialNumber);
-		///<summary>
 		/// <para><c>dll.name</c></para>
 		/// <para>Name of the library.
 		/// This generally maps to the name of the file on disk.</para>
@@ -907,13 +893,6 @@ namespace Elastic.CommonSchema
 		/// <example>C:\Windows\System32\kernel32.dll</example>
 		///</summary>
 		public static string DllPath = nameof(DllPath);
-		///<summary>
-		/// <para><c>dll.hash.cdhash</c></para>
-		/// <para>Code directory hash, utilized to uniquely identify and authenticate the integrity of the executable code.
-		/// <para><br/>This field is beta and subject to change.</para></para>
-		/// <example>3783b4052fd474dbe30676b45c329e7a6d44acd9</example>
-		///</summary>
-		public static string DllHashCdhash = nameof(DllHashCdhash);
 		///<summary>
 		/// <para><c>dll.hash.md5</c></para>
 		/// <para>MD5 hash.</para>
@@ -983,7 +962,7 @@ namespace Elastic.CommonSchema
 		///<summary>
 		/// <para><c>dll.pe.go_import_hash</c></para>
 		/// <para>A hash of the Go language imports in a PE file excluding standard library imports. An import hash can be used to fingerprint binaries even after recompilation or other code-level transformations have occurred, which would change more traditional hash values.
-		/// The algorithm used to calculate the Go symbol hash and a reference implementation are available here: https://github.com/elastic/toutoumomoma</para>
+		/// The algorithm used to calculate the Go symbol hash and a reference implementation are available [here](https://github.com/elastic/toutoumomoma).</para>
 		/// <example>10bddcb4cee42080f76c88d9ff964491</example>
 		///</summary>
 		public static string DllPeGoImportHash = nameof(DllPeGoImportHash);
@@ -1070,13 +1049,6 @@ namespace Elastic.CommonSchema
 		///</summary>
 		public static string DllCodeSignatureExists = nameof(DllCodeSignatureExists);
 		///<summary>
-		/// <para><c>dll.code_signature.flags</c></para>
-		/// <para>The flags used to sign the process.
-		/// <para><br/>This field is beta and subject to change.</para></para>
-		/// <example>570522385</example>
-		///</summary>
-		public static string DllCodeSignatureFlags = nameof(DllCodeSignatureFlags);
-		///<summary>
 		/// <para><c>dll.code_signature.signing_id</c></para>
 		/// <para>The identifier used to sign the process.
 		/// This is used to identify the application manufactured by a software vendor. The field is relevant to Apple *OS only.</para>
@@ -1152,7 +1124,7 @@ namespace Elastic.CommonSchema
 		/// <para><c>dns.question.registered_domain</c></para>
 		/// <para>The highest registered domain, stripped of the subdomain.
 		/// For example, the registered domain for "foo.example.com" is "example.com".
-		/// This value can be determined precisely with a list like the public suffix list (https://publicsuffix.org). Trying to approximate this by simply taking the last two labels will not work well for TLDs such as "co.uk".</para>
+		/// This value can be determined precisely with a list like the public suffix list (http://publicsuffix.org). Trying to approximate this by simply taking the last two labels will not work well for TLDs such as "co.uk".</para>
 		/// <example>example.com</example>
 		///</summary>
 		public static string DnsQuestionRegisteredDomain = nameof(DnsQuestionRegisteredDomain);
@@ -1166,7 +1138,7 @@ namespace Elastic.CommonSchema
 		///<summary>
 		/// <para><c>dns.question.top_level_domain</c></para>
 		/// <para>The effective top level domain (eTLD), also known as the domain suffix, is the last part of the domain name. For example, the top level domain for example.com is "com".
-		/// This value can be determined precisely with a list like the public suffix list (https://publicsuffix.org). Trying to approximate this by simply taking the last label will not work well for effective TLDs such as "co.uk".</para>
+		/// This value can be determined precisely with a list like the public suffix list (http://publicsuffix.org). Trying to approximate this by simply taking the last label will not work well for effective TLDs such as "co.uk".</para>
 		/// <example>co.uk</example>
 		///</summary>
 		public static string DnsQuestionTopLevelDomain = nameof(DnsQuestionTopLevelDomain);
@@ -1225,7 +1197,7 @@ namespace Elastic.CommonSchema
 		///<summary>
 		/// <para><c>elf.go_import_hash</c></para>
 		/// <para>A hash of the Go language imports in an ELF file excluding standard library imports. An import hash can be used to fingerprint binaries even after recompilation or other code-level transformations have occurred, which would change more traditional hash values.
-		/// The algorithm used to calculate the Go symbol hash and a reference implementation are available here: https://github.com/elastic/toutoumomoma</para>
+		/// The algorithm used to calculate the Go symbol hash and a reference implementation are available [here](https://github.com/elastic/toutoumomoma).</para>
 		/// <example>10bddcb4cee42080f76c88d9ff964491</example>
 		///</summary>
 		public static string ElfGoImportHash = nameof(ElfGoImportHash);
@@ -1807,13 +1779,6 @@ namespace Elastic.CommonSchema
 		///</summary>
 		public static string FileUid = nameof(FileUid);
 		///<summary>
-		/// <para><c>file.hash.cdhash</c></para>
-		/// <para>Code directory hash, utilized to uniquely identify and authenticate the integrity of the executable code.
-		/// <para><br/>This field is beta and subject to change.</para></para>
-		/// <example>3783b4052fd474dbe30676b45c329e7a6d44acd9</example>
-		///</summary>
-		public static string FileHashCdhash = nameof(FileHashCdhash);
-		///<summary>
 		/// <para><c>file.hash.md5</c></para>
 		/// <para>MD5 hash.</para>
 		/// <example></example>
@@ -1882,7 +1847,7 @@ namespace Elastic.CommonSchema
 		///<summary>
 		/// <para><c>file.pe.go_import_hash</c></para>
 		/// <para>A hash of the Go language imports in a PE file excluding standard library imports. An import hash can be used to fingerprint binaries even after recompilation or other code-level transformations have occurred, which would change more traditional hash values.
-		/// The algorithm used to calculate the Go symbol hash and a reference implementation are available here: https://github.com/elastic/toutoumomoma</para>
+		/// The algorithm used to calculate the Go symbol hash and a reference implementation are available [here](https://github.com/elastic/toutoumomoma).</para>
 		/// <example>10bddcb4cee42080f76c88d9ff964491</example>
 		///</summary>
 		public static string FilePeGoImportHash = nameof(FilePeGoImportHash);
@@ -2000,7 +1965,7 @@ namespace Elastic.CommonSchema
 		public static string FileX509PublicKeySize = nameof(FileX509PublicKeySize);
 		///<summary>
 		/// <para><c>file.x509.serial_number</c></para>
-		/// <para>Unique serial number issued by the certificate authority. For consistency, this should be encoded in base 16 and formatted without colons and uppercase characters.</para>
+		/// <para>Unique serial number issued by the certificate authority. For consistency, if this value is alphanumeric, it should be formatted without colons and uppercase characters.</para>
 		/// <example>55FBB9C7DEBF09809D12CCAA</example>
 		///</summary>
 		public static string FileX509SerialNumber = nameof(FileX509SerialNumber);
@@ -2035,13 +2000,6 @@ namespace Elastic.CommonSchema
 		/// <example>true</example>
 		///</summary>
 		public static string FileCodeSignatureExists = nameof(FileCodeSignatureExists);
-		///<summary>
-		/// <para><c>file.code_signature.flags</c></para>
-		/// <para>The flags used to sign the process.
-		/// <para><br/>This field is beta and subject to change.</para></para>
-		/// <example>570522385</example>
-		///</summary>
-		public static string FileCodeSignatureFlags = nameof(FileCodeSignatureFlags);
 		///<summary>
 		/// <para><c>file.code_signature.signing_id</c></para>
 		/// <para>The identifier used to sign the process.
@@ -2116,7 +2074,7 @@ namespace Elastic.CommonSchema
 		///<summary>
 		/// <para><c>file.elf.go_import_hash</c></para>
 		/// <para>A hash of the Go language imports in an ELF file excluding standard library imports. An import hash can be used to fingerprint binaries even after recompilation or other code-level transformations have occurred, which would change more traditional hash values.
-		/// The algorithm used to calculate the Go symbol hash and a reference implementation are available here: https://github.com/elastic/toutoumomoma</para>
+		/// The algorithm used to calculate the Go symbol hash and a reference implementation are available [here](https://github.com/elastic/toutoumomoma).</para>
 		/// <example>10bddcb4cee42080f76c88d9ff964491</example>
 		///</summary>
 		public static string FileElfGoImportHash = nameof(FileElfGoImportHash);
@@ -2220,7 +2178,7 @@ namespace Elastic.CommonSchema
 		///<summary>
 		/// <para><c>file.macho.go_import_hash</c></para>
 		/// <para>A hash of the Go language imports in a Mach-O file excluding standard library imports. An import hash can be used to fingerprint binaries even after recompilation or other code-level transformations have occurred, which would change more traditional hash values.
-		/// The algorithm used to calculate the Go symbol hash and a reference implementation are available here: https://github.com/elastic/toutoumomoma</para>
+		/// The algorithm used to calculate the Go symbol hash and a reference implementation are available [here](https://github.com/elastic/toutoumomoma).</para>
 		/// <example>10bddcb4cee42080f76c88d9ff964491</example>
 		///</summary>
 		public static string FileMachoGoImportHash = nameof(FileMachoGoImportHash);
@@ -2362,13 +2320,6 @@ namespace Elastic.CommonSchema
 		/// <example></example>
 		///</summary>
 		public static string GroupName = nameof(GroupName);
-		///<summary>
-		/// <para><c>hash.cdhash</c></para>
-		/// <para>Code directory hash, utilized to uniquely identify and authenticate the integrity of the executable code.
-		/// <para><br/>This field is beta and subject to change.</para></para>
-		/// <example>3783b4052fd474dbe30676b45c329e7a6d44acd9</example>
-		///</summary>
-		public static string HashCdhash = nameof(HashCdhash);
 		///<summary>
 		/// <para><c>hash.md5</c></para>
 		/// <para>MD5 hash.</para>
@@ -2817,7 +2768,7 @@ namespace Elastic.CommonSchema
 		///<summary>
 		/// <para><c>macho.go_import_hash</c></para>
 		/// <para>A hash of the Go language imports in a Mach-O file excluding standard library imports. An import hash can be used to fingerprint binaries even after recompilation or other code-level transformations have occurred, which would change more traditional hash values.
-		/// The algorithm used to calculate the Go symbol hash and a reference implementation are available here: https://github.com/elastic/toutoumomoma</para>
+		/// The algorithm used to calculate the Go symbol hash and a reference implementation are available [here](https://github.com/elastic/toutoumomoma).</para>
 		/// <example>10bddcb4cee42080f76c88d9ff964491</example>
 		///</summary>
 		public static string MachoGoImportHash = nameof(MachoGoImportHash);
@@ -3380,7 +3331,7 @@ namespace Elastic.CommonSchema
 		///<summary>
 		/// <para><c>pe.go_import_hash</c></para>
 		/// <para>A hash of the Go language imports in a PE file excluding standard library imports. An import hash can be used to fingerprint binaries even after recompilation or other code-level transformations have occurred, which would change more traditional hash values.
-		/// The algorithm used to calculate the Go symbol hash and a reference implementation are available here: https://github.com/elastic/toutoumomoma</para>
+		/// The algorithm used to calculate the Go symbol hash and a reference implementation are available [here](https://github.com/elastic/toutoumomoma).</para>
 		/// <example>10bddcb4cee42080f76c88d9ff964491</example>
 		///</summary>
 		public static string PeGoImportHash = nameof(PeGoImportHash);
@@ -3624,13 +3575,6 @@ namespace Elastic.CommonSchema
 		///</summary>
 		public static string ProcessSavedGroupName = nameof(ProcessSavedGroupName);
 		///<summary>
-		/// <para><c>process.hash.cdhash</c></para>
-		/// <para>Code directory hash, utilized to uniquely identify and authenticate the integrity of the executable code.
-		/// <para><br/>This field is beta and subject to change.</para></para>
-		/// <example>3783b4052fd474dbe30676b45c329e7a6d44acd9</example>
-		///</summary>
-		public static string ProcessHashCdhash = nameof(ProcessHashCdhash);
-		///<summary>
 		/// <para><c>process.hash.md5</c></para>
 		/// <para>MD5 hash.</para>
 		/// <example></example>
@@ -3699,7 +3643,7 @@ namespace Elastic.CommonSchema
 		///<summary>
 		/// <para><c>process.pe.go_import_hash</c></para>
 		/// <para>A hash of the Go language imports in a PE file excluding standard library imports. An import hash can be used to fingerprint binaries even after recompilation or other code-level transformations have occurred, which would change more traditional hash values.
-		/// The algorithm used to calculate the Go symbol hash and a reference implementation are available here: https://github.com/elastic/toutoumomoma</para>
+		/// The algorithm used to calculate the Go symbol hash and a reference implementation are available [here](https://github.com/elastic/toutoumomoma).</para>
 		/// <example>10bddcb4cee42080f76c88d9ff964491</example>
 		///</summary>
 		public static string ProcessPeGoImportHash = nameof(ProcessPeGoImportHash);
@@ -3786,13 +3730,6 @@ namespace Elastic.CommonSchema
 		///</summary>
 		public static string ProcessCodeSignatureExists = nameof(ProcessCodeSignatureExists);
 		///<summary>
-		/// <para><c>process.code_signature.flags</c></para>
-		/// <para>The flags used to sign the process.
-		/// <para><br/>This field is beta and subject to change.</para></para>
-		/// <example>570522385</example>
-		///</summary>
-		public static string ProcessCodeSignatureFlags = nameof(ProcessCodeSignatureFlags);
-		///<summary>
 		/// <para><c>process.code_signature.signing_id</c></para>
 		/// <para>The identifier used to sign the process.
 		/// This is used to identify the application manufactured by a software vendor. The field is relevant to Apple *OS only.</para>
@@ -3866,7 +3803,7 @@ namespace Elastic.CommonSchema
 		///<summary>
 		/// <para><c>process.elf.go_import_hash</c></para>
 		/// <para>A hash of the Go language imports in an ELF file excluding standard library imports. An import hash can be used to fingerprint binaries even after recompilation or other code-level transformations have occurred, which would change more traditional hash values.
-		/// The algorithm used to calculate the Go symbol hash and a reference implementation are available here: https://github.com/elastic/toutoumomoma</para>
+		/// The algorithm used to calculate the Go symbol hash and a reference implementation are available [here](https://github.com/elastic/toutoumomoma).</para>
 		/// <example>10bddcb4cee42080f76c88d9ff964491</example>
 		///</summary>
 		public static string ProcessElfGoImportHash = nameof(ProcessElfGoImportHash);
@@ -3970,7 +3907,7 @@ namespace Elastic.CommonSchema
 		///<summary>
 		/// <para><c>process.macho.go_import_hash</c></para>
 		/// <para>A hash of the Go language imports in a Mach-O file excluding standard library imports. An import hash can be used to fingerprint binaries even after recompilation or other code-level transformations have occurred, which would change more traditional hash values.
-		/// The algorithm used to calculate the Go symbol hash and a reference implementation are available here: https://github.com/elastic/toutoumomoma</para>
+		/// The algorithm used to calculate the Go symbol hash and a reference implementation are available [here](https://github.com/elastic/toutoumomoma).</para>
 		/// <example>10bddcb4cee42080f76c88d9ff964491</example>
 		///</summary>
 		public static string ProcessMachoGoImportHash = nameof(ProcessMachoGoImportHash);
@@ -4088,7 +4025,7 @@ namespace Elastic.CommonSchema
 		/// <para><c>process.entry_meta.source.registered_domain</c></para>
 		/// <para>The highest registered source domain, stripped of the subdomain.
 		/// For example, the registered domain for "foo.example.com" is "example.com".
-		/// This value can be determined precisely with a list like the public suffix list (https://publicsuffix.org). Trying to approximate this by simply taking the last two labels will not work well for TLDs such as "co.uk".</para>
+		/// This value can be determined precisely with a list like the public suffix list (http://publicsuffix.org). Trying to approximate this by simply taking the last two labels will not work well for TLDs such as "co.uk".</para>
 		/// <example>example.com</example>
 		///</summary>
 		public static string ProcessEntryMetaSourceRegisteredDomain = nameof(ProcessEntryMetaSourceRegisteredDomain);
@@ -4102,7 +4039,7 @@ namespace Elastic.CommonSchema
 		///<summary>
 		/// <para><c>process.entry_meta.source.top_level_domain</c></para>
 		/// <para>The effective top level domain (eTLD), also known as the domain suffix, is the last part of the domain name. For example, the top level domain for example.com is "com".
-		/// This value can be determined precisely with a list like the public suffix list (https://publicsuffix.org). Trying to approximate this by simply taking the last label will not work well for effective TLDs such as "co.uk".</para>
+		/// This value can be determined precisely with a list like the public suffix list (http://publicsuffix.org). Trying to approximate this by simply taking the last label will not work well for effective TLDs such as "co.uk".</para>
 		/// <example>co.uk</example>
 		///</summary>
 		public static string ProcessEntryMetaSourceTopLevelDomain = nameof(ProcessEntryMetaSourceTopLevelDomain);
@@ -4844,7 +4781,7 @@ namespace Elastic.CommonSchema
 		/// <para><c>server.registered_domain</c></para>
 		/// <para>The highest registered server domain, stripped of the subdomain.
 		/// For example, the registered domain for "foo.example.com" is "example.com".
-		/// This value can be determined precisely with a list like the public suffix list (https://publicsuffix.org). Trying to approximate this by simply taking the last two labels will not work well for TLDs such as "co.uk".</para>
+		/// This value can be determined precisely with a list like the public suffix list (http://publicsuffix.org). Trying to approximate this by simply taking the last two labels will not work well for TLDs such as "co.uk".</para>
 		/// <example>example.com</example>
 		///</summary>
 		public static string ServerRegisteredDomain = nameof(ServerRegisteredDomain);
@@ -4858,7 +4795,7 @@ namespace Elastic.CommonSchema
 		///<summary>
 		/// <para><c>server.top_level_domain</c></para>
 		/// <para>The effective top level domain (eTLD), also known as the domain suffix, is the last part of the domain name. For example, the top level domain for example.com is "com".
-		/// This value can be determined precisely with a list like the public suffix list (https://publicsuffix.org). Trying to approximate this by simply taking the last label will not work well for effective TLDs such as "co.uk".</para>
+		/// This value can be determined precisely with a list like the public suffix list (http://publicsuffix.org). Trying to approximate this by simply taking the last label will not work well for effective TLDs such as "co.uk".</para>
 		/// <example>co.uk</example>
 		///</summary>
 		public static string ServerTopLevelDomain = nameof(ServerTopLevelDomain);
@@ -5178,7 +5115,7 @@ namespace Elastic.CommonSchema
 		/// <para><c>source.registered_domain</c></para>
 		/// <para>The highest registered source domain, stripped of the subdomain.
 		/// For example, the registered domain for "foo.example.com" is "example.com".
-		/// This value can be determined precisely with a list like the public suffix list (https://publicsuffix.org). Trying to approximate this by simply taking the last two labels will not work well for TLDs such as "co.uk".</para>
+		/// This value can be determined precisely with a list like the public suffix list (http://publicsuffix.org). Trying to approximate this by simply taking the last two labels will not work well for TLDs such as "co.uk".</para>
 		/// <example>example.com</example>
 		///</summary>
 		public static string SourceRegisteredDomain = nameof(SourceRegisteredDomain);
@@ -5192,7 +5129,7 @@ namespace Elastic.CommonSchema
 		///<summary>
 		/// <para><c>source.top_level_domain</c></para>
 		/// <para>The effective top level domain (eTLD), also known as the domain suffix, is the last part of the domain name. For example, the top level domain for example.com is "com".
-		/// This value can be determined precisely with a list like the public suffix list (https://publicsuffix.org). Trying to approximate this by simply taking the last label will not work well for effective TLDs such as "co.uk".</para>
+		/// This value can be determined precisely with a list like the public suffix list (http://publicsuffix.org). Trying to approximate this by simply taking the last label will not work well for effective TLDs such as "co.uk".</para>
 		/// <example>co.uk</example>
 		///</summary>
 		public static string SourceTopLevelDomain = nameof(SourceTopLevelDomain);
@@ -5633,7 +5570,7 @@ namespace Elastic.CommonSchema
 		public static string ThreatIndicatorX509PublicKeySize = nameof(ThreatIndicatorX509PublicKeySize);
 		///<summary>
 		/// <para><c>threat.indicator.x509.serial_number</c></para>
-		/// <para>Unique serial number issued by the certificate authority. For consistency, this should be encoded in base 16 and formatted without colons and uppercase characters.</para>
+		/// <para>Unique serial number issued by the certificate authority. For consistency, if this value is alphanumeric, it should be formatted without colons and uppercase characters.</para>
 		/// <example>55FBB9C7DEBF09809D12CCAA</example>
 		///</summary>
 		public static string ThreatIndicatorX509SerialNumber = nameof(ThreatIndicatorX509SerialNumber);
@@ -5802,13 +5739,6 @@ namespace Elastic.CommonSchema
 		///</summary>
 		public static string ThreatIndicatorFileUid = nameof(ThreatIndicatorFileUid);
 		///<summary>
-		/// <para><c>threat.indicator.file.hash.cdhash</c></para>
-		/// <para>Code directory hash, utilized to uniquely identify and authenticate the integrity of the executable code.
-		/// <para><br/>This field is beta and subject to change.</para></para>
-		/// <example>3783b4052fd474dbe30676b45c329e7a6d44acd9</example>
-		///</summary>
-		public static string ThreatIndicatorFileHashCdhash = nameof(ThreatIndicatorFileHashCdhash);
-		///<summary>
 		/// <para><c>threat.indicator.file.hash.md5</c></para>
 		/// <para>MD5 hash.</para>
 		/// <example></example>
@@ -5877,7 +5807,7 @@ namespace Elastic.CommonSchema
 		///<summary>
 		/// <para><c>threat.indicator.file.pe.go_import_hash</c></para>
 		/// <para>A hash of the Go language imports in a PE file excluding standard library imports. An import hash can be used to fingerprint binaries even after recompilation or other code-level transformations have occurred, which would change more traditional hash values.
-		/// The algorithm used to calculate the Go symbol hash and a reference implementation are available here: https://github.com/elastic/toutoumomoma</para>
+		/// The algorithm used to calculate the Go symbol hash and a reference implementation are available [here](https://github.com/elastic/toutoumomoma).</para>
 		/// <example>10bddcb4cee42080f76c88d9ff964491</example>
 		///</summary>
 		public static string ThreatIndicatorFilePeGoImportHash = nameof(ThreatIndicatorFilePeGoImportHash);
@@ -5995,7 +5925,7 @@ namespace Elastic.CommonSchema
 		public static string ThreatIndicatorFileX509PublicKeySize = nameof(ThreatIndicatorFileX509PublicKeySize);
 		///<summary>
 		/// <para><c>threat.indicator.file.x509.serial_number</c></para>
-		/// <para>Unique serial number issued by the certificate authority. For consistency, this should be encoded in base 16 and formatted without colons and uppercase characters.</para>
+		/// <para>Unique serial number issued by the certificate authority. For consistency, if this value is alphanumeric, it should be formatted without colons and uppercase characters.</para>
 		/// <example>55FBB9C7DEBF09809D12CCAA</example>
 		///</summary>
 		public static string ThreatIndicatorFileX509SerialNumber = nameof(ThreatIndicatorFileX509SerialNumber);
@@ -6030,13 +5960,6 @@ namespace Elastic.CommonSchema
 		/// <example>true</example>
 		///</summary>
 		public static string ThreatIndicatorFileCodeSignatureExists = nameof(ThreatIndicatorFileCodeSignatureExists);
-		///<summary>
-		/// <para><c>threat.indicator.file.code_signature.flags</c></para>
-		/// <para>The flags used to sign the process.
-		/// <para><br/>This field is beta and subject to change.</para></para>
-		/// <example>570522385</example>
-		///</summary>
-		public static string ThreatIndicatorFileCodeSignatureFlags = nameof(ThreatIndicatorFileCodeSignatureFlags);
 		///<summary>
 		/// <para><c>threat.indicator.file.code_signature.signing_id</c></para>
 		/// <para>The identifier used to sign the process.
@@ -6111,7 +6034,7 @@ namespace Elastic.CommonSchema
 		///<summary>
 		/// <para><c>threat.indicator.file.elf.go_import_hash</c></para>
 		/// <para>A hash of the Go language imports in an ELF file excluding standard library imports. An import hash can be used to fingerprint binaries even after recompilation or other code-level transformations have occurred, which would change more traditional hash values.
-		/// The algorithm used to calculate the Go symbol hash and a reference implementation are available here: https://github.com/elastic/toutoumomoma</para>
+		/// The algorithm used to calculate the Go symbol hash and a reference implementation are available [here](https://github.com/elastic/toutoumomoma).</para>
 		/// <example>10bddcb4cee42080f76c88d9ff964491</example>
 		///</summary>
 		public static string ThreatIndicatorFileElfGoImportHash = nameof(ThreatIndicatorFileElfGoImportHash);
@@ -6215,7 +6138,7 @@ namespace Elastic.CommonSchema
 		///<summary>
 		/// <para><c>threat.indicator.file.macho.go_import_hash</c></para>
 		/// <para>A hash of the Go language imports in a Mach-O file excluding standard library imports. An import hash can be used to fingerprint binaries even after recompilation or other code-level transformations have occurred, which would change more traditional hash values.
-		/// The algorithm used to calculate the Go symbol hash and a reference implementation are available here: https://github.com/elastic/toutoumomoma</para>
+		/// The algorithm used to calculate the Go symbol hash and a reference implementation are available [here](https://github.com/elastic/toutoumomoma).</para>
 		/// <example>10bddcb4cee42080f76c88d9ff964491</example>
 		///</summary>
 		public static string ThreatIndicatorFileMachoGoImportHash = nameof(ThreatIndicatorFileMachoGoImportHash);
@@ -6442,7 +6365,7 @@ namespace Elastic.CommonSchema
 		/// <para><c>threat.indicator.url.registered_domain</c></para>
 		/// <para>The highest registered url domain, stripped of the subdomain.
 		/// For example, the registered domain for "foo.example.com" is "example.com".
-		/// This value can be determined precisely with a list like the public suffix list (https://publicsuffix.org). Trying to approximate this by simply taking the last two labels will not work well for TLDs such as "co.uk".</para>
+		/// This value can be determined precisely with a list like the public suffix list (http://publicsuffix.org). Trying to approximate this by simply taking the last two labels will not work well for TLDs such as "co.uk".</para>
 		/// <example>example.com</example>
 		///</summary>
 		public static string ThreatIndicatorUrlRegisteredDomain = nameof(ThreatIndicatorUrlRegisteredDomain);
@@ -6463,7 +6386,7 @@ namespace Elastic.CommonSchema
 		///<summary>
 		/// <para><c>threat.indicator.url.top_level_domain</c></para>
 		/// <para>The effective top level domain (eTLD), also known as the domain suffix, is the last part of the domain name. For example, the top level domain for example.com is "com".
-		/// This value can be determined precisely with a list like the public suffix list (https://publicsuffix.org). Trying to approximate this by simply taking the last label will not work well for effective TLDs such as "co.uk".</para>
+		/// This value can be determined precisely with a list like the public suffix list (http://publicsuffix.org). Trying to approximate this by simply taking the last label will not work well for effective TLDs such as "co.uk".</para>
 		/// <example>co.uk</example>
 		///</summary>
 		public static string ThreatIndicatorUrlTopLevelDomain = nameof(ThreatIndicatorUrlTopLevelDomain);
@@ -6674,7 +6597,7 @@ namespace Elastic.CommonSchema
 		public static string TlsClientX509PublicKeySize = nameof(TlsClientX509PublicKeySize);
 		///<summary>
 		/// <para><c>tls.client.x509.serial_number</c></para>
-		/// <para>Unique serial number issued by the certificate authority. For consistency, this should be encoded in base 16 and formatted without colons and uppercase characters.</para>
+		/// <para>Unique serial number issued by the certificate authority. For consistency, if this value is alphanumeric, it should be formatted without colons and uppercase characters.</para>
 		/// <example>55FBB9C7DEBF09809D12CCAA</example>
 		///</summary>
 		public static string TlsClientX509SerialNumber = nameof(TlsClientX509SerialNumber);
@@ -6763,7 +6686,7 @@ namespace Elastic.CommonSchema
 		/// <para><c>url.registered_domain</c></para>
 		/// <para>The highest registered url domain, stripped of the subdomain.
 		/// For example, the registered domain for "foo.example.com" is "example.com".
-		/// This value can be determined precisely with a list like the public suffix list (https://publicsuffix.org). Trying to approximate this by simply taking the last two labels will not work well for TLDs such as "co.uk".</para>
+		/// This value can be determined precisely with a list like the public suffix list (http://publicsuffix.org). Trying to approximate this by simply taking the last two labels will not work well for TLDs such as "co.uk".</para>
 		/// <example>example.com</example>
 		///</summary>
 		public static string UrlRegisteredDomain = nameof(UrlRegisteredDomain);
@@ -6784,7 +6707,7 @@ namespace Elastic.CommonSchema
 		///<summary>
 		/// <para><c>url.top_level_domain</c></para>
 		/// <para>The effective top level domain (eTLD), also known as the domain suffix, is the last part of the domain name. For example, the top level domain for example.com is "com".
-		/// This value can be determined precisely with a list like the public suffix list (https://publicsuffix.org). Trying to approximate this by simply taking the last label will not work well for effective TLDs such as "co.uk".</para>
+		/// This value can be determined precisely with a list like the public suffix list (http://publicsuffix.org). Trying to approximate this by simply taking the last label will not work well for effective TLDs such as "co.uk".</para>
 		/// <example>co.uk</example>
 		///</summary>
 		public static string UrlTopLevelDomain = nameof(UrlTopLevelDomain);
@@ -6976,113 +6899,6 @@ namespace Elastic.CommonSchema
 		///</summary>
 		public static string VlanName = nameof(VlanName);
 		///<summary>
-		/// <para><c>volume.bus_type</c></para>
-		/// <para>Bus type of the device, such as `Nvme`, `Usb`, or `FileBackedVirtual`.</para>
-		/// <example>FileBackedVirtual</example>
-		///</summary>
-		public static string VolumeBusType = nameof(VolumeBusType);
-		///<summary>
-		/// <para><c>volume.default_access</c></para>
-		/// <para>Describes the default access(es) of the volume.</para>
-		/// <example></example>
-		///</summary>
-		public static string VolumeDefaultAccess = nameof(VolumeDefaultAccess);
-		///<summary>
-		/// <para><c>volume.device_name</c></para>
-		/// <para>Full path of the volume device.
-		/// Only populate this field for POSIX system volumes.</para>
-		/// <example></example>
-		///</summary>
-		public static string VolumeDeviceName = nameof(VolumeDeviceName);
-		///<summary>
-		/// <para><c>volume.device_type</c></para>
-		/// <para>Volume device type.
-		/// The most frequently seen volume device types are `Disk File System` and `CD-ROM File System`.</para>
-		/// <example>CD-ROM File System</example>
-		///</summary>
-		public static string VolumeDeviceType = nameof(VolumeDeviceType);
-		///<summary>
-		/// <para><c>volume.dos_name</c></para>
-		/// <para>The MS-DOS name of a device.
-		/// DOS device name is in the format of driver letters, such as `C:`. The field is relevant to Windows systems only.</para>
-		/// <example>E:</example>
-		///</summary>
-		public static string VolumeDosName = nameof(VolumeDosName);
-		///<summary>
-		/// <para><c>volume.file_system_type</c></para>
-		/// <para>Volume device file system type.
-		/// The most common volume file system types are `NTFS` and `UDF`.</para>
-		/// <example></example>
-		///</summary>
-		public static string VolumeFileSystemType = nameof(VolumeFileSystemType);
-		///<summary>
-		/// <para><c>volume.mount_name</c></para>
-		/// <para>Mount name of the volume device.
-		/// Only populate this field for POSIX system volumes.</para>
-		/// <example></example>
-		///</summary>
-		public static string VolumeMountName = nameof(VolumeMountName);
-		///<summary>
-		/// <para><c>volume.nt_name</c></para>
-		/// <para>The NT device name.
-		/// NT device name uses a format of `\Device\HarddiskVolume2`. The field is relevant to Windows systems only.</para>
-		/// <example>\Device\Cdrom1</example>
-		///</summary>
-		public static string VolumeNtName = nameof(VolumeNtName);
-		///<summary>
-		/// <para><c>volume.product_id</c></para>
-		/// <para>ProductID of the device.
-		/// The vendor provides the ProductID for the volume, if any.</para>
-		/// <example></example>
-		///</summary>
-		public static string VolumeProductId = nameof(VolumeProductId);
-		///<summary>
-		/// <para><c>volume.product_name</c></para>
-		/// <para>Product name of the volume.
-		/// The volume device vendor provides this value.</para>
-		/// <example>Virtual DVD-ROM</example>
-		///</summary>
-		public static string VolumeProductName = nameof(VolumeProductName);
-		///<summary>
-		/// <para><c>volume.removable</c></para>
-		/// <para>Indicates if the volume is removable.</para>
-		/// <example></example>
-		///</summary>
-		public static string VolumeRemovable = nameof(VolumeRemovable);
-		///<summary>
-		/// <para><c>volume.serial_number</c></para>
-		/// <para>Serial number identifier for the volume device.
-		/// The serial number is provided by the vendor of the device, if any.</para>
-		/// <example></example>
-		///</summary>
-		public static string VolumeSerialNumber = nameof(VolumeSerialNumber);
-		///<summary>
-		/// <para><c>volume.size</c></para>
-		/// <para>Size of the volume device in bytes.</para>
-		/// <example></example>
-		///</summary>
-		public static string VolumeSize = nameof(VolumeSize);
-		///<summary>
-		/// <para><c>volume.vendor_id</c></para>
-		/// <para>VendorID of the volume device.
-		/// The volume device vendor provides this value.</para>
-		/// <example></example>
-		///</summary>
-		public static string VolumeVendorId = nameof(VolumeVendorId);
-		///<summary>
-		/// <para><c>volume.vendor_name</c></para>
-		/// <para>Vendor name of the volume device.
-		/// The value is provided by the vendor of the device.</para>
-		/// <example>Msft</example>
-		///</summary>
-		public static string VolumeVendorName = nameof(VolumeVendorName);
-		///<summary>
-		/// <para><c>volume.writable</c></para>
-		/// <para>Indicates if the volume is writable.</para>
-		/// <example></example>
-		///</summary>
-		public static string VolumeWritable = nameof(VolumeWritable);
-		///<summary>
 		/// <para><c>vulnerability.classification</c></para>
 		/// <para>The classification of the vulnerability scoring system. For example (https://www.first.org/cvss/)</para>
 		/// <example>CVSS</example>
@@ -7090,7 +6906,7 @@ namespace Elastic.CommonSchema
 		public static string VulnerabilityClassification = nameof(VulnerabilityClassification);
 		///<summary>
 		/// <para><c>vulnerability.description</c></para>
-		/// <para>The description of the vulnerability that provides additional context of the vulnerability. For example (https://cve.mitre.org/about/faqs.html#cve_entry_descriptions_created)</para>
+		/// <para>The description of the vulnerability that provides additional context of the vulnerability. For example (https://cve.mitre.org/about/faqs.html#cve_entry_descriptions_created[Common Vulnerabilities and Exposure CVE description])</para>
 		/// <example>In macOS before 2.12.6, there is a vulnerability in the RPC...</example>
 		///</summary>
 		public static string VulnerabilityDescription = nameof(VulnerabilityDescription);
@@ -7102,7 +6918,7 @@ namespace Elastic.CommonSchema
 		public static string VulnerabilityEnumeration = nameof(VulnerabilityEnumeration);
 		///<summary>
 		/// <para><c>vulnerability.id</c></para>
-		/// <para>The identification (ID) is the number portion of a vulnerability entry. It includes a unique identification number for the vulnerability. For example (https://cve.mitre.org/about/faqs.html#what_is_cve_id)</para>
+		/// <para>The identification (ID) is the number portion of a vulnerability entry. It includes a unique identification number for the vulnerability. For example (https://cve.mitre.org/about/faqs.html#what_is_cve_id)[Common Vulnerabilities and Exposure CVE ID]</para>
 		/// <example>CVE-2019-00001</example>
 		///</summary>
 		public static string VulnerabilityId = nameof(VulnerabilityId);
@@ -7203,7 +7019,7 @@ namespace Elastic.CommonSchema
 		public static string X509PublicKeySize = nameof(X509PublicKeySize);
 		///<summary>
 		/// <para><c>x509.serial_number</c></para>
-		/// <para>Unique serial number issued by the certificate authority. For consistency, this should be encoded in base 16 and formatted without colons and uppercase characters.</para>
+		/// <para>Unique serial number issued by the certificate authority. For consistency, if this value is alphanumeric, it should be formatted without colons and uppercase characters.</para>
 		/// <example>55FBB9C7DEBF09809D12CCAA</example>
 		///</summary>
 		public static string X509SerialNumber = nameof(X509SerialNumber);
@@ -7295,7 +7111,6 @@ namespace Elastic.CommonSchema
 			"cloud.service.name", CloudServiceName,
 			"code_signature.digest_algorithm", CodeSignatureDigestAlgorithm,
 			"code_signature.exists", CodeSignatureExists,
-			"code_signature.flags", CodeSignatureFlags,
 			"code_signature.signing_id", CodeSignatureSigningId,
 			"code_signature.status", CodeSignatureStatus,
 			"code_signature.subject_name", CodeSignatureSubjectName,
@@ -7361,10 +7176,8 @@ namespace Elastic.CommonSchema
 			"device.manufacturer", DeviceManufacturer,
 			"device.model.identifier", DeviceModelIdentifier,
 			"device.model.name", DeviceModelName,
-			"device.serial_number", DeviceSerialNumber,
 			"dll.name", DllName,
 			"dll.path", DllPath,
-			"dll.hash.cdhash", DllHashCdhash,
 			"dll.hash.md5", DllHashMd5,
 			"dll.hash.sha1", DllHashSha1,
 			"dll.hash.sha256", DllHashSha256,
@@ -7390,7 +7203,6 @@ namespace Elastic.CommonSchema
 			"dll.pe.product", DllPeProduct,
 			"dll.code_signature.digest_algorithm", DllCodeSignatureDigestAlgorithm,
 			"dll.code_signature.exists", DllCodeSignatureExists,
-			"dll.code_signature.flags", DllCodeSignatureFlags,
 			"dll.code_signature.signing_id", DllCodeSignatureSigningId,
 			"dll.code_signature.status", DllCodeSignatureStatus,
 			"dll.code_signature.subject_name", DllCodeSignatureSubjectName,
@@ -7496,7 +7308,6 @@ namespace Elastic.CommonSchema
 			"file.target_path", FileTargetPath,
 			"file.type", FileType,
 			"file.uid", FileUid,
-			"file.hash.cdhash", FileHashCdhash,
 			"file.hash.md5", FileHashMd5,
 			"file.hash.sha1", FileHashSha1,
 			"file.hash.sha256", FileHashSha256,
@@ -7533,7 +7344,6 @@ namespace Elastic.CommonSchema
 			"file.x509.version_number", FileX509VersionNumber,
 			"file.code_signature.digest_algorithm", FileCodeSignatureDigestAlgorithm,
 			"file.code_signature.exists", FileCodeSignatureExists,
-			"file.code_signature.flags", FileCodeSignatureFlags,
 			"file.code_signature.signing_id", FileCodeSignatureSigningId,
 			"file.code_signature.status", FileCodeSignatureStatus,
 			"file.code_signature.subject_name", FileCodeSignatureSubjectName,
@@ -7585,7 +7395,6 @@ namespace Elastic.CommonSchema
 			"group.domain", GroupDomain,
 			"group.id", GroupId,
 			"group.name", GroupName,
-			"hash.cdhash", HashCdhash,
 			"hash.md5", HashMd5,
 			"hash.sha1", HashSha1,
 			"hash.sha256", HashSha256,
@@ -7778,7 +7587,6 @@ namespace Elastic.CommonSchema
 			"process.saved_group.domain", ProcessSavedGroupDomain,
 			"process.saved_group.id", ProcessSavedGroupId,
 			"process.saved_group.name", ProcessSavedGroupName,
-			"process.hash.cdhash", ProcessHashCdhash,
 			"process.hash.md5", ProcessHashMd5,
 			"process.hash.sha1", ProcessHashSha1,
 			"process.hash.sha256", ProcessHashSha256,
@@ -7804,7 +7612,6 @@ namespace Elastic.CommonSchema
 			"process.pe.product", ProcessPeProduct,
 			"process.code_signature.digest_algorithm", ProcessCodeSignatureDigestAlgorithm,
 			"process.code_signature.exists", ProcessCodeSignatureExists,
-			"process.code_signature.flags", ProcessCodeSignatureFlags,
 			"process.code_signature.signing_id", ProcessCodeSignatureSigningId,
 			"process.code_signature.status", ProcessCodeSignatureStatus,
 			"process.code_signature.subject_name", ProcessCodeSignatureSubjectName,
@@ -8115,7 +7922,6 @@ namespace Elastic.CommonSchema
 			"threat.indicator.file.target_path", ThreatIndicatorFileTargetPath,
 			"threat.indicator.file.type", ThreatIndicatorFileType,
 			"threat.indicator.file.uid", ThreatIndicatorFileUid,
-			"threat.indicator.file.hash.cdhash", ThreatIndicatorFileHashCdhash,
 			"threat.indicator.file.hash.md5", ThreatIndicatorFileHashMd5,
 			"threat.indicator.file.hash.sha1", ThreatIndicatorFileHashSha1,
 			"threat.indicator.file.hash.sha256", ThreatIndicatorFileHashSha256,
@@ -8152,7 +7958,6 @@ namespace Elastic.CommonSchema
 			"threat.indicator.file.x509.version_number", ThreatIndicatorFileX509VersionNumber,
 			"threat.indicator.file.code_signature.digest_algorithm", ThreatIndicatorFileCodeSignatureDigestAlgorithm,
 			"threat.indicator.file.code_signature.exists", ThreatIndicatorFileCodeSignatureExists,
-			"threat.indicator.file.code_signature.flags", ThreatIndicatorFileCodeSignatureFlags,
 			"threat.indicator.file.code_signature.signing_id", ThreatIndicatorFileCodeSignatureSigningId,
 			"threat.indicator.file.code_signature.status", ThreatIndicatorFileCodeSignatureStatus,
 			"threat.indicator.file.code_signature.subject_name", ThreatIndicatorFileCodeSignatureSubjectName,
@@ -8300,22 +8105,6 @@ namespace Elastic.CommonSchema
 			"user_agent.os.version", UserAgentOsVersion,
 			"vlan.id", VlanId,
 			"vlan.name", VlanName,
-			"volume.bus_type", VolumeBusType,
-			"volume.default_access", VolumeDefaultAccess,
-			"volume.device_name", VolumeDeviceName,
-			"volume.device_type", VolumeDeviceType,
-			"volume.dos_name", VolumeDosName,
-			"volume.file_system_type", VolumeFileSystemType,
-			"volume.mount_name", VolumeMountName,
-			"volume.nt_name", VolumeNtName,
-			"volume.product_id", VolumeProductId,
-			"volume.product_name", VolumeProductName,
-			"volume.removable", VolumeRemovable,
-			"volume.serial_number", VolumeSerialNumber,
-			"volume.size", VolumeSize,
-			"volume.vendor_id", VolumeVendorId,
-			"volume.vendor_name", VolumeVendorName,
-			"volume.writable", VolumeWritable,
 			"vulnerability.classification", VulnerabilityClassification,
 			"vulnerability.description", VulnerabilityDescription,
 			"vulnerability.enumeration", VulnerabilityEnumeration,

@@ -14,6 +14,7 @@ using System.Text.Json.Serialization;
 
 namespace Elastic.CommonSchema.Serialization;
 
+/// An implementation of <see cref="JsonSerializerContext"/> that could be used to be combined with user data
 [JsonSerializable(typeof(EcsDocument))]
 [JsonSerializable(typeof(Labels))]
 [JsonSerializable(typeof(Agent))]
@@ -63,10 +64,9 @@ namespace Elastic.CommonSchema.Serialization;
 [JsonSerializable(typeof(User))]
 [JsonSerializable(typeof(UserAgent))]
 [JsonSerializable(typeof(Vlan))]
-[JsonSerializable(typeof(Volume))]
 [JsonSerializable(typeof(Vulnerability))]
 [JsonSerializable(typeof(X509))]
-[JsonSerializable(typeof(LogEntityJsonConverter.LogOriginInvalid))]
-[JsonSerializable(typeof(LogEntityJsonConverter.LogFileOriginInvalid))]
+[JsonSerializable(typeof(ParserIntermediary.LogOriginInvalid))]
+[JsonSerializable(typeof(ParserIntermediary.LogFileOriginInvalid))]
 [JsonSourceGenerationOptions(DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull)]
-internal partial class EcsJsonContext : JsonSerializerContext { }
+public partial class EcsJsonContext : JsonSerializerContext { }

@@ -106,10 +106,6 @@ namespace Elastic.CommonSchema
 	public class ProcessPrevious : ProcessFieldSet  {
 	}
 
-	///<inheritdoc cref="ProcessFieldSet"/>
-	public class ProcessResponsible : ProcessFieldSet  {
-	}
-
 	///<inheritdoc cref="ServiceFieldSet"/>
 	public class ServiceOrigin : ServiceFieldSet  {
 	}
@@ -424,7 +420,7 @@ namespace Elastic.CommonSchema
 	}
 
 	///<inheritdoc cref="ProcessFieldSet"/>
-	public class Process : ProcessFieldSet , IUser, IHash, IPe, ICodeSignature, IElf, IMacho, IGroup, IRealGroup, ISavedGroup, ISupplementalGroups, IAttestedGroups, IEntryMetaSource, ISavedUser, IRealUser, IAttestedUser, IProcessParent, IProcessEntryLeader, IProcessSessionLeader, IProcessGroupLeader, IProcessPrevious, IProcessResponsible {
+	public class Process : ProcessFieldSet , IUser, IHash, IPe, ICodeSignature, IElf, IMacho, IGroup, IRealGroup, ISavedGroup, ISupplementalGroups, IAttestedGroups, IEntryMetaSource, ISavedUser, IRealUser, IAttestedUser, IProcessParent, IProcessEntryLeader, IProcessSessionLeader, IProcessGroupLeader, IProcessPrevious {
 
 		///<summary>
 		/// <para><c>process.group</c></para>
@@ -565,13 +561,6 @@ namespace Elastic.CommonSchema
 		///</summary>
 		[JsonPropertyName("previous"), DataMember(Name = "previous")]
 		public ProcessPrevious[]? Previous { get; set; }
-
-		///<summary>
-		/// <para><c>process.responsible</c></para>
-		/// <example></example>
-		///</summary>
-		[JsonPropertyName("responsible"), DataMember(Name = "responsible")]
-		public ProcessResponsible? Responsible { get; set; }
 	}
 
 	///<inheritdoc cref="RegistryFieldSet"/>
@@ -778,10 +767,6 @@ namespace Elastic.CommonSchema
 
 	///<inheritdoc cref="VlanFieldSet"/>
 	public class Vlan : VlanFieldSet  {
-	}
-
-	///<inheritdoc cref="VolumeFieldSet"/>
-	public class Volume : VolumeFieldSet  {
 	}
 
 	///<inheritdoc cref="VulnerabilityFieldSet"/>
