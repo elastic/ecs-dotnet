@@ -19,6 +19,7 @@ namespace Elastic.CommonSchema.Serialization
 			NumberHandling = JsonNumberHandling.AllowNamedFloatingPointLiterals,
 			Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
 			PropertyNamingPolicy = new SnakeCaseJsonNamingPolicy(),
+			TypeInfoResolver = EcsJsonContext.Default,
 			Converters =
 			{
 				new EcsDocumentJsonConverterFactory(),
