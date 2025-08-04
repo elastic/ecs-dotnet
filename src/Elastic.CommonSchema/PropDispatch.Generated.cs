@@ -623,6 +623,18 @@ namespace Elastic.CommonSchema
 							SetMetaOrLabel(document, $"Vlan{kvp.Key}", kvp.Value);
 					}
 					return true;
+				case "volume" when value is Volume @volume:
+					document.Volume = @volume;
+					return true;
+				case "volume" when value is Dictionary<string, object> @volume:
+					if (!TypeCheck(@volume, LogTemplateEntities.Volume)) return false;
+					foreach (var kvp in @volume)
+					{
+						if (kvp.Value == null || kvp.Key == "$type") continue;
+						if (!TrySetVolume(document, $"Volume{kvp.Key}", kvp.Value))
+							SetMetaOrLabel(document, $"Volume{kvp.Key}", kvp.Value);
+					}
+					return true;
 				case "vulnerability" when value is Vulnerability @vulnerability:
 					document.Vulnerability = @vulnerability;
 					return true;
@@ -793,6 +805,8 @@ namespace Elastic.CommonSchema
 				case "CodeSignatureDigestAlgorithm":
 				case "code_signature.exists":
 				case "CodeSignatureExists":
+				case "code_signature.flags":
+				case "CodeSignatureFlags":
 				case "code_signature.signing_id":
 				case "CodeSignatureSigningId":
 				case "code_signature.status":
@@ -927,11 +941,15 @@ namespace Elastic.CommonSchema
 				case "DeviceModelIdentifier":
 				case "device.model.name":
 				case "DeviceModelName":
+				case "device.serial_number":
+				case "DeviceSerialNumber":
 					return TrySetDevice(document, path, value);
 				case "dll.name":
 				case "DllName":
 				case "dll.path":
 				case "DllPath":
+				case "dll.hash.cdhash":
+				case "DllHashCdhash":
 				case "dll.hash.md5":
 				case "DllHashMd5":
 				case "dll.hash.sha1":
@@ -982,6 +1000,8 @@ namespace Elastic.CommonSchema
 				case "DllCodeSignatureDigestAlgorithm":
 				case "dll.code_signature.exists":
 				case "DllCodeSignatureExists":
+				case "dll.code_signature.flags":
+				case "DllCodeSignatureFlags":
 				case "dll.code_signature.signing_id":
 				case "DllCodeSignatureSigningId":
 				case "dll.code_signature.status":
@@ -1200,6 +1220,8 @@ namespace Elastic.CommonSchema
 				case "FileType":
 				case "file.uid":
 				case "FileUid":
+				case "file.hash.cdhash":
+				case "FileHashCdhash":
 				case "file.hash.md5":
 				case "FileHashMd5":
 				case "file.hash.sha1":
@@ -1272,6 +1294,8 @@ namespace Elastic.CommonSchema
 				case "FileCodeSignatureDigestAlgorithm":
 				case "file.code_signature.exists":
 				case "FileCodeSignatureExists":
+				case "file.code_signature.flags":
+				case "FileCodeSignatureFlags":
 				case "file.code_signature.signing_id":
 				case "FileCodeSignatureSigningId":
 				case "file.code_signature.status":
@@ -1377,6 +1401,8 @@ namespace Elastic.CommonSchema
 				case "group.name":
 				case "GroupName":
 					return TrySetGroup(document, path, value);
+				case "hash.cdhash":
+				case "HashCdhash":
 				case "hash.md5":
 				case "HashMd5":
 				case "hash.sha1":
@@ -1774,6 +1800,8 @@ namespace Elastic.CommonSchema
 				case "ProcessSavedGroupId":
 				case "process.saved_group.name":
 				case "ProcessSavedGroupName":
+				case "process.hash.cdhash":
+				case "ProcessHashCdhash":
 				case "process.hash.md5":
 				case "ProcessHashMd5":
 				case "process.hash.sha1":
@@ -1824,6 +1852,8 @@ namespace Elastic.CommonSchema
 				case "ProcessCodeSignatureDigestAlgorithm":
 				case "process.code_signature.exists":
 				case "ProcessCodeSignatureExists":
+				case "process.code_signature.flags":
+				case "ProcessCodeSignatureFlags":
 				case "process.code_signature.signing_id":
 				case "ProcessCodeSignatureSigningId":
 				case "process.code_signature.status":
@@ -2451,6 +2481,8 @@ namespace Elastic.CommonSchema
 				case "ThreatIndicatorFileType":
 				case "threat.indicator.file.uid":
 				case "ThreatIndicatorFileUid":
+				case "threat.indicator.file.hash.cdhash":
+				case "ThreatIndicatorFileHashCdhash":
 				case "threat.indicator.file.hash.md5":
 				case "ThreatIndicatorFileHashMd5":
 				case "threat.indicator.file.hash.sha1":
@@ -2523,6 +2555,8 @@ namespace Elastic.CommonSchema
 				case "ThreatIndicatorFileCodeSignatureDigestAlgorithm":
 				case "threat.indicator.file.code_signature.exists":
 				case "ThreatIndicatorFileCodeSignatureExists":
+				case "threat.indicator.file.code_signature.flags":
+				case "ThreatIndicatorFileCodeSignatureFlags":
 				case "threat.indicator.file.code_signature.signing_id":
 				case "ThreatIndicatorFileCodeSignatureSigningId":
 				case "threat.indicator.file.code_signature.status":
@@ -2823,6 +2857,39 @@ namespace Elastic.CommonSchema
 				case "vlan.name":
 				case "VlanName":
 					return TrySetVlan(document, path, value);
+				case "volume.bus_type":
+				case "VolumeBusType":
+				case "volume.default_access":
+				case "VolumeDefaultAccess":
+				case "volume.device_name":
+				case "VolumeDeviceName":
+				case "volume.device_type":
+				case "VolumeDeviceType":
+				case "volume.dos_name":
+				case "VolumeDosName":
+				case "volume.file_system_type":
+				case "VolumeFileSystemType":
+				case "volume.mount_name":
+				case "VolumeMountName":
+				case "volume.nt_name":
+				case "VolumeNtName":
+				case "volume.product_id":
+				case "VolumeProductId":
+				case "volume.product_name":
+				case "VolumeProductName":
+				case "volume.removable":
+				case "VolumeRemovable":
+				case "volume.serial_number":
+				case "VolumeSerialNumber":
+				case "volume.size":
+				case "VolumeSize":
+				case "volume.vendor_id":
+				case "VolumeVendorId":
+				case "volume.vendor_name":
+				case "VolumeVendorName":
+				case "volume.writable":
+				case "VolumeWritable":
+					return TrySetVolume(document, path, value);
 				case "vulnerability.classification":
 				case "VulnerabilityClassification":
 				case "vulnerability.description":
@@ -3097,6 +3164,8 @@ namespace Elastic.CommonSchema
 				"CodeSignatureDigestAlgorithm" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.DigestAlgorithm = p),
 				"code_signature.exists" => static (e, v) => TrySetBool(e, v, static (ee, p) => ee.Exists = p),
 				"CodeSignatureExists" => static (e, v) => TrySetBool(e, v, static (ee, p) => ee.Exists = p),
+				"code_signature.flags" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Flags = p),
+				"CodeSignatureFlags" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Flags = p),
 				"code_signature.signing_id" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.SigningId = p),
 				"CodeSignatureSigningId" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.SigningId = p),
 				"code_signature.status" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Status = p),
@@ -3303,6 +3372,8 @@ namespace Elastic.CommonSchema
 				"DeviceModelIdentifier" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.ModelIdentifier = p),
 				"device.model.name" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.ModelName = p),
 				"DeviceModelName" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.ModelName = p),
+				"device.serial_number" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.SerialNumber = p),
+				"DeviceSerialNumber" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.SerialNumber = p),
 				_ => null
 			};
 			return assign;
@@ -3326,6 +3397,8 @@ namespace Elastic.CommonSchema
 				"DllName" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Name = p),
 				"dll.path" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Path = p),
 				"DllPath" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Path = p),
+				"dll.hash.cdhash" => static (e, v) => TryAssignHash("hash.cdhash")(e.Hash ??= new Hash(),v),
+				"DllHashCdhash" => static (e, v) => TryAssignHash("hash.cdhash")(e.Hash ??= new Hash(),v),
 				"dll.hash.md5" => static (e, v) => TryAssignHash("hash.md5")(e.Hash ??= new Hash(),v),
 				"DllHashMd5" => static (e, v) => TryAssignHash("hash.md5")(e.Hash ??= new Hash(),v),
 				"dll.hash.sha1" => static (e, v) => TryAssignHash("hash.sha1")(e.Hash ??= new Hash(),v),
@@ -3376,6 +3449,8 @@ namespace Elastic.CommonSchema
 				"DllCodeSignatureDigestAlgorithm" => static (e, v) => TryAssignCodeSignature("code_signature.digest_algorithm")(e.CodeSignature ??= new CodeSignature(),v),
 				"dll.code_signature.exists" => static (e, v) => TryAssignCodeSignature("code_signature.exists")(e.CodeSignature ??= new CodeSignature(),v),
 				"DllCodeSignatureExists" => static (e, v) => TryAssignCodeSignature("code_signature.exists")(e.CodeSignature ??= new CodeSignature(),v),
+				"dll.code_signature.flags" => static (e, v) => TryAssignCodeSignature("code_signature.flags")(e.CodeSignature ??= new CodeSignature(),v),
+				"DllCodeSignatureFlags" => static (e, v) => TryAssignCodeSignature("code_signature.flags")(e.CodeSignature ??= new CodeSignature(),v),
 				"dll.code_signature.signing_id" => static (e, v) => TryAssignCodeSignature("code_signature.signing_id")(e.CodeSignature ??= new CodeSignature(),v),
 				"DllCodeSignatureSigningId" => static (e, v) => TryAssignCodeSignature("code_signature.signing_id")(e.CodeSignature ??= new CodeSignature(),v),
 				"dll.code_signature.status" => static (e, v) => TryAssignCodeSignature("code_signature.status")(e.CodeSignature ??= new CodeSignature(),v),
@@ -3738,6 +3813,8 @@ namespace Elastic.CommonSchema
 				"FileType" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Type = p),
 				"file.uid" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Uid = p),
 				"FileUid" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Uid = p),
+				"file.hash.cdhash" => static (e, v) => TryAssignHash("hash.cdhash")(e.Hash ??= new Hash(),v),
+				"FileHashCdhash" => static (e, v) => TryAssignHash("hash.cdhash")(e.Hash ??= new Hash(),v),
 				"file.hash.md5" => static (e, v) => TryAssignHash("hash.md5")(e.Hash ??= new Hash(),v),
 				"FileHashMd5" => static (e, v) => TryAssignHash("hash.md5")(e.Hash ??= new Hash(),v),
 				"file.hash.sha1" => static (e, v) => TryAssignHash("hash.sha1")(e.Hash ??= new Hash(),v),
@@ -3810,6 +3887,8 @@ namespace Elastic.CommonSchema
 				"FileCodeSignatureDigestAlgorithm" => static (e, v) => TryAssignCodeSignature("code_signature.digest_algorithm")(e.CodeSignature ??= new CodeSignature(),v),
 				"file.code_signature.exists" => static (e, v) => TryAssignCodeSignature("code_signature.exists")(e.CodeSignature ??= new CodeSignature(),v),
 				"FileCodeSignatureExists" => static (e, v) => TryAssignCodeSignature("code_signature.exists")(e.CodeSignature ??= new CodeSignature(),v),
+				"file.code_signature.flags" => static (e, v) => TryAssignCodeSignature("code_signature.flags")(e.CodeSignature ??= new CodeSignature(),v),
+				"FileCodeSignatureFlags" => static (e, v) => TryAssignCodeSignature("code_signature.flags")(e.CodeSignature ??= new CodeSignature(),v),
 				"file.code_signature.signing_id" => static (e, v) => TryAssignCodeSignature("code_signature.signing_id")(e.CodeSignature ??= new CodeSignature(),v),
 				"FileCodeSignatureSigningId" => static (e, v) => TryAssignCodeSignature("code_signature.signing_id")(e.CodeSignature ??= new CodeSignature(),v),
 				"file.code_signature.status" => static (e, v) => TryAssignCodeSignature("code_signature.status")(e.CodeSignature ??= new CodeSignature(),v),
@@ -3969,6 +4048,8 @@ namespace Elastic.CommonSchema
 		{
 			Func<Hash, object, bool> assign = path switch
 			{
+				"hash.cdhash" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Cdhash = p),
+				"HashCdhash" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Cdhash = p),
 				"hash.md5" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Md5 = p),
 				"HashMd5" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Md5 = p),
 				"hash.sha1" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Sha1 = p),
@@ -4600,6 +4681,8 @@ namespace Elastic.CommonSchema
 				"ProcessSavedGroupId" => static (e, v) => TryAssignGroup("saved_group.id")(e.SavedGroup ??= new Group(),v),
 				"process.saved_group.name" => static (e, v) => TryAssignGroup("saved_group.name")(e.SavedGroup ??= new Group(),v),
 				"ProcessSavedGroupName" => static (e, v) => TryAssignGroup("saved_group.name")(e.SavedGroup ??= new Group(),v),
+				"process.hash.cdhash" => static (e, v) => TryAssignHash("hash.cdhash")(e.Hash ??= new Hash(),v),
+				"ProcessHashCdhash" => static (e, v) => TryAssignHash("hash.cdhash")(e.Hash ??= new Hash(),v),
 				"process.hash.md5" => static (e, v) => TryAssignHash("hash.md5")(e.Hash ??= new Hash(),v),
 				"ProcessHashMd5" => static (e, v) => TryAssignHash("hash.md5")(e.Hash ??= new Hash(),v),
 				"process.hash.sha1" => static (e, v) => TryAssignHash("hash.sha1")(e.Hash ??= new Hash(),v),
@@ -4650,6 +4733,8 @@ namespace Elastic.CommonSchema
 				"ProcessCodeSignatureDigestAlgorithm" => static (e, v) => TryAssignCodeSignature("code_signature.digest_algorithm")(e.CodeSignature ??= new CodeSignature(),v),
 				"process.code_signature.exists" => static (e, v) => TryAssignCodeSignature("code_signature.exists")(e.CodeSignature ??= new CodeSignature(),v),
 				"ProcessCodeSignatureExists" => static (e, v) => TryAssignCodeSignature("code_signature.exists")(e.CodeSignature ??= new CodeSignature(),v),
+				"process.code_signature.flags" => static (e, v) => TryAssignCodeSignature("code_signature.flags")(e.CodeSignature ??= new CodeSignature(),v),
+				"ProcessCodeSignatureFlags" => static (e, v) => TryAssignCodeSignature("code_signature.flags")(e.CodeSignature ??= new CodeSignature(),v),
 				"process.code_signature.signing_id" => static (e, v) => TryAssignCodeSignature("code_signature.signing_id")(e.CodeSignature ??= new CodeSignature(),v),
 				"ProcessCodeSignatureSigningId" => static (e, v) => TryAssignCodeSignature("code_signature.signing_id")(e.CodeSignature ??= new CodeSignature(),v),
 				"process.code_signature.status" => static (e, v) => TryAssignCodeSignature("code_signature.status")(e.CodeSignature ??= new CodeSignature(),v),
@@ -5422,6 +5507,8 @@ namespace Elastic.CommonSchema
 				"ThreatIndicatorFileType" => static (e, v) => TryAssignFile("file.type")(e.IndicatorFile ??= new File(),v),
 				"threat.indicator.file.uid" => static (e, v) => TryAssignFile("file.uid")(e.IndicatorFile ??= new File(),v),
 				"ThreatIndicatorFileUid" => static (e, v) => TryAssignFile("file.uid")(e.IndicatorFile ??= new File(),v),
+				"threat.indicator.file.hash.cdhash" => static (e, v) => TryAssignFile("file.hash.cdhash")(e.IndicatorFile ??= new File(),v),
+				"ThreatIndicatorFileHashCdhash" => static (e, v) => TryAssignFile("file.hash.cdhash")(e.IndicatorFile ??= new File(),v),
 				"threat.indicator.file.hash.md5" => static (e, v) => TryAssignFile("file.hash.md5")(e.IndicatorFile ??= new File(),v),
 				"ThreatIndicatorFileHashMd5" => static (e, v) => TryAssignFile("file.hash.md5")(e.IndicatorFile ??= new File(),v),
 				"threat.indicator.file.hash.sha1" => static (e, v) => TryAssignFile("file.hash.sha1")(e.IndicatorFile ??= new File(),v),
@@ -5494,6 +5581,8 @@ namespace Elastic.CommonSchema
 				"ThreatIndicatorFileCodeSignatureDigestAlgorithm" => static (e, v) => TryAssignFile("file.code_signature.digest_algorithm")(e.IndicatorFile ??= new File(),v),
 				"threat.indicator.file.code_signature.exists" => static (e, v) => TryAssignFile("file.code_signature.exists")(e.IndicatorFile ??= new File(),v),
 				"ThreatIndicatorFileCodeSignatureExists" => static (e, v) => TryAssignFile("file.code_signature.exists")(e.IndicatorFile ??= new File(),v),
+				"threat.indicator.file.code_signature.flags" => static (e, v) => TryAssignFile("file.code_signature.flags")(e.IndicatorFile ??= new File(),v),
+				"ThreatIndicatorFileCodeSignatureFlags" => static (e, v) => TryAssignFile("file.code_signature.flags")(e.IndicatorFile ??= new File(),v),
 				"threat.indicator.file.code_signature.signing_id" => static (e, v) => TryAssignFile("file.code_signature.signing_id")(e.IndicatorFile ??= new File(),v),
 				"ThreatIndicatorFileCodeSignatureSigningId" => static (e, v) => TryAssignFile("file.code_signature.signing_id")(e.IndicatorFile ??= new File(),v),
 				"threat.indicator.file.code_signature.status" => static (e, v) => TryAssignFile("file.code_signature.status")(e.IndicatorFile ??= new File(),v),
@@ -5895,6 +5984,57 @@ namespace Elastic.CommonSchema
 			var entity = document.Vlan ?? new Vlan();
 			var assigned = assign(entity, value);
 			if (assigned) document.Vlan = entity;
+			return assigned;
+		}
+
+		public static Func<Volume, object, bool> TryAssignVolume(string path)
+		{
+			Func<Volume, object, bool> assign = path switch
+			{
+				"volume.bus_type" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.BusType = p),
+				"VolumeBusType" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.BusType = p),
+				"volume.default_access" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.DefaultAccess = p),
+				"VolumeDefaultAccess" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.DefaultAccess = p),
+				"volume.device_name" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.DeviceName = p),
+				"VolumeDeviceName" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.DeviceName = p),
+				"volume.device_type" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.DeviceType = p),
+				"VolumeDeviceType" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.DeviceType = p),
+				"volume.dos_name" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.DosName = p),
+				"VolumeDosName" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.DosName = p),
+				"volume.file_system_type" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.FileSystemType = p),
+				"VolumeFileSystemType" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.FileSystemType = p),
+				"volume.mount_name" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.MountName = p),
+				"VolumeMountName" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.MountName = p),
+				"volume.nt_name" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.NtName = p),
+				"VolumeNtName" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.NtName = p),
+				"volume.product_id" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.ProductId = p),
+				"VolumeProductId" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.ProductId = p),
+				"volume.product_name" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.ProductName = p),
+				"VolumeProductName" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.ProductName = p),
+				"volume.removable" => static (e, v) => TrySetBool(e, v, static (ee, p) => ee.Removable = p),
+				"VolumeRemovable" => static (e, v) => TrySetBool(e, v, static (ee, p) => ee.Removable = p),
+				"volume.serial_number" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.SerialNumber = p),
+				"VolumeSerialNumber" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.SerialNumber = p),
+				"volume.size" => static (e, v) => TrySetLong(e, v, static (ee, p) => ee.Size = p),
+				"VolumeSize" => static (e, v) => TrySetLong(e, v, static (ee, p) => ee.Size = p),
+				"volume.vendor_id" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.VendorId = p),
+				"VolumeVendorId" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.VendorId = p),
+				"volume.vendor_name" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.VendorName = p),
+				"VolumeVendorName" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.VendorName = p),
+				"volume.writable" => static (e, v) => TrySetBool(e, v, static (ee, p) => ee.Writable = p),
+				"VolumeWritable" => static (e, v) => TrySetBool(e, v, static (ee, p) => ee.Writable = p),
+				_ => null
+			};
+			return assign;
+		}
+		public static bool TrySetVolume(EcsDocument document, string path, object value)
+		{
+			var assign = TryAssignVolume(path);
+			if (assign == null) return false;
+		
+			var entity = document.Volume ?? new Volume();
+			var assigned = assign(entity, value);
+			if (assigned) document.Volume = entity;
 			return assigned;
 		}
 

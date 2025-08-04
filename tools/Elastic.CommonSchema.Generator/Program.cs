@@ -9,7 +9,7 @@ namespace Elastic.CommonSchema.Generator;
 
 public static class Program
 {
-	private const string DefaultDownloadBranch = "v8.11.0";
+	private const string DefaultDownloadBranch = "v8.17.0";
 
 	// ReSharper disable once UnusedParameter.Local
 	private static async Task Main(string[] args)
