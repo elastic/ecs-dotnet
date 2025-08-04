@@ -5,6 +5,7 @@ using Elastic.Channels;
 using Elastic.Channels.Buffers;
 using Elastic.Channels.Diagnostics;
 using Elastic.CommonSchema.NLog;
+using Elastic.CommonSchema.Serialization;
 using Elastic.Ingest.Elasticsearch;
 using Elastic.Ingest.Elasticsearch.CommonSchema;
 using Elastic.Ingest.Elasticsearch.DataStreams;
@@ -255,7 +256,8 @@ namespace NLog.Targets
 			var dataStreamNamespace = DataStreamNamespace?.Render(LogEventInfo.CreateNullEvent()) ?? string.Empty;
 			var channelOptions = new DataStreamChannelOptions<NLogEcsDocument>(transport)
 			{
-				DataStream = new DataStreamName(dataStreamType, dataStreamSet, dataStreamNamespace)
+				DataStream = new DataStreamName(dataStreamType, dataStreamSet, dataStreamNamespace),
+				SerializerContext = EcsJsonContext.Default,
 			};
 			SetupChannelOptions(channelOptions);
 			var channel = new EcsDataStreamChannel<NLogEcsDocument>(channelOptions, new[] { new InternalLoggerCallbackListener<NLogEcsDocument>() });
@@ -270,7 +272,8 @@ namespace NLog.Targets
 				IndexFormat = indexFormat,
 				IndexOffset = indexOffset,
 				TimestampLookup = l => l.Timestamp,
-				OperationMode = indexOperation
+				OperationMode = indexOperation,
+				SerializerContext = EcsJsonContext.Default,
 			};
 
 			if (_hasIndexEventId)

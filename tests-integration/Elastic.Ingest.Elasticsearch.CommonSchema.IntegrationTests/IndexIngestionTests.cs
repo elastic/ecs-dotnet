@@ -6,6 +6,7 @@ using System.Text.Json;
 using Elastic.Channels;
 using Elastic.Clients.Elasticsearch.IndexManagement;
 using Elastic.CommonSchema;
+using Elastic.CommonSchema.Serialization;
 using Elastic.Ingest.Elasticsearch.Indices;
 using Elastic.Transport;
 using FluentAssertions;
@@ -35,6 +36,7 @@ public class IndexIngestionTests : IntegrationTestBase
 			{
 				WaitHandle = slim, ExportMaxConcurrency = 1,
 			},
+			SerializerContext = EcsJsonContext.Default,
 		};
 		var channel = new EcsIndexChannel<CatalogDocument>(options);
 		var bootstrapped = await channel.BootstrapElasticsearchAsync(BootstrapMethod.Failure, "7-days-default");
@@ -87,6 +89,7 @@ public class IndexIngestionTests : IntegrationTestBase
 			{
 				WaitHandle = slim, ExportMaxConcurrency = 1,
 			},
+			SerializerContext = EcsJsonContext.Default,
 			EventWriter = new CustomEventWriter<CatalogDocument>()
 		};
 		var channel = new EcsIndexChannel<CatalogDocument>(options);
