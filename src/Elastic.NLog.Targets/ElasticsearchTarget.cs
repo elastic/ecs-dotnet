@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json.Serialization.Metadata;
 using Elastic.Channels;
 using Elastic.Channels.Buffers;
 using Elastic.Channels.Diagnostics;
@@ -224,13 +225,9 @@ namespace NLog.Targets
 
 			var transport = new DistributedTransport<ITransportConfiguration>(config);
 			if (!string.IsNullOrEmpty(indexFormat))
-			{
 				_channel = CreateIndexChannel(transport, indexFormat, indexOffset, IndexOperation);
-			}
 			else
-			{
 				_channel = CreateDataStreamChannel(transport);
-			}
 		}
 
 		private void SetupChannelOptions(ElasticsearchChannelOptionsBase<NLogEcsDocument> channelOptions)
@@ -257,7 +254,7 @@ namespace NLog.Targets
 			var channelOptions = new DataStreamChannelOptions<NLogEcsDocument>(transport)
 			{
 				DataStream = new DataStreamName(dataStreamType, dataStreamSet, dataStreamNamespace),
-				SerializerContext = EcsJsonContext.Default,
+				SerializerContexts = [EcsJsonContext.Default, NLogEcsJsonContext.Default]
 			};
 			SetupChannelOptions(channelOptions);
 			var channel = new EcsDataStreamChannel<NLogEcsDocument>(channelOptions, new[] { new InternalLoggerCallbackListener<NLogEcsDocument>() });
@@ -273,13 +270,10 @@ namespace NLog.Targets
 				IndexOffset = indexOffset,
 				TimestampLookup = l => l.Timestamp,
 				OperationMode = indexOperation,
-				SerializerContext = EcsJsonContext.Default,
+				SerializerContexts = [EcsJsonContext.Default, NLogEcsJsonContext.Default]
 			};
 
-			if (_hasIndexEventId)
-			{
-				indexChannelOptions.BulkOperationIdLookup = (logEvent) => (logEvent.Event?.Id)!;
-			}
+			if (_hasIndexEventId) indexChannelOptions.BulkOperationIdLookup = (logEvent) => (logEvent.Event?.Id)!;
 
 			SetupChannelOptions(indexChannelOptions);
 			return new EcsIndexChannel<NLogEcsDocument>(indexChannelOptions);
@@ -293,10 +287,24 @@ namespace NLog.Targets
 		}
 
 		/// <inheritdoc />
-		protected override void Write(LogEventInfo logEvent)
+		protected override void Write(NLog.Common.AsyncLogEventInfo logEvent)
 		{
-			var ecsDoc = _layout.RenderEcsDocument(logEvent);
-			_channel?.TryWrite(ecsDoc);
+			try
+			{
+				var ecsDoc = _layout.RenderEcsDocument(logEvent.LogEvent);
+				if (_channel?.TryWrite(ecsDoc) == true)
+					logEvent.Continuation(null);
+				else
+				{
+					NLog.Common.InternalLogger.Error("ElasticSearch - Failed writing to Elastic channel (Buffer full)");
+					logEvent.Continuation(new System.Threading.Tasks.TaskCanceledException("Failed writing to Elastic channel (Buffer full)"));
+				}
+			}
+			catch (Exception ex)
+			{
+				logEvent.Continuation(ex);
+				throw;
+			}
 		}
 
 		private NodePool CreateNodePool()
@@ -361,18 +369,18 @@ namespace NLog.Targets
 	{
 		public Action<Exception>? ExportExceptionCallback { get; }
 		public Action<BulkResponse, IWriteTrackingBuffer>? ExportResponseCallback { get; }
+		public Action? PublishToInboundChannelFailureCallback { get; }
+		public Action? PublishToOutboundChannelFailureCallback { get; }
 
 		// ReSharper disable UnassignedGetOnlyAutoProperty
 		public Action<int, int>? ExportItemsAttemptCallback { get; }
 		public Action<IReadOnlyCollection<TNLogEcsDocument>>? ExportMaxRetriesCallback { get; }
 		public Action<IReadOnlyCollection<TNLogEcsDocument>>? ExportRetryCallback { get; }
 		public Action? PublishToInboundChannelCallback { get; }
-		public Action? PublishToInboundChannelFailureCallback { get; }
 		public Action? PublishToOutboundChannelCallback { get; }
 		public Action? OutboundChannelStartedCallback { get; }
 		public Action? OutboundChannelExitedCallback { get; }
 		public Action? InboundChannelStartedCallback { get; }
-		public Action? PublishToOutboundChannelFailureCallback { get; }
 		public Action? ExportBufferCallback { get; }
 		public Action<int>? ExportRetryableCountCallback { get; }
 		// ReSharper enable UnassignedGetOnlyAutoProperty
@@ -382,6 +390,14 @@ namespace NLog.Targets
 			ExportExceptionCallback = ex =>
 			{
 				NLog.Common.InternalLogger.Error(ex, "ElasticSearch - Export Exception");
+			};
+			PublishToInboundChannelFailureCallback = () =>
+			{
+				NLog.Common.InternalLogger.Error("ElasticSearch - Inbound Channel Failure (Buffer full)");
+			};
+			PublishToOutboundChannelFailureCallback = () =>
+			{
+				NLog.Common.InternalLogger.Error("ElasticSearch - Outbound Channel Failure (Flush failed)");
 			};
 			ExportResponseCallback = (response, _) =>
 			{
