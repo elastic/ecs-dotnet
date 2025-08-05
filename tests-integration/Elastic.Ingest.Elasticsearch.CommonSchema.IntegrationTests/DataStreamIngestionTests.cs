@@ -6,6 +6,7 @@ using System.Text.Json;
 using Elastic.Channels;
 using Elastic.Clients.Elasticsearch.IndexManagement;
 using Elastic.CommonSchema;
+using Elastic.CommonSchema.Serialization;
 using Elastic.Ingest.Elasticsearch.DataStreams;
 using Elastic.Transport;
 using FluentAssertions;
@@ -32,6 +33,7 @@ public class DataStreamIngestionTests : IntegrationTestBase
 		{
 			DataStream = targetDataStream,
 			BufferOptions = new BufferOptions { WaitHandle = slim, OutboundBufferMaxSize = 1 },
+			SerializerContext = EcsJsonContext.Default,
 		};
 		var channel = new EcsDataStreamChannel<TimeSeriesDocument>(options);
 
@@ -80,7 +82,8 @@ public class DataStreamIngestionTests : IntegrationTestBase
 		{
 			DataStream = targetDataStream,
 			BufferOptions = new BufferOptions { WaitHandle = slim, OutboundBufferMaxSize = 1 },
-			EventWriter = new CustomEventWriter<TimeSeriesDocument>()
+			EventWriter = new CustomEventWriter<TimeSeriesDocument>(),
+			SerializerContext = EcsJsonContext.Default,
 		};
 		var channel = new EcsDataStreamChannel<TimeSeriesDocument>(options);
 

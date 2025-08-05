@@ -5,6 +5,7 @@ using Elastic.Channels;
 using Elastic.Channels.Buffers;
 using Elastic.Channels.Diagnostics;
 using Elastic.CommonSchema;
+using Elastic.CommonSchema.Serialization;
 using Elastic.CommonSchema.Serilog;
 using Elastic.Ingest.Elasticsearch;
 using Elastic.Ingest.Elasticsearch.CommonSchema;
@@ -136,7 +137,8 @@ namespace Elastic.Serilog.Sinks
 			var channelOptions = new DataStreamChannelOptions<TEcsDocument>(options.Transport)
 			{
 				DataStream = options.DataStream,
-				ExportMaxRetriesCallback = EmitExportFailures
+				ExportMaxRetriesCallback = EmitExportFailures,
+				SerializerContext = EcsJsonContext.Default,
 			};
 			options.ConfigureChannel?.Invoke(channelOptions);
 			_channel = new EcsDataStreamChannel<TEcsDocument>(channelOptions, new [] { new SelfLogCallbackListener<TEcsDocument>(options)});

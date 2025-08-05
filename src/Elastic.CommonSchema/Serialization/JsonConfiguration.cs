@@ -6,6 +6,7 @@ using System;
 using System.Text.Encodings.Web;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using System.Text.Json.Serialization.Metadata;
 
 namespace Elastic.CommonSchema.Serialization
 {
@@ -19,6 +20,7 @@ namespace Elastic.CommonSchema.Serialization
 			NumberHandling = JsonNumberHandling.AllowNamedFloatingPointLiterals,
 			Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
 			PropertyNamingPolicy = new SnakeCaseJsonNamingPolicy(),
+			TypeInfoResolver = JsonTypeInfoResolver.Combine(new DefaultJsonTypeInfoResolver(), EcsJsonContext.Default),
 			Converters =
 			{
 				new EcsDocumentJsonConverterFactory(),

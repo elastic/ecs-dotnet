@@ -1,5 +1,6 @@
 ﻿using Elastic.Channels;
 using Elastic.CommonSchema;
+using Elastic.CommonSchema.Serialization;
 using Elastic.Elasticsearch.Ephemeral;
 using Elastic.Ingest.Elasticsearch;
 using Elastic.Ingest.Elasticsearch.CommonSchema;
@@ -116,7 +117,8 @@ EcsDataStreamChannel<EcsDocument> SetupElasticsearchChannel()
 	var c = new EcsDataStreamChannel<EcsDocument>(
 		new DataStreamChannelOptions<EcsDocument>(new DistributedTransport(transportConfiguration))
 		{
-			BufferOptions = bufferOptions
+			BufferOptions = bufferOptions,
+			SerializerContext = EcsJsonContext.Default
 		});
 
 	return c;

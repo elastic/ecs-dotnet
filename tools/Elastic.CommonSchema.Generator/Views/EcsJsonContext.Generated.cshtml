@@ -17,6 +17,9 @@ using System.Text.Json.Serialization;
 
 namespace Elastic.CommonSchema.Serialization;
 
+/// An implementation of <see cref="JsonSerializerContext"/> that could be used to be combined with user data
+[JsonSerializable(typeof(EcsDocument))]
+[JsonSerializable(typeof(Labels))]
 @foreach (var property in Model.Base.EntityProperties)
 {
 <text>[JsonSerializable(typeof(@property.Entity.Name))]
@@ -27,7 +30,7 @@ namespace Elastic.CommonSchema.Serialization;
 <text>[JsonSerializable(typeof(@entity.Name))]
 </text>
 }
-[JsonSerializable(typeof(LogEntityJsonConverter.LogOriginInvalid))]
-[JsonSerializable(typeof(LogEntityJsonConverter.LogFileOriginInvalid))]
+[JsonSerializable(typeof(ParserIntermediary.LogOriginInvalid))]
+[JsonSerializable(typeof(ParserIntermediary.LogFileOriginInvalid))]
 [JsonSourceGenerationOptions(DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull)]
-internal partial class EcsJsonContext : JsonSerializerContext { }
+public partial class EcsJsonContext : JsonSerializerContext { }
