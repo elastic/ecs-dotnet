@@ -6,7 +6,7 @@
 /*
 IMPORTANT NOTE
 ==============
-This file has been generated. 
+This file has been generated.
 If you wish to submit a PR please modify the original csharp file and submit the PR with that change. Thanks!
 */
 
@@ -14,6 +14,9 @@ using System.Text.Json.Serialization;
 
 namespace Elastic.CommonSchema.Serialization;
 
+/// An implementation of <see cref="JsonSerializerContext"/> that could be used to be combined with user data
+[JsonSerializable(typeof(EcsDocument))]
+[JsonSerializable(typeof(Labels))]
 [JsonSerializable(typeof(Agent))]
 [JsonSerializable(typeof(As))]
 [JsonSerializable(typeof(Client))]
@@ -64,7 +67,7 @@ namespace Elastic.CommonSchema.Serialization;
 [JsonSerializable(typeof(Volume))]
 [JsonSerializable(typeof(Vulnerability))]
 [JsonSerializable(typeof(X509))]
-[JsonSerializable(typeof(LogEntityJsonConverter.LogOriginInvalid))]
-[JsonSerializable(typeof(LogEntityJsonConverter.LogFileOriginInvalid))]
+[JsonSerializable(typeof(ParserIntermediary.LogOriginInvalid))]
+[JsonSerializable(typeof(ParserIntermediary.LogFileOriginInvalid))]
 [JsonSourceGenerationOptions(DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull)]
-internal partial class EcsJsonContext : JsonSerializerContext { }
+public partial class EcsJsonContext : JsonSerializerContext { }

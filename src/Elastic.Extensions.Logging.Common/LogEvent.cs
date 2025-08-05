@@ -81,4 +81,5 @@ namespace Elastic.Extensions.Logging
 			if (Scopes != null) write(ScopesPropertyName, Scopes);
 		}
 	}
+
 }

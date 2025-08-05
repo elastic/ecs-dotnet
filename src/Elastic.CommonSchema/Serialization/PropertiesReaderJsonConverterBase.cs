@@ -57,29 +57,41 @@ internal partial class EcsEntityJsonConverter
 	private partial bool ReadProperty(ref Utf8JsonReader reader, string propertyName, Ecs ecsEvent, JsonSerializerOptions options) => false;
 }
 
-internal partial class LogEntityJsonConverter
+
+/// intermediary parser objects, not meant for direct consumption
+public class ParserIntermediary
 {
-	internal class LogFileOriginInvalid
+	/// intermediary parser for log data in a different format
+	public class LogFileOriginInvalid
 	{
+		/// <inheritdoc cref="LogFieldSet.OriginFileName"/>
 		[JsonPropertyName("name"), DataMember(Name = "name")]
 		public string? Name { get; set; }
 
+		/// <inheritdoc cref="LogFieldSet.OriginFileLine"/>
 		[JsonPropertyName("line"), DataMember(Name = "line")]
 		public int? Line { get; set; }
 	}
-	internal class LogOriginInvalid
+
+	/// intermediary parser for log data in a different format
+	public class LogOriginInvalid
 	{
+		/// <inheritdoc cref="LogFieldSet.OriginFunction"/>
 		[JsonPropertyName("function"), DataMember(Name = "function")]
 		public string? Function { get; set; }
 
+		/// <inheritdoc cref="LogFieldSet.FilePath"/>
 		[JsonPropertyName("file"), DataMember(Name = "file")]
 		public LogFileOriginInvalid? File { get; set; }
 	}
+}
 
+internal partial class LogEntityJsonConverter
+{
 	private partial bool ReadProperty(ref Utf8JsonReader reader, string propertyName, Log ecsEvent, JsonSerializerOptions options) =>
 		propertyName switch
 		{
-			"origin" => ReadProp<LogOriginInvalid>(ref reader, "origin", ecsEvent, (b, v) =>
+			"origin" => ReadProp<ParserIntermediary.LogOriginInvalid>(ref reader, "origin", ecsEvent, (b, v) =>
 			{
 				if (v == null) return;
 				b.OriginFunction = v.Function;

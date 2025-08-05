@@ -6,13 +6,7 @@ using Elastic.Extensions.Logging.Options;
 using Microsoft.Extensions.Logging.Configuration;
 using Microsoft.Extensions.Options;
 
-namespace Elastic.Extensions.Logging
-{
-	internal class ElasticsearchLoggerOptionsSetup : ConfigureFromConfigurationOptions<ElasticsearchLoggerOptions>
-	{
-		public ElasticsearchLoggerOptionsSetup(
-			ILoggerProviderConfiguration<ElasticsearchLoggerProvider> providerConfiguration
-		)
-			: base(providerConfiguration.Configuration) { }
-	}
-}
+namespace Elastic.Extensions.Logging;
+
+internal class ElasticsearchLoggerOptionsSetup(ILoggerProviderConfiguration<ElasticsearchLoggerProvider> providerConfiguration)
+	: ConfigureFromConfigurationOptions<ElasticsearchLoggerOptions>(providerConfiguration.Configuration);

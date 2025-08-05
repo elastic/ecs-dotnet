@@ -63,7 +63,7 @@ namespace Elastic.CommonSchema
 		public static EcsDocument? Deserialize(Stream stream) => EcsSerializerFactory<EcsDocument>.Deserialize(stream);
 
 		// ReSharper disable once UnusedMember.Global
-		/// <summary> Deserialize asynchronously a stream to <see cref="EcsDocument"/> </summary>
+		/// <summary> Asynchronously deserialize a stream to <see cref="EcsDocument"/> </summary>
 		public static ValueTask<EcsDocument?> DeserializeAsync(Stream stream, CancellationToken ctx = default) =>
 			EcsSerializerFactory<EcsDocument>.DeserializeAsync(stream, ctx);
 
