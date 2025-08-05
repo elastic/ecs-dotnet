@@ -254,7 +254,7 @@ namespace NLog.Targets
 			var channelOptions = new DataStreamChannelOptions<NLogEcsDocument>(transport)
 			{
 				DataStream = new DataStreamName(dataStreamType, dataStreamSet, dataStreamNamespace),
-				SerializerContexts = [EcsJsonContext.Default, NLogEcsJsonContext.Default]
+				SerializerContexts = [EcsJsonContext.Default, Elastic.CommonSchema.NLog.NLogEcsJsonContext.Default]
 			};
 			SetupChannelOptions(channelOptions);
 			var channel = new EcsDataStreamChannel<NLogEcsDocument>(channelOptions, new[] { new InternalLoggerCallbackListener<NLogEcsDocument>() });
@@ -270,7 +270,7 @@ namespace NLog.Targets
 				IndexOffset = indexOffset,
 				TimestampLookup = l => l.Timestamp,
 				OperationMode = indexOperation,
-				SerializerContexts = [EcsJsonContext.Default, NLogEcsJsonContext.Default]
+				SerializerContexts = [EcsJsonContext.Default, Elastic.CommonSchema.NLog.NLogEcsJsonContext.Default]
 			};
 
 			if (_hasIndexEventId) indexChannelOptions.BulkOperationIdLookup = (logEvent) => (logEvent.Event?.Id)!;
