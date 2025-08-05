@@ -16,19 +16,10 @@ using NLog.Targets;
 
 namespace Elastic.CommonSchema.NLog
 {
-	internal class NlogEcsDocumentCreationOptions : IEcsDocumentCreationOptions
-	{
-		public static NlogEcsDocumentCreationOptions Default { get; } = new();
-		public bool IncludeHost { get; set; } = true;
-		public bool IncludeProcess { get; set; } = false;
-		public bool IncludeUser { get; set; } = false;
-		public bool IncludeActivityData { get; set; } = false;
-	}
-
 	/// <summary> An NLOG layout implementation that renders logs as ECS json</summary>
 	[Layout(Name)]
 	[ThreadAgnostic]
-	public class EcsLayout : Layout
+	public partial class EcsLayout : Layout
 	{
 		/// <summary> An NLOG layout implementation that renders logs as ECS json</summary>
 		public const string Name = nameof(EcsLayout);
@@ -569,7 +560,7 @@ namespace Elastic.CommonSchema.NLog
 			var processExecutable = ProcessExecutable?.Render(logEventInfo);
 			var processThreadId = ProcessThreadId?.Render(logEventInfo);
 			var processThreadName = ProcessThreadName?.Render(logEventInfo);
-			
+
 			var previousProcess = _previousProcess;
 			if (string.IsNullOrEmpty(processThreadId) && string.IsNullOrEmpty(processThreadName))
 			{

@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json.Serialization.Metadata;
 using Elastic.Channels;
 using Elastic.Channels.Buffers;
 using Elastic.Channels.Diagnostics;
@@ -224,13 +225,9 @@ namespace NLog.Targets
 
 			var transport = new DistributedTransport<ITransportConfiguration>(config);
 			if (!string.IsNullOrEmpty(indexFormat))
-			{
 				_channel = CreateIndexChannel(transport, indexFormat, indexOffset, IndexOperation);
-			}
 			else
-			{
 				_channel = CreateDataStreamChannel(transport);
-			}
 		}
 
 		private void SetupChannelOptions(ElasticsearchChannelOptionsBase<NLogEcsDocument> channelOptions)
@@ -257,7 +254,7 @@ namespace NLog.Targets
 			var channelOptions = new DataStreamChannelOptions<NLogEcsDocument>(transport)
 			{
 				DataStream = new DataStreamName(dataStreamType, dataStreamSet, dataStreamNamespace),
-				SerializerContext = EcsJsonContext.Default,
+				SerializerContexts = [EcsJsonContext.Default, NLogEcsJsonContext.Default]
 			};
 			SetupChannelOptions(channelOptions);
 			var channel = new EcsDataStreamChannel<NLogEcsDocument>(channelOptions, new[] { new InternalLoggerCallbackListener<NLogEcsDocument>() });
@@ -273,13 +270,10 @@ namespace NLog.Targets
 				IndexOffset = indexOffset,
 				TimestampLookup = l => l.Timestamp,
 				OperationMode = indexOperation,
-				SerializerContext = EcsJsonContext.Default,
+				SerializerContexts = [EcsJsonContext.Default, NLogEcsJsonContext.Default]
 			};
 
-			if (_hasIndexEventId)
-			{
-				indexChannelOptions.BulkOperationIdLookup = (logEvent) => (logEvent.Event?.Id)!;
-			}
+			if (_hasIndexEventId) indexChannelOptions.BulkOperationIdLookup = (logEvent) => (logEvent.Event?.Id)!;
 
 			SetupChannelOptions(indexChannelOptions);
 			return new EcsIndexChannel<NLogEcsDocument>(indexChannelOptions);
@@ -299,9 +293,7 @@ namespace NLog.Targets
 			{
 				var ecsDoc = _layout.RenderEcsDocument(logEvent.LogEvent);
 				if (_channel?.TryWrite(ecsDoc) == true)
-				{
 					logEvent.Continuation(null);
-				}
 				else
 				{
 					NLog.Common.InternalLogger.Error("ElasticSearch - Failed writing to Elastic channel (Buffer full)");
@@ -418,8 +410,10 @@ namespace NLog.Targets
 				if (response.Items?.Count > 0)
 				{
 					foreach (var itemResult in response.Items)
+					{
 						if (itemResult?.Status >= 300)
 							NLog.Common.InternalLogger.Error("ElasticSearch - Export Item failed to {0} document status {1} - {2}", itemResult.Action, itemResult.Status, itemResult.Error);
+					}
 				}
 			};
 		}
