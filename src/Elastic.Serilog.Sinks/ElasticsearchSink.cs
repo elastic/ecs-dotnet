@@ -31,14 +31,14 @@ namespace Elastic.Serilog.Sinks
 		IEcsTextFormatterConfiguration EcsTextFormatterConfiguration { get; }
 
 		/// <inheritdoc cref="DataStreamName"/>
-		public DataStreamName DataStream { get; }
+		DataStreamName DataStream { get; }
 
 		/// <summary>
 		/// The ILM Policy to apply, see the following for more details:
 		/// <para>https://www.elastic.co/guide/en/elasticsearch/reference/current/index-lifecycle-management.html</para>
 		/// Defaults to `logs` which is shipped by default with Elasticsearch
 		/// </summary>
-		public string? IlmPolicy { get; }
+		string? IlmPolicy { get; }
 
 	}
 
@@ -137,7 +137,6 @@ namespace Elastic.Serilog.Sinks
 			{
 				DataStream = options.DataStream,
 				ExportMaxRetriesCallback = EmitExportFailures
-
 			};
 			options.ConfigureChannel?.Invoke(channelOptions);
 			_channel = new EcsDataStreamChannel<TEcsDocument>(channelOptions, new [] { new SelfLogCallbackListener<TEcsDocument>(options)});
@@ -153,7 +152,7 @@ namespace Elastic.Serilog.Sinks
 				.ToArray();
 			_failureListener.OnLoggingFailed(
 				this,
-				LoggingFailureKind.Temporary,
+				LoggingFailureKind.Permanent,
 				"Failure to export events over to Elasticsearch.",
 				logs,
 				exception: null
@@ -169,7 +168,7 @@ namespace Elastic.Serilog.Sinks
 			{
 				_failureListener.OnLoggingFailed(
 					this,
-					LoggingFailureKind.Temporary,
+					LoggingFailureKind.Permanent,
 					"Failure to push event over the channel.",
 					[logEvent],
 					exception: null
