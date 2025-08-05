@@ -4,6 +4,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Runtime.Serialization;
 using System.Text.Json;
 using System.Text.Json.Serialization;
@@ -53,6 +54,8 @@ namespace Elastic.CommonSchema.Serialization
 			return dictionary.Count > 0 ? dictionary : null;
 		}
 
+		[UnconditionalSuppressMessage("ReflectionAnalysis", "IL2026:RequiresUnreferencedCode", Justification = "We always provide a static JsonTypeInfoResolver")]
+		[UnconditionalSuppressMessage("AotAnalysis", "IL3050:RequiresDynamicCode", Justification = "We always provide a static JsonTypeInfoResolver")]
 		public override void Write(Utf8JsonWriter writer, MetadataDictionary value, JsonSerializerOptions options)
 		{
 			writer.WriteStartObject();

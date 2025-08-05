@@ -1,5 +1,6 @@
 using System;
 using System.Buffers;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Text.Json;
 using System.Threading;
@@ -21,18 +22,24 @@ public static class EcsSerializerFactory<TEcsDocument> where TEcsDocument : EcsD
 	/// <summary>
 	/// Deserialize a <typeparamref name="TEcsDocument"/> instance from a Stream asynchronously.
 	/// </summary>
+	[UnconditionalSuppressMessage("ReflectionAnalysis", "IL2026:RequiresUnreferencedCode", Justification = "We always provide a static JsonTypeInfoResolver")]
+	[UnconditionalSuppressMessage("AotAnalysis", "IL3050:RequiresDynamicCode", Justification = "We always provide a static JsonTypeInfoResolver")]
 	public static ValueTask<TEcsDocument?> DeserializeAsync(Stream stream, CancellationToken ctx = default) =>
 		JsonSerializer.DeserializeAsync<TEcsDocument>(stream, EcsJsonConfiguration.SerializerOptions, ctx);
 
 	/// <summary>
 	/// Deserialize a <typeparamref name="TEcsDocument"/> instance from a json string.
 	/// </summary>
+	[UnconditionalSuppressMessage("ReflectionAnalysis", "IL2026:RequiresUnreferencedCode", Justification = "We always provide a static JsonTypeInfoResolver")]
+	[UnconditionalSuppressMessage("AotAnalysis", "IL3050:RequiresDynamicCode", Justification = "We always provide a static JsonTypeInfoResolver")]
 	public static TEcsDocument? Deserialize(string json) =>
 		JsonSerializer.Deserialize<TEcsDocument>(json, EcsJsonConfiguration.SerializerOptions);
 
 	/// <summary>
 	/// Deserialize a <typeparamref name="TEcsDocument"/> instance from a readonly span of bytes.
 	/// </summary>
+	[UnconditionalSuppressMessage("ReflectionAnalysis", "IL2026:RequiresUnreferencedCode", Justification = "We always provide a static JsonTypeInfoResolver")]
+	[UnconditionalSuppressMessage("AotAnalysis", "IL3050:RequiresDynamicCode", Justification = "We always provide a static JsonTypeInfoResolver")]
 	public static TEcsDocument? Deserialize(ReadOnlySpan<byte> json) =>
 		JsonSerializer.Deserialize<TEcsDocument>(json, EcsJsonConfiguration.SerializerOptions);
 
