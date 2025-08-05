@@ -1,5 +1,6 @@
 using System.Text.Json.Serialization;
-using Elastic.CommonSchema.NLog;
+
+namespace Elastic.CommonSchema.NLog;
 
 /// <summary>
 ///
