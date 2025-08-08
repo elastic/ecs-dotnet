@@ -419,7 +419,6 @@ namespace NLog.Targets
 					foreach (var itemResult in response.Items)
 						if (itemResult?.Status >= 300)
 							Common.InternalLogger.Error("ElasticSearch - Export Item failed to {0} document status {1} - {2}", itemResult.Action, itemResult.Status, itemResult.Error);
-					}
 				}
 			};
 		}
