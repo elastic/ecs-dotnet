@@ -92,3 +92,31 @@ jobs:
       with:
         name: test-results-linux
         path: build/output/junit-*.xml
+
+  aot-validate:
+    runs-on: ${{ matrix.os.runner }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os:
+          - runner: ubuntu-latest
+            folder: linux-x64
+            binary: ecs-aot-smoketest
+          - runner: macos-latest
+            folder: osx-arm64
+            binary: ecs-aot-smoketest
+          - runner: windows-latest
+            folder: win-x64
+            binary: ecs-aot-smoketest.exe
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-dotnet@v4
+        with:
+          global-json-file: ./global.json
+
+      - name: Publish AOT
+        run: dotnet publish examples/ecs-aot-smoketest
+
+      - name: Invoke AOT
+        run: ./examples/ecs-aot-smoketest/bin/Release/net9.0/${{ matrix.os.folder }}/publish/${{ matrix.os.binary }}

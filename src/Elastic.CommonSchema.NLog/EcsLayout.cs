@@ -18,7 +18,6 @@ namespace Elastic.CommonSchema.NLog
 {
 	/// <summary> An NLOG layout implementation that renders logs as ECS json</summary>
 	[Layout(Name)]
-	[ThreadSafe]
 	[ThreadAgnostic]
 	public partial class EcsLayout : Layout
 	{
@@ -50,7 +49,6 @@ namespace Elastic.CommonSchema.NLog
 			ProcessThreadId = "${threadid}";
 
 			HostName = "${hostname}";	// NLog 4.6
-			HostIp = "${local-ip:cachedSeconds=60}"; // NLog 4.6.8
 
 			ServerUser = "${environment-user}"; // NLog 4.6.4
 
@@ -94,9 +92,6 @@ namespace Elastic.CommonSchema.NLog
 				UrlPort = "${aspnet-request-url:IncludeScheme=false:IncludeHost=false:IncludePath=false:IncludePort=true}";
 				UrlQuery = "${aspnet-request-url:IncludeScheme=false:IncludeHost=false:IncludePath=false:IncludeQueryString=true}";
 				UrlUserName = "${aspnet-user-identity}";
-
-				if (!NLogApmLoaded.Value)
-					ApmTraceId = "${scopeproperty:item=RequestId:whenEmpty=${aspnet-TraceIdentifier}}";
 			}
 
 			base.InitializeLayout();
@@ -383,15 +378,14 @@ namespace Elastic.CommonSchema.NLog
 
 			if (IncludeScopeProperties)
 			{
-				foreach (var key in MappedDiagnosticsLogicalContext.GetNames())
+				foreach (var scopeProperty in ScopeContext.GetAllProperties())
 				{
-					if (string.IsNullOrEmpty(key) || ExcludeProperties.Contains(key))
+					if (string.IsNullOrEmpty(scopeProperty.Key) || ExcludeProperties.Contains(scopeProperty.Key))
 						continue;
 
-					var propertyValue = MappedDiagnosticsLogicalContext.GetObject(key);
-					if (!TryPopulateWhenSafe(metadata, key, propertyValue))
+					if (!TryPopulateWhenSafe(metadata, scopeProperty.Key, scopeProperty.Value))
 					{
-						Populate(metadata, key, propertyValue.ToString());
+						Populate(metadata, scopeProperty.Key, scopeProperty.Value.ToString());
 					}
 				}
 			}

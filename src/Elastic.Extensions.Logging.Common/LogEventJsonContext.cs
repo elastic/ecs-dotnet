@@ -7,4 +7,4 @@ namespace Elastic.Extensions.Logging.Common;
 /// </summary>
 [JsonSerializable(typeof(LogEvent))]
 [JsonSourceGenerationOptions(DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull)]
-public partial class LogEventJsonContext : JsonSerializerContext { }
+public partial class LogEventJsonContext : JsonSerializerContext;

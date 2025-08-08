@@ -3,6 +3,7 @@
 // See the LICENSE file in the project root for more information
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Text.Json.Serialization.Metadata;
@@ -13,6 +14,8 @@ namespace Elastic.CommonSchema.Serialization
 	public abstract class EcsJsonConverterBase<T> : JsonConverter<T>
 	{
 		/// <summary></summary>
+		[UnconditionalSuppressMessage("ReflectionAnalysis", "IL2026:RequiresUnreferencedCode", Justification = "We always provide a static JsonTypeInfoResolver")]
+		[UnconditionalSuppressMessage("AotAnalysis", "IL3050:RequiresDynamicCode", Justification = "We always provide a static JsonTypeInfoResolver")]
 		protected static JsonConverter<DateTimeOffset> GetDateTimeOffsetConverter(JsonSerializerOptions options) =>
 			options == EcsJsonConfiguration.SerializerOptions
 				? EcsJsonConfiguration.DateTimeOffsetConverter
@@ -59,6 +62,8 @@ namespace Elastic.CommonSchema.Serialization
 		}
 
 		/// <summary></summary>
+		[UnconditionalSuppressMessage("ReflectionAnalysis", "IL2026:RequiresUnreferencedCode", Justification = "We always provide a static JsonTypeInfoResolver")]
+		[UnconditionalSuppressMessage("AotAnalysis", "IL3050:RequiresDynamicCode", Justification = "We always provide a static JsonTypeInfoResolver")]
 		protected static void WriteProp<TValue>(Utf8JsonWriter writer, string key, TValue value, JsonSerializerOptions options)
 		{
 			if (value == null) return;
@@ -70,6 +75,8 @@ namespace Elastic.CommonSchema.Serialization
 		}
 
 		/// <summary></summary>
+		[UnconditionalSuppressMessage("ReflectionAnalysis", "IL2026:RequiresUnreferencedCode", Justification = "We always provide a static JsonTypeInfoResolver")]
+		[UnconditionalSuppressMessage("AotAnalysis", "IL3050:RequiresDynamicCode", Justification = "We always provide a static JsonTypeInfoResolver")]
 		protected static void WriteProp<TValue>(Utf8JsonWriter writer, string key, TValue value, JsonTypeInfo<TValue> typeInfo,
 			JsonSerializerOptions options)
 		{
@@ -84,6 +91,8 @@ namespace Elastic.CommonSchema.Serialization
 			else JsonSerializer.Serialize(writer, value, typeInfo);
 		}
 
+		[UnconditionalSuppressMessage("ReflectionAnalysis", "IL2026:RequiresUnreferencedCode", Justification = "We always provide a static JsonTypeInfoResolver")]
+		[UnconditionalSuppressMessage("AotAnalysis", "IL3050:RequiresDynamicCode", Justification = "We always provide a static JsonTypeInfoResolver")]
 		internal static object? ReadPropDeserialize(ref Utf8JsonReader reader, Type type, JsonSerializerOptions options)
 		{
 			if (reader.TokenType == JsonTokenType.Null) return null;
@@ -122,6 +131,8 @@ namespace Elastic.CommonSchema.Serialization
 
 		/// <summary></summary>
 		// ReSharper disable once UnusedParameter.Local (key is used for readability)
+		[UnconditionalSuppressMessage("ReflectionAnalysis", "IL2026:RequiresUnreferencedCode", Justification = "We always provide a static JsonTypeInfoResolver")]
+		[UnconditionalSuppressMessage("AotAnalysis", "IL3050:RequiresDynamicCode", Justification = "We always provide a static JsonTypeInfoResolver")]
 		private static TValue? ReadProp<TValue>(ref Utf8JsonReader reader, string key, JsonSerializerOptions options)  where TValue : class
 		{
 			if (reader.TokenType == JsonTokenType.Null) return null;

@@ -41,7 +41,7 @@ namespace Elastic.CommonSchema.NLog.Tests
 			var ecsEvents = ToEcsEvents(logEvents);
 
 			var (_, info) = ecsEvents.First();
-			info.Message.Should().Be("Info \"X\" 2.2 42");
+			info.Message.Should().Be("Info X 2.2 42");
 			info.Labels.Should().ContainKey("ValueX");
 			info.Metadata.Should().ContainKey("SomeY");
 			info.Metadata.Should().NotContainKey("NotX");
@@ -228,7 +228,7 @@ namespace Elastic.CommonSchema.NLog.Tests
 		[Fact]
 		public void MetadataWithSameKeys() => TestLogger((logger, getLogEvents) =>
 		{
-			using (MappedDiagnosticsLogicalContext.SetScoped("DupKey", "Mdlc"))
+			using (ScopeContext.PushProperty("DupKey", "Mdlc"))
 			{
 				logger.Info("Info {DupKey}", "LoggerArg");
 
@@ -239,7 +239,7 @@ namespace Elastic.CommonSchema.NLog.Tests
 
 				var (json, info) = ecsEvents.First();
 
-				info.Message.Should().Be("Info \"LoggerArg\"");
+				info.Message.Should().Be("Info LoggerArg");
 				info.Labels.Should().Contain("DupKey", "LoggerArg");
 				info.Labels.Should().Contain("DupKey_1", "Mdlc");
 

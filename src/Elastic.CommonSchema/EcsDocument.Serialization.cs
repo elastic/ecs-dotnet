@@ -3,6 +3,7 @@
 // See the LICENSE file in the project root for more information
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Text;
 using System.Text.Encodings.Web;
@@ -68,10 +69,14 @@ namespace Elastic.CommonSchema
 			EcsSerializerFactory<EcsDocument>.DeserializeAsync(stream, ctx);
 
 		/// <summary> Serialize this <see cref="EcsDocument"/> instance to string</summary>
+		[UnconditionalSuppressMessage("ReflectionAnalysis", "IL2026:RequiresUnreferencedCode", Justification = "We always provide a static JsonTypeInfoResolver")]
+		[UnconditionalSuppressMessage("AotAnalysis", "IL3050:RequiresDynamicCode", Justification = "We always provide a static JsonTypeInfoResolver")]
 		public string Serialize() => JsonSerializer.Serialize(this, GetType(), SerializerOptions);
 
 		// ReSharper disable once UnusedMember.Global
 		/// <summary> Serialize this <see cref="EcsDocument"/> instance to utf8 bytes</summary>
+		[UnconditionalSuppressMessage("ReflectionAnalysis", "IL2026:RequiresUnreferencedCode", Justification = "We always provide a static JsonTypeInfoResolver")]
+		[UnconditionalSuppressMessage("AotAnalysis", "IL3050:RequiresDynamicCode", Justification = "We always provide a static JsonTypeInfoResolver")]
 		public byte[] SerializeToUtf8Bytes() => JsonSerializer.SerializeToUtf8Bytes(this, GetType(), SerializerOptions);
 
 		private static readonly ReusableUtf8JsonWriter ReusableJsonWriter = new();
@@ -87,6 +92,8 @@ namespace Elastic.CommonSchema
 
 		// ReSharper disable once UnusedMember.Global
 		/// <summary> Serialize this <see cref="EcsDocument"/> instance to a Stream</summary>
+		[UnconditionalSuppressMessage("ReflectionAnalysis", "IL2026:RequiresUnreferencedCode", Justification = "We always provide a static JsonTypeInfoResolver")]
+		[UnconditionalSuppressMessage("AotAnalysis", "IL3050:RequiresDynamicCode", Justification = "We always provide a static JsonTypeInfoResolver")]
 		public void Serialize(Stream stream)
 		{
 			using var writer = new Utf8JsonWriter(stream, new JsonWriterOptions
@@ -97,9 +104,13 @@ namespace Elastic.CommonSchema
 			JsonSerializer.Serialize(writer, this, SerializerOptions);
 		}
 
+		[UnconditionalSuppressMessage("ReflectionAnalysis", "IL2026:RequiresUnreferencedCode", Justification = "We always provide a static JsonTypeInfoResolver")]
+		[UnconditionalSuppressMessage("AotAnalysis", "IL3050:RequiresDynamicCode", Justification = "We always provide a static JsonTypeInfoResolver")]
 		internal void Serialize(Utf8JsonWriter writer) => JsonSerializer.Serialize(writer, this, SerializerOptions);
 
 		/// <summary> Serialize this <see cref="EcsDocument"/> instance to a Stream asynchronously</summary>
+		[UnconditionalSuppressMessage("ReflectionAnalysis", "IL2026:RequiresUnreferencedCode", Justification = "We always provide a static JsonTypeInfoResolver")]
+		[UnconditionalSuppressMessage("AotAnalysis", "IL3050:RequiresDynamicCode", Justification = "We always provide a static JsonTypeInfoResolver")]
 		public Task SerializeAsync(Stream stream, CancellationToken ctx = default) =>
 			JsonSerializer.SerializeAsync(stream, this, GetType(), SerializerOptions, ctx);
 	}

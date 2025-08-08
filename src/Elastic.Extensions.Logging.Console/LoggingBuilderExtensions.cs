@@ -1,3 +1,4 @@
+using System.Diagnostics.CodeAnalysis;
 using Microsoft.Extensions.Logging;
 
 namespace Elastic.Extensions.Logging.Console;
@@ -6,7 +7,14 @@ namespace Elastic.Extensions.Logging.Console;
 public static class LoggingBuilderExtensions
 {
 	/// <summary> Adds ECS output to console output</summary>
-	public static ILoggingBuilder AddEcsConsole(this ILoggingBuilder builder, LogLevel stdErrorThreshold = LogLevel.Warning, Action<EcsConsoleFormatterOptions>? configure = null)
+	[UnconditionalSuppressMessage("ReflectionAnalysis", "IL2026:RequiresUnreferencedCode", Justification = "Action is not bound")]
+	[UnconditionalSuppressMessage("AotAnalysis", "IL3050:RequiresDynamicCode", Justification = "Action is not bound")]
+	[UnconditionalSuppressMessage("AotAnalysis", "IL2092:DynamicallyAccessedMemberTypes", Justification = "More concrete then override")]
+	public static ILoggingBuilder AddEcsConsole(
+		this ILoggingBuilder builder,
+		LogLevel stdErrorThreshold = LogLevel.Warning,
+		Action<EcsConsoleFormatterOptions>? configure = null
+	)
 	{
 		builder.AddConsole(c=>
 		{

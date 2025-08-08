@@ -24,7 +24,7 @@ namespace Elastic.CommonSchema.NLog.Tests
 			var ecsEvents = ToEcsEvents(logEvents);
 
 			var (_, info) = ecsEvents.First();
-			info.Message.Should().Be("Info \"my-trace-id\": true");
+			info.Message.Should().Be("Info my-trace-id: true");
 			info.Labels.Should().BeNull();
 			info.Metadata.Should().BeNull();
 
