@@ -119,4 +119,4 @@ jobs:
         run: dotnet publish examples/ecs-aot-smoketest
 
       - name: Invoke AOT
-        run: ./examples/ecs-aot-smoketest/bin/release/net9.0/${{ matrix.os.folder }}/${{ matrix.os.binary }}
+        run: ./examples/ecs-aot-smoketest/bin/Release/net9.0/${{ matrix.os.folder }}/publish/${{ matrix.os.binary }}
