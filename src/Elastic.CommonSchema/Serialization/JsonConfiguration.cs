@@ -3,6 +3,7 @@
 // See the LICENSE file in the project root for more information
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Text.Encodings.Web;
 using System.Text.Json;
 using System.Text.Json.Serialization;
@@ -13,7 +14,16 @@ namespace Elastic.CommonSchema.Serialization
 	/// <summary>Static class holding <see cref="JsonSerializerOptions"/></summary>
 	public static class EcsJsonConfiguration
 	{
+		/// <summary> ahas </summary>
+		[UnconditionalSuppressMessage("ReflectionAnalysis", "IL2026:RequiresUnreferencedCode", Justification = "We always provide a static JsonTypeInfoResolver")]
+		[UnconditionalSuppressMessage("AotAnalysis", "IL3050:RequiresDynamicCode", Justification = "We always provide a static JsonTypeInfoResolver")]
+		static EcsJsonConfiguration()
+		{
+		}
+
 		/// <summary>Default <see cref="JsonSerializerOptions"/> used by ECS integrations</summary>
+		[UnconditionalSuppressMessage("ReflectionAnalysis", "IL2026:RequiresUnreferencedCode", Justification = "We always provide a static JsonTypeInfoResolver")]
+		[UnconditionalSuppressMessage("AotAnalysis", "IL3050:RequiresDynamicCode", Justification = "We always provide a static JsonTypeInfoResolver")]
 		public static JsonSerializerOptions SerializerOptions { get; } = new()
 		{
 			DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingDefault,
@@ -38,10 +48,14 @@ namespace Elastic.CommonSchema.Serialization
 			}
 		};
 
+		[UnconditionalSuppressMessage("ReflectionAnalysis", "IL2026:RequiresUnreferencedCode", Justification = "We always provide a static JsonTypeInfoResolver")]
+		[UnconditionalSuppressMessage("AotAnalysis", "IL3050:RequiresDynamicCode", Justification = "We always provide a static JsonTypeInfoResolver")]
 		internal static readonly JsonConverter<DateTimeOffset> DateTimeOffsetConverter =
 			(JsonConverter<DateTimeOffset>)SerializerOptions.GetConverter(typeof(DateTimeOffset));
 
 		/// <summary>Default <see cref="JsonConverter{T}"/> for <see cref="EcsDocument"/></summary>
+		[UnconditionalSuppressMessage("ReflectionAnalysis", "IL2026:RequiresUnreferencedCode", Justification = "We always provide a static JsonTypeInfoResolver")]
+		[UnconditionalSuppressMessage("AotAnalysis", "IL3050:RequiresDynamicCode", Justification = "We always provide a static JsonTypeInfoResolver")]
 		public static readonly EcsDocumentJsonConverter DefaultEcsDocumentJsonConverter = new();
 
 		private sealed class EcsJsonStringConverter<T> : JsonConverter<T>

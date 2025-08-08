@@ -26,8 +26,8 @@ namespace NLog.Targets
 	public class ElasticsearchTarget : TargetWithLayout
 	{
 		/// <inheritdoc />
-		public override Layout Layout { get => _layout; set => _layout = value as Elastic.CommonSchema.NLog.EcsLayout ?? _layout; }
-		private Elastic.CommonSchema.NLog.EcsLayout _layout = new Elastic.CommonSchema.NLog.EcsLayout();
+		public override Layout Layout { get => _layout; set => _layout = value as EcsLayout ?? _layout; }
+		private EcsLayout _layout = new EcsLayout();
 		private IBufferedChannel<NLogEcsDocument>? _channel;
 
 		/// <summary>
@@ -189,6 +189,9 @@ namespace NLog.Targets
 		/// </summary>
 		public Action<ElasticsearchChannelOptionsBase<NLogEcsDocument>>? ConfigureChannel { get; set; }
 
+		/// <summary> Provide a <see cref="IRequestInvoker"/> to the <see cref="ITransport{TConfiguration}"/> this target uses</summary>
+		public IRequestInvoker? RequestInvoker { get; set; }
+
 		/// <inheritdoc cref="IChannelDiagnosticsListener"/>
 		public IChannelDiagnosticsListener? DiagnosticsListener => _channel?.DiagnosticsListener;
 
@@ -200,7 +203,11 @@ namespace NLog.Targets
 			var indexOffset = string.IsNullOrEmpty(indexOffsetHours) ? default(TimeSpan?) : TimeSpan.FromHours(int.Parse(indexOffsetHours));
 
 			var connectionPool = CreateNodePool();
-			var config = new TransportConfigurationDescriptor(connectionPool, productRegistration: ElasticsearchProductRegistration.Default);
+			var config = new TransportConfigurationDescriptor(
+				connectionPool,
+				productRegistration: ElasticsearchProductRegistration.Default,
+				invoker: RequestInvoker
+			);
 			// Cloud sets authentication as required parameter in the constructor
 			if (NodePoolType != ElasticPoolType.Cloud)
 				config = SetAuthenticationOnTransport(config);
@@ -254,7 +261,7 @@ namespace NLog.Targets
 			var channelOptions = new DataStreamChannelOptions<NLogEcsDocument>(transport)
 			{
 				DataStream = new DataStreamName(dataStreamType, dataStreamSet, dataStreamNamespace),
-				SerializerContexts = [EcsJsonContext.Default, Elastic.CommonSchema.NLog.NLogEcsJsonContext.Default]
+				SerializerContexts = [EcsJsonContext.Default, NLogEcsJsonContext.Default]
 			};
 			SetupChannelOptions(channelOptions);
 			var channel = new EcsDataStreamChannel<NLogEcsDocument>(channelOptions, new[] { new InternalLoggerCallbackListener<NLogEcsDocument>() });
@@ -270,7 +277,7 @@ namespace NLog.Targets
 				IndexOffset = indexOffset,
 				TimestampLookup = l => l.Timestamp,
 				OperationMode = indexOperation,
-				SerializerContexts = [EcsJsonContext.Default, Elastic.CommonSchema.NLog.NLogEcsJsonContext.Default]
+				SerializerContexts = [EcsJsonContext.Default, NLogEcsJsonContext.Default]
 			};
 
 			if (_hasIndexEventId) indexChannelOptions.BulkOperationIdLookup = (logEvent) => (logEvent.Event?.Id)!;
@@ -287,7 +294,7 @@ namespace NLog.Targets
 		}
 
 		/// <inheritdoc />
-		protected override void Write(NLog.Common.AsyncLogEventInfo logEvent)
+		protected override void Write(Common.AsyncLogEventInfo logEvent)
 		{
 			try
 			{
@@ -296,7 +303,7 @@ namespace NLog.Targets
 					logEvent.Continuation(null);
 				else
 				{
-					NLog.Common.InternalLogger.Error("ElasticSearch - Failed writing to Elastic channel (Buffer full)");
+					Common.InternalLogger.Error("ElasticSearch - Failed writing to Elastic channel (Buffer full)");
 					logEvent.Continuation(new System.Threading.Tasks.TaskCanceledException("Failed writing to Elastic channel (Buffer full)"));
 				}
 			}
@@ -389,15 +396,15 @@ namespace NLog.Targets
 		{
 			ExportExceptionCallback = ex =>
 			{
-				NLog.Common.InternalLogger.Error(ex, "ElasticSearch - Export Exception");
+				Common.InternalLogger.Error(ex, "ElasticSearch - Export Exception");
 			};
 			PublishToInboundChannelFailureCallback = () =>
 			{
-				NLog.Common.InternalLogger.Error("ElasticSearch - Inbound Channel Failure (Buffer full)");
+				Common.InternalLogger.Error("ElasticSearch - Inbound Channel Failure (Buffer full)");
 			};
 			PublishToOutboundChannelFailureCallback = () =>
 			{
-				NLog.Common.InternalLogger.Error("ElasticSearch - Outbound Channel Failure (Flush failed)");
+				Common.InternalLogger.Error("ElasticSearch - Outbound Channel Failure (Flush failed)");
 			};
 			ExportResponseCallback = (response, _) =>
 			{
@@ -405,14 +412,14 @@ namespace NLog.Targets
 					return;
 
 				if (response.TryGetElasticsearchServerError(out var error))
-					NLog.Common.InternalLogger.Error("ElasticSearch - Export Response Server Error - {0}", error);
+					Common.InternalLogger.Error("ElasticSearch - Export Response Server Error - {0}", error);
 
 				if (response.Items?.Count > 0)
 				{
 					foreach (var itemResult in response.Items)
 					{
 						if (itemResult?.Status >= 300)
-							NLog.Common.InternalLogger.Error("ElasticSearch - Export Item failed to {0} document status {1} - {2}", itemResult.Action, itemResult.Status, itemResult.Error);
+							Common.InternalLogger.Error("ElasticSearch - Export Item failed to {0} document status {1} - {2}", itemResult.Action, itemResult.Status, itemResult.Error);
 					}
 				}
 			};

@@ -13,7 +13,7 @@
       Feel free to open an issue on our repos to discuss if you feel you need to target 
       a lower NLog version
     -->
-    <PackageReference Include="NLog" Version="5.2.5" />
+    <PackageReference Include="NLog" Version="6.0.2" />
     <PackageReference Include="Elastic.Apm" Version="1.22.0" />
   </ItemGroup>
 </Project>

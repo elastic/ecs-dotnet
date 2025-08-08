@@ -1,4 +1,6 @@
 using System;
+using System.Diagnostics.CodeAnalysis;
+using System.Runtime.CompilerServices;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
@@ -14,7 +16,10 @@ namespace Elastic.CommonSchema.Serialization
 		public override bool CanConvert(Type typeToConvert) => typeof(EcsDocument).IsAssignableFrom(typeToConvert);
 
 		/// <inheritdoc cref="JsonConverterFactory.CreateConverter"/>
-		public override JsonConverter CreateConverter(Type typeToConvert, JsonSerializerOptions options)
+		[UnconditionalSuppressMessage("ReflectionAnalysis", "IL2026:RequiresUnreferencedCode", Justification = "We always provide a static JsonTypeInfoResolver")]
+		[UnconditionalSuppressMessage("AotAnalysis", "IL3050:RequiresDynamicCode", Justification = "We always provide a static JsonTypeInfoResolver")]
+		[UnconditionalSuppressMessage("AotAnalysis", "IL2092:DynamicallyAccessedMemberTypes", Justification = "More concrete then override")]
+		public override JsonConverter CreateConverter([DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicParameterlessConstructor)]Type typeToConvert, JsonSerializerOptions options)
 		{
 			if (typeToConvert == typeof(EcsDocument))
 				return EcsJsonConfiguration.DefaultEcsDocumentJsonConverter;
