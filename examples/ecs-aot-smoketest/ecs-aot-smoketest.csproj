@@ -18,5 +18,8 @@
     <ProjectReference Include="..\..\src\Elastic.NLog.Targets\Elastic.NLog.Targets.csproj" />
     <ProjectReference Include="..\..\src\Elastic.Serilog.Sinks\Elastic.Serilog.Sinks.csproj" />
   </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="NLog" Version="6.0.3" />
+  </ItemGroup>
 
 </Project>
