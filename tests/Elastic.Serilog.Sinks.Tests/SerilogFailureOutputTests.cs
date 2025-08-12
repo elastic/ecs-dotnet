@@ -1,7 +1,9 @@
 using Elastic.Channels;
 using Elastic.Channels.Diagnostics;
 using Elastic.Transport;
+using FluentAssertions;
 using Serilog;
+using Serilog.Sinks.InMemory;
 using Xunit;
 using DataStreamName = Elastic.Ingest.Elasticsearch.DataStreams.DataStreamName;
 
@@ -38,7 +40,7 @@ namespace Elastic.Serilog.Sinks.Tests
 				.MinimumLevel.Information()
 				.WriteTo.FallbackChain(
 					fc => fc.Elasticsearch(SinkOptions),
-					fc => fc.Console()
+					fc => fc.InMemory()
 				);
 
 			using var logger = loggerConfig.CreateLogger();
@@ -47,6 +49,8 @@ namespace Elastic.Serilog.Sinks.Tests
 			if (!_waitHandle.WaitHandle.WaitOne(TimeSpan.FromSeconds(10)))
 				throw new Exception($"No flush occurred in 10 seconds: {_listener}", _listener?.ObservedException);
 
+			var messages = InMemorySink.Instance.LogEvents.ToArray();
+			messages.Should().HaveCount(1);
 		}
 	}
 }
