@@ -11,6 +11,6 @@
       <ProjectReference Include="..\Elastic.CommonSchema\Elastic.CommonSchema.csproj" />
     </ItemGroup>
     <ItemGroup>
-      <PackageReference Include="NLog" Version="4.7.15" />
+      <PackageReference Include="NLog" Version="5.5.1" />
     </ItemGroup>
 </Project>

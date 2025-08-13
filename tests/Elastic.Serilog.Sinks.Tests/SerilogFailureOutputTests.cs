@@ -1,9 +1,7 @@
 using Elastic.Channels;
 using Elastic.Channels.Diagnostics;
 using Elastic.Transport;
-using FluentAssertions;
 using Serilog;
-using Serilog.Sinks.TestCorrelator;
 using Xunit;
 using DataStreamName = Elastic.Ingest.Elasticsearch.DataStreams.DataStreamName;
 

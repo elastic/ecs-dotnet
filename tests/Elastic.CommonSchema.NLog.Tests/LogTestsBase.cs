@@ -8,7 +8,6 @@ using System.Linq;
 using Elastic.Apm.NLog;
 using Elastic.CommonSchema.Tests.Specs;
 using NLog;
-using NLog.LayoutRenderers;
 using Config=NLog.Config;
 using NLog.Targets;
 using Xunit.Abstractions;
@@ -31,19 +30,23 @@ namespace Elastic.CommonSchema.NLog.Tests
 		protected void TestLoggerAndLayout(Action<EcsLayout> setup, Action<EcsLayout, ILogger, Func<List<string>>> act)
 		{
 			// These layout renderers need to registered statically as ultimately ConfigurationItemFactory.Default is called in the call stack.
-			LayoutRenderer.Register<ApmTraceIdLayoutRenderer>(ApmTraceIdLayoutRenderer.Name); //generic
-			LayoutRenderer.Register<ApmTransactionIdLayoutRenderer>(ApmTransactionIdLayoutRenderer.Name); //generic
-			LayoutRenderer.Register<ApmSpanIdLayoutRenderer>(ApmSpanIdLayoutRenderer.Name); //generic
-			LayoutRenderer.Register<ApmServiceNameLayoutRenderer>(ApmServiceNameLayoutRenderer.Name); //generic
-			LayoutRenderer.Register<ApmServiceVersionLayoutRenderer>(ApmServiceVersionLayoutRenderer.Name); //generic
-			LayoutRenderer.Register<ApmServiceNodeNameLayoutRenderer>(ApmServiceNodeNameLayoutRenderer.Name); //generic
+			LogManager.Setup().SetupExtensions(ext =>
+			{
+				ext.RegisterLayout<EcsLayout>();
+				ext.RegisterLayoutRenderer<ApmTraceIdLayoutRenderer>(ApmTraceIdLayoutRenderer.Name);
+				ext.RegisterLayoutRenderer<ApmTransactionIdLayoutRenderer>(ApmTransactionIdLayoutRenderer.Name);
+				ext.RegisterLayoutRenderer<ApmSpanIdLayoutRenderer>(ApmSpanIdLayoutRenderer.Name);
+				ext.RegisterLayoutRenderer<ApmServiceNameLayoutRenderer>(ApmServiceNameLayoutRenderer.Name);
+				ext.RegisterLayoutRenderer<ApmServiceVersionLayoutRenderer>(ApmServiceVersionLayoutRenderer.Name);
+				ext.RegisterLayoutRenderer<ApmServiceNodeNameLayoutRenderer>(ApmServiceNodeNameLayoutRenderer.Name);
+			});
 
 			var logFactory = new LogFactory();
 			var logConfig = new Config.LoggingConfiguration(logFactory);
 			var ecsLayout = new EcsLayout { IncludeScopeProperties = true };
 			ecsLayout.ExcludeProperties.Add("NotX");
 			setup?.Invoke(ecsLayout);
-			var memoryTarget = new MemoryTarget { Layout = ecsLayout, OptimizeBufferReuse = true };
+			var memoryTarget = new MemoryTarget { Layout = ecsLayout };
 			logConfig.AddRule(LogLevel.Trace, LogLevel.Fatal, memoryTarget);
 			logConfig.DefaultCultureInfo = System.Globalization.CultureInfo.InvariantCulture;
 			logFactory.Configuration = logConfig;
@@ -54,7 +57,6 @@ namespace Elastic.CommonSchema.NLog.Tests
 				{
 					TestOut.WriteLine(log);
 					Spec.Validate(log);
-
 				}
 
 				return memoryTarget.Logs.ToList();

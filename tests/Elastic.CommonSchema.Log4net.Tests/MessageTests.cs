@@ -127,10 +127,9 @@ public class MessageTests : LogTestsBase
 			info.Error.Type.Should().Be(e.GetType().FullName);
 
 			info.Error.StackTrace.Should().Contain(e.Message);
-			info.Error.StackTrace.Should().Contain("at void");
+			info.Error.StackTrace.Should().Contain("at Elastic.CommonSchema.Log4net.Tests.MessageTests");
 
 			info.Error.StackTrace.Should().Contain(innerException.Message);
-			info.Error.StackTrace.Should().Contain("at void");
 		}
 	});
 
