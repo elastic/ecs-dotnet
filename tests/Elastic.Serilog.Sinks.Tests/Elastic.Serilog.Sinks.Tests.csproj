@@ -13,6 +13,7 @@
 
   <ItemGroup>
     <PackageReference Include="Serilog.Sinks.ColoredConsole" Version="3.0.1" />
+    <PackageReference Include="Serilog.Sinks.InMemory" Version="0.16.0" />
     <PackageReference Include="Serilog.Sinks.TestCorrelator" Version="4.0.0" />
     <PackageReference Include="Microsoft.Extensions.Configuration" Version="8.0.0"/>
     <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="8.0.1"/>

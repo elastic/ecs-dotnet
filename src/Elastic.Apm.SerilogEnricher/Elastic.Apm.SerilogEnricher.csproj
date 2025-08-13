@@ -6,7 +6,7 @@
     <IsPackable>True</IsPackable>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Serilog" Version="4.1.0" />
+    <PackageReference Include="Serilog" Version="4.3.0" />
     <PackageReference Include="Elastic.Apm" Version="1.22.0" />
   </ItemGroup>
 </Project>

@@ -226,7 +226,7 @@ public partial class EcsDocument
 		// see: https://github.com/elastic/apm-agent-dotnet/pull/847
 		// see: https://github.com/elastic/apm-agent-dotnet/issues/6
 		// Mentions observed exceptions however this extension method itself is wrapped in try/catch
-		var exString = exception.ToStringDemystified();
+		var exString = exception.ToString();
 
 		return new Error { Message = exception.Message, Type = exception.GetType().FullName, StackTrace = exString };
 	}
