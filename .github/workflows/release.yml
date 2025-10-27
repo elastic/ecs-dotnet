@@ -53,7 +53,7 @@ jobs:
 
     - name: Store artifacts
       if: success()
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v5
       with:
         name: nupkg
         path: build/output/*.nupkg
