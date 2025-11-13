@@ -25,11 +25,12 @@ let exec binary args =
 let private restoreTools = lazy (exec "dotnet" [ "tool"; "restore" ])
 
 let private currentVersion =
-    lazy
-        (restoreTools.Value |> ignore
-         let r = Proc.Start("dotnet", "minver", "-d=canary", "-m=0.1")
-         let o = r.ConsoleOut |> Seq.find (fun l -> not (l.Line.StartsWith("MinVer:")))
-         o.Line)
+    lazy(
+        restoreTools.Value |> ignore
+        let r = Proc.Start("dotnet", "minver", "-p", "canary.0", "-m", "0.1")
+        let o = r.ConsoleOut |> Seq.find (fun l -> not(l.Line.StartsWith "MinVer:"))
+        o.Line
+    )
 
 let private currentVersionInformational =
     lazy
@@ -111,8 +112,8 @@ let private generateApiChanges (arguments: ParseResults<Arguments>) =
 
     let firstPath project tfms =
         tfms
-        |> Seq.map (fun tfm -> (tfm, sprintf "directory|src/%s/bin/Release/%s" project Paths.MainTFM))
-        |> Seq.where (fun (tfm, path) -> File.Exists path)
+        |> Seq.map (fun tfm -> (tfm, $".artifacts/bin/%s{project}/release_%s{Paths.MainTFM}"))
+        |> Seq.where (fun (tfm, path) -> Directory.Exists path)
         |> Seq.tryHead
 
     nugetPackages
