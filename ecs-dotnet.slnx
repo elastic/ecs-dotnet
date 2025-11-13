@@ -1,0 +1,93 @@
+<Solution>
+  <Folder Name="/build/">
+    <File Path=".ci.runsettings" />
+    <File Path="build.bat" />
+    <File Path="build.sh" />
+    <File Path="Directory.Build.props" />
+    <File Path="global.json" />
+    <Project Path=".github/.github.csproj" />
+    <Project Path="build/scripts/scripts.fsproj" />
+  </Folder>
+  <Folder Name="/examples/">
+    <Project Path="examples/aspnetcore-with-extensions-logging/aspnetcore-with-extensions-logging.csproj" />
+    <Project Path="examples/console-with-extensions-logging/console-with-extensions-logging.csproj" />
+    <Project Path="examples/ecs-aot-smoketest/ecs-aot-smoketest.csproj" />
+    <Project Path="examples/Elastic.Extensions.Logging.Console.Example/Elastic.Extensions.Logging.Console.Example.csproj" />
+    <Project Path="examples/Elastic.Extensions.Logging.Example/Elastic.Extensions.Logging.Example.csproj" />
+    <Project Path="examples/Elastic.Serilog.Sinks.Example/Elastic.Serilog.Sinks.Example.csproj" />
+    <Project Path="examples/playground/playground.csproj" />
+  </Folder>
+  <Folder Name="/examples/aspnetcore-with-serilog/">
+    <Project Path="examples/aspnetcore-with-serilog/AspnetCoreExample.csproj" />
+  </Folder>
+  <Folder Name="/src/">
+    <File Path="src/Directory.Build.props" />
+    <File Path="src/NullableExtensions.cs" />
+    <Project Path="src/Elastic.Apm.NLog/Elastic.Apm.NLog.csproj" />
+    <Project Path="src/Elastic.Apm.SerilogEnricher/Elastic.Apm.SerilogEnricher.csproj" />
+    <Project Path="src/Elastic.CommonSchema.BenchmarkDotNetExporter/Elastic.CommonSchema.BenchmarkDotNetExporter.csproj" />
+    <Project Path="src/Elastic.CommonSchema.Log4net/Elastic.CommonSchema.Log4net.csproj" />
+    <Project Path="src/Elastic.CommonSchema.NLog/Elastic.CommonSchema.NLog.csproj" />
+    <Project Path="src/Elastic.CommonSchema.Serilog/Elastic.CommonSchema.Serilog.csproj" />
+    <Project Path="src/Elastic.CommonSchema/Elastic.CommonSchema.csproj" />
+    <Project Path="src/Elastic.Extensions.Logging.Common/Elastic.Extensions.Logging.Common.csproj" />
+    <Project Path="src/Elastic.Extensions.Logging.Console/Elastic.Extensions.Logging.Console.csproj" />
+    <Project Path="src/Elastic.Extensions.Logging/Elastic.Extensions.Logging.csproj" />
+    <Project Path="src/Elastic.Ingest.Elasticsearch.CommonSchema/Elastic.Ingest.Elasticsearch.CommonSchema.csproj" />
+    <Project Path="src/Elastic.NLog.Targets/Elastic.NLog.Targets.csproj" />
+    <Project Path="src/Elastic.Serilog.Enrichers.Web/Elastic.Serilog.Enrichers.Web.csproj" />
+    <Project Path="src/Elastic.Serilog.Sinks/Elastic.Serilog.Sinks.csproj" />
+    <Project Path="src/Specification/Specification.csproj">
+      <Build Project="false" />
+    </Project>
+  </Folder>
+  <Folder Name="/tests-integration/">
+    <File Path="tests-integration/.runsettings" />
+    <File Path="tests-integration/Directory.Build.props" />
+    <Project Path="tests-integration/Elastic.CommonSchema.BenchmarkDotNetExporter.IntegrationTests/Elastic.CommonSchema.BenchmarkDotNetExporter.IntegrationTests.csproj" />
+    <Project Path="tests-integration/Elastic.Extensions.Logging.IntegrationTests/Elastic.Extensions.Logging.IntegrationTests.csproj" />
+    <Project Path="tests-integration/Elastic.Ingest.Elasticsearch.CommonSchema.IntegrationTests/Elastic.Ingest.Elasticsearch.CommonSchema.IntegrationTests.csproj" />
+    <Project Path="tests-integration/Elastic.NLog.Targets.IntegrationTests/Elastic.NLog.Targets.IntegrationTests.csproj" />
+    <Project Path="tests-integration/Elastic.Serilog.Sinks.IntegrationTests/Elastic.Serilog.Sinks.IntegrationTests.csproj" />
+    <Project Path="tests-integration/Elasticsearch.IntegrationDefaults/Elasticsearch.IntegrationDefaults.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <File Path="tests/.runsettings" />
+    <File Path="tests/Directory.Build.props" />
+    <Project Path="tests/Elastic.Apm.Disabled.Serilog.Tests/Elastic.Apm.Disabled.Serilog.Tests.csproj" />
+    <Project Path="tests/Elastic.Apm.NLog.Tests/Elastic.Apm.NLog.Tests.csproj" />
+    <Project Path="tests/Elastic.Apm.SerilogEnricher.Tests/Elastic.Apm.SerilogEnricher.Tests.csproj" />
+    <Project Path="tests/Elastic.Apm.Test.Common/Elastic.Apm.Test.Common.csproj" />
+    <Project Path="tests/Elastic.CommonSchema.Log4net.Tests/Elastic.CommonSchema.Log4net.Tests.csproj" />
+    <Project Path="tests/Elastic.CommonSchema.NLog.Tests/Elastic.CommonSchema.NLog.Tests.csproj" />
+    <Project Path="tests/Elastic.CommonSchema.Serilog.Tests/Elastic.CommonSchema.Serilog.Tests.csproj" />
+    <Project Path="tests/Elastic.CommonSchema.Tests/Elastic.CommonSchema.Tests.csproj" />
+    <Project Path="tests/Elastic.Serilog.Sinks.Tests/Elastic.Serilog.Sinks.Tests.csproj" />
+  </Folder>
+  <Folder Name="/tools/">
+    <Project Path="tools/Elastic.CommonSchema.Benchmarks/Elastic.CommonSchema.Benchmarks.csproj" />
+    <Project Path="tools/Elastic.CommonSchema.Generator/Elastic.CommonSchema.Generator.csproj" />
+  </Folder>
+  <Folder Name="/_solution/">
+    <File Path=".editorconfig" />
+    <File Path=".gitattributes" />
+    <File Path=".gitignore" />
+    <File Path=".pre-commit-config.yaml" />
+    <File Path="build.bat" />
+    <File Path="build.sh" />
+    <File Path="contributing.md" />
+    <File Path="Directory.Build.props" />
+    <File Path="dotnet-tools.json" />
+    <File Path="ecs-dotnet.sln" />
+    <File Path="ecs-dotnet.sln.DotSettings" />
+    <File Path="global.json" />
+    <File Path="issue_template.md" />
+    <File Path="license.txt" />
+    <File Path="nuget-icon.png" />
+    <File Path="nuget.config" />
+    <File Path="README.md" />
+  </Folder>
+  <Project Path="docs/docs.csproj">
+    <Build Project="false" />
+  </Project>
+</Solution>

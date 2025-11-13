@@ -17,6 +17,11 @@
     <LangVersion>latest</LangVersion>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <DefineConstants Condition="'$(TargetFramework)'=='net462'">$(DefineConstants);FULLFRAMEWORK</DefineConstants>
+
+    <UseArtifactsOutput>true</UseArtifactsOutput>
+    <SolutionRoot>$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildThisFileDirectory), build.sh))</SolutionRoot>
+    <ArtifactsPath>$(MSBuildThisFileDirectory).artifacts</ArtifactsPath>
+
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="MinVer" Version="6.0.0" PrivateAssets="all" />
