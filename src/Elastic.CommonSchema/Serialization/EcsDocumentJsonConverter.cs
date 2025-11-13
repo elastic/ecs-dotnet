@@ -6,101 +6,100 @@ using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
-namespace Elastic.CommonSchema.Serialization
+namespace Elastic.CommonSchema.Serialization;
+
+/// <summary> A JsonConverter for <see cref="EcsDocument"/> that supports the
+/// https://github.com/elastic/ecs-logging specification
+/// </summary>
+public partial class EcsDocumentJsonConverter<TBase> where TBase : EcsDocument, new()
 {
-	/// <summary> A JsonConverter for <see cref="EcsDocument"/> that supports the
-	/// https://github.com/elastic/ecs-logging specification
-	/// </summary>
-	public partial class EcsDocumentJsonConverter<TBase> where TBase : EcsDocument, new()
+	/// <inheritdoc cref="JsonConverter{T}.Read"/>
+	public override TBase? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
 	{
-		/// <inheritdoc cref="JsonConverter{T}.Read"/>
-		public override TBase? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+		if (reader.TokenType == JsonTokenType.Null)
 		{
-			if (reader.TokenType == JsonTokenType.Null)
+			reader.Read();
+			return null;
+		}
+		if (reader.TokenType != JsonTokenType.StartObject)
+			throw new JsonException();
+
+		var ecsEvent = new TBase();
+
+		string? loglevel = null;
+		string? ecsVersion = null;
+		DateTimeOffset? timestamp = default;
+		var originalDepth = reader.CurrentDepth;
+		while (reader.Read())
+		{
+			if (reader.TokenType == JsonTokenType.EndObject)
 			{
-				reader.Read();
-				return null;
+				if (reader.CurrentDepth <= originalDepth)
+					break;
+				continue;
 			}
-			if (reader.TokenType != JsonTokenType.StartObject)
+
+			if (reader.TokenType != JsonTokenType.PropertyName)
 				throw new JsonException();
 
-			var ecsEvent = new TBase();
-
-			string? loglevel = null;
-			string? ecsVersion = null;
-			DateTimeOffset? timestamp = default;
-			var originalDepth = reader.CurrentDepth;
-			while (reader.Read())
-			{
-				if (reader.TokenType == JsonTokenType.EndObject)
-				{
-					if (reader.CurrentDepth <= originalDepth)
-						break;
-					continue;
-				}
-
-				if (reader.TokenType != JsonTokenType.PropertyName)
-					throw new JsonException();
-
-				var _ = ReadProperties(ref reader, ecsEvent, ref timestamp, ref loglevel, ref ecsVersion, options);
-			}
-			if (!string.IsNullOrEmpty(loglevel))
-			{
-				ecsEvent.Log ??= new Log();
-				ecsEvent.Log.Level = loglevel;
-			}
-			if (!string.IsNullOrEmpty(ecsVersion))
-			{
-				ecsEvent.Ecs ??= new Ecs();
-				ecsEvent.Ecs.Version = ecsVersion;
-			}
-			ecsEvent.Timestamp = timestamp;
-
-			return ecsEvent;
+			var _ = ReadProperties(ref reader, ecsEvent, ref timestamp, ref loglevel, ref ecsVersion, options);
 		}
-
-		private static void WriteMessage(Utf8JsonWriter writer, EcsDocument value)
+		if (!string.IsNullOrEmpty(loglevel))
 		{
-			if (!string.IsNullOrEmpty(value.Message))
-				writer.WriteString("message", value.Message);
+			ecsEvent.Log ??= new Log();
+			ecsEvent.Log.Level = loglevel;
 		}
-
-		private static void WriteLogEntity(Utf8JsonWriter writer, Log? value, JsonSerializerOptions options) {
-			if (value == null) return;
-			if (!value.ShouldSerialize) return;
-
-			WriteProp(writer, "log", value, EcsJsonContext.Default.Log, options);
-		}
-
-		private static void WriteLogLevel(Utf8JsonWriter writer, EcsDocument value)
+		if (!string.IsNullOrEmpty(ecsVersion))
 		{
-			if (!string.IsNullOrEmpty(value.Log?.Level))
-				writer.WriteString("log.level", value.Log?.Level);
+			ecsEvent.Ecs ??= new Ecs();
+			ecsEvent.Ecs.Version = ecsVersion;
 		}
+		ecsEvent.Timestamp = timestamp;
 
-		private static void WriteEcsEntity(Utf8JsonWriter writer, Ecs? value, JsonSerializerOptions options)
-		{
-			if (value == null) return;
-			if (!value.ShouldSerialize) return;
-
-			WriteProp(writer, "ecs", value, EcsJsonContext.Default.Ecs, options);
-		}
-
-		private static void WriteEcsVersion(Utf8JsonWriter writer, EcsDocument value) =>
-			writer.WriteString("ecs.version", value.Ecs?.Version ?? EcsDocument.Version);
-
-		private static void WriteTimestamp(Utf8JsonWriter writer, BaseFieldSet value, JsonSerializerOptions options)
-		{
-			if (!value.Timestamp.HasValue) return;
-
-			writer.WritePropertyName("@timestamp");
-			var converter = GetDateTimeOffsetConverter(options);
-			converter.Write(writer, value.Timestamp.Value, options);
-		}
+		return ecsEvent;
 	}
 
-	/// <summary> A JsonConverter for <see cref="EcsDocument"/> that supports the
-	/// https://github.com/elastic/ecs-logging specification
-	/// </summary>
-	public class EcsDocumentJsonConverter : EcsDocumentJsonConverter<EcsDocument>;
+	private static void WriteMessage(Utf8JsonWriter writer, EcsDocument value)
+	{
+		if (!string.IsNullOrEmpty(value.Message))
+			writer.WriteString("message", value.Message);
+	}
+
+	private static void WriteLogEntity(Utf8JsonWriter writer, Log? value, JsonSerializerOptions options) {
+		if (value == null) return;
+		if (!value.ShouldSerialize) return;
+
+		WriteProp(writer, "log", value, EcsJsonContext.Default.Log, options);
+	}
+
+	private static void WriteLogLevel(Utf8JsonWriter writer, EcsDocument value)
+	{
+		if (!string.IsNullOrEmpty(value.Log?.Level))
+			writer.WriteString("log.level", value.Log?.Level);
+	}
+
+	private static void WriteEcsEntity(Utf8JsonWriter writer, Ecs? value, JsonSerializerOptions options)
+	{
+		if (value == null) return;
+		if (!value.ShouldSerialize) return;
+
+		WriteProp(writer, "ecs", value, EcsJsonContext.Default.Ecs, options);
+	}
+
+	private static void WriteEcsVersion(Utf8JsonWriter writer, EcsDocument value) =>
+		writer.WriteString("ecs.version", value.Ecs?.Version ?? EcsDocument.Version);
+
+	private static void WriteTimestamp(Utf8JsonWriter writer, BaseFieldSet value, JsonSerializerOptions options)
+	{
+		if (!value.Timestamp.HasValue) return;
+
+		writer.WritePropertyName("@timestamp");
+		var converter = GetDateTimeOffsetConverter(options);
+		converter.Write(writer, value.Timestamp.Value, options);
+	}
 }
+
+/// <summary> A JsonConverter for <see cref="EcsDocument"/> that supports the
+/// https://github.com/elastic/ecs-logging specification
+/// </summary>
+public class EcsDocumentJsonConverter : EcsDocumentJsonConverter<EcsDocument>;

@@ -32,7 +32,7 @@ namespace Elastic.CommonSchema.BenchmarkDotNetExporter.Domain
 
 		/// <summary></summary>
 		[JsonPropertyName("invocation_count"), DataMember(Name = "invocation_count")]
-		public int InvocationCount { get; set; }
+		public long InvocationCount { get; set; }
 
 		/// <summary></summary>
 		[JsonPropertyName("max_iteration_count"), DataMember(Name = "max_iteration_count")]

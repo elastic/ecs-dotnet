@@ -1,18 +1,14 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net8.0</TargetFramework>
+    <TargetFramework>net10.0</TargetFramework>
 
     <IsPackable>false</IsPackable>
 
-    <!-- BUG: workaround for https://github.com/dotnet/BenchmarkDotNet/issues/1452 -->
-    <LangVersion>9.0</LangVersion>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="BenchmarkDotNet" Version="0.13.1"/>
-    <PackageReference Include="BenchmarkDotNet.Annotations" Version="0.13.1"/>
-    <PackageReference Update="xunit" Version="2.9.3" />
+    <PackageReference Include="BenchmarkDotNet" Version="0.15.7"/>
   </ItemGroup>
 
   <ItemGroup>

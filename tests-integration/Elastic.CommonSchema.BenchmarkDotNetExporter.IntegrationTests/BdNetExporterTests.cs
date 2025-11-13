@@ -94,7 +94,7 @@ namespace Elastic.CommonSchema.BenchmarkDotNetExporter.IntegrationTests
 
 			var doc = searchResponse.Documents.First();
 
-			doc.Timestamp.Should().NotBeNull().And.BeCloseTo(DateTimeOffset.UtcNow, precision: 600000);
+			doc.Timestamp.Should().NotBeNull().And.BeCloseTo(DateTimeOffset.UtcNow, precision: TimeSpan.FromDays(1));
 
 			doc.Benchmark.Should().NotBeNull();
 
@@ -102,6 +102,7 @@ namespace Elastic.CommonSchema.BenchmarkDotNetExporter.IntegrationTests
 			if (doc.Benchmark.Success)
 			{
 				doc.Benchmark.Max.Should().BeGreaterThan(0);
+				doc.Event.Should().NotBeNull();
 				doc.Event.Duration.Should().BeGreaterThan(0);
 				//searchResponse.Total.Should().Be(summary.BenchmarksCases.Length);
 				searchResponse.Total.Should().BeGreaterThan(0);

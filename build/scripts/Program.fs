@@ -28,18 +28,7 @@ let main argv =
         Targets.Setup parsed arguments
         let swallowTypes = [ typeof<ProcExecException>; typeof<ExceptionExiter> ]
 
-        // temp fix for unit reporting: https://github.com/elastic/apm-pipeline-library/issues/2063
-        let exitCode =
-            try
-                try
-                    Targets.RunTargetsWithoutExiting([ target ], (fun e -> swallowTypes |> List.contains (e.GetType())), ":")
-                    0
-                with
-                | :? InvalidUsageException as ex ->
-                    Console.WriteLine ex.Message
-                    2
-                | :? TargetFailedException as ex -> 1
-            finally
-                Targets.teardown()
-
-        exitCode
+        task {
+            return! Targets.RunTargetsAndExitAsync([ target ], (fun e -> swallowTypes |> List.contains (e.GetType())), (fun _ -> ":"), null, null)
+        } |> Async.AwaitTask |> Async.RunSynchronously
+        0

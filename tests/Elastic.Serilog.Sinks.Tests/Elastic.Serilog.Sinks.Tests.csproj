@@ -1,10 +1,10 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net8.0</TargetFramework>
+    <TargetFramework>net10.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
-    <LangVersion>preview</LangVersion>
+    <LangVersion>latest</LangVersion>
   </PropertyGroup>
 
   <ItemGroup>
@@ -12,13 +12,12 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Serilog.Sinks.ColoredConsole" Version="3.0.1" />
-    <PackageReference Include="Serilog.Sinks.InMemory" Version="0.16.0" />
+    <PackageReference Include="Serilog.Sinks.Console" Version="6.1.1" />
+    <PackageReference Include="Serilog.Sinks.InMemory" Version="2.0.0" />
     <PackageReference Include="Serilog.Sinks.TestCorrelator" Version="4.0.0" />
-    <PackageReference Include="Microsoft.Extensions.Configuration" Version="8.0.0"/>
-    <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="8.0.1"/>
-    <PackageReference Include="Serilog.Settings.Configuration" Version="8.0.2"/>
-    <PackageReference Update="xunit" Version="2.9.3" />
+    <PackageReference Include="Microsoft.Extensions.Configuration" Version="10.0.0"/>
+    <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="10.0.0"/>
+    <PackageReference Include="Serilog.Settings.Configuration" Version="9.0.0"/>
   </ItemGroup>
 
 </Project>

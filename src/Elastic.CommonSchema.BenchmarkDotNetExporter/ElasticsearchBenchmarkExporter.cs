@@ -238,10 +238,10 @@ namespace Elastic.CommonSchema.BenchmarkDotNetExporter
 		{
 			var environmentInfo = new BenchmarkHost
 			{
-				ProcessorName = summary.HostEnvironmentInfo.CpuInfo.Value.ProcessorName,
-				PhysicalProcessorCount = summary.HostEnvironmentInfo.CpuInfo.Value?.PhysicalProcessorCount,
-				PhysicalCoreCount = summary.HostEnvironmentInfo.CpuInfo.Value?.PhysicalCoreCount,
-				LogicalCoreCount = summary.HostEnvironmentInfo.CpuInfo.Value?.LogicalCoreCount,
+				ProcessorName = summary.HostEnvironmentInfo.Cpu.Value.ProcessorName,
+				PhysicalProcessorCount = summary.HostEnvironmentInfo.Cpu.Value.PhysicalProcessorCount,
+				PhysicalCoreCount = summary.HostEnvironmentInfo.Cpu.Value.PhysicalCoreCount,
+				LogicalCoreCount = summary.HostEnvironmentInfo.Cpu.Value.LogicalCoreCount,
 				Architecture = summary.HostEnvironmentInfo.Architecture,
 				VirtualMachineHypervisor = summary.HostEnvironmentInfo.VirtualMachineHypervisor.Value?.Name,
 				InDocker = summary.HostEnvironmentInfo.InDocker,
@@ -250,7 +250,7 @@ namespace Elastic.CommonSchema.BenchmarkDotNetExporter
 				HardwareTimerKind = summary.HostEnvironmentInfo.HardwareTimerKind.ToString(),
 				Os = new Os
 				{
-					Version = summary.HostEnvironmentInfo.OsVersion.Value,
+					Version = summary.HostEnvironmentInfo.Os.Value.Version,
 					Name = OsName(),
 					Platform = OsPlatform()
 				}
