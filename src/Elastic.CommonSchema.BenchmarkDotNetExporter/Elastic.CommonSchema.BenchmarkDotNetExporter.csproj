@@ -11,6 +11,6 @@
     <ProjectReference Include="..\Elastic.Ingest.Elasticsearch.CommonSchema\Elastic.Ingest.Elasticsearch.CommonSchema.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="BenchmarkDotNet" Version="0.13.1" />
+    <PackageReference Include="BenchmarkDotNet" Version="0.15.7" />
   </ItemGroup>
 </Project>

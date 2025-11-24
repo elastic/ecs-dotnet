@@ -5,6 +5,6 @@ namespace Elastic.CommonSchema.NLog;
 /// <summary>
 ///
 /// </summary>
-[JsonSerializable(typeof(EcsLayout.NLogEcsDocument))]
+[JsonSerializable(typeof(NLogEcsDocument))]
 [JsonSourceGenerationOptions(DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull)]
-public partial class NLogEcsJsonContext : JsonSerializerContext { }
+public partial class NLogEcsJsonContext : JsonSerializerContext;

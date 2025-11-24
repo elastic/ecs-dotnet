@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>netstandard2.0;netstandard2.1;net8.0</TargetFrameworks>
+    <TargetFrameworks>netstandard2.0;netstandard2.1;net8.0;net10.0</TargetFrameworks>
     <Title>Common Abstactions For ECS For Microsoft.Extensions.Logging</Title>
     <Description>Transient dependency, do not install directly. Common Abstactions For ECS For Microsoft.Extensions.Logging</Description>
     <PackageTags>Logging;LoggerProvider;Elasticsearch;Console;ELK;Kibana;Logstash;Tracing;Diagnostics;Log;Trace;ECS</PackageTags>
@@ -14,8 +14,14 @@
     <ProjectReference Include="..\Elastic.CommonSchema\Elastic.CommonSchema.csproj"/>
   </ItemGroup>
 
-  <ItemGroup>
+  <ItemGroup Condition="!$([MSBuild]::IsTargetFrameworkCompatible('$(TargetFramework)', 'net8.0'))">
     <PackageReference Include="Microsoft.Extensions.Logging" Version="8.0.0"/>
+  </ItemGroup>
+  <ItemGroup Condition="'$(TargetFramework)' == 'net8.0'">
+    <PackageReference Include="Microsoft.Extensions.Logging" Version="8.0.0"/>
+  </ItemGroup>
+  <ItemGroup Condition="'$(TargetFramework)' == 'net10.0'">
+    <PackageReference Include="Microsoft.Extensions.Logging" Version="10.0.0"/>
   </ItemGroup>
 
 </Project>

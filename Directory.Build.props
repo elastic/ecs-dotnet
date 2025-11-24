@@ -11,15 +11,20 @@
   </PropertyGroup>
   
   <PropertyGroup>
-    <MinVerDefaultPreReleasePhase>canary</MinVerDefaultPreReleasePhase>
-    <MinVerMinimumMajorMinor>0.1</MinVerMinimumMajorMinor>
+    <MinVerDefaultPreReleaseIdentifiers>canary.0</MinVerDefaultPreReleaseIdentifiers>
+    <MinVerMinimumMajorMinor>0.2</MinVerMinimumMajorMinor>
 
     <LangVersion>latest</LangVersion>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <DefineConstants Condition="'$(TargetFramework)'=='net462'">$(DefineConstants);FULLFRAMEWORK</DefineConstants>
+
+    <UseArtifactsOutput>true</UseArtifactsOutput>
+    <SolutionRoot>$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildThisFileDirectory), build.sh))</SolutionRoot>
+    <ArtifactsPath>$(MSBuildThisFileDirectory).artifacts</ArtifactsPath>
+
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="MinVer" Version="2.3.1" PrivateAssets="all" />
+    <PackageReference Include="MinVer" Version="6.0.0" PrivateAssets="all" />
     <PackageReference Condition="'$(TargetFramework)'=='net462'"
       Include="Microsoft.NETFramework.ReferenceAssemblies.net462" Version="1.0.3" PrivateAssets="all"/>
   </ItemGroup>

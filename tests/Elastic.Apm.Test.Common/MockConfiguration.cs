@@ -11,32 +11,24 @@ using Elastic.Apm.Logging;
 
 namespace Elastic.Apm.Test.Common
 {
-	public class MockConfiguration : IConfigurationReader
+	public class MockConfiguration(
+		string serviceName,
+		string serviceNodeName,
+		string serviceVersion,
+		bool enabled = true,
+		IReadOnlyDictionary<string, string> globalLabels = null
+	)
+		: IConfigurationReader
 	{
-		public MockConfiguration(
-			string serviceName,
-			string serviceNodeName,
-			string serviceVersion,
-			bool enabled = true,
-			IReadOnlyDictionary<string, string> globalLabels = null
-		)
-		{
-			GlobalLabels = globalLabels;
-			ServiceName = serviceName;
-			ServiceNodeName = serviceNodeName;
-			ServiceVersion = serviceVersion;
-			Enabled = enabled;
-			Recording = true;
-		}
+		public bool Enabled { get; } = enabled;
 
-		public bool Enabled { get; }
+		public string Description => nameof(MockConfiguration);
+		public IReadOnlyList<WildcardMatcher> BaggageToAttach { get; }
 
-		public string Description { get; } = nameof(MockConfiguration);
-
-		public IReadOnlyDictionary<string, string> GlobalLabels { get; }
-		public string ServiceName { get; }
-		public string ServiceNodeName { get; }
-		public string ServiceVersion { get; }
+		public IReadOnlyDictionary<string, string> GlobalLabels { get; } = globalLabels;
+		public string ServiceName { get; } = serviceName;
+		public string ServiceNodeName { get; } = serviceNodeName;
+		public string ServiceVersion { get; } = serviceVersion;
 
 		public IReadOnlyList<WildcardMatcher> SanitizeFieldNames { get; } = Array.Empty<WildcardMatcher>();
 		public IReadOnlyList<Uri> ServerUrls { get; } = Array.Empty<Uri>();
@@ -46,7 +38,7 @@ namespace Elastic.Apm.Test.Common
 
 		// ReSharper disable UnassignedGetOnlyAutoProperty
 		public IReadOnlyList<WildcardMatcher> IgnoreMessageQueues { get; }
-		public bool Recording { get; }
+		public bool Recording { get; } = true;
 		public string HostName { get; }
 		public string ServerCert { get; }
 		public Uri ServerUrl { get; }
@@ -69,10 +61,25 @@ namespace Elastic.Apm.Test.Common
 		public bool TraceContextIgnoreSampledFalse { get; }
 		public string TraceContinuationStrategy { get; }
 		public IReadOnlyList<WildcardMatcher> TransactionIgnoreUrls { get; }
+
+		/// <inheritdoc />
+		public IReadOnlyCollection<WildcardMatcher> TransactionNameGroups { get; }
 		public int TransactionMaxSpans { get; }
 		public double TransactionSampleRate { get; }
 		public bool UseElasticTraceparentHeader { get; }
+
+		/// <inheritdoc />
+		public bool UsePathAsTransactionName { get; }
 		public bool VerifyServerCert { get; }
+
+		/// <inheritdoc />
+		public Uri ProxyUrl { get; }
+
+		/// <inheritdoc />
+		public string ProxyUserName { get; }
+
+		/// <inheritdoc />
+		public string ProxyPassword { get; }
 		public bool OpenTelemetryBridgeEnabled { get; }
 		public bool UseWindowsCredentials { get; }
 		public bool SpanCompressionEnabled { get; }
@@ -80,5 +87,8 @@ namespace Elastic.Apm.Test.Common
 		public double SpanCompressionSameKindMaxDuration { get; }
 		public double SpanStackTraceMinDurationInMilliseconds { get; }
 		// ReSharper restore UnassignedGetOnlyAutoProperty
+
+		/// <inheritdoc />
+		public ConfigurationKeyValue Lookup(ConfigurationOption option) => null;
 	}
 }

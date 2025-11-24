@@ -95,7 +95,7 @@ public class MessageTests : LogTestsBase
 		info.Host.Should().NotBeNull();
 		var fqdn = loggingEvent.LookupProperty(LoggingEvent.HostNameProperty).ToString();
 		fqdn.Should().NotBeNullOrEmpty();
-		info.Host.Hostname.Should().StartWithEquivalent(fqdn.Split('.', StringSplitOptions.None).First());
+		info.Host.Hostname.Should().StartWithEquivalentOf(fqdn.Split('.', StringSplitOptions.None).First());
 	});
 
 	[Fact]
