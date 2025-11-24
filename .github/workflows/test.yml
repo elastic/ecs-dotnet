@@ -31,7 +31,7 @@ jobs:
     runs-on: windows-latest
     
     steps:
-    - uses: actions/checkout@v5
+    - uses: actions/checkout@v6
     - name: Bootstrap Action Workspace
       uses: ./.github/workflows/bootstrap
             
@@ -70,7 +70,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v5
+    - uses: actions/checkout@v6
     - name: Bootstrap Action Workspace
       uses: ./.github/workflows/bootstrap
 
@@ -109,7 +109,7 @@ jobs:
             folder: win-x64
             binary: ecs-aot-smoketest.exe
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
 
       - uses: actions/setup-dotnet@v5
         with:
