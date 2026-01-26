@@ -13,10 +13,11 @@ jobs:
   release:
     runs-on: ubuntu-latest
     permissions:
+      artifact-metadata: write
+      attestations: write
       contents: write
       id-token: write
       issues: write
-      attestations: write
     steps:
     - uses: actions/checkout@v6
     - name: Bootstrap Action Workspace
