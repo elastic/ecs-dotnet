@@ -27,11 +27,11 @@ public class SerilogExporter(ITransport<ITransportConfiguration> transport)
 			},
 			ChannelDiagnosticsCallback = l => listen = l
 		};
-		listener = listen ?? throw new Exception("No listener");
 
 		var loggerConfig = new LoggerConfiguration()
 			.MinimumLevel.Information()
 			.WriteTo.Elasticsearch(options);
+		listener = listen ?? throw new Exception("No listener");
 
 		var logger = loggerConfig.CreateLogger();
 		return logger;

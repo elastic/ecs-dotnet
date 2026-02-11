@@ -69,5 +69,6 @@ namespace Elastic.CommonSchema.Serialization;
 [JsonSerializable(typeof(X509))]
 [JsonSerializable(typeof(ParserIntermediary.LogOriginInvalid))]
 [JsonSerializable(typeof(ParserIntermediary.LogFileOriginInvalid))]
+[JsonSerializable(typeof(Location))]
 [JsonSourceGenerationOptions(DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull)]
 public partial class EcsJsonContext : JsonSerializerContext { }
