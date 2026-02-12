@@ -1,4 +1,11 @@
 ---
+applies_to:
+  stack: ga
+  serverless: ga
+  deployment:
+    ess: ga
+    ece: ga
+    eck: ga
 mapped_pages:
   - https://www.elastic.co/guide/en/ecs-logging/dotnet/current/_formatters.html
 ---
@@ -22,6 +29,10 @@ All supported ECS message template properties are available as constants under t
 
 
 ## Ingest ECS log files [_ingest_ecs_log_files]
+
+```{applies_to}
+serverless: unavailable
+```
 
 If you are using one of our formatter libraries to log to file or stdout/stderr you can use the following options to get these logs into Elasticsearch or Elastic Cloud:
 

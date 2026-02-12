@@ -1,4 +1,11 @@
 ---
+applies_to:
+  stack: ga
+  serverless: ga
+  deployment:
+    ess: ga
+    ece: ga
+    eck: ga
 mapped_pages:
   # TO DO: Do we want this in addition to an intro page?
   - https://www.elastic.co/guide/en/ecs-logging/dotnet/current/index.html
