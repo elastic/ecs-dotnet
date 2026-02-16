@@ -64,10 +64,9 @@ let private runTests (arguments: ParseResults<Arguments>) testMode =
         | Unit ->  [ "--filter"; "FullyQualifiedName!~IntegrationTests" ]
         | Integration -> [ "--filter"; "FullyQualifiedName~IntegrationTests" ]
 
-    let loggerArg = $"--logger:GitHubActions"
     let settingsArg = if runningOnCI then ["-s"; ".ci.runsettings"] else [];
 
-    execWithTimeout "dotnet" ([ "test" ] @ filterArg @ settingsArg @ [ "-c"; "RELEASE"; "-m:1"; loggerArg ]) (Nullable(TimeSpan.FromMinutes 15.))
+    execWithTimeout "dotnet" ([ "test" ] @ filterArg @ settingsArg @ [ "-c"; "RELEASE"; "-m:1" ]) (Nullable(TimeSpan.FromMinutes 15.))
     |> ignore
 
 let private test (arguments: ParseResults<Arguments>) =
