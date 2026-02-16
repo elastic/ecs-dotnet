@@ -13,6 +13,9 @@ namespace Elastic.CommonSchema;
 public record Location
 {
 	/// Represents a Latitude/Longitude as a 2-dimensional point.
+	public Location() { }
+
+	/// Represents a Latitude/Longitude as a 2-dimensional point.
 	public Location(double latitude, double longitude)
 	{
 		Latitude = latitude;
@@ -23,13 +26,13 @@ public record Location
 	///  Latitude
 	/// </summary>
 	[JsonPropertyName("lat"), DataMember(Name = "lat")]
-	public double Latitude { get; }
+	public double Latitude { get; init; }
 
 	/// <summary>
 	///  Longitude
 	/// </summary>
 	[JsonPropertyName("lon"), DataMember(Name = "lon")]
-	public double Longitude { get; }
+	public double Longitude { get; init; }
 
 	/// <inheritdoc cref="object.ToString"/>>
 	public string ToString(string format, IFormatProvider formatProvider) => ToString();
