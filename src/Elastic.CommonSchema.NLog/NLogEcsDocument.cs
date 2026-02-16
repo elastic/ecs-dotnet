@@ -9,6 +9,7 @@ namespace Elastic.CommonSchema.NLog;
 /// A subclass of <see cref="EcsDocument"/> that adds additional properties related to Extensions logging.
 /// <para>For instance, it adds scope information to each logged event</para>
 /// </summary>
+[JsonConverter(typeof(EcsDocumentJsonConverterFactory))]
 public class NLogEcsDocument : EcsDocument
 {
 	// Custom fields; use capitalisation as per ECS
