@@ -4,7 +4,6 @@ open System.Net.Http
 open Fake.Tools.Git
 open Argu
 open System
-open System.Linq
 open System.IO
 open Bullseye
 open CommandLine
@@ -65,7 +64,7 @@ let private runTests (arguments: ParseResults<Arguments>) testMode =
         | Unit ->  [ "--filter"; "FullyQualifiedName!~IntegrationTests" ]
         | Integration -> [ "--filter"; "FullyQualifiedName~IntegrationTests" ]
 
-    let loggerArg = $"--logger:GithubActions"
+    let loggerArg = $"--logger:GitHubActions"
     let settingsArg = if runningOnCI then ["-s"; ".ci.runsettings"] else [];
 
     execWithTimeout "dotnet" ([ "test" ] @ filterArg @ settingsArg @ [ "-c"; "RELEASE"; "-m:1"; loggerArg ]) (Nullable(TimeSpan.FromMinutes 15.))
@@ -234,17 +233,7 @@ let private release (arguments: ParseResults<Arguments>) = printfn "release"
 
 let private publish (arguments: ParseResults<Arguments>) = printfn "publish"
 
-// temp fix for unit reporting: https://github.com/elastic/apm-pipeline-library/issues/2063
 let teardown () =
-    if Paths.Output.Exists then
-        let isSkippedFile p =
-            File.ReadLines(p).FirstOrDefault() = "<testsuites />"
-        Paths.Output.GetFiles("junit-*.xml")
-            |> Seq.filter (fun p -> isSkippedFile p.FullName)
-            |> Seq.iter (fun f ->
-                printfn $"Removing empty test file: %s{f.FullName}"
-                f.Delete()
-            )
     Console.WriteLine "Ran teardown"
 
 let Setup (parsed: ParseResults<Arguments>) (subCommand: Arguments) =
