@@ -8,8 +8,8 @@
   </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="NLog" Version="6.0.2" />
-        <PackageReference Include="NLog.Web.AspNetCore" Version="6.0.2" />
+        <PackageReference Include="NLog" Version="6.1.0" />
+        <PackageReference Include="NLog.Web.AspNetCore" Version="6.1.1" />
         <PackageReference Include="Elastic.Apm" Version="1.34.1" />
     </ItemGroup>
 
