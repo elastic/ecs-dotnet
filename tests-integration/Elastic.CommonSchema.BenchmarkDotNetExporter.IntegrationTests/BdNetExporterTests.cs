@@ -38,7 +38,7 @@ namespace Elastic.CommonSchema.BenchmarkDotNetExporter.IntegrationTests
 		{
 			var jobs = new List<Job>
 			{
-				Job.ShortRun.WithRuntime(CoreRuntime.Core60).WithInvocationCount(4).WithUnrollFactor(2),
+				Job.ShortRun.WithRuntime(CoreRuntime.Core10_0).WithInvocationCount(4).WithUnrollFactor(2),
 			};
 			var config = DefaultConfig.Instance
 				.KeepBenchmarkFiles()
