@@ -23,7 +23,7 @@ namespace Elastic.Apm.Test.Common
 		public bool Enabled { get; } = enabled;
 
 		public string Description => nameof(MockConfiguration);
-		public IReadOnlyList<WildcardMatcher> BaggageToAttach { get; }
+		public IReadOnlyList<WildcardMatcher> BaggageToAttach { get; } = Array.Empty<WildcardMatcher>();
 
 		public IReadOnlyDictionary<string, string> GlobalLabels { get; } = globalLabels;
 		public string ServiceName { get; } = serviceName;
@@ -37,18 +37,18 @@ namespace Elastic.Apm.Test.Common
 		public LogLevel LogLevel { get; } = LogLevel.Information;
 
 		// ReSharper disable UnassignedGetOnlyAutoProperty
-		public IReadOnlyList<WildcardMatcher> IgnoreMessageQueues { get; }
+		public IReadOnlyList<WildcardMatcher> IgnoreMessageQueues { get; } = Array.Empty<WildcardMatcher>();
 		public bool Recording { get; } = true;
 		public string HostName { get; }
 		public string ServerCert { get; }
 		public Uri ServerUrl { get; }
 		public string CloudProvider { get; }
-		public IReadOnlyCollection<string> ApplicationNamespaces { get; }
+		public IReadOnlyCollection<string> ApplicationNamespaces { get; } = Array.Empty<string>();
 		public string CaptureBody { get; }
 		public bool CaptureHeaders { get; }
 		public bool CentralConfig { get; }
 		public string Environment { get; }
-		public IReadOnlyCollection<string> ExcludedNamespaces { get; }
+		public IReadOnlyCollection<string> ExcludedNamespaces { get; } = Array.Empty<string>();
 		public double ExitSpanMinDuration { get; }
 		public TimeSpan FlushInterval { get; }
 		public int MaxBatchEventCount { get; }
@@ -60,12 +60,12 @@ namespace Elastic.Apm.Test.Common
 		public int StackTraceLimit { get; }
 		public bool TraceContextIgnoreSampledFalse { get; }
 		public string TraceContinuationStrategy { get; }
-		public IReadOnlyList<WildcardMatcher> TransactionIgnoreUrls { get; }
+		public IReadOnlyList<WildcardMatcher> TransactionIgnoreUrls { get; } = Array.Empty<WildcardMatcher>();
 
 		/// <inheritdoc />
-		public IReadOnlyCollection<WildcardMatcher> TransactionNameGroups { get; }
+		public IReadOnlyCollection<WildcardMatcher> TransactionNameGroups { get; } = Array.Empty<WildcardMatcher>();
 		public int TransactionMaxSpans { get; }
-		public double TransactionSampleRate { get; }
+		public double TransactionSampleRate { get; } = 1.0;
 		public bool UseElasticTraceparentHeader { get; }
 
 		/// <inheritdoc />
