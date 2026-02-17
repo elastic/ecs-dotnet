@@ -97,6 +97,55 @@ public partial class EcsDocumentJsonConverter<TBase> where TBase : EcsDocument, 
 		var converter = GetDateTimeOffsetConverter(options);
 		converter.Write(writer, value.Timestamp.Value, options);
 	}
+
+	[System.Diagnostics.CodeAnalysis.UnconditionalSuppressMessage("ReflectionAnalysis", "IL2026:RequiresUnreferencedCode", Justification = "We always provide a static JsonTypeInfoResolver")]
+	[System.Diagnostics.CodeAnalysis.UnconditionalSuppressMessage("AotAnalysis", "IL3050:RequiresDynamicCode", Justification = "We always provide a static JsonTypeInfoResolver")]
+	private static bool ReadOTelAttributes(ref Utf8JsonReader reader, TBase ecsEvent, JsonSerializerOptions options)
+	{
+		if (reader.TokenType == JsonTokenType.Null)
+			return true;
+
+		if (reader.TokenType != JsonTokenType.StartObject)
+			return false;
+
+		ecsEvent.Attributes ??= new MetadataDictionary();
+
+		while (reader.Read())
+		{
+			if (reader.TokenType == JsonTokenType.EndObject)
+				break;
+
+			if (reader.TokenType != JsonTokenType.PropertyName)
+				throw new JsonException("Expected property name in attributes object");
+
+			var attrName = reader.GetString()!;
+			reader.Read();
+
+			object? value = reader.TokenType switch
+			{
+				JsonTokenType.String => reader.GetString(),
+				JsonTokenType.Number => reader.TryGetInt64(out var l) ? l : reader.GetDouble(),
+				JsonTokenType.True => true,
+				JsonTokenType.False => false,
+				JsonTokenType.Null => null,
+				_ => JsonSerializer.Deserialize<object>(ref reader, options)
+			};
+
+			// Store in Attributes
+			ecsEvent.Attributes[attrName] = value;
+
+			// If there's an OTel->ECS mapping, also set the ECS property
+			if (value != null)
+			{
+				if (OTelMappings.OTelToEcs.TryGetValue(attrName, out var ecsPath))
+					ecsEvent.AssignField(ecsPath, value);
+				else
+					// For match relations, OTel name IS the ECS name
+					ecsEvent.AssignField(attrName, value);
+			}
+		}
+		return true;
+	}
 }
 
 /// <summary> A JsonConverter for <see cref="EcsDocument"/> that supports the

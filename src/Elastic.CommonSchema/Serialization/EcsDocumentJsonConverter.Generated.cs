@@ -94,6 +94,7 @@ namespace Elastic.CommonSchema.Serialization
 				"volume" => ReadProp<Volume>(ref reader, "volume", EcsJsonContext.Default.Volume, ecsEvent, (b, v) => b.Volume = v),
 				"vulnerability" => ReadProp<Vulnerability>(ref reader, "vulnerability", EcsJsonContext.Default.Vulnerability, ecsEvent, (b, v) => b.Vulnerability = v),
 				"x509" => ReadProp<X509>(ref reader, "x509", EcsJsonContext.Default.X509, ecsEvent, (b, v) => b.X509 = v),
+				"attributes" => ReadOTelAttributes(ref reader, ecsEvent, options),
 				_ =>
 					typeof(EcsDocument) == ecsEvent.GetType()
 						? false
@@ -179,6 +180,7 @@ namespace Elastic.CommonSchema.Serialization
 			WriteProp(writer, "vulnerability", value.Vulnerability, EcsJsonContext.Default.Vulnerability, options);
 			WriteProp(writer, "x509", value.X509, EcsJsonContext.Default.X509, options);
 			WriteProp(writer, "metadata", value.Metadata, options);
+			WriteProp(writer, "attributes", value.Attributes, options);
 
 			if (typeof(EcsDocument) != value.GetType())
 				value.WriteAdditionalProperties((k, v) => WriteProp(writer, k, v, options));

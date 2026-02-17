@@ -59,6 +59,7 @@ namespace Elastic.CommonSchema.Serialization
 	var entityName = entity.BaseFieldSet.FieldSet.Name;
 	<text>				"@entityName" => ReadProp<@(entity.Name)>(ref reader, "@entityName", EcsJsonContext.Default.@(entity.Name), ecsEvent, (b, v) => b.@(entity.Name) = v),
 </text>}
+				"attributes" => ReadOTelAttributes(ref reader, ecsEvent, options),
 				_ =>
 					typeof(@(Model.Base.Name)) == ecsEvent.GetType()
 						? false
@@ -117,6 +118,7 @@ namespace Elastic.CommonSchema.Serialization
 </text>
 }
 			WriteProp(writer, "metadata", value.Metadata, options);
+			WriteProp(writer, "attributes", value.Attributes, options);
 
 			if (typeof(@Model.Base.Name) != value.GetType())
 				value.WriteAdditionalProperties((k, v) => WriteProp(writer, k, v, options));
