@@ -2,10 +2,6 @@
 applies_to:
   stack: ga
   serverless: ga
-  deployment:
-    ess: ga
-    ece: ga
-    eck: ga
 mapped_pages:
   - https://www.elastic.co/guide/en/ecs-logging/dotnet/current/extensions-logging-data-shipper.html
 ---
