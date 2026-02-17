@@ -27,5 +27,6 @@ namespace Elastic.CommonSchema.Generator.Schema.DTO
 		[EnumMember(Value = "float")] Float,
 		[EnumMember(Value = "geo_point")] GeoPoint,
 		[EnumMember(Value = "boolean")] Boolean,
+		[EnumMember(Value = "double")] Double,
 	}
 }

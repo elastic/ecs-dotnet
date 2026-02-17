@@ -1,5 +1,6 @@
 @using System.Collections.Generic
 @using System.Linq
+@using Elastic.CommonSchema.Generator
 @inherits Elastic.CommonSchema.Generator.Views.CodeTemplatePage<Elastic.CommonSchema.Generator.Projection.CommonSchemaTypesProjection>
 // Licensed to Elasticsearch B.V under one or more agreements.
 // Elasticsearch B.V licenses this file to you under the Apache 2.0 License.
@@ -22,9 +23,10 @@ namespace Elastic.CommonSchema.Serialization;
 @foreach (var kv in Model.EntitiesWithPropertiesAtRoot)
 {
 	var entity = kv.Key;
+	var accessibility = CodeConfiguration.PublicEntityConverters.Contains(entity.Name) ? "public" : "internal";
 	<text>
 /// <summary> Specialized converter for <see cref="@(entity.Name)"/> </summary>
-internal partial class @(entity.Name)EntityJsonConverter : PropertiesReaderJsonConverterBase@(Raw("<"))@(entity.Name)@Raw(">")
+@(accessibility) partial class @(entity.Name)EntityJsonConverter : PropertiesReaderJsonConverterBase@(Raw("<"))@(entity.Name)@Raw(">")
 {
 	/// <inheritdoc cref="PropertiesReaderJsonConverterBase{T}.ReadProperties"/>
 	protected override bool ReadProperties(ref Utf8JsonReader reader, @entity.Name ecsEvent, JsonSerializerOptions options)

@@ -37,12 +37,14 @@ namespace Elastic.CommonSchema.Generator.Projection
 				case FieldType.Wildcard:
 				case FieldType.Text:
 				case FieldType.Ip:
-				case FieldType.GeoPoint:
 					return "TrySetString";
+				case FieldType.GeoPoint:
+					return null;
 				case FieldType.Boolean:
 					return "TrySetBool";
 				case FieldType.ScaledFloat:
 				case FieldType.Float:
+				case FieldType.Double:
 					return "TrySetFloat";
 				case FieldType.Long:
 					return "TrySetLong";
@@ -78,6 +80,7 @@ namespace Elastic.CommonSchema.Generator.Projection
 					return "object";
 				case FieldType.ScaledFloat:
 				case FieldType.Float:
+				case FieldType.Double:
 					return "float";
 				case FieldType.GeoPoint:
 					return "Location";

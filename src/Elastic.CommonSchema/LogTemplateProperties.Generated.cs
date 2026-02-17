@@ -339,6 +339,54 @@ namespace Elastic.CommonSchema
 		///</summary>
 		public static string ClientUserGroupName = nameof(ClientUserGroupName);
 		///<summary>
+		/// <para><c>client.user.entity.display_name</c></para>
+		/// <para>An optional field used when a pretty name is desired for entity-centric operations. This field should not be used for correlation with `*.name` fields for entities with dedicated field sets (e.g., `host`).
+		/// <para><br/>This field is beta and subject to change.</para></para>
+		/// <example></example>
+		///</summary>
+		public static string ClientUserEntityDisplayName = nameof(ClientUserEntityDisplayName);
+		///<summary>
+		/// <para><c>client.user.entity.id</c></para>
+		/// <para>A unique identifier for the entity. When multiple identifiers exist, this should be the most stable and commonly used identifier that: 1) persists across the entity's lifecycle, 2) ensures uniqueness within its scope, 3) is commonly used for queries and correlation, and 4) is readily available in most observations (logs/events). For entities with dedicated field sets (e.g., host, user), this value should match the corresponding *.id field. Alternative identifiers (e.g., ARNs values in AWS, URLs) can be preserved in the raw field.</para>
+		/// <example></example>
+		///</summary>
+		public static string ClientUserEntityId = nameof(ClientUserEntityId);
+		///<summary>
+		/// <para><c>client.user.entity.last_seen_timestamp</c></para>
+		/// <para>Indicates the date/time when this entity was last "seen," usually based upon the last event/log that is initiated by this entity.
+		/// <para><br/>This field is beta and subject to change.</para></para>
+		/// <example></example>
+		///</summary>
+		public static string ClientUserEntityLastSeenTimestamp = nameof(ClientUserEntityLastSeenTimestamp);
+		///<summary>
+		/// <para><c>client.user.entity.name</c></para>
+		/// <para>The name of the entity. The keyword field enables exact matches for filtering and aggregations, while the text field enables full-text search. For entities with dedicated field sets (e.g., `host`), this field should mirrors the corresponding *.name value.
+		/// <para><br/>This field is beta and subject to change.</para></para>
+		/// <example></example>
+		///</summary>
+		public static string ClientUserEntityName = nameof(ClientUserEntityName);
+		///<summary>
+		/// <para><c>client.user.entity.reference</c></para>
+		/// <para>A URI, URL, or other direct reference to access or locate the entity in its source system. This could be an API endpoint, web console URL, or other addressable location. Format may vary by entity type and source system.
+		/// <para><br/>This field is beta and subject to change.</para></para>
+		/// <example></example>
+		///</summary>
+		public static string ClientUserEntityReference = nameof(ClientUserEntityReference);
+		///<summary>
+		/// <para><c>client.user.entity.source</c></para>
+		/// <para>The module or integration that provided this entity data (similar to event.module).
+		/// <para><br/>This field is beta and subject to change.</para></para>
+		/// <example></example>
+		///</summary>
+		public static string ClientUserEntitySource = nameof(ClientUserEntitySource);
+		///<summary>
+		/// <para><c>client.user.entity.sub_type</c></para>
+		/// <para>The specific type designation for the entity as defined by its provider or system. This field provides more granular classification than the type field. Examples: `aws_s3_bucket`, `gcp_cloud_storage_bucket`, `azure_blob_container` would all map to entity type `bucket`.  `hardware` , `virtual` , `container` , `node` , `cloud_instance` would all map to entity type `host`.
+		/// <para><br/>This field is beta and subject to change.</para></para>
+		/// <example>aws_s3_bucket</example>
+		///</summary>
+		public static string ClientUserEntitySubType = nameof(ClientUserEntitySubType);
+		///<summary>
 		/// <para><c>client.user.risk.calculated_level</c></para>
 		/// <para>A risk classification level calculated by an internal system as part of entity analytics and entity risk scoring.</para>
 		/// <example>High</example>
@@ -446,6 +494,54 @@ namespace Elastic.CommonSchema
 		///</summary>
 		public static string CloudServiceName = nameof(CloudServiceName);
 		///<summary>
+		/// <para><c>cloud.entity.display_name</c></para>
+		/// <para>An optional field used when a pretty name is desired for entity-centric operations. This field should not be used for correlation with `*.name` fields for entities with dedicated field sets (e.g., `host`).
+		/// <para><br/>This field is beta and subject to change.</para></para>
+		/// <example></example>
+		///</summary>
+		public static string CloudEntityDisplayName = nameof(CloudEntityDisplayName);
+		///<summary>
+		/// <para><c>cloud.entity.id</c></para>
+		/// <para>A unique identifier for the entity. When multiple identifiers exist, this should be the most stable and commonly used identifier that: 1) persists across the entity's lifecycle, 2) ensures uniqueness within its scope, 3) is commonly used for queries and correlation, and 4) is readily available in most observations (logs/events). For entities with dedicated field sets (e.g., host, user), this value should match the corresponding *.id field. Alternative identifiers (e.g., ARNs values in AWS, URLs) can be preserved in the raw field.</para>
+		/// <example></example>
+		///</summary>
+		public static string CloudEntityId = nameof(CloudEntityId);
+		///<summary>
+		/// <para><c>cloud.entity.last_seen_timestamp</c></para>
+		/// <para>Indicates the date/time when this entity was last "seen," usually based upon the last event/log that is initiated by this entity.
+		/// <para><br/>This field is beta and subject to change.</para></para>
+		/// <example></example>
+		///</summary>
+		public static string CloudEntityLastSeenTimestamp = nameof(CloudEntityLastSeenTimestamp);
+		///<summary>
+		/// <para><c>cloud.entity.name</c></para>
+		/// <para>The name of the entity. The keyword field enables exact matches for filtering and aggregations, while the text field enables full-text search. For entities with dedicated field sets (e.g., `host`), this field should mirrors the corresponding *.name value.
+		/// <para><br/>This field is beta and subject to change.</para></para>
+		/// <example></example>
+		///</summary>
+		public static string CloudEntityName = nameof(CloudEntityName);
+		///<summary>
+		/// <para><c>cloud.entity.reference</c></para>
+		/// <para>A URI, URL, or other direct reference to access or locate the entity in its source system. This could be an API endpoint, web console URL, or other addressable location. Format may vary by entity type and source system.
+		/// <para><br/>This field is beta and subject to change.</para></para>
+		/// <example></example>
+		///</summary>
+		public static string CloudEntityReference = nameof(CloudEntityReference);
+		///<summary>
+		/// <para><c>cloud.entity.source</c></para>
+		/// <para>The module or integration that provided this entity data (similar to event.module).
+		/// <para><br/>This field is beta and subject to change.</para></para>
+		/// <example></example>
+		///</summary>
+		public static string CloudEntitySource = nameof(CloudEntitySource);
+		///<summary>
+		/// <para><c>cloud.entity.sub_type</c></para>
+		/// <para>The specific type designation for the entity as defined by its provider or system. This field provides more granular classification than the type field. Examples: `aws_s3_bucket`, `gcp_cloud_storage_bucket`, `azure_blob_container` would all map to entity type `bucket`.  `hardware` , `virtual` , `container` , `node` , `cloud_instance` would all map to entity type `host`.
+		/// <para><br/>This field is beta and subject to change.</para></para>
+		/// <example>aws_s3_bucket</example>
+		///</summary>
+		public static string CloudEntitySubType = nameof(CloudEntitySubType);
+		///<summary>
 		/// <para><c>code_signature.digest_algorithm</c></para>
 		/// <para>The hashing algorithm used to sign the process.
 		/// This value can distinguish signatures when a file is signed multiple times by the same signer but with a different digest algorithm.</para>
@@ -492,6 +588,14 @@ namespace Elastic.CommonSchema
 		/// <example>EQHXZ8M8AV</example>
 		///</summary>
 		public static string CodeSignatureTeamId = nameof(CodeSignatureTeamId);
+		///<summary>
+		/// <para><c>code_signature.thumbprint_sha256</c></para>
+		/// <para>Certificate SHA256 hash that uniquely identifies the code signer.
+		/// <para><br/>This field is beta and subject to change.</para>
+		/// <para>pattern: </para></para>
+		/// <example>c0f23a8eb1cba0ccaa88483b5a234c96e4bdfec719bf458024e68c2a8183476b</example>
+		///</summary>
+		public static string CodeSignatureThumbprintSha256 = nameof(CodeSignatureThumbprintSha256);
 		///<summary>
 		/// <para><c>code_signature.timestamp</c></para>
 		/// <para>Date and time when the code signature was generated and signed.</para>
@@ -826,6 +930,54 @@ namespace Elastic.CommonSchema
 		///</summary>
 		public static string DestinationUserGroupName = nameof(DestinationUserGroupName);
 		///<summary>
+		/// <para><c>destination.user.entity.display_name</c></para>
+		/// <para>An optional field used when a pretty name is desired for entity-centric operations. This field should not be used for correlation with `*.name` fields for entities with dedicated field sets (e.g., `host`).
+		/// <para><br/>This field is beta and subject to change.</para></para>
+		/// <example></example>
+		///</summary>
+		public static string DestinationUserEntityDisplayName = nameof(DestinationUserEntityDisplayName);
+		///<summary>
+		/// <para><c>destination.user.entity.id</c></para>
+		/// <para>A unique identifier for the entity. When multiple identifiers exist, this should be the most stable and commonly used identifier that: 1) persists across the entity's lifecycle, 2) ensures uniqueness within its scope, 3) is commonly used for queries and correlation, and 4) is readily available in most observations (logs/events). For entities with dedicated field sets (e.g., host, user), this value should match the corresponding *.id field. Alternative identifiers (e.g., ARNs values in AWS, URLs) can be preserved in the raw field.</para>
+		/// <example></example>
+		///</summary>
+		public static string DestinationUserEntityId = nameof(DestinationUserEntityId);
+		///<summary>
+		/// <para><c>destination.user.entity.last_seen_timestamp</c></para>
+		/// <para>Indicates the date/time when this entity was last "seen," usually based upon the last event/log that is initiated by this entity.
+		/// <para><br/>This field is beta and subject to change.</para></para>
+		/// <example></example>
+		///</summary>
+		public static string DestinationUserEntityLastSeenTimestamp = nameof(DestinationUserEntityLastSeenTimestamp);
+		///<summary>
+		/// <para><c>destination.user.entity.name</c></para>
+		/// <para>The name of the entity. The keyword field enables exact matches for filtering and aggregations, while the text field enables full-text search. For entities with dedicated field sets (e.g., `host`), this field should mirrors the corresponding *.name value.
+		/// <para><br/>This field is beta and subject to change.</para></para>
+		/// <example></example>
+		///</summary>
+		public static string DestinationUserEntityName = nameof(DestinationUserEntityName);
+		///<summary>
+		/// <para><c>destination.user.entity.reference</c></para>
+		/// <para>A URI, URL, or other direct reference to access or locate the entity in its source system. This could be an API endpoint, web console URL, or other addressable location. Format may vary by entity type and source system.
+		/// <para><br/>This field is beta and subject to change.</para></para>
+		/// <example></example>
+		///</summary>
+		public static string DestinationUserEntityReference = nameof(DestinationUserEntityReference);
+		///<summary>
+		/// <para><c>destination.user.entity.source</c></para>
+		/// <para>The module or integration that provided this entity data (similar to event.module).
+		/// <para><br/>This field is beta and subject to change.</para></para>
+		/// <example></example>
+		///</summary>
+		public static string DestinationUserEntitySource = nameof(DestinationUserEntitySource);
+		///<summary>
+		/// <para><c>destination.user.entity.sub_type</c></para>
+		/// <para>The specific type designation for the entity as defined by its provider or system. This field provides more granular classification than the type field. Examples: `aws_s3_bucket`, `gcp_cloud_storage_bucket`, `azure_blob_container` would all map to entity type `bucket`.  `hardware` , `virtual` , `container` , `node` , `cloud_instance` would all map to entity type `host`.
+		/// <para><br/>This field is beta and subject to change.</para></para>
+		/// <example>aws_s3_bucket</example>
+		///</summary>
+		public static string DestinationUserEntitySubType = nameof(DestinationUserEntitySubType);
+		///<summary>
 		/// <para><c>destination.user.risk.calculated_level</c></para>
 		/// <para>A risk classification level calculated by an internal system as part of entity analytics and entity risk scoring.</para>
 		/// <example>High</example>
@@ -888,12 +1040,55 @@ namespace Elastic.CommonSchema
 		///</summary>
 		public static string DeviceModelName = nameof(DeviceModelName);
 		///<summary>
+		/// <para><c>device.product.id</c></para>
+		/// <para>A unique identifier assigned by the vendor to distinguish different product models. This is typically a hexadecimal value that, combined with the vendor ID, creates a globally unique device identifier.
+		/// The product ID is assigned by the device manufacturer and should remain consistent across all instances of the same product model. For hardware devices, this often corresponds to the Product ID (PID) in device descriptors.
+		/// See https://learn.microsoft.com/en-us/windows-hardware/drivers/install/standard-usb-identifiers for more details on product identification standards.
+		/// <para><br/>This field is beta and subject to change.</para></para>
+		/// <example>43981</example>
+		///</summary>
+		public static string DeviceProductId = nameof(DeviceProductId);
+		///<summary>
+		/// <para><c>device.product.name</c></para>
+		/// <para>The human-readable marketing or commercial name of the device as designated by the manufacturer. This name is typically found in product documentation, marketing materials, or device packaging.
+		/// Unlike the product.id which is a technical identifier, this field contains the consumer-facing product name that would be recognizable to end users. The name should be exactly as provided by the manufacturer and may include model numbers, series designations, or other identifying information.
+		/// <para><br/>This field is beta and subject to change.</para></para>
+		/// <example>Extreme V2 SSD</example>
+		///</summary>
+		public static string DeviceProductName = nameof(DeviceProductName);
+		///<summary>
 		/// <para><c>device.serial_number</c></para>
 		/// <para>The unique serial number serves as a distinct identifier for each device, aiding in inventory management and device authentication.
 		/// <para><br/>This field is beta and subject to change.</para></para>
 		/// <example>DJGAQS4CW5</example>
 		///</summary>
 		public static string DeviceSerialNumber = nameof(DeviceSerialNumber);
+		///<summary>
+		/// <para><c>device.type</c></para>
+		/// <para>A classification of the device based on its primary function or device class. This field categorizes devices into functional groups to enable policy enforcement and monitoring based on device capabilities.
+		/// The classification should follow standard device class definitions where possible, such as "Storage Device", "Human Interface Device", "Audio", "Video", "Network", "Communication", etc. This allows for consistent categorization across different device types and manufacturers.
+		/// See https://www.usb.org/defined-class-codes for standard device class definitions.
+		/// <para><br/>This field is beta and subject to change.</para></para>
+		/// <example>Storage Device</example>
+		///</summary>
+		public static string DeviceType = nameof(DeviceType);
+		///<summary>
+		/// <para><c>device.vendor.id</c></para>
+		/// <para>A unique identifier assigned to device manufacturers by standards organizations. This is typically a hexadecimal value that uniquely identifies the vendor/manufacturer of the device.
+		/// The vendor ID is assigned by standards bodies and remains consistent across all products from the same manufacturer. For hardware devices, this often corresponds to the Vendor ID (VID) in device descriptors. This identifier enables tracking and policy enforcement at the manufacturer level.
+		/// See https://learn.microsoft.com/en-us/windows-hardware/drivers/install/standard-usb-identifiers for more information on vendor identification standards.
+		/// <para><br/>This field is beta and subject to change.</para></para>
+		/// <example>4660</example>
+		///</summary>
+		public static string DeviceVendorId = nameof(DeviceVendorId);
+		///<summary>
+		/// <para><c>device.vendor.name</c></para>
+		/// <para>The name of the organization or company that manufactured or produced the device. This should be the official registered business name or commonly recognized brand name of the manufacturer.
+		/// The vendor name provides human-readable identification of the device manufacturer and should be consistent with the vendor.id field. This field is useful for reporting, device inventory management, and applying vendor-specific policies or security rules.
+		/// <para><br/>This field is beta and subject to change.</para></para>
+		/// <example>SanDisk</example>
+		///</summary>
+		public static string DeviceVendorName = nameof(DeviceVendorName);
 		///<summary>
 		/// <para><c>dll.name</c></para>
 		/// <para>Name of the library.
@@ -1117,6 +1312,14 @@ namespace Elastic.CommonSchema
 		/// <example>EQHXZ8M8AV</example>
 		///</summary>
 		public static string DllCodeSignatureTeamId = nameof(DllCodeSignatureTeamId);
+		///<summary>
+		/// <para><c>dll.code_signature.thumbprint_sha256</c></para>
+		/// <para>Certificate SHA256 hash that uniquely identifies the code signer.
+		/// <para><br/>This field is beta and subject to change.</para>
+		/// <para>pattern: </para></para>
+		/// <example>c0f23a8eb1cba0ccaa88483b5a234c96e4bdfec719bf458024e68c2a8183476b</example>
+		///</summary>
+		public static string DllCodeSignatureThumbprintSha256 = nameof(DllCodeSignatureThumbprintSha256);
 		///<summary>
 		/// <para><c>dll.code_signature.timestamp</c></para>
 		/// <para>Date and time when the code signature was generated and signed.</para>
@@ -1397,6 +1600,54 @@ namespace Elastic.CommonSchema
 		///</summary>
 		public static string EmailXMailer = nameof(EmailXMailer);
 		///<summary>
+		/// <para><c>entity.display_name</c></para>
+		/// <para>An optional field used when a pretty name is desired for entity-centric operations. This field should not be used for correlation with `*.name` fields for entities with dedicated field sets (e.g., `host`).
+		/// <para><br/>This field is beta and subject to change.</para></para>
+		/// <example></example>
+		///</summary>
+		public static string EntityDisplayName = nameof(EntityDisplayName);
+		///<summary>
+		/// <para><c>entity.id</c></para>
+		/// <para>A unique identifier for the entity. When multiple identifiers exist, this should be the most stable and commonly used identifier that: 1) persists across the entity's lifecycle, 2) ensures uniqueness within its scope, 3) is commonly used for queries and correlation, and 4) is readily available in most observations (logs/events). For entities with dedicated field sets (e.g., host, user), this value should match the corresponding *.id field. Alternative identifiers (e.g., ARNs values in AWS, URLs) can be preserved in the raw field.</para>
+		/// <example></example>
+		///</summary>
+		public static string EntityId = nameof(EntityId);
+		///<summary>
+		/// <para><c>entity.last_seen_timestamp</c></para>
+		/// <para>Indicates the date/time when this entity was last "seen," usually based upon the last event/log that is initiated by this entity.
+		/// <para><br/>This field is beta and subject to change.</para></para>
+		/// <example></example>
+		///</summary>
+		public static string EntityLastSeenTimestamp = nameof(EntityLastSeenTimestamp);
+		///<summary>
+		/// <para><c>entity.name</c></para>
+		/// <para>The name of the entity. The keyword field enables exact matches for filtering and aggregations, while the text field enables full-text search. For entities with dedicated field sets (e.g., `host`), this field should mirrors the corresponding *.name value.
+		/// <para><br/>This field is beta and subject to change.</para></para>
+		/// <example></example>
+		///</summary>
+		public static string EntityName = nameof(EntityName);
+		///<summary>
+		/// <para><c>entity.reference</c></para>
+		/// <para>A URI, URL, or other direct reference to access or locate the entity in its source system. This could be an API endpoint, web console URL, or other addressable location. Format may vary by entity type and source system.
+		/// <para><br/>This field is beta and subject to change.</para></para>
+		/// <example></example>
+		///</summary>
+		public static string EntityReference = nameof(EntityReference);
+		///<summary>
+		/// <para><c>entity.source</c></para>
+		/// <para>The module or integration that provided this entity data (similar to event.module).
+		/// <para><br/>This field is beta and subject to change.</para></para>
+		/// <example></example>
+		///</summary>
+		public static string EntitySource = nameof(EntitySource);
+		///<summary>
+		/// <para><c>entity.sub_type</c></para>
+		/// <para>The specific type designation for the entity as defined by its provider or system. This field provides more granular classification than the type field. Examples: `aws_s3_bucket`, `gcp_cloud_storage_bucket`, `azure_blob_container` would all map to entity type `bucket`.  `hardware` , `virtual` , `container` , `node` , `cloud_instance` would all map to entity type `host`.
+		/// <para><br/>This field is beta and subject to change.</para></para>
+		/// <example>aws_s3_bucket</example>
+		///</summary>
+		public static string EntitySubType = nameof(EntitySubType);
+		///<summary>
 		/// <para><c>error.code</c></para>
 		/// <para>Error code describing the error.</para>
 		/// <example></example>
@@ -1546,7 +1797,7 @@ namespace Elastic.CommonSchema
 		/// <para>Raw text message of entire event. Used to demonstrate log integrity or where the full log message (before splitting it up in multiple parts) may be required, e.g. for reindex.
 		/// This field is not indexed and doc_values are disabled. It cannot be searched, but it can be retrieved from `_source`. If users wish to override this and index this field, please see `Field data types` in the `Elasticsearch Reference`.
 		/// <para><br/>Stored but not available for search in Elasticsearch by default</para></para>
-		/// <example>Sep 19 08:26:10 host CEF:0&#124;Security&#124; threatmanager&#124;1.0&#124;100&#124; worm successfully stopped&#124;10&#124;src=10.0.0.1 dst=2.1.2.2spt=1232</example>
+		/// <example>Sep 19 08:26:10 host CEF:0&amp;#124;Security&amp;#124; threatmanager&amp;#124;1.0&amp;#124;100&amp;#124; worm successfully stopped&amp;#124;10&amp;#124;src=10.0.0.1 dst=2.1.2.2spt=1232</example>
 		///</summary>
 		public static string EventOriginal = nameof(EventOriginal);
 		///<summary>
@@ -2098,6 +2349,14 @@ namespace Elastic.CommonSchema
 		///</summary>
 		public static string FileCodeSignatureTeamId = nameof(FileCodeSignatureTeamId);
 		///<summary>
+		/// <para><c>file.code_signature.thumbprint_sha256</c></para>
+		/// <para>Certificate SHA256 hash that uniquely identifies the code signer.
+		/// <para><br/>This field is beta and subject to change.</para>
+		/// <para>pattern: </para></para>
+		/// <example>c0f23a8eb1cba0ccaa88483b5a234c96e4bdfec719bf458024e68c2a8183476b</example>
+		///</summary>
+		public static string FileCodeSignatureThumbprintSha256 = nameof(FileCodeSignatureThumbprintSha256);
+		///<summary>
 		/// <para><c>file.code_signature.timestamp</c></para>
 		/// <para>Date and time when the code signature was generated and signed.</para>
 		/// <example>1/1/2021 12:10:30 PM</example>
@@ -2302,6 +2561,189 @@ namespace Elastic.CommonSchema
 		/// <example>d3ccf195b62a9279c3c19af1080497ec</example>
 		///</summary>
 		public static string FileMachoSymhash = nameof(FileMachoSymhash);
+		///<summary>
+		/// <para><c>gen_ai.agent.description</c></para>
+		/// <para>Free-form description of the GenAI agent provided by the application.
+		/// <para><br/>Stored but not available for search in Elasticsearch by default</para>
+		/// <para><br/>This field is beta and subject to change.</para></para>
+		/// <example>Helps with math problems; Generates fiction stories</example>
+		///</summary>
+		public static string GenAiAgentDescription = nameof(GenAiAgentDescription);
+		///<summary>
+		/// <para><c>gen_ai.agent.id</c></para>
+		/// <para>The unique identifier of the GenAI agent.
+		/// <para><br/>This field is beta and subject to change.</para></para>
+		/// <example>asst_5j66UpCpwteGg4YSxUnt7lPY</example>
+		///</summary>
+		public static string GenAiAgentId = nameof(GenAiAgentId);
+		///<summary>
+		/// <para><c>gen_ai.agent.name</c></para>
+		/// <para>Human-readable name of the GenAI agent provided by the application.
+		/// <para><br/>This field is beta and subject to change.</para></para>
+		/// <example>Math Tutor; Fiction Writer</example>
+		///</summary>
+		public static string GenAiAgentName = nameof(GenAiAgentName);
+		///<summary>
+		/// <para><c>gen_ai.operation.name</c></para>
+		/// <para>The name of the operation being performed.
+		/// <para><br/>This field is beta and subject to change.</para></para>
+		/// <example>chat; text_completion; embeddings</example>
+		///</summary>
+		public static string GenAiOperationName = nameof(GenAiOperationName);
+		///<summary>
+		/// <para><c>gen_ai.output.type</c></para>
+		/// <para>Represents the content type requested by the client.
+		/// <para><br/>This field is beta and subject to change.</para></para>
+		/// <example>text; json; image</example>
+		///</summary>
+		public static string GenAiOutputType = nameof(GenAiOutputType);
+		///<summary>
+		/// <para><c>gen_ai.request.choice.count</c></para>
+		/// <para>The target number of candidate completions to return.
+		/// <para><br/>This field is beta and subject to change.</para></para>
+		/// <example>3</example>
+		///</summary>
+		public static string GenAiRequestChoiceCount = nameof(GenAiRequestChoiceCount);
+		///<summary>
+		/// <para><c>gen_ai.request.encoding_formats</c></para>
+		/// <para>The encoding formats requested in an embeddings operation, if specified.
+		/// <para><br/>This field is beta and subject to change.</para></para>
+		/// <example>["float", "binary"]</example>
+		///</summary>
+		public static string GenAiRequestEncodingFormats = nameof(GenAiRequestEncodingFormats);
+		///<summary>
+		/// <para><c>gen_ai.request.frequency_penalty</c></para>
+		/// <para>The frequency penalty setting for the GenAI request.
+		/// <para><br/>This field is beta and subject to change.</para></para>
+		/// <example>0.1</example>
+		///</summary>
+		public static string GenAiRequestFrequencyPenalty = nameof(GenAiRequestFrequencyPenalty);
+		///<summary>
+		/// <para><c>gen_ai.request.max_tokens</c></para>
+		/// <para>The maximum number of tokens the model generates for a request.
+		/// <para><br/>This field is beta and subject to change.</para></para>
+		/// <example>100</example>
+		///</summary>
+		public static string GenAiRequestMaxTokens = nameof(GenAiRequestMaxTokens);
+		///<summary>
+		/// <para><c>gen_ai.request.model</c></para>
+		/// <para>The name of the GenAI model a request is being made to.
+		/// <para><br/>This field is beta and subject to change.</para></para>
+		/// <example>gpt-4</example>
+		///</summary>
+		public static string GenAiRequestModel = nameof(GenAiRequestModel);
+		///<summary>
+		/// <para><c>gen_ai.request.presence_penalty</c></para>
+		/// <para>The presence penalty setting for the GenAI request.
+		/// <para><br/>This field is beta and subject to change.</para></para>
+		/// <example>0.1</example>
+		///</summary>
+		public static string GenAiRequestPresencePenalty = nameof(GenAiRequestPresencePenalty);
+		///<summary>
+		/// <para><c>gen_ai.request.seed</c></para>
+		/// <para>Requests with same seed value more likely to return same result.
+		/// <para><br/>This field is beta and subject to change.</para></para>
+		/// <example>100</example>
+		///</summary>
+		public static string GenAiRequestSeed = nameof(GenAiRequestSeed);
+		///<summary>
+		/// <para><c>gen_ai.request.stop_sequences</c></para>
+		/// <para>List of sequences that the model will use to stop generating further tokens.
+		/// <para><br/>This field is beta and subject to change.</para></para>
+		/// <example>["forest", "lived"]</example>
+		///</summary>
+		public static string GenAiRequestStopSequences = nameof(GenAiRequestStopSequences);
+		///<summary>
+		/// <para><c>gen_ai.request.temperature</c></para>
+		/// <para>The temperature setting for the GenAI request.
+		/// <para><br/>This field is beta and subject to change.</para></para>
+		/// <example>0.0</example>
+		///</summary>
+		public static string GenAiRequestTemperature = nameof(GenAiRequestTemperature);
+		///<summary>
+		/// <para><c>gen_ai.request.top_k</c></para>
+		/// <para>The top_k sampling setting for the GenAI request.
+		/// <para><br/>This field is beta and subject to change.</para></para>
+		/// <example>1.0</example>
+		///</summary>
+		public static string GenAiRequestTopK = nameof(GenAiRequestTopK);
+		///<summary>
+		/// <para><c>gen_ai.request.top_p</c></para>
+		/// <para>The top_p sampling setting for the GenAI request.
+		/// <para><br/>This field is beta and subject to change.</para></para>
+		/// <example>1.0</example>
+		///</summary>
+		public static string GenAiRequestTopP = nameof(GenAiRequestTopP);
+		///<summary>
+		/// <para><c>gen_ai.response.finish_reasons</c></para>
+		/// <para>Array of reasons the model stopped generating tokens, corresponding to each generation received.
+		/// <para><br/>This field is beta and subject to change.</para></para>
+		/// <example>["stop", "length"]</example>
+		///</summary>
+		public static string GenAiResponseFinishReasons = nameof(GenAiResponseFinishReasons);
+		///<summary>
+		/// <para><c>gen_ai.response.id</c></para>
+		/// <para>The unique identifier for the completion.
+		/// <para><br/>This field is beta and subject to change.</para></para>
+		/// <example>chatcmpl-123</example>
+		///</summary>
+		public static string GenAiResponseId = nameof(GenAiResponseId);
+		///<summary>
+		/// <para><c>gen_ai.response.model</c></para>
+		/// <para>The name of the model that generated the response.
+		/// <para><br/>This field is beta and subject to change.</para></para>
+		/// <example>gpt-4-0613</example>
+		///</summary>
+		public static string GenAiResponseModel = nameof(GenAiResponseModel);
+		///<summary>
+		/// <para><c>gen_ai.system</c></para>
+		/// <para>The Generative AI product as identified by the client or server instrumentation.
+		/// <para><br/>This field is beta and subject to change.</para></para>
+		/// <example>openai</example>
+		///</summary>
+		public static string GenAiSystem = nameof(GenAiSystem);
+		///<summary>
+		/// <para><c>gen_ai.token.type</c></para>
+		/// <para>The type of token being counted.
+		/// <para><br/>This field is beta and subject to change.</para></para>
+		/// <example>input; output</example>
+		///</summary>
+		public static string GenAiTokenType = nameof(GenAiTokenType);
+		///<summary>
+		/// <para><c>gen_ai.tool.call.id</c></para>
+		/// <para>The tool call identifier.
+		/// <para><br/>This field is beta and subject to change.</para></para>
+		/// <example>call_mszuSIzqtI65i1wAUOE8w5H4</example>
+		///</summary>
+		public static string GenAiToolCallId = nameof(GenAiToolCallId);
+		///<summary>
+		/// <para><c>gen_ai.tool.name</c></para>
+		/// <para>Name of the tool utilized by the agent.
+		/// <para><br/>This field is beta and subject to change.</para></para>
+		/// <example>Flights</example>
+		///</summary>
+		public static string GenAiToolName = nameof(GenAiToolName);
+		///<summary>
+		/// <para><c>gen_ai.tool.type</c></para>
+		/// <para>Type of the tool utilized by the agent
+		/// <para><br/>This field is beta and subject to change.</para></para>
+		/// <example>function; extension; datastore</example>
+		///</summary>
+		public static string GenAiToolType = nameof(GenAiToolType);
+		///<summary>
+		/// <para><c>gen_ai.usage.input_tokens</c></para>
+		/// <para>The number of tokens used in the GenAI input (prompt).
+		/// <para><br/>This field is beta and subject to change.</para></para>
+		/// <example>100</example>
+		///</summary>
+		public static string GenAiUsageInputTokens = nameof(GenAiUsageInputTokens);
+		///<summary>
+		/// <para><c>gen_ai.usage.output_tokens</c></para>
+		/// <para>The number of tokens used in the GenAI response (completion).
+		/// <para><br/>This field is beta and subject to change.</para></para>
+		/// <example>180</example>
+		///</summary>
+		public static string GenAiUsageOutputTokens = nameof(GenAiUsageOutputTokens);
 		///<summary>
 		/// <para><c>geo.city_name</c></para>
 		/// <para>City name.</para>
@@ -2543,6 +2985,54 @@ namespace Elastic.CommonSchema
 		/// <example>1325</example>
 		///</summary>
 		public static string HostUptime = nameof(HostUptime);
+		///<summary>
+		/// <para><c>host.entity.display_name</c></para>
+		/// <para>An optional field used when a pretty name is desired for entity-centric operations. This field should not be used for correlation with `*.name` fields for entities with dedicated field sets (e.g., `host`).
+		/// <para><br/>This field is beta and subject to change.</para></para>
+		/// <example></example>
+		///</summary>
+		public static string HostEntityDisplayName = nameof(HostEntityDisplayName);
+		///<summary>
+		/// <para><c>host.entity.id</c></para>
+		/// <para>A unique identifier for the entity. When multiple identifiers exist, this should be the most stable and commonly used identifier that: 1) persists across the entity's lifecycle, 2) ensures uniqueness within its scope, 3) is commonly used for queries and correlation, and 4) is readily available in most observations (logs/events). For entities with dedicated field sets (e.g., host, user), this value should match the corresponding *.id field. Alternative identifiers (e.g., ARNs values in AWS, URLs) can be preserved in the raw field.</para>
+		/// <example></example>
+		///</summary>
+		public static string HostEntityId = nameof(HostEntityId);
+		///<summary>
+		/// <para><c>host.entity.last_seen_timestamp</c></para>
+		/// <para>Indicates the date/time when this entity was last "seen," usually based upon the last event/log that is initiated by this entity.
+		/// <para><br/>This field is beta and subject to change.</para></para>
+		/// <example></example>
+		///</summary>
+		public static string HostEntityLastSeenTimestamp = nameof(HostEntityLastSeenTimestamp);
+		///<summary>
+		/// <para><c>host.entity.name</c></para>
+		/// <para>The name of the entity. The keyword field enables exact matches for filtering and aggregations, while the text field enables full-text search. For entities with dedicated field sets (e.g., `host`), this field should mirrors the corresponding *.name value.
+		/// <para><br/>This field is beta and subject to change.</para></para>
+		/// <example></example>
+		///</summary>
+		public static string HostEntityName = nameof(HostEntityName);
+		///<summary>
+		/// <para><c>host.entity.reference</c></para>
+		/// <para>A URI, URL, or other direct reference to access or locate the entity in its source system. This could be an API endpoint, web console URL, or other addressable location. Format may vary by entity type and source system.
+		/// <para><br/>This field is beta and subject to change.</para></para>
+		/// <example></example>
+		///</summary>
+		public static string HostEntityReference = nameof(HostEntityReference);
+		///<summary>
+		/// <para><c>host.entity.source</c></para>
+		/// <para>The module or integration that provided this entity data (similar to event.module).
+		/// <para><br/>This field is beta and subject to change.</para></para>
+		/// <example></example>
+		///</summary>
+		public static string HostEntitySource = nameof(HostEntitySource);
+		///<summary>
+		/// <para><c>host.entity.sub_type</c></para>
+		/// <para>The specific type designation for the entity as defined by its provider or system. This field provides more granular classification than the type field. Examples: `aws_s3_bucket`, `gcp_cloud_storage_bucket`, `azure_blob_container` would all map to entity type `bucket`.  `hardware` , `virtual` , `container` , `node` , `cloud_instance` would all map to entity type `host`.
+		/// <para><br/>This field is beta and subject to change.</para></para>
+		/// <example>aws_s3_bucket</example>
+		///</summary>
+		public static string HostEntitySubType = nameof(HostEntitySubType);
 		///<summary>
 		/// <para><c>host.geo.city_name</c></para>
 		/// <para>City name.</para>
@@ -3235,6 +3725,54 @@ namespace Elastic.CommonSchema
 		///</summary>
 		public static string OrchestratorType = nameof(OrchestratorType);
 		///<summary>
+		/// <para><c>orchestrator.entity.display_name</c></para>
+		/// <para>An optional field used when a pretty name is desired for entity-centric operations. This field should not be used for correlation with `*.name` fields for entities with dedicated field sets (e.g., `host`).
+		/// <para><br/>This field is beta and subject to change.</para></para>
+		/// <example></example>
+		///</summary>
+		public static string OrchestratorEntityDisplayName = nameof(OrchestratorEntityDisplayName);
+		///<summary>
+		/// <para><c>orchestrator.entity.id</c></para>
+		/// <para>A unique identifier for the entity. When multiple identifiers exist, this should be the most stable and commonly used identifier that: 1) persists across the entity's lifecycle, 2) ensures uniqueness within its scope, 3) is commonly used for queries and correlation, and 4) is readily available in most observations (logs/events). For entities with dedicated field sets (e.g., host, user), this value should match the corresponding *.id field. Alternative identifiers (e.g., ARNs values in AWS, URLs) can be preserved in the raw field.</para>
+		/// <example></example>
+		///</summary>
+		public static string OrchestratorEntityId = nameof(OrchestratorEntityId);
+		///<summary>
+		/// <para><c>orchestrator.entity.last_seen_timestamp</c></para>
+		/// <para>Indicates the date/time when this entity was last "seen," usually based upon the last event/log that is initiated by this entity.
+		/// <para><br/>This field is beta and subject to change.</para></para>
+		/// <example></example>
+		///</summary>
+		public static string OrchestratorEntityLastSeenTimestamp = nameof(OrchestratorEntityLastSeenTimestamp);
+		///<summary>
+		/// <para><c>orchestrator.entity.name</c></para>
+		/// <para>The name of the entity. The keyword field enables exact matches for filtering and aggregations, while the text field enables full-text search. For entities with dedicated field sets (e.g., `host`), this field should mirrors the corresponding *.name value.
+		/// <para><br/>This field is beta and subject to change.</para></para>
+		/// <example></example>
+		///</summary>
+		public static string OrchestratorEntityName = nameof(OrchestratorEntityName);
+		///<summary>
+		/// <para><c>orchestrator.entity.reference</c></para>
+		/// <para>A URI, URL, or other direct reference to access or locate the entity in its source system. This could be an API endpoint, web console URL, or other addressable location. Format may vary by entity type and source system.
+		/// <para><br/>This field is beta and subject to change.</para></para>
+		/// <example></example>
+		///</summary>
+		public static string OrchestratorEntityReference = nameof(OrchestratorEntityReference);
+		///<summary>
+		/// <para><c>orchestrator.entity.source</c></para>
+		/// <para>The module or integration that provided this entity data (similar to event.module).
+		/// <para><br/>This field is beta and subject to change.</para></para>
+		/// <example></example>
+		///</summary>
+		public static string OrchestratorEntitySource = nameof(OrchestratorEntitySource);
+		///<summary>
+		/// <para><c>orchestrator.entity.sub_type</c></para>
+		/// <para>The specific type designation for the entity as defined by its provider or system. This field provides more granular classification than the type field. Examples: `aws_s3_bucket`, `gcp_cloud_storage_bucket`, `azure_blob_container` would all map to entity type `bucket`.  `hardware` , `virtual` , `container` , `node` , `cloud_instance` would all map to entity type `host`.
+		/// <para><br/>This field is beta and subject to change.</para></para>
+		/// <example>aws_s3_bucket</example>
+		///</summary>
+		public static string OrchestratorEntitySubType = nameof(OrchestratorEntitySubType);
+		///<summary>
 		/// <para><c>organization.id</c></para>
 		/// <para>Unique identifier for the organization.</para>
 		/// <example></example>
@@ -3839,6 +4377,14 @@ namespace Elastic.CommonSchema
 		///</summary>
 		public static string ProcessCodeSignatureTeamId = nameof(ProcessCodeSignatureTeamId);
 		///<summary>
+		/// <para><c>process.code_signature.thumbprint_sha256</c></para>
+		/// <para>Certificate SHA256 hash that uniquely identifies the code signer.
+		/// <para><br/>This field is beta and subject to change.</para>
+		/// <para>pattern: </para></para>
+		/// <example>c0f23a8eb1cba0ccaa88483b5a234c96e4bdfec719bf458024e68c2a8183476b</example>
+		///</summary>
+		public static string ProcessCodeSignatureThumbprintSha256 = nameof(ProcessCodeSignatureThumbprintSha256);
+		///<summary>
 		/// <para><c>process.code_signature.timestamp</c></para>
 		/// <para>Date and time when the code signature was generated and signed.</para>
 		/// <example>1/1/2021 12:10:30 PM</example>
@@ -4264,6 +4810,54 @@ namespace Elastic.CommonSchema
 		///</summary>
 		public static string ProcessEntryMetaSourceUserGroupName = nameof(ProcessEntryMetaSourceUserGroupName);
 		///<summary>
+		/// <para><c>process.entry_meta.source.user.entity.display_name</c></para>
+		/// <para>An optional field used when a pretty name is desired for entity-centric operations. This field should not be used for correlation with `*.name` fields for entities with dedicated field sets (e.g., `host`).
+		/// <para><br/>This field is beta and subject to change.</para></para>
+		/// <example></example>
+		///</summary>
+		public static string ProcessEntryMetaSourceUserEntityDisplayName = nameof(ProcessEntryMetaSourceUserEntityDisplayName);
+		///<summary>
+		/// <para><c>process.entry_meta.source.user.entity.id</c></para>
+		/// <para>A unique identifier for the entity. When multiple identifiers exist, this should be the most stable and commonly used identifier that: 1) persists across the entity's lifecycle, 2) ensures uniqueness within its scope, 3) is commonly used for queries and correlation, and 4) is readily available in most observations (logs/events). For entities with dedicated field sets (e.g., host, user), this value should match the corresponding *.id field. Alternative identifiers (e.g., ARNs values in AWS, URLs) can be preserved in the raw field.</para>
+		/// <example></example>
+		///</summary>
+		public static string ProcessEntryMetaSourceUserEntityId = nameof(ProcessEntryMetaSourceUserEntityId);
+		///<summary>
+		/// <para><c>process.entry_meta.source.user.entity.last_seen_timestamp</c></para>
+		/// <para>Indicates the date/time when this entity was last "seen," usually based upon the last event/log that is initiated by this entity.
+		/// <para><br/>This field is beta and subject to change.</para></para>
+		/// <example></example>
+		///</summary>
+		public static string ProcessEntryMetaSourceUserEntityLastSeenTimestamp = nameof(ProcessEntryMetaSourceUserEntityLastSeenTimestamp);
+		///<summary>
+		/// <para><c>process.entry_meta.source.user.entity.name</c></para>
+		/// <para>The name of the entity. The keyword field enables exact matches for filtering and aggregations, while the text field enables full-text search. For entities with dedicated field sets (e.g., `host`), this field should mirrors the corresponding *.name value.
+		/// <para><br/>This field is beta and subject to change.</para></para>
+		/// <example></example>
+		///</summary>
+		public static string ProcessEntryMetaSourceUserEntityName = nameof(ProcessEntryMetaSourceUserEntityName);
+		///<summary>
+		/// <para><c>process.entry_meta.source.user.entity.reference</c></para>
+		/// <para>A URI, URL, or other direct reference to access or locate the entity in its source system. This could be an API endpoint, web console URL, or other addressable location. Format may vary by entity type and source system.
+		/// <para><br/>This field is beta and subject to change.</para></para>
+		/// <example></example>
+		///</summary>
+		public static string ProcessEntryMetaSourceUserEntityReference = nameof(ProcessEntryMetaSourceUserEntityReference);
+		///<summary>
+		/// <para><c>process.entry_meta.source.user.entity.source</c></para>
+		/// <para>The module or integration that provided this entity data (similar to event.module).
+		/// <para><br/>This field is beta and subject to change.</para></para>
+		/// <example></example>
+		///</summary>
+		public static string ProcessEntryMetaSourceUserEntitySource = nameof(ProcessEntryMetaSourceUserEntitySource);
+		///<summary>
+		/// <para><c>process.entry_meta.source.user.entity.sub_type</c></para>
+		/// <para>The specific type designation for the entity as defined by its provider or system. This field provides more granular classification than the type field. Examples: `aws_s3_bucket`, `gcp_cloud_storage_bucket`, `azure_blob_container` would all map to entity type `bucket`.  `hardware` , `virtual` , `container` , `node` , `cloud_instance` would all map to entity type `host`.
+		/// <para><br/>This field is beta and subject to change.</para></para>
+		/// <example>aws_s3_bucket</example>
+		///</summary>
+		public static string ProcessEntryMetaSourceUserEntitySubType = nameof(ProcessEntryMetaSourceUserEntitySubType);
+		///<summary>
 		/// <para><c>process.entry_meta.source.user.risk.calculated_level</c></para>
 		/// <para>A risk classification level calculated by an internal system as part of entity analytics and entity risk scoring.</para>
 		/// <example>High</example>
@@ -4356,6 +4950,54 @@ namespace Elastic.CommonSchema
 		/// <example></example>
 		///</summary>
 		public static string ProcessUserGroupName = nameof(ProcessUserGroupName);
+		///<summary>
+		/// <para><c>process.user.entity.display_name</c></para>
+		/// <para>An optional field used when a pretty name is desired for entity-centric operations. This field should not be used for correlation with `*.name` fields for entities with dedicated field sets (e.g., `host`).
+		/// <para><br/>This field is beta and subject to change.</para></para>
+		/// <example></example>
+		///</summary>
+		public static string ProcessUserEntityDisplayName = nameof(ProcessUserEntityDisplayName);
+		///<summary>
+		/// <para><c>process.user.entity.id</c></para>
+		/// <para>A unique identifier for the entity. When multiple identifiers exist, this should be the most stable and commonly used identifier that: 1) persists across the entity's lifecycle, 2) ensures uniqueness within its scope, 3) is commonly used for queries and correlation, and 4) is readily available in most observations (logs/events). For entities with dedicated field sets (e.g., host, user), this value should match the corresponding *.id field. Alternative identifiers (e.g., ARNs values in AWS, URLs) can be preserved in the raw field.</para>
+		/// <example></example>
+		///</summary>
+		public static string ProcessUserEntityId = nameof(ProcessUserEntityId);
+		///<summary>
+		/// <para><c>process.user.entity.last_seen_timestamp</c></para>
+		/// <para>Indicates the date/time when this entity was last "seen," usually based upon the last event/log that is initiated by this entity.
+		/// <para><br/>This field is beta and subject to change.</para></para>
+		/// <example></example>
+		///</summary>
+		public static string ProcessUserEntityLastSeenTimestamp = nameof(ProcessUserEntityLastSeenTimestamp);
+		///<summary>
+		/// <para><c>process.user.entity.name</c></para>
+		/// <para>The name of the entity. The keyword field enables exact matches for filtering and aggregations, while the text field enables full-text search. For entities with dedicated field sets (e.g., `host`), this field should mirrors the corresponding *.name value.
+		/// <para><br/>This field is beta and subject to change.</para></para>
+		/// <example></example>
+		///</summary>
+		public static string ProcessUserEntityName = nameof(ProcessUserEntityName);
+		///<summary>
+		/// <para><c>process.user.entity.reference</c></para>
+		/// <para>A URI, URL, or other direct reference to access or locate the entity in its source system. This could be an API endpoint, web console URL, or other addressable location. Format may vary by entity type and source system.
+		/// <para><br/>This field is beta and subject to change.</para></para>
+		/// <example></example>
+		///</summary>
+		public static string ProcessUserEntityReference = nameof(ProcessUserEntityReference);
+		///<summary>
+		/// <para><c>process.user.entity.source</c></para>
+		/// <para>The module or integration that provided this entity data (similar to event.module).
+		/// <para><br/>This field is beta and subject to change.</para></para>
+		/// <example></example>
+		///</summary>
+		public static string ProcessUserEntitySource = nameof(ProcessUserEntitySource);
+		///<summary>
+		/// <para><c>process.user.entity.sub_type</c></para>
+		/// <para>The specific type designation for the entity as defined by its provider or system. This field provides more granular classification than the type field. Examples: `aws_s3_bucket`, `gcp_cloud_storage_bucket`, `azure_blob_container` would all map to entity type `bucket`.  `hardware` , `virtual` , `container` , `node` , `cloud_instance` would all map to entity type `host`.
+		/// <para><br/>This field is beta and subject to change.</para></para>
+		/// <example>aws_s3_bucket</example>
+		///</summary>
+		public static string ProcessUserEntitySubType = nameof(ProcessUserEntitySubType);
 		///<summary>
 		/// <para><c>process.user.risk.calculated_level</c></para>
 		/// <para>A risk classification level calculated by an internal system as part of entity analytics and entity risk scoring.</para>
@@ -4450,6 +5092,54 @@ namespace Elastic.CommonSchema
 		///</summary>
 		public static string ProcessSavedUserGroupName = nameof(ProcessSavedUserGroupName);
 		///<summary>
+		/// <para><c>process.saved_user.entity.display_name</c></para>
+		/// <para>An optional field used when a pretty name is desired for entity-centric operations. This field should not be used for correlation with `*.name` fields for entities with dedicated field sets (e.g., `host`).
+		/// <para><br/>This field is beta and subject to change.</para></para>
+		/// <example></example>
+		///</summary>
+		public static string ProcessSavedUserEntityDisplayName = nameof(ProcessSavedUserEntityDisplayName);
+		///<summary>
+		/// <para><c>process.saved_user.entity.id</c></para>
+		/// <para>A unique identifier for the entity. When multiple identifiers exist, this should be the most stable and commonly used identifier that: 1) persists across the entity's lifecycle, 2) ensures uniqueness within its scope, 3) is commonly used for queries and correlation, and 4) is readily available in most observations (logs/events). For entities with dedicated field sets (e.g., host, user), this value should match the corresponding *.id field. Alternative identifiers (e.g., ARNs values in AWS, URLs) can be preserved in the raw field.</para>
+		/// <example></example>
+		///</summary>
+		public static string ProcessSavedUserEntityId = nameof(ProcessSavedUserEntityId);
+		///<summary>
+		/// <para><c>process.saved_user.entity.last_seen_timestamp</c></para>
+		/// <para>Indicates the date/time when this entity was last "seen," usually based upon the last event/log that is initiated by this entity.
+		/// <para><br/>This field is beta and subject to change.</para></para>
+		/// <example></example>
+		///</summary>
+		public static string ProcessSavedUserEntityLastSeenTimestamp = nameof(ProcessSavedUserEntityLastSeenTimestamp);
+		///<summary>
+		/// <para><c>process.saved_user.entity.name</c></para>
+		/// <para>The name of the entity. The keyword field enables exact matches for filtering and aggregations, while the text field enables full-text search. For entities with dedicated field sets (e.g., `host`), this field should mirrors the corresponding *.name value.
+		/// <para><br/>This field is beta and subject to change.</para></para>
+		/// <example></example>
+		///</summary>
+		public static string ProcessSavedUserEntityName = nameof(ProcessSavedUserEntityName);
+		///<summary>
+		/// <para><c>process.saved_user.entity.reference</c></para>
+		/// <para>A URI, URL, or other direct reference to access or locate the entity in its source system. This could be an API endpoint, web console URL, or other addressable location. Format may vary by entity type and source system.
+		/// <para><br/>This field is beta and subject to change.</para></para>
+		/// <example></example>
+		///</summary>
+		public static string ProcessSavedUserEntityReference = nameof(ProcessSavedUserEntityReference);
+		///<summary>
+		/// <para><c>process.saved_user.entity.source</c></para>
+		/// <para>The module or integration that provided this entity data (similar to event.module).
+		/// <para><br/>This field is beta and subject to change.</para></para>
+		/// <example></example>
+		///</summary>
+		public static string ProcessSavedUserEntitySource = nameof(ProcessSavedUserEntitySource);
+		///<summary>
+		/// <para><c>process.saved_user.entity.sub_type</c></para>
+		/// <para>The specific type designation for the entity as defined by its provider or system. This field provides more granular classification than the type field. Examples: `aws_s3_bucket`, `gcp_cloud_storage_bucket`, `azure_blob_container` would all map to entity type `bucket`.  `hardware` , `virtual` , `container` , `node` , `cloud_instance` would all map to entity type `host`.
+		/// <para><br/>This field is beta and subject to change.</para></para>
+		/// <example>aws_s3_bucket</example>
+		///</summary>
+		public static string ProcessSavedUserEntitySubType = nameof(ProcessSavedUserEntitySubType);
+		///<summary>
 		/// <para><c>process.saved_user.risk.calculated_level</c></para>
 		/// <para>A risk classification level calculated by an internal system as part of entity analytics and entity risk scoring.</para>
 		/// <example>High</example>
@@ -4543,6 +5233,54 @@ namespace Elastic.CommonSchema
 		///</summary>
 		public static string ProcessRealUserGroupName = nameof(ProcessRealUserGroupName);
 		///<summary>
+		/// <para><c>process.real_user.entity.display_name</c></para>
+		/// <para>An optional field used when a pretty name is desired for entity-centric operations. This field should not be used for correlation with `*.name` fields for entities with dedicated field sets (e.g., `host`).
+		/// <para><br/>This field is beta and subject to change.</para></para>
+		/// <example></example>
+		///</summary>
+		public static string ProcessRealUserEntityDisplayName = nameof(ProcessRealUserEntityDisplayName);
+		///<summary>
+		/// <para><c>process.real_user.entity.id</c></para>
+		/// <para>A unique identifier for the entity. When multiple identifiers exist, this should be the most stable and commonly used identifier that: 1) persists across the entity's lifecycle, 2) ensures uniqueness within its scope, 3) is commonly used for queries and correlation, and 4) is readily available in most observations (logs/events). For entities with dedicated field sets (e.g., host, user), this value should match the corresponding *.id field. Alternative identifiers (e.g., ARNs values in AWS, URLs) can be preserved in the raw field.</para>
+		/// <example></example>
+		///</summary>
+		public static string ProcessRealUserEntityId = nameof(ProcessRealUserEntityId);
+		///<summary>
+		/// <para><c>process.real_user.entity.last_seen_timestamp</c></para>
+		/// <para>Indicates the date/time when this entity was last "seen," usually based upon the last event/log that is initiated by this entity.
+		/// <para><br/>This field is beta and subject to change.</para></para>
+		/// <example></example>
+		///</summary>
+		public static string ProcessRealUserEntityLastSeenTimestamp = nameof(ProcessRealUserEntityLastSeenTimestamp);
+		///<summary>
+		/// <para><c>process.real_user.entity.name</c></para>
+		/// <para>The name of the entity. The keyword field enables exact matches for filtering and aggregations, while the text field enables full-text search. For entities with dedicated field sets (e.g., `host`), this field should mirrors the corresponding *.name value.
+		/// <para><br/>This field is beta and subject to change.</para></para>
+		/// <example></example>
+		///</summary>
+		public static string ProcessRealUserEntityName = nameof(ProcessRealUserEntityName);
+		///<summary>
+		/// <para><c>process.real_user.entity.reference</c></para>
+		/// <para>A URI, URL, or other direct reference to access or locate the entity in its source system. This could be an API endpoint, web console URL, or other addressable location. Format may vary by entity type and source system.
+		/// <para><br/>This field is beta and subject to change.</para></para>
+		/// <example></example>
+		///</summary>
+		public static string ProcessRealUserEntityReference = nameof(ProcessRealUserEntityReference);
+		///<summary>
+		/// <para><c>process.real_user.entity.source</c></para>
+		/// <para>The module or integration that provided this entity data (similar to event.module).
+		/// <para><br/>This field is beta and subject to change.</para></para>
+		/// <example></example>
+		///</summary>
+		public static string ProcessRealUserEntitySource = nameof(ProcessRealUserEntitySource);
+		///<summary>
+		/// <para><c>process.real_user.entity.sub_type</c></para>
+		/// <para>The specific type designation for the entity as defined by its provider or system. This field provides more granular classification than the type field. Examples: `aws_s3_bucket`, `gcp_cloud_storage_bucket`, `azure_blob_container` would all map to entity type `bucket`.  `hardware` , `virtual` , `container` , `node` , `cloud_instance` would all map to entity type `host`.
+		/// <para><br/>This field is beta and subject to change.</para></para>
+		/// <example>aws_s3_bucket</example>
+		///</summary>
+		public static string ProcessRealUserEntitySubType = nameof(ProcessRealUserEntitySubType);
+		///<summary>
 		/// <para><c>process.real_user.risk.calculated_level</c></para>
 		/// <para>A risk classification level calculated by an internal system as part of entity analytics and entity risk scoring.</para>
 		/// <example>High</example>
@@ -4635,6 +5373,54 @@ namespace Elastic.CommonSchema
 		/// <example></example>
 		///</summary>
 		public static string ProcessAttestedUserGroupName = nameof(ProcessAttestedUserGroupName);
+		///<summary>
+		/// <para><c>process.attested_user.entity.display_name</c></para>
+		/// <para>An optional field used when a pretty name is desired for entity-centric operations. This field should not be used for correlation with `*.name` fields for entities with dedicated field sets (e.g., `host`).
+		/// <para><br/>This field is beta and subject to change.</para></para>
+		/// <example></example>
+		///</summary>
+		public static string ProcessAttestedUserEntityDisplayName = nameof(ProcessAttestedUserEntityDisplayName);
+		///<summary>
+		/// <para><c>process.attested_user.entity.id</c></para>
+		/// <para>A unique identifier for the entity. When multiple identifiers exist, this should be the most stable and commonly used identifier that: 1) persists across the entity's lifecycle, 2) ensures uniqueness within its scope, 3) is commonly used for queries and correlation, and 4) is readily available in most observations (logs/events). For entities with dedicated field sets (e.g., host, user), this value should match the corresponding *.id field. Alternative identifiers (e.g., ARNs values in AWS, URLs) can be preserved in the raw field.</para>
+		/// <example></example>
+		///</summary>
+		public static string ProcessAttestedUserEntityId = nameof(ProcessAttestedUserEntityId);
+		///<summary>
+		/// <para><c>process.attested_user.entity.last_seen_timestamp</c></para>
+		/// <para>Indicates the date/time when this entity was last "seen," usually based upon the last event/log that is initiated by this entity.
+		/// <para><br/>This field is beta and subject to change.</para></para>
+		/// <example></example>
+		///</summary>
+		public static string ProcessAttestedUserEntityLastSeenTimestamp = nameof(ProcessAttestedUserEntityLastSeenTimestamp);
+		///<summary>
+		/// <para><c>process.attested_user.entity.name</c></para>
+		/// <para>The name of the entity. The keyword field enables exact matches for filtering and aggregations, while the text field enables full-text search. For entities with dedicated field sets (e.g., `host`), this field should mirrors the corresponding *.name value.
+		/// <para><br/>This field is beta and subject to change.</para></para>
+		/// <example></example>
+		///</summary>
+		public static string ProcessAttestedUserEntityName = nameof(ProcessAttestedUserEntityName);
+		///<summary>
+		/// <para><c>process.attested_user.entity.reference</c></para>
+		/// <para>A URI, URL, or other direct reference to access or locate the entity in its source system. This could be an API endpoint, web console URL, or other addressable location. Format may vary by entity type and source system.
+		/// <para><br/>This field is beta and subject to change.</para></para>
+		/// <example></example>
+		///</summary>
+		public static string ProcessAttestedUserEntityReference = nameof(ProcessAttestedUserEntityReference);
+		///<summary>
+		/// <para><c>process.attested_user.entity.source</c></para>
+		/// <para>The module or integration that provided this entity data (similar to event.module).
+		/// <para><br/>This field is beta and subject to change.</para></para>
+		/// <example></example>
+		///</summary>
+		public static string ProcessAttestedUserEntitySource = nameof(ProcessAttestedUserEntitySource);
+		///<summary>
+		/// <para><c>process.attested_user.entity.sub_type</c></para>
+		/// <para>The specific type designation for the entity as defined by its provider or system. This field provides more granular classification than the type field. Examples: `aws_s3_bucket`, `gcp_cloud_storage_bucket`, `azure_blob_container` would all map to entity type `bucket`.  `hardware` , `virtual` , `container` , `node` , `cloud_instance` would all map to entity type `host`.
+		/// <para><br/>This field is beta and subject to change.</para></para>
+		/// <example>aws_s3_bucket</example>
+		///</summary>
+		public static string ProcessAttestedUserEntitySubType = nameof(ProcessAttestedUserEntitySubType);
 		///<summary>
 		/// <para><c>process.attested_user.risk.calculated_level</c></para>
 		/// <para>A risk classification level calculated by an internal system as part of entity analytics and entity risk scoring.</para>
@@ -5020,6 +5806,54 @@ namespace Elastic.CommonSchema
 		///</summary>
 		public static string ServerUserGroupName = nameof(ServerUserGroupName);
 		///<summary>
+		/// <para><c>server.user.entity.display_name</c></para>
+		/// <para>An optional field used when a pretty name is desired for entity-centric operations. This field should not be used for correlation with `*.name` fields for entities with dedicated field sets (e.g., `host`).
+		/// <para><br/>This field is beta and subject to change.</para></para>
+		/// <example></example>
+		///</summary>
+		public static string ServerUserEntityDisplayName = nameof(ServerUserEntityDisplayName);
+		///<summary>
+		/// <para><c>server.user.entity.id</c></para>
+		/// <para>A unique identifier for the entity. When multiple identifiers exist, this should be the most stable and commonly used identifier that: 1) persists across the entity's lifecycle, 2) ensures uniqueness within its scope, 3) is commonly used for queries and correlation, and 4) is readily available in most observations (logs/events). For entities with dedicated field sets (e.g., host, user), this value should match the corresponding *.id field. Alternative identifiers (e.g., ARNs values in AWS, URLs) can be preserved in the raw field.</para>
+		/// <example></example>
+		///</summary>
+		public static string ServerUserEntityId = nameof(ServerUserEntityId);
+		///<summary>
+		/// <para><c>server.user.entity.last_seen_timestamp</c></para>
+		/// <para>Indicates the date/time when this entity was last "seen," usually based upon the last event/log that is initiated by this entity.
+		/// <para><br/>This field is beta and subject to change.</para></para>
+		/// <example></example>
+		///</summary>
+		public static string ServerUserEntityLastSeenTimestamp = nameof(ServerUserEntityLastSeenTimestamp);
+		///<summary>
+		/// <para><c>server.user.entity.name</c></para>
+		/// <para>The name of the entity. The keyword field enables exact matches for filtering and aggregations, while the text field enables full-text search. For entities with dedicated field sets (e.g., `host`), this field should mirrors the corresponding *.name value.
+		/// <para><br/>This field is beta and subject to change.</para></para>
+		/// <example></example>
+		///</summary>
+		public static string ServerUserEntityName = nameof(ServerUserEntityName);
+		///<summary>
+		/// <para><c>server.user.entity.reference</c></para>
+		/// <para>A URI, URL, or other direct reference to access or locate the entity in its source system. This could be an API endpoint, web console URL, or other addressable location. Format may vary by entity type and source system.
+		/// <para><br/>This field is beta and subject to change.</para></para>
+		/// <example></example>
+		///</summary>
+		public static string ServerUserEntityReference = nameof(ServerUserEntityReference);
+		///<summary>
+		/// <para><c>server.user.entity.source</c></para>
+		/// <para>The module or integration that provided this entity data (similar to event.module).
+		/// <para><br/>This field is beta and subject to change.</para></para>
+		/// <example></example>
+		///</summary>
+		public static string ServerUserEntitySource = nameof(ServerUserEntitySource);
+		///<summary>
+		/// <para><c>server.user.entity.sub_type</c></para>
+		/// <para>The specific type designation for the entity as defined by its provider or system. This field provides more granular classification than the type field. Examples: `aws_s3_bucket`, `gcp_cloud_storage_bucket`, `azure_blob_container` would all map to entity type `bucket`.  `hardware` , `virtual` , `container` , `node` , `cloud_instance` would all map to entity type `host`.
+		/// <para><br/>This field is beta and subject to change.</para></para>
+		/// <example>aws_s3_bucket</example>
+		///</summary>
+		public static string ServerUserEntitySubType = nameof(ServerUserEntitySubType);
+		///<summary>
 		/// <para><c>server.user.risk.calculated_level</c></para>
 		/// <para>A risk classification level calculated by an internal system as part of entity analytics and entity risk scoring.</para>
 		/// <example>High</example>
@@ -5133,6 +5967,54 @@ namespace Elastic.CommonSchema
 		/// <example>3.2.4</example>
 		///</summary>
 		public static string ServiceVersion = nameof(ServiceVersion);
+		///<summary>
+		/// <para><c>service.entity.display_name</c></para>
+		/// <para>An optional field used when a pretty name is desired for entity-centric operations. This field should not be used for correlation with `*.name` fields for entities with dedicated field sets (e.g., `host`).
+		/// <para><br/>This field is beta and subject to change.</para></para>
+		/// <example></example>
+		///</summary>
+		public static string ServiceEntityDisplayName = nameof(ServiceEntityDisplayName);
+		///<summary>
+		/// <para><c>service.entity.id</c></para>
+		/// <para>A unique identifier for the entity. When multiple identifiers exist, this should be the most stable and commonly used identifier that: 1) persists across the entity's lifecycle, 2) ensures uniqueness within its scope, 3) is commonly used for queries and correlation, and 4) is readily available in most observations (logs/events). For entities with dedicated field sets (e.g., host, user), this value should match the corresponding *.id field. Alternative identifiers (e.g., ARNs values in AWS, URLs) can be preserved in the raw field.</para>
+		/// <example></example>
+		///</summary>
+		public static string ServiceEntityId = nameof(ServiceEntityId);
+		///<summary>
+		/// <para><c>service.entity.last_seen_timestamp</c></para>
+		/// <para>Indicates the date/time when this entity was last "seen," usually based upon the last event/log that is initiated by this entity.
+		/// <para><br/>This field is beta and subject to change.</para></para>
+		/// <example></example>
+		///</summary>
+		public static string ServiceEntityLastSeenTimestamp = nameof(ServiceEntityLastSeenTimestamp);
+		///<summary>
+		/// <para><c>service.entity.name</c></para>
+		/// <para>The name of the entity. The keyword field enables exact matches for filtering and aggregations, while the text field enables full-text search. For entities with dedicated field sets (e.g., `host`), this field should mirrors the corresponding *.name value.
+		/// <para><br/>This field is beta and subject to change.</para></para>
+		/// <example></example>
+		///</summary>
+		public static string ServiceEntityName = nameof(ServiceEntityName);
+		///<summary>
+		/// <para><c>service.entity.reference</c></para>
+		/// <para>A URI, URL, or other direct reference to access or locate the entity in its source system. This could be an API endpoint, web console URL, or other addressable location. Format may vary by entity type and source system.
+		/// <para><br/>This field is beta and subject to change.</para></para>
+		/// <example></example>
+		///</summary>
+		public static string ServiceEntityReference = nameof(ServiceEntityReference);
+		///<summary>
+		/// <para><c>service.entity.source</c></para>
+		/// <para>The module or integration that provided this entity data (similar to event.module).
+		/// <para><br/>This field is beta and subject to change.</para></para>
+		/// <example></example>
+		///</summary>
+		public static string ServiceEntitySource = nameof(ServiceEntitySource);
+		///<summary>
+		/// <para><c>service.entity.sub_type</c></para>
+		/// <para>The specific type designation for the entity as defined by its provider or system. This field provides more granular classification than the type field. Examples: `aws_s3_bucket`, `gcp_cloud_storage_bucket`, `azure_blob_container` would all map to entity type `bucket`.  `hardware` , `virtual` , `container` , `node` , `cloud_instance` would all map to entity type `host`.
+		/// <para><br/>This field is beta and subject to change.</para></para>
+		/// <example>aws_s3_bucket</example>
+		///</summary>
+		public static string ServiceEntitySubType = nameof(ServiceEntitySubType);
 		///<summary>
 		/// <para><c>source.address</c></para>
 		/// <para>Some event source addresses are defined ambiguously. The event will sometimes list an IP, a domain or a unix socket.  You should always store the raw address in the `.address` field.
@@ -5353,6 +6235,54 @@ namespace Elastic.CommonSchema
 		/// <example></example>
 		///</summary>
 		public static string SourceUserGroupName = nameof(SourceUserGroupName);
+		///<summary>
+		/// <para><c>source.user.entity.display_name</c></para>
+		/// <para>An optional field used when a pretty name is desired for entity-centric operations. This field should not be used for correlation with `*.name` fields for entities with dedicated field sets (e.g., `host`).
+		/// <para><br/>This field is beta and subject to change.</para></para>
+		/// <example></example>
+		///</summary>
+		public static string SourceUserEntityDisplayName = nameof(SourceUserEntityDisplayName);
+		///<summary>
+		/// <para><c>source.user.entity.id</c></para>
+		/// <para>A unique identifier for the entity. When multiple identifiers exist, this should be the most stable and commonly used identifier that: 1) persists across the entity's lifecycle, 2) ensures uniqueness within its scope, 3) is commonly used for queries and correlation, and 4) is readily available in most observations (logs/events). For entities with dedicated field sets (e.g., host, user), this value should match the corresponding *.id field. Alternative identifiers (e.g., ARNs values in AWS, URLs) can be preserved in the raw field.</para>
+		/// <example></example>
+		///</summary>
+		public static string SourceUserEntityId = nameof(SourceUserEntityId);
+		///<summary>
+		/// <para><c>source.user.entity.last_seen_timestamp</c></para>
+		/// <para>Indicates the date/time when this entity was last "seen," usually based upon the last event/log that is initiated by this entity.
+		/// <para><br/>This field is beta and subject to change.</para></para>
+		/// <example></example>
+		///</summary>
+		public static string SourceUserEntityLastSeenTimestamp = nameof(SourceUserEntityLastSeenTimestamp);
+		///<summary>
+		/// <para><c>source.user.entity.name</c></para>
+		/// <para>The name of the entity. The keyword field enables exact matches for filtering and aggregations, while the text field enables full-text search. For entities with dedicated field sets (e.g., `host`), this field should mirrors the corresponding *.name value.
+		/// <para><br/>This field is beta and subject to change.</para></para>
+		/// <example></example>
+		///</summary>
+		public static string SourceUserEntityName = nameof(SourceUserEntityName);
+		///<summary>
+		/// <para><c>source.user.entity.reference</c></para>
+		/// <para>A URI, URL, or other direct reference to access or locate the entity in its source system. This could be an API endpoint, web console URL, or other addressable location. Format may vary by entity type and source system.
+		/// <para><br/>This field is beta and subject to change.</para></para>
+		/// <example></example>
+		///</summary>
+		public static string SourceUserEntityReference = nameof(SourceUserEntityReference);
+		///<summary>
+		/// <para><c>source.user.entity.source</c></para>
+		/// <para>The module or integration that provided this entity data (similar to event.module).
+		/// <para><br/>This field is beta and subject to change.</para></para>
+		/// <example></example>
+		///</summary>
+		public static string SourceUserEntitySource = nameof(SourceUserEntitySource);
+		///<summary>
+		/// <para><c>source.user.entity.sub_type</c></para>
+		/// <para>The specific type designation for the entity as defined by its provider or system. This field provides more granular classification than the type field. Examples: `aws_s3_bucket`, `gcp_cloud_storage_bucket`, `azure_blob_container` would all map to entity type `bucket`.  `hardware` , `virtual` , `container` , `node` , `cloud_instance` would all map to entity type `host`.
+		/// <para><br/>This field is beta and subject to change.</para></para>
+		/// <example>aws_s3_bucket</example>
+		///</summary>
+		public static string SourceUserEntitySubType = nameof(SourceUserEntitySubType);
 		///<summary>
 		/// <para><c>source.user.risk.calculated_level</c></para>
 		/// <para>A risk classification level calculated by an internal system as part of entity analytics and entity risk scoring.</para>
@@ -6098,6 +7028,14 @@ namespace Elastic.CommonSchema
 		///</summary>
 		public static string ThreatIndicatorFileCodeSignatureTeamId = nameof(ThreatIndicatorFileCodeSignatureTeamId);
 		///<summary>
+		/// <para><c>threat.indicator.file.code_signature.thumbprint_sha256</c></para>
+		/// <para>Certificate SHA256 hash that uniquely identifies the code signer.
+		/// <para><br/>This field is beta and subject to change.</para>
+		/// <para>pattern: </para></para>
+		/// <example>c0f23a8eb1cba0ccaa88483b5a234c96e4bdfec719bf458024e68c2a8183476b</example>
+		///</summary>
+		public static string ThreatIndicatorFileCodeSignatureThumbprintSha256 = nameof(ThreatIndicatorFileCodeSignatureThumbprintSha256);
+		///<summary>
 		/// <para><c>threat.indicator.file.code_signature.timestamp</c></para>
 		/// <para>Date and time when the code signature was generated and signed.</para>
 		/// <example>1/1/2021 12:10:30 PM</example>
@@ -6466,9 +7404,9 @@ namespace Elastic.CommonSchema
 		public static string ThreatIndicatorUrlPort = nameof(ThreatIndicatorUrlPort);
 		///<summary>
 		/// <para><c>threat.indicator.url.query</c></para>
-		/// <para>The query field describes the query string of the request, such as "q=elasticsearch".
-		/// The `?` is excluded from the query string. If a URL contains no `?`, there is no query field. If there is a `?` but no query, the query field exists with an empty string. The `exists` query can be used to differentiate between the two cases.</para>
-		/// <example></example>
+		/// <para>The field contains the entire query string, excluding the leading `?` character, such as "q=elasticsearch".
+		/// If a URL contains no `?`, there is no query field. If there is a `?` but no query, the query field exists with an empty string. The `exists` query can be used to differentiate between the two cases.</para>
+		/// <example>q=elasticsearch&amp;sort=desc</example>
 		///</summary>
 		public static string ThreatIndicatorUrlQuery = nameof(ThreatIndicatorUrlQuery);
 		///<summary>
@@ -6787,9 +7725,9 @@ namespace Elastic.CommonSchema
 		public static string UrlPort = nameof(UrlPort);
 		///<summary>
 		/// <para><c>url.query</c></para>
-		/// <para>The query field describes the query string of the request, such as "q=elasticsearch".
-		/// The `?` is excluded from the query string. If a URL contains no `?`, there is no query field. If there is a `?` but no query, the query field exists with an empty string. The `exists` query can be used to differentiate between the two cases.</para>
-		/// <example></example>
+		/// <para>The field contains the entire query string, excluding the leading `?` character, such as "q=elasticsearch".
+		/// If a URL contains no `?`, there is no query field. If there is a `?` but no query, the query field exists with an empty string. The `exists` query can be used to differentiate between the two cases.</para>
+		/// <example>q=elasticsearch&amp;sort=desc</example>
 		///</summary>
 		public static string UrlQuery = nameof(UrlQuery);
 		///<summary>
@@ -6884,6 +7822,54 @@ namespace Elastic.CommonSchema
 		/// <example></example>
 		///</summary>
 		public static string UserGroupName = nameof(UserGroupName);
+		///<summary>
+		/// <para><c>user.entity.display_name</c></para>
+		/// <para>An optional field used when a pretty name is desired for entity-centric operations. This field should not be used for correlation with `*.name` fields for entities with dedicated field sets (e.g., `host`).
+		/// <para><br/>This field is beta and subject to change.</para></para>
+		/// <example></example>
+		///</summary>
+		public static string UserEntityDisplayName = nameof(UserEntityDisplayName);
+		///<summary>
+		/// <para><c>user.entity.id</c></para>
+		/// <para>A unique identifier for the entity. When multiple identifiers exist, this should be the most stable and commonly used identifier that: 1) persists across the entity's lifecycle, 2) ensures uniqueness within its scope, 3) is commonly used for queries and correlation, and 4) is readily available in most observations (logs/events). For entities with dedicated field sets (e.g., host, user), this value should match the corresponding *.id field. Alternative identifiers (e.g., ARNs values in AWS, URLs) can be preserved in the raw field.</para>
+		/// <example></example>
+		///</summary>
+		public static string UserEntityId = nameof(UserEntityId);
+		///<summary>
+		/// <para><c>user.entity.last_seen_timestamp</c></para>
+		/// <para>Indicates the date/time when this entity was last "seen," usually based upon the last event/log that is initiated by this entity.
+		/// <para><br/>This field is beta and subject to change.</para></para>
+		/// <example></example>
+		///</summary>
+		public static string UserEntityLastSeenTimestamp = nameof(UserEntityLastSeenTimestamp);
+		///<summary>
+		/// <para><c>user.entity.name</c></para>
+		/// <para>The name of the entity. The keyword field enables exact matches for filtering and aggregations, while the text field enables full-text search. For entities with dedicated field sets (e.g., `host`), this field should mirrors the corresponding *.name value.
+		/// <para><br/>This field is beta and subject to change.</para></para>
+		/// <example></example>
+		///</summary>
+		public static string UserEntityName = nameof(UserEntityName);
+		///<summary>
+		/// <para><c>user.entity.reference</c></para>
+		/// <para>A URI, URL, or other direct reference to access or locate the entity in its source system. This could be an API endpoint, web console URL, or other addressable location. Format may vary by entity type and source system.
+		/// <para><br/>This field is beta and subject to change.</para></para>
+		/// <example></example>
+		///</summary>
+		public static string UserEntityReference = nameof(UserEntityReference);
+		///<summary>
+		/// <para><c>user.entity.source</c></para>
+		/// <para>The module or integration that provided this entity data (similar to event.module).
+		/// <para><br/>This field is beta and subject to change.</para></para>
+		/// <example></example>
+		///</summary>
+		public static string UserEntitySource = nameof(UserEntitySource);
+		///<summary>
+		/// <para><c>user.entity.sub_type</c></para>
+		/// <para>The specific type designation for the entity as defined by its provider or system. This field provides more granular classification than the type field. Examples: `aws_s3_bucket`, `gcp_cloud_storage_bucket`, `azure_blob_container` would all map to entity type `bucket`.  `hardware` , `virtual` , `container` , `node` , `cloud_instance` would all map to entity type `host`.
+		/// <para><br/>This field is beta and subject to change.</para></para>
+		/// <example>aws_s3_bucket</example>
+		///</summary>
+		public static string UserEntitySubType = nameof(UserEntitySubType);
 		///<summary>
 		/// <para><c>user.risk.calculated_level</c></para>
 		/// <para>A risk classification level calculated by an internal system as part of entity analytics and entity risk scoring.</para>
@@ -7309,6 +8295,13 @@ namespace Elastic.CommonSchema
 			"client.user.group.domain", ClientUserGroupDomain,
 			"client.user.group.id", ClientUserGroupId,
 			"client.user.group.name", ClientUserGroupName,
+			"client.user.entity.display_name", ClientUserEntityDisplayName,
+			"client.user.entity.id", ClientUserEntityId,
+			"client.user.entity.last_seen_timestamp", ClientUserEntityLastSeenTimestamp,
+			"client.user.entity.name", ClientUserEntityName,
+			"client.user.entity.reference", ClientUserEntityReference,
+			"client.user.entity.source", ClientUserEntitySource,
+			"client.user.entity.sub_type", ClientUserEntitySubType,
 			"client.user.risk.calculated_level", ClientUserRiskCalculatedLevel,
 			"client.user.risk.calculated_score", ClientUserRiskCalculatedScore,
 			"client.user.risk.calculated_score_norm", ClientUserRiskCalculatedScoreNorm,
@@ -7326,6 +8319,13 @@ namespace Elastic.CommonSchema
 			"cloud.provider", CloudProvider,
 			"cloud.region", CloudRegion,
 			"cloud.service.name", CloudServiceName,
+			"cloud.entity.display_name", CloudEntityDisplayName,
+			"cloud.entity.id", CloudEntityId,
+			"cloud.entity.last_seen_timestamp", CloudEntityLastSeenTimestamp,
+			"cloud.entity.name", CloudEntityName,
+			"cloud.entity.reference", CloudEntityReference,
+			"cloud.entity.source", CloudEntitySource,
+			"cloud.entity.sub_type", CloudEntitySubType,
 			"code_signature.digest_algorithm", CodeSignatureDigestAlgorithm,
 			"code_signature.exists", CodeSignatureExists,
 			"code_signature.flags", CodeSignatureFlags,
@@ -7333,6 +8333,7 @@ namespace Elastic.CommonSchema
 			"code_signature.status", CodeSignatureStatus,
 			"code_signature.subject_name", CodeSignatureSubjectName,
 			"code_signature.team_id", CodeSignatureTeamId,
+			"code_signature.thumbprint_sha256", CodeSignatureThumbprintSha256,
 			"code_signature.timestamp", CodeSignatureTimestamp,
 			"code_signature.trusted", CodeSignatureTrusted,
 			"code_signature.valid", CodeSignatureValid,
@@ -7384,6 +8385,13 @@ namespace Elastic.CommonSchema
 			"destination.user.group.domain", DestinationUserGroupDomain,
 			"destination.user.group.id", DestinationUserGroupId,
 			"destination.user.group.name", DestinationUserGroupName,
+			"destination.user.entity.display_name", DestinationUserEntityDisplayName,
+			"destination.user.entity.id", DestinationUserEntityId,
+			"destination.user.entity.last_seen_timestamp", DestinationUserEntityLastSeenTimestamp,
+			"destination.user.entity.name", DestinationUserEntityName,
+			"destination.user.entity.reference", DestinationUserEntityReference,
+			"destination.user.entity.source", DestinationUserEntitySource,
+			"destination.user.entity.sub_type", DestinationUserEntitySubType,
 			"destination.user.risk.calculated_level", DestinationUserRiskCalculatedLevel,
 			"destination.user.risk.calculated_score", DestinationUserRiskCalculatedScore,
 			"destination.user.risk.calculated_score_norm", DestinationUserRiskCalculatedScoreNorm,
@@ -7394,7 +8402,12 @@ namespace Elastic.CommonSchema
 			"device.manufacturer", DeviceManufacturer,
 			"device.model.identifier", DeviceModelIdentifier,
 			"device.model.name", DeviceModelName,
+			"device.product.id", DeviceProductId,
+			"device.product.name", DeviceProductName,
 			"device.serial_number", DeviceSerialNumber,
+			"device.type", DeviceType,
+			"device.vendor.id", DeviceVendorId,
+			"device.vendor.name", DeviceVendorName,
 			"dll.name", DllName,
 			"dll.origin_referrer_url", DllOriginReferrerUrl,
 			"dll.origin_url", DllOriginUrl,
@@ -7430,6 +8443,7 @@ namespace Elastic.CommonSchema
 			"dll.code_signature.status", DllCodeSignatureStatus,
 			"dll.code_signature.subject_name", DllCodeSignatureSubjectName,
 			"dll.code_signature.team_id", DllCodeSignatureTeamId,
+			"dll.code_signature.thumbprint_sha256", DllCodeSignatureThumbprintSha256,
 			"dll.code_signature.timestamp", DllCodeSignatureTimestamp,
 			"dll.code_signature.trusted", DllCodeSignatureTrusted,
 			"dll.code_signature.valid", DllCodeSignatureValid,
@@ -7474,6 +8488,13 @@ namespace Elastic.CommonSchema
 			"email.sender.address", EmailSenderAddress,
 			"email.subject", EmailSubject,
 			"email.x_mailer", EmailXMailer,
+			"entity.display_name", EntityDisplayName,
+			"entity.id", EntityId,
+			"entity.last_seen_timestamp", EntityLastSeenTimestamp,
+			"entity.name", EntityName,
+			"entity.reference", EntityReference,
+			"entity.source", EntitySource,
+			"entity.sub_type", EntitySubType,
 			"error.code", ErrorCode,
 			"error.id", ErrorId,
 			"error.message", ErrorMessage,
@@ -7575,6 +8596,7 @@ namespace Elastic.CommonSchema
 			"file.code_signature.status", FileCodeSignatureStatus,
 			"file.code_signature.subject_name", FileCodeSignatureSubjectName,
 			"file.code_signature.team_id", FileCodeSignatureTeamId,
+			"file.code_signature.thumbprint_sha256", FileCodeSignatureThumbprintSha256,
 			"file.code_signature.timestamp", FileCodeSignatureTimestamp,
 			"file.code_signature.trusted", FileCodeSignatureTrusted,
 			"file.code_signature.valid", FileCodeSignatureValid,
@@ -7608,6 +8630,32 @@ namespace Elastic.CommonSchema
 			"file.macho.imports_names_entropy", FileMachoImportsNamesEntropy,
 			"file.macho.imports_names_var_entropy", FileMachoImportsNamesVarEntropy,
 			"file.macho.symhash", FileMachoSymhash,
+			"gen_ai.agent.description", GenAiAgentDescription,
+			"gen_ai.agent.id", GenAiAgentId,
+			"gen_ai.agent.name", GenAiAgentName,
+			"gen_ai.operation.name", GenAiOperationName,
+			"gen_ai.output.type", GenAiOutputType,
+			"gen_ai.request.choice.count", GenAiRequestChoiceCount,
+			"gen_ai.request.encoding_formats", GenAiRequestEncodingFormats,
+			"gen_ai.request.frequency_penalty", GenAiRequestFrequencyPenalty,
+			"gen_ai.request.max_tokens", GenAiRequestMaxTokens,
+			"gen_ai.request.model", GenAiRequestModel,
+			"gen_ai.request.presence_penalty", GenAiRequestPresencePenalty,
+			"gen_ai.request.seed", GenAiRequestSeed,
+			"gen_ai.request.stop_sequences", GenAiRequestStopSequences,
+			"gen_ai.request.temperature", GenAiRequestTemperature,
+			"gen_ai.request.top_k", GenAiRequestTopK,
+			"gen_ai.request.top_p", GenAiRequestTopP,
+			"gen_ai.response.finish_reasons", GenAiResponseFinishReasons,
+			"gen_ai.response.id", GenAiResponseId,
+			"gen_ai.response.model", GenAiResponseModel,
+			"gen_ai.system", GenAiSystem,
+			"gen_ai.token.type", GenAiTokenType,
+			"gen_ai.tool.call.id", GenAiToolCallId,
+			"gen_ai.tool.name", GenAiToolName,
+			"gen_ai.tool.type", GenAiToolType,
+			"gen_ai.usage.input_tokens", GenAiUsageInputTokens,
+			"gen_ai.usage.output_tokens", GenAiUsageOutputTokens,
 			"geo.city_name", GeoCityName,
 			"geo.continent_code", GeoContinentCode,
 			"geo.continent_name", GeoContinentName,
@@ -7646,6 +8694,13 @@ namespace Elastic.CommonSchema
 			"host.pid_ns_ino", HostPidNsIno,
 			"host.type", HostType,
 			"host.uptime", HostUptime,
+			"host.entity.display_name", HostEntityDisplayName,
+			"host.entity.id", HostEntityId,
+			"host.entity.last_seen_timestamp", HostEntityLastSeenTimestamp,
+			"host.entity.name", HostEntityName,
+			"host.entity.reference", HostEntityReference,
+			"host.entity.source", HostEntitySource,
+			"host.entity.sub_type", HostEntitySubType,
 			"host.geo.city_name", HostGeoCityName,
 			"host.geo.continent_code", HostGeoContinentCode,
 			"host.geo.continent_name", HostGeoContinentName,
@@ -7751,6 +8806,13 @@ namespace Elastic.CommonSchema
 			"orchestrator.resource.parent.type", OrchestratorResourceParentType,
 			"orchestrator.resource.type", OrchestratorResourceType,
 			"orchestrator.type", OrchestratorType,
+			"orchestrator.entity.display_name", OrchestratorEntityDisplayName,
+			"orchestrator.entity.id", OrchestratorEntityId,
+			"orchestrator.entity.last_seen_timestamp", OrchestratorEntityLastSeenTimestamp,
+			"orchestrator.entity.name", OrchestratorEntityName,
+			"orchestrator.entity.reference", OrchestratorEntityReference,
+			"orchestrator.entity.source", OrchestratorEntitySource,
+			"orchestrator.entity.sub_type", OrchestratorEntitySubType,
 			"organization.id", OrganizationId,
 			"organization.name", OrganizationName,
 			"os.family", OsFamily,
@@ -7845,6 +8907,7 @@ namespace Elastic.CommonSchema
 			"process.code_signature.status", ProcessCodeSignatureStatus,
 			"process.code_signature.subject_name", ProcessCodeSignatureSubjectName,
 			"process.code_signature.team_id", ProcessCodeSignatureTeamId,
+			"process.code_signature.thumbprint_sha256", ProcessCodeSignatureThumbprintSha256,
 			"process.code_signature.timestamp", ProcessCodeSignatureTimestamp,
 			"process.code_signature.trusted", ProcessCodeSignatureTrusted,
 			"process.code_signature.valid", ProcessCodeSignatureValid,
@@ -7912,6 +8975,13 @@ namespace Elastic.CommonSchema
 			"process.entry_meta.source.user.group.domain", ProcessEntryMetaSourceUserGroupDomain,
 			"process.entry_meta.source.user.group.id", ProcessEntryMetaSourceUserGroupId,
 			"process.entry_meta.source.user.group.name", ProcessEntryMetaSourceUserGroupName,
+			"process.entry_meta.source.user.entity.display_name", ProcessEntryMetaSourceUserEntityDisplayName,
+			"process.entry_meta.source.user.entity.id", ProcessEntryMetaSourceUserEntityId,
+			"process.entry_meta.source.user.entity.last_seen_timestamp", ProcessEntryMetaSourceUserEntityLastSeenTimestamp,
+			"process.entry_meta.source.user.entity.name", ProcessEntryMetaSourceUserEntityName,
+			"process.entry_meta.source.user.entity.reference", ProcessEntryMetaSourceUserEntityReference,
+			"process.entry_meta.source.user.entity.source", ProcessEntryMetaSourceUserEntitySource,
+			"process.entry_meta.source.user.entity.sub_type", ProcessEntryMetaSourceUserEntitySubType,
 			"process.entry_meta.source.user.risk.calculated_level", ProcessEntryMetaSourceUserRiskCalculatedLevel,
 			"process.entry_meta.source.user.risk.calculated_score", ProcessEntryMetaSourceUserRiskCalculatedScore,
 			"process.entry_meta.source.user.risk.calculated_score_norm", ProcessEntryMetaSourceUserRiskCalculatedScoreNorm,
@@ -7927,6 +8997,13 @@ namespace Elastic.CommonSchema
 			"process.user.group.domain", ProcessUserGroupDomain,
 			"process.user.group.id", ProcessUserGroupId,
 			"process.user.group.name", ProcessUserGroupName,
+			"process.user.entity.display_name", ProcessUserEntityDisplayName,
+			"process.user.entity.id", ProcessUserEntityId,
+			"process.user.entity.last_seen_timestamp", ProcessUserEntityLastSeenTimestamp,
+			"process.user.entity.name", ProcessUserEntityName,
+			"process.user.entity.reference", ProcessUserEntityReference,
+			"process.user.entity.source", ProcessUserEntitySource,
+			"process.user.entity.sub_type", ProcessUserEntitySubType,
 			"process.user.risk.calculated_level", ProcessUserRiskCalculatedLevel,
 			"process.user.risk.calculated_score", ProcessUserRiskCalculatedScore,
 			"process.user.risk.calculated_score_norm", ProcessUserRiskCalculatedScoreNorm,
@@ -7942,6 +9019,13 @@ namespace Elastic.CommonSchema
 			"process.saved_user.group.domain", ProcessSavedUserGroupDomain,
 			"process.saved_user.group.id", ProcessSavedUserGroupId,
 			"process.saved_user.group.name", ProcessSavedUserGroupName,
+			"process.saved_user.entity.display_name", ProcessSavedUserEntityDisplayName,
+			"process.saved_user.entity.id", ProcessSavedUserEntityId,
+			"process.saved_user.entity.last_seen_timestamp", ProcessSavedUserEntityLastSeenTimestamp,
+			"process.saved_user.entity.name", ProcessSavedUserEntityName,
+			"process.saved_user.entity.reference", ProcessSavedUserEntityReference,
+			"process.saved_user.entity.source", ProcessSavedUserEntitySource,
+			"process.saved_user.entity.sub_type", ProcessSavedUserEntitySubType,
 			"process.saved_user.risk.calculated_level", ProcessSavedUserRiskCalculatedLevel,
 			"process.saved_user.risk.calculated_score", ProcessSavedUserRiskCalculatedScore,
 			"process.saved_user.risk.calculated_score_norm", ProcessSavedUserRiskCalculatedScoreNorm,
@@ -7957,6 +9041,13 @@ namespace Elastic.CommonSchema
 			"process.real_user.group.domain", ProcessRealUserGroupDomain,
 			"process.real_user.group.id", ProcessRealUserGroupId,
 			"process.real_user.group.name", ProcessRealUserGroupName,
+			"process.real_user.entity.display_name", ProcessRealUserEntityDisplayName,
+			"process.real_user.entity.id", ProcessRealUserEntityId,
+			"process.real_user.entity.last_seen_timestamp", ProcessRealUserEntityLastSeenTimestamp,
+			"process.real_user.entity.name", ProcessRealUserEntityName,
+			"process.real_user.entity.reference", ProcessRealUserEntityReference,
+			"process.real_user.entity.source", ProcessRealUserEntitySource,
+			"process.real_user.entity.sub_type", ProcessRealUserEntitySubType,
 			"process.real_user.risk.calculated_level", ProcessRealUserRiskCalculatedLevel,
 			"process.real_user.risk.calculated_score", ProcessRealUserRiskCalculatedScore,
 			"process.real_user.risk.calculated_score_norm", ProcessRealUserRiskCalculatedScoreNorm,
@@ -7972,6 +9063,13 @@ namespace Elastic.CommonSchema
 			"process.attested_user.group.domain", ProcessAttestedUserGroupDomain,
 			"process.attested_user.group.id", ProcessAttestedUserGroupId,
 			"process.attested_user.group.name", ProcessAttestedUserGroupName,
+			"process.attested_user.entity.display_name", ProcessAttestedUserEntityDisplayName,
+			"process.attested_user.entity.id", ProcessAttestedUserEntityId,
+			"process.attested_user.entity.last_seen_timestamp", ProcessAttestedUserEntityLastSeenTimestamp,
+			"process.attested_user.entity.name", ProcessAttestedUserEntityName,
+			"process.attested_user.entity.reference", ProcessAttestedUserEntityReference,
+			"process.attested_user.entity.source", ProcessAttestedUserEntitySource,
+			"process.attested_user.entity.sub_type", ProcessAttestedUserEntitySubType,
 			"process.attested_user.risk.calculated_level", ProcessAttestedUserRiskCalculatedLevel,
 			"process.attested_user.risk.calculated_score", ProcessAttestedUserRiskCalculatedScore,
 			"process.attested_user.risk.calculated_score_norm", ProcessAttestedUserRiskCalculatedScoreNorm,
@@ -8033,6 +9131,13 @@ namespace Elastic.CommonSchema
 			"server.user.group.domain", ServerUserGroupDomain,
 			"server.user.group.id", ServerUserGroupId,
 			"server.user.group.name", ServerUserGroupName,
+			"server.user.entity.display_name", ServerUserEntityDisplayName,
+			"server.user.entity.id", ServerUserEntityId,
+			"server.user.entity.last_seen_timestamp", ServerUserEntityLastSeenTimestamp,
+			"server.user.entity.name", ServerUserEntityName,
+			"server.user.entity.reference", ServerUserEntityReference,
+			"server.user.entity.source", ServerUserEntitySource,
+			"server.user.entity.sub_type", ServerUserEntitySubType,
 			"server.user.risk.calculated_level", ServerUserRiskCalculatedLevel,
 			"server.user.risk.calculated_score", ServerUserRiskCalculatedScore,
 			"server.user.risk.calculated_score_norm", ServerUserRiskCalculatedScoreNorm,
@@ -8049,6 +9154,13 @@ namespace Elastic.CommonSchema
 			"service.state", ServiceState,
 			"service.type", ServiceType,
 			"service.version", ServiceVersion,
+			"service.entity.display_name", ServiceEntityDisplayName,
+			"service.entity.id", ServiceEntityId,
+			"service.entity.last_seen_timestamp", ServiceEntityLastSeenTimestamp,
+			"service.entity.name", ServiceEntityName,
+			"service.entity.reference", ServiceEntityReference,
+			"service.entity.source", ServiceEntitySource,
+			"service.entity.sub_type", ServiceEntitySubType,
 			"source.address", SourceAddress,
 			"source.bytes", SourceBytes,
 			"source.domain", SourceDomain,
@@ -8083,6 +9195,13 @@ namespace Elastic.CommonSchema
 			"source.user.group.domain", SourceUserGroupDomain,
 			"source.user.group.id", SourceUserGroupId,
 			"source.user.group.name", SourceUserGroupName,
+			"source.user.entity.display_name", SourceUserEntityDisplayName,
+			"source.user.entity.id", SourceUserEntityId,
+			"source.user.entity.last_seen_timestamp", SourceUserEntityLastSeenTimestamp,
+			"source.user.entity.name", SourceUserEntityName,
+			"source.user.entity.reference", SourceUserEntityReference,
+			"source.user.entity.source", SourceUserEntitySource,
+			"source.user.entity.sub_type", SourceUserEntitySubType,
 			"source.user.risk.calculated_level", SourceUserRiskCalculatedLevel,
 			"source.user.risk.calculated_score", SourceUserRiskCalculatedScore,
 			"source.user.risk.calculated_score_norm", SourceUserRiskCalculatedScoreNorm,
@@ -8195,6 +9314,7 @@ namespace Elastic.CommonSchema
 			"threat.indicator.file.code_signature.status", ThreatIndicatorFileCodeSignatureStatus,
 			"threat.indicator.file.code_signature.subject_name", ThreatIndicatorFileCodeSignatureSubjectName,
 			"threat.indicator.file.code_signature.team_id", ThreatIndicatorFileCodeSignatureTeamId,
+			"threat.indicator.file.code_signature.thumbprint_sha256", ThreatIndicatorFileCodeSignatureThumbprintSha256,
 			"threat.indicator.file.code_signature.timestamp", ThreatIndicatorFileCodeSignatureTimestamp,
 			"threat.indicator.file.code_signature.trusted", ThreatIndicatorFileCodeSignatureTrusted,
 			"threat.indicator.file.code_signature.valid", ThreatIndicatorFileCodeSignatureValid,
@@ -8319,6 +9439,13 @@ namespace Elastic.CommonSchema
 			"user.group.domain", UserGroupDomain,
 			"user.group.id", UserGroupId,
 			"user.group.name", UserGroupName,
+			"user.entity.display_name", UserEntityDisplayName,
+			"user.entity.id", UserEntityId,
+			"user.entity.last_seen_timestamp", UserEntityLastSeenTimestamp,
+			"user.entity.name", UserEntityName,
+			"user.entity.reference", UserEntityReference,
+			"user.entity.source", UserEntitySource,
+			"user.entity.sub_type", UserEntitySubType,
 			"user.risk.calculated_level", UserRiskCalculatedLevel,
 			"user.risk.calculated_score", UserRiskCalculatedScore,
 			"user.risk.calculated_score_norm", UserRiskCalculatedScoreNorm,

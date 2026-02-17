@@ -3,6 +3,7 @@
 // See the LICENSE file in the project root for more information
 
 using System;
+using System.Collections.Generic;
 using System.IO;
 
 namespace Elastic.CommonSchema.Generator;
@@ -39,4 +40,10 @@ public static class CodeConfiguration
 	public static string ElasticCommonSchemaGeneratedFolder { get; }
 	public static string SpecificationFolder { get; }
 	public static string ViewFolder { get; }
+
+	/// <summary>
+	/// Entity converters that have hand-written public partial declarations
+	/// and must be generated as public (not internal).
+	/// </summary>
+	public static readonly HashSet<string> PublicEntityConverters = new() { "Ecs", "Log" };
 }

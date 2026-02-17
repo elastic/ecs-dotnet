@@ -5,7 +5,7 @@
 /*
 IMPORTANT NOTE
 ==============
-This file has been generated.
+This file has been generated. 
 If you wish to submit a PR please modify the original csharp file and submit the PR with that change. Thanks!
 */
 
@@ -39,7 +39,7 @@ public partial class LogEntityJsonConverter : PropertiesReaderJsonConverterBase<
 	}
 
 	private partial bool ReadProperty(ref Utf8JsonReader reader, string propertyName, Log ecsEvent, JsonSerializerOptions options);
-
+		
 	/// <inheritdoc cref="JsonConverter{T}.Write"/>
 	public override void Write(Utf8JsonWriter writer, Log value, JsonSerializerOptions options)
 	{
@@ -77,7 +77,7 @@ public partial class EcsEntityJsonConverter : PropertiesReaderJsonConverterBase<
 	}
 
 	private partial bool ReadProperty(ref Utf8JsonReader reader, string propertyName, Ecs ecsEvent, JsonSerializerOptions options);
-
+		
 	/// <inheritdoc cref="JsonConverter{T}.Write"/>
 	public override void Write(Utf8JsonWriter writer, Ecs value, JsonSerializerOptions options)
 	{
