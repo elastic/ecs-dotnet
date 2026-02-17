@@ -31,6 +31,14 @@ namespace Elastic.CommonSchema
 	public class CloudTarget : CloudFieldSet  {
 	}
 
+	///<inheritdoc cref="EntityFieldSet"/>
+	public class EntityTarget : EntityFieldSet  {
+	}
+
+	///<inheritdoc cref="HostFieldSet"/>
+	public class HostTarget : HostFieldSet  {
+	}
+
 	///<inheritdoc cref="ProcessFieldSet"/>
 	public class ProcessParent : ProcessFieldSet  {
 
@@ -164,7 +172,14 @@ namespace Elastic.CommonSchema
 	}
 
 	///<inheritdoc cref="CloudFieldSet"/>
-	public class Cloud : CloudFieldSet , ICloudOrigin, ICloudTarget {
+	public class Cloud : CloudFieldSet , IEntity, ICloudOrigin, ICloudTarget {
+
+		///<summary>
+		/// <para><c>cloud.entity</c></para>
+		/// <example></example>
+		///</summary>
+		[JsonPropertyName("entity"), DataMember(Name = "entity")]
+		public Entity? Entity { get; set; }
 
 		///<summary>
 		/// <para><c>cloud.origin</c></para>
@@ -263,6 +278,17 @@ namespace Elastic.CommonSchema
 	public class Email : EmailFieldSet  {
 	}
 
+	///<inheritdoc cref="EntityFieldSet"/>
+	public class Entity : EntityFieldSet , IEntityTarget {
+
+		///<summary>
+		/// <para><c>entity.target</c></para>
+		/// <example></example>
+		///</summary>
+		[JsonPropertyName("target"), DataMember(Name = "target")]
+		public EntityTarget? Target { get; set; }
+	}
+
 	///<inheritdoc cref="ErrorFieldSet"/>
 	public class Error : ErrorFieldSet  {
 	}
@@ -321,6 +347,10 @@ namespace Elastic.CommonSchema
 		public Macho? Macho { get; set; }
 	}
 
+	///<inheritdoc cref="GenAiFieldSet"/>
+	public class GenAi : GenAiFieldSet  {
+	}
+
 	///<inheritdoc cref="GeoFieldSet"/>
 	public class Geo : GeoFieldSet  {
 	}
@@ -334,7 +364,14 @@ namespace Elastic.CommonSchema
 	}
 
 	///<inheritdoc cref="HostFieldSet"/>
-	public class Host : HostFieldSet , IGeo, IOs, IRisk {
+	public class Host : HostFieldSet , IGeo, IEntity, IOs, IRisk, IHostTarget {
+
+		///<summary>
+		/// <para><c>host.entity</c></para>
+		/// <example></example>
+		///</summary>
+		[JsonPropertyName("entity"), DataMember(Name = "entity")]
+		public Entity? Entity { get; set; }
 
 		///<summary>
 		/// <para><c>host.geo</c></para>
@@ -356,6 +393,13 @@ namespace Elastic.CommonSchema
 		///</summary>
 		[JsonPropertyName("risk"), DataMember(Name = "risk")]
 		public Risk? Risk { get; set; }
+
+		///<summary>
+		/// <para><c>host.target</c></para>
+		/// <example></example>
+		///</summary>
+		[JsonPropertyName("target"), DataMember(Name = "target")]
+		public HostTarget? Target { get; set; }
 	}
 
 	///<inheritdoc cref="HttpFieldSet"/>
@@ -404,7 +448,14 @@ namespace Elastic.CommonSchema
 	}
 
 	///<inheritdoc cref="OrchestratorFieldSet"/>
-	public class Orchestrator : OrchestratorFieldSet  {
+	public class Orchestrator : OrchestratorFieldSet , IEntity {
+
+		///<summary>
+		/// <para><c>orchestrator.entity</c></para>
+		/// <example></example>
+		///</summary>
+		[JsonPropertyName("entity"), DataMember(Name = "entity")]
+		public Entity? Entity { get; set; }
 	}
 
 	///<inheritdoc cref="OrganizationFieldSet"/>
@@ -616,7 +667,14 @@ namespace Elastic.CommonSchema
 	}
 
 	///<inheritdoc cref="ServiceFieldSet"/>
-	public class Service : ServiceFieldSet , IServiceOrigin, IServiceTarget {
+	public class Service : ServiceFieldSet , IEntity, IServiceOrigin, IServiceTarget {
+
+		///<summary>
+		/// <para><c>service.entity</c></para>
+		/// <example></example>
+		///</summary>
+		[JsonPropertyName("entity"), DataMember(Name = "entity")]
+		public Entity? Entity { get; set; }
 
 		///<summary>
 		/// <para><c>service.origin</c></para>
@@ -727,7 +785,7 @@ namespace Elastic.CommonSchema
 	}
 
 	///<inheritdoc cref="UserFieldSet"/>
-	public class User : UserFieldSet , IRisk, IGroup, IUserTarget, IUserEffective, IUserChanges {
+	public class User : UserFieldSet , IEntity, IRisk, IGroup, IUserTarget, IUserEffective, IUserChanges {
 
 		///<summary>
 		/// <para><c>user.group</c></para>
@@ -735,6 +793,13 @@ namespace Elastic.CommonSchema
 		///</summary>
 		[JsonPropertyName("group"), DataMember(Name = "group")]
 		public Group? Group { get; set; }
+
+		///<summary>
+		/// <para><c>user.entity</c></para>
+		/// <example></example>
+		///</summary>
+		[JsonPropertyName("entity"), DataMember(Name = "entity")]
+		public Entity? Entity { get; set; }
 
 		///<summary>
 		/// <para><c>user.risk</c></para>

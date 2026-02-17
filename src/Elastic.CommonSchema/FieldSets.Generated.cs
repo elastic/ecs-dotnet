@@ -5,7 +5,7 @@
 /*
 IMPORTANT NOTE
 ==============
-This file has been generated.
+This file has been generated. 
 If you wish to submit a PR please modify the original csharp file and submit the PR with that change. Thanks!
 */
 
@@ -455,6 +455,16 @@ namespace Elastic.CommonSchema
 		public string? TeamId { get; set; }
 
 		///<summary>
+		/// <para><c>code_signature.thumbprint_sha256</c></para>
+		/// <para>Certificate SHA256 hash that uniquely identifies the code signer.
+		/// <para><br/>This field is beta and subject to change.</para>
+		/// <para>pattern: </para></para>
+		/// <example>c0f23a8eb1cba0ccaa88483b5a234c96e4bdfec719bf458024e68c2a8183476b</example>
+		///</summary>
+		[JsonPropertyName("thumbprint_sha256"), DataMember(Name = "thumbprint_sha256")]
+		public string? ThumbprintSha256 { get; set; }
+
+		///<summary>
 		/// <para><c>code_signature.timestamp</c></para>
 		/// <para>Date and time when the code signature was generated and signed.</para>
 		/// <example>1/1/2021 12:10:30 PM</example>
@@ -790,6 +800,27 @@ namespace Elastic.CommonSchema
 		public string? ModelName { get; set; }
 
 		///<summary>
+		/// <para><c>device.product.id</c></para>
+		/// <para>A unique identifier assigned by the vendor to distinguish different product models. This is typically a hexadecimal value that, combined with the vendor ID, creates a globally unique device identifier.
+		/// The product ID is assigned by the device manufacturer and should remain consistent across all instances of the same product model. For hardware devices, this often corresponds to the Product ID (PID) in device descriptors.
+		/// See https://learn.microsoft.com/en-us/windows-hardware/drivers/install/standard-usb-identifiers for more details on product identification standards.
+		/// <para><br/>This field is beta and subject to change.</para></para>
+		/// <example>43981</example>
+		///</summary>
+		[JsonPropertyName("product.id"), DataMember(Name = "product.id")]
+		public string? ProductId { get; set; }
+
+		///<summary>
+		/// <para><c>device.product.name</c></para>
+		/// <para>The human-readable marketing or commercial name of the device as designated by the manufacturer. This name is typically found in product documentation, marketing materials, or device packaging.
+		/// Unlike the product.id which is a technical identifier, this field contains the consumer-facing product name that would be recognizable to end users. The name should be exactly as provided by the manufacturer and may include model numbers, series designations, or other identifying information.
+		/// <para><br/>This field is beta and subject to change.</para></para>
+		/// <example>Extreme V2 SSD</example>
+		///</summary>
+		[JsonPropertyName("product.name"), DataMember(Name = "product.name")]
+		public string? ProductName { get; set; }
+
+		///<summary>
 		/// <para><c>device.serial_number</c></para>
 		/// <para>The unique serial number serves as a distinct identifier for each device, aiding in inventory management and device authentication.
 		/// <para><br/>This field is beta and subject to change.</para></para>
@@ -797,6 +828,38 @@ namespace Elastic.CommonSchema
 		///</summary>
 		[JsonPropertyName("serial_number"), DataMember(Name = "serial_number")]
 		public string? SerialNumber { get; set; }
+
+		///<summary>
+		/// <para><c>device.type</c></para>
+		/// <para>A classification of the device based on its primary function or device class. This field categorizes devices into functional groups to enable policy enforcement and monitoring based on device capabilities.
+		/// The classification should follow standard device class definitions where possible, such as "Storage Device", "Human Interface Device", "Audio", "Video", "Network", "Communication", etc. This allows for consistent categorization across different device types and manufacturers.
+		/// See https://www.usb.org/defined-class-codes for standard device class definitions.
+		/// <para><br/>This field is beta and subject to change.</para></para>
+		/// <example>Storage Device</example>
+		///</summary>
+		[JsonPropertyName("type"), DataMember(Name = "type")]
+		public string? Type { get; set; }
+
+		///<summary>
+		/// <para><c>device.vendor.id</c></para>
+		/// <para>A unique identifier assigned to device manufacturers by standards organizations. This is typically a hexadecimal value that uniquely identifies the vendor/manufacturer of the device.
+		/// The vendor ID is assigned by standards bodies and remains consistent across all products from the same manufacturer. For hardware devices, this often corresponds to the Vendor ID (VID) in device descriptors. This identifier enables tracking and policy enforcement at the manufacturer level.
+		/// See https://learn.microsoft.com/en-us/windows-hardware/drivers/install/standard-usb-identifiers for more information on vendor identification standards.
+		/// <para><br/>This field is beta and subject to change.</para></para>
+		/// <example>4660</example>
+		///</summary>
+		[JsonPropertyName("vendor.id"), DataMember(Name = "vendor.id")]
+		public string? VendorId { get; set; }
+
+		///<summary>
+		/// <para><c>device.vendor.name</c></para>
+		/// <para>The name of the organization or company that manufactured or produced the device. This should be the official registered business name or commonly recognized brand name of the manufacturer.
+		/// The vendor name provides human-readable identification of the device manufacturer and should be consistent with the vendor.id field. This field is useful for reporting, device inventory management, and applying vendor-specific policies or security rules.
+		/// <para><br/>This field is beta and subject to change.</para></para>
+		/// <example>SanDisk</example>
+		///</summary>
+		[JsonPropertyName("vendor.name"), DataMember(Name = "vendor.name")]
+		public string? VendorName { get; set; }
 	}
 
 	///<summary>
@@ -1333,6 +1396,144 @@ namespace Elastic.CommonSchema
 	}
 
 	///<summary>
+	/// The entity fields provide a standardized way to represent and categorize different types of components within an IT environment, including those that don&#x27;t have dedicated field sets in ECS. An entity represents a discrete, identifiable component that can be described by a set of attributes and maintains its identity over time.
+	///</summary>
+	public abstract class EntityFieldSet {
+
+		///<summary>
+		/// <para><c>entity.display_name</c></para>
+		/// <para>An optional field used when a pretty name is desired for entity-centric operations. This field should not be used for correlation with `*.name` fields for entities with dedicated field sets (e.g., `host`).
+		/// <para><br/>This field is beta and subject to change.</para></para>
+		/// <example></example>
+		///</summary>
+		[JsonPropertyName("display_name"), DataMember(Name = "display_name")]
+		public string? DisplayName { get; set; }
+
+		///<summary>
+		/// <para><c>entity.id</c></para>
+		/// <para>A unique identifier for the entity. When multiple identifiers exist, this should be the most stable and commonly used identifier that: 1) persists across the entity's lifecycle, 2) ensures uniqueness within its scope, 3) is commonly used for queries and correlation, and 4) is readily available in most observations (logs/events). For entities with dedicated field sets (e.g., host, user), this value should match the corresponding *.id field. Alternative identifiers (e.g., ARNs values in AWS, URLs) can be preserved in the raw field.</para>
+		/// <example></example>
+		///</summary>
+		[JsonPropertyName("id"), DataMember(Name = "id")]
+		public string? Id { get; set; }
+
+		///<summary>
+		/// <para><c>entity.last_seen_timestamp</c></para>
+		/// <para>Indicates the date/time when this entity was last "seen," usually based upon the last event/log that is initiated by this entity.
+		/// <para><br/>This field is beta and subject to change.</para></para>
+		/// <example></example>
+		///</summary>
+		[JsonPropertyName("last_seen_timestamp"), DataMember(Name = "last_seen_timestamp")]
+		public DateTimeOffset? LastSeenTimestamp { get; set; }
+
+		///<summary>
+		/// <para><c>entity.name</c></para>
+		/// <para>The name of the entity. The keyword field enables exact matches for filtering and aggregations, while the text field enables full-text search. For entities with dedicated field sets (e.g., `host`), this field should mirrors the corresponding *.name value.
+		/// <para><br/>This field is beta and subject to change.</para></para>
+		/// <example></example>
+		///</summary>
+		[JsonPropertyName("name"), DataMember(Name = "name")]
+		public string? Name { get; set; }
+
+		///<summary>
+		/// <para><c>entity.reference</c></para>
+		/// <para>A URI, URL, or other direct reference to access or locate the entity in its source system. This could be an API endpoint, web console URL, or other addressable location. Format may vary by entity type and source system.
+		/// <para><br/>This field is beta and subject to change.</para></para>
+		/// <example></example>
+		///</summary>
+		[JsonPropertyName("reference"), DataMember(Name = "reference")]
+		public string? Reference { get; set; }
+
+		///<summary>
+		/// <para><c>entity.source</c></para>
+		/// <para>The module or integration that provided this entity data (similar to event.module).
+		/// <para><br/>This field is beta and subject to change.</para></para>
+		/// <example></example>
+		///</summary>
+		[JsonPropertyName("source"), DataMember(Name = "source")]
+		public string? Source { get; set; }
+
+		///<summary>
+		/// <para><c>entity.sub_type</c></para>
+		/// <para>The specific type designation for the entity as defined by its provider or system. This field provides more granular classification than the type field. Examples: `aws_s3_bucket`, `gcp_cloud_storage_bucket`, `azure_blob_container` would all map to entity type `bucket`.  `hardware` , `virtual` , `container` , `node` , `cloud_instance` would all map to entity type `host`.
+		/// <para><br/>This field is beta and subject to change.</para></para>
+		/// <example>aws_s3_bucket</example>
+		///</summary>
+		[JsonPropertyName("sub_type"), DataMember(Name = "sub_type")]
+		public string? SubType { get; set; }
+
+		///<summary>
+		/// <para><c>entity.type</c></para>
+		/// <para>A standardized high-level classification of the entity. This provides a normalized way to group similar entities across different providers or systems. Example values: `bucket`, `database`, `container`, `function`, `queue`, `host`, `user`, `application`, `session`, `cloud`, `orchestrator`, etc. If an entity is nested under a top-level namespace like `host` or `cloud`, or similar, its type array should include the matching value — for example, `host` or `cloud`.
+		/// <para><br/>This field is beta and subject to change.</para>
+		/// <para><br/>Allowed Values:</para>
+		/// <list type="table">
+		/// <listheader><term>Value</term><description>Description</description></listheader>
+		/// <item><term>bucket</term><description>Represents a storage container or bucket, typically used for object storage. Common examples include AWS S3 buckets, Google Cloud Storage buckets, Azure Blob containers, and other cloud storage services. Buckets are used to organize and store files, objects, or data in cloud environments.</description></item>
+		/// <item><term>database</term><description>Represents a database system or database instance. This includes relational databases (MySQL, PostgreSQL, Oracle), NoSQL databases (MongoDB, Cassandra, DynamoDB), time-series databases, and other data storage systems. The entity may represent the entire database system or a specific database instance.</description></item>
+		/// <item><term>container</term><description>Represents a containerized application or process. This includes Docker containers, Kubernetes pods, and other containerization technologies. Containers encapsulate applications and their dependencies, providing isolation and portability across different environments.</description></item>
+		/// <item><term>function</term><description>Represents a serverless function or Function-as-a-Service (FaaS) component. This includes AWS Lambda functions, Azure Functions, Google Cloud Functions, and other serverless computing resources. Functions are typically event-driven and execute code without managing the underlying infrastructure.</description></item>
+		/// <item><term>queue</term><description>Represents a message queue or messaging system. This includes message brokers, event queues, and other messaging infrastructure components such as Amazon SQS, RabbitMQ, Apache Kafka, and Azure Service Bus. Queues facilitate asynchronous communication between applications and services.</description></item>
+		/// <item><term>host</term><description>Represents a computing host or machine. This includes physical servers, virtual machines, cloud instances, and other computing resources that can run applications or services. Hosts provide the fundamental computing infrastructure for other entity types.</description></item>
+		/// <item><term>user</term><description>Represents a user account or identity. This includes human users, service accounts, system accounts, and other identity entities that can interact with systems, applications, or services. Users may have various roles, permissions, and attributes associated with their identity.</description></item>
+		/// <item><term>application</term><description>Represents a software application or service. This includes web applications, mobile applications, desktop applications, and other software components that provide functionality to users or other systems. Applications may run on various infrastructure components and can span multiple hosts or containers.</description></item>
+		/// <item><term>service</term><description>Represents a service or microservice component. This includes web services, APIs, background services, and other service-oriented architecture components. Services provide specific functionality and may communicate with other services to fulfill business requirements.</description></item>
+		/// <item><term>session</term><description>Represents a user session or connection session. This includes user login sessions, database connections, network sessions, and other temporary interactive or persistent connections between users, applications, or systems.</description></item>
+		/// <item><term>cloud</term><description>Represents a cloud or infrastructure. This includes cloud providers and their services (such as AWS EC2), and is used to identify or correlate resources, entities, and activities across accounts or multi-cloud environments.</description></item>
+		/// <item><term>orchestrator</term><description>Represents an orchestration system or orchestrator component. This includes container orchestrators like Kubernetes, Docker Swarm, and other systems responsible for automating the deployment, management, scaling, and networking of containers or workloads.</description></item>
+		/// </list></para>
+		/// <example>host</example>
+		///</summary>
+		[JsonPropertyName("type"), DataMember(Name = "type")]
+		public string[]? Type { get; set; }
+
+		///<summary>
+		/// <para><c>entity.attributes</c></para>
+		/// <para>A set of static or semi-static attributes of the entity. Usually boolean or keyword field data types. Use this field set when you need to track static or semi-static characteristics of an entity for advanced searching and correlation of normalized values across different providers/sources and entity types.
+		/// <para><br/>This field is beta and subject to change.</para></para>
+		/// <example></example>
+		///</summary>
+		[JsonPropertyName("attributes"), DataMember(Name = "attributes")]
+		public EntityAttributes? Attributes { get; set; }
+
+		///<summary>
+		/// <para><c>entity.behavior</c></para>
+		/// <para>A set of ephemeral characteristics of the entity, derived from observed behaviors during a specific time period. Usually boolean field data type. Use this field set when you need to capture and track ephemeral characteristics of an entity for advanced searching, correlation of normalized values across different providers/sources and entity types.
+		/// <para><br/>This field is beta and subject to change.</para></para>
+		/// <example></example>
+		///</summary>
+		[JsonPropertyName("behavior"), DataMember(Name = "behavior")]
+		public EntityBehavior? Behavior { get; set; }
+
+		///<summary>
+		/// <para><c>entity.lifecycle</c></para>
+		/// <para>A set of temporal characteristics of the entity. Usually date field data type. Use this field set when you need to track temporal characteristics of an entity for advanced searching and correlation of normalized values across different providers/sources and entity types.
+		/// <para><br/>This field is beta and subject to change.</para></para>
+		/// <example></example>
+		///</summary>
+		[JsonPropertyName("lifecycle"), DataMember(Name = "lifecycle")]
+		public EntityLifecycle? Lifecycle { get; set; }
+
+		///<summary>
+		/// <para><c>entity.metrics</c></para>
+		/// <para>Field set for any fields containing numeric entity metrics. These use dynamic field data type mapping.
+		/// <para><br/>This field is beta and subject to change.</para></para>
+		/// <example></example>
+		///</summary>
+		[JsonPropertyName("metrics"), DataMember(Name = "metrics")]
+		public EntityMetrics? Metrics { get; set; }
+
+		///<summary>
+		/// <para><c>entity.raw</c></para>
+		/// <para>Original, unmodified fields from the source system. Usually flattened field data type. While the attributes field should be used for normalized fields requiring advanced queries, this field preserves all source metadata with basic search capabilities.
+		/// <para><br/>This field is beta and subject to change.</para></para>
+		/// <example></example>
+		///</summary>
+		[JsonPropertyName("raw"), DataMember(Name = "raw")]
+		public EntityRaw? Raw { get; set; }
+	}
+
+	///<summary>
 	/// These fields can represent errors of any kind.&#xA;Use them for errors that happen while fetching events or in cases where the event itself contains an error.
 	///</summary>
 	public abstract class ErrorFieldSet {
@@ -1566,7 +1767,7 @@ namespace Elastic.CommonSchema
 		/// <para>Raw text message of entire event. Used to demonstrate log integrity or where the full log message (before splitting it up in multiple parts) may be required, e.g. for reindex.
 		/// This field is not indexed and doc_values are disabled. It cannot be searched, but it can be retrieved from `_source`. If users wish to override this and index this field, please see `Field data types` in the `Elasticsearch Reference`.
 		/// <para><br/>Stored but not available for search in Elasticsearch by default</para></para>
-		/// <example>Sep 19 08:26:10 host CEF:0&#124;Security&#124; threatmanager&#124;1.0&#124;100&#124; worm successfully stopped&#124;10&#124;src=10.0.0.1 dst=2.1.2.2spt=1232</example>
+		/// <example>Sep 19 08:26:10 host CEF:0&amp;#124;Security&amp;#124; threatmanager&amp;#124;1.0&amp;#124;100&amp;#124; worm successfully stopped&amp;#124;10&amp;#124;src=10.0.0.1 dst=2.1.2.2spt=1232</example>
 		///</summary>
 		[JsonPropertyName("original"), DataMember(Name = "original")]
 		public string? Original { get; set; }
@@ -1686,6 +1887,7 @@ namespace Elastic.CommonSchema
 		/// <item><term>creation</term><description>The "creation" event type is used for the subset of events within a category that indicate that something was created. A common example is `event.category:file AND event.type:creation`.</description></item>
 		/// <item><term>deletion</term><description>The deletion event type is used for the subset of events within a category that indicate that something was deleted. A common example is `event.category:file AND event.type:deletion` to indicate that a file has been deleted.</description></item>
 		/// <item><term>denied</term><description>The denied event type is used for the subset of events within a category that indicate that something was denied. Common examples include `event.category:network AND event.type:denied` (to indicate a network firewall event for which the firewall disposition was to deny the connection) and `event.category:intrusion_detection AND event.type:denied` (to indicate a network intrusion prevention system event for which the IPS disposition was to deny the connection to complete). You can further distinguish denied operations using the ECS `event.action` field, populating with values of your choosing, such as "blocked", "dropped", or "quarantined".</description></item>
+		/// <item><term>device</term><description>The device event type is used for the subset of events within a category that are related to device objects. Common example: `event.category:host AND event.type:change AND event.type:device`. You can further distinguish device operations using the ECS `event.action` field.</description></item>
 		/// <item><term>end</term><description>The end event type is used for the subset of events within a category that indicate something has ended. A common example is `event.category:process AND event.type:end`.</description></item>
 		/// <item><term>error</term><description>The error event type is used for the subset of events within a category that indicate or describe an error. A common example is `event.category:database AND event.type:error`. Note that pipeline errors that occur during the event ingestion process should not use this `event.type` value. Instead, they should use `event.kind:pipeline_error`.</description></item>
 		/// <item><term>group</term><description>The group event type is used for the subset of events within a category that are related to group objects. Common example: `event.category:iam AND event.type:creation AND event.type:group`. You can further distinguish group operations using the ECS `event.action` field.</description></item>
@@ -1990,6 +2192,247 @@ namespace Elastic.CommonSchema
 		///</summary>
 		[JsonPropertyName("uid"), DataMember(Name = "uid")]
 		public string? Uid { get; set; }
+	}
+
+	///<summary>
+	/// Fields that capture the context of Generative Artificial Intelligence (GenAI) Models requests and responses&#xA;This field group definition is based on the Gen AI namespace of the OpenTelemetry Semantic Conventions (https://opentelemetry.io/docs/specs/semconv/attributes-registry/gen-ai/).
+	///</summary>
+	public abstract class GenAiFieldSet {
+
+		///<summary>
+		/// <para><c>gen_ai.agent.description</c></para>
+		/// <para>Free-form description of the GenAI agent provided by the application.
+		/// <para><br/>Stored but not available for search in Elasticsearch by default</para>
+		/// <para><br/>This field is beta and subject to change.</para></para>
+		/// <example>Helps with math problems; Generates fiction stories</example>
+		///</summary>
+		[JsonPropertyName("agent.description"), DataMember(Name = "agent.description")]
+		public string? AgentDescription { get; set; }
+
+		///<summary>
+		/// <para><c>gen_ai.agent.id</c></para>
+		/// <para>The unique identifier of the GenAI agent.
+		/// <para><br/>This field is beta and subject to change.</para></para>
+		/// <example>asst_5j66UpCpwteGg4YSxUnt7lPY</example>
+		///</summary>
+		[JsonPropertyName("agent.id"), DataMember(Name = "agent.id")]
+		public string? AgentId { get; set; }
+
+		///<summary>
+		/// <para><c>gen_ai.agent.name</c></para>
+		/// <para>Human-readable name of the GenAI agent provided by the application.
+		/// <para><br/>This field is beta and subject to change.</para></para>
+		/// <example>Math Tutor; Fiction Writer</example>
+		///</summary>
+		[JsonPropertyName("agent.name"), DataMember(Name = "agent.name")]
+		public string? AgentName { get; set; }
+
+		///<summary>
+		/// <para><c>gen_ai.operation.name</c></para>
+		/// <para>The name of the operation being performed.
+		/// <para><br/>This field is beta and subject to change.</para></para>
+		/// <example>chat; text_completion; embeddings</example>
+		///</summary>
+		[JsonPropertyName("operation.name"), DataMember(Name = "operation.name")]
+		public string? OperationName { get; set; }
+
+		///<summary>
+		/// <para><c>gen_ai.output.type</c></para>
+		/// <para>Represents the content type requested by the client.
+		/// <para><br/>This field is beta and subject to change.</para></para>
+		/// <example>text; json; image</example>
+		///</summary>
+		[JsonPropertyName("output.type"), DataMember(Name = "output.type")]
+		public string? OutputType { get; set; }
+
+		///<summary>
+		/// <para><c>gen_ai.request.choice.count</c></para>
+		/// <para>The target number of candidate completions to return.
+		/// <para><br/>This field is beta and subject to change.</para></para>
+		/// <example>3</example>
+		///</summary>
+		[JsonPropertyName("request.choice.count"), DataMember(Name = "request.choice.count")]
+		public int? RequestChoiceCount { get; set; }
+
+		///<summary>
+		/// <para><c>gen_ai.request.encoding_formats</c></para>
+		/// <para>The encoding formats requested in an embeddings operation, if specified.
+		/// <para><br/>This field is beta and subject to change.</para></para>
+		/// <example>["float", "binary"]</example>
+		///</summary>
+		[JsonPropertyName("request.encoding_formats"), DataMember(Name = "request.encoding_formats")]
+		public object? RequestEncodingFormats { get; set; }
+
+		///<summary>
+		/// <para><c>gen_ai.request.frequency_penalty</c></para>
+		/// <para>The frequency penalty setting for the GenAI request.
+		/// <para><br/>This field is beta and subject to change.</para></para>
+		/// <example>0.1</example>
+		///</summary>
+		[JsonPropertyName("request.frequency_penalty"), DataMember(Name = "request.frequency_penalty")]
+		public float? RequestFrequencyPenalty { get; set; }
+
+		///<summary>
+		/// <para><c>gen_ai.request.max_tokens</c></para>
+		/// <para>The maximum number of tokens the model generates for a request.
+		/// <para><br/>This field is beta and subject to change.</para></para>
+		/// <example>100</example>
+		///</summary>
+		[JsonPropertyName("request.max_tokens"), DataMember(Name = "request.max_tokens")]
+		public int? RequestMaxTokens { get; set; }
+
+		///<summary>
+		/// <para><c>gen_ai.request.model</c></para>
+		/// <para>The name of the GenAI model a request is being made to.
+		/// <para><br/>This field is beta and subject to change.</para></para>
+		/// <example>gpt-4</example>
+		///</summary>
+		[JsonPropertyName("request.model"), DataMember(Name = "request.model")]
+		public string? RequestModel { get; set; }
+
+		///<summary>
+		/// <para><c>gen_ai.request.presence_penalty</c></para>
+		/// <para>The presence penalty setting for the GenAI request.
+		/// <para><br/>This field is beta and subject to change.</para></para>
+		/// <example>0.1</example>
+		///</summary>
+		[JsonPropertyName("request.presence_penalty"), DataMember(Name = "request.presence_penalty")]
+		public float? RequestPresencePenalty { get; set; }
+
+		///<summary>
+		/// <para><c>gen_ai.request.seed</c></para>
+		/// <para>Requests with same seed value more likely to return same result.
+		/// <para><br/>This field is beta and subject to change.</para></para>
+		/// <example>100</example>
+		///</summary>
+		[JsonPropertyName("request.seed"), DataMember(Name = "request.seed")]
+		public int? RequestSeed { get; set; }
+
+		///<summary>
+		/// <para><c>gen_ai.request.stop_sequences</c></para>
+		/// <para>List of sequences that the model will use to stop generating further tokens.
+		/// <para><br/>This field is beta and subject to change.</para></para>
+		/// <example>["forest", "lived"]</example>
+		///</summary>
+		[JsonPropertyName("request.stop_sequences"), DataMember(Name = "request.stop_sequences")]
+		public object? RequestStopSequences { get; set; }
+
+		///<summary>
+		/// <para><c>gen_ai.request.temperature</c></para>
+		/// <para>The temperature setting for the GenAI request.
+		/// <para><br/>This field is beta and subject to change.</para></para>
+		/// <example>0.0</example>
+		///</summary>
+		[JsonPropertyName("request.temperature"), DataMember(Name = "request.temperature")]
+		public float? RequestTemperature { get; set; }
+
+		///<summary>
+		/// <para><c>gen_ai.request.top_k</c></para>
+		/// <para>The top_k sampling setting for the GenAI request.
+		/// <para><br/>This field is beta and subject to change.</para></para>
+		/// <example>1.0</example>
+		///</summary>
+		[JsonPropertyName("request.top_k"), DataMember(Name = "request.top_k")]
+		public float? RequestTopK { get; set; }
+
+		///<summary>
+		/// <para><c>gen_ai.request.top_p</c></para>
+		/// <para>The top_p sampling setting for the GenAI request.
+		/// <para><br/>This field is beta and subject to change.</para></para>
+		/// <example>1.0</example>
+		///</summary>
+		[JsonPropertyName("request.top_p"), DataMember(Name = "request.top_p")]
+		public float? RequestTopP { get; set; }
+
+		///<summary>
+		/// <para><c>gen_ai.response.finish_reasons</c></para>
+		/// <para>Array of reasons the model stopped generating tokens, corresponding to each generation received.
+		/// <para><br/>This field is beta and subject to change.</para></para>
+		/// <example>["stop", "length"]</example>
+		///</summary>
+		[JsonPropertyName("response.finish_reasons"), DataMember(Name = "response.finish_reasons")]
+		public object? ResponseFinishReasons { get; set; }
+
+		///<summary>
+		/// <para><c>gen_ai.response.id</c></para>
+		/// <para>The unique identifier for the completion.
+		/// <para><br/>This field is beta and subject to change.</para></para>
+		/// <example>chatcmpl-123</example>
+		///</summary>
+		[JsonPropertyName("response.id"), DataMember(Name = "response.id")]
+		public string? ResponseId { get; set; }
+
+		///<summary>
+		/// <para><c>gen_ai.response.model</c></para>
+		/// <para>The name of the model that generated the response.
+		/// <para><br/>This field is beta and subject to change.</para></para>
+		/// <example>gpt-4-0613</example>
+		///</summary>
+		[JsonPropertyName("response.model"), DataMember(Name = "response.model")]
+		public string? ResponseModel { get; set; }
+
+		///<summary>
+		/// <para><c>gen_ai.system</c></para>
+		/// <para>The Generative AI product as identified by the client or server instrumentation.
+		/// <para><br/>This field is beta and subject to change.</para></para>
+		/// <example>openai</example>
+		///</summary>
+		[JsonPropertyName("system"), DataMember(Name = "system")]
+		public string? System { get; set; }
+
+		///<summary>
+		/// <para><c>gen_ai.token.type</c></para>
+		/// <para>The type of token being counted.
+		/// <para><br/>This field is beta and subject to change.</para></para>
+		/// <example>input; output</example>
+		///</summary>
+		[JsonPropertyName("token.type"), DataMember(Name = "token.type")]
+		public string? TokenType { get; set; }
+
+		///<summary>
+		/// <para><c>gen_ai.tool.call.id</c></para>
+		/// <para>The tool call identifier.
+		/// <para><br/>This field is beta and subject to change.</para></para>
+		/// <example>call_mszuSIzqtI65i1wAUOE8w5H4</example>
+		///</summary>
+		[JsonPropertyName("tool.call.id"), DataMember(Name = "tool.call.id")]
+		public string? ToolCallId { get; set; }
+
+		///<summary>
+		/// <para><c>gen_ai.tool.name</c></para>
+		/// <para>Name of the tool utilized by the agent.
+		/// <para><br/>This field is beta and subject to change.</para></para>
+		/// <example>Flights</example>
+		///</summary>
+		[JsonPropertyName("tool.name"), DataMember(Name = "tool.name")]
+		public string? ToolName { get; set; }
+
+		///<summary>
+		/// <para><c>gen_ai.tool.type</c></para>
+		/// <para>Type of the tool utilized by the agent
+		/// <para><br/>This field is beta and subject to change.</para></para>
+		/// <example>function; extension; datastore</example>
+		///</summary>
+		[JsonPropertyName("tool.type"), DataMember(Name = "tool.type")]
+		public string? ToolType { get; set; }
+
+		///<summary>
+		/// <para><c>gen_ai.usage.input_tokens</c></para>
+		/// <para>The number of tokens used in the GenAI input (prompt).
+		/// <para><br/>This field is beta and subject to change.</para></para>
+		/// <example>100</example>
+		///</summary>
+		[JsonPropertyName("usage.input_tokens"), DataMember(Name = "usage.input_tokens")]
+		public int? UsageInputTokens { get; set; }
+
+		///<summary>
+		/// <para><c>gen_ai.usage.output_tokens</c></para>
+		/// <para>The number of tokens used in the GenAI response (completion).
+		/// <para><br/>This field is beta and subject to change.</para></para>
+		/// <example>180</example>
+		///</summary>
+		[JsonPropertyName("usage.output_tokens"), DataMember(Name = "usage.output_tokens")]
+		public int? UsageOutputTokens { get; set; }
 	}
 
 	///<summary>
@@ -4875,9 +5318,9 @@ namespace Elastic.CommonSchema
 
 		///<summary>
 		/// <para><c>url.query</c></para>
-		/// <para>The query field describes the query string of the request, such as "q=elasticsearch".
-		/// The `?` is excluded from the query string. If a URL contains no `?`, there is no query field. If there is a `?` but no query, the query field exists with an empty string. The `exists` query can be used to differentiate between the two cases.</para>
-		/// <example></example>
+		/// <para>The field contains the entire query string, excluding the leading `?` character, such as "q=elasticsearch".
+		/// If a URL contains no `?`, there is no query field. If there is a `?` but no query, the query field exists with an empty string. The `exists` query can be used to differentiate between the two cases.</para>
+		/// <example>q=elasticsearch&amp;sort=desc</example>
 		///</summary>
 		[JsonPropertyName("query"), DataMember(Name = "query")]
 		public string? Query { get; set; }

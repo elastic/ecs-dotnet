@@ -25,7 +25,7 @@ namespace Elastic.CommonSchema.Generator.Projection
 			if (description == null) return string.Empty;
 			var multiLineDescription = Regex.Replace(description, @"\n", "\r\n		/// ");
 			multiLineDescription = multiLineDescription.Replace("<", "&lt;").Replace(">", "&gt;");
-			multiLineDescription = multiLineDescription.Replace("ATT&CK", "ATT&amp;CK");
+			multiLineDescription = Regex.Replace(multiLineDescription, @"&(?!amp;|lt;|gt;|quot;|apos;)", "&amp;");
 			return multiLineDescription;
 		}
 

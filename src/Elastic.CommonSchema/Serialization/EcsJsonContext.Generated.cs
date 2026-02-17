@@ -6,7 +6,7 @@
 /*
 IMPORTANT NOTE
 ==============
-This file has been generated.
+This file has been generated. 
 If you wish to submit a PR please modify the original csharp file and submit the PR with that change. Thanks!
 */
 
@@ -31,10 +31,12 @@ namespace Elastic.CommonSchema.Serialization;
 [JsonSerializable(typeof(Ecs))]
 [JsonSerializable(typeof(Elf))]
 [JsonSerializable(typeof(Email))]
+[JsonSerializable(typeof(Entity))]
 [JsonSerializable(typeof(Error))]
 [JsonSerializable(typeof(Event))]
 [JsonSerializable(typeof(Faas))]
 [JsonSerializable(typeof(File))]
+[JsonSerializable(typeof(GenAi))]
 [JsonSerializable(typeof(Geo))]
 [JsonSerializable(typeof(Group))]
 [JsonSerializable(typeof(Hash))]
@@ -69,6 +71,5 @@ namespace Elastic.CommonSchema.Serialization;
 [JsonSerializable(typeof(X509))]
 [JsonSerializable(typeof(ParserIntermediary.LogOriginInvalid))]
 [JsonSerializable(typeof(ParserIntermediary.LogFileOriginInvalid))]
-[JsonSerializable(typeof(Location))]
 [JsonSourceGenerationOptions(DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull)]
 public partial class EcsJsonContext : JsonSerializerContext { }

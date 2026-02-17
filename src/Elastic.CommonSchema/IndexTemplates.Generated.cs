@@ -22,12 +22,12 @@ using System.Text.Json.Serialization;
 namespace Elastic.CommonSchema.Elasticsearch
 {
 /// <summary>
-/// Elastic Common Schema version v9.0.0 index templates to be used with Elasticsearch.
+/// Elastic Common Schema version v9.3.0 index templates to be used with Elasticsearch.
 /// </summary>
 public static class IndexTemplates
 {
 	/// <summary>
-	 /// Elastic Common Schema version v9.0.0 Composable index template  
+	 /// Elastic Common Schema version v9.3.0 Composable index template  
 	 /// See the Put Index Template API documentation: https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-templates.html
 	 /// </summary>
 	 /// <returns>Index template string that can be used with the Put Index Template API.</returns>
@@ -38,55 +38,57 @@ public static class IndexTemplates
 		 		 
 		return @"{
   ""_meta"": {
-    ""description"": ""Template installed by ECS.NET 9.0.0 (https://github.com/elastic/ecs-dotnet)"",
-    ""ecs_version"": ""9.0.0""
+    ""description"": ""Template installed by ECS.NET 9.3.0 (https://github.com/elastic/ecs-dotnet)"",
+    ""ecs_version"": ""9.3.0""
   },
   ""composed_of"": [
-    ""ecs_9.0.0_base"",
-    ""ecs_9.0.0_agent"",
-    ""ecs_9.0.0_client"",
-    ""ecs_9.0.0_cloud"",
-    ""ecs_9.0.0_container"",
-    ""ecs_9.0.0_data_stream"",
-    ""ecs_9.0.0_destination"",
-    ""ecs_9.0.0_device"",
-    ""ecs_9.0.0_dll"",
-    ""ecs_9.0.0_dns"",
-    ""ecs_9.0.0_ecs"",
-    ""ecs_9.0.0_email"",
-    ""ecs_9.0.0_error"",
-    ""ecs_9.0.0_event"",
-    ""ecs_9.0.0_faas"",
-    ""ecs_9.0.0_file"",
-    ""ecs_9.0.0_group"",
-    ""ecs_9.0.0_host"",
-    ""ecs_9.0.0_http"",
-    ""ecs_9.0.0_log"",
-    ""ecs_9.0.0_network"",
-    ""ecs_9.0.0_observer"",
-    ""ecs_9.0.0_orchestrator"",
-    ""ecs_9.0.0_organization"",
-    ""ecs_9.0.0_package"",
-    ""ecs_9.0.0_process"",
-    ""ecs_9.0.0_registry"",
-    ""ecs_9.0.0_related"",
-    ""ecs_9.0.0_rule"",
-    ""ecs_9.0.0_server"",
-    ""ecs_9.0.0_service"",
-    ""ecs_9.0.0_source"",
-    ""ecs_9.0.0_threat"",
-    ""ecs_9.0.0_tls"",
-    ""ecs_9.0.0_tracing"",
-    ""ecs_9.0.0_url"",
-    ""ecs_9.0.0_user_agent"",
-    ""ecs_9.0.0_user"",
-    ""ecs_9.0.0_volume"",
-    ""ecs_9.0.0_vulnerability""" + userComponents + @"
+    ""ecs_9.3.0_base"",
+    ""ecs_9.3.0_agent"",
+    ""ecs_9.3.0_client"",
+    ""ecs_9.3.0_cloud"",
+    ""ecs_9.3.0_container"",
+    ""ecs_9.3.0_data_stream"",
+    ""ecs_9.3.0_destination"",
+    ""ecs_9.3.0_device"",
+    ""ecs_9.3.0_dll"",
+    ""ecs_9.3.0_dns"",
+    ""ecs_9.3.0_ecs"",
+    ""ecs_9.3.0_email"",
+    ""ecs_9.3.0_entity"",
+    ""ecs_9.3.0_error"",
+    ""ecs_9.3.0_event"",
+    ""ecs_9.3.0_faas"",
+    ""ecs_9.3.0_file"",
+    ""ecs_9.3.0_gen_ai"",
+    ""ecs_9.3.0_group"",
+    ""ecs_9.3.0_host"",
+    ""ecs_9.3.0_http"",
+    ""ecs_9.3.0_log"",
+    ""ecs_9.3.0_network"",
+    ""ecs_9.3.0_observer"",
+    ""ecs_9.3.0_orchestrator"",
+    ""ecs_9.3.0_organization"",
+    ""ecs_9.3.0_package"",
+    ""ecs_9.3.0_process"",
+    ""ecs_9.3.0_registry"",
+    ""ecs_9.3.0_related"",
+    ""ecs_9.3.0_rule"",
+    ""ecs_9.3.0_server"",
+    ""ecs_9.3.0_service"",
+    ""ecs_9.3.0_source"",
+    ""ecs_9.3.0_threat"",
+    ""ecs_9.3.0_tls"",
+    ""ecs_9.3.0_tracing"",
+    ""ecs_9.3.0_url"",
+    ""ecs_9.3.0_user_agent"",
+    ""ecs_9.3.0_user"",
+    ""ecs_9.3.0_volume"",
+    ""ecs_9.3.0_vulnerability""" + userComponents + @"
   ],
   ""index_patterns"": [
     """ + indexPattern + @"""
   ],
-  ""priority"": 589824,
+  ""priority"": 590592,
   ""data_stream"": {},
   ""template"": {
     ""mappings"": {
@@ -119,7 +121,7 @@ public static class IndexTemplates
 	 }
 
  	/// <summary>
-	 /// Elastic Common Schema version v9.0.0 Legacy index template  
+	 /// Elastic Common Schema version v9.3.0 Legacy index template  
 	 /// See the Put Index Template API documentation: https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-templates.html
 	 /// </summary>
 	 /// <returns>Index template string that can be used with the Put Index Template API.</returns>
@@ -132,7 +134,7 @@ public static class IndexTemplates
   ],
   ""mappings"": {
     ""_meta"": {
-      ""version"": ""9.0.0""
+      ""version"": ""9.3.0""
     },
     ""date_detection"": false,
     ""dynamic_templates"": [
@@ -376,6 +378,66 @@ public static class IndexTemplates
             ""ignore_above"": 1024,
             ""type"": ""keyword""
           },
+          ""entity"": {
+            ""properties"": {
+              ""attributes"": {
+                ""type"": ""object""
+              },
+              ""behavior"": {
+                ""type"": ""object""
+              },
+              ""display_name"": {
+                ""fields"": {
+                  ""text"": {
+                    ""type"": ""match_only_text""
+                  }
+                },
+                ""ignore_above"": 1024,
+                ""type"": ""keyword""
+              },
+              ""id"": {
+                ""ignore_above"": 1024,
+                ""type"": ""keyword""
+              },
+              ""last_seen_timestamp"": {
+                ""type"": ""date""
+              },
+              ""lifecycle"": {
+                ""type"": ""object""
+              },
+              ""metrics"": {
+                ""type"": ""object""
+              },
+              ""name"": {
+                ""fields"": {
+                  ""text"": {
+                    ""type"": ""match_only_text""
+                  }
+                },
+                ""ignore_above"": 1024,
+                ""type"": ""keyword""
+              },
+              ""raw"": {
+                ""type"": ""object""
+              },
+              ""reference"": {
+                ""ignore_above"": 1024,
+                ""type"": ""keyword""
+              },
+              ""source"": {
+                ""ignore_above"": 1024,
+                ""type"": ""keyword""
+              },
+              ""sub_type"": {
+                ""ignore_above"": 1024,
+                ""type"": ""keyword""
+              },
+              ""type"": {
+                ""ignore_above"": 1024,
+                ""type"": ""keyword""
+              }
+            }
+          },
           ""instance"": {
             ""properties"": {
               ""id"": {
@@ -413,6 +475,66 @@ public static class IndexTemplates
               ""availability_zone"": {
                 ""ignore_above"": 1024,
                 ""type"": ""keyword""
+              },
+              ""entity"": {
+                ""properties"": {
+                  ""attributes"": {
+                    ""type"": ""object""
+                  },
+                  ""behavior"": {
+                    ""type"": ""object""
+                  },
+                  ""display_name"": {
+                    ""fields"": {
+                      ""text"": {
+                        ""type"": ""match_only_text""
+                      }
+                    },
+                    ""ignore_above"": 1024,
+                    ""type"": ""keyword""
+                  },
+                  ""id"": {
+                    ""ignore_above"": 1024,
+                    ""type"": ""keyword""
+                  },
+                  ""last_seen_timestamp"": {
+                    ""type"": ""date""
+                  },
+                  ""lifecycle"": {
+                    ""type"": ""object""
+                  },
+                  ""metrics"": {
+                    ""type"": ""object""
+                  },
+                  ""name"": {
+                    ""fields"": {
+                      ""text"": {
+                        ""type"": ""match_only_text""
+                      }
+                    },
+                    ""ignore_above"": 1024,
+                    ""type"": ""keyword""
+                  },
+                  ""raw"": {
+                    ""type"": ""object""
+                  },
+                  ""reference"": {
+                    ""ignore_above"": 1024,
+                    ""type"": ""keyword""
+                  },
+                  ""source"": {
+                    ""ignore_above"": 1024,
+                    ""type"": ""keyword""
+                  },
+                  ""sub_type"": {
+                    ""ignore_above"": 1024,
+                    ""type"": ""keyword""
+                  },
+                  ""type"": {
+                    ""ignore_above"": 1024,
+                    ""type"": ""keyword""
+                  }
+                }
               },
               ""instance"": {
                 ""properties"": {
@@ -509,6 +631,66 @@ public static class IndexTemplates
               ""availability_zone"": {
                 ""ignore_above"": 1024,
                 ""type"": ""keyword""
+              },
+              ""entity"": {
+                ""properties"": {
+                  ""attributes"": {
+                    ""type"": ""object""
+                  },
+                  ""behavior"": {
+                    ""type"": ""object""
+                  },
+                  ""display_name"": {
+                    ""fields"": {
+                      ""text"": {
+                        ""type"": ""match_only_text""
+                      }
+                    },
+                    ""ignore_above"": 1024,
+                    ""type"": ""keyword""
+                  },
+                  ""id"": {
+                    ""ignore_above"": 1024,
+                    ""type"": ""keyword""
+                  },
+                  ""last_seen_timestamp"": {
+                    ""type"": ""date""
+                  },
+                  ""lifecycle"": {
+                    ""type"": ""object""
+                  },
+                  ""metrics"": {
+                    ""type"": ""object""
+                  },
+                  ""name"": {
+                    ""fields"": {
+                      ""text"": {
+                        ""type"": ""match_only_text""
+                      }
+                    },
+                    ""ignore_above"": 1024,
+                    ""type"": ""keyword""
+                  },
+                  ""raw"": {
+                    ""type"": ""object""
+                  },
+                  ""reference"": {
+                    ""ignore_above"": 1024,
+                    ""type"": ""keyword""
+                  },
+                  ""source"": {
+                    ""ignore_above"": 1024,
+                    ""type"": ""keyword""
+                  },
+                  ""sub_type"": {
+                    ""ignore_above"": 1024,
+                    ""type"": ""keyword""
+                  },
+                  ""type"": {
+                    ""ignore_above"": 1024,
+                    ""type"": ""keyword""
+                  }
+                }
               },
               ""instance"": {
                 ""properties"": {
@@ -872,9 +1054,37 @@ public static class IndexTemplates
               }
             }
           },
+          ""product"": {
+            ""properties"": {
+              ""id"": {
+                ""ignore_above"": 1024,
+                ""type"": ""keyword""
+              },
+              ""name"": {
+                ""ignore_above"": 1024,
+                ""type"": ""keyword""
+              }
+            }
+          },
           ""serial_number"": {
             ""ignore_above"": 1024,
             ""type"": ""keyword""
+          },
+          ""type"": {
+            ""ignore_above"": 1024,
+            ""type"": ""keyword""
+          },
+          ""vendor"": {
+            ""properties"": {
+              ""id"": {
+                ""ignore_above"": 1024,
+                ""type"": ""keyword""
+              },
+              ""name"": {
+                ""ignore_above"": 1024,
+                ""type"": ""keyword""
+              }
+            }
           }
         }
       },
@@ -907,6 +1117,10 @@ public static class IndexTemplates
               },
               ""team_id"": {
                 ""ignore_above"": 1024,
+                ""type"": ""keyword""
+              },
+              ""thumbprint_sha256"": {
+                ""ignore_above"": 64,
                 ""type"": ""keyword""
               },
               ""timestamp"": {
@@ -1300,6 +1514,126 @@ public static class IndexTemplates
           }
         }
       },
+      ""entity"": {
+        ""properties"": {
+          ""attributes"": {
+            ""type"": ""object""
+          },
+          ""behavior"": {
+            ""type"": ""object""
+          },
+          ""display_name"": {
+            ""fields"": {
+              ""text"": {
+                ""type"": ""match_only_text""
+              }
+            },
+            ""ignore_above"": 1024,
+            ""type"": ""keyword""
+          },
+          ""id"": {
+            ""ignore_above"": 1024,
+            ""type"": ""keyword""
+          },
+          ""last_seen_timestamp"": {
+            ""type"": ""date""
+          },
+          ""lifecycle"": {
+            ""type"": ""object""
+          },
+          ""metrics"": {
+            ""type"": ""object""
+          },
+          ""name"": {
+            ""fields"": {
+              ""text"": {
+                ""type"": ""match_only_text""
+              }
+            },
+            ""ignore_above"": 1024,
+            ""type"": ""keyword""
+          },
+          ""raw"": {
+            ""type"": ""object""
+          },
+          ""reference"": {
+            ""ignore_above"": 1024,
+            ""type"": ""keyword""
+          },
+          ""source"": {
+            ""ignore_above"": 1024,
+            ""type"": ""keyword""
+          },
+          ""sub_type"": {
+            ""ignore_above"": 1024,
+            ""type"": ""keyword""
+          },
+          ""target"": {
+            ""properties"": {
+              ""attributes"": {
+                ""type"": ""object""
+              },
+              ""behavior"": {
+                ""type"": ""object""
+              },
+              ""display_name"": {
+                ""fields"": {
+                  ""text"": {
+                    ""type"": ""match_only_text""
+                  }
+                },
+                ""ignore_above"": 1024,
+                ""type"": ""keyword""
+              },
+              ""id"": {
+                ""ignore_above"": 1024,
+                ""type"": ""keyword""
+              },
+              ""last_seen_timestamp"": {
+                ""type"": ""date""
+              },
+              ""lifecycle"": {
+                ""type"": ""object""
+              },
+              ""metrics"": {
+                ""type"": ""object""
+              },
+              ""name"": {
+                ""fields"": {
+                  ""text"": {
+                    ""type"": ""match_only_text""
+                  }
+                },
+                ""ignore_above"": 1024,
+                ""type"": ""keyword""
+              },
+              ""raw"": {
+                ""type"": ""object""
+              },
+              ""reference"": {
+                ""ignore_above"": 1024,
+                ""type"": ""keyword""
+              },
+              ""source"": {
+                ""ignore_above"": 1024,
+                ""type"": ""keyword""
+              },
+              ""sub_type"": {
+                ""ignore_above"": 1024,
+                ""type"": ""keyword""
+              },
+              ""type"": {
+                ""ignore_above"": 1024,
+                ""type"": ""keyword""
+              }
+            }
+          },
+          ""type"": {
+            ""ignore_above"": 1024,
+            ""type"": ""keyword""
+          }
+        }
+      },
       ""error"": {
         ""properties"": {
           ""code"": {
@@ -1501,6 +1835,10 @@ public static class IndexTemplates
               },
               ""team_id"": {
                 ""ignore_above"": 1024,
+                ""type"": ""keyword""
+              },
+              ""thumbprint_sha256"": {
+                ""ignore_above"": 64,
                 ""type"": ""keyword""
               },
               ""timestamp"": {
@@ -2042,6 +2380,142 @@ public static class IndexTemplates
           }
         }
       },
+      ""gen_ai"": {
+        ""properties"": {
+          ""agent"": {
+            ""properties"": {
+              ""description"": {
+                ""doc_values"": false,
+                ""index"": false,
+                ""type"": ""keyword""
+              },
+              ""id"": {
+                ""ignore_above"": 1024,
+                ""type"": ""keyword""
+              },
+              ""name"": {
+                ""ignore_above"": 1024,
+                ""type"": ""keyword""
+              }
+            }
+          },
+          ""operation"": {
+            ""properties"": {
+              ""name"": {
+                ""ignore_above"": 1024,
+                ""type"": ""keyword""
+              }
+            }
+          },
+          ""output"": {
+            ""properties"": {
+              ""type"": {
+                ""ignore_above"": 1024,
+                ""type"": ""keyword""
+              }
+            }
+          },
+          ""request"": {
+            ""properties"": {
+              ""choice"": {
+                ""properties"": {
+                  ""count"": {
+                    ""type"": ""integer""
+                  }
+                }
+              },
+              ""encoding_formats"": {
+                ""type"": ""nested""
+              },
+              ""frequency_penalty"": {
+                ""type"": ""double""
+              },
+              ""max_tokens"": {
+                ""type"": ""integer""
+              },
+              ""model"": {
+                ""ignore_above"": 1024,
+                ""type"": ""keyword""
+              },
+              ""presence_penalty"": {
+                ""type"": ""double""
+              },
+              ""seed"": {
+                ""type"": ""integer""
+              },
+              ""stop_sequences"": {
+                ""type"": ""nested""
+              },
+              ""temperature"": {
+                ""type"": ""double""
+              },
+              ""top_k"": {
+                ""type"": ""double""
+              },
+              ""top_p"": {
+                ""type"": ""double""
+              }
+            }
+          },
+          ""response"": {
+            ""properties"": {
+              ""finish_reasons"": {
+                ""type"": ""nested""
+              },
+              ""id"": {
+                ""ignore_above"": 1024,
+                ""type"": ""keyword""
+              },
+              ""model"": {
+                ""ignore_above"": 1024,
+                ""type"": ""keyword""
+              }
+            }
+          },
+          ""system"": {
+            ""ignore_above"": 1024,
+            ""type"": ""keyword""
+          },
+          ""token"": {
+            ""properties"": {
+              ""type"": {
+                ""ignore_above"": 1024,
+                ""type"": ""keyword""
+              }
+            }
+          },
+          ""tool"": {
+            ""properties"": {
+              ""call"": {
+                ""properties"": {
+                  ""id"": {
+                    ""ignore_above"": 1024,
+                    ""type"": ""keyword""
+                  }
+                }
+              },
+              ""name"": {
+                ""ignore_above"": 1024,
+                ""type"": ""keyword""
+              },
+              ""type"": {
+                ""ignore_above"": 1024,
+                ""type"": ""keyword""
+              }
+            }
+          },
+          ""usage"": {
+            ""properties"": {
+              ""input_tokens"": {
+                ""type"": ""integer""
+              },
+              ""output_tokens"": {
+                ""type"": ""integer""
+              }
+            }
+          }
+        }
+      },
       ""group"": {
         ""properties"": {
           ""domain"": {
@@ -2101,6 +2575,66 @@ public static class IndexTemplates
           ""domain"": {
             ""ignore_above"": 1024,
             ""type"": ""keyword""
+          },
+          ""entity"": {
+            ""properties"": {
+              ""attributes"": {
+                ""type"": ""object""
+              },
+              ""behavior"": {
+                ""type"": ""object""
+              },
+              ""display_name"": {
+                ""fields"": {
+                  ""text"": {
+                    ""type"": ""match_only_text""
+                  }
+                },
+                ""ignore_above"": 1024,
+                ""type"": ""keyword""
+              },
+              ""id"": {
+                ""ignore_above"": 1024,
+                ""type"": ""keyword""
+              },
+              ""last_seen_timestamp"": {
+                ""type"": ""date""
+              },
+              ""lifecycle"": {
+                ""type"": ""object""
+              },
+              ""metrics"": {
+                ""type"": ""object""
+              },
+              ""name"": {
+                ""fields"": {
+                  ""text"": {
+                    ""type"": ""match_only_text""
+                  }
+                },
+                ""ignore_above"": 1024,
+                ""type"": ""keyword""
+              },
+              ""raw"": {
+                ""type"": ""object""
+              },
+              ""reference"": {
+                ""ignore_above"": 1024,
+                ""type"": ""keyword""
+              },
+              ""source"": {
+                ""ignore_above"": 1024,
+                ""type"": ""keyword""
+              },
+              ""sub_type"": {
+                ""ignore_above"": 1024,
+                ""type"": ""keyword""
+              },
+              ""type"": {
+                ""ignore_above"": 1024,
+                ""type"": ""keyword""
+              }
+            }
           },
           ""geo"": {
             ""properties"": {
@@ -2260,6 +2794,280 @@ public static class IndexTemplates
               },
               ""static_score_norm"": {
                 ""type"": ""float""
+              }
+            }
+          },
+          ""target"": {
+            ""properties"": {
+              ""architecture"": {
+                ""ignore_above"": 1024,
+                ""type"": ""keyword""
+              },
+              ""boot"": {
+                ""properties"": {
+                  ""id"": {
+                    ""ignore_above"": 1024,
+                    ""type"": ""keyword""
+                  }
+                }
+              },
+              ""cpu"": {
+                ""properties"": {
+                  ""usage"": {
+                    ""scaling_factor"": 1000,
+                    ""type"": ""scaled_float""
+                  }
+                }
+              },
+              ""disk"": {
+                ""properties"": {
+                  ""read"": {
+                    ""properties"": {
+                      ""bytes"": {
+                        ""type"": ""long""
+                      }
+                    }
+                  },
+                  ""write"": {
+                    ""properties"": {
+                      ""bytes"": {
+                        ""type"": ""long""
+                      }
+                    }
+                  }
+                }
+              },
+              ""domain"": {
+                ""ignore_above"": 1024,
+                ""type"": ""keyword""
+              },
+              ""entity"": {
+                ""properties"": {
+                  ""attributes"": {
+                    ""type"": ""object""
+                  },
+                  ""behavior"": {
+                    ""type"": ""object""
+                  },
+                  ""display_name"": {
+                    ""fields"": {
+                      ""text"": {
+                        ""type"": ""match_only_text""
+                      }
+                    },
+                    ""ignore_above"": 1024,
+                    ""type"": ""keyword""
+                  },
+                  ""id"": {
+                    ""ignore_above"": 1024,
+                    ""type"": ""keyword""
+                  },
+                  ""last_seen_timestamp"": {
+                    ""type"": ""date""
+                  },
+                  ""lifecycle"": {
+                    ""type"": ""object""
+                  },
+                  ""metrics"": {
+                    ""type"": ""object""
+                  },
+                  ""name"": {
+                    ""fields"": {
+                      ""text"": {
+                        ""type"": ""match_only_text""
+                      }
+                    },
+                    ""ignore_above"": 1024,
+                    ""type"": ""keyword""
+                  },
+                  ""raw"": {
+                    ""type"": ""object""
+                  },
+                  ""reference"": {
+                    ""ignore_above"": 1024,
+                    ""type"": ""keyword""
+                  },
+                  ""source"": {
+                    ""ignore_above"": 1024,
+                    ""type"": ""keyword""
+                  },
+                  ""sub_type"": {
+                    ""ignore_above"": 1024,
+                    ""type"": ""keyword""
+                  },
+                  ""type"": {
+                    ""ignore_above"": 1024,
+                    ""type"": ""keyword""
+                  }
+                }
+              },
+              ""geo"": {
+                ""properties"": {
+                  ""city_name"": {
+                    ""ignore_above"": 1024,
+                    ""type"": ""keyword""
+                  },
+                  ""continent_code"": {
+                    ""ignore_above"": 1024,
+                    ""type"": ""keyword""
+                  },
+                  ""continent_name"": {
+                    ""ignore_above"": 1024,
+                    ""type"": ""keyword""
+                  },
+                  ""country_iso_code"": {
+                    ""ignore_above"": 1024,
+                    ""type"": ""keyword""
+                  },
+                  ""country_name"": {
+                    ""ignore_above"": 1024,
+                    ""type"": ""keyword""
+                  },
+                  ""location"": {
+                    ""type"": ""geo_point""
+                  },
+                  ""name"": {
+                    ""ignore_above"": 1024,
+                    ""type"": ""keyword""
+                  },
+                  ""postal_code"": {
+                    ""ignore_above"": 1024,
+                    ""type"": ""keyword""
+                  },
+                  ""region_iso_code"": {
+                    ""ignore_above"": 1024,
+                    ""type"": ""keyword""
+                  },
+                  ""region_name"": {
+                    ""ignore_above"": 1024,
+                    ""type"": ""keyword""
+                  },
+                  ""timezone"": {
+                    ""ignore_above"": 1024,
+                    ""type"": ""keyword""
+                  }
+                }
+              },
+              ""hostname"": {
+                ""ignore_above"": 1024,
+                ""type"": ""keyword""
+              },
+              ""id"": {
+                ""ignore_above"": 1024,
+                ""type"": ""keyword""
+              },
+              ""ip"": {
+                ""type"": ""ip""
+              },
+              ""mac"": {
+                ""ignore_above"": 1024,
+                ""synthetic_source_keep"": ""none"",
+                ""type"": ""keyword""
+              },
+              ""name"": {
+                ""ignore_above"": 1024,
+                ""type"": ""keyword""
+              },
+              ""network"": {
+                ""properties"": {
+                  ""egress"": {
+                    ""properties"": {
+                      ""bytes"": {
+                        ""type"": ""long""
+                      },
+                      ""packets"": {
+                        ""type"": ""long""
+                      }
+                    }
+                  },
+                  ""ingress"": {
+                    ""properties"": {
+                      ""bytes"": {
+                        ""type"": ""long""
+                      },
+                      ""packets"": {
+                        ""type"": ""long""
+                      }
+                    }
+                  }
+                }
+              },
+              ""os"": {
+                ""properties"": {
+                  ""family"": {
+                    ""ignore_above"": 1024,
+                    ""type"": ""keyword""
+                  },
+                  ""full"": {
+                    ""fields"": {
+                      ""text"": {
+                        ""type"": ""match_only_text""
+                      }
+                    },
+                    ""ignore_above"": 1024,
+                    ""type"": ""keyword""
+                  },
+                  ""kernel"": {
+                    ""ignore_above"": 1024,
+                    ""type"": ""keyword""
+                  },
+                  ""name"": {
+                    ""fields"": {
+                      ""text"": {
+                        ""type"": ""match_only_text""
+                      }
+                    },
+                    ""ignore_above"": 1024,
+                    ""type"": ""keyword""
+                  },
+                  ""platform"": {
+                    ""ignore_above"": 1024,
+                    ""type"": ""keyword""
+                  },
+                  ""type"": {
+                    ""ignore_above"": 1024,
+                    ""type"": ""keyword""
+                  },
+                  ""version"": {
+                    ""ignore_above"": 1024,
+                    ""type"": ""keyword""
+                  }
+                }
+              },
+              ""pid_ns_ino"": {
+                ""ignore_above"": 1024,
+                ""type"": ""keyword""
+              },
+              ""risk"": {
+                ""properties"": {
+                  ""calculated_level"": {
+                    ""ignore_above"": 1024,
+                    ""type"": ""keyword""
+                  },
+                  ""calculated_score"": {
+                    ""type"": ""float""
+                  },
+                  ""calculated_score_norm"": {
+                    ""type"": ""float""
+                  },
+                  ""static_level"": {
+                    ""ignore_above"": 1024,
+                    ""type"": ""keyword""
+                  },
+                  ""static_score"": {
+                    ""type"": ""float""
+                  },
+                  ""static_score_norm"": {
+                    ""type"": ""float""
+                  }
+                }
+              },
+              ""type"": {
+                ""ignore_above"": 1024,
+                ""type"": ""keyword""
+              },
+              ""uptime"": {
+                ""type"": ""long""
               }
             }
           },
@@ -2748,6 +3556,66 @@ public static class IndexTemplates
               }
             }
           },
+          ""entity"": {
+            ""properties"": {
+              ""attributes"": {
+                ""type"": ""object""
+              },
+              ""behavior"": {
+                ""type"": ""object""
+              },
+              ""display_name"": {
+                ""fields"": {
+                  ""text"": {
+                    ""type"": ""match_only_text""
+                  }
+                },
+                ""ignore_above"": 1024,
+                ""type"": ""keyword""
+              },
+              ""id"": {
+                ""ignore_above"": 1024,
+                ""type"": ""keyword""
+              },
+              ""last_seen_timestamp"": {
+                ""type"": ""date""
+              },
+              ""lifecycle"": {
+                ""type"": ""object""
+              },
+              ""metrics"": {
+                ""type"": ""object""
+              },
+              ""name"": {
+                ""fields"": {
+                  ""text"": {
+                    ""type"": ""match_only_text""
+                  }
+                },
+                ""ignore_above"": 1024,
+                ""type"": ""keyword""
+              },
+              ""raw"": {
+                ""type"": ""object""
+              },
+              ""reference"": {
+                ""ignore_above"": 1024,
+                ""type"": ""keyword""
+              },
+              ""source"": {
+                ""ignore_above"": 1024,
+                ""type"": ""keyword""
+              },
+              ""sub_type"": {
+                ""ignore_above"": 1024,
+                ""type"": ""keyword""
+              },
+              ""type"": {
+                ""ignore_above"": 1024,
+                ""type"": ""keyword""
+              }
+            }
+          },
           ""namespace"": {
             ""ignore_above"": 1024,
             ""type"": ""keyword""
@@ -2906,6 +3774,10 @@ public static class IndexTemplates
               },
               ""team_id"": {
                 ""ignore_above"": 1024,
+                ""type"": ""keyword""
+              },
+              ""thumbprint_sha256"": {
+                ""ignore_above"": 64,
                 ""type"": ""keyword""
               },
               ""timestamp"": {
@@ -3715,6 +4587,10 @@ public static class IndexTemplates
                   },
                   ""team_id"": {
                     ""ignore_above"": 1024,
+                    ""type"": ""keyword""
+                  },
+                  ""thumbprint_sha256"": {
+                    ""ignore_above"": 64,
                     ""type"": ""keyword""
                   },
                   ""timestamp"": {
@@ -5049,6 +5925,66 @@ public static class IndexTemplates
             ""ignore_above"": 1024,
             ""type"": ""keyword""
           },
+          ""entity"": {
+            ""properties"": {
+              ""attributes"": {
+                ""type"": ""object""
+              },
+              ""behavior"": {
+                ""type"": ""object""
+              },
+              ""display_name"": {
+                ""fields"": {
+                  ""text"": {
+                    ""type"": ""match_only_text""
+                  }
+                },
+                ""ignore_above"": 1024,
+                ""type"": ""keyword""
+              },
+              ""id"": {
+                ""ignore_above"": 1024,
+                ""type"": ""keyword""
+              },
+              ""last_seen_timestamp"": {
+                ""type"": ""date""
+              },
+              ""lifecycle"": {
+                ""type"": ""object""
+              },
+              ""metrics"": {
+                ""type"": ""object""
+              },
+              ""name"": {
+                ""fields"": {
+                  ""text"": {
+                    ""type"": ""match_only_text""
+                  }
+                },
+                ""ignore_above"": 1024,
+                ""type"": ""keyword""
+              },
+              ""raw"": {
+                ""type"": ""object""
+              },
+              ""reference"": {
+                ""ignore_above"": 1024,
+                ""type"": ""keyword""
+              },
+              ""source"": {
+                ""ignore_above"": 1024,
+                ""type"": ""keyword""
+              },
+              ""sub_type"": {
+                ""ignore_above"": 1024,
+                ""type"": ""keyword""
+              },
+              ""type"": {
+                ""ignore_above"": 1024,
+                ""type"": ""keyword""
+              }
+            }
+          },
           ""environment"": {
             ""ignore_above"": 1024,
             ""type"": ""keyword""
@@ -5087,6 +6023,66 @@ public static class IndexTemplates
               ""address"": {
                 ""ignore_above"": 1024,
                 ""type"": ""keyword""
+              },
+              ""entity"": {
+                ""properties"": {
+                  ""attributes"": {
+                    ""type"": ""object""
+                  },
+                  ""behavior"": {
+                    ""type"": ""object""
+                  },
+                  ""display_name"": {
+                    ""fields"": {
+                      ""text"": {
+                        ""type"": ""match_only_text""
+                      }
+                    },
+                    ""ignore_above"": 1024,
+                    ""type"": ""keyword""
+                  },
+                  ""id"": {
+                    ""ignore_above"": 1024,
+                    ""type"": ""keyword""
+                  },
+                  ""last_seen_timestamp"": {
+                    ""type"": ""date""
+                  },
+                  ""lifecycle"": {
+                    ""type"": ""object""
+                  },
+                  ""metrics"": {
+                    ""type"": ""object""
+                  },
+                  ""name"": {
+                    ""fields"": {
+                      ""text"": {
+                        ""type"": ""match_only_text""
+                      }
+                    },
+                    ""ignore_above"": 1024,
+                    ""type"": ""keyword""
+                  },
+                  ""raw"": {
+                    ""type"": ""object""
+                  },
+                  ""reference"": {
+                    ""ignore_above"": 1024,
+                    ""type"": ""keyword""
+                  },
+                  ""source"": {
+                    ""ignore_above"": 1024,
+                    ""type"": ""keyword""
+                  },
+                  ""sub_type"": {
+                    ""ignore_above"": 1024,
+                    ""type"": ""keyword""
+                  },
+                  ""type"": {
+                    ""ignore_above"": 1024,
+                    ""type"": ""keyword""
+                  }
+                }
               },
               ""environment"": {
                 ""ignore_above"": 1024,
@@ -5144,6 +6140,66 @@ public static class IndexTemplates
               ""address"": {
                 ""ignore_above"": 1024,
                 ""type"": ""keyword""
+              },
+              ""entity"": {
+                ""properties"": {
+                  ""attributes"": {
+                    ""type"": ""object""
+                  },
+                  ""behavior"": {
+                    ""type"": ""object""
+                  },
+                  ""display_name"": {
+                    ""fields"": {
+                      ""text"": {
+                        ""type"": ""match_only_text""
+                      }
+                    },
+                    ""ignore_above"": 1024,
+                    ""type"": ""keyword""
+                  },
+                  ""id"": {
+                    ""ignore_above"": 1024,
+                    ""type"": ""keyword""
+                  },
+                  ""last_seen_timestamp"": {
+                    ""type"": ""date""
+                  },
+                  ""lifecycle"": {
+                    ""type"": ""object""
+                  },
+                  ""metrics"": {
+                    ""type"": ""object""
+                  },
+                  ""name"": {
+                    ""fields"": {
+                      ""text"": {
+                        ""type"": ""match_only_text""
+                      }
+                    },
+                    ""ignore_above"": 1024,
+                    ""type"": ""keyword""
+                  },
+                  ""raw"": {
+                    ""type"": ""object""
+                  },
+                  ""reference"": {
+                    ""ignore_above"": 1024,
+                    ""type"": ""keyword""
+                  },
+                  ""source"": {
+                    ""ignore_above"": 1024,
+                    ""type"": ""keyword""
+                  },
+                  ""sub_type"": {
+                    ""ignore_above"": 1024,
+                    ""type"": ""keyword""
+                  },
+                  ""type"": {
+                    ""ignore_above"": 1024,
+                    ""type"": ""keyword""
+                  }
+                }
               },
               ""environment"": {
                 ""ignore_above"": 1024,
@@ -5470,6 +6526,10 @@ public static class IndexTemplates
                           },
                           ""team_id"": {
                             ""ignore_above"": 1024,
+                            ""type"": ""keyword""
+                          },
+                          ""thumbprint_sha256"": {
+                            ""ignore_above"": 64,
                             ""type"": ""keyword""
                           },
                           ""timestamp"": {
@@ -6409,6 +7469,10 @@ public static class IndexTemplates
                       },
                       ""team_id"": {
                         ""ignore_above"": 1024,
+                        ""type"": ""keyword""
+                      },
+                      ""thumbprint_sha256"": {
+                        ""ignore_above"": 64,
                         ""type"": ""keyword""
                       },
                       ""timestamp"": {
@@ -7728,6 +8792,66 @@ public static class IndexTemplates
                 ""ignore_above"": 1024,
                 ""type"": ""keyword""
               },
+              ""entity"": {
+                ""properties"": {
+                  ""attributes"": {
+                    ""type"": ""object""
+                  },
+                  ""behavior"": {
+                    ""type"": ""object""
+                  },
+                  ""display_name"": {
+                    ""fields"": {
+                      ""text"": {
+                        ""type"": ""match_only_text""
+                      }
+                    },
+                    ""ignore_above"": 1024,
+                    ""type"": ""keyword""
+                  },
+                  ""id"": {
+                    ""ignore_above"": 1024,
+                    ""type"": ""keyword""
+                  },
+                  ""last_seen_timestamp"": {
+                    ""type"": ""date""
+                  },
+                  ""lifecycle"": {
+                    ""type"": ""object""
+                  },
+                  ""metrics"": {
+                    ""type"": ""object""
+                  },
+                  ""name"": {
+                    ""fields"": {
+                      ""text"": {
+                        ""type"": ""match_only_text""
+                      }
+                    },
+                    ""ignore_above"": 1024,
+                    ""type"": ""keyword""
+                  },
+                  ""raw"": {
+                    ""type"": ""object""
+                  },
+                  ""reference"": {
+                    ""ignore_above"": 1024,
+                    ""type"": ""keyword""
+                  },
+                  ""source"": {
+                    ""ignore_above"": 1024,
+                    ""type"": ""keyword""
+                  },
+                  ""sub_type"": {
+                    ""ignore_above"": 1024,
+                    ""type"": ""keyword""
+                  },
+                  ""type"": {
+                    ""ignore_above"": 1024,
+                    ""type"": ""keyword""
+                  }
+                }
+              },
               ""full_name"": {
                 ""fields"": {
                   ""text"": {
@@ -7769,6 +8893,30 @@ public static class IndexTemplates
                 },
                 ""ignore_above"": 1024,
                 ""type"": ""keyword""
+              },
+              ""risk"": {
+                ""properties"": {
+                  ""calculated_level"": {
+                    ""ignore_above"": 1024,
+                    ""type"": ""keyword""
+                  },
+                  ""calculated_score"": {
+                    ""type"": ""float""
+                  },
+                  ""calculated_score_norm"": {
+                    ""type"": ""float""
+                  },
+                  ""static_level"": {
+                    ""ignore_above"": 1024,
+                    ""type"": ""keyword""
+                  },
+                  ""static_score"": {
+                    ""type"": ""float""
+                  },
+                  ""static_score_norm"": {
+                    ""type"": ""float""
+                  }
+                }
               },
               ""roles"": {
                 ""ignore_above"": 1024,
@@ -7791,6 +8939,66 @@ public static class IndexTemplates
                 ""ignore_above"": 1024,
                 ""type"": ""keyword""
               },
+              ""entity"": {
+                ""properties"": {
+                  ""attributes"": {
+                    ""type"": ""object""
+                  },
+                  ""behavior"": {
+                    ""type"": ""object""
+                  },
+                  ""display_name"": {
+                    ""fields"": {
+                      ""text"": {
+                        ""type"": ""match_only_text""
+                      }
+                    },
+                    ""ignore_above"": 1024,
+                    ""type"": ""keyword""
+                  },
+                  ""id"": {
+                    ""ignore_above"": 1024,
+                    ""type"": ""keyword""
+                  },
+                  ""last_seen_timestamp"": {
+                    ""type"": ""date""
+                  },
+                  ""lifecycle"": {
+                    ""type"": ""object""
+                  },
+                  ""metrics"": {
+                    ""type"": ""object""
+                  },
+                  ""name"": {
+                    ""fields"": {
+                      ""text"": {
+                        ""type"": ""match_only_text""
+                      }
+                    },
+                    ""ignore_above"": 1024,
+                    ""type"": ""keyword""
+                  },
+                  ""raw"": {
+                    ""type"": ""object""
+                  },
+                  ""reference"": {
+                    ""ignore_above"": 1024,
+                    ""type"": ""keyword""
+                  },
+                  ""source"": {
+                    ""ignore_above"": 1024,
+                    ""type"": ""keyword""
+                  },
+                  ""sub_type"": {
+                    ""ignore_above"": 1024,
+                    ""type"": ""keyword""
+                  },
+                  ""type"": {
+                    ""ignore_above"": 1024,
+                    ""type"": ""keyword""
+                  }
+                }
+              },
               ""full_name"": {
                 ""fields"": {
                   ""text"": {
@@ -7833,6 +9041,30 @@ public static class IndexTemplates
                 ""ignore_above"": 1024,
                 ""type"": ""keyword""
               },
+              ""risk"": {
+                ""properties"": {
+                  ""calculated_level"": {
+                    ""ignore_above"": 1024,
+                    ""type"": ""keyword""
+                  },
+                  ""calculated_score"": {
+                    ""type"": ""float""
+                  },
+                  ""calculated_score_norm"": {
+                    ""type"": ""float""
+                  },
+                  ""static_level"": {
+                    ""ignore_above"": 1024,
+                    ""type"": ""keyword""
+                  },
+                  ""static_score"": {
+                    ""type"": ""float""
+                  },
+                  ""static_score_norm"": {
+                    ""type"": ""float""
+                  }
+                }
+              },
               ""roles"": {
                 ""ignore_above"": 1024,
                 ""synthetic_source_keep"": ""none"",
@@ -7843,6 +9075,66 @@ public static class IndexTemplates
           ""email"": {
             ""ignore_above"": 1024,
             ""type"": ""keyword""
+          },
+          ""entity"": {
+            ""properties"": {
+              ""attributes"": {
+                ""type"": ""object""
+              },
+              ""behavior"": {
+                ""type"": ""object""
+              },
+              ""display_name"": {
+                ""fields"": {
+                  ""text"": {
+                    ""type"": ""match_only_text""
+                  }
+                },
+                ""ignore_above"": 1024,
+                ""type"": ""keyword""
+              },
+              ""id"": {
+                ""ignore_above"": 1024,
+                ""type"": ""keyword""
+              },
+              ""last_seen_timestamp"": {
+                ""type"": ""date""
+              },
+              ""lifecycle"": {
+                ""type"": ""object""
+              },
+              ""metrics"": {
+                ""type"": ""object""
+              },
+              ""name"": {
+                ""fields"": {
+                  ""text"": {
+                    ""type"": ""match_only_text""
+                  }
+                },
+                ""ignore_above"": 1024,
+                ""type"": ""keyword""
+              },
+              ""raw"": {
+                ""type"": ""object""
+              },
+              ""reference"": {
+                ""ignore_above"": 1024,
+                ""type"": ""keyword""
+              },
+              ""source"": {
+                ""ignore_above"": 1024,
+                ""type"": ""keyword""
+              },
+              ""sub_type"": {
+                ""ignore_above"": 1024,
+                ""type"": ""keyword""
+              },
+              ""type"": {
+                ""ignore_above"": 1024,
+                ""type"": ""keyword""
+              }
+            }
           },
           ""full_name"": {
             ""fields"": {
@@ -7925,6 +9217,66 @@ public static class IndexTemplates
                 ""ignore_above"": 1024,
                 ""type"": ""keyword""
               },
+              ""entity"": {
+                ""properties"": {
+                  ""attributes"": {
+                    ""type"": ""object""
+                  },
+                  ""behavior"": {
+                    ""type"": ""object""
+                  },
+                  ""display_name"": {
+                    ""fields"": {
+                      ""text"": {
+                        ""type"": ""match_only_text""
+                      }
+                    },
+                    ""ignore_above"": 1024,
+                    ""type"": ""keyword""
+                  },
+                  ""id"": {
+                    ""ignore_above"": 1024,
+                    ""type"": ""keyword""
+                  },
+                  ""last_seen_timestamp"": {
+                    ""type"": ""date""
+                  },
+                  ""lifecycle"": {
+                    ""type"": ""object""
+                  },
+                  ""metrics"": {
+                    ""type"": ""object""
+                  },
+                  ""name"": {
+                    ""fields"": {
+                      ""text"": {
+                        ""type"": ""match_only_text""
+                      }
+                    },
+                    ""ignore_above"": 1024,
+                    ""type"": ""keyword""
+                  },
+                  ""raw"": {
+                    ""type"": ""object""
+                  },
+                  ""reference"": {
+                    ""ignore_above"": 1024,
+                    ""type"": ""keyword""
+                  },
+                  ""source"": {
+                    ""ignore_above"": 1024,
+                    ""type"": ""keyword""
+                  },
+                  ""sub_type"": {
+                    ""ignore_above"": 1024,
+                    ""type"": ""keyword""
+                  },
+                  ""type"": {
+                    ""ignore_above"": 1024,
+                    ""type"": ""keyword""
+                  }
+                }
+              },
               ""full_name"": {
                 ""fields"": {
                   ""text"": {
@@ -7966,6 +9318,30 @@ public static class IndexTemplates
                 },
                 ""ignore_above"": 1024,
                 ""type"": ""keyword""
+              },
+              ""risk"": {
+                ""properties"": {
+                  ""calculated_level"": {
+                    ""ignore_above"": 1024,
+                    ""type"": ""keyword""
+                  },
+                  ""calculated_score"": {
+                    ""type"": ""float""
+                  },
+                  ""calculated_score_norm"": {
+                    ""type"": ""float""
+                  },
+                  ""static_level"": {
+                    ""ignore_above"": 1024,
+                    ""type"": ""keyword""
+                  },
+                  ""static_score"": {
+                    ""type"": ""float""
+                  },
+                  ""static_score_norm"": {
+                    ""type"": ""float""
+                  }
+                }
               },
               ""roles"": {
                 ""ignore_above"": 1024,
