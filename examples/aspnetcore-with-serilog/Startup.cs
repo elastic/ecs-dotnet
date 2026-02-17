@@ -18,6 +18,7 @@ namespace AspnetCoreExample
 		{
 			// Ensure that we make the HttpContextAccessor resolvable through the configuration
 			services.AddHttpContextAccessor();
+			services.AddElasticApm();
 
 			services.AddControllers();
 		}
@@ -29,7 +30,6 @@ namespace AspnetCoreExample
 				app.UseDeveloperExceptionPage();
 
 			app.UseRouting();
-			app.UseElasticApm();
 
 			app.UseAuthorization();
 

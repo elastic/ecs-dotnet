@@ -7,8 +7,8 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Text.Json.Serialization;
-using Elastic.CommonSchema.Serialization;
 using Serilog.Events;
+using Elastic.CommonSchema.Serialization;
 using static Elastic.CommonSchema.Serilog.SpecialProperties;
 
 namespace Elastic.CommonSchema.Serilog

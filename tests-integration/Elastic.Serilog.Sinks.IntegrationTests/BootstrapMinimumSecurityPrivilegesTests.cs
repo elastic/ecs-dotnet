@@ -114,7 +114,7 @@ public abstract class SecurityPrivilegesTestsBase : SerilogTestBase<SecurityClus
 
 		var loggerConfig = new LoggerConfiguration()
 			.MinimumLevel.Information()
-			.WriteTo.ColoredConsole()
+			.WriteTo.Console()
 			.WriteTo.Elasticsearch(SinkOptions);
 
 		using var logger = loggerConfig.CreateLogger();

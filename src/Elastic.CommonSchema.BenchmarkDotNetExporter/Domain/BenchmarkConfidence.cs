@@ -16,12 +16,9 @@ namespace Elastic.CommonSchema.BenchmarkDotNetExporter.Domain
 		/// <summary></summary>
 		public BenchmarkConfidence(ConfidenceInterval interval)
 		{
-			Level = interval.Level;
+			Level = interval.ConfidenceLevel.Value;
 			Lower = interval.Lower;
 			Margin = interval.Margin;
-			Mean = interval.Mean;
-			N = interval.N;
-			StandardError = interval.StandardError;
 		}
 
 		/// <summary></summary>
@@ -36,16 +33,5 @@ namespace Elastic.CommonSchema.BenchmarkDotNetExporter.Domain
 		[JsonPropertyName("margin"), DataMember(Name = "margin")]
 		public double Margin { get; set; }
 
-		/// <summary></summary>
-		[JsonPropertyName("mean"), DataMember(Name = "mean")]
-		public double Mean { get; set; }
-
-		/// <summary></summary>
-		[JsonPropertyName("n"), DataMember(Name = "n")]
-		public int N { get; set; }
-
-		/// <summary></summary>
-		[JsonPropertyName("standard_error"), DataMember(Name = "standard_error")]
-		public double StandardError { get; set; }
 	}
 }

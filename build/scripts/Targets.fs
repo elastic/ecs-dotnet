@@ -4,7 +4,6 @@ open System.Net.Http
 open Fake.Tools.Git
 open Argu
 open System
-open System.Linq
 open System.IO
 open Bullseye
 open CommandLine
@@ -15,25 +14,22 @@ let runningOnWindows = Fake.Core.Environment.isWindows
 
 let execWithTimeout binary args timeout =
     let opts =
-        ExecArguments(binary, args |> List.map (sprintf "\"%s\"") |> List.toArray)
+        ExecArguments(binary, args |> List.toArray, Timeout=timeout)
         
-    let r = Proc.Exec(opts, timeout)
-
-    match r.HasValue with
-    | true -> r.Value
-    | false -> failwithf "invocation of `%s` timed out" binary
+    Proc.Exec(opts)
 
 let exec binary args =
-    execWithTimeout binary args (TimeSpan.FromMinutes 10)
+    execWithTimeout binary args (Nullable(TimeSpan.FromMinutes 10.))
 
 let private restoreTools = lazy (exec "dotnet" [ "tool"; "restore" ])
 
 let private currentVersion =
-    lazy
-        (restoreTools.Value |> ignore
-         let r = Proc.Start("dotnet", "minver", "-d=canary", "-m=0.1")
-         let o = r.ConsoleOut |> Seq.find (fun l -> not (l.Line.StartsWith("MinVer:")))
-         o.Line)
+    lazy(
+        restoreTools.Value |> ignore
+        let r = Proc.Start("dotnet", "minver", "-p", "canary.0", "-m", "0.1")
+        let o = r.ConsoleOut |> Seq.find (fun l -> not(l.Line.StartsWith "MinVer:"))
+        o.Line
+    )
 
 let private currentVersionInformational =
     lazy
@@ -68,15 +64,10 @@ let private runTests (arguments: ParseResults<Arguments>) testMode =
         | Unit ->  [ "--filter"; "FullyQualifiedName!~IntegrationTests" ]
         | Integration -> [ "--filter"; "FullyQualifiedName~IntegrationTests" ]
 
-    let os = if runningOnWindows then "win" else "linux"
-    let junitOutput =
-        Path.Combine(Paths.Output.FullName, $"junit-%s{os}-%s{mode}-{{assembly}}-{{framework}}-test-results.xml")
+    let loggerArg = $"--logger:GitHubActions"
+    let settingsArg = if runningOnCI then ["-s"; ".ci.runsettings"] else [];
 
-    let loggerPathArgs = sprintf "LogFilePath=%s" junitOutput
-    let loggerArg = $"--logger:\"junit;%s{loggerPathArgs};MethodFormat=Class;FailureBodyFormat=Verbose\""
-    let settingsArg = if runningOnCI then (["-s"; ".ci.runsettings"]) else [];
-
-    execWithTimeout "dotnet" ([ "test" ] @ filterArg @ settingsArg @ [ "-c"; "RELEASE"; "-m:1"; loggerArg ]) (TimeSpan.FromMinutes 15)
+    execWithTimeout "dotnet" ([ "test" ] @ filterArg @ settingsArg @ [ "-c"; "RELEASE"; "-m:1"; loggerArg ]) (Nullable(TimeSpan.FromMinutes 15.))
     |> ignore
 
 let private test (arguments: ParseResults<Arguments>) =
@@ -120,8 +111,8 @@ let private generateApiChanges (arguments: ParseResults<Arguments>) =
 
     let firstPath project tfms =
         tfms
-        |> Seq.map (fun tfm -> (tfm, sprintf "directory|src/%s/bin/Release/%s" project Paths.MainTFM))
-        |> Seq.where (fun (tfm, path) -> File.Exists path)
+        |> Seq.map (fun tfm -> (tfm, $".artifacts/bin/%s{project}/release_%s{Paths.MainTFM}"))
+        |> Seq.where (fun (tfm, path) -> Directory.Exists path)
         |> Seq.tryHead
 
     nugetPackages
@@ -242,17 +233,7 @@ let private release (arguments: ParseResults<Arguments>) = printfn "release"
 
 let private publish (arguments: ParseResults<Arguments>) = printfn "publish"
 
-// temp fix for unit reporting: https://github.com/elastic/apm-pipeline-library/issues/2063
 let teardown () =
-    if Paths.Output.Exists then
-        let isSkippedFile p =
-            File.ReadLines(p).FirstOrDefault() = "<testsuites />"
-        Paths.Output.GetFiles("junit-*.xml")
-            |> Seq.filter (fun p -> isSkippedFile p.FullName)
-            |> Seq.iter (fun f ->
-                printfn $"Removing empty test file: %s{f.FullName}"
-                f.Delete()
-            )
     Console.WriteLine "Ran teardown"
 
 let Setup (parsed: ParseResults<Arguments>) (subCommand: Arguments) =

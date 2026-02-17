@@ -5,39 +5,41 @@
 using System.Text;
 using System.Text.Json;
 
-namespace Elastic.CommonSchema.Serialization
+namespace Elastic.CommonSchema.Serialization;
+
+/// snake_case naming policy
+public class SnakeCaseJsonNamingPolicy : JsonNamingPolicy
 {
-	internal class SnakeCaseJsonNamingPolicy : JsonNamingPolicy
+	/// Turn string into snake_case
+	public static string ToSnakeCase(string s)
 	{
-		public static string ToSnakeCase(string s)
+		if (string.IsNullOrEmpty(s)) return s;
+
+		var sb = new StringBuilder();
+		for (var i = 0; i < s.Length; i++)
 		{
-			if (string.IsNullOrEmpty(s)) return s;
-
-			var sb = new StringBuilder();
-			for (var i = 0; i < s.Length; i++)
+			var c = s[i];
+			if (!char.IsUpper(c))
 			{
-				var c = s[i];
-				if (!char.IsUpper(c))
-				{
-					sb.Append(c);
-					continue;
-				}
-				// first
-				if (i == 0)
-					sb.Append(char.ToLowerInvariant(c));
-				else if (char.IsUpper(s[i - 1])) // WriteIO => write_io
-					sb.Append(char.ToLowerInvariant(c));
-				else if (s[i - 1] == '_') // User_Id => user_id
-					sb.Append(char.ToLowerInvariant(c));
-				else
-				{
-					sb.Append("_");
-					sb.Append(char.ToLowerInvariant(c));
-				}
+				sb.Append(c);
+				continue;
 			}
-			return sb.ToString();
+			// first
+			if (i == 0)
+				sb.Append(char.ToLowerInvariant(c));
+			else if (char.IsUpper(s[i - 1])) // WriteIO => write_io
+				sb.Append(char.ToLowerInvariant(c));
+			else if (s[i - 1] == '_') // User_Id => user_id
+				sb.Append(char.ToLowerInvariant(c));
+			else
+			{
+				sb.Append("_");
+				sb.Append(char.ToLowerInvariant(c));
+			}
 		}
-
-		public override string ConvertName(string name) => ToSnakeCase(name);
+		return sb.ToString();
 	}
+
+	/// convert to snake_case
+	public override string ConvertName(string name) => ToSnakeCase(name);
 }

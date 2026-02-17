@@ -4,15 +4,18 @@
 
 using System.Text.Json.Serialization;
 using Elastic.CommonSchema;
+using Elastic.CommonSchema.Serialization;
 
 namespace Elastic.Ingest.Elasticsearch.CommonSchema.IntegrationTests;
 
 public enum MyEnum { One, Two, Three }
 
+[JsonConverter(typeof(EcsDocumentJsonConverterFactory))]
 public class TimeSeriesDocument : EcsDocument
 {
 }
 
+[JsonConverter(typeof(EcsDocumentJsonConverterFactory))]
 public class CatalogDocument : EcsDocument
 {
 	[JsonPropertyName("id")]

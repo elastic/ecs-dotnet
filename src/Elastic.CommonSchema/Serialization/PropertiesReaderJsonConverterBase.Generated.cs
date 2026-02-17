@@ -5,7 +5,7 @@
 /*
 IMPORTANT NOTE
 ==============
-This file has been generated. 
+This file has been generated.
 If you wish to submit a PR please modify the original csharp file and submit the PR with that change. Thanks!
 */
 
@@ -18,7 +18,7 @@ namespace Elastic.CommonSchema.Serialization;
 
 
 /// <summary> Specialized converter for <see cref="Log"/> </summary>
-internal partial class LogEntityJsonConverter : PropertiesReaderJsonConverterBase<Log>
+public partial class LogEntityJsonConverter : PropertiesReaderJsonConverterBase<Log>
 {
 	/// <inheritdoc cref="PropertiesReaderJsonConverterBase{T}.ReadProperties"/>
 	protected override bool ReadProperties(ref Utf8JsonReader reader, Log ecsEvent, JsonSerializerOptions options)
@@ -39,7 +39,7 @@ internal partial class LogEntityJsonConverter : PropertiesReaderJsonConverterBas
 	}
 
 	private partial bool ReadProperty(ref Utf8JsonReader reader, string propertyName, Log ecsEvent, JsonSerializerOptions options);
-		
+
 	/// <inheritdoc cref="JsonConverter{T}.Write"/>
 	public override void Write(Utf8JsonWriter writer, Log value, JsonSerializerOptions options)
 	{
@@ -62,7 +62,7 @@ internal partial class LogEntityJsonConverter : PropertiesReaderJsonConverterBas
 }
 
 /// <summary> Specialized converter for <see cref="Ecs"/> </summary>
-internal partial class EcsEntityJsonConverter : PropertiesReaderJsonConverterBase<Ecs>
+public partial class EcsEntityJsonConverter : PropertiesReaderJsonConverterBase<Ecs>
 {
 	/// <inheritdoc cref="PropertiesReaderJsonConverterBase{T}.ReadProperties"/>
 	protected override bool ReadProperties(ref Utf8JsonReader reader, Ecs ecsEvent, JsonSerializerOptions options)
@@ -77,7 +77,7 @@ internal partial class EcsEntityJsonConverter : PropertiesReaderJsonConverterBas
 	}
 
 	private partial bool ReadProperty(ref Utf8JsonReader reader, string propertyName, Ecs ecsEvent, JsonSerializerOptions options);
-		
+
 	/// <inheritdoc cref="JsonConverter{T}.Write"/>
 	public override void Write(Utf8JsonWriter writer, Ecs value, JsonSerializerOptions options)
 	{

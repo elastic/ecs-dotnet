@@ -83,7 +83,7 @@ namespace Elastic.CommonSchema.Tests.Specs
 							prop.Value.Type.Should().Be(JTokenType.String, $"label {prop.Name} holds {prop.Value.Type} but may only hold string");
 						break;
 					default:
-						Assert.True(false, $"Cannot yet assert on {type}. Add assertion for this type: {property.Path}");
+						Assert.Fail($"Cannot yet assert on {type}. Add assertion for this type: {property.Path}");
 						break;
 				}
 			}

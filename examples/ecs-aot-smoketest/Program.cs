@@ -31,13 +31,14 @@ var transport = new DistributedTransport(configuration);
 var extension = new ExtensionsLogger(transport);
 LogInMemoryExtensionsLogger(extension);
 
+// https://github.com/serilog/serilog/issues/2194 serilog not ready yet for AOT
+// var serilog = new SerilogExporter(transport);
+// LogInMemorySerilog(serilog);
+
 var nlog = new NLogExporter(transport);
 LogInMemoryNLog(nlog);
 
 /*
-var serilog = new SerilogExporter(transport);
-LogInMemorySerilog(serilog);
-
 void LogInMemorySerilog(SerilogExporter serilogExporter)
 {
 	using var logger = serilogExporter.CreateSerilogLogger(out var waitHandle, out var listener);
@@ -51,8 +52,7 @@ void LogInMemorySerilog(SerilogExporter serilogExporter)
 	if (listener.ObservedException != null)
 		throw new Exception("Serilog Logger received exception", listener.ObservedException);
 	Console.WriteLine("Serilog Logger export success");
-}
-*/
+}*/
 
 void LogInMemoryExtensionsLogger(ExtensionsLogger extensionsLogger)
 {
@@ -77,9 +77,9 @@ void LogInMemoryNLog(NLogExporter serilogExporter)
 	if (!waitHandle.WaitOne(TimeSpan.FromSeconds(10)))
 		throw new Exception($"No flush occurred in 10 seconds: {listener}", listener.ObservedException);
 
-	if (!listener.PublishSuccess)
-		throw new Exception("NLog did not export correctly");
 	if (listener.ObservedException != null)
 		throw new Exception("NLog export received exception", listener.ObservedException);
+	if (!listener.PublishSuccess)
+		throw new Exception("NLog did not export correctly");
 	Console.WriteLine("NLog export success");
 }

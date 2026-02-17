@@ -27,7 +27,8 @@ public class DataStreamIngestionTests : IntegrationTestBase
 	[Fact]
 	public async Task EnsureDocumentsEndUpInDataStream()
 	{
-		var targetDataStream = new DataStreamName("timeseriesdocs", "dotnet");
+		var suffix = Guid.NewGuid().ToString("N")[..8];
+		var targetDataStream = new DataStreamName($"timeseriesdocs-{suffix}", "dotnet");
 		var slim = new CountdownEvent(1);
 		var options = new DataStreamChannelOptions<TimeSeriesDocument>(Client.Transport)
 		{
@@ -76,7 +77,8 @@ public class DataStreamIngestionTests : IntegrationTestBase
 	[Fact]
 	public async Task UseCustomEventWriter()
 	{
-		var targetDataStream = new DataStreamName("customtimeseriesdocs", "dotnet");
+		var suffix = Guid.NewGuid().ToString("N")[..8];
+		var targetDataStream = new DataStreamName($"customtimeseriesdocs-{suffix}", "dotnet");
 		var slim = new CountdownEvent(1);
 		var options = new DataStreamChannelOptions<TimeSeriesDocument>(Client.Transport)
 		{
