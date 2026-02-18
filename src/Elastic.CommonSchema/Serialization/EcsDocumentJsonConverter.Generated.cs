@@ -34,14 +34,14 @@ namespace Elastic.CommonSchema.Serialization
 			{
 				"log.level" => ReadString(ref reader, ref loglevel),
 				"ecs.version" => ReadString(ref reader, ref ecsVersion),
-				"metadata" => ReadProp<MetadataDictionary>(ref reader, "metadata", ecsEvent, (b, v) => b.Metadata = v, options),
+				"metadata" => ReadMetadataIntoAttributes(ref reader, ecsEvent, options),
 				"@timestamp" => ReadDateTime(ref reader, ref @timestamp, options),
 				"message" => ReadProp<string>(ref reader, "message", ecsEvent, (b, v) => b.Message = v, options),
 				"tags" => ReadProp<string[]>(ref reader, "tags", ecsEvent, (b, v) => b.Tags = v, options),
 				"span.id" => ReadProp<string>(ref reader, "span.id", ecsEvent, (b, v) => b.SpanId = v, options),
 				"trace.id" => ReadProp<string>(ref reader, "trace.id", ecsEvent, (b, v) => b.TraceId = v, options),
 				"transaction.id" => ReadProp<string>(ref reader, "transaction.id", ecsEvent, (b, v) => b.TransactionId = v, options),
-				"labels" => ReadProp<Labels>(ref reader, "labels", ecsEvent, (b, v) => b.Labels = v, options),
+				"labels" => ReadLabelsIntoAttributes(ref reader, ecsEvent, options),
 				"agent" => ReadProp<Agent>(ref reader, "agent", EcsJsonContext.Default.Agent, ecsEvent, (b, v) => b.Agent = v),
 				"as" => ReadProp<As>(ref reader, "as", EcsJsonContext.Default.As, ecsEvent, (b, v) => b.As = v),
 				"client" => ReadProp<Client>(ref reader, "client", EcsJsonContext.Default.Client, ecsEvent, (b, v) => b.Client = v),
@@ -126,7 +126,6 @@ namespace Elastic.CommonSchema.Serialization
 			WriteProp(writer, "span.id", value.SpanId, options);
 			WriteProp(writer, "trace.id", value.TraceId, options);
 			WriteProp(writer, "transaction.id", value.TransactionId, options);
-			WriteProp(writer, "labels", value.Labels, options);
 
 			// Complex types
 			WriteProp(writer, "agent", value.Agent, EcsJsonContext.Default.Agent, options);
@@ -179,8 +178,7 @@ namespace Elastic.CommonSchema.Serialization
 			WriteProp(writer, "volume", value.Volume, EcsJsonContext.Default.Volume, options);
 			WriteProp(writer, "vulnerability", value.Vulnerability, EcsJsonContext.Default.Vulnerability, options);
 			WriteProp(writer, "x509", value.X509, EcsJsonContext.Default.X509, options);
-			WriteProp(writer, "metadata", value.Metadata, options);
-			WriteProp(writer, "attributes", value.Attributes, options);
+			WriteConsolidatedAttributes(writer, value, options);
 
 			if (typeof(EcsDocument) != value.GetType())
 				value.WriteAdditionalProperties((k, v) => WriteProp(writer, k, v, options));

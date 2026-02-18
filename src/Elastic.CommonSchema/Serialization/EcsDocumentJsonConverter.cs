@@ -3,6 +3,7 @@
 // See the LICENSE file in the project root for more information
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
@@ -98,6 +99,98 @@ public partial class EcsDocumentJsonConverter<TBase> where TBase : EcsDocument, 
 		converter.Write(writer, value.Timestamp.Value, options);
 	}
 
+	#pragma warning disable CS0618 // Obsolete
+	private static void WriteConsolidatedAttributes(Utf8JsonWriter writer, TBase value, JsonSerializerOptions options)
+	{
+		// Merge Labels, Metadata, Attributes — Attributes wins over Metadata wins over Labels
+		var hasLabels = value.Labels is { Count: > 0 };
+		var hasMetadata = value.Metadata is { Count: > 0 };
+		var hasAttributes = value.Attributes is { Count: > 0 };
+
+		if (!hasLabels && !hasMetadata && !hasAttributes) return;
+
+		var merged = new MetadataDictionary();
+		if (hasLabels)
+			foreach (var kvp in value.Labels!) merged[kvp.Key] = kvp.Value;
+		if (hasMetadata)
+			foreach (var kvp in value.Metadata!) merged[kvp.Key] = kvp.Value;
+		if (hasAttributes)
+			foreach (var kvp in value.Attributes!) merged[kvp.Key] = kvp.Value;
+
+		WriteProp(writer, "attributes", merged, options);
+	}
+	#pragma warning restore CS0618
+
+	private static bool ReadLabelsIntoAttributes(ref Utf8JsonReader reader, TBase ecsEvent, JsonSerializerOptions options)
+	{
+		if (reader.TokenType == JsonTokenType.Null)
+			return true;
+
+		if (reader.TokenType != JsonTokenType.StartObject)
+			return false;
+
+		ecsEvent.Attributes ??= new MetadataDictionary();
+
+		while (reader.Read())
+		{
+			if (reader.TokenType == JsonTokenType.EndObject)
+				break;
+
+			if (reader.TokenType != JsonTokenType.PropertyName)
+				throw new JsonException("Expected property name in labels object");
+
+			var key = reader.GetString()!;
+			reader.Read();
+
+			// Labels are always strings
+			var value = reader.TokenType == JsonTokenType.Null ? null : reader.GetString();
+			if (value != null)
+				ecsEvent.Attributes[key] = value;
+		}
+		return true;
+	}
+
+	[System.Diagnostics.CodeAnalysis.UnconditionalSuppressMessage("ReflectionAnalysis", "IL2026:RequiresUnreferencedCode", Justification = "We always provide a static JsonTypeInfoResolver")]
+	[System.Diagnostics.CodeAnalysis.UnconditionalSuppressMessage("AotAnalysis", "IL3050:RequiresDynamicCode", Justification = "We always provide a static JsonTypeInfoResolver")]
+	private static bool ReadMetadataIntoAttributes(ref Utf8JsonReader reader, TBase ecsEvent, JsonSerializerOptions options)
+	{
+		if (reader.TokenType == JsonTokenType.Null)
+			return true;
+
+		if (reader.TokenType != JsonTokenType.StartObject)
+			return false;
+
+		ecsEvent.Attributes ??= new MetadataDictionary();
+
+		while (reader.Read())
+		{
+			if (reader.TokenType == JsonTokenType.EndObject)
+				break;
+
+			if (reader.TokenType != JsonTokenType.PropertyName)
+				throw new JsonException("Expected property name in metadata object");
+
+			var key = reader.GetString()!;
+			reader.Read();
+
+			object? value = reader.TokenType switch
+			{
+				JsonTokenType.String => reader.GetString(),
+				JsonTokenType.Number => reader.TryGetInt64(out var l) ? l : reader.GetDouble(),
+				JsonTokenType.True => true,
+				JsonTokenType.False => false,
+				JsonTokenType.Null => null,
+				JsonTokenType.StartObject => JsonSerializer.Deserialize<MetadataDictionary>(ref reader, options),
+				JsonTokenType.StartArray => ReadJsonArray(ref reader, options),
+				_ => JsonSerializer.Deserialize<object>(ref reader, options)
+			};
+
+			if (value != null)
+				ecsEvent.Attributes[key] = value;
+		}
+		return true;
+	}
+
 	[System.Diagnostics.CodeAnalysis.UnconditionalSuppressMessage("ReflectionAnalysis", "IL2026:RequiresUnreferencedCode", Justification = "We always provide a static JsonTypeInfoResolver")]
 	[System.Diagnostics.CodeAnalysis.UnconditionalSuppressMessage("AotAnalysis", "IL3050:RequiresDynamicCode", Justification = "We always provide a static JsonTypeInfoResolver")]
 	private static bool ReadOTelAttributes(ref Utf8JsonReader reader, TBase ecsEvent, JsonSerializerOptions options)
@@ -128,6 +221,8 @@ public partial class EcsDocumentJsonConverter<TBase> where TBase : EcsDocument, 
 				JsonTokenType.True => true,
 				JsonTokenType.False => false,
 				JsonTokenType.Null => null,
+				JsonTokenType.StartObject => JsonSerializer.Deserialize<MetadataDictionary>(ref reader, options),
+				JsonTokenType.StartArray => ReadJsonArray(ref reader, options),
 				_ => JsonSerializer.Deserialize<object>(ref reader, options)
 			};
 
@@ -145,6 +240,32 @@ public partial class EcsDocumentJsonConverter<TBase> where TBase : EcsDocument, 
 			}
 		}
 		return true;
+	}
+
+	[System.Diagnostics.CodeAnalysis.UnconditionalSuppressMessage("ReflectionAnalysis", "IL2026:RequiresUnreferencedCode", Justification = "We always provide a static JsonTypeInfoResolver")]
+	[System.Diagnostics.CodeAnalysis.UnconditionalSuppressMessage("AotAnalysis", "IL3050:RequiresDynamicCode", Justification = "We always provide a static JsonTypeInfoResolver")]
+	private static List<object?> ReadJsonArray(ref Utf8JsonReader reader, JsonSerializerOptions options)
+	{
+		var list = new List<object?>();
+		while (reader.Read())
+		{
+			if (reader.TokenType == JsonTokenType.EndArray)
+				break;
+
+			object? item = reader.TokenType switch
+			{
+				JsonTokenType.String => reader.GetString(),
+				JsonTokenType.Number => reader.TryGetInt64(out var l) ? l : reader.GetDouble(),
+				JsonTokenType.True => true,
+				JsonTokenType.False => false,
+				JsonTokenType.Null => null,
+				JsonTokenType.StartObject => JsonSerializer.Deserialize<MetadataDictionary>(ref reader, options),
+				JsonTokenType.StartArray => ReadJsonArray(ref reader, options),
+				_ => JsonSerializer.Deserialize<object>(ref reader, options)
+			};
+			list.Add(item);
+		}
+		return list;
 	}
 }
 

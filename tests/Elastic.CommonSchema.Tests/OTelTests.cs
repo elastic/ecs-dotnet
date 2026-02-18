@@ -272,18 +272,18 @@ public class OTelTests
 	// ── 6. PropDispatch / Field Assignment ──
 
 	[Fact]
-	public void AssignField_OTelEquivalentName_GoesToLabels()
+	public void AssignField_OTelEquivalentName_GoesToAttributes()
 	{
 		// AssignField only recognizes ECS field names.
 		// OTel equivalent names like "exception.message" are not in LogTemplateProperties,
-		// so string values fall through to Labels. Use AssignOTelField for OTel names.
+		// so values fall through to Attributes. Use AssignOTelField for OTel names.
 		var doc = new EcsDocument();
 		doc.AssignField("exception.message", "dispatch test");
 
-		// Not set as ECS property — stored as label instead (strings go to Labels)
+		// Not set as ECS property — stored in Attributes instead
 		doc.Error.Should().BeNull();
-		doc.Labels.Should().NotBeNull();
-		doc.Labels.Should().ContainKey("exception.message");
+		doc.Attributes.Should().NotBeNull();
+		doc.Attributes.Should().ContainKey("exception.message");
 	}
 
 	[Fact]

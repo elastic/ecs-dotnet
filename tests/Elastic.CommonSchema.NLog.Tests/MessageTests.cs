@@ -42,15 +42,14 @@ namespace Elastic.CommonSchema.NLog.Tests
 
 			var (_, info) = ecsEvents.First();
 			info.Message.Should().Be("Info X 2.2 42");
-			info.Labels.Should().ContainKey("ValueX");
-			info.Metadata.Should().ContainKey("SomeY");
-			info.Metadata.Should().NotContainKey("NotX");
-			info.Labels.Should().NotContainKey("NotX");
+			info.Attributes.Should().ContainKey("ValueX");
+			info.Attributes.Should().ContainKey("SomeY");
+			info.Attributes.Should().NotContainKey("NotX");
 
-			var x = info.Labels["ValueX"];
+			var x = info.Attributes["ValueX"];
 			x.Should().NotBeNull().And.Be("X");
 
-			var y = info.Metadata["SomeY"] as double?;
+			var y = info.Attributes["SomeY"] as double?;
 			y.Should().HaveValue().And.Be(2.2);
 		});
 
@@ -66,9 +65,9 @@ namespace Elastic.CommonSchema.NLog.Tests
 
 			var (_, info) = ecsEvents.First();
 			info.Message.Should().Be("Info {\"ValueX\":\"X\", \"SomeY\":2.2}");
-			info.Metadata.Should().ContainKey("SafeValue");
+			info.Attributes.Should().ContainKey("SafeValue");
 
-			var x = info.Metadata["SafeValue"] as Dictionary<string, object>;
+			var x = info.Attributes["SafeValue"] as Dictionary<string, object>;
 			x.Should().NotBeNull().And.NotBeEmpty();
 		});
 
@@ -84,11 +83,10 @@ namespace Elastic.CommonSchema.NLog.Tests
 
 			var (_, info) = ecsEvents.First();
 			info.Message.Should().Be("Info X=X");
-			info.Metadata.Should().BeNull();
-			info.Labels.Should().NotBeNull();
-			info.Labels.Should().ContainKey("UnsafeValue");
+			info.Attributes.Should().NotBeNull();
+			info.Attributes.Should().ContainKey("UnsafeValue");
 
-			var x = info.Labels["UnsafeValue"];
+			var x = info.Attributes["UnsafeValue"];
 			x.Should().NotBeNull().And.Be("X=X");
 		});
 
@@ -112,9 +110,9 @@ namespace Elastic.CommonSchema.NLog.Tests
 
 			var (_, info) = ecsEvents.First();
 			info.Message.Should().Be("Info {\"ValueX\":\"X\", \"SomeY\":2.2}");
-			info.Metadata.Should().ContainKey("SafeValue");
+			info.Attributes.Should().ContainKey("SafeValue");
 
-			var x = info.Metadata["SafeValue"] as Dictionary<string, object>;
+			var x = info.Attributes["SafeValue"] as Dictionary<string, object>;
 			x.Should().NotBeNull().And.NotBeEmpty();
 		});
 
@@ -130,11 +128,10 @@ namespace Elastic.CommonSchema.NLog.Tests
 
 			var (_, info) = ecsEvents.First();
 			info.Message.Should().Be("Info X=X");
-			info.Metadata.Should().BeNull();
-			info.Labels.Should().NotBeNull();
-			info.Labels.Should().ContainKey("StructuredValue");
+			info.Attributes.Should().NotBeNull();
+			info.Attributes.Should().ContainKey("StructuredValue");
 
-			var x = info.Labels["StructuredValue"];
+			var x = info.Attributes["StructuredValue"];
 			x.Should().NotBeNull().And.Be("X=X");
 		});
 
@@ -150,9 +147,9 @@ namespace Elastic.CommonSchema.NLog.Tests
 
 			var (_, info) = ecsEvents.First();
 			info.Message.Should().StartWith("Info {\"TypeProperty");
-			info.Metadata.Should().ContainKey("EvilValue");
+			info.Attributes.Should().ContainKey("EvilValue");
 
-			var x = info.Metadata["EvilValue"] as Dictionary<string, object>;
+			var x = info.Attributes["EvilValue"] as Dictionary<string, object>;
 			x.Should().NotBeNull().And.NotBeEmpty();
 		});
 
@@ -168,10 +165,10 @@ namespace Elastic.CommonSchema.NLog.Tests
 
 			var (_, info) = ecsEvents.First();
 			info.Message.Should().StartWith("Info {\"TypeProperty");
-			info.Metadata.Should().NotContainKey("EvilValue");
-			info.Metadata.Should().ContainKey("__failures__");
+			info.Attributes.Should().NotContainKey("EvilValue");
+			info.Attributes.Should().ContainKey("__failures__");
 
-			var failures = info.Metadata["__failures__"] as List<object>;
+			var failures = info.Attributes["__failures__"] as List<object>;
 			failures.Should().NotBeNull().And.HaveCount(1);
 			var failure = failures![0] as MetadataDictionary;
 			failure!["reason"].Should().NotBeNull();
@@ -240,13 +237,13 @@ namespace Elastic.CommonSchema.NLog.Tests
 				var (json, info) = ecsEvents.First();
 
 				info.Message.Should().Be("Info LoggerArg");
-				info.Labels.Should().Contain("DupKey", "LoggerArg");
-				info.Labels.Should().Contain("DupKey_1", "Mdlc");
+				info.Attributes.Should().Contain("DupKey", (object)"LoggerArg");
+				info.Attributes.Should().Contain("DupKey_1", (object)"Mdlc");
 
-				var x = info.Labels["DupKey"];
+				var x = info.Attributes["DupKey"];
 				x.Should().NotBeNull().And.Be("LoggerArg");
 
-				var y = info.Labels["DupKey_1"];
+				var y = info.Attributes["DupKey_1"];
 				y.Should().NotBeNull().And.Be("Mdlc");
 			}
 		});

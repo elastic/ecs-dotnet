@@ -144,10 +144,10 @@ public class MessageTests : LogTestsBase
 		var (_, info) = ToEcsEvents(logEvents).First();
 
 		info.Should().NotBeNull();
-		info.Labels.Should().NotBeNull();
+		info.Attributes.Should().NotBeNull();
 
-		info.Labels["MessageTemplate"].Should().Be("Log with {0}");
-		info.Labels["0"].Should().Be("format");
+		info.Attributes["MessageTemplate"].Should().Be("Log with {0}");
+		info.Attributes["0"].Should().Be("format");
 	});
 
 	[Fact]
@@ -160,17 +160,11 @@ public class MessageTests : LogTestsBase
 
 		var (_, info) = ToEcsEvents(logEvents).First();
 
-		if (info.Metadata != null)
+		if (info.Attributes != null)
 		{
-			info.Metadata.Should().NotContainKey(LoggingEvent.IdentityProperty);
-			info.Metadata.Should().NotContainKey(LoggingEvent.HostNameProperty);
-			info.Metadata.Should().NotContainKey(LoggingEvent.UserNameProperty);
-		}
-		if (info.Labels != null)
-		{
-			info.Labels.Should().NotContainKey(LoggingEvent.IdentityProperty);
-			info.Labels.Should().NotContainKey(LoggingEvent.HostNameProperty);
-			info.Labels.Should().NotContainKey(LoggingEvent.UserNameProperty);
+			info.Attributes.Should().NotContainKey(LoggingEvent.IdentityProperty);
+			info.Attributes.Should().NotContainKey(LoggingEvent.HostNameProperty);
+			info.Attributes.Should().NotContainKey(LoggingEvent.UserNameProperty);
 		}
 	});
 
@@ -190,8 +184,8 @@ public class MessageTests : LogTestsBase
 
 			var (_, info) = ToEcsEvents(logEvents).First();
 
-			info.Labels.Should().ContainKey(property);
-			info.Labels[property].Should().Be(propertyValue);
+			info.Attributes.Should().ContainKey(property);
+			info.Attributes[property].Should().Be(propertyValue);
 		}
 		finally
 		{
@@ -213,8 +207,8 @@ public class MessageTests : LogTestsBase
 
 		var (_, info) = ToEcsEvents(logEvents).First();
 
-		info.Labels.Should().ContainKey(property);
-		info.Labels[property].Should().Be(propertyValue);
+		info.Attributes.Should().ContainKey(property);
+		info.Attributes[property].Should().Be(propertyValue);
 	});
 
 	[Fact]
@@ -233,8 +227,8 @@ public class MessageTests : LogTestsBase
 
 			var (_, info) = ToEcsEvents(logEvents).First();
 
-			info.Labels.Should().ContainKey(property);
-			info.Labels[property].Should().Be(propertyValue);
+			info.Attributes.Should().ContainKey(property);
+			info.Attributes[property].Should().Be(propertyValue);
 		}
 		finally
 		{
@@ -256,11 +250,10 @@ public class MessageTests : LogTestsBase
 
 		var (_, info) = ToEcsEvents(logEvents).First();
 
-		info.Metadata.Should().BeNull();
-		info.Labels.Should().NotBeNull();
+		info.Attributes.Should().NotBeNull();
 
-		info.Labels.Should().ContainKey(property);
-		info.Labels[property].Should().Be(propertyValue);
+		info.Attributes.Should().ContainKey(property);
+		info.Attributes[property].Should().Be(propertyValue);
 	});
 
 	[Fact]
@@ -281,10 +274,10 @@ public class MessageTests : LogTestsBase
 
 			var (_, info) = ToEcsEvents(logEvents).First();
 
-			info.Labels.Should().ContainKey(property);
-			info.Labels[property].Should().Be(propertyValue);
-			info.Metadata.Should().ContainKey(metadataProperty);
-			info.Metadata[metadataProperty].Should().Be(2.0);
+			info.Attributes.Should().ContainKey(property);
+			info.Attributes[property].Should().Be(propertyValue);
+			info.Attributes.Should().ContainKey(metadataProperty);
+			info.Attributes[metadataProperty].Should().Be(2.0);
 		}
 		finally
 		{
@@ -307,8 +300,8 @@ public class MessageTests : LogTestsBase
 
 		var (_, info) = ToEcsEvents(logEvents).First();
 
-		info.Labels.Should().ContainKey(property);
-		info.Labels[property].Should().Be(propertyValue);
+		info.Attributes.Should().ContainKey(property);
+		info.Attributes[property].Should().Be(propertyValue);
 	});
 
 	[Fact]
@@ -337,8 +330,8 @@ public class MessageTests : LogTestsBase
 
 			var (_, info) = ToEcsEvents(logEvents).Last();
 
-			info.Labels.Should().ContainKey(property);
-			info.Labels[property].Should().Be(expectedPropertyValue);
+			info.Attributes.Should().ContainKey(property);
+			info.Attributes[property].Should().Be(expectedPropertyValue);
 		}
 	});
 
@@ -368,8 +361,8 @@ public class MessageTests : LogTestsBase
 
 			var (_, info) = ToEcsEvents(logEvents).Last();
 
-			info.Labels.Should().ContainKey(property);
-			info.Labels[property].Should().Be(expectedPropertyValue);
+			info.Attributes.Should().ContainKey(property);
+			info.Attributes[property].Should().Be(expectedPropertyValue);
 		}
 	});
 }

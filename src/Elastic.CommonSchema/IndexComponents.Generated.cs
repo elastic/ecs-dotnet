@@ -345,6 +345,9 @@ namespace Elastic.CommonSchema.Elasticsearch
         ""@timestamp"": {
           ""type"": ""date""
         },
+        ""attributes"": {
+          ""type"": ""passthrough""
+        },
         ""labels"": {
           ""type"": ""object""
         },

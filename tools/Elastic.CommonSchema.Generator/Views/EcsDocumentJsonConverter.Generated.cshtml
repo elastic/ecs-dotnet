@@ -37,7 +37,7 @@ namespace Elastic.CommonSchema.Serialization
 			{
 				"log.level" => ReadString(ref reader, ref loglevel),
 				"ecs.version" => ReadString(ref reader, ref ecsVersion),
-				"metadata" => ReadProp@(Raw("<MetadataDictionary>"))(ref reader, "metadata", ecsEvent, (b, v) => b.Metadata = v, options),
+				"metadata" => ReadMetadataIntoAttributes(ref reader, ecsEvent, options),
 @foreach (var property in Model.Base.BaseFieldSet.ValueProperties)
 {
 	var name = property.JsonProperty;
@@ -51,8 +51,12 @@ namespace Elastic.CommonSchema.Serialization
 @foreach (var property in Model.Base.BaseFieldSet.InlineObjectProperties)
 {
 	var name = property.JsonProperty;
-<text>				"@(name)" => ReadProp<@(Raw(property.InlineObject.Name))>(ref reader, "@name", ecsEvent, (b, v) => b.@(property.Name) = v, options),
-</text>
+	if (name == "labels")
+{<text>				"@(name)" => ReadLabelsIntoAttributes(ref reader, ecsEvent, options),
+</text>}
+	else
+{<text>				"@(name)" => ReadProp<@(Raw(property.InlineObject.Name))>(ref reader, "@name", ecsEvent, (b, v) => b.@(property.Name) = v, options),
+</text>}
 }
 @foreach (var entity in Model.EntityClasses)
 {
@@ -102,6 +106,7 @@ namespace Elastic.CommonSchema.Serialization
 @foreach (var property in Model.Base.BaseFieldSet.InlineObjectProperties)
 {
 	var name = property.JsonProperty;
+	if (name == "labels") { continue; }
 <text>			WriteProp(writer, "@(name)", value.@(property.InlineObject.Name), options);
 </text>
 }
@@ -117,8 +122,7 @@ namespace Elastic.CommonSchema.Serialization
 <text>			WriteProp(writer, "@(entityName)", value.@(entity.Name), EcsJsonContext.Default.@(entity.Name), options);
 </text>
 }
-			WriteProp(writer, "metadata", value.Metadata, options);
-			WriteProp(writer, "attributes", value.Attributes, options);
+			WriteConsolidatedAttributes(writer, value, options);
 
 			if (typeof(@Model.Base.Name) != value.GetType())
 				value.WriteAdditionalProperties((k, v) => WriteProp(writer, k, v, options));
