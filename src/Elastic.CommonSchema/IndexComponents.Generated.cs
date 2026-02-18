@@ -346,7 +346,8 @@ namespace Elastic.CommonSchema.Elasticsearch
           ""type"": ""date""
         },
         ""attributes"": {
-          ""type"": ""passthrough""
+          ""type"": ""passthrough"",
+          ""priority"": 10
         },
         ""labels"": {
           ""type"": ""object""
@@ -362,8 +363,7 @@ namespace Elastic.CommonSchema.Elasticsearch
       }
     }
   }
-}
-"
+}"
 			},
 		{	
 				"ecs_9.3.0_client", 
