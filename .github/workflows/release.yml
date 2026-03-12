@@ -39,7 +39,7 @@ jobs:
       run: ./build.sh createreleaseongithub -s true --token ${{ secrets.GITHUB_TOKEN }}
 
     - name: generate build provenance
-      uses: actions/attest-build-provenance@v3
+      uses: actions/attest-build-provenance@v4
       with:
         subject-path: "${{ github.workspace }}/build/output/*.nupkg"
 
@@ -55,7 +55,7 @@ jobs:
 
     - name: Store artifacts
       if: success()
-      uses: actions/upload-artifact@v6
+      uses: actions/upload-artifact@v7
       with:
         name: nupkg
         path: build/output/*.nupkg
