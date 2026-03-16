@@ -40,7 +40,7 @@ public class SerilogWithExtensionsLoggerGenerated : LogTestsBase
 		info.Event.Should().NotBeNull();
 		info.Event.Timezone.Should().Be("testing");
 
-		info.Labels.Should().HaveCount(1).And.NotContainKey("event");
+		info.Attributes.Should().HaveCount(1).And.NotContainKey("event");
 	});
 
 	[Fact]
@@ -61,8 +61,8 @@ public class SerilogWithExtensionsLoggerGenerated : LogTestsBase
 		info.Event.Should().NotBeNull();
 		info.Event.Timezone.Should().Be("testing");
 
-		info.Labels.Should().HaveCount(1);
-		info.Labels.Should().HaveCount(1).And.NotContainKey("event");
+		info.Attributes.Should().HaveCount(1);
+		info.Attributes.Should().HaveCount(1).And.NotContainKey("event");
 	});
 
 }

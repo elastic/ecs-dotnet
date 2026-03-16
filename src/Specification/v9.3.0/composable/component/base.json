@@ -9,6 +9,9 @@
         "@timestamp": {
           "type": "date"
         },
+        "attributes": {
+          "type": "passthrough"
+        },
         "labels": {
           "type": "object"
         },

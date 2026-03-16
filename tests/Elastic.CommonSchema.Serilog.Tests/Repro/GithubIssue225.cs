@@ -25,11 +25,11 @@ namespace Elastic.CommonSchema.Serilog.Tests.Repro
 			var (_, info) = ecsEvents.First();
 			info.Message.Should().Be("Logging something with log context");
 
-			info.Labels.Should().NotBeNull().And.ContainKey("ShipmentId");
-			info.Labels["ShipmentId"].Should().Be("my-shipment-id");
+			info.Attributes.Should().NotBeNull().And.ContainKey("ShipmentId");
+			info.Attributes["ShipmentId"].Should().Be("my-shipment-id");
 
-			info.Metadata.Should().NotBeNull().And.ContainKey("ShipmentAmount");
-			info.Metadata["ShipmentAmount"].Should().Be(2.3);
+			info.Attributes.Should().ContainKey("ShipmentAmount");
+			info.Attributes["ShipmentAmount"].Should().Be(2.3);
 
 		});
 	}

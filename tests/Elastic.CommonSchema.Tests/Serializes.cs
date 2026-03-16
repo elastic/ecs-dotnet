@@ -47,6 +47,7 @@ namespace Elastic.CommonSchema.Tests
 		[Fact]
 		public void MetaDataKeysAreSerializedVerbatim()
 		{
+#pragma warning disable CS0618 // Obsolete Metadata
 			var b = new EcsDocument
 			{
 				Metadata = new MetadataDictionary
@@ -58,15 +59,17 @@ namespace Elastic.CommonSchema.Tests
 					["rule"] = "some-rule",
 				}
 			};
+#pragma warning restore CS0618
 
 			var serialized = b.Serialize();
 			var deserialized = EcsSerializerFactory<EcsDocument>.Deserialize(serialized);
 
-			deserialized.Metadata.Should().ContainKey("MessageTemplate");
-			deserialized.Metadata.Should().ContainKey("WriteIO");
-			deserialized.Metadata.Should().ContainKey("User_Id");
-			deserialized.Metadata.Should().ContainKey("eventId");
-			deserialized.Metadata.Should().ContainKey("rule");
+			// Metadata is now merged into Attributes during serialization
+			deserialized.Attributes.Should().ContainKey("MessageTemplate");
+			deserialized.Attributes.Should().ContainKey("WriteIO");
+			deserialized.Attributes.Should().ContainKey("User_Id");
+			deserialized.Attributes.Should().ContainKey("eventId");
+			deserialized.Attributes.Should().ContainKey("rule");
 		}
 
 		[JsonConverter(typeof(EcsDocumentJsonConverterFactory))]
@@ -217,7 +220,9 @@ namespace Elastic.CommonSchema.Tests
 					Category = new[] { "network_traffic" }
 				},
 				Ecs = new Ecs { Version = "1.2.0" },
-				Metadata = new MetadataDictionary { { "client", "ecs-dotnet" } }
+	#pragma warning disable CS0618 // Obsolete Metadata
+			Metadata = new MetadataDictionary { { "client", "ecs-dotnet" } }
+#pragma warning restore CS0618
 			};
 
 			var serialized = ecsDocument.Serialize();
@@ -231,7 +236,7 @@ namespace Elastic.CommonSchema.Tests
 			deserialized.Dns.Answers.Should().NotBeNull().And.HaveCount(2);
 			deserialized.Dns.Answers[0].Name.Should().NotBeNull().And.Be("www.example.com");
 			deserialized.Dns.Answers[1].Data.Should().NotBeNull().And.EndWith(".117");
-			deserialized.Metadata.Should().NotBeNull().And.HaveCount(1);
+			deserialized.Attributes.Should().NotBeNull().And.HaveCount(1);
 		}
 
 		private enum MyEnum { One, Two, Three }
@@ -239,6 +244,7 @@ namespace Elastic.CommonSchema.Tests
 		[Fact]
 		public void UseCustomSerializer()
 		{
+#pragma warning disable CS0618 // Obsolete Metadata
 			var ecsDocument = new EcsDocument
 			{
 				Timestamp = DateTimeOffset.Parse("2024-05-27T23:56:15.785Z"),
@@ -246,11 +252,12 @@ namespace Elastic.CommonSchema.Tests
 				Metadata = new MetadataDictionary { { "MyEnum", MyEnum.Two } },
 				Ecs = new Ecs { Version = "8.11.0" }
 			};
+#pragma warning restore CS0618
 
 			var serializerOptions = new JsonSerializerOptions { Converters = { new JsonStringEnumConverter() } };
 			var json = JsonSerializer.Serialize(ecsDocument, serializerOptions);
 
-			json.Should().Be("{\"@timestamp\":\"2024-05-27T23:56:15.785+00:00\",\"message\":\"Hello World!\",\"ecs.version\":\"8.11.0\",\"metadata\":{\"MyEnum\":\"Two\"}}");
+			json.Should().Be("{\"@timestamp\":\"2024-05-27T23:56:15.785+00:00\",\"message\":\"Hello World!\",\"ecs.version\":\"8.11.0\",\"attributes\":{\"MyEnum\":\"Two\"}}");
 		}
 	}
 }
