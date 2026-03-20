@@ -26,7 +26,7 @@ Log.Logger = new LoggerConfiguration()
 	.Enrich.FromLogContext()
 ```
 
-**NOTE:** Don’t forget we also publish an [`Elastic.Apm.SerilogEnricher`](https://github.com/elastic/ecs-dotnet/blob/main/src/Elastic.Apm.SerilogEnricher/readme.md) for the Elastic APM Agent!
+**NOTE:** Don’t forget we also publish an [`Elastic.Apm.SerilogEnricher`](https://github.com/elastic/ecs-dotnet/tree/main/src/Elastic.Apm.SerilogEnricher) for the Elastic APM Agent!
 
 Writing to `Elasticsearch`
 
