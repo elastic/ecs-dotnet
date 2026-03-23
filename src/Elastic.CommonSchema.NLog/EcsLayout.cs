@@ -92,7 +92,27 @@ namespace Elastic.CommonSchema.NLog
 				UrlUserName = "${aspnet-user-identity}";
 			}
 
+			_staticTags = AllowStaticCapture(Tags) ? GetTags(LogEventInfo.CreateNullEvent()) : null;
+			_staticLabels = AllowStaticCapture(Labels) ? GetLabels(LogEventInfo.CreateNullEvent()) : null;
+			_staticMetadata = AllowStaticCapture(Metadata) && !IncludeEventProperties && !IncludeScopeProperties ? GetMetadata(LogEventInfo.CreateNullEvent()) : null;
+
 			base.InitializeLayout();
+		}
+
+		private static bool AllowStaticCapture(IList<TargetPropertyWithContext> items)
+		{
+			if (items?.Count > 0)
+			{
+				foreach (var item in items)
+				{
+					if (item.Layout is SimpleLayout simpleLayout && simpleLayout.IsFixedText)
+						continue;
+
+					return false;
+				}
+				return true;
+			}
+			return false;
 		}
 
 		private static Lazy<bool> NLogApmLoaded { get; } = new Lazy<bool>(() => Type.GetType("Elastic.Apm.NLog.ApmTraceIdLayoutRenderer, Elastic.Apm.NLog") != null);
@@ -349,6 +369,9 @@ namespace Elastic.CommonSchema.NLog
 
 		private MetadataDictionary GetMetadata(LogEventInfo e)
 		{
+			if (_staticMetadata != null)
+				return _staticMetadata;
+
 			if ((!IncludeEventProperties || !e.HasProperties) && Metadata?.Count == 0 && !IncludeScopeProperties)
 				return null;
 
@@ -402,8 +425,9 @@ namespace Elastic.CommonSchema.NLog
 				? metadata
 				: null;
 		}
+		private MetadataDictionary _staticMetadata;
 
-		private bool AllowSerializePropertyValue(string propertyName, global::NLog.MessageTemplates.MessageTemplateParameters templateParameters)
+		private static bool AllowSerializePropertyValue(string propertyName, global::NLog.MessageTemplates.MessageTemplateParameters templateParameters)
 		{
 			if (templateParameters.Count > 0 && !templateParameters.IsPositional)
 			{
@@ -451,6 +475,9 @@ namespace Elastic.CommonSchema.NLog
 
 		private string[] GetTags(LogEventInfo e)
 		{
+			if (_staticTags != null)
+				return _staticTags;
+
 			if (Tags.Count == 0)
 				return null;
 
@@ -471,6 +498,7 @@ namespace Elastic.CommonSchema.NLog
 				? tags.ToArray()
 				: null;
 		}
+		private string[] _staticTags;
 
 		private static string[] GetTagsSplit(string tags) =>
 			string.IsNullOrEmpty(tags)
@@ -479,6 +507,9 @@ namespace Elastic.CommonSchema.NLog
 
 		private Labels GetLabels(LogEventInfo e)
 		{
+			if (_staticLabels != null)
+				return _staticLabels;
+
 			if (Labels.Count == 0)
 				return null;
 
@@ -493,6 +524,7 @@ namespace Elastic.CommonSchema.NLog
 				? labels
 				: null;
 		}
+		private Labels _staticLabels;
 
 		private Event GetEvent(LogEventInfo logEventInfo)
 		{
