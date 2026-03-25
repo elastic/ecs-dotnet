@@ -1,0 +1,8 @@
+name: docs-deploy
+on:
+  workflow_run:
+    workflows: [docs-build]
+    types: [completed]
+jobs:
+  deploy:
+    uses: elastic/docs-actions/.github/workflows/docs-deploy.yml@v1
