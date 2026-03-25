@@ -6,6 +6,7 @@ on:
     branches: [main]
 permissions:
   contents: read
+  pull-requests: read
 jobs:
   build:
     uses: elastic/docs-actions/.github/workflows/docs-build.yml@v1
