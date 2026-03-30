@@ -8,6 +8,7 @@ permissions:
   deployments: write
   id-token: write
   pull-requests: write
+  actions: read
 jobs:
   deploy:
     uses: elastic/docs-actions/.github/workflows/docs-deploy.yml@v1
