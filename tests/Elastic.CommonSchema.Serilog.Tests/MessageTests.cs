@@ -48,13 +48,13 @@ namespace Elastic.CommonSchema.Serilog.Tests
 
 			var (_, info) = ecsEvents.First();
 			info.Message.Should().Be("Info \"X\" 2.2");
-			info.Labels.Should().ContainKey("ValueX");
-			info.Metadata.Should().ContainKey("SomeY");
+			info.Attributes.Should().ContainKey("ValueX");
+			info.Attributes.Should().ContainKey("SomeY");
 
-			var x = info.Labels["ValueX"];
+			var x = info.Attributes["ValueX"];
 			x.Should().NotBeNull().And.Be("X");
 
-			var y = info.Metadata["SomeY"] as double?;
+			var y = info.Attributes["SomeY"] as double?;
 			y.Should().HaveValue().And.Be(2.2);
 
 		});
@@ -71,17 +71,17 @@ namespace Elastic.CommonSchema.Serilog.Tests
 
 			var (_, info) = ecsEvents.First();
 			info.Message.Should().Be("Info \"X\" 2.2 [(\"fieldOne\": \"value1\"), (\"fieldTwo\": \"value2\")]");
-			info.Labels.Should().ContainKey("ValueX");
-			info.Metadata.Should().ContainKey("SomeY");
-			info.Metadata.Should().ContainKey("DictValue");
+			info.Attributes.Should().ContainKey("ValueX");
+			info.Attributes.Should().ContainKey("SomeY");
+			info.Attributes.Should().ContainKey("DictValue");
 
-			var x = info.Labels["ValueX"];
+			var x = info.Attributes["ValueX"];
 			x.Should().NotBeNull().And.Be("X");
 
-			var y = info.Metadata["SomeY"] as double?;
+			var y = info.Attributes["SomeY"] as double?;
 			y.Should().HaveValue().And.Be(2.2);
 
-			var dict = info.Metadata["DictValue"] as MetadataDictionary;
+			var dict = info.Attributes["DictValue"] as MetadataDictionary;
 			dict.Should().NotBeNull();
 			dict!["fieldOne"].Should().Be("value1");
 			dict["fieldTwo"].Should().Be("value2");
@@ -99,10 +99,10 @@ namespace Elastic.CommonSchema.Serilog.Tests
 
 			var (_, info) = ecsEvents.First();
 			info.Message.Should().Be("Info { TestProp: \"testing\", Child: { ChildProp: 3.3 } }");
-			info.Metadata.Should().ContainKey("MyObj");
+			info.Attributes.Should().ContainKey("MyObj");
 
 
-			var json = info.Metadata["MyObj"] as MetadataDictionary;
+			var json = info.Attributes["MyObj"] as MetadataDictionary;
 			json.Should().NotBeNull();
 			json!["TestProp"].Should().Be("testing");
 			var child = json["Child"] as MetadataDictionary;
@@ -124,7 +124,6 @@ namespace Elastic.CommonSchema.Serilog.Tests
 
 			var (_, info) = ecsEvents.First();
 			info.Event.Duration.Should().Be(2200000);
-			info.Metadata.Should().BeNull();
 		});
 
 		[Theory]
@@ -141,7 +140,6 @@ namespace Elastic.CommonSchema.Serilog.Tests
 
 			var (_, info) = ecsEvents.First();
 			info.Event.Duration.Should().Be(2000000);
-			info.Metadata.Should().BeNull();
 		});
 
 		[Theory]
@@ -158,7 +156,6 @@ namespace Elastic.CommonSchema.Serilog.Tests
 
 			var (_, info) = ecsEvents.First();
 			info.Http.RequestMethod.Should().Be("GET");
-			info.Metadata.Should().BeNull();
 		});
 
 		[Theory]
@@ -175,7 +172,6 @@ namespace Elastic.CommonSchema.Serilog.Tests
 
 			var (_, info) = ecsEvents.First();
 			info.Url.Path.Should().Be("/");
-			info.Metadata.Should().BeNull();
 		});
 
 		[Fact]
@@ -190,7 +186,6 @@ namespace Elastic.CommonSchema.Serilog.Tests
 
 			var (_, info) = ecsEvents.First();
 			info.Http.ResponseStatusCode.Should().Be(200);
-			info.Metadata.Should().BeNull();
 		});
 
 		[Fact]
@@ -205,7 +200,6 @@ namespace Elastic.CommonSchema.Serilog.Tests
 
 			var (_, info) = ecsEvents.First();
 			info.Url.Scheme.Should().Be("https");
-			info.Metadata.Should().BeNull();
 		});
 
 		[Theory]
@@ -226,7 +220,6 @@ namespace Elastic.CommonSchema.Serilog.Tests
 				info.Url.Should().BeNull();
 			else
 				((object)info.Url.Query).Should().Be(expectedValue);
-			info.Metadata.Should().BeNull();
 		});
 
 		[Fact]
@@ -241,7 +234,6 @@ namespace Elastic.CommonSchema.Serilog.Tests
 
 			var (_, info) = ecsEvents.First();
 			info.Http.RequestId.Should().Be("34985y39y6tg95");
-			info.Metadata.Should().BeNull();
 		});
 	}
 }
