@@ -35,14 +35,14 @@ jobs:
     - name: Bootstrap Action Workspace
       uses: ./.github/workflows/bootstrap
             
-    - uses: actions/cache@v5
+    - uses: actions/cache@v6
       with:
         path: ~/.nuget/packages
         key: ${{ runner.os }}-nuget-${{ hashFiles('**/packages.lock.json') }}
         restore-keys: |
           ${{ runner.os }}-nuget-
             
-    - uses: actions/cache@v5
+    - uses: actions/cache@v6
       with:
         path: ~\AppData\Local\ElasticManaged\elasticsearch-${{ env.ELASTIC_STACK_VERSION }}
         key: ${{ runner.os }}-elastic-managed-${{ env.ELASTIC_STACK_VERSION }}
