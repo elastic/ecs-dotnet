@@ -7,7 +7,7 @@
   <ItemGroup>
     <PackageReference Include="Elastic.Apm" Version="1.34.1" />
     <PackageReference Include="Moq" Version="4.20.72" />
-    <PackageReference Include="NLog" Version="6.1.0" />
+    <PackageReference Include="NLog" Version="6.1.3" />
     <PackageReference Include="NLog.Extensions.Logging" Version="6.1.1" />
   </ItemGroup>
 
