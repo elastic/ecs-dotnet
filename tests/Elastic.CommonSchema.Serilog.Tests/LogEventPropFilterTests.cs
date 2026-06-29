@@ -64,8 +64,8 @@ namespace Elastic.CommonSchema.Serilog.Tests
 			var (_, info) = ecsEvents.First();
 			info.Log.Level.Should().Be("Information");
 			info.Error.Should().BeNull();
-			info.Labels.Should().Contain("bar", "bbb");
-			info.Labels.Should().NotContainKey("foo", "Should have been filtered");
+			info.Attributes.Should().Contain("bar", (object)"bbb");
+			info.Attributes.Should().NotContainKey("foo", "Should have been filtered");
 		});
 		/// <summary>
 		/// Test that null <see cref="EcsTextFormatterConfiguration.LogEventPropertiesToFilter"/> does not cause any critical errors
@@ -87,8 +87,8 @@ namespace Elastic.CommonSchema.Serilog.Tests
 			var (_, info) = ecsEvents.First();
 			info.Log.Level.Should().Be("Information");
 			info.Error.Should().BeNull();
-			info.Labels.Should().Contain("bar", "bbb");
-			info.Labels.Should().Contain("foo", "aaa");
+			info.Attributes.Should().Contain("bar", (object)"bbb");
+			info.Attributes.Should().Contain("foo", (object)"aaa");
 		});
 
 		/// <summary>
@@ -111,8 +111,8 @@ namespace Elastic.CommonSchema.Serilog.Tests
 			var (_, info) = ecsEvents.First();
 			info.Log.Level.Should().Be("Information");
 			info.Error.Should().BeNull();
-			info.Labels.Should().Contain("bar", "bbb");
-			info.Labels.Should().Contain("foo", "aaa");
+			info.Attributes.Should().Contain("bar", (object)"bbb");
+			info.Attributes.Should().Contain("foo", (object)"aaa");
 		});
 		/// <summary>
 		/// Test that <see cref="EcsTextFormatterConfiguration.LogEventPropertiesToFilter"/> can be case insensitive
@@ -134,8 +134,8 @@ namespace Elastic.CommonSchema.Serilog.Tests
 			var (_, info) = ecsEvents.First();
 			info.Log.Level.Should().Be("Information");
 			info.Error.Should().BeNull();
-			info.Labels.Should().Contain("bar", "bbb");
-			info.Labels.Should().NotContainKey("foo", "Should have been filtered");
+			info.Attributes.Should().Contain("bar", (object)"bbb");
+			info.Attributes.Should().NotContainKey("foo", "Should have been filtered");
 		});
 		/// <summary>
 		/// Test that <see cref="EcsTextFormatterConfiguration.LogEventPropertiesToFilter"/> can be case sensitive
@@ -157,8 +157,8 @@ namespace Elastic.CommonSchema.Serilog.Tests
 			var (_, info) = ecsEvents.First();
 			info.Log.Level.Should().Be("Information");
 			info.Error.Should().BeNull();
-			info.Labels.Should().Contain("bar", "bbb");
-			info.Labels.Should().Contain("foo", "aaa");
+			info.Attributes.Should().Contain("bar", (object)"bbb");
+			info.Attributes.Should().Contain("foo", (object)"aaa");
 		});
 	}
 }

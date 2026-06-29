@@ -33,6 +33,8 @@ namespace Elastic.CommonSchema.Generator.Projection
 		public List<AssignableEntityInterface> AssignableInterfaces { get; set; }
 
 		public List<PropDispatch> AssignablePropDispatches { get; set; }
+
+		public IReadOnlyCollection<OTelFieldMapping> OTelMappings { get; set; }
 		// ReSharper restore PropertyCanBeMadeInitOnly.Global
 	}
 
@@ -168,7 +170,69 @@ namespace Elastic.CommonSchema.Generator.Projection
 				propDispatches.Add(new PropDispatch(entity, a));
 			}
 			Projection.AssignablePropDispatches = propDispatches;
+
+			// Collect OTel mappings from all field sets
+			var otelMappings = CollectOTelMappings();
+			Projection.OTelMappings = otelMappings;
+
+			// Annotate DispatchProperties with OTel equivalent names
+			var otelEquivalentLookup = otelMappings
+				.Where(m => m.Relation == OTelRelation.Equivalent)
+				.ToLookup(m => m.EcsFieldPath);
+
+			foreach (var dispatch in propDispatches)
+			{
+				foreach (var prop in dispatch.AssignableProperties)
+				{
+					foreach (var mapping in otelEquivalentLookup[prop.FullPath])
+						prop.OTelNames.Add(mapping.OTelFieldName);
+				}
+			}
+			// Also annotate the base entity dispatch properties
+			foreach (var prop in Projection.Base.DispatchProperties)
+			{
+				foreach (var mapping in otelEquivalentLookup[prop.FullPath])
+					prop.OTelNames.Add(mapping.OTelFieldName);
+			}
+
 			return Projection;
+		}
+
+		private List<OTelFieldMapping> CollectOTelMappings()
+		{
+			var mappings = new List<OTelFieldMapping>();
+			foreach (var fieldSet in Schema.Entities)
+			{
+				foreach (var (flatName, field) in fieldSet.Fields)
+				{
+					if (field.OTelMappings == null) continue;
+					foreach (var otel in field.OTelMappings)
+					{
+						if (!otel.IsBidirectional) continue;
+
+						var otelName = otel.Relation == OTelRelation.Match
+							? flatName // For match, OTel name = ECS flat_name
+							: otel.OTelFieldName; // For equivalent, explicit name
+
+						if (string.IsNullOrEmpty(otelName)) continue;
+
+						var kind = otel.Attribute != null ? OTelMappingKind.Attribute
+							: otel.OtlpField != null ? OTelMappingKind.OtlpField
+							: OTelMappingKind.Metric;
+
+						mappings.Add(new OTelFieldMapping
+						{
+							EcsFieldPath = flatName,
+							OTelFieldName = otelName,
+							Relation = otel.Relation,
+							Stability = otel.Stability,
+							Kind = kind,
+							Note = otel.Note,
+						});
+					}
+				}
+			}
+			return mappings;
 		}
 
 		private Dictionary<string, EntityClass> CreateEntityTypes()

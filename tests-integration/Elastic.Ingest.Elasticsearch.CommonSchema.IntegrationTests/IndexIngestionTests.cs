@@ -110,7 +110,7 @@ public class IndexIngestionTests : IntegrationTestBase
 			Created = date,
 			Title = "Hello World!",
 			Id = "hello-world",
-			Metadata = new MetadataDictionary { { "MyEnum", MyEnum.Two } }
+			Attributes = new MetadataDictionary { { "MyEnum", MyEnum.Two } }
 		});
 
 		if (!slim.WaitHandle.WaitOne(TimeSpan.FromSeconds(10)))
@@ -126,6 +126,6 @@ public class IndexIngestionTests : IntegrationTestBase
 		root.GetProperty("created").GetString().Should().Be("2024-05-27T23:56:15.785+00:00");
 		root.GetProperty("title").GetString().Should().Be("Hello World!");
 		root.GetProperty("id").GetString().Should().Be("hello-world");
-		root.GetProperty("metadata").GetProperty("MyEnum").GetString().Should().Be("Two");
+		root.GetProperty("attributes").GetProperty("MyEnum").GetString().Should().Be("Two");
 	}
 }

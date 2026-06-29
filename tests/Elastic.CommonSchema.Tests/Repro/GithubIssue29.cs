@@ -11,6 +11,7 @@ namespace Elastic.CommonSchema.Tests.Repro
 		{
 			// Metadata properties with null values should be serialised
 			var uniqueName = Guid.NewGuid().ToString();
+#pragma warning disable CS0618 // Obsolete Metadata
 			var root = new EcsDocument
 			{
 				Metadata = new MetadataDictionary
@@ -18,6 +19,7 @@ namespace Elastic.CommonSchema.Tests.Repro
 					{ uniqueName, null }
 				}
 			};
+#pragma warning restore CS0618
 
 			var serialised = root.Serialize();
 			serialised.Should().Contain($"\"{uniqueName}\":null");

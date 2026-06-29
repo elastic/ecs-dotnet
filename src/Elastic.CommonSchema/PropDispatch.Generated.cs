@@ -5,7 +5,7 @@
 /*
 IMPORTANT NOTE
 ==============
-This file has been generated. 
+This file has been generated.
 If you wish to submit a PR please modify the original csharp file and submit the PR with that change. Thanks!
 */
 
@@ -24,7 +24,7 @@ using static Elastic.CommonSchema.PropDispatch;
 namespace Elastic.CommonSchema
 {
 	///<inheritdoc cref="BaseFieldSet"/>
-	public partial class EcsDocument : BaseFieldSet 
+	public partial class EcsDocument : BaseFieldSet
 	{
 		/// <summary>
 		/// Set ECS fields by name on <see cref="EcsDocument"/>.
@@ -43,9 +43,9 @@ namespace Elastic.CommonSchema
 		public void AssignField(string path, object value)
 		{
 			var assigned = LogTemplateProperties.All.Contains(path) && TrySet(this, path, value);
-			if (!assigned && LogTemplateEntities.All.Contains(path)) 
+			if (!assigned && LogTemplateEntities.All.Contains(path))
 				assigned = TrySetEntity(this, path, value);
-			if (!assigned) 
+			if (!assigned)
 				SetMetaOrLabel(this, path, value);
 		}
 	}
@@ -688,9 +688,9 @@ namespace Elastic.CommonSchema
 			}
 		}
 
-		internal static bool TrySet(EcsDocument document, string path, object value) 
+		internal static bool TrySet(EcsDocument document, string path, object value)
 		{
-			switch (path) 
+			switch (path)
 			{
 				case "@timestamp":
 				case "Timestamp":
@@ -3257,6 +3257,9 @@ namespace Elastic.CommonSchema
 				case "X509VersionNumber":
 					return TrySetX509(document, path, value);
 				default:
+					// OTel equivalent name fallback: look up OTel name -> ECS path, then retry
+					if (OTelMappings.OTelToEcs.TryGetValue(path, out var ecsPath))
+						return TrySet(document, ecsPath, value);
 					return false;
 			}
 		}
@@ -3304,7 +3307,7 @@ namespace Elastic.CommonSchema
 		{
 			var assign = TryAssignAgent(path);
 			if (assign == null) return false;
-		
+
 			var entity = document.Agent ?? new Agent();
 			var assigned = assign(entity, value);
 			if (assigned) document.Agent = entity;
@@ -3327,7 +3330,7 @@ namespace Elastic.CommonSchema
 		{
 			var assign = TryAssignAs(path);
 			if (assign == null) return false;
-		
+
 			var entity = document.As ?? new As();
 			var assigned = assign(entity, value);
 			if (assigned) document.As = entity;
@@ -3440,7 +3443,7 @@ namespace Elastic.CommonSchema
 		{
 			var assign = TryAssignClient(path);
 			if (assign == null) return false;
-		
+
 			var entity = document.Client ?? new Client();
 			var assigned = assign(entity, value);
 			if (assigned) document.Client = entity;
@@ -3473,6 +3476,7 @@ namespace Elastic.CommonSchema
 				"CloudRegion" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Region = p),
 				"cloud.service.name" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.ServiceName = p),
 				"CloudServiceName" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.ServiceName = p),
+				"cloud.platform" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.ServiceName = p),
 				"cloud.entity.display_name" => static (e, v) => TryAssignEntity("entity.display_name")(e.Entity ??= new Entity(),v),
 				"CloudEntityDisplayName" => static (e, v) => TryAssignEntity("entity.display_name")(e.Entity ??= new Entity(),v),
 				"cloud.entity.id" => static (e, v) => TryAssignEntity("entity.id")(e.Entity ??= new Entity(),v),
@@ -3495,7 +3499,7 @@ namespace Elastic.CommonSchema
 		{
 			var assign = TryAssignCloud(path);
 			if (assign == null) return false;
-		
+
 			var entity = document.Cloud ?? new Cloud();
 			var assigned = assign(entity, value);
 			if (assigned) document.Cloud = entity;
@@ -3536,7 +3540,7 @@ namespace Elastic.CommonSchema
 		{
 			var assign = TryAssignCodeSignature(path);
 			if (assign == null) return false;
-		
+
 			var entity = document.CodeSignature ?? new CodeSignature();
 			var assigned = assign(entity, value);
 			if (assigned) document.CodeSignature = entity;
@@ -3567,6 +3571,7 @@ namespace Elastic.CommonSchema
 				"ContainerNetworkIngressBytes" => static (e, v) => TrySetLong(e, v, static (ee, p) => ee.NetworkIngressBytes = p),
 				"container.runtime" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Runtime = p),
 				"ContainerRuntime" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Runtime = p),
+				"container.runtime.name" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Runtime = p),
 				"container.security_context.privileged" => static (e, v) => TrySetBool(e, v, static (ee, p) => ee.SecurityContextPrivileged = p),
 				"ContainerSecurityContextPrivileged" => static (e, v) => TrySetBool(e, v, static (ee, p) => ee.SecurityContextPrivileged = p),
 				_ => null
@@ -3577,7 +3582,7 @@ namespace Elastic.CommonSchema
 		{
 			var assign = TryAssignContainer(path);
 			if (assign == null) return false;
-		
+
 			var entity = document.Container ?? new Container();
 			var assigned = assign(entity, value);
 			if (assigned) document.Container = entity;
@@ -3602,7 +3607,7 @@ namespace Elastic.CommonSchema
 		{
 			var assign = TryAssignDataStream(path);
 			if (assign == null) return false;
-		
+
 			var entity = document.DataStream ?? new DataStream();
 			var assigned = assign(entity, value);
 			if (assigned) document.DataStream = entity;
@@ -3715,7 +3720,7 @@ namespace Elastic.CommonSchema
 		{
 			var assign = TryAssignDestination(path);
 			if (assign == null) return false;
-		
+
 			var entity = document.Destination ?? new Destination();
 			var assigned = assign(entity, value);
 			if (assigned) document.Destination = entity;
@@ -3754,7 +3759,7 @@ namespace Elastic.CommonSchema
 		{
 			var assign = TryAssignDevice(path);
 			if (assign == null) return false;
-		
+
 			var entity = document.Device ?? new Device();
 			var assigned = assign(entity, value);
 			if (assigned) document.Device = entity;
@@ -3851,7 +3856,7 @@ namespace Elastic.CommonSchema
 		{
 			var assign = TryAssignDll(path);
 			if (assign == null) return false;
-		
+
 			var entity = document.Dll ?? new Dll();
 			var assigned = assign(entity, value);
 			if (assigned) document.Dll = entity;
@@ -3890,7 +3895,7 @@ namespace Elastic.CommonSchema
 		{
 			var assign = TryAssignDns(path);
 			if (assign == null) return false;
-		
+
 			var entity = document.Dns ?? new Dns();
 			var assigned = assign(entity, value);
 			if (assigned) document.Dns = entity;
@@ -3911,7 +3916,7 @@ namespace Elastic.CommonSchema
 		{
 			var assign = TryAssignEcs(path);
 			if (assign == null) return false;
-		
+
 			var entity = document.Ecs ?? new Ecs();
 			var assigned = assign(entity, value);
 			if (assigned) document.Ecs = entity;
@@ -3972,7 +3977,7 @@ namespace Elastic.CommonSchema
 		{
 			var assign = TryAssignElf(path);
 			if (assign == null) return false;
-		
+
 			var entity = document.Elf ?? new Elf();
 			var assigned = assign(entity, value);
 			if (assigned) document.Elf = entity;
@@ -4009,7 +4014,7 @@ namespace Elastic.CommonSchema
 		{
 			var assign = TryAssignEmail(path);
 			if (assign == null) return false;
-		
+
 			var entity = document.Email ?? new Email();
 			var assigned = assign(entity, value);
 			if (assigned) document.Email = entity;
@@ -4042,7 +4047,7 @@ namespace Elastic.CommonSchema
 		{
 			var assign = TryAssignEntity(path);
 			if (assign == null) return false;
-		
+
 			var entity = document.Entity ?? new Entity();
 			var assigned = assign(entity, value);
 			if (assigned) document.Entity = entity;
@@ -4059,8 +4064,10 @@ namespace Elastic.CommonSchema
 				"ErrorId" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Id = p),
 				"error.message" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Message = p),
 				"ErrorMessage" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Message = p),
+				"exception.message" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Message = p),
 				"error.stack_trace" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.StackTrace = p),
 				"ErrorStackTrace" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.StackTrace = p),
+				"exception.stacktrace" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.StackTrace = p),
 				"error.type" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Type = p),
 				"ErrorType" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Type = p),
 				_ => null
@@ -4071,7 +4078,7 @@ namespace Elastic.CommonSchema
 		{
 			var assign = TryAssignError(path);
 			if (assign == null) return false;
-		
+
 			var entity = document.Error ?? new Error();
 			var assigned = assign(entity, value);
 			if (assigned) document.Error = entity;
@@ -4138,7 +4145,7 @@ namespace Elastic.CommonSchema
 		{
 			var assign = TryAssignEvent(path);
 			if (assign == null) return false;
-		
+
 			var entity = document.Event ?? new Event();
 			var assigned = assign(entity, value);
 			if (assigned) document.Event = entity;
@@ -4153,6 +4160,7 @@ namespace Elastic.CommonSchema
 				"FaasColdstart" => static (e, v) => TrySetBool(e, v, static (ee, p) => ee.Coldstart = p),
 				"faas.execution" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Execution = p),
 				"FaasExecution" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Execution = p),
+				"faas.invocation_id" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Execution = p),
 				"faas.id" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Id = p),
 				"FaasId" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Id = p),
 				"faas.name" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Name = p),
@@ -4161,6 +4169,7 @@ namespace Elastic.CommonSchema
 				"FaasTriggerRequestId" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.TriggerRequestId = p),
 				"faas.trigger.type" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.TriggerType = p),
 				"FaasTriggerType" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.TriggerType = p),
+				"faas.trigger" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.TriggerType = p),
 				"faas.version" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Version = p),
 				"FaasVersion" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Version = p),
 				_ => null
@@ -4171,7 +4180,7 @@ namespace Elastic.CommonSchema
 		{
 			var assign = TryAssignFaas(path);
 			if (assign == null) return false;
-		
+
 			var entity = document.Faas ?? new Faas();
 			var assigned = assign(entity, value);
 			if (assigned) document.Faas = entity;
@@ -4188,6 +4197,7 @@ namespace Elastic.CommonSchema
 				"FileCreated" => static (e, v) => TrySetDateTimeOffset(e, v, static (ee, p) => ee.Created = p),
 				"file.ctime" => static (e, v) => TrySetDateTimeOffset(e, v, static (ee, p) => ee.Ctime = p),
 				"FileCtime" => static (e, v) => TrySetDateTimeOffset(e, v, static (ee, p) => ee.Ctime = p),
+				"file.changed" => static (e, v) => TrySetDateTimeOffset(e, v, static (ee, p) => ee.Ctime = p),
 				"file.device" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Device = p),
 				"FileDevice" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Device = p),
 				"file.directory" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Directory = p),
@@ -4200,8 +4210,10 @@ namespace Elastic.CommonSchema
 				"FileForkName" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.ForkName = p),
 				"file.gid" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Gid = p),
 				"FileGid" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Gid = p),
+				"file.group.id" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Gid = p),
 				"file.group" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Group = p),
 				"FileGroup" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Group = p),
+				"file.group.name" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Group = p),
 				"file.inode" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Inode = p),
 				"FileInode" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Inode = p),
 				"file.mime_type" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.MimeType = p),
@@ -4210,6 +4222,7 @@ namespace Elastic.CommonSchema
 				"FileMode" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Mode = p),
 				"file.mtime" => static (e, v) => TrySetDateTimeOffset(e, v, static (ee, p) => ee.Mtime = p),
 				"FileMtime" => static (e, v) => TrySetDateTimeOffset(e, v, static (ee, p) => ee.Mtime = p),
+				"file.modified" => static (e, v) => TrySetDateTimeOffset(e, v, static (ee, p) => ee.Mtime = p),
 				"file.name" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Name = p),
 				"FileName" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Name = p),
 				"file.origin_referrer_url" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.OriginReferrerUrl = p),
@@ -4218,16 +4231,19 @@ namespace Elastic.CommonSchema
 				"FileOriginUrl" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.OriginUrl = p),
 				"file.owner" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Owner = p),
 				"FileOwner" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Owner = p),
+				"file.owner.name" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Owner = p),
 				"file.path" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Path = p),
 				"FilePath" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Path = p),
 				"file.size" => static (e, v) => TrySetLong(e, v, static (ee, p) => ee.Size = p),
 				"FileSize" => static (e, v) => TrySetLong(e, v, static (ee, p) => ee.Size = p),
 				"file.target_path" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.TargetPath = p),
 				"FileTargetPath" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.TargetPath = p),
+				"file.symbolic_link.target_path" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.TargetPath = p),
 				"file.type" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Type = p),
 				"FileType" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Type = p),
 				"file.uid" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Uid = p),
 				"FileUid" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Uid = p),
+				"file.owner.id" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Uid = p),
 				"file.hash.cdhash" => static (e, v) => TryAssignHash("hash.cdhash")(e.Hash ??= new Hash(),v),
 				"FileHashCdhash" => static (e, v) => TryAssignHash("hash.cdhash")(e.Hash ??= new Hash(),v),
 				"file.hash.md5" => static (e, v) => TryAssignHash("hash.md5")(e.Hash ??= new Hash(),v),
@@ -4388,7 +4404,7 @@ namespace Elastic.CommonSchema
 		{
 			var assign = TryAssignFile(path);
 			if (assign == null) return false;
-		
+
 			var entity = document.File ?? new File();
 			var assigned = assign(entity, value);
 			if (assigned) document.File = entity;
@@ -4433,6 +4449,7 @@ namespace Elastic.CommonSchema
 				"GenAiResponseModel" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.ResponseModel = p),
 				"gen_ai.system" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.System = p),
 				"GenAiSystem" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.System = p),
+				"gen_ai.provider.name" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.System = p),
 				"gen_ai.token.type" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.TokenType = p),
 				"GenAiTokenType" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.TokenType = p),
 				"gen_ai.tool.call.id" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.ToolCallId = p),
@@ -4453,7 +4470,7 @@ namespace Elastic.CommonSchema
 		{
 			var assign = TryAssignGenAi(path);
 			if (assign == null) return false;
-		
+
 			var entity = document.GenAi ?? new GenAi();
 			var assigned = assign(entity, value);
 			if (assigned) document.GenAi = entity;
@@ -4466,12 +4483,15 @@ namespace Elastic.CommonSchema
 			{
 				"geo.city_name" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.CityName = p),
 				"GeoCityName" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.CityName = p),
+				"geo.locality.name" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.CityName = p),
 				"geo.continent_code" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.ContinentCode = p),
 				"GeoContinentCode" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.ContinentCode = p),
+				"geo.continent.code" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.ContinentCode = p),
 				"geo.continent_name" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.ContinentName = p),
 				"GeoContinentName" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.ContinentName = p),
 				"geo.country_iso_code" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.CountryIsoCode = p),
 				"GeoCountryIsoCode" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.CountryIsoCode = p),
+				"geo.country.iso_code" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.CountryIsoCode = p),
 				"geo.country_name" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.CountryName = p),
 				"GeoCountryName" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.CountryName = p),
 				"geo.name" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Name = p),
@@ -4480,6 +4500,7 @@ namespace Elastic.CommonSchema
 				"GeoPostalCode" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.PostalCode = p),
 				"geo.region_iso_code" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.RegionIsoCode = p),
 				"GeoRegionIsoCode" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.RegionIsoCode = p),
+				"geo.region.iso_code" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.RegionIsoCode = p),
 				"geo.region_name" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.RegionName = p),
 				"GeoRegionName" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.RegionName = p),
 				"geo.timezone" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Timezone = p),
@@ -4492,7 +4513,7 @@ namespace Elastic.CommonSchema
 		{
 			var assign = TryAssignGeo(path);
 			if (assign == null) return false;
-		
+
 			var entity = document.Geo ?? new Geo();
 			var assigned = assign(entity, value);
 			if (assigned) document.Geo = entity;
@@ -4517,7 +4538,7 @@ namespace Elastic.CommonSchema
 		{
 			var assign = TryAssignGroup(path);
 			if (assign == null) return false;
-		
+
 			var entity = document.Group ?? new Group();
 			var assigned = assign(entity, value);
 			if (assigned) document.Group = entity;
@@ -4552,7 +4573,7 @@ namespace Elastic.CommonSchema
 		{
 			var assign = TryAssignHash(path);
 			if (assign == null) return false;
-		
+
 			var entity = document.Hash ?? new Hash();
 			var assigned = assign(entity, value);
 			if (assigned) document.Hash = entity;
@@ -4565,6 +4586,7 @@ namespace Elastic.CommonSchema
 			{
 				"host.architecture" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Architecture = p),
 				"HostArchitecture" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Architecture = p),
+				"host.arch" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Architecture = p),
 				"host.boot.id" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.BootId = p),
 				"HostBootId" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.BootId = p),
 				"host.cpu.usage" => static (e, v) => TrySetFloat(e, v, static (ee, p) => ee.CpuUsage = p),
@@ -4665,7 +4687,7 @@ namespace Elastic.CommonSchema
 		{
 			var assign = TryAssignHost(path);
 			if (assign == null) return false;
-		
+
 			var entity = document.Host ?? new Host();
 			var assigned = assign(entity, value);
 			if (assigned) document.Host = entity;
@@ -4678,24 +4700,29 @@ namespace Elastic.CommonSchema
 			{
 				"http.request.body.bytes" => static (e, v) => TrySetLong(e, v, static (ee, p) => ee.RequestBodyBytes = p),
 				"HttpRequestBodyBytes" => static (e, v) => TrySetLong(e, v, static (ee, p) => ee.RequestBodyBytes = p),
+				"http.request.body.size" => static (e, v) => TrySetLong(e, v, static (ee, p) => ee.RequestBodyBytes = p),
 				"http.request.body.content" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.RequestBodyContent = p),
 				"HttpRequestBodyContent" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.RequestBodyContent = p),
 				"http.request.bytes" => static (e, v) => TrySetLong(e, v, static (ee, p) => ee.RequestBytes = p),
 				"HttpRequestBytes" => static (e, v) => TrySetLong(e, v, static (ee, p) => ee.RequestBytes = p),
+				"http.request.size" => static (e, v) => TrySetLong(e, v, static (ee, p) => ee.RequestBytes = p),
 				"http.request.id" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.RequestId = p),
 				"HttpRequestId" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.RequestId = p),
 				"http.request.method" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.RequestMethod = p),
 				"HttpRequestMethod" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.RequestMethod = p),
+				"http.request.method_original" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.RequestMethod = p),
 				"http.request.mime_type" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.RequestMimeType = p),
 				"HttpRequestMimeType" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.RequestMimeType = p),
 				"http.request.referrer" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.RequestReferrer = p),
 				"HttpRequestReferrer" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.RequestReferrer = p),
 				"http.response.body.bytes" => static (e, v) => TrySetLong(e, v, static (ee, p) => ee.ResponseBodyBytes = p),
 				"HttpResponseBodyBytes" => static (e, v) => TrySetLong(e, v, static (ee, p) => ee.ResponseBodyBytes = p),
+				"http.response.body.size" => static (e, v) => TrySetLong(e, v, static (ee, p) => ee.ResponseBodyBytes = p),
 				"http.response.body.content" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.ResponseBodyContent = p),
 				"HttpResponseBodyContent" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.ResponseBodyContent = p),
 				"http.response.bytes" => static (e, v) => TrySetLong(e, v, static (ee, p) => ee.ResponseBytes = p),
 				"HttpResponseBytes" => static (e, v) => TrySetLong(e, v, static (ee, p) => ee.ResponseBytes = p),
+				"http.response.size" => static (e, v) => TrySetLong(e, v, static (ee, p) => ee.ResponseBytes = p),
 				"http.response.mime_type" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.ResponseMimeType = p),
 				"HttpResponseMimeType" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.ResponseMimeType = p),
 				"http.response.status_code" => static (e, v) => TrySetLong(e, v, static (ee, p) => ee.ResponseStatusCode = p),
@@ -4710,7 +4737,7 @@ namespace Elastic.CommonSchema
 		{
 			var assign = TryAssignHttp(path);
 			if (assign == null) return false;
-		
+
 			var entity = document.Http ?? new Http();
 			var assigned = assign(entity, value);
 			if (assigned) document.Http = entity;
@@ -4735,7 +4762,7 @@ namespace Elastic.CommonSchema
 		{
 			var assign = TryAssignInterface(path);
 			if (assign == null) return false;
-		
+
 			var entity = document.Interface ?? new Interface();
 			var assigned = assign(entity, value);
 			if (assigned) document.Interface = entity;
@@ -4766,7 +4793,7 @@ namespace Elastic.CommonSchema
 		{
 			var assign = TryAssignLog(path);
 			if (assign == null) return false;
-		
+
 			var entity = document.Log ?? new Log();
 			var assigned = assign(entity, value);
 			if (assigned) document.Log = entity;
@@ -4803,7 +4830,7 @@ namespace Elastic.CommonSchema
 		{
 			var assign = TryAssignMacho(path);
 			if (assign == null) return false;
-		
+
 			var entity = document.Macho ?? new Macho();
 			var assigned = assign(entity, value);
 			if (assigned) document.Macho = entity;
@@ -4832,6 +4859,7 @@ namespace Elastic.CommonSchema
 				"NetworkPackets" => static (e, v) => TrySetLong(e, v, static (ee, p) => ee.Packets = p),
 				"network.protocol" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Protocol = p),
 				"NetworkProtocol" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Protocol = p),
+				"network.protocol.name" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Protocol = p),
 				"network.transport" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Transport = p),
 				"NetworkTransport" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Transport = p),
 				"network.type" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Type = p),
@@ -4848,7 +4876,7 @@ namespace Elastic.CommonSchema
 		{
 			var assign = TryAssignNetwork(path);
 			if (assign == null) return false;
-		
+
 			var entity = document.Network ?? new Network();
 			var assigned = assign(entity, value);
 			if (assigned) document.Network = entity;
@@ -4917,7 +4945,7 @@ namespace Elastic.CommonSchema
 		{
 			var assign = TryAssignObserver(path);
 			if (assign == null) return false;
-		
+
 			var entity = document.Observer ?? new Observer();
 			var assigned = assign(entity, value);
 			if (assigned) document.Observer = entity;
@@ -4974,7 +5002,7 @@ namespace Elastic.CommonSchema
 		{
 			var assign = TryAssignOrchestrator(path);
 			if (assign == null) return false;
-		
+
 			var entity = document.Orchestrator ?? new Orchestrator();
 			var assigned = assign(entity, value);
 			if (assigned) document.Orchestrator = entity;
@@ -4997,7 +5025,7 @@ namespace Elastic.CommonSchema
 		{
 			var assign = TryAssignOrganization(path);
 			if (assign == null) return false;
-		
+
 			var entity = document.Organization ?? new Organization();
 			var assigned = assign(entity, value);
 			if (assigned) document.Organization = entity;
@@ -5012,6 +5040,7 @@ namespace Elastic.CommonSchema
 				"OsFamily" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Family = p),
 				"os.full" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Full = p),
 				"OsFull" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Full = p),
+				"os.description" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Full = p),
 				"os.kernel" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Kernel = p),
 				"OsKernel" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Kernel = p),
 				"os.name" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Name = p),
@@ -5030,7 +5059,7 @@ namespace Elastic.CommonSchema
 		{
 			var assign = TryAssignOs(path);
 			if (assign == null) return false;
-		
+
 			var entity = document.Os ?? new Os();
 			var assigned = assign(entity, value);
 			if (assigned) document.Os = entity;
@@ -5075,7 +5104,7 @@ namespace Elastic.CommonSchema
 		{
 			var assign = TryAssignPackage(path);
 			if (assign == null) return false;
-		
+
 			var entity = document.Package ?? new Package();
 			var assigned = assign(entity, value);
 			if (assigned) document.Package = entity;
@@ -5126,7 +5155,7 @@ namespace Elastic.CommonSchema
 		{
 			var assign = TryAssignPe(path);
 			if (assign == null) return false;
-		
+
 			var entity = document.Pe ?? new Pe();
 			var assigned = assign(entity, value);
 			if (assigned) document.Pe = entity;
@@ -5147,6 +5176,7 @@ namespace Elastic.CommonSchema
 				"ProcessEntityId" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.EntityId = p),
 				"process.executable" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Executable = p),
 				"ProcessExecutable" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Executable = p),
+				"process.executable.path" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Executable = p),
 				"process.exit_code" => static (e, v) => TrySetLong(e, v, static (ee, p) => ee.ExitCode = p),
 				"ProcessExitCode" => static (e, v) => TrySetLong(e, v, static (ee, p) => ee.ExitCode = p),
 				"process.interactive" => static (e, v) => TrySetBool(e, v, static (ee, p) => ee.Interactive = p),
@@ -5595,7 +5625,7 @@ namespace Elastic.CommonSchema
 		{
 			var assign = TryAssignProcess(path);
 			if (assign == null) return false;
-		
+
 			var entity = document.Process ?? new Process();
 			var assigned = assign(entity, value);
 			if (assigned) document.Process = entity;
@@ -5626,7 +5656,7 @@ namespace Elastic.CommonSchema
 		{
 			var assign = TryAssignRegistry(path);
 			if (assign == null) return false;
-		
+
 			var entity = document.Registry ?? new Registry();
 			var assigned = assign(entity, value);
 			if (assigned) document.Registry = entity;
@@ -5645,7 +5675,7 @@ namespace Elastic.CommonSchema
 		{
 			var assign = TryAssignRelated(path);
 			if (assign == null) return false;
-		
+
 			var entity = document.Related ?? new Related();
 			var assigned = assign(entity, value);
 			if (assigned) document.Related = entity;
@@ -5676,7 +5706,7 @@ namespace Elastic.CommonSchema
 		{
 			var assign = TryAssignRisk(path);
 			if (assign == null) return false;
-		
+
 			var entity = document.Risk ?? new Risk();
 			var assigned = assign(entity, value);
 			if (assigned) document.Risk = entity;
@@ -5713,7 +5743,7 @@ namespace Elastic.CommonSchema
 		{
 			var assign = TryAssignRule(path);
 			if (assign == null) return false;
-		
+
 			var entity = document.Rule ?? new Rule();
 			var assigned = assign(entity, value);
 			if (assigned) document.Rule = entity;
@@ -5826,7 +5856,7 @@ namespace Elastic.CommonSchema
 		{
 			var assign = TryAssignServer(path);
 			if (assign == null) return false;
-		
+
 			var entity = document.Server ?? new Server();
 			var assigned = assign(entity, value);
 			if (assigned) document.Server = entity;
@@ -5841,6 +5871,7 @@ namespace Elastic.CommonSchema
 				"ServiceAddress" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Address = p),
 				"service.environment" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Environment = p),
 				"ServiceEnvironment" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Environment = p),
+				"deployment.environment.name" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Environment = p),
 				"service.ephemeral_id" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.EphemeralId = p),
 				"ServiceEphemeralId" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.EphemeralId = p),
 				"service.id" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Id = p),
@@ -5849,6 +5880,7 @@ namespace Elastic.CommonSchema
 				"ServiceName" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Name = p),
 				"service.node.name" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.NodeName = p),
 				"ServiceNodeName" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.NodeName = p),
+				"service.instance.id" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.NodeName = p),
 				"service.node.role" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.NodeRole = p),
 				"ServiceNodeRole" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.NodeRole = p),
 				"service.state" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.State = p),
@@ -5879,7 +5911,7 @@ namespace Elastic.CommonSchema
 		{
 			var assign = TryAssignService(path);
 			if (assign == null) return false;
-		
+
 			var entity = document.Service ?? new Service();
 			var assigned = assign(entity, value);
 			if (assigned) document.Service = entity;
@@ -5992,7 +6024,7 @@ namespace Elastic.CommonSchema
 		{
 			var assign = TryAssignSource(path);
 			if (assign == null) return false;
-		
+
 			var entity = document.Source ?? new Source();
 			var assigned = assign(entity, value);
 			if (assigned) document.Source = entity;
@@ -6353,7 +6385,7 @@ namespace Elastic.CommonSchema
 		{
 			var assign = TryAssignThreat(path);
 			if (assign == null) return false;
-		
+
 			var entity = document.Threat ?? new Threat();
 			var assigned = assign(entity, value);
 			if (assigned) document.Threat = entity;
@@ -6446,7 +6478,7 @@ namespace Elastic.CommonSchema
 		{
 			var assign = TryAssignTls(path);
 			if (assign == null) return false;
-		
+
 			var entity = document.Tls ?? new Tls();
 			var assigned = assign(entity, value);
 			if (assigned) document.Tls = entity;
@@ -6493,7 +6525,7 @@ namespace Elastic.CommonSchema
 		{
 			var assign = TryAssignUrl(path);
 			if (assign == null) return false;
-		
+
 			var entity = document.Url ?? new Url();
 			var assigned = assign(entity, value);
 			if (assigned) document.Url = entity;
@@ -6556,7 +6588,7 @@ namespace Elastic.CommonSchema
 		{
 			var assign = TryAssignUser(path);
 			if (assign == null) return false;
-		
+
 			var entity = document.User ?? new User();
 			var assigned = assign(entity, value);
 			if (assigned) document.User = entity;
@@ -6597,7 +6629,7 @@ namespace Elastic.CommonSchema
 		{
 			var assign = TryAssignUserAgent(path);
 			if (assign == null) return false;
-		
+
 			var entity = document.UserAgent ?? new UserAgent();
 			var assigned = assign(entity, value);
 			if (assigned) document.UserAgent = entity;
@@ -6620,7 +6652,7 @@ namespace Elastic.CommonSchema
 		{
 			var assign = TryAssignVlan(path);
 			if (assign == null) return false;
-		
+
 			var entity = document.Vlan ?? new Vlan();
 			var assigned = assign(entity, value);
 			if (assigned) document.Vlan = entity;
@@ -6671,7 +6703,7 @@ namespace Elastic.CommonSchema
 		{
 			var assign = TryAssignVolume(path);
 			if (assign == null) return false;
-		
+
 			var entity = document.Volume ?? new Volume();
 			var assigned = assign(entity, value);
 			if (assigned) document.Volume = entity;
@@ -6714,7 +6746,7 @@ namespace Elastic.CommonSchema
 		{
 			var assign = TryAssignVulnerability(path);
 			if (assign == null) return false;
-		
+
 			var entity = document.Vulnerability ?? new Vulnerability();
 			var assigned = assign(entity, value);
 			if (assigned) document.Vulnerability = entity;
@@ -6755,7 +6787,7 @@ namespace Elastic.CommonSchema
 		{
 			var assign = TryAssignX509(path);
 			if (assign == null) return false;
-		
+
 			var entity = document.X509 ?? new X509();
 			var assigned = assign(entity, value);
 			if (assigned) document.X509 = entity;

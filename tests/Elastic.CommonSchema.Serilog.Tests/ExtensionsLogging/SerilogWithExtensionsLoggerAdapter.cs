@@ -50,7 +50,6 @@ namespace Elastic.CommonSchema.Serilog.Tests.ExtensionsLogging
 			error.Event.Should().NotBeNull();
 			error.Event.Action.Should().Be("hello");
 			error.Event.Code.Should().Be("123");
-			error.Metadata.Should().BeNull();
 		});
 		[Fact]
 		public void SupportsStructureCapturing() => TestLogger((serilogLogger, getLogEvents) =>
@@ -69,8 +68,8 @@ namespace Elastic.CommonSchema.Serilog.Tests.ExtensionsLogging
 			info.TraceId.Should().NotBeNull();
 			info.TraceId.Should().Be("{ x = 1 }");
 			info.Faas.Should().BeNull();
-			info.Metadata.Should().ContainKey("FaasColdstart");
-			var structured = info.Metadata["FaasColdstart"] as MetadataDictionary;
+			info.Attributes.Should().ContainKey("FaasColdstart");
+			var structured = info.Attributes["FaasColdstart"] as MetadataDictionary;
 			structured.Should().NotBeNull();
 			structured!["y"].Should().Be(2);
 		});

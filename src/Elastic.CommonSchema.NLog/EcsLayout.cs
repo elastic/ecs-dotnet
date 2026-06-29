@@ -304,7 +304,9 @@ namespace Elastic.CommonSchema.NLog
 			ecsEvent.Event = GetEvent(logEvent);
 			ecsEvent.Process = GetProcess(logEvent);
 			ecsEvent.Tags = GetTags(logEvent);
+#pragma warning disable CS0618 // Obsolete Labels
 			ecsEvent.Labels = GetLabels(logEvent);
+#pragma warning restore CS0618
 			ecsEvent.Http = GetHttp(logEvent);
 			ecsEvent.Url = GetUrl(logEvent);
 

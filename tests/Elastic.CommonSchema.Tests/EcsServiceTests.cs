@@ -9,6 +9,7 @@ using Xunit.Abstractions;
 
 namespace Elastic.CommonSchema.Tests;
 
+[Collection("EnvironmentVariables")]
 public class EcsServiceTests
 {
 	public EcsServiceTests(ITestOutputHelper output) => _output = output;

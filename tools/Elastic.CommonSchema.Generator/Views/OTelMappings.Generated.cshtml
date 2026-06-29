@@ -1,0 +1,89 @@
+@using System.Collections.Generic
+@using System.Linq
+@using Elastic.CommonSchema.Generator.Schema.DTO
+@inherits Elastic.CommonSchema.Generator.Views.CodeTemplatePage<Elastic.CommonSchema.Generator.Projection.CommonSchemaTypesProjection>
+// Licensed to Elasticsearch B.V under one or more agreements.
+// Elasticsearch B.V licenses this file to you under the Apache 2.0 License.
+// See the LICENSE file in the project root for more information
+
+/*
+IMPORTANT NOTE
+==============
+This file has been generated.
+If you wish to submit a PR please modify the original csharp file and submit the PR with that change. Thanks!
+*/
+
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+
+namespace Elastic.CommonSchema
+{
+	/// <summary>
+	/// Bidirectional mapping tables between ECS field paths and OTel semantic convention attribute names.
+	/// Only includes <c>match</c> and <c>equivalent</c> relations.
+	/// </summary>
+	public static class OTelMappings
+	{
+@{
+	// Group by ECS field path -> list of OTel names
+	var ecsToOTel = Model.OTelMappings
+		.GroupBy(m => m.EcsFieldPath)
+		.OrderBy(g => g.Key)
+		.ToDictionary(g => g.Key, g => g.Select(m => m.OTelFieldName).Distinct().OrderBy(n => n).ToArray());
+
+	// Reverse: OTel name -> ECS field path (first match wins if duplicates)
+	var otelToEcs = Model.OTelMappings
+		.GroupBy(m => m.OTelFieldName)
+		.OrderBy(g => g.Key)
+		.ToDictionary(g => g.Key, g => g.First().EcsFieldPath);
+
+	// Only emit entries where OTel name differs from ECS path (equivalent) since match means they're identical
+	var equivalentEcsToOTel = ecsToOTel
+		.Where(kv => kv.Value.Any(otel => otel != kv.Key))
+		.ToDictionary(kv => kv.Key, kv => kv.Value.Where(otel => otel != kv.Key).ToArray());
+
+	var equivalentOTelToEcs = otelToEcs
+		.Where(kv => kv.Key != kv.Value);
+}
+		/// <summary>
+		/// ECS field path to OTel attribute name(s) for fields where the names differ (equivalent relation).
+		/// For match relations the names are identical and not listed here.
+		/// </summary>
+		public static readonly IReadOnlyDictionary<string, string[]> EcsToOTel =
+			new ReadOnlyDictionary<string, string[]>(new Dictionary<string, string[]>
+			{
+@foreach (var kv in equivalentEcsToOTel)
+{
+<text>				{ "@kv.Key", new[] { @Raw(string.Join(", ", kv.Value.Select(v => $"\"{v}\""))) } },
+</text>
+}
+			});
+
+		/// <summary>
+		/// OTel attribute name to ECS field path for fields where the names differ (equivalent relation).
+		/// For match relations the names are identical and not listed here.
+		/// </summary>
+		public static readonly IReadOnlyDictionary<string, string> OTelToEcs =
+			new ReadOnlyDictionary<string, string>(new Dictionary<string, string>
+			{
+@foreach (var kv in equivalentOTelToEcs)
+{
+<text>				{ "@kv.Key", "@kv.Value" },
+</text>
+}
+			});
+
+		/// <summary>
+		/// All bidirectional ECS field paths (both match and equivalent).
+		/// These are ECS fields that have a corresponding OTel semantic convention.
+		/// </summary>
+		public static readonly IReadOnlyCollection<string> AllBidirectionalEcsFields = new HashSet<string>
+		{
+@foreach (var kv in ecsToOTel)
+{
+<text>			"@kv.Key",
+</text>
+}
+		};
+	}
+}
