@@ -22,249 +22,261 @@ using System.Text.Json.Serialization;
 namespace Elastic.CommonSchema.Elasticsearch
 {
 	/// <summary>
-	/// Elastic Common Schema version v9.0.0 index templates to be used with Elasticsearch.
+	/// Elastic Common Schema version v9.3.0 index templates to be used with Elasticsearch.
 	/// </summary>
 	public static class IndexComponents
 	{
 		/// <summary>
-		/// Elastic Common Schema version v9.0.0 ecs_9.0.0_agent component template  
+		/// Elastic Common Schema version v9.3.0 ecs_9.3.0_agent component template  
 		/// </summary>
 		/// <returns>Index template string that can be used with the Put Index Template API.</returns>
-		public static string Agent => Components["ecs_9.0.0_agent"];
+		public static string Agent => Components["ecs_9.3.0_agent"];
 
 		/// <summary>
-		/// Elastic Common Schema version v9.0.0 ecs_9.0.0_base component template  
+		/// Elastic Common Schema version v9.3.0 ecs_9.3.0_base component template  
 		/// </summary>
 		/// <returns>Index template string that can be used with the Put Index Template API.</returns>
-		public static string Base => Components["ecs_9.0.0_base"];
+		public static string Base => Components["ecs_9.3.0_base"];
 
 		/// <summary>
-		/// Elastic Common Schema version v9.0.0 ecs_9.0.0_client component template  
+		/// Elastic Common Schema version v9.3.0 ecs_9.3.0_client component template  
 		/// </summary>
 		/// <returns>Index template string that can be used with the Put Index Template API.</returns>
-		public static string Client => Components["ecs_9.0.0_client"];
+		public static string Client => Components["ecs_9.3.0_client"];
 
 		/// <summary>
-		/// Elastic Common Schema version v9.0.0 ecs_9.0.0_cloud component template  
+		/// Elastic Common Schema version v9.3.0 ecs_9.3.0_cloud component template  
 		/// </summary>
 		/// <returns>Index template string that can be used with the Put Index Template API.</returns>
-		public static string Cloud => Components["ecs_9.0.0_cloud"];
+		public static string Cloud => Components["ecs_9.3.0_cloud"];
 
 		/// <summary>
-		/// Elastic Common Schema version v9.0.0 ecs_9.0.0_container component template  
+		/// Elastic Common Schema version v9.3.0 ecs_9.3.0_container component template  
 		/// </summary>
 		/// <returns>Index template string that can be used with the Put Index Template API.</returns>
-		public static string Container => Components["ecs_9.0.0_container"];
+		public static string Container => Components["ecs_9.3.0_container"];
 
 		/// <summary>
-		/// Elastic Common Schema version v9.0.0 ecs_9.0.0_data_stream component template  
+		/// Elastic Common Schema version v9.3.0 ecs_9.3.0_data_stream component template  
 		/// </summary>
 		/// <returns>Index template string that can be used with the Put Index Template API.</returns>
-		public static string DataStream => Components["ecs_9.0.0_data_stream"];
+		public static string DataStream => Components["ecs_9.3.0_data_stream"];
 
 		/// <summary>
-		/// Elastic Common Schema version v9.0.0 ecs_9.0.0_destination component template  
+		/// Elastic Common Schema version v9.3.0 ecs_9.3.0_destination component template  
 		/// </summary>
 		/// <returns>Index template string that can be used with the Put Index Template API.</returns>
-		public static string Destination => Components["ecs_9.0.0_destination"];
+		public static string Destination => Components["ecs_9.3.0_destination"];
 
 		/// <summary>
-		/// Elastic Common Schema version v9.0.0 ecs_9.0.0_device component template  
+		/// Elastic Common Schema version v9.3.0 ecs_9.3.0_device component template  
 		/// </summary>
 		/// <returns>Index template string that can be used with the Put Index Template API.</returns>
-		public static string Device => Components["ecs_9.0.0_device"];
+		public static string Device => Components["ecs_9.3.0_device"];
 
 		/// <summary>
-		/// Elastic Common Schema version v9.0.0 ecs_9.0.0_dll component template  
+		/// Elastic Common Schema version v9.3.0 ecs_9.3.0_dll component template  
 		/// </summary>
 		/// <returns>Index template string that can be used with the Put Index Template API.</returns>
-		public static string Dll => Components["ecs_9.0.0_dll"];
+		public static string Dll => Components["ecs_9.3.0_dll"];
 
 		/// <summary>
-		/// Elastic Common Schema version v9.0.0 ecs_9.0.0_dns component template  
+		/// Elastic Common Schema version v9.3.0 ecs_9.3.0_dns component template  
 		/// </summary>
 		/// <returns>Index template string that can be used with the Put Index Template API.</returns>
-		public static string Dns => Components["ecs_9.0.0_dns"];
+		public static string Dns => Components["ecs_9.3.0_dns"];
 
 		/// <summary>
-		/// Elastic Common Schema version v9.0.0 ecs_9.0.0_ecs component template  
+		/// Elastic Common Schema version v9.3.0 ecs_9.3.0_ecs component template  
 		/// </summary>
 		/// <returns>Index template string that can be used with the Put Index Template API.</returns>
-		public static string Ecs => Components["ecs_9.0.0_ecs"];
+		public static string Ecs => Components["ecs_9.3.0_ecs"];
 
 		/// <summary>
-		/// Elastic Common Schema version v9.0.0 ecs_9.0.0_email component template  
+		/// Elastic Common Schema version v9.3.0 ecs_9.3.0_email component template  
 		/// </summary>
 		/// <returns>Index template string that can be used with the Put Index Template API.</returns>
-		public static string Email => Components["ecs_9.0.0_email"];
+		public static string Email => Components["ecs_9.3.0_email"];
 
 		/// <summary>
-		/// Elastic Common Schema version v9.0.0 ecs_9.0.0_error component template  
+		/// Elastic Common Schema version v9.3.0 ecs_9.3.0_entity component template  
 		/// </summary>
 		/// <returns>Index template string that can be used with the Put Index Template API.</returns>
-		public static string Error => Components["ecs_9.0.0_error"];
+		public static string Entity => Components["ecs_9.3.0_entity"];
 
 		/// <summary>
-		/// Elastic Common Schema version v9.0.0 ecs_9.0.0_event component template  
+		/// Elastic Common Schema version v9.3.0 ecs_9.3.0_error component template  
 		/// </summary>
 		/// <returns>Index template string that can be used with the Put Index Template API.</returns>
-		public static string Event => Components["ecs_9.0.0_event"];
+		public static string Error => Components["ecs_9.3.0_error"];
 
 		/// <summary>
-		/// Elastic Common Schema version v9.0.0 ecs_9.0.0_faas component template  
+		/// Elastic Common Schema version v9.3.0 ecs_9.3.0_event component template  
 		/// </summary>
 		/// <returns>Index template string that can be used with the Put Index Template API.</returns>
-		public static string Faas => Components["ecs_9.0.0_faas"];
+		public static string Event => Components["ecs_9.3.0_event"];
 
 		/// <summary>
-		/// Elastic Common Schema version v9.0.0 ecs_9.0.0_file component template  
+		/// Elastic Common Schema version v9.3.0 ecs_9.3.0_faas component template  
 		/// </summary>
 		/// <returns>Index template string that can be used with the Put Index Template API.</returns>
-		public static string File => Components["ecs_9.0.0_file"];
+		public static string Faas => Components["ecs_9.3.0_faas"];
 
 		/// <summary>
-		/// Elastic Common Schema version v9.0.0 ecs_9.0.0_group component template  
+		/// Elastic Common Schema version v9.3.0 ecs_9.3.0_file component template  
 		/// </summary>
 		/// <returns>Index template string that can be used with the Put Index Template API.</returns>
-		public static string Group => Components["ecs_9.0.0_group"];
+		public static string File => Components["ecs_9.3.0_file"];
 
 		/// <summary>
-		/// Elastic Common Schema version v9.0.0 ecs_9.0.0_host component template  
+		/// Elastic Common Schema version v9.3.0 ecs_9.3.0_gen_ai component template  
 		/// </summary>
 		/// <returns>Index template string that can be used with the Put Index Template API.</returns>
-		public static string Host => Components["ecs_9.0.0_host"];
+		public static string GenAi => Components["ecs_9.3.0_gen_ai"];
 
 		/// <summary>
-		/// Elastic Common Schema version v9.0.0 ecs_9.0.0_http component template  
+		/// Elastic Common Schema version v9.3.0 ecs_9.3.0_group component template  
 		/// </summary>
 		/// <returns>Index template string that can be used with the Put Index Template API.</returns>
-		public static string Http => Components["ecs_9.0.0_http"];
+		public static string Group => Components["ecs_9.3.0_group"];
 
 		/// <summary>
-		/// Elastic Common Schema version v9.0.0 ecs_9.0.0_log component template  
+		/// Elastic Common Schema version v9.3.0 ecs_9.3.0_host component template  
 		/// </summary>
 		/// <returns>Index template string that can be used with the Put Index Template API.</returns>
-		public static string Log => Components["ecs_9.0.0_log"];
+		public static string Host => Components["ecs_9.3.0_host"];
 
 		/// <summary>
-		/// Elastic Common Schema version v9.0.0 ecs_9.0.0_network component template  
+		/// Elastic Common Schema version v9.3.0 ecs_9.3.0_http component template  
 		/// </summary>
 		/// <returns>Index template string that can be used with the Put Index Template API.</returns>
-		public static string Network => Components["ecs_9.0.0_network"];
+		public static string Http => Components["ecs_9.3.0_http"];
 
 		/// <summary>
-		/// Elastic Common Schema version v9.0.0 ecs_9.0.0_observer component template  
+		/// Elastic Common Schema version v9.3.0 ecs_9.3.0_log component template  
 		/// </summary>
 		/// <returns>Index template string that can be used with the Put Index Template API.</returns>
-		public static string Observer => Components["ecs_9.0.0_observer"];
+		public static string Log => Components["ecs_9.3.0_log"];
 
 		/// <summary>
-		/// Elastic Common Schema version v9.0.0 ecs_9.0.0_orchestrator component template  
+		/// Elastic Common Schema version v9.3.0 ecs_9.3.0_network component template  
 		/// </summary>
 		/// <returns>Index template string that can be used with the Put Index Template API.</returns>
-		public static string Orchestrator => Components["ecs_9.0.0_orchestrator"];
+		public static string Network => Components["ecs_9.3.0_network"];
 
 		/// <summary>
-		/// Elastic Common Schema version v9.0.0 ecs_9.0.0_organization component template  
+		/// Elastic Common Schema version v9.3.0 ecs_9.3.0_observer component template  
 		/// </summary>
 		/// <returns>Index template string that can be used with the Put Index Template API.</returns>
-		public static string Organization => Components["ecs_9.0.0_organization"];
+		public static string Observer => Components["ecs_9.3.0_observer"];
 
 		/// <summary>
-		/// Elastic Common Schema version v9.0.0 ecs_9.0.0_package component template  
+		/// Elastic Common Schema version v9.3.0 ecs_9.3.0_orchestrator component template  
 		/// </summary>
 		/// <returns>Index template string that can be used with the Put Index Template API.</returns>
-		public static string Package => Components["ecs_9.0.0_package"];
+		public static string Orchestrator => Components["ecs_9.3.0_orchestrator"];
 
 		/// <summary>
-		/// Elastic Common Schema version v9.0.0 ecs_9.0.0_process component template  
+		/// Elastic Common Schema version v9.3.0 ecs_9.3.0_organization component template  
 		/// </summary>
 		/// <returns>Index template string that can be used with the Put Index Template API.</returns>
-		public static string Process => Components["ecs_9.0.0_process"];
+		public static string Organization => Components["ecs_9.3.0_organization"];
 
 		/// <summary>
-		/// Elastic Common Schema version v9.0.0 ecs_9.0.0_registry component template  
+		/// Elastic Common Schema version v9.3.0 ecs_9.3.0_package component template  
 		/// </summary>
 		/// <returns>Index template string that can be used with the Put Index Template API.</returns>
-		public static string Registry => Components["ecs_9.0.0_registry"];
+		public static string Package => Components["ecs_9.3.0_package"];
 
 		/// <summary>
-		/// Elastic Common Schema version v9.0.0 ecs_9.0.0_related component template  
+		/// Elastic Common Schema version v9.3.0 ecs_9.3.0_process component template  
 		/// </summary>
 		/// <returns>Index template string that can be used with the Put Index Template API.</returns>
-		public static string Related => Components["ecs_9.0.0_related"];
+		public static string Process => Components["ecs_9.3.0_process"];
 
 		/// <summary>
-		/// Elastic Common Schema version v9.0.0 ecs_9.0.0_rule component template  
+		/// Elastic Common Schema version v9.3.0 ecs_9.3.0_registry component template  
 		/// </summary>
 		/// <returns>Index template string that can be used with the Put Index Template API.</returns>
-		public static string Rule => Components["ecs_9.0.0_rule"];
+		public static string Registry => Components["ecs_9.3.0_registry"];
 
 		/// <summary>
-		/// Elastic Common Schema version v9.0.0 ecs_9.0.0_server component template  
+		/// Elastic Common Schema version v9.3.0 ecs_9.3.0_related component template  
 		/// </summary>
 		/// <returns>Index template string that can be used with the Put Index Template API.</returns>
-		public static string Server => Components["ecs_9.0.0_server"];
+		public static string Related => Components["ecs_9.3.0_related"];
 
 		/// <summary>
-		/// Elastic Common Schema version v9.0.0 ecs_9.0.0_service component template  
+		/// Elastic Common Schema version v9.3.0 ecs_9.3.0_rule component template  
 		/// </summary>
 		/// <returns>Index template string that can be used with the Put Index Template API.</returns>
-		public static string Service => Components["ecs_9.0.0_service"];
+		public static string Rule => Components["ecs_9.3.0_rule"];
 
 		/// <summary>
-		/// Elastic Common Schema version v9.0.0 ecs_9.0.0_source component template  
+		/// Elastic Common Schema version v9.3.0 ecs_9.3.0_server component template  
 		/// </summary>
 		/// <returns>Index template string that can be used with the Put Index Template API.</returns>
-		public static string Source => Components["ecs_9.0.0_source"];
+		public static string Server => Components["ecs_9.3.0_server"];
 
 		/// <summary>
-		/// Elastic Common Schema version v9.0.0 ecs_9.0.0_threat component template  
+		/// Elastic Common Schema version v9.3.0 ecs_9.3.0_service component template  
 		/// </summary>
 		/// <returns>Index template string that can be used with the Put Index Template API.</returns>
-		public static string Threat => Components["ecs_9.0.0_threat"];
+		public static string Service => Components["ecs_9.3.0_service"];
 
 		/// <summary>
-		/// Elastic Common Schema version v9.0.0 ecs_9.0.0_tls component template  
+		/// Elastic Common Schema version v9.3.0 ecs_9.3.0_source component template  
 		/// </summary>
 		/// <returns>Index template string that can be used with the Put Index Template API.</returns>
-		public static string Tls => Components["ecs_9.0.0_tls"];
+		public static string Source => Components["ecs_9.3.0_source"];
 
 		/// <summary>
-		/// Elastic Common Schema version v9.0.0 ecs_9.0.0_tracing component template  
+		/// Elastic Common Schema version v9.3.0 ecs_9.3.0_threat component template  
 		/// </summary>
 		/// <returns>Index template string that can be used with the Put Index Template API.</returns>
-		public static string Tracing => Components["ecs_9.0.0_tracing"];
+		public static string Threat => Components["ecs_9.3.0_threat"];
 
 		/// <summary>
-		/// Elastic Common Schema version v9.0.0 ecs_9.0.0_url component template  
+		/// Elastic Common Schema version v9.3.0 ecs_9.3.0_tls component template  
 		/// </summary>
 		/// <returns>Index template string that can be used with the Put Index Template API.</returns>
-		public static string Url => Components["ecs_9.0.0_url"];
+		public static string Tls => Components["ecs_9.3.0_tls"];
 
 		/// <summary>
-		/// Elastic Common Schema version v9.0.0 ecs_9.0.0_user component template  
+		/// Elastic Common Schema version v9.3.0 ecs_9.3.0_tracing component template  
 		/// </summary>
 		/// <returns>Index template string that can be used with the Put Index Template API.</returns>
-		public static string User => Components["ecs_9.0.0_user"];
+		public static string Tracing => Components["ecs_9.3.0_tracing"];
 
 		/// <summary>
-		/// Elastic Common Schema version v9.0.0 ecs_9.0.0_user_agent component template  
+		/// Elastic Common Schema version v9.3.0 ecs_9.3.0_url component template  
 		/// </summary>
 		/// <returns>Index template string that can be used with the Put Index Template API.</returns>
-		public static string UserAgent => Components["ecs_9.0.0_user_agent"];
+		public static string Url => Components["ecs_9.3.0_url"];
 
 		/// <summary>
-		/// Elastic Common Schema version v9.0.0 ecs_9.0.0_volume component template  
+		/// Elastic Common Schema version v9.3.0 ecs_9.3.0_user component template  
 		/// </summary>
 		/// <returns>Index template string that can be used with the Put Index Template API.</returns>
-		public static string Volume => Components["ecs_9.0.0_volume"];
+		public static string User => Components["ecs_9.3.0_user"];
 
 		/// <summary>
-		/// Elastic Common Schema version v9.0.0 ecs_9.0.0_vulnerability component template  
+		/// Elastic Common Schema version v9.3.0 ecs_9.3.0_user_agent component template  
 		/// </summary>
 		/// <returns>Index template string that can be used with the Put Index Template API.</returns>
-		public static string Vulnerability => Components["ecs_9.0.0_vulnerability"];
+		public static string UserAgent => Components["ecs_9.3.0_user_agent"];
+
+		/// <summary>
+		/// Elastic Common Schema version v9.3.0 ecs_9.3.0_volume component template  
+		/// </summary>
+		/// <returns>Index template string that can be used with the Put Index Template API.</returns>
+		public static string Volume => Components["ecs_9.3.0_volume"];
+
+		/// <summary>
+		/// Elastic Common Schema version v9.3.0 ecs_9.3.0_vulnerability component template  
+		/// </summary>
+		/// <returns>Index template string that can be used with the Put Index Template API.</returns>
+		public static string Vulnerability => Components["ecs_9.3.0_vulnerability"];
 
 
 		/// <summary>
@@ -273,11 +285,11 @@ namespace Elastic.CommonSchema.Elasticsearch
      	public static IReadOnlyDictionary<string, string> Components { get; } = new Dictionary<string, string>
      	{
 		{	
-				"ecs_9.0.0_agent", 
+				"ecs_9.3.0_agent", 
 				@"{
   ""_meta"": {
     ""documentation"": ""https://www.elastic.co/guide/en/ecs/current/ecs-agent.html"",
-    ""ecs_version"": ""9.0.0""
+    ""ecs_version"": ""9.3.0""
   },
   ""template"": {
     ""mappings"": {
@@ -321,11 +333,11 @@ namespace Elastic.CommonSchema.Elasticsearch
 "
 			},
 		{	
-				"ecs_9.0.0_base", 
+				"ecs_9.3.0_base", 
 				@"{
   ""_meta"": {
     ""documentation"": ""https://www.elastic.co/guide/en/ecs/current/ecs-base.html"",
-    ""ecs_version"": ""9.0.0""
+    ""ecs_version"": ""9.3.0""
   },
   ""template"": {
     ""mappings"": {
@@ -351,11 +363,11 @@ namespace Elastic.CommonSchema.Elasticsearch
 "
 			},
 		{	
-				"ecs_9.0.0_client", 
+				"ecs_9.3.0_client", 
 				@"{
   ""_meta"": {
     ""documentation"": ""https://www.elastic.co/guide/en/ecs/current/ecs-client.html"",
-    ""ecs_version"": ""9.0.0""
+    ""ecs_version"": ""9.3.0""
   },
   ""template"": {
     ""mappings"": {
@@ -543,11 +555,11 @@ namespace Elastic.CommonSchema.Elasticsearch
 "
 			},
 		{	
-				"ecs_9.0.0_cloud", 
+				"ecs_9.3.0_cloud", 
 				@"{
   ""_meta"": {
     ""documentation"": ""https://www.elastic.co/guide/en/ecs/current/ecs-cloud.html"",
-    ""ecs_version"": ""9.0.0""
+    ""ecs_version"": ""9.3.0""
   },
   ""template"": {
     ""mappings"": {
@@ -569,6 +581,66 @@ namespace Elastic.CommonSchema.Elasticsearch
             ""availability_zone"": {
               ""ignore_above"": 1024,
               ""type"": ""keyword""
+            },
+            ""entity"": {
+              ""properties"": {
+                ""attributes"": {
+                  ""type"": ""object""
+                },
+                ""behavior"": {
+                  ""type"": ""object""
+                },
+                ""display_name"": {
+                  ""fields"": {
+                    ""text"": {
+                      ""type"": ""match_only_text""
+                    }
+                  },
+                  ""ignore_above"": 1024,
+                  ""type"": ""keyword""
+                },
+                ""id"": {
+                  ""ignore_above"": 1024,
+                  ""type"": ""keyword""
+                },
+                ""last_seen_timestamp"": {
+                  ""type"": ""date""
+                },
+                ""lifecycle"": {
+                  ""type"": ""object""
+                },
+                ""metrics"": {
+                  ""type"": ""object""
+                },
+                ""name"": {
+                  ""fields"": {
+                    ""text"": {
+                      ""type"": ""match_only_text""
+                    }
+                  },
+                  ""ignore_above"": 1024,
+                  ""type"": ""keyword""
+                },
+                ""raw"": {
+                  ""type"": ""object""
+                },
+                ""reference"": {
+                  ""ignore_above"": 1024,
+                  ""type"": ""keyword""
+                },
+                ""source"": {
+                  ""ignore_above"": 1024,
+                  ""type"": ""keyword""
+                },
+                ""sub_type"": {
+                  ""ignore_above"": 1024,
+                  ""type"": ""keyword""
+                },
+                ""type"": {
+                  ""ignore_above"": 1024,
+                  ""type"": ""keyword""
+                }
+              }
             },
             ""instance"": {
               ""properties"": {
@@ -607,6 +679,66 @@ namespace Elastic.CommonSchema.Elasticsearch
                 ""availability_zone"": {
                   ""ignore_above"": 1024,
                   ""type"": ""keyword""
+                },
+                ""entity"": {
+                  ""properties"": {
+                    ""attributes"": {
+                      ""type"": ""object""
+                    },
+                    ""behavior"": {
+                      ""type"": ""object""
+                    },
+                    ""display_name"": {
+                      ""fields"": {
+                        ""text"": {
+                          ""type"": ""match_only_text""
+                        }
+                      },
+                      ""ignore_above"": 1024,
+                      ""type"": ""keyword""
+                    },
+                    ""id"": {
+                      ""ignore_above"": 1024,
+                      ""type"": ""keyword""
+                    },
+                    ""last_seen_timestamp"": {
+                      ""type"": ""date""
+                    },
+                    ""lifecycle"": {
+                      ""type"": ""object""
+                    },
+                    ""metrics"": {
+                      ""type"": ""object""
+                    },
+                    ""name"": {
+                      ""fields"": {
+                        ""text"": {
+                          ""type"": ""match_only_text""
+                        }
+                      },
+                      ""ignore_above"": 1024,
+                      ""type"": ""keyword""
+                    },
+                    ""raw"": {
+                      ""type"": ""object""
+                    },
+                    ""reference"": {
+                      ""ignore_above"": 1024,
+                      ""type"": ""keyword""
+                    },
+                    ""source"": {
+                      ""ignore_above"": 1024,
+                      ""type"": ""keyword""
+                    },
+                    ""sub_type"": {
+                      ""ignore_above"": 1024,
+                      ""type"": ""keyword""
+                    },
+                    ""type"": {
+                      ""ignore_above"": 1024,
+                      ""type"": ""keyword""
+                    }
+                  }
                 },
                 ""instance"": {
                   ""properties"": {
@@ -704,6 +836,66 @@ namespace Elastic.CommonSchema.Elasticsearch
                   ""ignore_above"": 1024,
                   ""type"": ""keyword""
                 },
+                ""entity"": {
+                  ""properties"": {
+                    ""attributes"": {
+                      ""type"": ""object""
+                    },
+                    ""behavior"": {
+                      ""type"": ""object""
+                    },
+                    ""display_name"": {
+                      ""fields"": {
+                        ""text"": {
+                          ""type"": ""match_only_text""
+                        }
+                      },
+                      ""ignore_above"": 1024,
+                      ""type"": ""keyword""
+                    },
+                    ""id"": {
+                      ""ignore_above"": 1024,
+                      ""type"": ""keyword""
+                    },
+                    ""last_seen_timestamp"": {
+                      ""type"": ""date""
+                    },
+                    ""lifecycle"": {
+                      ""type"": ""object""
+                    },
+                    ""metrics"": {
+                      ""type"": ""object""
+                    },
+                    ""name"": {
+                      ""fields"": {
+                        ""text"": {
+                          ""type"": ""match_only_text""
+                        }
+                      },
+                      ""ignore_above"": 1024,
+                      ""type"": ""keyword""
+                    },
+                    ""raw"": {
+                      ""type"": ""object""
+                    },
+                    ""reference"": {
+                      ""ignore_above"": 1024,
+                      ""type"": ""keyword""
+                    },
+                    ""source"": {
+                      ""ignore_above"": 1024,
+                      ""type"": ""keyword""
+                    },
+                    ""sub_type"": {
+                      ""ignore_above"": 1024,
+                      ""type"": ""keyword""
+                    },
+                    ""type"": {
+                      ""ignore_above"": 1024,
+                      ""type"": ""keyword""
+                    }
+                  }
+                },
                 ""instance"": {
                   ""properties"": {
                     ""id"": {
@@ -763,11 +955,11 @@ namespace Elastic.CommonSchema.Elasticsearch
 "
 			},
 		{	
-				"ecs_9.0.0_container", 
+				"ecs_9.3.0_container", 
 				@"{
   ""_meta"": {
     ""documentation"": ""https://www.elastic.co/guide/en/ecs/current/ecs-container.html"",
-    ""ecs_version"": ""9.0.0""
+    ""ecs_version"": ""9.3.0""
   },
   ""template"": {
     ""mappings"": {
@@ -878,11 +1070,11 @@ namespace Elastic.CommonSchema.Elasticsearch
 "
 			},
 		{	
-				"ecs_9.0.0_data_stream", 
+				"ecs_9.3.0_data_stream", 
 				@"{
   ""_meta"": {
     ""documentation"": ""https://www.elastic.co/guide/en/ecs/current/ecs-data_stream.html"",
-    ""ecs_version"": ""9.0.0""
+    ""ecs_version"": ""9.3.0""
   },
   ""template"": {
     ""mappings"": {
@@ -907,11 +1099,11 @@ namespace Elastic.CommonSchema.Elasticsearch
 "
 			},
 		{	
-				"ecs_9.0.0_destination", 
+				"ecs_9.3.0_destination", 
 				@"{
   ""_meta"": {
     ""documentation"": ""https://www.elastic.co/guide/en/ecs/current/ecs-destination.html"",
-    ""ecs_version"": ""9.0.0""
+    ""ecs_version"": ""9.3.0""
   },
   ""template"": {
     ""mappings"": {
@@ -1099,11 +1291,11 @@ namespace Elastic.CommonSchema.Elasticsearch
 "
 			},
 		{	
-				"ecs_9.0.0_device", 
+				"ecs_9.3.0_device", 
 				@"{
   ""_meta"": {
     ""documentation"": ""https://www.elastic.co/guide/en/ecs/current/ecs-device.html"",
-    ""ecs_version"": ""9.0.0""
+    ""ecs_version"": ""9.3.0""
   },
   ""template"": {
     ""mappings"": {
@@ -1130,9 +1322,37 @@ namespace Elastic.CommonSchema.Elasticsearch
                 }
               }
             },
+            ""product"": {
+              ""properties"": {
+                ""id"": {
+                  ""ignore_above"": 1024,
+                  ""type"": ""keyword""
+                },
+                ""name"": {
+                  ""ignore_above"": 1024,
+                  ""type"": ""keyword""
+                }
+              }
+            },
             ""serial_number"": {
               ""ignore_above"": 1024,
               ""type"": ""keyword""
+            },
+            ""type"": {
+              ""ignore_above"": 1024,
+              ""type"": ""keyword""
+            },
+            ""vendor"": {
+              ""properties"": {
+                ""id"": {
+                  ""ignore_above"": 1024,
+                  ""type"": ""keyword""
+                },
+                ""name"": {
+                  ""ignore_above"": 1024,
+                  ""type"": ""keyword""
+                }
+              }
             }
           }
         }
@@ -1143,11 +1363,11 @@ namespace Elastic.CommonSchema.Elasticsearch
 "
 			},
 		{	
-				"ecs_9.0.0_dll", 
+				"ecs_9.3.0_dll", 
 				@"{
   ""_meta"": {
     ""documentation"": ""https://www.elastic.co/guide/en/ecs/current/ecs-dll.html"",
-    ""ecs_version"": ""9.0.0""
+    ""ecs_version"": ""9.3.0""
   },
   ""template"": {
     ""mappings"": {
@@ -1181,6 +1401,10 @@ namespace Elastic.CommonSchema.Elasticsearch
                 },
                 ""team_id"": {
                   ""ignore_above"": 1024,
+                  ""type"": ""keyword""
+                },
+                ""thumbprint_sha256"": {
+                  ""ignore_above"": 64,
                   ""type"": ""keyword""
                 },
                 ""timestamp"": {
@@ -1341,11 +1565,11 @@ namespace Elastic.CommonSchema.Elasticsearch
 "
 			},
 		{	
-				"ecs_9.0.0_dns", 
+				"ecs_9.3.0_dns", 
 				@"{
   ""_meta"": {
     ""documentation"": ""https://www.elastic.co/guide/en/ecs/current/ecs-dns.html"",
-    ""ecs_version"": ""9.0.0""
+    ""ecs_version"": ""9.3.0""
   },
   ""template"": {
     ""mappings"": {
@@ -1437,11 +1661,11 @@ namespace Elastic.CommonSchema.Elasticsearch
 "
 			},
 		{	
-				"ecs_9.0.0_ecs", 
+				"ecs_9.3.0_ecs", 
 				@"{
   ""_meta"": {
     ""documentation"": ""https://www.elastic.co/guide/en/ecs/current/ecs-ecs.html"",
-    ""ecs_version"": ""9.0.0""
+    ""ecs_version"": ""9.3.0""
   },
   ""template"": {
     ""mappings"": {
@@ -1461,11 +1685,11 @@ namespace Elastic.CommonSchema.Elasticsearch
 "
 			},
 		{	
-				"ecs_9.0.0_email", 
+				"ecs_9.3.0_email", 
 				@"{
   ""_meta"": {
     ""documentation"": ""https://www.elastic.co/guide/en/ecs/current/ecs-email.html"",
-    ""ecs_version"": ""9.0.0""
+    ""ecs_version"": ""9.3.0""
   },
   ""template"": {
     ""mappings"": {
@@ -1629,11 +1853,147 @@ namespace Elastic.CommonSchema.Elasticsearch
 "
 			},
 		{	
-				"ecs_9.0.0_error", 
+				"ecs_9.3.0_entity", 
+				@"{
+  ""_meta"": {
+    ""documentation"": ""https://www.elastic.co/guide/en/ecs/current/ecs-entity.html"",
+    ""ecs_version"": ""9.3.0""
+  },
+  ""template"": {
+    ""mappings"": {
+      ""properties"": {
+        ""entity"": {
+          ""properties"": {
+            ""attributes"": {
+              ""type"": ""object""
+            },
+            ""behavior"": {
+              ""type"": ""object""
+            },
+            ""display_name"": {
+              ""fields"": {
+                ""text"": {
+                  ""type"": ""match_only_text""
+                }
+              },
+              ""ignore_above"": 1024,
+              ""type"": ""keyword""
+            },
+            ""id"": {
+              ""ignore_above"": 1024,
+              ""type"": ""keyword""
+            },
+            ""last_seen_timestamp"": {
+              ""type"": ""date""
+            },
+            ""lifecycle"": {
+              ""type"": ""object""
+            },
+            ""metrics"": {
+              ""type"": ""object""
+            },
+            ""name"": {
+              ""fields"": {
+                ""text"": {
+                  ""type"": ""match_only_text""
+                }
+              },
+              ""ignore_above"": 1024,
+              ""type"": ""keyword""
+            },
+            ""raw"": {
+              ""type"": ""object""
+            },
+            ""reference"": {
+              ""ignore_above"": 1024,
+              ""type"": ""keyword""
+            },
+            ""source"": {
+              ""ignore_above"": 1024,
+              ""type"": ""keyword""
+            },
+            ""sub_type"": {
+              ""ignore_above"": 1024,
+              ""type"": ""keyword""
+            },
+            ""target"": {
+              ""properties"": {
+                ""attributes"": {
+                  ""type"": ""object""
+                },
+                ""behavior"": {
+                  ""type"": ""object""
+                },
+                ""display_name"": {
+                  ""fields"": {
+                    ""text"": {
+                      ""type"": ""match_only_text""
+                    }
+                  },
+                  ""ignore_above"": 1024,
+                  ""type"": ""keyword""
+                },
+                ""id"": {
+                  ""ignore_above"": 1024,
+                  ""type"": ""keyword""
+                },
+                ""last_seen_timestamp"": {
+                  ""type"": ""date""
+                },
+                ""lifecycle"": {
+                  ""type"": ""object""
+                },
+                ""metrics"": {
+                  ""type"": ""object""
+                },
+                ""name"": {
+                  ""fields"": {
+                    ""text"": {
+                      ""type"": ""match_only_text""
+                    }
+                  },
+                  ""ignore_above"": 1024,
+                  ""type"": ""keyword""
+                },
+                ""raw"": {
+                  ""type"": ""object""
+                },
+                ""reference"": {
+                  ""ignore_above"": 1024,
+                  ""type"": ""keyword""
+                },
+                ""source"": {
+                  ""ignore_above"": 1024,
+                  ""type"": ""keyword""
+                },
+                ""sub_type"": {
+                  ""ignore_above"": 1024,
+                  ""type"": ""keyword""
+                },
+                ""type"": {
+                  ""ignore_above"": 1024,
+                  ""type"": ""keyword""
+                }
+              }
+            },
+            ""type"": {
+              ""ignore_above"": 1024,
+              ""type"": ""keyword""
+            }
+          }
+        }
+      }
+    }
+  }
+}
+"
+			},
+		{	
+				"ecs_9.3.0_error", 
 				@"{
   ""_meta"": {
     ""documentation"": ""https://www.elastic.co/guide/en/ecs/current/ecs-error.html"",
-    ""ecs_version"": ""9.0.0""
+    ""ecs_version"": ""9.3.0""
   },
   ""template"": {
     ""mappings"": {
@@ -1672,11 +2032,11 @@ namespace Elastic.CommonSchema.Elasticsearch
 "
 			},
 		{	
-				"ecs_9.0.0_event", 
+				"ecs_9.3.0_event", 
 				@"{
   ""_meta"": {
     ""documentation"": ""https://www.elastic.co/guide/en/ecs/current/ecs-event.html"",
-    ""ecs_version"": ""9.0.0""
+    ""ecs_version"": ""9.3.0""
   },
   ""template"": {
     ""mappings"": {
@@ -1790,11 +2150,11 @@ namespace Elastic.CommonSchema.Elasticsearch
 "
 			},
 		{	
-				"ecs_9.0.0_faas", 
+				"ecs_9.3.0_faas", 
 				@"{
   ""_meta"": {
     ""documentation"": ""https://www.elastic.co/guide/en/ecs/current/ecs-faas.html"",
-    ""ecs_version"": ""9.0.0""
+    ""ecs_version"": ""9.3.0""
   },
   ""template"": {
     ""mappings"": {
@@ -1841,11 +2201,11 @@ namespace Elastic.CommonSchema.Elasticsearch
 "
 			},
 		{	
-				"ecs_9.0.0_file", 
+				"ecs_9.3.0_file", 
 				@"{
   ""_meta"": {
     ""documentation"": ""https://www.elastic.co/guide/en/ecs/current/ecs-file.html"",
-    ""ecs_version"": ""9.0.0""
+    ""ecs_version"": ""9.3.0""
   },
   ""template"": {
     ""mappings"": {
@@ -1887,6 +2247,10 @@ namespace Elastic.CommonSchema.Elasticsearch
                 },
                 ""team_id"": {
                   ""ignore_above"": 1024,
+                  ""type"": ""keyword""
+                },
+                ""thumbprint_sha256"": {
+                  ""ignore_above"": 64,
                   ""type"": ""keyword""
                 },
                 ""timestamp"": {
@@ -2435,11 +2799,163 @@ namespace Elastic.CommonSchema.Elasticsearch
 "
 			},
 		{	
-				"ecs_9.0.0_group", 
+				"ecs_9.3.0_gen_ai", 
+				@"{
+  ""_meta"": {
+    ""documentation"": ""https://www.elastic.co/guide/en/ecs/current/ecs-gen_ai.html"",
+    ""ecs_version"": ""9.3.0""
+  },
+  ""template"": {
+    ""mappings"": {
+      ""properties"": {
+        ""gen_ai"": {
+          ""properties"": {
+            ""agent"": {
+              ""properties"": {
+                ""description"": {
+                  ""doc_values"": false,
+                  ""index"": false,
+                  ""type"": ""keyword""
+                },
+                ""id"": {
+                  ""ignore_above"": 1024,
+                  ""type"": ""keyword""
+                },
+                ""name"": {
+                  ""ignore_above"": 1024,
+                  ""type"": ""keyword""
+                }
+              }
+            },
+            ""operation"": {
+              ""properties"": {
+                ""name"": {
+                  ""ignore_above"": 1024,
+                  ""type"": ""keyword""
+                }
+              }
+            },
+            ""output"": {
+              ""properties"": {
+                ""type"": {
+                  ""ignore_above"": 1024,
+                  ""type"": ""keyword""
+                }
+              }
+            },
+            ""request"": {
+              ""properties"": {
+                ""choice"": {
+                  ""properties"": {
+                    ""count"": {
+                      ""type"": ""integer""
+                    }
+                  }
+                },
+                ""encoding_formats"": {
+                  ""type"": ""nested""
+                },
+                ""frequency_penalty"": {
+                  ""type"": ""double""
+                },
+                ""max_tokens"": {
+                  ""type"": ""integer""
+                },
+                ""model"": {
+                  ""ignore_above"": 1024,
+                  ""type"": ""keyword""
+                },
+                ""presence_penalty"": {
+                  ""type"": ""double""
+                },
+                ""seed"": {
+                  ""type"": ""integer""
+                },
+                ""stop_sequences"": {
+                  ""type"": ""nested""
+                },
+                ""temperature"": {
+                  ""type"": ""double""
+                },
+                ""top_k"": {
+                  ""type"": ""double""
+                },
+                ""top_p"": {
+                  ""type"": ""double""
+                }
+              }
+            },
+            ""response"": {
+              ""properties"": {
+                ""finish_reasons"": {
+                  ""type"": ""nested""
+                },
+                ""id"": {
+                  ""ignore_above"": 1024,
+                  ""type"": ""keyword""
+                },
+                ""model"": {
+                  ""ignore_above"": 1024,
+                  ""type"": ""keyword""
+                }
+              }
+            },
+            ""system"": {
+              ""ignore_above"": 1024,
+              ""type"": ""keyword""
+            },
+            ""token"": {
+              ""properties"": {
+                ""type"": {
+                  ""ignore_above"": 1024,
+                  ""type"": ""keyword""
+                }
+              }
+            },
+            ""tool"": {
+              ""properties"": {
+                ""call"": {
+                  ""properties"": {
+                    ""id"": {
+                      ""ignore_above"": 1024,
+                      ""type"": ""keyword""
+                    }
+                  }
+                },
+                ""name"": {
+                  ""ignore_above"": 1024,
+                  ""type"": ""keyword""
+                },
+                ""type"": {
+                  ""ignore_above"": 1024,
+                  ""type"": ""keyword""
+                }
+              }
+            },
+            ""usage"": {
+              ""properties"": {
+                ""input_tokens"": {
+                  ""type"": ""integer""
+                },
+                ""output_tokens"": {
+                  ""type"": ""integer""
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+"
+			},
+		{	
+				"ecs_9.3.0_group", 
 				@"{
   ""_meta"": {
     ""documentation"": ""https://www.elastic.co/guide/en/ecs/current/ecs-group.html"",
-    ""ecs_version"": ""9.0.0""
+    ""ecs_version"": ""9.3.0""
   },
   ""template"": {
     ""mappings"": {
@@ -2467,11 +2983,11 @@ namespace Elastic.CommonSchema.Elasticsearch
 "
 			},
 		{	
-				"ecs_9.0.0_host", 
+				"ecs_9.3.0_host", 
 				@"{
   ""_meta"": {
     ""documentation"": ""https://www.elastic.co/guide/en/ecs/current/ecs-host.html"",
-    ""ecs_version"": ""9.0.0""
+    ""ecs_version"": ""9.3.0""
   },
   ""template"": {
     ""mappings"": {
@@ -2519,6 +3035,66 @@ namespace Elastic.CommonSchema.Elasticsearch
             ""domain"": {
               ""ignore_above"": 1024,
               ""type"": ""keyword""
+            },
+            ""entity"": {
+              ""properties"": {
+                ""attributes"": {
+                  ""type"": ""object""
+                },
+                ""behavior"": {
+                  ""type"": ""object""
+                },
+                ""display_name"": {
+                  ""fields"": {
+                    ""text"": {
+                      ""type"": ""match_only_text""
+                    }
+                  },
+                  ""ignore_above"": 1024,
+                  ""type"": ""keyword""
+                },
+                ""id"": {
+                  ""ignore_above"": 1024,
+                  ""type"": ""keyword""
+                },
+                ""last_seen_timestamp"": {
+                  ""type"": ""date""
+                },
+                ""lifecycle"": {
+                  ""type"": ""object""
+                },
+                ""metrics"": {
+                  ""type"": ""object""
+                },
+                ""name"": {
+                  ""fields"": {
+                    ""text"": {
+                      ""type"": ""match_only_text""
+                    }
+                  },
+                  ""ignore_above"": 1024,
+                  ""type"": ""keyword""
+                },
+                ""raw"": {
+                  ""type"": ""object""
+                },
+                ""reference"": {
+                  ""ignore_above"": 1024,
+                  ""type"": ""keyword""
+                },
+                ""source"": {
+                  ""ignore_above"": 1024,
+                  ""type"": ""keyword""
+                },
+                ""sub_type"": {
+                  ""ignore_above"": 1024,
+                  ""type"": ""keyword""
+                },
+                ""type"": {
+                  ""ignore_above"": 1024,
+                  ""type"": ""keyword""
+                }
+              }
             },
             ""geo"": {
               ""properties"": {
@@ -2681,6 +3257,280 @@ namespace Elastic.CommonSchema.Elasticsearch
                 }
               }
             },
+            ""target"": {
+              ""properties"": {
+                ""architecture"": {
+                  ""ignore_above"": 1024,
+                  ""type"": ""keyword""
+                },
+                ""boot"": {
+                  ""properties"": {
+                    ""id"": {
+                      ""ignore_above"": 1024,
+                      ""type"": ""keyword""
+                    }
+                  }
+                },
+                ""cpu"": {
+                  ""properties"": {
+                    ""usage"": {
+                      ""scaling_factor"": 1000,
+                      ""type"": ""scaled_float""
+                    }
+                  }
+                },
+                ""disk"": {
+                  ""properties"": {
+                    ""read"": {
+                      ""properties"": {
+                        ""bytes"": {
+                          ""type"": ""long""
+                        }
+                      }
+                    },
+                    ""write"": {
+                      ""properties"": {
+                        ""bytes"": {
+                          ""type"": ""long""
+                        }
+                      }
+                    }
+                  }
+                },
+                ""domain"": {
+                  ""ignore_above"": 1024,
+                  ""type"": ""keyword""
+                },
+                ""entity"": {
+                  ""properties"": {
+                    ""attributes"": {
+                      ""type"": ""object""
+                    },
+                    ""behavior"": {
+                      ""type"": ""object""
+                    },
+                    ""display_name"": {
+                      ""fields"": {
+                        ""text"": {
+                          ""type"": ""match_only_text""
+                        }
+                      },
+                      ""ignore_above"": 1024,
+                      ""type"": ""keyword""
+                    },
+                    ""id"": {
+                      ""ignore_above"": 1024,
+                      ""type"": ""keyword""
+                    },
+                    ""last_seen_timestamp"": {
+                      ""type"": ""date""
+                    },
+                    ""lifecycle"": {
+                      ""type"": ""object""
+                    },
+                    ""metrics"": {
+                      ""type"": ""object""
+                    },
+                    ""name"": {
+                      ""fields"": {
+                        ""text"": {
+                          ""type"": ""match_only_text""
+                        }
+                      },
+                      ""ignore_above"": 1024,
+                      ""type"": ""keyword""
+                    },
+                    ""raw"": {
+                      ""type"": ""object""
+                    },
+                    ""reference"": {
+                      ""ignore_above"": 1024,
+                      ""type"": ""keyword""
+                    },
+                    ""source"": {
+                      ""ignore_above"": 1024,
+                      ""type"": ""keyword""
+                    },
+                    ""sub_type"": {
+                      ""ignore_above"": 1024,
+                      ""type"": ""keyword""
+                    },
+                    ""type"": {
+                      ""ignore_above"": 1024,
+                      ""type"": ""keyword""
+                    }
+                  }
+                },
+                ""geo"": {
+                  ""properties"": {
+                    ""city_name"": {
+                      ""ignore_above"": 1024,
+                      ""type"": ""keyword""
+                    },
+                    ""continent_code"": {
+                      ""ignore_above"": 1024,
+                      ""type"": ""keyword""
+                    },
+                    ""continent_name"": {
+                      ""ignore_above"": 1024,
+                      ""type"": ""keyword""
+                    },
+                    ""country_iso_code"": {
+                      ""ignore_above"": 1024,
+                      ""type"": ""keyword""
+                    },
+                    ""country_name"": {
+                      ""ignore_above"": 1024,
+                      ""type"": ""keyword""
+                    },
+                    ""location"": {
+                      ""type"": ""geo_point""
+                    },
+                    ""name"": {
+                      ""ignore_above"": 1024,
+                      ""type"": ""keyword""
+                    },
+                    ""postal_code"": {
+                      ""ignore_above"": 1024,
+                      ""type"": ""keyword""
+                    },
+                    ""region_iso_code"": {
+                      ""ignore_above"": 1024,
+                      ""type"": ""keyword""
+                    },
+                    ""region_name"": {
+                      ""ignore_above"": 1024,
+                      ""type"": ""keyword""
+                    },
+                    ""timezone"": {
+                      ""ignore_above"": 1024,
+                      ""type"": ""keyword""
+                    }
+                  }
+                },
+                ""hostname"": {
+                  ""ignore_above"": 1024,
+                  ""type"": ""keyword""
+                },
+                ""id"": {
+                  ""ignore_above"": 1024,
+                  ""type"": ""keyword""
+                },
+                ""ip"": {
+                  ""type"": ""ip""
+                },
+                ""mac"": {
+                  ""ignore_above"": 1024,
+                  ""synthetic_source_keep"": ""none"",
+                  ""type"": ""keyword""
+                },
+                ""name"": {
+                  ""ignore_above"": 1024,
+                  ""type"": ""keyword""
+                },
+                ""network"": {
+                  ""properties"": {
+                    ""egress"": {
+                      ""properties"": {
+                        ""bytes"": {
+                          ""type"": ""long""
+                        },
+                        ""packets"": {
+                          ""type"": ""long""
+                        }
+                      }
+                    },
+                    ""ingress"": {
+                      ""properties"": {
+                        ""bytes"": {
+                          ""type"": ""long""
+                        },
+                        ""packets"": {
+                          ""type"": ""long""
+                        }
+                      }
+                    }
+                  }
+                },
+                ""os"": {
+                  ""properties"": {
+                    ""family"": {
+                      ""ignore_above"": 1024,
+                      ""type"": ""keyword""
+                    },
+                    ""full"": {
+                      ""fields"": {
+                        ""text"": {
+                          ""type"": ""match_only_text""
+                        }
+                      },
+                      ""ignore_above"": 1024,
+                      ""type"": ""keyword""
+                    },
+                    ""kernel"": {
+                      ""ignore_above"": 1024,
+                      ""type"": ""keyword""
+                    },
+                    ""name"": {
+                      ""fields"": {
+                        ""text"": {
+                          ""type"": ""match_only_text""
+                        }
+                      },
+                      ""ignore_above"": 1024,
+                      ""type"": ""keyword""
+                    },
+                    ""platform"": {
+                      ""ignore_above"": 1024,
+                      ""type"": ""keyword""
+                    },
+                    ""type"": {
+                      ""ignore_above"": 1024,
+                      ""type"": ""keyword""
+                    },
+                    ""version"": {
+                      ""ignore_above"": 1024,
+                      ""type"": ""keyword""
+                    }
+                  }
+                },
+                ""pid_ns_ino"": {
+                  ""ignore_above"": 1024,
+                  ""type"": ""keyword""
+                },
+                ""risk"": {
+                  ""properties"": {
+                    ""calculated_level"": {
+                      ""ignore_above"": 1024,
+                      ""type"": ""keyword""
+                    },
+                    ""calculated_score"": {
+                      ""type"": ""float""
+                    },
+                    ""calculated_score_norm"": {
+                      ""type"": ""float""
+                    },
+                    ""static_level"": {
+                      ""ignore_above"": 1024,
+                      ""type"": ""keyword""
+                    },
+                    ""static_score"": {
+                      ""type"": ""float""
+                    },
+                    ""static_score_norm"": {
+                      ""type"": ""float""
+                    }
+                  }
+                },
+                ""type"": {
+                  ""ignore_above"": 1024,
+                  ""type"": ""keyword""
+                },
+                ""uptime"": {
+                  ""type"": ""long""
+                }
+              }
+            },
             ""type"": {
               ""ignore_above"": 1024,
               ""type"": ""keyword""
@@ -2697,11 +3547,11 @@ namespace Elastic.CommonSchema.Elasticsearch
 "
 			},
 		{	
-				"ecs_9.0.0_http", 
+				"ecs_9.3.0_http", 
 				@"{
   ""_meta"": {
     ""documentation"": ""https://www.elastic.co/guide/en/ecs/current/ecs-http.html"",
-    ""ecs_version"": ""9.0.0""
+    ""ecs_version"": ""9.3.0""
   },
   ""template"": {
     ""mappings"": {
@@ -2788,11 +3638,11 @@ namespace Elastic.CommonSchema.Elasticsearch
 "
 			},
 		{	
-				"ecs_9.0.0_log", 
+				"ecs_9.3.0_log", 
 				@"{
   ""_meta"": {
     ""documentation"": ""https://www.elastic.co/guide/en/ecs/current/ecs-log.html"",
-    ""ecs_version"": ""9.0.0""
+    ""ecs_version"": ""9.3.0""
   },
   ""template"": {
     ""mappings"": {
@@ -2896,11 +3746,11 @@ namespace Elastic.CommonSchema.Elasticsearch
 "
 			},
 		{	
-				"ecs_9.0.0_network", 
+				"ecs_9.3.0_network", 
 				@"{
   ""_meta"": {
     ""documentation"": ""https://www.elastic.co/guide/en/ecs/current/ecs-network.html"",
-    ""ecs_version"": ""9.0.0""
+    ""ecs_version"": ""9.3.0""
   },
   ""template"": {
     ""mappings"": {
@@ -2986,11 +3836,11 @@ namespace Elastic.CommonSchema.Elasticsearch
 "
 			},
 		{	
-				"ecs_9.0.0_observer", 
+				"ecs_9.3.0_observer", 
 				@"{
   ""_meta"": {
     ""documentation"": ""https://www.elastic.co/guide/en/ecs/current/ecs-observer.html"",
-    ""ecs_version"": ""9.0.0""
+    ""ecs_version"": ""9.3.0""
   },
   ""template"": {
     ""mappings"": {
@@ -3205,11 +4055,11 @@ namespace Elastic.CommonSchema.Elasticsearch
 "
 			},
 		{	
-				"ecs_9.0.0_orchestrator", 
+				"ecs_9.3.0_orchestrator", 
 				@"{
   ""_meta"": {
     ""documentation"": ""https://www.elastic.co/guide/en/ecs/current/ecs-orchestrator.html"",
-    ""ecs_version"": ""9.0.0""
+    ""ecs_version"": ""9.3.0""
   },
   ""template"": {
     ""mappings"": {
@@ -3235,6 +4085,66 @@ namespace Elastic.CommonSchema.Elasticsearch
                   ""type"": ""keyword""
                 },
                 ""version"": {
+                  ""ignore_above"": 1024,
+                  ""type"": ""keyword""
+                }
+              }
+            },
+            ""entity"": {
+              ""properties"": {
+                ""attributes"": {
+                  ""type"": ""object""
+                },
+                ""behavior"": {
+                  ""type"": ""object""
+                },
+                ""display_name"": {
+                  ""fields"": {
+                    ""text"": {
+                      ""type"": ""match_only_text""
+                    }
+                  },
+                  ""ignore_above"": 1024,
+                  ""type"": ""keyword""
+                },
+                ""id"": {
+                  ""ignore_above"": 1024,
+                  ""type"": ""keyword""
+                },
+                ""last_seen_timestamp"": {
+                  ""type"": ""date""
+                },
+                ""lifecycle"": {
+                  ""type"": ""object""
+                },
+                ""metrics"": {
+                  ""type"": ""object""
+                },
+                ""name"": {
+                  ""fields"": {
+                    ""text"": {
+                      ""type"": ""match_only_text""
+                    }
+                  },
+                  ""ignore_above"": 1024,
+                  ""type"": ""keyword""
+                },
+                ""raw"": {
+                  ""type"": ""object""
+                },
+                ""reference"": {
+                  ""ignore_above"": 1024,
+                  ""type"": ""keyword""
+                },
+                ""source"": {
+                  ""ignore_above"": 1024,
+                  ""type"": ""keyword""
+                },
+                ""sub_type"": {
+                  ""ignore_above"": 1024,
+                  ""type"": ""keyword""
+                },
+                ""type"": {
                   ""ignore_above"": 1024,
                   ""type"": ""keyword""
                 }
@@ -3298,11 +4208,11 @@ namespace Elastic.CommonSchema.Elasticsearch
 "
 			},
 		{	
-				"ecs_9.0.0_organization", 
+				"ecs_9.3.0_organization", 
 				@"{
   ""_meta"": {
     ""documentation"": ""https://www.elastic.co/guide/en/ecs/current/ecs-organization.html"",
-    ""ecs_version"": ""9.0.0""
+    ""ecs_version"": ""9.3.0""
   },
   ""template"": {
     ""mappings"": {
@@ -3331,11 +4241,11 @@ namespace Elastic.CommonSchema.Elasticsearch
 "
 			},
 		{	
-				"ecs_9.0.0_package", 
+				"ecs_9.3.0_package", 
 				@"{
   ""_meta"": {
     ""documentation"": ""https://www.elastic.co/guide/en/ecs/current/ecs-package.html"",
-    ""ecs_version"": ""9.0.0""
+    ""ecs_version"": ""9.3.0""
   },
   ""template"": {
     ""mappings"": {
@@ -3401,11 +4311,11 @@ namespace Elastic.CommonSchema.Elasticsearch
 "
 			},
 		{	
-				"ecs_9.0.0_process", 
+				"ecs_9.3.0_process", 
 				@"{
   ""_meta"": {
     ""documentation"": ""https://www.elastic.co/guide/en/ecs/current/ecs-process.html"",
-    ""ecs_version"": ""9.0.0""
+    ""ecs_version"": ""9.3.0""
   },
   ""template"": {
     ""mappings"": {
@@ -3446,6 +4356,10 @@ namespace Elastic.CommonSchema.Elasticsearch
                 },
                 ""team_id"": {
                   ""ignore_above"": 1024,
+                  ""type"": ""keyword""
+                },
+                ""thumbprint_sha256"": {
+                  ""ignore_above"": 64,
                   ""type"": ""keyword""
                 },
                 ""timestamp"": {
@@ -4255,6 +5169,10 @@ namespace Elastic.CommonSchema.Elasticsearch
                     },
                     ""team_id"": {
                       ""ignore_above"": 1024,
+                      ""type"": ""keyword""
+                    },
+                    ""thumbprint_sha256"": {
+                      ""ignore_above"": 64,
                       ""type"": ""keyword""
                     },
                     ""timestamp"": {
@@ -5312,11 +6230,11 @@ namespace Elastic.CommonSchema.Elasticsearch
 "
 			},
 		{	
-				"ecs_9.0.0_registry", 
+				"ecs_9.3.0_registry", 
 				@"{
   ""_meta"": {
     ""documentation"": ""https://www.elastic.co/guide/en/ecs/current/ecs-registry.html"",
-    ""ecs_version"": ""9.0.0""
+    ""ecs_version"": ""9.3.0""
   },
   ""template"": {
     ""mappings"": {
@@ -5363,11 +6281,11 @@ namespace Elastic.CommonSchema.Elasticsearch
 "
 			},
 		{	
-				"ecs_9.0.0_related", 
+				"ecs_9.3.0_related", 
 				@"{
   ""_meta"": {
     ""documentation"": ""https://www.elastic.co/guide/en/ecs/current/ecs-related.html"",
-    ""ecs_version"": ""9.0.0""
+    ""ecs_version"": ""9.3.0""
   },
   ""template"": {
     ""mappings"": {
@@ -5401,11 +6319,11 @@ namespace Elastic.CommonSchema.Elasticsearch
 "
 			},
 		{	
-				"ecs_9.0.0_rule", 
+				"ecs_9.3.0_rule", 
 				@"{
   ""_meta"": {
     ""documentation"": ""https://www.elastic.co/guide/en/ecs/current/ecs-rule.html"",
-    ""ecs_version"": ""9.0.0""
+    ""ecs_version"": ""9.3.0""
   },
   ""template"": {
     ""mappings"": {
@@ -5462,11 +6380,11 @@ namespace Elastic.CommonSchema.Elasticsearch
 "
 			},
 		{	
-				"ecs_9.0.0_server", 
+				"ecs_9.3.0_server", 
 				@"{
   ""_meta"": {
     ""documentation"": ""https://www.elastic.co/guide/en/ecs/current/ecs-server.html"",
-    ""ecs_version"": ""9.0.0""
+    ""ecs_version"": ""9.3.0""
   },
   ""template"": {
     ""mappings"": {
@@ -5654,11 +6572,11 @@ namespace Elastic.CommonSchema.Elasticsearch
 "
 			},
 		{	
-				"ecs_9.0.0_service", 
+				"ecs_9.3.0_service", 
 				@"{
   ""_meta"": {
     ""documentation"": ""https://www.elastic.co/guide/en/ecs/current/ecs-service.html"",
-    ""ecs_version"": ""9.0.0""
+    ""ecs_version"": ""9.3.0""
   },
   ""template"": {
     ""mappings"": {
@@ -5668,6 +6586,66 @@ namespace Elastic.CommonSchema.Elasticsearch
             ""address"": {
               ""ignore_above"": 1024,
               ""type"": ""keyword""
+            },
+            ""entity"": {
+              ""properties"": {
+                ""attributes"": {
+                  ""type"": ""object""
+                },
+                ""behavior"": {
+                  ""type"": ""object""
+                },
+                ""display_name"": {
+                  ""fields"": {
+                    ""text"": {
+                      ""type"": ""match_only_text""
+                    }
+                  },
+                  ""ignore_above"": 1024,
+                  ""type"": ""keyword""
+                },
+                ""id"": {
+                  ""ignore_above"": 1024,
+                  ""type"": ""keyword""
+                },
+                ""last_seen_timestamp"": {
+                  ""type"": ""date""
+                },
+                ""lifecycle"": {
+                  ""type"": ""object""
+                },
+                ""metrics"": {
+                  ""type"": ""object""
+                },
+                ""name"": {
+                  ""fields"": {
+                    ""text"": {
+                      ""type"": ""match_only_text""
+                    }
+                  },
+                  ""ignore_above"": 1024,
+                  ""type"": ""keyword""
+                },
+                ""raw"": {
+                  ""type"": ""object""
+                },
+                ""reference"": {
+                  ""ignore_above"": 1024,
+                  ""type"": ""keyword""
+                },
+                ""source"": {
+                  ""ignore_above"": 1024,
+                  ""type"": ""keyword""
+                },
+                ""sub_type"": {
+                  ""ignore_above"": 1024,
+                  ""type"": ""keyword""
+                },
+                ""type"": {
+                  ""ignore_above"": 1024,
+                  ""type"": ""keyword""
+                }
+              }
             },
             ""environment"": {
               ""ignore_above"": 1024,
@@ -5707,6 +6685,66 @@ namespace Elastic.CommonSchema.Elasticsearch
                 ""address"": {
                   ""ignore_above"": 1024,
                   ""type"": ""keyword""
+                },
+                ""entity"": {
+                  ""properties"": {
+                    ""attributes"": {
+                      ""type"": ""object""
+                    },
+                    ""behavior"": {
+                      ""type"": ""object""
+                    },
+                    ""display_name"": {
+                      ""fields"": {
+                        ""text"": {
+                          ""type"": ""match_only_text""
+                        }
+                      },
+                      ""ignore_above"": 1024,
+                      ""type"": ""keyword""
+                    },
+                    ""id"": {
+                      ""ignore_above"": 1024,
+                      ""type"": ""keyword""
+                    },
+                    ""last_seen_timestamp"": {
+                      ""type"": ""date""
+                    },
+                    ""lifecycle"": {
+                      ""type"": ""object""
+                    },
+                    ""metrics"": {
+                      ""type"": ""object""
+                    },
+                    ""name"": {
+                      ""fields"": {
+                        ""text"": {
+                          ""type"": ""match_only_text""
+                        }
+                      },
+                      ""ignore_above"": 1024,
+                      ""type"": ""keyword""
+                    },
+                    ""raw"": {
+                      ""type"": ""object""
+                    },
+                    ""reference"": {
+                      ""ignore_above"": 1024,
+                      ""type"": ""keyword""
+                    },
+                    ""source"": {
+                      ""ignore_above"": 1024,
+                      ""type"": ""keyword""
+                    },
+                    ""sub_type"": {
+                      ""ignore_above"": 1024,
+                      ""type"": ""keyword""
+                    },
+                    ""type"": {
+                      ""ignore_above"": 1024,
+                      ""type"": ""keyword""
+                    }
+                  }
                 },
                 ""environment"": {
                   ""ignore_above"": 1024,
@@ -5764,6 +6802,66 @@ namespace Elastic.CommonSchema.Elasticsearch
                 ""address"": {
                   ""ignore_above"": 1024,
                   ""type"": ""keyword""
+                },
+                ""entity"": {
+                  ""properties"": {
+                    ""attributes"": {
+                      ""type"": ""object""
+                    },
+                    ""behavior"": {
+                      ""type"": ""object""
+                    },
+                    ""display_name"": {
+                      ""fields"": {
+                        ""text"": {
+                          ""type"": ""match_only_text""
+                        }
+                      },
+                      ""ignore_above"": 1024,
+                      ""type"": ""keyword""
+                    },
+                    ""id"": {
+                      ""ignore_above"": 1024,
+                      ""type"": ""keyword""
+                    },
+                    ""last_seen_timestamp"": {
+                      ""type"": ""date""
+                    },
+                    ""lifecycle"": {
+                      ""type"": ""object""
+                    },
+                    ""metrics"": {
+                      ""type"": ""object""
+                    },
+                    ""name"": {
+                      ""fields"": {
+                        ""text"": {
+                          ""type"": ""match_only_text""
+                        }
+                      },
+                      ""ignore_above"": 1024,
+                      ""type"": ""keyword""
+                    },
+                    ""raw"": {
+                      ""type"": ""object""
+                    },
+                    ""reference"": {
+                      ""ignore_above"": 1024,
+                      ""type"": ""keyword""
+                    },
+                    ""source"": {
+                      ""ignore_above"": 1024,
+                      ""type"": ""keyword""
+                    },
+                    ""sub_type"": {
+                      ""ignore_above"": 1024,
+                      ""type"": ""keyword""
+                    },
+                    ""type"": {
+                      ""ignore_above"": 1024,
+                      ""type"": ""keyword""
+                    }
+                  }
                 },
                 ""environment"": {
                   ""ignore_above"": 1024,
@@ -5829,11 +6927,11 @@ namespace Elastic.CommonSchema.Elasticsearch
 "
 			},
 		{	
-				"ecs_9.0.0_source", 
+				"ecs_9.3.0_source", 
 				@"{
   ""_meta"": {
     ""documentation"": ""https://www.elastic.co/guide/en/ecs/current/ecs-source.html"",
-    ""ecs_version"": ""9.0.0""
+    ""ecs_version"": ""9.3.0""
   },
   ""template"": {
     ""mappings"": {
@@ -6021,11 +7119,11 @@ namespace Elastic.CommonSchema.Elasticsearch
 "
 			},
 		{	
-				"ecs_9.0.0_threat", 
+				"ecs_9.3.0_threat", 
 				@"{
   ""_meta"": {
     ""documentation"": ""https://www.elastic.co/guide/en/ecs/current/ecs-threat.html"",
-    ""ecs_version"": ""9.0.0""
+    ""ecs_version"": ""9.3.0""
   },
   ""template"": {
     ""mappings"": {
@@ -6109,6 +7207,10 @@ namespace Elastic.CommonSchema.Elasticsearch
                             },
                             ""team_id"": {
                               ""ignore_above"": 1024,
+                              ""type"": ""keyword""
+                            },
+                            ""thumbprint_sha256"": {
+                              ""ignore_above"": 64,
                               ""type"": ""keyword""
                             },
                             ""timestamp"": {
@@ -7050,6 +8152,10 @@ namespace Elastic.CommonSchema.Elasticsearch
                           ""ignore_above"": 1024,
                           ""type"": ""keyword""
                         },
+                        ""thumbprint_sha256"": {
+                          ""ignore_above"": 64,
+                          ""type"": ""keyword""
+                        },
                         ""timestamp"": {
                           ""type"": ""date""
                         },
@@ -7938,11 +9044,11 @@ namespace Elastic.CommonSchema.Elasticsearch
 "
 			},
 		{	
-				"ecs_9.0.0_tls", 
+				"ecs_9.3.0_tls", 
 				@"{
   ""_meta"": {
     ""documentation"": ""https://www.elastic.co/guide/en/ecs/current/ecs-tls.html"",
-    ""ecs_version"": ""9.0.0""
+    ""ecs_version"": ""9.3.0""
   },
   ""template"": {
     ""mappings"": {
@@ -8296,11 +9402,11 @@ namespace Elastic.CommonSchema.Elasticsearch
 "
 			},
 		{	
-				"ecs_9.0.0_tracing", 
+				"ecs_9.3.0_tracing", 
 				@"{
   ""_meta"": {
     ""documentation"": ""https://www.elastic.co/guide/en/ecs/current/ecs-tracing.html"",
-    ""ecs_version"": ""9.0.0""
+    ""ecs_version"": ""9.3.0""
   },
   ""template"": {
     ""mappings"": {
@@ -8336,11 +9442,11 @@ namespace Elastic.CommonSchema.Elasticsearch
 "
 			},
 		{	
-				"ecs_9.0.0_url", 
+				"ecs_9.3.0_url", 
 				@"{
   ""_meta"": {
     ""documentation"": ""https://www.elastic.co/guide/en/ecs/current/ecs-url.html"",
-    ""ecs_version"": ""9.0.0""
+    ""ecs_version"": ""9.3.0""
   },
   ""template"": {
     ""mappings"": {
@@ -8418,11 +9524,11 @@ namespace Elastic.CommonSchema.Elasticsearch
 "
 			},
 		{	
-				"ecs_9.0.0_user", 
+				"ecs_9.3.0_user", 
 				@"{
   ""_meta"": {
     ""documentation"": ""https://www.elastic.co/guide/en/ecs/current/ecs-user.html"",
-    ""ecs_version"": ""9.0.0""
+    ""ecs_version"": ""9.3.0""
   },
   ""template"": {
     ""mappings"": {
@@ -8438,6 +9544,66 @@ namespace Elastic.CommonSchema.Elasticsearch
                 ""email"": {
                   ""ignore_above"": 1024,
                   ""type"": ""keyword""
+                },
+                ""entity"": {
+                  ""properties"": {
+                    ""attributes"": {
+                      ""type"": ""object""
+                    },
+                    ""behavior"": {
+                      ""type"": ""object""
+                    },
+                    ""display_name"": {
+                      ""fields"": {
+                        ""text"": {
+                          ""type"": ""match_only_text""
+                        }
+                      },
+                      ""ignore_above"": 1024,
+                      ""type"": ""keyword""
+                    },
+                    ""id"": {
+                      ""ignore_above"": 1024,
+                      ""type"": ""keyword""
+                    },
+                    ""last_seen_timestamp"": {
+                      ""type"": ""date""
+                    },
+                    ""lifecycle"": {
+                      ""type"": ""object""
+                    },
+                    ""metrics"": {
+                      ""type"": ""object""
+                    },
+                    ""name"": {
+                      ""fields"": {
+                        ""text"": {
+                          ""type"": ""match_only_text""
+                        }
+                      },
+                      ""ignore_above"": 1024,
+                      ""type"": ""keyword""
+                    },
+                    ""raw"": {
+                      ""type"": ""object""
+                    },
+                    ""reference"": {
+                      ""ignore_above"": 1024,
+                      ""type"": ""keyword""
+                    },
+                    ""source"": {
+                      ""ignore_above"": 1024,
+                      ""type"": ""keyword""
+                    },
+                    ""sub_type"": {
+                      ""ignore_above"": 1024,
+                      ""type"": ""keyword""
+                    },
+                    ""type"": {
+                      ""ignore_above"": 1024,
+                      ""type"": ""keyword""
+                    }
+                  }
                 },
                 ""full_name"": {
                   ""fields"": {
@@ -8480,6 +9646,30 @@ namespace Elastic.CommonSchema.Elasticsearch
                   },
                   ""ignore_above"": 1024,
                   ""type"": ""keyword""
+                },
+                ""risk"": {
+                  ""properties"": {
+                    ""calculated_level"": {
+                      ""ignore_above"": 1024,
+                      ""type"": ""keyword""
+                    },
+                    ""calculated_score"": {
+                      ""type"": ""float""
+                    },
+                    ""calculated_score_norm"": {
+                      ""type"": ""float""
+                    },
+                    ""static_level"": {
+                      ""ignore_above"": 1024,
+                      ""type"": ""keyword""
+                    },
+                    ""static_score"": {
+                      ""type"": ""float""
+                    },
+                    ""static_score_norm"": {
+                      ""type"": ""float""
+                    }
+                  }
                 },
                 ""roles"": {
                   ""ignore_above"": 1024,
@@ -8502,6 +9692,66 @@ namespace Elastic.CommonSchema.Elasticsearch
                   ""ignore_above"": 1024,
                   ""type"": ""keyword""
                 },
+                ""entity"": {
+                  ""properties"": {
+                    ""attributes"": {
+                      ""type"": ""object""
+                    },
+                    ""behavior"": {
+                      ""type"": ""object""
+                    },
+                    ""display_name"": {
+                      ""fields"": {
+                        ""text"": {
+                          ""type"": ""match_only_text""
+                        }
+                      },
+                      ""ignore_above"": 1024,
+                      ""type"": ""keyword""
+                    },
+                    ""id"": {
+                      ""ignore_above"": 1024,
+                      ""type"": ""keyword""
+                    },
+                    ""last_seen_timestamp"": {
+                      ""type"": ""date""
+                    },
+                    ""lifecycle"": {
+                      ""type"": ""object""
+                    },
+                    ""metrics"": {
+                      ""type"": ""object""
+                    },
+                    ""name"": {
+                      ""fields"": {
+                        ""text"": {
+                          ""type"": ""match_only_text""
+                        }
+                      },
+                      ""ignore_above"": 1024,
+                      ""type"": ""keyword""
+                    },
+                    ""raw"": {
+                      ""type"": ""object""
+                    },
+                    ""reference"": {
+                      ""ignore_above"": 1024,
+                      ""type"": ""keyword""
+                    },
+                    ""source"": {
+                      ""ignore_above"": 1024,
+                      ""type"": ""keyword""
+                    },
+                    ""sub_type"": {
+                      ""ignore_above"": 1024,
+                      ""type"": ""keyword""
+                    },
+                    ""type"": {
+                      ""ignore_above"": 1024,
+                      ""type"": ""keyword""
+                    }
+                  }
+                },
                 ""full_name"": {
                   ""fields"": {
                     ""text"": {
@@ -8544,6 +9794,30 @@ namespace Elastic.CommonSchema.Elasticsearch
                   ""ignore_above"": 1024,
                   ""type"": ""keyword""
                 },
+                ""risk"": {
+                  ""properties"": {
+                    ""calculated_level"": {
+                      ""ignore_above"": 1024,
+                      ""type"": ""keyword""
+                    },
+                    ""calculated_score"": {
+                      ""type"": ""float""
+                    },
+                    ""calculated_score_norm"": {
+                      ""type"": ""float""
+                    },
+                    ""static_level"": {
+                      ""ignore_above"": 1024,
+                      ""type"": ""keyword""
+                    },
+                    ""static_score"": {
+                      ""type"": ""float""
+                    },
+                    ""static_score_norm"": {
+                      ""type"": ""float""
+                    }
+                  }
+                },
                 ""roles"": {
                   ""ignore_above"": 1024,
                   ""synthetic_source_keep"": ""none"",
@@ -8554,6 +9828,66 @@ namespace Elastic.CommonSchema.Elasticsearch
             ""email"": {
               ""ignore_above"": 1024,
               ""type"": ""keyword""
+            },
+            ""entity"": {
+              ""properties"": {
+                ""attributes"": {
+                  ""type"": ""object""
+                },
+                ""behavior"": {
+                  ""type"": ""object""
+                },
+                ""display_name"": {
+                  ""fields"": {
+                    ""text"": {
+                      ""type"": ""match_only_text""
+                    }
+                  },
+                  ""ignore_above"": 1024,
+                  ""type"": ""keyword""
+                },
+                ""id"": {
+                  ""ignore_above"": 1024,
+                  ""type"": ""keyword""
+                },
+                ""last_seen_timestamp"": {
+                  ""type"": ""date""
+                },
+                ""lifecycle"": {
+                  ""type"": ""object""
+                },
+                ""metrics"": {
+                  ""type"": ""object""
+                },
+                ""name"": {
+                  ""fields"": {
+                    ""text"": {
+                      ""type"": ""match_only_text""
+                    }
+                  },
+                  ""ignore_above"": 1024,
+                  ""type"": ""keyword""
+                },
+                ""raw"": {
+                  ""type"": ""object""
+                },
+                ""reference"": {
+                  ""ignore_above"": 1024,
+                  ""type"": ""keyword""
+                },
+                ""source"": {
+                  ""ignore_above"": 1024,
+                  ""type"": ""keyword""
+                },
+                ""sub_type"": {
+                  ""ignore_above"": 1024,
+                  ""type"": ""keyword""
+                },
+                ""type"": {
+                  ""ignore_above"": 1024,
+                  ""type"": ""keyword""
+                }
+              }
             },
             ""full_name"": {
               ""fields"": {
@@ -8636,6 +9970,66 @@ namespace Elastic.CommonSchema.Elasticsearch
                   ""ignore_above"": 1024,
                   ""type"": ""keyword""
                 },
+                ""entity"": {
+                  ""properties"": {
+                    ""attributes"": {
+                      ""type"": ""object""
+                    },
+                    ""behavior"": {
+                      ""type"": ""object""
+                    },
+                    ""display_name"": {
+                      ""fields"": {
+                        ""text"": {
+                          ""type"": ""match_only_text""
+                        }
+                      },
+                      ""ignore_above"": 1024,
+                      ""type"": ""keyword""
+                    },
+                    ""id"": {
+                      ""ignore_above"": 1024,
+                      ""type"": ""keyword""
+                    },
+                    ""last_seen_timestamp"": {
+                      ""type"": ""date""
+                    },
+                    ""lifecycle"": {
+                      ""type"": ""object""
+                    },
+                    ""metrics"": {
+                      ""type"": ""object""
+                    },
+                    ""name"": {
+                      ""fields"": {
+                        ""text"": {
+                          ""type"": ""match_only_text""
+                        }
+                      },
+                      ""ignore_above"": 1024,
+                      ""type"": ""keyword""
+                    },
+                    ""raw"": {
+                      ""type"": ""object""
+                    },
+                    ""reference"": {
+                      ""ignore_above"": 1024,
+                      ""type"": ""keyword""
+                    },
+                    ""source"": {
+                      ""ignore_above"": 1024,
+                      ""type"": ""keyword""
+                    },
+                    ""sub_type"": {
+                      ""ignore_above"": 1024,
+                      ""type"": ""keyword""
+                    },
+                    ""type"": {
+                      ""ignore_above"": 1024,
+                      ""type"": ""keyword""
+                    }
+                  }
+                },
                 ""full_name"": {
                   ""fields"": {
                     ""text"": {
@@ -8678,6 +10072,30 @@ namespace Elastic.CommonSchema.Elasticsearch
                   ""ignore_above"": 1024,
                   ""type"": ""keyword""
                 },
+                ""risk"": {
+                  ""properties"": {
+                    ""calculated_level"": {
+                      ""ignore_above"": 1024,
+                      ""type"": ""keyword""
+                    },
+                    ""calculated_score"": {
+                      ""type"": ""float""
+                    },
+                    ""calculated_score_norm"": {
+                      ""type"": ""float""
+                    },
+                    ""static_level"": {
+                      ""ignore_above"": 1024,
+                      ""type"": ""keyword""
+                    },
+                    ""static_score"": {
+                      ""type"": ""float""
+                    },
+                    ""static_score_norm"": {
+                      ""type"": ""float""
+                    }
+                  }
+                },
                 ""roles"": {
                   ""ignore_above"": 1024,
                   ""synthetic_source_keep"": ""none"",
@@ -8694,11 +10112,11 @@ namespace Elastic.CommonSchema.Elasticsearch
 "
 			},
 		{	
-				"ecs_9.0.0_user_agent", 
+				"ecs_9.3.0_user_agent", 
 				@"{
   ""_meta"": {
     ""documentation"": ""https://www.elastic.co/guide/en/ecs/current/ecs-user_agent.html"",
-    ""ecs_version"": ""9.0.0""
+    ""ecs_version"": ""9.3.0""
   },
   ""template"": {
     ""mappings"": {
@@ -8781,11 +10199,11 @@ namespace Elastic.CommonSchema.Elasticsearch
 "
 			},
 		{	
-				"ecs_9.0.0_volume", 
+				"ecs_9.3.0_volume", 
 				@"{
   ""_meta"": {
     ""documentation"": ""https://www.elastic.co/guide/en/ecs/current/ecs-volume.html"",
-    ""ecs_version"": ""9.0.0""
+    ""ecs_version"": ""9.3.0""
   },
   ""template"": {
     ""mappings"": {
@@ -8862,11 +10280,11 @@ namespace Elastic.CommonSchema.Elasticsearch
 "
 			},
 		{	
-				"ecs_9.0.0_vulnerability", 
+				"ecs_9.3.0_vulnerability", 
 				@"{
   ""_meta"": {
     ""documentation"": ""https://www.elastic.co/guide/en/ecs/current/ecs-vulnerability.html"",
-    ""ecs_version"": ""9.0.0""
+    ""ecs_version"": ""9.3.0""
   },
   ""template"": {
     ""mappings"": {

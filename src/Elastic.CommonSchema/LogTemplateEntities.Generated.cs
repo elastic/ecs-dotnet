@@ -55,6 +55,8 @@ namespace Elastic.CommonSchema
 		public static string Elf = nameof(Elf);
 		///<summary>Static field name to supply an instance of <see cref="Elastic.CommonSchema.Email"/> </summary>
 		public static string Email = nameof(Email);
+		///<summary>Static field name to supply an instance of <see cref="Elastic.CommonSchema.Entity"/> </summary>
+		public static string Entity = nameof(Entity);
 		///<summary>Static field name to supply an instance of <see cref="Elastic.CommonSchema.Error"/> </summary>
 		public static string Error = nameof(Error);
 		///<summary>Static field name to supply an instance of <see cref="Elastic.CommonSchema.Event"/> </summary>
@@ -63,6 +65,8 @@ namespace Elastic.CommonSchema
 		public static string Faas = nameof(Faas);
 		///<summary>Static field name to supply an instance of <see cref="Elastic.CommonSchema.File"/> </summary>
 		public static string File = nameof(File);
+		///<summary>Static field name to supply an instance of <see cref="Elastic.CommonSchema.GenAi"/> </summary>
+		public static string GenAi = nameof(GenAi);
 		///<summary>Static field name to supply an instance of <see cref="Elastic.CommonSchema.Geo"/> </summary>
 		public static string Geo = nameof(Geo);
 		///<summary>Static field name to supply an instance of <see cref="Elastic.CommonSchema.Group"/> </summary>
@@ -146,10 +150,12 @@ namespace Elastic.CommonSchema
 			"ecs", "Ecs",
 			"elf", "Elf",
 			"email", "Email",
+			"entity", "Entity",
 			"error", "Error",
 			"event", "Event",
 			"faas", "Faas",
 			"file", "File",
+			"genai", "GenAi",
 			"geo", "Geo",
 			"group", "Group",
 			"hash", "Hash",

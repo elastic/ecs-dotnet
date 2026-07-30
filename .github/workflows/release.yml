@@ -13,11 +13,13 @@ jobs:
   release:
     runs-on: ubuntu-latest
     permissions:
+      artifact-metadata: write
+      attestations: write
       contents: write
       id-token: write
       issues: write
     steps:
-    - uses: actions/checkout@v5
+    - uses: actions/checkout@v7
     - name: Bootstrap Action Workspace
       uses: ./.github/workflows/bootstrap
         
@@ -37,13 +39,13 @@ jobs:
       run: ./build.sh createreleaseongithub -s true --token ${{ secrets.GITHUB_TOKEN }}
 
     - name: generate build provenance
-      uses: actions/attest-build-provenance@v3
+      uses: actions/attest-build-provenance@v4
       with:
         subject-path: "${{ github.workspace }}/build/output/*.nupkg"
 
     # Get a short-lived NuGet API key
     - name: NuGet login (OIDC → temp API key)
-      uses: NuGet/login@d22cc5f58ff5b88bf9bd452535b4335137e24544 # v1
+      uses: NuGet/login@8d196754b4036150537f80ac539e15c2f1028841 # v1
       id: login
       with:
         user: ${{ secrets.NUGET_USER }}
@@ -53,7 +55,7 @@ jobs:
 
     - name: Store artifacts
       if: success()
-      uses: actions/upload-artifact@v5
+      uses: actions/upload-artifact@v7
       with:
         name: nupkg
         path: build/output/*.nupkg

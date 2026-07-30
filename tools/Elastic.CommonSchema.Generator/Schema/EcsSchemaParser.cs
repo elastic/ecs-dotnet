@@ -42,15 +42,18 @@ namespace Elastic.CommonSchema.Generator.Schema
 			var spec = jsonSerializer.Deserialize<Dictionary<string, FieldSet>>(new JsonTextReader(new StringReader(asJson)));
 
 			var warnings = SerializeParsedAndCompareWithOriginal(spec, asJson);
-			var templates = ReadTemplates();
+			var totalFields = spec.Values.Sum(fs => fs.Fields?.Count ?? 0);
+			var templates = ReadTemplates(totalFields);
 			var components = ReadComponents();
 			var ecsVersion = new Regex("^.*\"ecs_version\":\\s?\"(.*?)\".*$", RegexOptions.Singleline)
 				.Replace(templates["composable"], "$1");
 			return new EcsSchema(spec.Values.ToList(), warnings, templates, components, _gitRef, ecsVersion);
 		}
 
-		private Dictionary<string, string> ReadTemplates()
+		private Dictionary<string, string> ReadTemplates(int totalFields)
 		{
+			// Add headroom for multi-fields, internal fields, and dynamic mappings
+			var fieldLimit = totalFields + (int)Math.Ceiling(totalFields * 0.5);
 
 			var templates = new Dictionary<string, string>();
 			var templateFiles =
@@ -63,7 +66,11 @@ namespace Elastic.CommonSchema.Generator.Schema
 			{
 				if (dir.Name == "component") continue;
 
-				templates.Add(dir.Name, File.ReadAllText(jsonFile.FullName));
+				var json = File.ReadAllText(jsonFile.FullName);
+				json = Regex.Replace(json,
+					@"(""total_fields""\s*:\s*\{\s*""limit""\s*:\s*)\d+",
+					$"${{1}}{fieldLimit}");
+				templates.Add(dir.Name, json);
 			}
 			return templates;
 		}

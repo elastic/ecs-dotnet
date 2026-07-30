@@ -26,7 +26,7 @@ namespace Elastic.CommonSchema.BenchmarkDotNetExporter.Domain
 
 		/// <summary></summary>
 		[JsonPropertyName("bytes_allocated_per_operation"), DataMember(Name = "bytes_allocated_per_operation")]
-		public long BytesAllocatedPerOperation { get; set; }
+		public long? BytesAllocatedPerOperation { get; set; }
 
 		/// <summary></summary>
 		[JsonPropertyName("total_operations"), DataMember(Name = "total_operations")]

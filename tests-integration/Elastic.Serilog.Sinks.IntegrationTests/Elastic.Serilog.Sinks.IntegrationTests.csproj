@@ -1,15 +1,14 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFramework>net8.0</TargetFramework>
+    <TargetFramework>net10.0</TargetFramework>
     <LangVersion>latest</LangVersion>
     <IsTestProject>False</IsTestProject>
     <Nullable>enable</Nullable>
   </PropertyGroup>
   
   <ItemGroup>
-    <PackageReference Include="Serilog.Sinks.ColoredConsole" Version="3.0.1" />
-    <PackageReference Update="xunit" Version="2.9.3" />
+    <PackageReference Include="Serilog.Sinks.Console" Version="6.1.1" />
   </ItemGroup>
   
   <ItemGroup>

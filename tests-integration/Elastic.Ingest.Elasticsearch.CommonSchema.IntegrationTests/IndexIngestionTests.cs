@@ -25,7 +25,8 @@ public class IndexIngestionTests : IntegrationTestBase
 	[Fact]
 	public async Task EnsureDocumentsEndUpInIndex()
 	{
-		var indexPrefix = "catalog-data-";
+		var suffix = Guid.NewGuid().ToString("N")[..8];
+		var indexPrefix = $"catalog-data-{suffix}-";
 		var slim = new CountdownEvent(1);
 		var options = new IndexChannelOptions<CatalogDocument>(Client.Transport)
 		{
@@ -78,7 +79,8 @@ public class IndexIngestionTests : IntegrationTestBase
 	[Fact]
 	public async Task UseCustomEventWriter()
 	{
-		var indexPrefix = "custom-catalog-data-";
+		var suffix = Guid.NewGuid().ToString("N")[..8];
+		var indexPrefix = $"custom-catalog-data-{suffix}-";
 		var slim = new CountdownEvent(1);
 		var options = new IndexChannelOptions<CatalogDocument>(Client.Transport)
 		{

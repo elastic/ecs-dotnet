@@ -148,6 +148,36 @@ namespace Elastic.CommonSchema
 	}
 
 	///<summary>
+	/// A set of static or semi-static attributes of the entity. Usually boolean or keyword field data types. Use this field set when you need to track static or semi-static characteristics of an entity for advanced searching and correlation of normalized values across different providers/sources and entity types.
+	///</summary>
+	public class EntityAttributes : Dictionary<string, string> {
+	}
+
+	///<summary>
+	/// A set of ephemeral characteristics of the entity, derived from observed behaviors during a specific time period. Usually boolean field data type. Use this field set when you need to capture and track ephemeral characteristics of an entity for advanced searching, correlation of normalized values across different providers/sources and entity types.
+	///</summary>
+	public class EntityBehavior : Dictionary<string, string> {
+	}
+
+	///<summary>
+	/// A set of temporal characteristics of the entity. Usually date field data type. Use this field set when you need to track temporal characteristics of an entity for advanced searching and correlation of normalized values across different providers/sources and entity types.
+	///</summary>
+	public class EntityLifecycle : Dictionary<string, string> {
+	}
+
+	///<summary>
+	/// Field set for any fields containing numeric entity metrics. These use dynamic field data type mapping.
+	///</summary>
+	public class EntityMetrics : Dictionary<string, string> {
+	}
+
+	///<summary>
+	/// Original, unmodified fields from the source system. Usually flattened field data type. While the attributes field should be used for normalized fields requiring advanced queries, this field preserves all source metadata with basic search capabilities.
+	///</summary>
+	public class EntityRaw : Dictionary<string, string> {
+	}
+
+	///<summary>
 	/// The Syslog metadata of the event, if the event was transmitted via Syslog. Please see RFCs 5424 or 3164.
 	///</summary>
 	public class LogSyslog {

@@ -41,6 +41,12 @@ namespace Elastic.CommonSchema
 		public User? User { get; set; }
 	}
 
+	///<summary> Interface for entities that can assign an IEntity: Cloud, Host, Orchestrator, Service, User</summary>
+	public interface IEntity {
+		///<summary>entity</summary>
+		public Entity? Entity { get; set; }
+	}
+
 	///<summary> Interface for entities that can assign an ICloudOrigin: Cloud</summary>
 	public interface ICloudOrigin {
 		///<summary>origin</summary>
@@ -71,6 +77,12 @@ namespace Elastic.CommonSchema
 		public CodeSignature? CodeSignature { get; set; }
 	}
 
+	///<summary> Interface for entities that can assign an IEntityTarget: Entity</summary>
+	public interface IEntityTarget {
+		///<summary>target</summary>
+		public EntityTarget? Target { get; set; }
+	}
+
 	///<summary> Interface for entities that can assign an IX509: File</summary>
 	public interface IX509 {
 		///<summary>x509</summary>
@@ -99,6 +111,12 @@ namespace Elastic.CommonSchema
 	public interface IRisk {
 		///<summary>risk</summary>
 		public Risk? Risk { get; set; }
+	}
+
+	///<summary> Interface for entities that can assign an IHostTarget: Host</summary>
+	public interface IHostTarget {
+		///<summary>target</summary>
+		public HostTarget? Target { get; set; }
 	}
 
 	///<summary> Interface for entities that can assign an IVlan: Network</summary>

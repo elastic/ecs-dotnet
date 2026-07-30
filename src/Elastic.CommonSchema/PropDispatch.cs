@@ -73,6 +73,32 @@ internal static partial class PropDispatch
 		}
 	}
 
+	private static bool TrySetInt<T>(T target, object value, Action<T, int> set)
+	{
+		if (!TrySetInt(value, out var b)) return false;
+		set(target, b);
+		return true;
+	}
+
+	private static bool TrySetInt(object value, out int i)
+	{
+		i = default;
+		switch (value)
+		{
+			case int ii:
+				i = ii;
+				return true;
+			case long l:
+				i = (int)l;
+				return true;
+			case string s when int.TryParse(s, NumberStyles.None, CultureInfo.InvariantCulture, out var ii):
+				i = ii;
+				return true;
+			default:
+				return false;
+		}
+	}
+
 	private static bool TrySetFloat(object value, out float f)
 	{
 		f = default;

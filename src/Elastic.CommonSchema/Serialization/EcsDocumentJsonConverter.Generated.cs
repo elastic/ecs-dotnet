@@ -56,10 +56,12 @@ namespace Elastic.CommonSchema.Serialization
 				"ecs" => ReadProp<Ecs>(ref reader, "ecs", EcsJsonContext.Default.Ecs, ecsEvent, (b, v) => b.Ecs = v),
 				"elf" => ReadProp<Elf>(ref reader, "elf", EcsJsonContext.Default.Elf, ecsEvent, (b, v) => b.Elf = v),
 				"email" => ReadProp<Email>(ref reader, "email", EcsJsonContext.Default.Email, ecsEvent, (b, v) => b.Email = v),
+				"entity" => ReadProp<Entity>(ref reader, "entity", EcsJsonContext.Default.Entity, ecsEvent, (b, v) => b.Entity = v),
 				"error" => ReadProp<Error>(ref reader, "error", EcsJsonContext.Default.Error, ecsEvent, (b, v) => b.Error = v),
 				"event" => ReadProp<Event>(ref reader, "event", EcsJsonContext.Default.Event, ecsEvent, (b, v) => b.Event = v),
 				"faas" => ReadProp<Faas>(ref reader, "faas", EcsJsonContext.Default.Faas, ecsEvent, (b, v) => b.Faas = v),
 				"file" => ReadProp<File>(ref reader, "file", EcsJsonContext.Default.File, ecsEvent, (b, v) => b.File = v),
+				"gen_ai" => ReadProp<GenAi>(ref reader, "gen_ai", EcsJsonContext.Default.GenAi, ecsEvent, (b, v) => b.GenAi = v),
 				"geo" => ReadProp<Geo>(ref reader, "geo", EcsJsonContext.Default.Geo, ecsEvent, (b, v) => b.Geo = v),
 				"group" => ReadProp<Group>(ref reader, "group", EcsJsonContext.Default.Group, ecsEvent, (b, v) => b.Group = v),
 				"hash" => ReadProp<Hash>(ref reader, "hash", EcsJsonContext.Default.Hash, ecsEvent, (b, v) => b.Hash = v),
@@ -139,10 +141,12 @@ namespace Elastic.CommonSchema.Serialization
 			WriteProp(writer, "dns", value.Dns, EcsJsonContext.Default.Dns, options);
 			WriteProp(writer, "elf", value.Elf, EcsJsonContext.Default.Elf, options);
 			WriteProp(writer, "email", value.Email, EcsJsonContext.Default.Email, options);
+			WriteProp(writer, "entity", value.Entity, EcsJsonContext.Default.Entity, options);
 			WriteProp(writer, "error", value.Error, EcsJsonContext.Default.Error, options);
 			WriteProp(writer, "event", value.Event, EcsJsonContext.Default.Event, options);
 			WriteProp(writer, "faas", value.Faas, EcsJsonContext.Default.Faas, options);
 			WriteProp(writer, "file", value.File, EcsJsonContext.Default.File, options);
+			WriteProp(writer, "gen_ai", value.GenAi, EcsJsonContext.Default.GenAi, options);
 			WriteProp(writer, "geo", value.Geo, EcsJsonContext.Default.Geo, options);
 			WriteProp(writer, "group", value.Group, EcsJsonContext.Default.Group, options);
 			WriteProp(writer, "hash", value.Hash, EcsJsonContext.Default.Hash, options);

@@ -54,7 +54,7 @@ namespace Elastic.Serilog.Sinks.IntegrationTests
 
 			var loggerConfig = new LoggerConfiguration()
 				.MinimumLevel.Information()
-				.WriteTo.ColoredConsole()
+				.WriteTo.Console()
 				.WriteTo.Elasticsearch(SinkOptions);
 
 			using var logger = loggerConfig.CreateLogger();

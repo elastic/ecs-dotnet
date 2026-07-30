@@ -24,13 +24,13 @@ using Elastic.CommonSchema.Serialization;
 namespace Elastic.CommonSchema
 {
 	///<inheritdoc cref="BaseFieldSet"/>
-	public partial class EcsDocument : BaseFieldSet , IAs, ICodeSignature, IElf, IGeo, IGroup, IHash, IMacho, IOs, IPe, IRisk, IUser, IVlan, IX509
+	public partial class EcsDocument : BaseFieldSet , IAs, ICodeSignature, IElf, IEntity, IGeo, IGroup, IHash, IMacho, IOs, IPe, IRisk, IUser, IVlan, IX509
 	{
 
 		/// <summary>
-		/// Elastic Common Schema version 9.0.0
+		/// Elastic Common Schema version 9.3.0
 		/// </summary>
-		public static string Version => "9.0.0";
+		public static string Version => "9.3.0";
 
 		/// <summary>
 		/// Container for additional metadata against this event.
@@ -100,6 +100,10 @@ namespace Elastic.CommonSchema
 		[JsonPropertyName("email"), DataMember(Name = "email")]
 		public Email? Email { get; set; }
 
+		///<summary>entity</summary>
+		[JsonPropertyName("entity"), DataMember(Name = "entity")]
+		public Entity? Entity { get; set; }
+
 		///<summary>error</summary>
 		[JsonPropertyName("error"), DataMember(Name = "error")]
 		public Error? Error { get; set; }
@@ -115,6 +119,10 @@ namespace Elastic.CommonSchema
 		///<summary>file</summary>
 		[JsonPropertyName("file"), DataMember(Name = "file")]
 		public File? File { get; set; }
+
+		///<summary>gen_ai</summary>
+		[JsonPropertyName("gen_ai"), DataMember(Name = "gen_ai")]
+		public GenAi? GenAi { get; set; }
 
 		///<summary>geo</summary>
 		[JsonPropertyName("geo"), DataMember(Name = "geo")]

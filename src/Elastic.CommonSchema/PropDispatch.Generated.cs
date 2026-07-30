@@ -227,6 +227,18 @@ namespace Elastic.CommonSchema
 							SetMetaOrLabel(document, $"Email{kvp.Key}", kvp.Value);
 					}
 					return true;
+				case "entity" when value is Entity @entity:
+					document.Entity = @entity;
+					return true;
+				case "entity" when value is Dictionary<string, object> @entity:
+					if (!TypeCheck(@entity, LogTemplateEntities.Entity)) return false;
+					foreach (var kvp in @entity)
+					{
+						if (kvp.Value == null || kvp.Key == "$type") continue;
+						if (!TrySetEntity(document, $"Entity{kvp.Key}", kvp.Value))
+							SetMetaOrLabel(document, $"Entity{kvp.Key}", kvp.Value);
+					}
+					return true;
 				case "error" when value is Error @error:
 					document.Error = @error;
 					return true;
@@ -273,6 +285,18 @@ namespace Elastic.CommonSchema
 						if (kvp.Value == null || kvp.Key == "$type") continue;
 						if (!TrySetFile(document, $"File{kvp.Key}", kvp.Value))
 							SetMetaOrLabel(document, $"File{kvp.Key}", kvp.Value);
+					}
+					return true;
+				case "genai" when value is GenAi @genai:
+					document.GenAi = @genai;
+					return true;
+				case "genai" when value is Dictionary<string, object> @genai:
+					if (!TypeCheck(@genai, LogTemplateEntities.GenAi)) return false;
+					foreach (var kvp in @genai)
+					{
+						if (kvp.Value == null || kvp.Key == "$type") continue;
+						if (!TrySetGenAi(document, $"GenAi{kvp.Key}", kvp.Value))
+							SetMetaOrLabel(document, $"GenAi{kvp.Key}", kvp.Value);
 					}
 					return true;
 				case "geo" when value is Geo @geo:
@@ -765,6 +789,20 @@ namespace Elastic.CommonSchema
 				case "ClientUserGroupId":
 				case "client.user.group.name":
 				case "ClientUserGroupName":
+				case "client.user.entity.display_name":
+				case "ClientUserEntityDisplayName":
+				case "client.user.entity.id":
+				case "ClientUserEntityId":
+				case "client.user.entity.last_seen_timestamp":
+				case "ClientUserEntityLastSeenTimestamp":
+				case "client.user.entity.name":
+				case "ClientUserEntityName":
+				case "client.user.entity.reference":
+				case "ClientUserEntityReference":
+				case "client.user.entity.source":
+				case "ClientUserEntitySource":
+				case "client.user.entity.sub_type":
+				case "ClientUserEntitySubType":
 				case "client.user.risk.calculated_level":
 				case "ClientUserRiskCalculatedLevel":
 				case "client.user.risk.calculated_score":
@@ -800,6 +838,20 @@ namespace Elastic.CommonSchema
 				case "CloudRegion":
 				case "cloud.service.name":
 				case "CloudServiceName":
+				case "cloud.entity.display_name":
+				case "CloudEntityDisplayName":
+				case "cloud.entity.id":
+				case "CloudEntityId":
+				case "cloud.entity.last_seen_timestamp":
+				case "CloudEntityLastSeenTimestamp":
+				case "cloud.entity.name":
+				case "CloudEntityName":
+				case "cloud.entity.reference":
+				case "CloudEntityReference":
+				case "cloud.entity.source":
+				case "CloudEntitySource":
+				case "cloud.entity.sub_type":
+				case "CloudEntitySubType":
 					return TrySetCloud(document, path, value);
 				case "code_signature.digest_algorithm":
 				case "CodeSignatureDigestAlgorithm":
@@ -815,6 +867,8 @@ namespace Elastic.CommonSchema
 				case "CodeSignatureSubjectName":
 				case "code_signature.team_id":
 				case "CodeSignatureTeamId":
+				case "code_signature.thumbprint_sha256":
+				case "CodeSignatureThumbprintSha256":
 				case "code_signature.timestamp":
 				case "CodeSignatureTimestamp":
 				case "code_signature.trusted":
@@ -920,6 +974,20 @@ namespace Elastic.CommonSchema
 				case "DestinationUserGroupId":
 				case "destination.user.group.name":
 				case "DestinationUserGroupName":
+				case "destination.user.entity.display_name":
+				case "DestinationUserEntityDisplayName":
+				case "destination.user.entity.id":
+				case "DestinationUserEntityId":
+				case "destination.user.entity.last_seen_timestamp":
+				case "DestinationUserEntityLastSeenTimestamp":
+				case "destination.user.entity.name":
+				case "DestinationUserEntityName":
+				case "destination.user.entity.reference":
+				case "DestinationUserEntityReference":
+				case "destination.user.entity.source":
+				case "DestinationUserEntitySource":
+				case "destination.user.entity.sub_type":
+				case "DestinationUserEntitySubType":
 				case "destination.user.risk.calculated_level":
 				case "DestinationUserRiskCalculatedLevel":
 				case "destination.user.risk.calculated_score":
@@ -941,8 +1009,18 @@ namespace Elastic.CommonSchema
 				case "DeviceModelIdentifier":
 				case "device.model.name":
 				case "DeviceModelName":
+				case "device.product.id":
+				case "DeviceProductId":
+				case "device.product.name":
+				case "DeviceProductName":
 				case "device.serial_number":
 				case "DeviceSerialNumber":
+				case "device.type":
+				case "DeviceType":
+				case "device.vendor.id":
+				case "DeviceVendorId":
+				case "device.vendor.name":
+				case "DeviceVendorName":
 					return TrySetDevice(document, path, value);
 				case "dll.name":
 				case "DllName":
@@ -1014,6 +1092,8 @@ namespace Elastic.CommonSchema
 				case "DllCodeSignatureSubjectName":
 				case "dll.code_signature.team_id":
 				case "DllCodeSignatureTeamId":
+				case "dll.code_signature.thumbprint_sha256":
+				case "DllCodeSignatureThumbprintSha256":
 				case "dll.code_signature.timestamp":
 				case "DllCodeSignatureTimestamp":
 				case "dll.code_signature.trusted":
@@ -1107,6 +1187,21 @@ namespace Elastic.CommonSchema
 				case "email.x_mailer":
 				case "EmailXMailer":
 					return TrySetEmail(document, path, value);
+				case "entity.display_name":
+				case "EntityDisplayName":
+				case "entity.id":
+				case "EntityId":
+				case "entity.last_seen_timestamp":
+				case "EntityLastSeenTimestamp":
+				case "entity.name":
+				case "EntityName":
+				case "entity.reference":
+				case "EntityReference":
+				case "entity.source":
+				case "EntitySource":
+				case "entity.sub_type":
+				case "EntitySubType":
+					return TrySetEntity(document, path, value);
 				case "error.code":
 				case "ErrorCode":
 				case "error.id":
@@ -1312,6 +1407,8 @@ namespace Elastic.CommonSchema
 				case "FileCodeSignatureSubjectName":
 				case "file.code_signature.team_id":
 				case "FileCodeSignatureTeamId":
+				case "file.code_signature.thumbprint_sha256":
+				case "FileCodeSignatureThumbprintSha256":
 				case "file.code_signature.timestamp":
 				case "FileCodeSignatureTimestamp":
 				case "file.code_signature.trusted":
@@ -1379,6 +1476,59 @@ namespace Elastic.CommonSchema
 				case "file.macho.symhash":
 				case "FileMachoSymhash":
 					return TrySetFile(document, path, value);
+				case "gen_ai.agent.description":
+				case "GenAiAgentDescription":
+				case "gen_ai.agent.id":
+				case "GenAiAgentId":
+				case "gen_ai.agent.name":
+				case "GenAiAgentName":
+				case "gen_ai.operation.name":
+				case "GenAiOperationName":
+				case "gen_ai.output.type":
+				case "GenAiOutputType":
+				case "gen_ai.request.choice.count":
+				case "GenAiRequestChoiceCount":
+				case "gen_ai.request.encoding_formats":
+				case "GenAiRequestEncodingFormats":
+				case "gen_ai.request.frequency_penalty":
+				case "GenAiRequestFrequencyPenalty":
+				case "gen_ai.request.max_tokens":
+				case "GenAiRequestMaxTokens":
+				case "gen_ai.request.model":
+				case "GenAiRequestModel":
+				case "gen_ai.request.presence_penalty":
+				case "GenAiRequestPresencePenalty":
+				case "gen_ai.request.seed":
+				case "GenAiRequestSeed":
+				case "gen_ai.request.stop_sequences":
+				case "GenAiRequestStopSequences":
+				case "gen_ai.request.temperature":
+				case "GenAiRequestTemperature":
+				case "gen_ai.request.top_k":
+				case "GenAiRequestTopK":
+				case "gen_ai.request.top_p":
+				case "GenAiRequestTopP":
+				case "gen_ai.response.finish_reasons":
+				case "GenAiResponseFinishReasons":
+				case "gen_ai.response.id":
+				case "GenAiResponseId":
+				case "gen_ai.response.model":
+				case "GenAiResponseModel":
+				case "gen_ai.system":
+				case "GenAiSystem":
+				case "gen_ai.token.type":
+				case "GenAiTokenType":
+				case "gen_ai.tool.call.id":
+				case "GenAiToolCallId":
+				case "gen_ai.tool.name":
+				case "GenAiToolName":
+				case "gen_ai.tool.type":
+				case "GenAiToolType":
+				case "gen_ai.usage.input_tokens":
+				case "GenAiUsageInputTokens":
+				case "gen_ai.usage.output_tokens":
+				case "GenAiUsageOutputTokens":
+					return TrySetGenAi(document, path, value);
 				case "geo.city_name":
 				case "GeoCityName":
 				case "geo.continent_code":
@@ -1458,6 +1608,20 @@ namespace Elastic.CommonSchema
 				case "HostType":
 				case "host.uptime":
 				case "HostUptime":
+				case "host.entity.display_name":
+				case "HostEntityDisplayName":
+				case "host.entity.id":
+				case "HostEntityId":
+				case "host.entity.last_seen_timestamp":
+				case "HostEntityLastSeenTimestamp":
+				case "host.entity.name":
+				case "HostEntityName":
+				case "host.entity.reference":
+				case "HostEntityReference":
+				case "host.entity.source":
+				case "HostEntitySource":
+				case "host.entity.sub_type":
+				case "HostEntitySubType":
 				case "host.geo.city_name":
 				case "HostGeoCityName":
 				case "host.geo.continent_code":
@@ -1675,6 +1839,20 @@ namespace Elastic.CommonSchema
 				case "OrchestratorResourceType":
 				case "orchestrator.type":
 				case "OrchestratorType":
+				case "orchestrator.entity.display_name":
+				case "OrchestratorEntityDisplayName":
+				case "orchestrator.entity.id":
+				case "OrchestratorEntityId":
+				case "orchestrator.entity.last_seen_timestamp":
+				case "OrchestratorEntityLastSeenTimestamp":
+				case "orchestrator.entity.name":
+				case "OrchestratorEntityName":
+				case "orchestrator.entity.reference":
+				case "OrchestratorEntityReference":
+				case "orchestrator.entity.source":
+				case "OrchestratorEntitySource":
+				case "orchestrator.entity.sub_type":
+				case "OrchestratorEntitySubType":
 					return TrySetOrchestrator(document, path, value);
 				case "organization.id":
 				case "OrganizationId":
@@ -1868,6 +2046,8 @@ namespace Elastic.CommonSchema
 				case "ProcessCodeSignatureSubjectName":
 				case "process.code_signature.team_id":
 				case "ProcessCodeSignatureTeamId":
+				case "process.code_signature.thumbprint_sha256":
+				case "ProcessCodeSignatureThumbprintSha256":
 				case "process.code_signature.timestamp":
 				case "ProcessCodeSignatureTimestamp":
 				case "process.code_signature.trusted":
@@ -2002,6 +2182,20 @@ namespace Elastic.CommonSchema
 				case "ProcessEntryMetaSourceUserGroupId":
 				case "process.entry_meta.source.user.group.name":
 				case "ProcessEntryMetaSourceUserGroupName":
+				case "process.entry_meta.source.user.entity.display_name":
+				case "ProcessEntryMetaSourceUserEntityDisplayName":
+				case "process.entry_meta.source.user.entity.id":
+				case "ProcessEntryMetaSourceUserEntityId":
+				case "process.entry_meta.source.user.entity.last_seen_timestamp":
+				case "ProcessEntryMetaSourceUserEntityLastSeenTimestamp":
+				case "process.entry_meta.source.user.entity.name":
+				case "ProcessEntryMetaSourceUserEntityName":
+				case "process.entry_meta.source.user.entity.reference":
+				case "ProcessEntryMetaSourceUserEntityReference":
+				case "process.entry_meta.source.user.entity.source":
+				case "ProcessEntryMetaSourceUserEntitySource":
+				case "process.entry_meta.source.user.entity.sub_type":
+				case "ProcessEntryMetaSourceUserEntitySubType":
 				case "process.entry_meta.source.user.risk.calculated_level":
 				case "ProcessEntryMetaSourceUserRiskCalculatedLevel":
 				case "process.entry_meta.source.user.risk.calculated_score":
@@ -2032,6 +2226,20 @@ namespace Elastic.CommonSchema
 				case "ProcessUserGroupId":
 				case "process.user.group.name":
 				case "ProcessUserGroupName":
+				case "process.user.entity.display_name":
+				case "ProcessUserEntityDisplayName":
+				case "process.user.entity.id":
+				case "ProcessUserEntityId":
+				case "process.user.entity.last_seen_timestamp":
+				case "ProcessUserEntityLastSeenTimestamp":
+				case "process.user.entity.name":
+				case "ProcessUserEntityName":
+				case "process.user.entity.reference":
+				case "ProcessUserEntityReference":
+				case "process.user.entity.source":
+				case "ProcessUserEntitySource":
+				case "process.user.entity.sub_type":
+				case "ProcessUserEntitySubType":
 				case "process.user.risk.calculated_level":
 				case "ProcessUserRiskCalculatedLevel":
 				case "process.user.risk.calculated_score":
@@ -2062,6 +2270,20 @@ namespace Elastic.CommonSchema
 				case "ProcessSavedUserGroupId":
 				case "process.saved_user.group.name":
 				case "ProcessSavedUserGroupName":
+				case "process.saved_user.entity.display_name":
+				case "ProcessSavedUserEntityDisplayName":
+				case "process.saved_user.entity.id":
+				case "ProcessSavedUserEntityId":
+				case "process.saved_user.entity.last_seen_timestamp":
+				case "ProcessSavedUserEntityLastSeenTimestamp":
+				case "process.saved_user.entity.name":
+				case "ProcessSavedUserEntityName":
+				case "process.saved_user.entity.reference":
+				case "ProcessSavedUserEntityReference":
+				case "process.saved_user.entity.source":
+				case "ProcessSavedUserEntitySource":
+				case "process.saved_user.entity.sub_type":
+				case "ProcessSavedUserEntitySubType":
 				case "process.saved_user.risk.calculated_level":
 				case "ProcessSavedUserRiskCalculatedLevel":
 				case "process.saved_user.risk.calculated_score":
@@ -2092,6 +2314,20 @@ namespace Elastic.CommonSchema
 				case "ProcessRealUserGroupId":
 				case "process.real_user.group.name":
 				case "ProcessRealUserGroupName":
+				case "process.real_user.entity.display_name":
+				case "ProcessRealUserEntityDisplayName":
+				case "process.real_user.entity.id":
+				case "ProcessRealUserEntityId":
+				case "process.real_user.entity.last_seen_timestamp":
+				case "ProcessRealUserEntityLastSeenTimestamp":
+				case "process.real_user.entity.name":
+				case "ProcessRealUserEntityName":
+				case "process.real_user.entity.reference":
+				case "ProcessRealUserEntityReference":
+				case "process.real_user.entity.source":
+				case "ProcessRealUserEntitySource":
+				case "process.real_user.entity.sub_type":
+				case "ProcessRealUserEntitySubType":
 				case "process.real_user.risk.calculated_level":
 				case "ProcessRealUserRiskCalculatedLevel":
 				case "process.real_user.risk.calculated_score":
@@ -2122,6 +2358,20 @@ namespace Elastic.CommonSchema
 				case "ProcessAttestedUserGroupId":
 				case "process.attested_user.group.name":
 				case "ProcessAttestedUserGroupName":
+				case "process.attested_user.entity.display_name":
+				case "ProcessAttestedUserEntityDisplayName":
+				case "process.attested_user.entity.id":
+				case "ProcessAttestedUserEntityId":
+				case "process.attested_user.entity.last_seen_timestamp":
+				case "ProcessAttestedUserEntityLastSeenTimestamp":
+				case "process.attested_user.entity.name":
+				case "ProcessAttestedUserEntityName":
+				case "process.attested_user.entity.reference":
+				case "ProcessAttestedUserEntityReference":
+				case "process.attested_user.entity.source":
+				case "ProcessAttestedUserEntitySource":
+				case "process.attested_user.entity.sub_type":
+				case "ProcessAttestedUserEntitySubType":
 				case "process.attested_user.risk.calculated_level":
 				case "ProcessAttestedUserRiskCalculatedLevel":
 				case "process.attested_user.risk.calculated_score":
@@ -2248,6 +2498,20 @@ namespace Elastic.CommonSchema
 				case "ServerUserGroupId":
 				case "server.user.group.name":
 				case "ServerUserGroupName":
+				case "server.user.entity.display_name":
+				case "ServerUserEntityDisplayName":
+				case "server.user.entity.id":
+				case "ServerUserEntityId":
+				case "server.user.entity.last_seen_timestamp":
+				case "ServerUserEntityLastSeenTimestamp":
+				case "server.user.entity.name":
+				case "ServerUserEntityName":
+				case "server.user.entity.reference":
+				case "ServerUserEntityReference":
+				case "server.user.entity.source":
+				case "ServerUserEntitySource":
+				case "server.user.entity.sub_type":
+				case "ServerUserEntitySubType":
 				case "server.user.risk.calculated_level":
 				case "ServerUserRiskCalculatedLevel":
 				case "server.user.risk.calculated_score":
@@ -2281,6 +2545,20 @@ namespace Elastic.CommonSchema
 				case "ServiceType":
 				case "service.version":
 				case "ServiceVersion":
+				case "service.entity.display_name":
+				case "ServiceEntityDisplayName":
+				case "service.entity.id":
+				case "ServiceEntityId":
+				case "service.entity.last_seen_timestamp":
+				case "ServiceEntityLastSeenTimestamp":
+				case "service.entity.name":
+				case "ServiceEntityName":
+				case "service.entity.reference":
+				case "ServiceEntityReference":
+				case "service.entity.source":
+				case "ServiceEntitySource":
+				case "service.entity.sub_type":
+				case "ServiceEntitySubType":
 					return TrySetService(document, path, value);
 				case "source.address":
 				case "SourceAddress":
@@ -2350,6 +2628,20 @@ namespace Elastic.CommonSchema
 				case "SourceUserGroupId":
 				case "source.user.group.name":
 				case "SourceUserGroupName":
+				case "source.user.entity.display_name":
+				case "SourceUserEntityDisplayName":
+				case "source.user.entity.id":
+				case "SourceUserEntityId":
+				case "source.user.entity.last_seen_timestamp":
+				case "SourceUserEntityLastSeenTimestamp":
+				case "source.user.entity.name":
+				case "SourceUserEntityName":
+				case "source.user.entity.reference":
+				case "SourceUserEntityReference":
+				case "source.user.entity.source":
+				case "SourceUserEntitySource":
+				case "source.user.entity.sub_type":
+				case "SourceUserEntitySubType":
 				case "source.user.risk.calculated_level":
 				case "SourceUserRiskCalculatedLevel":
 				case "source.user.risk.calculated_score":
@@ -2575,6 +2867,8 @@ namespace Elastic.CommonSchema
 				case "ThreatIndicatorFileCodeSignatureSubjectName":
 				case "threat.indicator.file.code_signature.team_id":
 				case "ThreatIndicatorFileCodeSignatureTeamId":
+				case "threat.indicator.file.code_signature.thumbprint_sha256":
+				case "ThreatIndicatorFileCodeSignatureThumbprintSha256":
 				case "threat.indicator.file.code_signature.timestamp":
 				case "ThreatIndicatorFileCodeSignatureTimestamp":
 				case "threat.indicator.file.code_signature.trusted":
@@ -2826,6 +3120,20 @@ namespace Elastic.CommonSchema
 				case "UserGroupId":
 				case "user.group.name":
 				case "UserGroupName":
+				case "user.entity.display_name":
+				case "UserEntityDisplayName":
+				case "user.entity.id":
+				case "UserEntityId":
+				case "user.entity.last_seen_timestamp":
+				case "UserEntityLastSeenTimestamp":
+				case "user.entity.name":
+				case "UserEntityName":
+				case "user.entity.reference":
+				case "UserEntityReference":
+				case "user.entity.source":
+				case "UserEntitySource":
+				case "user.entity.sub_type":
+				case "UserEntitySubType":
 				case "user.risk.calculated_level":
 				case "UserRiskCalculatedLevel":
 				case "user.risk.calculated_score":
@@ -3098,6 +3406,20 @@ namespace Elastic.CommonSchema
 				"ClientUserGroupId" => static (e, v) => TryAssignUser("user.group.id")(e.User ??= new User(),v),
 				"client.user.group.name" => static (e, v) => TryAssignUser("user.group.name")(e.User ??= new User(),v),
 				"ClientUserGroupName" => static (e, v) => TryAssignUser("user.group.name")(e.User ??= new User(),v),
+				"client.user.entity.display_name" => static (e, v) => TryAssignUser("user.entity.display_name")(e.User ??= new User(),v),
+				"ClientUserEntityDisplayName" => static (e, v) => TryAssignUser("user.entity.display_name")(e.User ??= new User(),v),
+				"client.user.entity.id" => static (e, v) => TryAssignUser("user.entity.id")(e.User ??= new User(),v),
+				"ClientUserEntityId" => static (e, v) => TryAssignUser("user.entity.id")(e.User ??= new User(),v),
+				"client.user.entity.last_seen_timestamp" => static (e, v) => TryAssignUser("user.entity.last_seen_timestamp")(e.User ??= new User(),v),
+				"ClientUserEntityLastSeenTimestamp" => static (e, v) => TryAssignUser("user.entity.last_seen_timestamp")(e.User ??= new User(),v),
+				"client.user.entity.name" => static (e, v) => TryAssignUser("user.entity.name")(e.User ??= new User(),v),
+				"ClientUserEntityName" => static (e, v) => TryAssignUser("user.entity.name")(e.User ??= new User(),v),
+				"client.user.entity.reference" => static (e, v) => TryAssignUser("user.entity.reference")(e.User ??= new User(),v),
+				"ClientUserEntityReference" => static (e, v) => TryAssignUser("user.entity.reference")(e.User ??= new User(),v),
+				"client.user.entity.source" => static (e, v) => TryAssignUser("user.entity.source")(e.User ??= new User(),v),
+				"ClientUserEntitySource" => static (e, v) => TryAssignUser("user.entity.source")(e.User ??= new User(),v),
+				"client.user.entity.sub_type" => static (e, v) => TryAssignUser("user.entity.sub_type")(e.User ??= new User(),v),
+				"ClientUserEntitySubType" => static (e, v) => TryAssignUser("user.entity.sub_type")(e.User ??= new User(),v),
 				"client.user.risk.calculated_level" => static (e, v) => TryAssignUser("user.risk.calculated_level")(e.User ??= new User(),v),
 				"ClientUserRiskCalculatedLevel" => static (e, v) => TryAssignUser("user.risk.calculated_level")(e.User ??= new User(),v),
 				"client.user.risk.calculated_score" => static (e, v) => TryAssignUser("user.risk.calculated_score")(e.User ??= new User(),v),
@@ -3151,6 +3473,20 @@ namespace Elastic.CommonSchema
 				"CloudRegion" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Region = p),
 				"cloud.service.name" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.ServiceName = p),
 				"CloudServiceName" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.ServiceName = p),
+				"cloud.entity.display_name" => static (e, v) => TryAssignEntity("entity.display_name")(e.Entity ??= new Entity(),v),
+				"CloudEntityDisplayName" => static (e, v) => TryAssignEntity("entity.display_name")(e.Entity ??= new Entity(),v),
+				"cloud.entity.id" => static (e, v) => TryAssignEntity("entity.id")(e.Entity ??= new Entity(),v),
+				"CloudEntityId" => static (e, v) => TryAssignEntity("entity.id")(e.Entity ??= new Entity(),v),
+				"cloud.entity.last_seen_timestamp" => static (e, v) => TryAssignEntity("entity.last_seen_timestamp")(e.Entity ??= new Entity(),v),
+				"CloudEntityLastSeenTimestamp" => static (e, v) => TryAssignEntity("entity.last_seen_timestamp")(e.Entity ??= new Entity(),v),
+				"cloud.entity.name" => static (e, v) => TryAssignEntity("entity.name")(e.Entity ??= new Entity(),v),
+				"CloudEntityName" => static (e, v) => TryAssignEntity("entity.name")(e.Entity ??= new Entity(),v),
+				"cloud.entity.reference" => static (e, v) => TryAssignEntity("entity.reference")(e.Entity ??= new Entity(),v),
+				"CloudEntityReference" => static (e, v) => TryAssignEntity("entity.reference")(e.Entity ??= new Entity(),v),
+				"cloud.entity.source" => static (e, v) => TryAssignEntity("entity.source")(e.Entity ??= new Entity(),v),
+				"CloudEntitySource" => static (e, v) => TryAssignEntity("entity.source")(e.Entity ??= new Entity(),v),
+				"cloud.entity.sub_type" => static (e, v) => TryAssignEntity("entity.sub_type")(e.Entity ??= new Entity(),v),
+				"CloudEntitySubType" => static (e, v) => TryAssignEntity("entity.sub_type")(e.Entity ??= new Entity(),v),
 				_ => null
 			};
 			return assign;
@@ -3184,6 +3520,8 @@ namespace Elastic.CommonSchema
 				"CodeSignatureSubjectName" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.SubjectName = p),
 				"code_signature.team_id" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.TeamId = p),
 				"CodeSignatureTeamId" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.TeamId = p),
+				"code_signature.thumbprint_sha256" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.ThumbprintSha256 = p),
+				"CodeSignatureThumbprintSha256" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.ThumbprintSha256 = p),
 				"code_signature.timestamp" => static (e, v) => TrySetDateTimeOffset(e, v, static (ee, p) => ee.Timestamp = p),
 				"CodeSignatureTimestamp" => static (e, v) => TrySetDateTimeOffset(e, v, static (ee, p) => ee.Timestamp = p),
 				"code_signature.trusted" => static (e, v) => TrySetBool(e, v, static (ee, p) => ee.Trusted = p),
@@ -3343,6 +3681,20 @@ namespace Elastic.CommonSchema
 				"DestinationUserGroupId" => static (e, v) => TryAssignUser("user.group.id")(e.User ??= new User(),v),
 				"destination.user.group.name" => static (e, v) => TryAssignUser("user.group.name")(e.User ??= new User(),v),
 				"DestinationUserGroupName" => static (e, v) => TryAssignUser("user.group.name")(e.User ??= new User(),v),
+				"destination.user.entity.display_name" => static (e, v) => TryAssignUser("user.entity.display_name")(e.User ??= new User(),v),
+				"DestinationUserEntityDisplayName" => static (e, v) => TryAssignUser("user.entity.display_name")(e.User ??= new User(),v),
+				"destination.user.entity.id" => static (e, v) => TryAssignUser("user.entity.id")(e.User ??= new User(),v),
+				"DestinationUserEntityId" => static (e, v) => TryAssignUser("user.entity.id")(e.User ??= new User(),v),
+				"destination.user.entity.last_seen_timestamp" => static (e, v) => TryAssignUser("user.entity.last_seen_timestamp")(e.User ??= new User(),v),
+				"DestinationUserEntityLastSeenTimestamp" => static (e, v) => TryAssignUser("user.entity.last_seen_timestamp")(e.User ??= new User(),v),
+				"destination.user.entity.name" => static (e, v) => TryAssignUser("user.entity.name")(e.User ??= new User(),v),
+				"DestinationUserEntityName" => static (e, v) => TryAssignUser("user.entity.name")(e.User ??= new User(),v),
+				"destination.user.entity.reference" => static (e, v) => TryAssignUser("user.entity.reference")(e.User ??= new User(),v),
+				"DestinationUserEntityReference" => static (e, v) => TryAssignUser("user.entity.reference")(e.User ??= new User(),v),
+				"destination.user.entity.source" => static (e, v) => TryAssignUser("user.entity.source")(e.User ??= new User(),v),
+				"DestinationUserEntitySource" => static (e, v) => TryAssignUser("user.entity.source")(e.User ??= new User(),v),
+				"destination.user.entity.sub_type" => static (e, v) => TryAssignUser("user.entity.sub_type")(e.User ??= new User(),v),
+				"DestinationUserEntitySubType" => static (e, v) => TryAssignUser("user.entity.sub_type")(e.User ??= new User(),v),
 				"destination.user.risk.calculated_level" => static (e, v) => TryAssignUser("user.risk.calculated_level")(e.User ??= new User(),v),
 				"DestinationUserRiskCalculatedLevel" => static (e, v) => TryAssignUser("user.risk.calculated_level")(e.User ??= new User(),v),
 				"destination.user.risk.calculated_score" => static (e, v) => TryAssignUser("user.risk.calculated_score")(e.User ??= new User(),v),
@@ -3382,8 +3734,18 @@ namespace Elastic.CommonSchema
 				"DeviceModelIdentifier" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.ModelIdentifier = p),
 				"device.model.name" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.ModelName = p),
 				"DeviceModelName" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.ModelName = p),
+				"device.product.id" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.ProductId = p),
+				"DeviceProductId" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.ProductId = p),
+				"device.product.name" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.ProductName = p),
+				"DeviceProductName" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.ProductName = p),
 				"device.serial_number" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.SerialNumber = p),
 				"DeviceSerialNumber" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.SerialNumber = p),
+				"device.type" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Type = p),
+				"DeviceType" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Type = p),
+				"device.vendor.id" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.VendorId = p),
+				"DeviceVendorId" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.VendorId = p),
+				"device.vendor.name" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.VendorName = p),
+				"DeviceVendorName" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.VendorName = p),
 				_ => null
 			};
 			return assign;
@@ -3473,6 +3835,8 @@ namespace Elastic.CommonSchema
 				"DllCodeSignatureSubjectName" => static (e, v) => TryAssignCodeSignature("code_signature.subject_name")(e.CodeSignature ??= new CodeSignature(),v),
 				"dll.code_signature.team_id" => static (e, v) => TryAssignCodeSignature("code_signature.team_id")(e.CodeSignature ??= new CodeSignature(),v),
 				"DllCodeSignatureTeamId" => static (e, v) => TryAssignCodeSignature("code_signature.team_id")(e.CodeSignature ??= new CodeSignature(),v),
+				"dll.code_signature.thumbprint_sha256" => static (e, v) => TryAssignCodeSignature("code_signature.thumbprint_sha256")(e.CodeSignature ??= new CodeSignature(),v),
+				"DllCodeSignatureThumbprintSha256" => static (e, v) => TryAssignCodeSignature("code_signature.thumbprint_sha256")(e.CodeSignature ??= new CodeSignature(),v),
 				"dll.code_signature.timestamp" => static (e, v) => TryAssignCodeSignature("code_signature.timestamp")(e.CodeSignature ??= new CodeSignature(),v),
 				"DllCodeSignatureTimestamp" => static (e, v) => TryAssignCodeSignature("code_signature.timestamp")(e.CodeSignature ??= new CodeSignature(),v),
 				"dll.code_signature.trusted" => static (e, v) => TryAssignCodeSignature("code_signature.trusted")(e.CodeSignature ??= new CodeSignature(),v),
@@ -3649,6 +4013,39 @@ namespace Elastic.CommonSchema
 			var entity = document.Email ?? new Email();
 			var assigned = assign(entity, value);
 			if (assigned) document.Email = entity;
+			return assigned;
+		}
+
+		public static Func<Entity, object, bool> TryAssignEntity(string path)
+		{
+			Func<Entity, object, bool> assign = path switch
+			{
+				"entity.display_name" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.DisplayName = p),
+				"EntityDisplayName" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.DisplayName = p),
+				"entity.id" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Id = p),
+				"EntityId" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Id = p),
+				"entity.last_seen_timestamp" => static (e, v) => TrySetDateTimeOffset(e, v, static (ee, p) => ee.LastSeenTimestamp = p),
+				"EntityLastSeenTimestamp" => static (e, v) => TrySetDateTimeOffset(e, v, static (ee, p) => ee.LastSeenTimestamp = p),
+				"entity.name" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Name = p),
+				"EntityName" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Name = p),
+				"entity.reference" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Reference = p),
+				"EntityReference" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Reference = p),
+				"entity.source" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Source = p),
+				"EntitySource" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Source = p),
+				"entity.sub_type" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.SubType = p),
+				"EntitySubType" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.SubType = p),
+				_ => null
+			};
+			return assign;
+		}
+		public static bool TrySetEntity(IEntity document, string path, object value)
+		{
+			var assign = TryAssignEntity(path);
+			if (assign == null) return false;
+		
+			var entity = document.Entity ?? new Entity();
+			var assigned = assign(entity, value);
+			if (assigned) document.Entity = entity;
 			return assigned;
 		}
 
@@ -3915,6 +4312,8 @@ namespace Elastic.CommonSchema
 				"FileCodeSignatureSubjectName" => static (e, v) => TryAssignCodeSignature("code_signature.subject_name")(e.CodeSignature ??= new CodeSignature(),v),
 				"file.code_signature.team_id" => static (e, v) => TryAssignCodeSignature("code_signature.team_id")(e.CodeSignature ??= new CodeSignature(),v),
 				"FileCodeSignatureTeamId" => static (e, v) => TryAssignCodeSignature("code_signature.team_id")(e.CodeSignature ??= new CodeSignature(),v),
+				"file.code_signature.thumbprint_sha256" => static (e, v) => TryAssignCodeSignature("code_signature.thumbprint_sha256")(e.CodeSignature ??= new CodeSignature(),v),
+				"FileCodeSignatureThumbprintSha256" => static (e, v) => TryAssignCodeSignature("code_signature.thumbprint_sha256")(e.CodeSignature ??= new CodeSignature(),v),
 				"file.code_signature.timestamp" => static (e, v) => TryAssignCodeSignature("code_signature.timestamp")(e.CodeSignature ??= new CodeSignature(),v),
 				"FileCodeSignatureTimestamp" => static (e, v) => TryAssignCodeSignature("code_signature.timestamp")(e.CodeSignature ??= new CodeSignature(),v),
 				"file.code_signature.trusted" => static (e, v) => TryAssignCodeSignature("code_signature.trusted")(e.CodeSignature ??= new CodeSignature(),v),
@@ -3996,6 +4395,71 @@ namespace Elastic.CommonSchema
 			return assigned;
 		}
 
+		public static Func<GenAi, object, bool> TryAssignGenAi(string path)
+		{
+			Func<GenAi, object, bool> assign = path switch
+			{
+				"gen_ai.agent.description" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.AgentDescription = p),
+				"GenAiAgentDescription" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.AgentDescription = p),
+				"gen_ai.agent.id" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.AgentId = p),
+				"GenAiAgentId" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.AgentId = p),
+				"gen_ai.agent.name" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.AgentName = p),
+				"GenAiAgentName" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.AgentName = p),
+				"gen_ai.operation.name" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.OperationName = p),
+				"GenAiOperationName" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.OperationName = p),
+				"gen_ai.output.type" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.OutputType = p),
+				"GenAiOutputType" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.OutputType = p),
+				"gen_ai.request.choice.count" => static (e, v) => TrySetInt(e, v, static (ee, p) => ee.RequestChoiceCount = p),
+				"GenAiRequestChoiceCount" => static (e, v) => TrySetInt(e, v, static (ee, p) => ee.RequestChoiceCount = p),
+				"gen_ai.request.frequency_penalty" => static (e, v) => TrySetFloat(e, v, static (ee, p) => ee.RequestFrequencyPenalty = p),
+				"GenAiRequestFrequencyPenalty" => static (e, v) => TrySetFloat(e, v, static (ee, p) => ee.RequestFrequencyPenalty = p),
+				"gen_ai.request.max_tokens" => static (e, v) => TrySetInt(e, v, static (ee, p) => ee.RequestMaxTokens = p),
+				"GenAiRequestMaxTokens" => static (e, v) => TrySetInt(e, v, static (ee, p) => ee.RequestMaxTokens = p),
+				"gen_ai.request.model" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.RequestModel = p),
+				"GenAiRequestModel" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.RequestModel = p),
+				"gen_ai.request.presence_penalty" => static (e, v) => TrySetFloat(e, v, static (ee, p) => ee.RequestPresencePenalty = p),
+				"GenAiRequestPresencePenalty" => static (e, v) => TrySetFloat(e, v, static (ee, p) => ee.RequestPresencePenalty = p),
+				"gen_ai.request.seed" => static (e, v) => TrySetInt(e, v, static (ee, p) => ee.RequestSeed = p),
+				"GenAiRequestSeed" => static (e, v) => TrySetInt(e, v, static (ee, p) => ee.RequestSeed = p),
+				"gen_ai.request.temperature" => static (e, v) => TrySetFloat(e, v, static (ee, p) => ee.RequestTemperature = p),
+				"GenAiRequestTemperature" => static (e, v) => TrySetFloat(e, v, static (ee, p) => ee.RequestTemperature = p),
+				"gen_ai.request.top_k" => static (e, v) => TrySetFloat(e, v, static (ee, p) => ee.RequestTopK = p),
+				"GenAiRequestTopK" => static (e, v) => TrySetFloat(e, v, static (ee, p) => ee.RequestTopK = p),
+				"gen_ai.request.top_p" => static (e, v) => TrySetFloat(e, v, static (ee, p) => ee.RequestTopP = p),
+				"GenAiRequestTopP" => static (e, v) => TrySetFloat(e, v, static (ee, p) => ee.RequestTopP = p),
+				"gen_ai.response.id" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.ResponseId = p),
+				"GenAiResponseId" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.ResponseId = p),
+				"gen_ai.response.model" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.ResponseModel = p),
+				"GenAiResponseModel" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.ResponseModel = p),
+				"gen_ai.system" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.System = p),
+				"GenAiSystem" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.System = p),
+				"gen_ai.token.type" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.TokenType = p),
+				"GenAiTokenType" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.TokenType = p),
+				"gen_ai.tool.call.id" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.ToolCallId = p),
+				"GenAiToolCallId" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.ToolCallId = p),
+				"gen_ai.tool.name" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.ToolName = p),
+				"GenAiToolName" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.ToolName = p),
+				"gen_ai.tool.type" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.ToolType = p),
+				"GenAiToolType" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.ToolType = p),
+				"gen_ai.usage.input_tokens" => static (e, v) => TrySetInt(e, v, static (ee, p) => ee.UsageInputTokens = p),
+				"GenAiUsageInputTokens" => static (e, v) => TrySetInt(e, v, static (ee, p) => ee.UsageInputTokens = p),
+				"gen_ai.usage.output_tokens" => static (e, v) => TrySetInt(e, v, static (ee, p) => ee.UsageOutputTokens = p),
+				"GenAiUsageOutputTokens" => static (e, v) => TrySetInt(e, v, static (ee, p) => ee.UsageOutputTokens = p),
+				_ => null
+			};
+			return assign;
+		}
+		public static bool TrySetGenAi(EcsDocument document, string path, object value)
+		{
+			var assign = TryAssignGenAi(path);
+			if (assign == null) return false;
+		
+			var entity = document.GenAi ?? new GenAi();
+			var assigned = assign(entity, value);
+			if (assigned) document.GenAi = entity;
+			return assigned;
+		}
+
 		public static Func<Geo, object, bool> TryAssignGeo(string path)
 		{
 			Func<Geo, object, bool> assign = path switch
@@ -4010,8 +4474,6 @@ namespace Elastic.CommonSchema
 				"GeoCountryIsoCode" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.CountryIsoCode = p),
 				"geo.country_name" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.CountryName = p),
 				"GeoCountryName" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.CountryName = p),
-				"geo.location" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Location = p),
-				"GeoLocation" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Location = p),
 				"geo.name" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Name = p),
 				"GeoName" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Name = p),
 				"geo.postal_code" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.PostalCode = p),
@@ -4133,6 +4595,20 @@ namespace Elastic.CommonSchema
 				"HostType" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Type = p),
 				"host.uptime" => static (e, v) => TrySetLong(e, v, static (ee, p) => ee.Uptime = p),
 				"HostUptime" => static (e, v) => TrySetLong(e, v, static (ee, p) => ee.Uptime = p),
+				"host.entity.display_name" => static (e, v) => TryAssignEntity("entity.display_name")(e.Entity ??= new Entity(),v),
+				"HostEntityDisplayName" => static (e, v) => TryAssignEntity("entity.display_name")(e.Entity ??= new Entity(),v),
+				"host.entity.id" => static (e, v) => TryAssignEntity("entity.id")(e.Entity ??= new Entity(),v),
+				"HostEntityId" => static (e, v) => TryAssignEntity("entity.id")(e.Entity ??= new Entity(),v),
+				"host.entity.last_seen_timestamp" => static (e, v) => TryAssignEntity("entity.last_seen_timestamp")(e.Entity ??= new Entity(),v),
+				"HostEntityLastSeenTimestamp" => static (e, v) => TryAssignEntity("entity.last_seen_timestamp")(e.Entity ??= new Entity(),v),
+				"host.entity.name" => static (e, v) => TryAssignEntity("entity.name")(e.Entity ??= new Entity(),v),
+				"HostEntityName" => static (e, v) => TryAssignEntity("entity.name")(e.Entity ??= new Entity(),v),
+				"host.entity.reference" => static (e, v) => TryAssignEntity("entity.reference")(e.Entity ??= new Entity(),v),
+				"HostEntityReference" => static (e, v) => TryAssignEntity("entity.reference")(e.Entity ??= new Entity(),v),
+				"host.entity.source" => static (e, v) => TryAssignEntity("entity.source")(e.Entity ??= new Entity(),v),
+				"HostEntitySource" => static (e, v) => TryAssignEntity("entity.source")(e.Entity ??= new Entity(),v),
+				"host.entity.sub_type" => static (e, v) => TryAssignEntity("entity.sub_type")(e.Entity ??= new Entity(),v),
+				"HostEntitySubType" => static (e, v) => TryAssignEntity("entity.sub_type")(e.Entity ??= new Entity(),v),
 				"host.geo.city_name" => static (e, v) => TryAssignGeo("geo.city_name")(e.Geo ??= new Geo(),v),
 				"HostGeoCityName" => static (e, v) => TryAssignGeo("geo.city_name")(e.Geo ??= new Geo(),v),
 				"host.geo.continent_code" => static (e, v) => TryAssignGeo("geo.continent_code")(e.Geo ??= new Geo(),v),
@@ -4476,6 +4952,20 @@ namespace Elastic.CommonSchema
 				"OrchestratorResourceType" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.ResourceType = p),
 				"orchestrator.type" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Type = p),
 				"OrchestratorType" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Type = p),
+				"orchestrator.entity.display_name" => static (e, v) => TryAssignEntity("entity.display_name")(e.Entity ??= new Entity(),v),
+				"OrchestratorEntityDisplayName" => static (e, v) => TryAssignEntity("entity.display_name")(e.Entity ??= new Entity(),v),
+				"orchestrator.entity.id" => static (e, v) => TryAssignEntity("entity.id")(e.Entity ??= new Entity(),v),
+				"OrchestratorEntityId" => static (e, v) => TryAssignEntity("entity.id")(e.Entity ??= new Entity(),v),
+				"orchestrator.entity.last_seen_timestamp" => static (e, v) => TryAssignEntity("entity.last_seen_timestamp")(e.Entity ??= new Entity(),v),
+				"OrchestratorEntityLastSeenTimestamp" => static (e, v) => TryAssignEntity("entity.last_seen_timestamp")(e.Entity ??= new Entity(),v),
+				"orchestrator.entity.name" => static (e, v) => TryAssignEntity("entity.name")(e.Entity ??= new Entity(),v),
+				"OrchestratorEntityName" => static (e, v) => TryAssignEntity("entity.name")(e.Entity ??= new Entity(),v),
+				"orchestrator.entity.reference" => static (e, v) => TryAssignEntity("entity.reference")(e.Entity ??= new Entity(),v),
+				"OrchestratorEntityReference" => static (e, v) => TryAssignEntity("entity.reference")(e.Entity ??= new Entity(),v),
+				"orchestrator.entity.source" => static (e, v) => TryAssignEntity("entity.source")(e.Entity ??= new Entity(),v),
+				"OrchestratorEntitySource" => static (e, v) => TryAssignEntity("entity.source")(e.Entity ??= new Entity(),v),
+				"orchestrator.entity.sub_type" => static (e, v) => TryAssignEntity("entity.sub_type")(e.Entity ??= new Entity(),v),
+				"OrchestratorEntitySubType" => static (e, v) => TryAssignEntity("entity.sub_type")(e.Entity ??= new Entity(),v),
 				_ => null
 			};
 			return assign;
@@ -4759,6 +5249,8 @@ namespace Elastic.CommonSchema
 				"ProcessCodeSignatureSubjectName" => static (e, v) => TryAssignCodeSignature("code_signature.subject_name")(e.CodeSignature ??= new CodeSignature(),v),
 				"process.code_signature.team_id" => static (e, v) => TryAssignCodeSignature("code_signature.team_id")(e.CodeSignature ??= new CodeSignature(),v),
 				"ProcessCodeSignatureTeamId" => static (e, v) => TryAssignCodeSignature("code_signature.team_id")(e.CodeSignature ??= new CodeSignature(),v),
+				"process.code_signature.thumbprint_sha256" => static (e, v) => TryAssignCodeSignature("code_signature.thumbprint_sha256")(e.CodeSignature ??= new CodeSignature(),v),
+				"ProcessCodeSignatureThumbprintSha256" => static (e, v) => TryAssignCodeSignature("code_signature.thumbprint_sha256")(e.CodeSignature ??= new CodeSignature(),v),
 				"process.code_signature.timestamp" => static (e, v) => TryAssignCodeSignature("code_signature.timestamp")(e.CodeSignature ??= new CodeSignature(),v),
 				"ProcessCodeSignatureTimestamp" => static (e, v) => TryAssignCodeSignature("code_signature.timestamp")(e.CodeSignature ??= new CodeSignature(),v),
 				"process.code_signature.trusted" => static (e, v) => TryAssignCodeSignature("code_signature.trusted")(e.CodeSignature ??= new CodeSignature(),v),
@@ -4893,6 +5385,20 @@ namespace Elastic.CommonSchema
 				"ProcessEntryMetaSourceUserGroupId" => static (e, v) => TryAssignSource("source.user.group.id")(e.EntryMetaSource ??= new Source(),v),
 				"process.entry_meta.source.user.group.name" => static (e, v) => TryAssignSource("source.user.group.name")(e.EntryMetaSource ??= new Source(),v),
 				"ProcessEntryMetaSourceUserGroupName" => static (e, v) => TryAssignSource("source.user.group.name")(e.EntryMetaSource ??= new Source(),v),
+				"process.entry_meta.source.user.entity.display_name" => static (e, v) => TryAssignSource("source.user.entity.display_name")(e.EntryMetaSource ??= new Source(),v),
+				"ProcessEntryMetaSourceUserEntityDisplayName" => static (e, v) => TryAssignSource("source.user.entity.display_name")(e.EntryMetaSource ??= new Source(),v),
+				"process.entry_meta.source.user.entity.id" => static (e, v) => TryAssignSource("source.user.entity.id")(e.EntryMetaSource ??= new Source(),v),
+				"ProcessEntryMetaSourceUserEntityId" => static (e, v) => TryAssignSource("source.user.entity.id")(e.EntryMetaSource ??= new Source(),v),
+				"process.entry_meta.source.user.entity.last_seen_timestamp" => static (e, v) => TryAssignSource("source.user.entity.last_seen_timestamp")(e.EntryMetaSource ??= new Source(),v),
+				"ProcessEntryMetaSourceUserEntityLastSeenTimestamp" => static (e, v) => TryAssignSource("source.user.entity.last_seen_timestamp")(e.EntryMetaSource ??= new Source(),v),
+				"process.entry_meta.source.user.entity.name" => static (e, v) => TryAssignSource("source.user.entity.name")(e.EntryMetaSource ??= new Source(),v),
+				"ProcessEntryMetaSourceUserEntityName" => static (e, v) => TryAssignSource("source.user.entity.name")(e.EntryMetaSource ??= new Source(),v),
+				"process.entry_meta.source.user.entity.reference" => static (e, v) => TryAssignSource("source.user.entity.reference")(e.EntryMetaSource ??= new Source(),v),
+				"ProcessEntryMetaSourceUserEntityReference" => static (e, v) => TryAssignSource("source.user.entity.reference")(e.EntryMetaSource ??= new Source(),v),
+				"process.entry_meta.source.user.entity.source" => static (e, v) => TryAssignSource("source.user.entity.source")(e.EntryMetaSource ??= new Source(),v),
+				"ProcessEntryMetaSourceUserEntitySource" => static (e, v) => TryAssignSource("source.user.entity.source")(e.EntryMetaSource ??= new Source(),v),
+				"process.entry_meta.source.user.entity.sub_type" => static (e, v) => TryAssignSource("source.user.entity.sub_type")(e.EntryMetaSource ??= new Source(),v),
+				"ProcessEntryMetaSourceUserEntitySubType" => static (e, v) => TryAssignSource("source.user.entity.sub_type")(e.EntryMetaSource ??= new Source(),v),
 				"process.entry_meta.source.user.risk.calculated_level" => static (e, v) => TryAssignSource("source.user.risk.calculated_level")(e.EntryMetaSource ??= new Source(),v),
 				"ProcessEntryMetaSourceUserRiskCalculatedLevel" => static (e, v) => TryAssignSource("source.user.risk.calculated_level")(e.EntryMetaSource ??= new Source(),v),
 				"process.entry_meta.source.user.risk.calculated_score" => static (e, v) => TryAssignSource("source.user.risk.calculated_score")(e.EntryMetaSource ??= new Source(),v),
@@ -4923,6 +5429,20 @@ namespace Elastic.CommonSchema
 				"ProcessUserGroupId" => static (e, v) => TryAssignUser("user.group.id")(e.User ??= new User(),v),
 				"process.user.group.name" => static (e, v) => TryAssignUser("user.group.name")(e.User ??= new User(),v),
 				"ProcessUserGroupName" => static (e, v) => TryAssignUser("user.group.name")(e.User ??= new User(),v),
+				"process.user.entity.display_name" => static (e, v) => TryAssignUser("user.entity.display_name")(e.User ??= new User(),v),
+				"ProcessUserEntityDisplayName" => static (e, v) => TryAssignUser("user.entity.display_name")(e.User ??= new User(),v),
+				"process.user.entity.id" => static (e, v) => TryAssignUser("user.entity.id")(e.User ??= new User(),v),
+				"ProcessUserEntityId" => static (e, v) => TryAssignUser("user.entity.id")(e.User ??= new User(),v),
+				"process.user.entity.last_seen_timestamp" => static (e, v) => TryAssignUser("user.entity.last_seen_timestamp")(e.User ??= new User(),v),
+				"ProcessUserEntityLastSeenTimestamp" => static (e, v) => TryAssignUser("user.entity.last_seen_timestamp")(e.User ??= new User(),v),
+				"process.user.entity.name" => static (e, v) => TryAssignUser("user.entity.name")(e.User ??= new User(),v),
+				"ProcessUserEntityName" => static (e, v) => TryAssignUser("user.entity.name")(e.User ??= new User(),v),
+				"process.user.entity.reference" => static (e, v) => TryAssignUser("user.entity.reference")(e.User ??= new User(),v),
+				"ProcessUserEntityReference" => static (e, v) => TryAssignUser("user.entity.reference")(e.User ??= new User(),v),
+				"process.user.entity.source" => static (e, v) => TryAssignUser("user.entity.source")(e.User ??= new User(),v),
+				"ProcessUserEntitySource" => static (e, v) => TryAssignUser("user.entity.source")(e.User ??= new User(),v),
+				"process.user.entity.sub_type" => static (e, v) => TryAssignUser("user.entity.sub_type")(e.User ??= new User(),v),
+				"ProcessUserEntitySubType" => static (e, v) => TryAssignUser("user.entity.sub_type")(e.User ??= new User(),v),
 				"process.user.risk.calculated_level" => static (e, v) => TryAssignUser("user.risk.calculated_level")(e.User ??= new User(),v),
 				"ProcessUserRiskCalculatedLevel" => static (e, v) => TryAssignUser("user.risk.calculated_level")(e.User ??= new User(),v),
 				"process.user.risk.calculated_score" => static (e, v) => TryAssignUser("user.risk.calculated_score")(e.User ??= new User(),v),
@@ -4953,6 +5473,20 @@ namespace Elastic.CommonSchema
 				"ProcessSavedUserGroupId" => static (e, v) => TryAssignUser("saved_user.group.id")(e.SavedUser ??= new User(),v),
 				"process.saved_user.group.name" => static (e, v) => TryAssignUser("saved_user.group.name")(e.SavedUser ??= new User(),v),
 				"ProcessSavedUserGroupName" => static (e, v) => TryAssignUser("saved_user.group.name")(e.SavedUser ??= new User(),v),
+				"process.saved_user.entity.display_name" => static (e, v) => TryAssignUser("saved_user.entity.display_name")(e.SavedUser ??= new User(),v),
+				"ProcessSavedUserEntityDisplayName" => static (e, v) => TryAssignUser("saved_user.entity.display_name")(e.SavedUser ??= new User(),v),
+				"process.saved_user.entity.id" => static (e, v) => TryAssignUser("saved_user.entity.id")(e.SavedUser ??= new User(),v),
+				"ProcessSavedUserEntityId" => static (e, v) => TryAssignUser("saved_user.entity.id")(e.SavedUser ??= new User(),v),
+				"process.saved_user.entity.last_seen_timestamp" => static (e, v) => TryAssignUser("saved_user.entity.last_seen_timestamp")(e.SavedUser ??= new User(),v),
+				"ProcessSavedUserEntityLastSeenTimestamp" => static (e, v) => TryAssignUser("saved_user.entity.last_seen_timestamp")(e.SavedUser ??= new User(),v),
+				"process.saved_user.entity.name" => static (e, v) => TryAssignUser("saved_user.entity.name")(e.SavedUser ??= new User(),v),
+				"ProcessSavedUserEntityName" => static (e, v) => TryAssignUser("saved_user.entity.name")(e.SavedUser ??= new User(),v),
+				"process.saved_user.entity.reference" => static (e, v) => TryAssignUser("saved_user.entity.reference")(e.SavedUser ??= new User(),v),
+				"ProcessSavedUserEntityReference" => static (e, v) => TryAssignUser("saved_user.entity.reference")(e.SavedUser ??= new User(),v),
+				"process.saved_user.entity.source" => static (e, v) => TryAssignUser("saved_user.entity.source")(e.SavedUser ??= new User(),v),
+				"ProcessSavedUserEntitySource" => static (e, v) => TryAssignUser("saved_user.entity.source")(e.SavedUser ??= new User(),v),
+				"process.saved_user.entity.sub_type" => static (e, v) => TryAssignUser("saved_user.entity.sub_type")(e.SavedUser ??= new User(),v),
+				"ProcessSavedUserEntitySubType" => static (e, v) => TryAssignUser("saved_user.entity.sub_type")(e.SavedUser ??= new User(),v),
 				"process.saved_user.risk.calculated_level" => static (e, v) => TryAssignUser("saved_user.risk.calculated_level")(e.SavedUser ??= new User(),v),
 				"ProcessSavedUserRiskCalculatedLevel" => static (e, v) => TryAssignUser("saved_user.risk.calculated_level")(e.SavedUser ??= new User(),v),
 				"process.saved_user.risk.calculated_score" => static (e, v) => TryAssignUser("saved_user.risk.calculated_score")(e.SavedUser ??= new User(),v),
@@ -4983,6 +5517,20 @@ namespace Elastic.CommonSchema
 				"ProcessRealUserGroupId" => static (e, v) => TryAssignUser("real_user.group.id")(e.RealUser ??= new User(),v),
 				"process.real_user.group.name" => static (e, v) => TryAssignUser("real_user.group.name")(e.RealUser ??= new User(),v),
 				"ProcessRealUserGroupName" => static (e, v) => TryAssignUser("real_user.group.name")(e.RealUser ??= new User(),v),
+				"process.real_user.entity.display_name" => static (e, v) => TryAssignUser("real_user.entity.display_name")(e.RealUser ??= new User(),v),
+				"ProcessRealUserEntityDisplayName" => static (e, v) => TryAssignUser("real_user.entity.display_name")(e.RealUser ??= new User(),v),
+				"process.real_user.entity.id" => static (e, v) => TryAssignUser("real_user.entity.id")(e.RealUser ??= new User(),v),
+				"ProcessRealUserEntityId" => static (e, v) => TryAssignUser("real_user.entity.id")(e.RealUser ??= new User(),v),
+				"process.real_user.entity.last_seen_timestamp" => static (e, v) => TryAssignUser("real_user.entity.last_seen_timestamp")(e.RealUser ??= new User(),v),
+				"ProcessRealUserEntityLastSeenTimestamp" => static (e, v) => TryAssignUser("real_user.entity.last_seen_timestamp")(e.RealUser ??= new User(),v),
+				"process.real_user.entity.name" => static (e, v) => TryAssignUser("real_user.entity.name")(e.RealUser ??= new User(),v),
+				"ProcessRealUserEntityName" => static (e, v) => TryAssignUser("real_user.entity.name")(e.RealUser ??= new User(),v),
+				"process.real_user.entity.reference" => static (e, v) => TryAssignUser("real_user.entity.reference")(e.RealUser ??= new User(),v),
+				"ProcessRealUserEntityReference" => static (e, v) => TryAssignUser("real_user.entity.reference")(e.RealUser ??= new User(),v),
+				"process.real_user.entity.source" => static (e, v) => TryAssignUser("real_user.entity.source")(e.RealUser ??= new User(),v),
+				"ProcessRealUserEntitySource" => static (e, v) => TryAssignUser("real_user.entity.source")(e.RealUser ??= new User(),v),
+				"process.real_user.entity.sub_type" => static (e, v) => TryAssignUser("real_user.entity.sub_type")(e.RealUser ??= new User(),v),
+				"ProcessRealUserEntitySubType" => static (e, v) => TryAssignUser("real_user.entity.sub_type")(e.RealUser ??= new User(),v),
 				"process.real_user.risk.calculated_level" => static (e, v) => TryAssignUser("real_user.risk.calculated_level")(e.RealUser ??= new User(),v),
 				"ProcessRealUserRiskCalculatedLevel" => static (e, v) => TryAssignUser("real_user.risk.calculated_level")(e.RealUser ??= new User(),v),
 				"process.real_user.risk.calculated_score" => static (e, v) => TryAssignUser("real_user.risk.calculated_score")(e.RealUser ??= new User(),v),
@@ -5013,6 +5561,20 @@ namespace Elastic.CommonSchema
 				"ProcessAttestedUserGroupId" => static (e, v) => TryAssignUser("attested_user.group.id")(e.AttestedUser ??= new User(),v),
 				"process.attested_user.group.name" => static (e, v) => TryAssignUser("attested_user.group.name")(e.AttestedUser ??= new User(),v),
 				"ProcessAttestedUserGroupName" => static (e, v) => TryAssignUser("attested_user.group.name")(e.AttestedUser ??= new User(),v),
+				"process.attested_user.entity.display_name" => static (e, v) => TryAssignUser("attested_user.entity.display_name")(e.AttestedUser ??= new User(),v),
+				"ProcessAttestedUserEntityDisplayName" => static (e, v) => TryAssignUser("attested_user.entity.display_name")(e.AttestedUser ??= new User(),v),
+				"process.attested_user.entity.id" => static (e, v) => TryAssignUser("attested_user.entity.id")(e.AttestedUser ??= new User(),v),
+				"ProcessAttestedUserEntityId" => static (e, v) => TryAssignUser("attested_user.entity.id")(e.AttestedUser ??= new User(),v),
+				"process.attested_user.entity.last_seen_timestamp" => static (e, v) => TryAssignUser("attested_user.entity.last_seen_timestamp")(e.AttestedUser ??= new User(),v),
+				"ProcessAttestedUserEntityLastSeenTimestamp" => static (e, v) => TryAssignUser("attested_user.entity.last_seen_timestamp")(e.AttestedUser ??= new User(),v),
+				"process.attested_user.entity.name" => static (e, v) => TryAssignUser("attested_user.entity.name")(e.AttestedUser ??= new User(),v),
+				"ProcessAttestedUserEntityName" => static (e, v) => TryAssignUser("attested_user.entity.name")(e.AttestedUser ??= new User(),v),
+				"process.attested_user.entity.reference" => static (e, v) => TryAssignUser("attested_user.entity.reference")(e.AttestedUser ??= new User(),v),
+				"ProcessAttestedUserEntityReference" => static (e, v) => TryAssignUser("attested_user.entity.reference")(e.AttestedUser ??= new User(),v),
+				"process.attested_user.entity.source" => static (e, v) => TryAssignUser("attested_user.entity.source")(e.AttestedUser ??= new User(),v),
+				"ProcessAttestedUserEntitySource" => static (e, v) => TryAssignUser("attested_user.entity.source")(e.AttestedUser ??= new User(),v),
+				"process.attested_user.entity.sub_type" => static (e, v) => TryAssignUser("attested_user.entity.sub_type")(e.AttestedUser ??= new User(),v),
+				"ProcessAttestedUserEntitySubType" => static (e, v) => TryAssignUser("attested_user.entity.sub_type")(e.AttestedUser ??= new User(),v),
 				"process.attested_user.risk.calculated_level" => static (e, v) => TryAssignUser("attested_user.risk.calculated_level")(e.AttestedUser ??= new User(),v),
 				"ProcessAttestedUserRiskCalculatedLevel" => static (e, v) => TryAssignUser("attested_user.risk.calculated_level")(e.AttestedUser ??= new User(),v),
 				"process.attested_user.risk.calculated_score" => static (e, v) => TryAssignUser("attested_user.risk.calculated_score")(e.AttestedUser ??= new User(),v),
@@ -5230,6 +5792,20 @@ namespace Elastic.CommonSchema
 				"ServerUserGroupId" => static (e, v) => TryAssignUser("user.group.id")(e.User ??= new User(),v),
 				"server.user.group.name" => static (e, v) => TryAssignUser("user.group.name")(e.User ??= new User(),v),
 				"ServerUserGroupName" => static (e, v) => TryAssignUser("user.group.name")(e.User ??= new User(),v),
+				"server.user.entity.display_name" => static (e, v) => TryAssignUser("user.entity.display_name")(e.User ??= new User(),v),
+				"ServerUserEntityDisplayName" => static (e, v) => TryAssignUser("user.entity.display_name")(e.User ??= new User(),v),
+				"server.user.entity.id" => static (e, v) => TryAssignUser("user.entity.id")(e.User ??= new User(),v),
+				"ServerUserEntityId" => static (e, v) => TryAssignUser("user.entity.id")(e.User ??= new User(),v),
+				"server.user.entity.last_seen_timestamp" => static (e, v) => TryAssignUser("user.entity.last_seen_timestamp")(e.User ??= new User(),v),
+				"ServerUserEntityLastSeenTimestamp" => static (e, v) => TryAssignUser("user.entity.last_seen_timestamp")(e.User ??= new User(),v),
+				"server.user.entity.name" => static (e, v) => TryAssignUser("user.entity.name")(e.User ??= new User(),v),
+				"ServerUserEntityName" => static (e, v) => TryAssignUser("user.entity.name")(e.User ??= new User(),v),
+				"server.user.entity.reference" => static (e, v) => TryAssignUser("user.entity.reference")(e.User ??= new User(),v),
+				"ServerUserEntityReference" => static (e, v) => TryAssignUser("user.entity.reference")(e.User ??= new User(),v),
+				"server.user.entity.source" => static (e, v) => TryAssignUser("user.entity.source")(e.User ??= new User(),v),
+				"ServerUserEntitySource" => static (e, v) => TryAssignUser("user.entity.source")(e.User ??= new User(),v),
+				"server.user.entity.sub_type" => static (e, v) => TryAssignUser("user.entity.sub_type")(e.User ??= new User(),v),
+				"ServerUserEntitySubType" => static (e, v) => TryAssignUser("user.entity.sub_type")(e.User ??= new User(),v),
 				"server.user.risk.calculated_level" => static (e, v) => TryAssignUser("user.risk.calculated_level")(e.User ??= new User(),v),
 				"ServerUserRiskCalculatedLevel" => static (e, v) => TryAssignUser("user.risk.calculated_level")(e.User ??= new User(),v),
 				"server.user.risk.calculated_score" => static (e, v) => TryAssignUser("user.risk.calculated_score")(e.User ??= new User(),v),
@@ -5281,6 +5857,20 @@ namespace Elastic.CommonSchema
 				"ServiceType" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Type = p),
 				"service.version" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Version = p),
 				"ServiceVersion" => static (e, v) => TrySetString(e, v, static (ee, p) => ee.Version = p),
+				"service.entity.display_name" => static (e, v) => TryAssignEntity("entity.display_name")(e.Entity ??= new Entity(),v),
+				"ServiceEntityDisplayName" => static (e, v) => TryAssignEntity("entity.display_name")(e.Entity ??= new Entity(),v),
+				"service.entity.id" => static (e, v) => TryAssignEntity("entity.id")(e.Entity ??= new Entity(),v),
+				"ServiceEntityId" => static (e, v) => TryAssignEntity("entity.id")(e.Entity ??= new Entity(),v),
+				"service.entity.last_seen_timestamp" => static (e, v) => TryAssignEntity("entity.last_seen_timestamp")(e.Entity ??= new Entity(),v),
+				"ServiceEntityLastSeenTimestamp" => static (e, v) => TryAssignEntity("entity.last_seen_timestamp")(e.Entity ??= new Entity(),v),
+				"service.entity.name" => static (e, v) => TryAssignEntity("entity.name")(e.Entity ??= new Entity(),v),
+				"ServiceEntityName" => static (e, v) => TryAssignEntity("entity.name")(e.Entity ??= new Entity(),v),
+				"service.entity.reference" => static (e, v) => TryAssignEntity("entity.reference")(e.Entity ??= new Entity(),v),
+				"ServiceEntityReference" => static (e, v) => TryAssignEntity("entity.reference")(e.Entity ??= new Entity(),v),
+				"service.entity.source" => static (e, v) => TryAssignEntity("entity.source")(e.Entity ??= new Entity(),v),
+				"ServiceEntitySource" => static (e, v) => TryAssignEntity("entity.source")(e.Entity ??= new Entity(),v),
+				"service.entity.sub_type" => static (e, v) => TryAssignEntity("entity.sub_type")(e.Entity ??= new Entity(),v),
+				"ServiceEntitySubType" => static (e, v) => TryAssignEntity("entity.sub_type")(e.Entity ??= new Entity(),v),
 				_ => null
 			};
 			return assign;
@@ -5368,6 +5958,20 @@ namespace Elastic.CommonSchema
 				"SourceUserGroupId" => static (e, v) => TryAssignUser("user.group.id")(e.User ??= new User(),v),
 				"source.user.group.name" => static (e, v) => TryAssignUser("user.group.name")(e.User ??= new User(),v),
 				"SourceUserGroupName" => static (e, v) => TryAssignUser("user.group.name")(e.User ??= new User(),v),
+				"source.user.entity.display_name" => static (e, v) => TryAssignUser("user.entity.display_name")(e.User ??= new User(),v),
+				"SourceUserEntityDisplayName" => static (e, v) => TryAssignUser("user.entity.display_name")(e.User ??= new User(),v),
+				"source.user.entity.id" => static (e, v) => TryAssignUser("user.entity.id")(e.User ??= new User(),v),
+				"SourceUserEntityId" => static (e, v) => TryAssignUser("user.entity.id")(e.User ??= new User(),v),
+				"source.user.entity.last_seen_timestamp" => static (e, v) => TryAssignUser("user.entity.last_seen_timestamp")(e.User ??= new User(),v),
+				"SourceUserEntityLastSeenTimestamp" => static (e, v) => TryAssignUser("user.entity.last_seen_timestamp")(e.User ??= new User(),v),
+				"source.user.entity.name" => static (e, v) => TryAssignUser("user.entity.name")(e.User ??= new User(),v),
+				"SourceUserEntityName" => static (e, v) => TryAssignUser("user.entity.name")(e.User ??= new User(),v),
+				"source.user.entity.reference" => static (e, v) => TryAssignUser("user.entity.reference")(e.User ??= new User(),v),
+				"SourceUserEntityReference" => static (e, v) => TryAssignUser("user.entity.reference")(e.User ??= new User(),v),
+				"source.user.entity.source" => static (e, v) => TryAssignUser("user.entity.source")(e.User ??= new User(),v),
+				"SourceUserEntitySource" => static (e, v) => TryAssignUser("user.entity.source")(e.User ??= new User(),v),
+				"source.user.entity.sub_type" => static (e, v) => TryAssignUser("user.entity.sub_type")(e.User ??= new User(),v),
+				"SourceUserEntitySubType" => static (e, v) => TryAssignUser("user.entity.sub_type")(e.User ??= new User(),v),
 				"source.user.risk.calculated_level" => static (e, v) => TryAssignUser("user.risk.calculated_level")(e.User ??= new User(),v),
 				"SourceUserRiskCalculatedLevel" => static (e, v) => TryAssignUser("user.risk.calculated_level")(e.User ??= new User(),v),
 				"source.user.risk.calculated_score" => static (e, v) => TryAssignUser("user.risk.calculated_score")(e.User ??= new User(),v),
@@ -5611,6 +6215,8 @@ namespace Elastic.CommonSchema
 				"ThreatIndicatorFileCodeSignatureSubjectName" => static (e, v) => TryAssignFile("file.code_signature.subject_name")(e.IndicatorFile ??= new File(),v),
 				"threat.indicator.file.code_signature.team_id" => static (e, v) => TryAssignFile("file.code_signature.team_id")(e.IndicatorFile ??= new File(),v),
 				"ThreatIndicatorFileCodeSignatureTeamId" => static (e, v) => TryAssignFile("file.code_signature.team_id")(e.IndicatorFile ??= new File(),v),
+				"threat.indicator.file.code_signature.thumbprint_sha256" => static (e, v) => TryAssignFile("file.code_signature.thumbprint_sha256")(e.IndicatorFile ??= new File(),v),
+				"ThreatIndicatorFileCodeSignatureThumbprintSha256" => static (e, v) => TryAssignFile("file.code_signature.thumbprint_sha256")(e.IndicatorFile ??= new File(),v),
 				"threat.indicator.file.code_signature.timestamp" => static (e, v) => TryAssignFile("file.code_signature.timestamp")(e.IndicatorFile ??= new File(),v),
 				"ThreatIndicatorFileCodeSignatureTimestamp" => static (e, v) => TryAssignFile("file.code_signature.timestamp")(e.IndicatorFile ??= new File(),v),
 				"threat.indicator.file.code_signature.trusted" => static (e, v) => TryAssignFile("file.code_signature.trusted")(e.IndicatorFile ??= new File(),v),
@@ -5916,6 +6522,20 @@ namespace Elastic.CommonSchema
 				"UserGroupId" => static (e, v) => TryAssignGroup("group.id")(e.Group ??= new Group(),v),
 				"user.group.name" => static (e, v) => TryAssignGroup("group.name")(e.Group ??= new Group(),v),
 				"UserGroupName" => static (e, v) => TryAssignGroup("group.name")(e.Group ??= new Group(),v),
+				"user.entity.display_name" => static (e, v) => TryAssignEntity("entity.display_name")(e.Entity ??= new Entity(),v),
+				"UserEntityDisplayName" => static (e, v) => TryAssignEntity("entity.display_name")(e.Entity ??= new Entity(),v),
+				"user.entity.id" => static (e, v) => TryAssignEntity("entity.id")(e.Entity ??= new Entity(),v),
+				"UserEntityId" => static (e, v) => TryAssignEntity("entity.id")(e.Entity ??= new Entity(),v),
+				"user.entity.last_seen_timestamp" => static (e, v) => TryAssignEntity("entity.last_seen_timestamp")(e.Entity ??= new Entity(),v),
+				"UserEntityLastSeenTimestamp" => static (e, v) => TryAssignEntity("entity.last_seen_timestamp")(e.Entity ??= new Entity(),v),
+				"user.entity.name" => static (e, v) => TryAssignEntity("entity.name")(e.Entity ??= new Entity(),v),
+				"UserEntityName" => static (e, v) => TryAssignEntity("entity.name")(e.Entity ??= new Entity(),v),
+				"user.entity.reference" => static (e, v) => TryAssignEntity("entity.reference")(e.Entity ??= new Entity(),v),
+				"UserEntityReference" => static (e, v) => TryAssignEntity("entity.reference")(e.Entity ??= new Entity(),v),
+				"user.entity.source" => static (e, v) => TryAssignEntity("entity.source")(e.Entity ??= new Entity(),v),
+				"UserEntitySource" => static (e, v) => TryAssignEntity("entity.source")(e.Entity ??= new Entity(),v),
+				"user.entity.sub_type" => static (e, v) => TryAssignEntity("entity.sub_type")(e.Entity ??= new Entity(),v),
+				"UserEntitySubType" => static (e, v) => TryAssignEntity("entity.sub_type")(e.Entity ??= new Entity(),v),
 				"user.risk.calculated_level" => static (e, v) => TryAssignRisk("risk.calculated_level")(e.Risk ??= new Risk(),v),
 				"UserRiskCalculatedLevel" => static (e, v) => TryAssignRisk("risk.calculated_level")(e.Risk ??= new Risk(),v),
 				"user.risk.calculated_score" => static (e, v) => TryAssignRisk("risk.calculated_score")(e.Risk ??= new Risk(),v),

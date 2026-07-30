@@ -7,6 +7,7 @@ using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Hosting;
 using Serilog;
 
 namespace AspnetCoreExample
@@ -19,13 +20,18 @@ namespace AspnetCoreExample
 			.AddEnvironmentVariables()
 			.Build();
 
-		public static IWebHost BuildWebHost(string[] args) =>
-			WebHost.CreateDefaultBuilder(args)
-				.UseStartup<Startup>()
+		public static IHost BuildWebHost(string[] args) =>
+			Host.CreateDefaultBuilder(args)
+				.ConfigureWebHost(webBuilder =>
+				{
+					webBuilder
+						.UseStartup<Startup>()
+						.UseKestrel();
+				})
 				.UseSerilog((ctx, config) =>
 				{
 					// Ensure HttpContextAccessor is accessible
-					var httpAccessor = ctx.Configuration.Get<HttpContextAccessor>();
+					var httpAccessor = ctx.Configuration.Get<IHttpContextAccessor>();
 
 					config
 						.ReadFrom.Configuration(ctx.Configuration)
@@ -35,7 +41,6 @@ namespace AspnetCoreExample
 					//config.WriteTo.Console(formatter);
 					config.WriteTo.Async(a => a.Console(new EcsTextFormatter()));
 				})
-				.UseKestrel()
 				.Build();
 
 		public static void Main(string[] args)

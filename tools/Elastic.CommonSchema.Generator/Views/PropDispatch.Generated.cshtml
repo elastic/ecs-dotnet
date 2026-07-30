@@ -139,6 +139,7 @@ namespace Elastic.CommonSchema
 			{
 		@foreach (var prop in Model.Base.DispatchProperties)
 		{
+			if (string.IsNullOrEmpty(prop.CastFromObject)) { continue; }
 <text>				"@prop.FullPath" => static (e, v) => @(prop.CastFromObject)(e, v, static (ee, p) => ee.@(prop.Name) = p),
 				"@prop.LogTemplateAlternative" => static (e, v) => @(prop.CastFromObject)(e, v, static (ee, p) => ee.@(prop.Name) = p),
 </text>
@@ -157,6 +158,7 @@ namespace Elastic.CommonSchema
 			{
 		@foreach (var prop in dispatch.AssignableProperties)
 		{
+			if (string.IsNullOrEmpty(prop.CastFromObject)) { continue; }
 			if (!prop.IsEntityDispatch)
 			{
 <text>				"@prop.FullPath" => static (e, v) => @(prop.CastFromObject)(e, v, static (ee, p) => ee.@(prop.Name) = p),

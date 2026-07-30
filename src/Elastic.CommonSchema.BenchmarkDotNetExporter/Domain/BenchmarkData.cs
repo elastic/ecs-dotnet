@@ -39,7 +39,6 @@ namespace Elastic.CommonSchema.BenchmarkDotNetExporter.Domain
 			StandardDeviation = statistics.StandardDeviation;
 			Skewness = statistics.Skewness;
 			Kurtosis = statistics.Kurtosis;
-			ConfidenceInterval = new BenchmarkConfidence(statistics.ConfidenceInterval);
 			Percentiles = new Percentiles(statistics.Percentiles);
 		}
 

@@ -52,7 +52,7 @@ public abstract class PropertiesReaderJsonConverterBase<T> : EcsJsonConverterBas
 	protected abstract bool ReadProperties(ref Utf8JsonReader reader, T ecsEvent, JsonSerializerOptions options);
 }
 
-internal partial class EcsEntityJsonConverter
+public partial class EcsEntityJsonConverter
 {
 	private partial bool ReadProperty(ref Utf8JsonReader reader, string propertyName, Ecs ecsEvent, JsonSerializerOptions options) => false;
 }
@@ -86,7 +86,7 @@ public class ParserIntermediary
 	}
 }
 
-internal partial class LogEntityJsonConverter
+public partial class LogEntityJsonConverter
 {
 	private partial bool ReadProperty(ref Utf8JsonReader reader, string propertyName, Log ecsEvent, JsonSerializerOptions options) =>
 		propertyName switch

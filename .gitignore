@@ -49,7 +49,6 @@ build/tools/*
 !build/tools/sn/*
 !build/tools/ilmerge
 !build/*.fsx
-!build/*.fsx
 !build/*.ps1
 !build/*.nuspec
 !build/*.png
@@ -80,3 +79,5 @@ src/packages/
 BenchmarkDotNet.Artifacts
 
 html_docs
+
+.artifacts

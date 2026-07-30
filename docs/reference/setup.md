@@ -1,4 +1,7 @@
 ---
+applies_to:
+  stack: ga
+  serverless: ga
 mapped_pages:
   - https://www.elastic.co/guide/en/ecs-logging/dotnet/current/setup.html
 navigation_title: 'Get started'
@@ -33,6 +36,10 @@ By default the ECS logging integrations will read tracing information from [Syst
 
 
 ## Step 3: Configure Filebeat (optional) [setup-step-3]
+
+```{applies_to}
+serverless: unavailable
+```
 
 If you are using one of our log formatters you can use the following methods to ship these logs to Elastic.
 

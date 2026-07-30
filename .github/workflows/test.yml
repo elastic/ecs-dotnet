@@ -31,18 +31,18 @@ jobs:
     runs-on: windows-latest
     
     steps:
-    - uses: actions/checkout@v5
+    - uses: actions/checkout@v7
     - name: Bootstrap Action Workspace
       uses: ./.github/workflows/bootstrap
             
-    - uses: actions/cache@v4
+    - uses: actions/cache@v6
       with:
         path: ~/.nuget/packages
         key: ${{ runner.os }}-nuget-${{ hashFiles('**/packages.lock.json') }}
         restore-keys: |
           ${{ runner.os }}-nuget-
             
-    - uses: actions/cache@v4
+    - uses: actions/cache@v6
       with:
         path: ~\AppData\Local\ElasticManaged\elasticsearch-${{ env.ELASTIC_STACK_VERSION }}
         key: ${{ runner.os }}-elastic-managed-${{ env.ELASTIC_STACK_VERSION }}
@@ -59,18 +59,11 @@ jobs:
       run: build.bat integrate -s true
       shell: cmd
       
-    - name: Store test results
-      if: success() || failure()
-      uses: actions/upload-artifact@v5
-      with:
-        name: test-results-windows
-        path: build/output/junit-*.xml
-   
   test-linux:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v5
+    - uses: actions/checkout@v7
     - name: Bootstrap Action Workspace
       uses: ./.github/workflows/bootstrap
 
@@ -85,13 +78,6 @@ jobs:
     
     - name: Run release -c false 
       run: ./build.sh release -c false --token ${{ secrets.GITHUB_TOKEN }}
-
-    - name: Store test results
-      if: success() || failure()
-      uses: actions/upload-artifact@v5
-      with:
-        name: test-results-linux
-        path: build/output/junit-*.xml
 
   aot-validate:
     runs-on: ${{ matrix.os.runner }}
@@ -109,7 +95,7 @@ jobs:
             folder: win-x64
             binary: ecs-aot-smoketest.exe
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v7
 
       - uses: actions/setup-dotnet@v5
         with:
@@ -119,4 +105,4 @@ jobs:
         run: dotnet publish examples/ecs-aot-smoketest
 
       - name: Invoke AOT
-        run: ./examples/ecs-aot-smoketest/bin/Release/net9.0/${{ matrix.os.folder }}/publish/${{ matrix.os.binary }}
+        run: ./.artifacts/publish/ecs-aot-smoketest/release/${{ matrix.os.binary }}
