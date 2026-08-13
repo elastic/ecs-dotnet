@@ -52,6 +52,9 @@ namespace Elastic.CommonSchema
 		/// <para>@Raw(property.Description)</para>
 		/// <example>@Raw(property.Example)</example>
 		///</summary>
+@if (property.Name == "Labels")
+{<text>		[Obsolete("Use EcsDocument.Attributes instead. Labels values will be merged into Attributes during serialization.")]
+</text>}
 		[JsonPropertyName("@property.JsonProperty"), DataMember(Name = "@property.JsonProperty")]
 		public @property.ClrType? @property.Name { get; set; }
 </text>

@@ -39,6 +39,8 @@ namespace Elastic.CommonSchema.Generator
 				{ m => Generate(m, "AssignableInterfaces"), "Assignable Interfaces" },
 				{ m => Generate(m, "IndexTemplates"), "Elasticsearch index templates" },
 				{ m => Generate(m, "IndexComponents"), "Elasticsearch index components" },
+				{ m => Generate(m, "OTelMappings"), "OTel semantic convention mappings" },
+				{ m => Generate(m, "SemConv"), "OTel SemConv attribute name constants" },
 			};
 
 			using (var progressBar = new ProgressBar(actions.Count, "Generating code",

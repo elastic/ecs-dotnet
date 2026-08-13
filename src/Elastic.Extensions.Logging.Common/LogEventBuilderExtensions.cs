@@ -15,7 +15,9 @@ public static class LogEventBuilderExtensions
 		{
 			if (scope is null) return;
 
+#pragma warning disable CS0618 // Obsolete Labels
 			log.Labels ??= new Labels();
+#pragma warning restore CS0618
 			log.Scopes ??= new List<string>();
 
 

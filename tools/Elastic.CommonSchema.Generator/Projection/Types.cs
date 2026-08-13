@@ -148,6 +148,11 @@ namespace Elastic.CommonSchema.Generator.Projection
 		public string JsonProperty { get; }
 		public bool SelfReferential { get; }
 
+		/// <summary>
+		/// OTel attribute names that are equivalent to this ECS field (different name, same semantics).
+		/// </summary>
+		public List<string> OTelNames { get; set; } = new();
+
 		public DispatchProperty(PropertyReference property)
 		{
 			JsonProperty = property.JsonProperty;

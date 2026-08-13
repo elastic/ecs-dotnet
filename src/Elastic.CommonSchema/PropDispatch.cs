@@ -30,21 +30,8 @@ internal static partial class PropDispatch
 {
 	public static void SetMetaOrLabel(EcsDocument document, string path, object value)
 	{
-		switch (value)
-		{
-			case string s:
-				document.Labels ??= new Labels();
-				document.Labels[path] = s;
-				break;
-			case bool b:
-				document.Labels ??= new Labels();
-				document.Labels[path] = b.ToString(CultureInfo.InvariantCulture).ToLowerInvariant();
-				break;
-			default:
-				document.Metadata ??= new MetadataDictionary();
-				document.Metadata[path] = value;
-				break;
-		}
+		document.Attributes ??= new MetadataDictionary();
+		document.Attributes[path] = value;
 	}
 
 	private static bool TrySetLong<T>(T target, object value, Action<T, long> set)

@@ -46,7 +46,6 @@ namespace Elastic.CommonSchema.Serilog.Tests
 			info.Event.Kind.Should().Be("something");
 			info.As.Should().NotBeNull();
 			info.As.Number.Should().Be(1337);
-			info.Metadata.Should().BeNull();
 		});
 
 		[Fact]
@@ -67,7 +66,7 @@ namespace Elastic.CommonSchema.Serilog.Tests
 			info.Event.Kind.Should().NotBe("something");
 			info.As.Should().BeNull();
 
-			info.Metadata.Should().NotBeEmpty().And.ContainKey("Event").And.ContainKey("As");
+			info.Attributes.Should().NotBeEmpty().And.ContainKey("Event").And.ContainKey("As");
 		});
 
 
@@ -85,8 +84,8 @@ namespace Elastic.CommonSchema.Serilog.Tests
 			info.TraceId.Should().BeNull();
 			info.Faas.Should().BeNull();
 
-			info.Labels.Should().ContainKey("FaasColdstart");
-			info.Metadata.Should().ContainKey("TraceId");
+			info.Attributes.Should().ContainKey("FaasColdstart");
+			info.Attributes.Should().ContainKey("TraceId");
 		});
 
 		[Fact]
@@ -118,8 +117,8 @@ namespace Elastic.CommonSchema.Serilog.Tests
 			info.TraceId.Should().NotBeNull();
 			info.TraceId.Should().Be("{ x = 1 }");
 			info.Faas.Should().BeNull();
-			info.Metadata.Should().ContainKey("FaasColdstart");
-			var structured = info.Metadata["FaasColdstart"] as MetadataDictionary;
+			info.Attributes.Should().ContainKey("FaasColdstart");
+			var structured = info.Attributes["FaasColdstart"] as MetadataDictionary;
 			structured.Should().NotBeNull();
 			structured!["y"].Should().Be(2);
 		});

@@ -345,6 +345,10 @@ namespace Elastic.CommonSchema.Elasticsearch
         ""@timestamp"": {
           ""type"": ""date""
         },
+        ""attributes"": {
+          ""type"": ""passthrough"",
+          ""priority"": 10
+        },
         ""labels"": {
           ""type"": ""object""
         },
@@ -359,8 +363,7 @@ namespace Elastic.CommonSchema.Elasticsearch
       }
     }
   }
-}
-"
+}"
 			},
 		{	
 				"ecs_9.3.0_client", 

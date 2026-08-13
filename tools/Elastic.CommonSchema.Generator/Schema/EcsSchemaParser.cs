@@ -6,6 +6,7 @@ using System.Text.RegularExpressions;
 using CsQuery.ExtensionMethods;
 using Elastic.CommonSchema.Generator.Schema.DTO;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using YamlDotNet.Serialization;
 
 namespace Elastic.CommonSchema.Generator.Schema
@@ -88,9 +89,33 @@ namespace Elastic.CommonSchema.Generator.Schema
 			{
 				if (dir.Name != "component") continue;
 
-				templates.Add(jsonFile.Name.Replace(".json", ""), File.ReadAllText(jsonFile.FullName));
+				var json = File.ReadAllText(jsonFile.FullName);
+				json = EnsurePassthroughPriority(json);
+				templates.Add(jsonFile.Name.Replace(".json", ""), json);
 			}
 			return templates;
+		}
+
+		// Elasticsearch 9+ requires a non-negative priority on passthrough-type mappings.
+		// The ECS spec may omit it, so we inject a default of 10 when it's missing.
+		private static string EnsurePassthroughPriority(string json)
+		{
+			var root = JObject.Parse(json);
+			var properties = root.SelectToken("template.mappings.properties") as JObject;
+			if (properties == null) return json;
+
+			var changed = false;
+			foreach (var prop in properties.Properties())
+			{
+				var obj = prop.Value as JObject;
+				if (obj == null) continue;
+				if (obj["type"]?.Value<string>() == "passthrough" && obj["priority"] == null)
+				{
+					obj["priority"] = 10;
+					changed = true;
+				}
+			}
+			return changed ? root.ToString(Formatting.Indented) : json;
 		}
 
 

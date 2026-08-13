@@ -11,36 +11,70 @@ public static class Program
 {
 	private const string DefaultDownloadBranch = "v9.3.0";
 
+	// Usage:
+	//   dotnet run                          — interactive mode (prompts for download/tag)
+	//   dotnet run -- --no-download         — skip download, use cached spec, default tag
+	//   dotnet run -- --download            — download spec, default tag
+	//   dotnet run -- --download --tag v9.3.0 — download spec with specific tag
+	//   dotnet run -- --no-download --tag v9.3.0 — skip download, specific tag
+	//   dotnet run -- --token <gh-token>    — pass GitHub token for download
 	// ReSharper disable once UnusedParameter.Local
 	private static async Task Main(string[] args)
 	{
-		var token = args.Length > 0 ? args[0] : string.Empty;
-
 		Console.WriteLine($"Running from: {Directory.GetCurrentDirectory()}");
 		Console.WriteLine($"Resolved codebase root to: {CodeConfiguration.Root}");
 		Console.WriteLine();
 
-		var redownloadCoreSpecification = true;
+		var token = string.Empty;
+		var redownloadCoreSpecification = (bool?)null;
 		var downloadBranch = DefaultDownloadBranch;
 
-		var answer = "invalid";
-		while (answer != "y" && answer != "n" && answer != "")
+		// Parse CLI args
+		for (var i = 0; i < args.Length; i++)
 		{
-			Console.Write("Download online specifications? [Y/N] (default N): ");
-			answer = Console.ReadLine()?.Trim().ToLowerInvariant();
-			redownloadCoreSpecification = answer == "y";
+			switch (args[i])
+			{
+				case "--no-download":
+					redownloadCoreSpecification = false;
+					break;
+				case "--download":
+					redownloadCoreSpecification = true;
+					break;
+				case "--tag" when i + 1 < args.Length:
+					downloadBranch = args[++i];
+					break;
+				case "--token" when i + 1 < args.Length:
+					token = args[++i];
+					break;
+				default:
+					// Legacy: first positional arg is token
+					if (!args[i].StartsWith("--") && string.IsNullOrEmpty(token))
+						token = args[i];
+					break;
+			}
 		}
 
-		Console.Write($"Tag to use (default {downloadBranch}): ");
-		var readBranch = Console.ReadLine()?.Trim();
-		if (!string.IsNullOrEmpty(readBranch)) downloadBranch = readBranch;
+		// Interactive prompts only if not specified via CLI
+		if (redownloadCoreSpecification == null)
+		{
+			var answer = "invalid";
+			while (answer != "y" && answer != "n" && answer != "")
+			{
+				Console.Write("Download online specifications? [Y/N] (default N): ");
+				answer = Console.ReadLine()?.Trim().ToLowerInvariant();
+				redownloadCoreSpecification = answer == "y";
+			}
+
+			Console.Write($"Tag to use (default {downloadBranch}): ");
+			var readBranch = Console.ReadLine()?.Trim();
+			if (!string.IsNullOrEmpty(readBranch)) downloadBranch = readBranch;
+		}
 
 		if (string.IsNullOrEmpty(downloadBranch))
 			downloadBranch = DefaultDownloadBranch;
 
-		if (redownloadCoreSpecification)
+		if (redownloadCoreSpecification == true)
 			await SpecificationDownloader.DownloadAsync(downloadBranch, token);
-
 
 		var ecsSchema = new EcsSchemaParser(downloadBranch).Parse();
 		WarnAboutSchemaValidations(ecsSchema);

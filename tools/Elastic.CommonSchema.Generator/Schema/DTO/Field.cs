@@ -170,5 +170,17 @@ namespace Elastic.CommonSchema.Generator.Schema.DTO
 		[JsonProperty("pattern")]
 		public string Pattern { get; set; }
 
+		/// <summary>
+		///  OTel semantic convention mappings for this field.
+		/// </summary>
+		[JsonProperty("otel")]
+		public List<FieldOTelMapping> OTelMappings { get; set; }
+
+		/// <summary>
+		///  Controls synthetic source keep behaviour.
+		/// </summary>
+		[JsonProperty("synthetic_source_keep")]
+		public string SyntheticSourceKeep { get; set; }
+
 	}
 }

@@ -62,8 +62,8 @@ namespace Elastic.Extensions.Logging.IntegrationTests
 			loggedError.Ecs.Version.Should().Be(EcsDocument.Version);
 			loggedError.Ecs.Version.Should().NotStartWith("v");
 
-			loggedError.Labels.Should().ContainKey("Status");
-			loggedError.Labels["Status"].Should().Be("Failure");
+			loggedError.Attributes.Should().ContainKey("Status");
+			loggedError.Attributes["Status"].Should().Be("Failure");
 		}
 
 		[Fact]

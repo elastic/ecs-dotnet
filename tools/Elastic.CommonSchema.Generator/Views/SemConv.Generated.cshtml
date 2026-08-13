@@ -1,0 +1,67 @@
+@using System.Collections.Generic
+@using System.Linq
+@using System.Globalization
+@using Elastic.CommonSchema.Generator.Schema.DTO
+@inherits Elastic.CommonSchema.Generator.Views.CodeTemplatePage<Elastic.CommonSchema.Generator.Projection.CommonSchemaTypesProjection>
+// Licensed to Elasticsearch B.V under one or more agreements.
+// Elasticsearch B.V licenses this file to you under the Apache 2.0 License.
+// See the LICENSE file in the project root for more information
+
+/*
+IMPORTANT NOTE
+==============
+This file has been generated.
+If you wish to submit a PR please modify the original csharp file and submit the PR with that change. Thanks!
+*/
+
+namespace Elastic.CommonSchema
+{
+	/// <summary>
+	/// OpenTelemetry semantic convention attribute name constants.
+	/// Use these with <see cref="EcsDocument.AssignOTelField"/> and <see cref="EcsDocument.Attributes"/>.
+	/// </summary>
+	public static class SemConv
+	{
+@{
+	// Collect all unique OTel attribute names from bidirectional mappings
+	var entries = Model.OTelMappings
+		.Select(m => new { OTelName = m.OTelFieldName, EcsPath = m.EcsFieldPath, Relation = m.Relation })
+		.GroupBy(m => m.OTelName)
+		.OrderBy(g => g.Key)
+		.Select(g => g.First())
+		.ToList();
+
+	// Convert dotted OTel name to PascalCase constant name
+	// e.g. "exception.message" -> "ExceptionMessage", "deployment.environment.name" -> "DeploymentEnvironmentName"
+	string ToPascalCase(string dottedName)
+	{
+		return string.Join("", dottedName.Split('.', '_')
+			.Select(segment => segment.Length == 0
+				? ""
+				: char.ToUpperInvariant(segment[0]) + segment.Substring(1)));
+	}
+
+	// Track used names to handle potential collisions
+	var usedNames = new HashSet<string>();
+}
+@foreach (var entry in entries)
+{
+	var constName = ToPascalCase(entry.OTelName);
+	// Handle potential name collisions by appending _Attr
+	if (!usedNames.Add(constName))
+	{
+		constName = constName + "Attr";
+	}
+	var relation = entry.Relation == OTelRelation.Equivalent ? "equivalent" : "match";
+	var comment = entry.Relation == OTelRelation.Equivalent
+		? $"OTel <c>{entry.OTelName}</c> ({relation}: ECS <c>{entry.EcsPath}</c>)"
+		: $"OTel <c>{entry.OTelName}</c> ({relation}: same as ECS)";
+<text>		/// <summary>
+		/// @Raw(comment)
+		/// </summary>
+		public const string @constName = "@entry.OTelName";
+
+</text>
+}
+	}
+}

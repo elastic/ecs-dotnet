@@ -97,6 +97,9 @@ public partial class EcsDocument
 		if (options?.IncludeActivityData is null or true)
 			SetActivityData(doc);
 
+		// Process remaining OTel resource attributes through the mapping table
+		ApplyOTelResourceAttributes(doc, initialCache.OTelResourceAttributes);
+
 		return doc;
 	}
 
@@ -119,6 +122,48 @@ public partial class EcsDocument
 			.ToDictionary(kv => kv[0].Trim().ToLowerInvariant(), kv => kv[1].Trim());
 
 		return keyValues;
+	}
+
+	// Attributes already handled by specific code in GetService/GetHost
+	private static readonly HashSet<string> HandledResourceAttributes = new()
+	{
+		"service.name", "service.version", "service.instance.id",
+		"deployment.environment",
+		"host.name", "host.type", "host.arch"
+	};
+
+	private static void ApplyOTelResourceAttributes(EcsDocument doc, IDictionary<string, string>? resourceAttributes)
+	{
+		if (resourceAttributes == null || resourceAttributes.Count == 0) return;
+
+		foreach (var kvp in resourceAttributes)
+		{
+			var attrName = kvp.Key;
+			var attrValue = kvp.Value;
+
+			// Skip attributes already handled by specific code
+			if (HandledResourceAttributes.Contains(attrName)) continue;
+
+			// Check if this OTel attribute name maps to an ECS field
+			if (OTelMappings.OTelToEcs.TryGetValue(attrName, out var ecsPath))
+			{
+				// Equivalent mapping: set ECS property and store in Attributes
+				doc.AssignField(ecsPath, attrValue);
+				doc.Attributes ??= new MetadataDictionary();
+				doc.Attributes[attrName] = attrValue;
+			}
+			else if (OTelMappings.AllBidirectionalEcsFields.Contains(attrName))
+			{
+				// Match relation: OTel name IS the ECS name
+				doc.AssignField(attrName, attrValue);
+			}
+			else
+			{
+				// Unknown attribute: store in Attributes only
+				doc.Attributes ??= new MetadataDictionary();
+				doc.Attributes[attrName] = attrValue;
+			}
+		}
 	}
 
 

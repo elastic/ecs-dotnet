@@ -173,6 +173,7 @@ namespace Elastic.CommonSchema
 		/// Example: `docker` and `k8s` labels.</para>
 		/// <example>{"application": "foo-bar", "env": "production"}</example>
 		///</summary>
+		[Obsolete("Use EcsDocument.Attributes instead. Labels values will be merged into Attributes during serialization.")]
 		[JsonPropertyName("labels"), DataMember(Name = "labels")]
 		public Labels? Labels { get; set; }
 	}
@@ -605,6 +606,7 @@ namespace Elastic.CommonSchema
 		/// <para>Image labels.</para>
 		/// <example></example>
 		///</summary>
+		[Obsolete("Use EcsDocument.Attributes instead. Labels values will be merged into Attributes during serialization.")]
 		[JsonPropertyName("labels"), DataMember(Name = "labels")]
 		public ContainerLabels? Labels { get; set; }
 	}
