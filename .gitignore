@@ -81,3 +81,5 @@ BenchmarkDotNet.Artifacts
 html_docs
 
 .artifacts
+# Claude Code personal settings
+.claude/settings.local.json
