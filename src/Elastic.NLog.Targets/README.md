@@ -2,7 +2,7 @@
 
 A [NLog](https://nlog-project.org/) target that writes logs directly to [Elasticsearch](https://www.elastic.co/elasticsearch/) or [Elastic Cloud](https://www.elastic.co/cloud/) using the Elastic Common Schema.
 
-**NOTE:** To use version `9.0.0` of this package you need atleast version `8.15.0` of the Elastic Stack.
+**NOTE:** To use version `9.0.0` of this package you need at least version `8.15.0` of the Elastic Stack.
 
 ## Packages
 
@@ -84,7 +84,7 @@ var logger = LogManager.GetCurrentClassLogger();
   - _IndexEventId_ - Optional override of the per document `_id`
 
 Notice that export depends on in-memory queue, that is lost on application-crash / -exit.
-If higher gurantee of delivery is required, then consider using [Elastic.CommonSchema.NLog](https://www.nuget.org/packages/Elastic.CommonSchema.NLog)
+If higher guarantee of delivery is required, then consider using [Elastic.CommonSchema.NLog](https://www.nuget.org/packages/Elastic.CommonSchema.NLog)
 together with NLog FileTarget and use [filebeat](https://www.elastic.co/beats/filebeat) to ship these logs.
 
 Check out [Elastic Agent & Fleet](https://www.elastic.co/guide/en/fleet/current/fleet-overview.html) to simplify collecting logs and metrics on the edge.

@@ -9,7 +9,7 @@ These types can be used in either as-is, or in conjunction with, the [Official .
 
 See also:
 
-* [Elastic.Ingest.Elasticsearch.CommonSchema](https://github.com/elastic/ecs-dotnet/tree/main/src/Elastic.Ingest.Elasticsearch.CommonSchema) to easily persist ECS document to Elasticsearch or Elastic Cloud. 
+* [Elastic.Ingest.Elasticsearch.CommonSchema](https://github.com/elastic/ecs-dotnet/tree/main/src/Elastic.Ingest.Elasticsearch.CommonSchema) to easily persist ECS documents to Elasticsearch or Elastic Cloud. 
 
 ## Packages
 
@@ -114,7 +114,7 @@ ecsDocument.AssignProperty("orchestrator.cluster.id", "id");
 ```
 This will assign `ecsDocument.Orchestrator.ClusterId` to `"id"` and automatically create a new `Orchestrator` instance if needed.
 
-Any `string` or `boolean` value that is not a known `ecs` field will be assigned to `labels.*` everything else to `metatadata.*`
+Any `string` or `boolean` value that is not a known `ecs` field will be assigned to `labels.*` everything else to `metadata.*`
 
 #### A note on the `Metadata` property
 
