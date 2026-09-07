@@ -93,6 +93,6 @@ ecsDocument.AssignProperty("orchestrator.cluster.id", "id");
 
 This will assign `ecsDocument.Orchestrator.ClusterId` to `"id"` and automatically create a new `Orchestrator` instance if needed.
 
-Any `string` or `boolean` value that is not a known `ecs` field will be assigned to `labels.*` and everything else to `metatadata.*`
+Any `string` or `boolean` value that is not a known `ecs` field will be assigned to `labels.*` and everything else to `metadata.*`
 
 

@@ -2,7 +2,7 @@
 
 A [Serilog](https://serilog.net/) sink that writes logs directly to [Elasticsearch](https://www.elastic.co/elasticsearch/) or [Elastic Cloud](https://www.elastic.co/cloud/) using the Elastic Common Schema.
 
-**NOTE:** To use version `9.0.0` of the sink you need atleast version `8.15.0` of the Elastic Stack.
+**NOTE:** To use version `9.0.0` of the sink you need at least version `8.15.0` of the Elastic Stack.
 
 ## Example
 
@@ -42,9 +42,9 @@ Writing to `Elastic Cloud`:
 
 | Option | Description |
 |-------|-------------|
-| `Transport` | An instance of `Elastic.Transport` that dictates where and how wer are communicating to. Defaults to `http://localhost:9200` |
+| `Transport` | An instance of `Elastic.Transport` that dictates where and how we are communicating to. Defaults to `http://localhost:9200` |
 | `DataStream` | Where to write data, defaults to the `logs-dotnet-default` datastream. |
-| `BootstrapMethod` | Wheter the sink should attempt to install component and index templates to ensure the datastream has ECS mappings. Can be be either `None` (the default), `Silent` (attempt but fail silently), `Failure` (attempt and fail with exceptions if bootstrapping fails). |
+| `BootstrapMethod` | Whether the sink should attempt to install component and index templates to ensure the datastream has ECS mappings. Can be either `None` (the default), `Silent` (attempt but fail silently), `Failure` (attempt and fail with exceptions if bootstrapping fails). |
 | `TextFormatting`| Allows explicit control of over the `EcsTextFormatterConfiguration` used to emit ECS json documents. See [`Elastic.CommonSchema.Serilog`](https://github.com/elastic/ecs-dotnet/tree/main/src/Elastic.CommonSchema.Serilog) for available options. |
 | `ConfigureChannel` | A callback receiving the `DatastreamChannelOptions` which allows you to control sizing, backpressure etc. See [`Elastic.Ingest.Elasticsearch`](https://github.com/elastic/elastic-ingest-dotnet/blob/main/src/Elastic.Ingest.Elasticsearch/README.md#elasticingestelasticsearch) for more information.
 
@@ -63,7 +63,7 @@ https://messagetemplates.org/ format.
 
 The available ECS message template properties are listed under `LogTemplateProperties.*` e.g `LogTemplateProperties.TraceId`
 
-```chsarp
+```csharp
 Log.Information("The time is {TraceId}", "my-trace-id");
 ```
 
@@ -174,14 +174,14 @@ You'll need to specify either `apiKey` or `username` and `password`.
 
 * `Serilog.Sinks.Elasticsearch` is an amazing community led sink that has a ton of options and works against older Elasticsearch versions `< 8.0`.
 * `Serilog.Sinks.Elasticsearch` is unofficially supported by Elastic with some of the .NET team helping to maintain it.
-* `Elastic.Serilog.Sinks` is **officially** supported by Elastic and was purposely build to adhere to newer best practices around logging, datastreams and ILM.
-* `Elastic.Serilog.Sinks` is purposely build to have fewer configuration options and be more prescriptive than `Serilog.Sinks.Elasticsearch`.
+* `Elastic.Serilog.Sinks` is **officially** supported by Elastic and was purposely built to adhere to newer best practices around logging, datastreams and ILM.
+* `Elastic.Serilog.Sinks` is purposely built to have fewer configuration options and be more prescriptive than `Serilog.Sinks.Elasticsearch`.
   * That is not to say there aren't plenty of configuration hooks in `Elastic.Serilog.Sinks` 
 
 #### Notable absent features:
 * `Elastic.Serilog.Sinks` only works with `Elasticsearch 8.x` and up. 
-  * This is because the bootrapping (`BootstrapMethod`) attempts to load templates build for Elasticsearch 8.0 and up. 
-* `Elastic.Serilog.Sinks` has only one way it emits data to Elasticsearch confirming to the [ecs-logging specification](https://github.com/elastic/ecs-logging)
+  * This is because the bootstrapping (`BootstrapMethod`) attempts to load templates built for Elasticsearch 8.0 and up. 
+* `Elastic.Serilog.Sinks` has only one way it emits data to Elasticsearch conforming to the [ecs-logging specification](https://github.com/elastic/ecs-logging)
   * That doesn't mean you can not introduce your own additional properties though.
 * `Elastic.Serilog.Sinks` has no durable mode. 
   * If you need higher guarantees on log delivery use [`Serilog.Sinks.File`](https://github.com/serilog/serilog-sinks-file) with our [ECS log formatter](https://www.nuget.org/packages/Elastic.CommonSchema.Serilog/) for Serilog and use [filebeat](https://www.elastic.co/beats/filebeat) to ship these logs.

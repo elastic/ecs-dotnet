@@ -111,7 +111,7 @@ the NLog FileTarget and [Elastic Filebeat](https://www.elastic.co/downloads/beat
 Additionally any valid ECS log template properties that is available under `LogTemplateProperties.*` e.g `LogTemplateProperties.TraceId`
 is supported and will directly set the appropriate ECS fields.
 
-```chsarp
+```csharp
 logger.Info("The time is {TraceId}", "my-trace-id");
 ```
 
