@@ -54,6 +54,28 @@ namespace Elastic.CommonSchema.NLog.Tests
 			y.Should().HaveValue().And.Be(2.2);
 		});
 
+
+		[Fact]
+		public void SeesMessageWithSpecialDoubles() => TestLogger((logger, getLogEvents) =>
+		{
+			logger.Info("Info {ValueX} {SomeY} {NotX}", double.NaN, double.NegativeInfinity, "X");
+
+			var logEvents = getLogEvents();
+			logEvents.Should().HaveCount(1);
+
+			var ecsEvents = ToEcsEvents(logEvents);
+
+			var (_, info) = ecsEvents.First();
+			info.Message.Should().Be("Info NaN -Infinity X");
+			info.Metadata.Should().ContainKey("ValueX");
+			info.Metadata.Should().ContainKey("SomeY");
+
+			var x = info.Metadata["ValueX"] as string;
+			x.Should().Be("NaN");
+			var y = info.Metadata["SomeY"] as string;
+			y.Should().Be("-Infinity");
+		});
+
 		[Fact]
 		public void SeesMessageWithSafeProp() => TestLogger((logger, getLogEvents) =>
 		{

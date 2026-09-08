@@ -62,6 +62,9 @@ namespace Elastic.CommonSchema.Serialization
 		}
 
 		/// <summary></summary>
+		protected static void WriteProp(Utf8JsonWriter writer, string key, string? value, JsonSerializerOptions options) => WritePropString(writer, key, value);
+
+		/// <summary></summary>
 		[UnconditionalSuppressMessage("ReflectionAnalysis", "IL2026:RequiresUnreferencedCode", Justification = "We always provide a static JsonTypeInfoResolver")]
 		[UnconditionalSuppressMessage("AotAnalysis", "IL3050:RequiresDynamicCode", Justification = "We always provide a static JsonTypeInfoResolver")]
 		protected static void WriteProp<TValue>(Utf8JsonWriter writer, string key, TValue value, JsonSerializerOptions options)
