@@ -98,7 +98,7 @@ internal static class LoggingEventConverter
 		{
 			metadata["MessageTemplate"] = format.Format;
 			for (var i = 0; i < format.Args.Length; i++)
-				metadata[i.ToString()] = format.Args[0];
+				metadata[i.ToString()] = format.Args[i];
 		}
 
 		return metadata.Count > 0 ? metadata : null;
