@@ -151,6 +151,24 @@ public class MessageTests : LogTestsBase
 	});
 
 	[Fact]
+	public void ToEcs_EventWithFormat_LabelsContainTemplateAndTwoArgs() => TestLogger((log, getLogEvents) =>
+	{
+		log.InfoFormat("Log with {0} {1}", "healthy", "format");
+
+		var logEvents = getLogEvents();
+		logEvents.Should().HaveCount(1);
+
+		var (_, info) = ToEcsEvents(logEvents).First();
+
+		info.Should().NotBeNull();
+		info.Labels.Should().NotBeNull();
+
+		info.Labels["MessageTemplate"].Should().Be("Log with {0} {1}");
+		info.Labels["0"].Should().Be("healthy");
+		info.Labels["1"].Should().Be("format");
+	});
+
+	[Fact]
 	public void ToEcs_AnyEvent_PopulatesMetadataAndLabelsFieldsWithoutLog4netProperties() => TestLogger((log, getLogEvents) =>
 	{
 		log.Info("DummyText");
