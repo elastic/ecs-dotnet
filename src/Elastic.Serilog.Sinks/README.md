@@ -14,7 +14,7 @@ Log.Logger = new LoggerConfiguration()
 	.Enrich.FromLogContext()
 ```
 
-**NOTE:** Don't forget that we also publish an [`Elastic.Apm.SerilogEnricher`](https://github.com/elastic/ecs-dotnet/blob/main/src/Elastic.Apm.SerilogEnricher/readme.md) for the Elastic APM Agent!
+**NOTE:** Don't forget that we also publish an [`Elastic.Apm.SerilogEnricher`](https://github.com/elastic/ecs-dotnet/tree/main/src/Elastic.Apm.SerilogEnricher) for the Elastic APM Agent!
 
 ### Writing to Elasticsearch
 
@@ -25,9 +25,9 @@ Log.Logger = new LoggerConfiguration()
 	opts.BootstrapMethod = BootstrapMethod.Failure;
 	opts.ConfigureChannel = channelOpts =>
 	{
-		channelOpts.BufferOptions = new BufferOptions 
-		{ 
-			ConcurrentConsumers = 10 
+		channelOpts.BufferOptions = new BufferOptions
+		{
+			ConcurrentConsumers = 10
 		};
 	};
 })
@@ -52,10 +52,10 @@ Log.Logger = new LoggerConfiguration()
 Note that you can also pass `ElasticsearchSinkOptions` instance directly:
 
 ```csharp
-.WriteTo.Elasticsearch(new ElasticsearchSinkOptions(client.Transport)
+.WriteTo.Elasticsearch(new ElasticsearchSinkOptions(client.Transport))
 ```
 
-This allows you to reuse the transport configured for the Elasticsearch client.
+This allows you to reuse the `Transport` configured for the Elasticsearch client.
 
 ### ECS Aware Message Templates
 
@@ -187,4 +187,4 @@ You must also specify either an `apiKey` or both `username` and `password`.
   - If you need stronger guarantees for log delivery, use [`Serilog.Sinks.File`](https://github.com/serilog/serilog-sinks-file) together with our [ECS log formatter](https://www.nuget.org/packages/Elastic.CommonSchema.Serilog/) for Serilog, and use [Filebeat](https://www.elastic.co/beats/filebeat) to ship the resulting logs.
   - You can also check out [Elastic Agent and Fleet](https://www.elastic.co/guide/en/fleet/current/fleet-overview.html) to simplify the collection of logs and metrics at the edge.
 
-If you're missing a particular feature from `Serilog.Sinks.Elasticsearch` in `Elastic.Serilog.Sinks`, please open a [feature request](https://github.com/elastic/ecs-dotnet/issues/new?assignees=&labels=enhancement&template=feature_request.md&title=%5BFEATURE%5D). We'd love to grow this sink organically moving forward!
+If you miss a particular feature from `Serilog.Sinks.Elasticsearch` in `Elastic.Serilog.Sinks`, please open a [feature request](https://github.com/elastic/ecs-dotnet/issues/new?assignees=&labels=enhancement&template=feature_request.md&title=%5BFEATURE%5D). We'd love to grow this sink organically moving forward!

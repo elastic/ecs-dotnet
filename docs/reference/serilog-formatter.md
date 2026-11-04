@@ -31,8 +31,6 @@ In the example above, `new EcsTextFormatter()` enables the ECS text formatter an
 
 The example uses the Console sink, but you can use any sink of your choice. For durable and reliable log ingestion, consider using a file system sink together with [Elastic Filebeat](https://www.elastic.co/downloads/beats/filebeat) to ship the resulting log files.
 
-### ASP.NET Core Applications
-
 In ASP.NET Core applications, you can configure the formatter and enrich log events with HTTP context information as follows:
 
 ```csharp
