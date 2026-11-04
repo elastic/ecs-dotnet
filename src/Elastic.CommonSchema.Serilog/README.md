@@ -39,7 +39,7 @@ The `WithEcsHttpContext` enricher adds information from the current `HttpContext
 
 ### Example Output
 
-The following is an example of the JSON output produced by the formatter:
+The following is an example of the JSON output produced by the formatter (formatted for readability):
 
 ```json
 {

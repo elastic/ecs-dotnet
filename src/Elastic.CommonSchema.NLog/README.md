@@ -1,6 +1,6 @@
 # Elastic Common Schema NLog Layout
 
-An NLog Layout implementation that formats NLog log events as JSON documents adhering to the Elastic Common Schema (ECS) specification.
+This NLog Layout implementation formats NLog log events as JSON documents adhering to the Elastic Common Schema (ECS) specification.
 
 ## Packages
 
@@ -121,7 +121,7 @@ This overrides `trace.id` in the resulting ECS JSON document.
 
 ## Example Output from EcsLayout
 
-The following is an example of the JSON output produced by `EcsLayout`:
+The following is an example of the JSON output produced by `EcsLayout` (formatted for readability):
 
 ```json
 {

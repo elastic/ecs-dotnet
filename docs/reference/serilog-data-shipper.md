@@ -139,7 +139,7 @@ In case of issues, you can enable the [Serilog Self-Log feature](https://github.
 * `Elastic.Serilog.Sinks` is intentionally designed to offer fewer configuration options and be more prescriptive than `Serilog.Sinks.Elasticsearch`.
 * This doesn't mean that `Elastic.Serilog.Sinks` lacks configuration hooks.
 
-#### Notable absent features
+### Notable absent features: [_notable_absent_features]
 
 * `Elastic.Serilog.Sinks` only supports Elasticsearch 8.x and later.
 * This is because the bootstrapping process (`BootstrapMethod`) attempts to install templates designed for Elasticsearch 8.0 and later.

@@ -1,14 +1,14 @@
 # Elastic Common Schema log4net Layout
 
-This Layout implementation formats a log4net event into a JSON representation that adheres to the Elastic Common Schema specification.
+This log4net Layout implementation formats log4net events as JSON documents adhering to the Elastic Common Schema (ECS) specification.
 
 ## Packages
 
-The .NET assemblies are published to NuGet under the package name [Elastic.CommonSchema.Log4net](http://nuget.org/packages/Elastic.CommonSchema.Log4net)
+The .NET assemblies are published to NuGet under the package name [Elastic.CommonSchema.Log4net](https://www.nuget.org/packages/Elastic.CommonSchema.Log4net).
 
-## How to use from configuration
+## How to Use Configuration
 
-Specify layout type in appender's configuration:
+Specify the layout type in the appender configuration:
 
 ```xml
 <log4net>
@@ -22,7 +22,7 @@ Specify layout type in appender's configuration:
 </log4net>
 ```
 
-## How to use from API
+## How to Use the API
 
 ```csharp
 var hierarchy = (Hierarchy)LogManager.CreateRepository(Guid.NewGuid().ToString());
@@ -32,36 +32,41 @@ hierarchy.Root.Level = Level.All;
 hierarchy.Configured = true;
 ```
 
-The `Layout = new EcsLayout()` line then instructs log4net to use ECS layout.
-The sample above uses the console appender, but you are free to use any appender of your choice, perhaps consider using a
-filesystem target and [Elastic Filebeat](https://www.elastic.co/downloads/beats/filebeat) for durable and reliable ingestion.
+Setting `Layout = new EcsLayout()` instructs log4net to use the ECS layout.
 
-### ECS Aware Properties
+The example above uses the console appender, but you can use any appender of your choice.
 
-Any valid ECS log template properties that is available under `LogTemplateProperties.*` e.g `LogTemplateProperties.TraceId`
-is supported and will directly set the appropriate ECS field.
+For durable and reliable log ingestion, consider using a file appender together with [Elastic Filebeat](https://www.elastic.co/downloads/beats/filebeat) to ship the resulting log files.
+
+### ECS-Aware Properties
+
+The layout supports valid ECS message template properties listed under `LogTemplateProperties.*`, such as `LogTemplateProperties.TraceId`.
+
+These properties allow you to set ECS fields directly through log messages.
 
 ## Output
 
-Apart from [mandatory fields](https://www.elastic.co/guide/en/ecs/current/ecs-guidelines.html#_general_guidelines), the output contains additional data:
+In addition to the [mandatory ECS fields](https://www.elastic.co/guide/en/ecs/current/ecs-guidelines.html#_general_guidelines), the output contains the following information:
 
-- `labels` is taken from `metadata` (string and boolean properties)
-- `log.origin.file.name` is taken from `LocationInformation`
-- `log.origin.file.line` is taken from `LocationInformation`
-- `log.origin.function` is taken from `LocationInformation`
-- `event.created` is taken from timestamp
-- `event.timezone` is equal to local timezone
-- `host.hostname` is taken from `HostName` property
-- `process.thread.id` is taken from `ThreadName` if it has numeric value
-- `process.thread.name` is taken from `ThreadName` if it doesn't have numeric value
-- `service.name` is taken from entry or calling assembly
-- `service.version` is taken from entry or calling assembly
-- `error.message` is taken from `ExceptionObject`
-- `error.type` is taken from `ExceptionObject`
-- `error.stacktrace` is taken from `ExceptionObject`
-- `metadata` is taken from properties. It also contains message template and arguments in case a formatted message was logged
+- `labels` - Populated from `metadata` (string and boolean properties).
+- `log.origin.file.name` - Populated from `LocationInformation`.
+- `log.origin.file.line` - Populated from `LocationInformation`.
+- `log.origin.function` - Populated from `LocationInformation`.
+- `event.created` - Populated from the log event timestamp.
+- `event.timezone` - Set to the local time zone.
+- `host.hostname` - Populated from the `HostName` property.
+- `process.thread.id` - Populated from `ThreadName` if its value is numeric.
+- `process.thread.name` - Populated from `ThreadName` if its value is non-numeric.
+- `service.name` - Populated from the entry assembly or calling assembly.
+- `service.version` - Populated from the entry assembly or calling assembly.
+- `error.message` - Populated from `ExceptionObject`.
+- `error.type` - Populated from `ExceptionObject`.
+- `error.stacktrace` - Populated from `ExceptionObject`.
+- `metadata` - Populated from log event properties. It also contains the message template and its arguments when a formatted message is logged.
 
-Sample log event output (formatted for readability):
+### Example Output
+
+The following is an example of a log event formatted as JSON (formatted for readability):
 
 ```json
 {
@@ -81,7 +86,7 @@ Sample log event output (formatted for readability):
         }
     },
     "labels": {
-        "MessageTemplate": "{0}! Welcome to example!"
+        "MessageTemplate": "{0}! Welcome to example!",
         "0": "Hi"
     },
     "agent": {

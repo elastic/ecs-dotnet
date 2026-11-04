@@ -36,19 +36,19 @@ In ASP.NET Core applications, you can configure the formatter and enrich log eve
 ```csharp
 .UseSerilog((ctx, config) =>
 {
-    // Ensure HttpContextAccessor is accessible
-    var httpAccessor = ctx.Configuration.Get<HttpContextAccessor>();
+	// Ensure HttpContextAccessor is accessible
+	var httpAccessor = ctx.Configuration.Get<HttpContextAccessor>();
 
-    config
-        .ReadFrom.Configuration(ctx.Configuration)
-        .Enrich.WithEcsHttpContext(httpAccessor)
-        .WriteTo.Async(a => a.Console(new EcsTextFormatter()));
+	config
+		.ReadFrom.Configuration(ctx.Configuration)
+		.Enrich.WithEcsHttpContext(httpAccessor)
+		.WriteTo.Async(a => a.Console(new EcsTextFormatter()));
 })
 ```
 
 The `WithEcsHttpContext` enricher adds information from the current `HttpContext` to log events, enriching them with relevant ECS fields.
 
-The following is an example of the JSON output produced by the formatter:
+The following is an example of the JSON output produced by the formatter (formatted for readability):
 
 ```json
 {

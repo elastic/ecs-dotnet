@@ -8,7 +8,7 @@ mapped_pages:
 
 # NLog layout [nlog-formatter]
 
-An NLog Layout implementation that formats NLog log events as JSON documents adhering to the Elastic Common Schema (ECS) specification.
+This NLog Layout implementation formats NLog log events as JSON documents adhering to the Elastic Common Schema (ECS) specification.
 
 ## Installation [_installation_3]
 
@@ -136,7 +136,7 @@ This overrides `trace.id` in the resulting ECS JSON document.
 
 ## Example output from EcsLayout [_example_output_from_ecslayout]
 
-The following is an example of the JSON output produced by `EcsLayout`:
+The following is an example of the JSON output produced by `EcsLayout` (formatted for readability):
 
 ```json
 {
