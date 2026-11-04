@@ -1,12 +1,12 @@
 # Elastic Common Schema NLog Layout
 
-This Layout implementation formats an NLog event into a JSON representation that adheres to the Elastic Common Schema specification.
+An NLog Layout implementation that formats NLog log events as JSON documents adhering to the Elastic Common Schema (ECS) specification.
 
 ## Packages
 
-The .NET assemblies are published to NuGet under the package name [Elastic.CommonSchema.NLog](http://nuget.org/packages/Elastic.CommonSchema.NLog)
+The .NET assemblies are published to NuGet under the package name [Elastic.CommonSchema.NLog](https://www.nuget.org/packages/Elastic.CommonSchema.NLog).
 
-## How to use from API
+## How to Use the API
 
 ```csharp
 var config = new LoggingConfiguration();
@@ -16,10 +16,11 @@ LogManager.Configuration = config;
 var logger = LogManager.GetCurrentClassLogger();
 ```
 
-The sample above uses `EcsLayout`  with the NLog console target, but you are free to use any target of your choice, perhaps consider
-the NLog FileTarget and [Elastic Filebeat](https://www.elastic.co/downloads/beats/filebeat) for durable and reliable ingestion.
+The example above uses `EcsLayout` with the NLog console target, but you can use any target of your choice.
 
-## How to use from NLog.config
+For durable and reliable log ingestion, consider using NLog's `FileTarget` together with [Elastic Filebeat](https://www.elastic.co/downloads/beats/filebeat) to ship the resulting log files.
+
+## How to Use NLog.config
 
 ```xml
 <nlog>
@@ -27,8 +28,8 @@ the NLog FileTarget and [Elastic Filebeat](https://www.elastic.co/downloads/beat
     <add assembly="Elastic.CommonSchema.NLog"/>
   </extensions>
   <targets>
-    <target name="console" xsi:type="console">
-      <layout xsi:type="EcsLayout">
+    <target name="console" type="console">
+      <layout type="EcsLayout">
         <metadata name="MyProperty" layout="MyPropertyValue" /> <!-- repeated, optional -->
         <label name="MyLabel" layout="MyLabelValue" />          <!-- repeated, optional -->
         <tag layout="MyTagValue" />                             <!-- repeated, optional -->
@@ -44,22 +45,22 @@ the NLog FileTarget and [Elastic Filebeat](https://www.elastic.co/downloads/beat
 ## EcsLayout Parameter Options
 
 * **Metadata Options**
-  - _IncludeEventProperties_ - Include LogEvent properties as metadata. Default: `true`
-  - _IncludeScopeProperties_ - Include NLog Scope Context Properties as metadata. Default: `false`
-  - _ExcludeProperties_ - Comma separated string with names which properties to exclude.
+  - _IncludeEventProperties_ - Determines whether NLog event properties are included as metadata. Default: `true`.
+  - _IncludeScopeProperties_ - Determines whether NLog scope context properties are included as metadata. Default: `false`.
+  - _ExcludeProperties_ - A comma-separated list of property names to exclude from the output.
 
 * **Event Options**
-  - _EventAction_ - 
-  -	_EventCategory_ - 
-  -	_EventId_ - 
-  -	_EventKind_ - 
-  -	_EventSeverity_ - 
+  - _EventAction_ -
+  - _EventCategory_ -
+  - _EventId_ -
+  - _EventKind_ -
+  - _EventSeverity_ -
 
 * **Agent Options**
-  - _AgentId_ - 
-  - _AgentName_ - 
-  - _AgentType_ - 
-  - _AgentVersion_ - 
+  - _AgentId_ -
+  - _AgentName_ -
+  - _AgentType_ -
+  - _AgentVersion_ -
 
 * **Process Options**
   - _ProcessExecutable_ - Default: `${processname:FullName=true}`
@@ -70,28 +71,28 @@ the NLog FileTarget and [Elastic Filebeat](https://www.elastic.co/downloads/beat
   - _ProcessThreadName_ -
 
 * **Server Options**
-  -	_ServerAddress_ -
-  -	_ServerIp_ -
-  -	_ServerUser_ - Default: `${environment-user}`
+  - _ServerAddress_ -
+  - _ServerIp_ -
+  - _ServerUser_ - Default: `${environment-user}`
 
 * **Host Options**
-  -	_HostId_ -
-  -	_HostIp_ - 
-  -	_HostName_ - Default: `${machinename}`
+  - _HostId_ -
+  - _HostIp_ -
+  - _HostName_ - Default: `${machinename}`
 
 * **Log Origin Options**
   - _LogOriginCallSiteMethod_ - Default: `${exception:format=method}`
   - _LogOriginCallSiteFile_ - Default: `${exception:format=source}`
   - _LogOriginCallSiteLine_ -
 
-* **Http Options**
+* **HTTP Options**
   - _HttpRequestId_ - Default: `${aspnet-trace-identifier}`
   - _HttpRequestMethod_ - Default: `${aspnet-request-method}`
   - _HttpRequestBytes_ - Default: `${aspnet-request-contentlength}`
   - _HttpRequestReferrer_ - Default: `${aspnet-request-referrer}`
   - _HttpResponseStatusCode_ - Default: `${aspnet-response-statuscode}`
 
-* **Url Options**
+* **URL Options**
   - _UrlScheme_ - Default: `${aspnet-request-url:IncludeScheme=true:IncludeHost=false:IncludePath=false}`
   - _UrlDomain_ - Default: `${aspnet-request-url:IncludeScheme=false:IncludeHost=true:IncludePath=false}`
   - _UrlPath_ - Default: `${aspnet-request-url:IncludeScheme=false:IncludeHost=false:IncludePath=true}`
@@ -105,21 +106,22 @@ the NLog FileTarget and [Elastic Filebeat](https://www.elastic.co/downloads/beat
 
 * **Transaction Options**
   - _ApmTransactionId_ - Default: `${ElasticApmTransactionId}`
-  - 
+
 ### ECS Aware Message Templates
 
-Additionally any valid ECS log template properties that is available under `LogTemplateProperties.*` e.g `LogTemplateProperties.TraceId`
-is supported and will directly set the appropriate ECS fields.
+The layout also supports valid ECS message template properties listed under `LogTemplateProperties.*`, such as `LogTemplateProperties.TraceId`.
 
-```chsarp
+These properties allow you to set ECS fields directly through message templates.
+
+```csharp
 logger.Info("The time is {TraceId}", "my-trace-id");
 ```
 
-Will override `trace.id` on the resulting ECS json document.
+This overrides `trace.id` in the resulting ECS JSON document.
 
+## Example Output from EcsLayout
 
-## Example output from EcsLayout
-An example of the output is given below:
+The following is an example of the JSON output produced by `EcsLayout`:
 
 ```json
 {
