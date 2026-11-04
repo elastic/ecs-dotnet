@@ -8,7 +8,7 @@ mapped_pages:
 
 # Serilog formatter [serilog-formatter]
 
-This `ITextFormatter` implementation formats a Serilog event into a JSON representation that adheres to the Elastic Common Schema specification.
+This Serilog `ITextFormatter` implementation formats Serilog log events as JSON documents adhering to the Elastic Common Schema (ECS) specification.
 
 ## Installation [_installation_2]
 
@@ -27,9 +27,11 @@ var logger = new LoggerConfiguration()
     .CreateLogger();
 ```
 
-In the code snippet above `new EcsTextFormatter()` enables the text formatter and instructs Serilog to format the event as JSON. The sample above uses the Console sink, but you are free to use any sink of your choice, perhaps consider using a filesystem sink and [Elastic Filebeat](https://www.elastic.co/downloads/beats/filebeat) for durable and reliable ingestion.
+In the example above, `new EcsTextFormatter()` enables the ECS text formatter and instructs Serilog to format log events as JSON.
 
-In ASP.NET (core) applications
+The example uses the Console sink, but you can use any sink of your choice. For durable and reliable log ingestion, consider using a file system sink together with [Elastic Filebeat](https://www.elastic.co/downloads/beats/filebeat) to ship the resulting log files.
+
+In ASP.NET Core applications, you can configure the formatter and enrich log events with HTTP context information as follows:
 
 ```csharp
 .UseSerilog((ctx, config) =>
@@ -44,49 +46,75 @@ In ASP.NET (core) applications
 })
 ```
 
-The `WithEcsHttpContext` ensures logs will be enriched with `HttpContext` data.
+The `WithEcsHttpContext` enricher adds information from the current `HttpContext` to log events, enriching them with relevant ECS fields.
 
-An example of the output is given below:
+The following is an example of the JSON output produced by the formatter (formatted for readability):
 
 ```json
 {
   "@timestamp": "2019-11-22T14:59:02.5903135+11:00",
   "log.level": "Information",
-  "message": "Log message",
-  "ecs": {
-    "version": "1.4.0"
+  "message": "Info \"X\" 2.2",
+  "ecs.version": "9.0.0",
+  "log": { "logger": "Elastic.CommonSchema.Serilog.Tests.MessageTests" },
+  "labels": {
+    "MessageTemplate": "Info {ValueX} {SomeY}",
+    "ValueX": "X",
+    "ThreadName": ".NET Long Running Task"
+  },
+  "agent": {
+    "type": "Elastic.CommonSchema.Serilog",
+    "version": "1.6.0"
   },
   "event": {
-    "severity": 0,
-    "timezone": "AUS Eastern Standard Time",
-    "created": "2019-11-22T14:59:02.5903135+11:00"
+    "created": "2019-11-22T14:59:02.5903135+11:00",
+    "severity": 2,
+    "timezone": "Romance Standard Time"
   },
-  "log": {
-    "logger": "Elastic.CommonSchema.Serilog"
+  "host": {
+    "os": {
+      "full": "Microsoft Windows 10.0.19045",
+      "platform": "Win32NT",
+      "version": "10.0.19045.0"
+    },
+    "architecture": "X64",
+    "hostname": "LOCALHOST",
+    "name": "LOCALHOST"
   },
   "process": {
-    "thread": {
-      "id": 1
-    },
-    "executable": "System.Threading.ExecutionContext"
+    "name": "dotnet",
+    "pid": 1440,
+    "thread.id": 15,
+    "thread.name": ".NET Long Running Task",
+    "title": ""
+  },
+  "server": { "user": { "name": "MyDomain\\MyUserName" } },
+  "service": {
+    "name": "Elastic.CommonSchema",
+    "type": "dotnet",
+    "version": "1.6.0"
+  },
+  "user": {
+    "domain": "MyDomain",
+    "name": "MyUserName"
+  },
+  "metadata": {
+    "SomeY": 2.2
   }
 }
 ```
 
-
 ## Configuration [_configuration]
 
-| Option | Description |
-| --- | --- |
-| `MapCurrentThead` | `true` map `ecs.process` by looking up the `Process` from the current thread |
-| `MapHttpAdapter` | `null` a way to map `HttpContextAccessor` to ECS fields. |
-| `LogEventPropertiesToFilter` | A `Set<string>` of properties that should not be emitted as `labels.*` or `metadata.*` |
-| `MapCustom` | A Func that allows you to mutate the EcsDocument before its fully converted. |
-
+| Option                        | Description                                                                            |
+|-------------------------------|----------------------------------------------------------------------------------------|
+| `MapHttpAdapter` | Allows you to map an `HttpContextAccessor` to ECS fields. Defaults to `null`.                       |
+| `LogEventsPropertiesToFilter` | A `Set<string>` containing property names that should be excluded from `labels.*` and `metadata.*` in the resulting JSON document. |
+| `MapCustom` | A `Func` that allows you to modify the `EcsDocument` before it is serialized.                            |
 
 ## ECS aware message templates [_ecs_aware_message_templates_2]
 
-This formatter also allows you to set ECS fields directly from the message template using properties that adhere to the [https://messagetemplates.org/](https://messagetemplates.org/) format.
+This formatter also allows you to set ECS fields directly through message templates using properties that follow the [Message Templates](https://messagetemplates.org/) format.
 
 The available ECS message template properties are listed under `LogTemplateProperties.*` e.g `LogTemplateProperties.TraceId`
 
@@ -94,6 +122,6 @@ The available ECS message template properties are listed under `LogTemplatePrope
 Log.Information("The time is {TraceId}", "my-trace-id");
 ```
 
-Will override `trace.id` on the resulting ECS json document.
+This overrides `trace.id` in the resulting ECS JSON document.
 
 

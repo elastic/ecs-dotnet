@@ -1,39 +1,45 @@
 # Elastic Common Schema Serilog Text Formatter
 
-This `ITextFormatter` implementation formats a Serilog event into a JSON representation that adheres to the Elastic Common Schema specification.
+This Serilog `ITextFormatter` implementation formats Serilog log events as JSON documents adhering to the Elastic Common Schema (ECS) specification.
 
 ## Packages
 
-The .NET assemblies are published to NuGet under the package name [Elastic.CommonSchema.Serilog](http://nuget.org/packages/Elastic.CommonSchema.Serilog)
+The .NET assemblies are published to NuGet under the package name [Elastic.CommonSchema.Serilog](https://www.nuget.org/packages/Elastic.CommonSchema.Serilog).
 
 ## How to Enable
 
 ```csharp
 var logger = new LoggerConfiguration()
-                .WriteTo.Console(new EcsTextFormatter())
-                .CreateLogger();
+    .WriteTo.Console(new EcsTextFormatter())
+    .CreateLogger();
 ```
 
-In the code snippet above `new EcsTextFormatter()` enables the text formatter and instructs Serilog to format the event as JSON. The sample above uses the Console sink, but you are free to use any sink of your choice, perhaps consider using a filesystem sink and [Elastic Filebeat](https://www.elastic.co/downloads/beats/filebeat) for durable and reliable ingestion.
+In the example above, `new EcsTextFormatter()` enables the ECS text formatter and instructs Serilog to format log events as JSON.
 
-In ASP.NET (core) applications 
+The example uses the Console sink, but you can use any sink of your choice. For durable and reliable log ingestion, consider using a file system sink together with [Elastic Filebeat](https://www.elastic.co/downloads/beats/filebeat) to ship the resulting log files.
+
+### ASP.NET Core Applications
+
+In ASP.NET Core applications, you can configure the formatter and enrich log events with HTTP context information as follows:
 
 ```csharp
 .UseSerilog((ctx, config) =>
 {
-  // Ensure HttpContextAccessor is accessible
-  var httpAccessor = ctx.Configuration.Get<HttpContextAccessor>();
+    // Ensure HttpContextAccessor is accessible
+    var httpAccessor = ctx.Configuration.Get<HttpContextAccessor>();
 
-  config
-    .ReadFrom.Configuration(ctx.Configuration)
-    .Enrich.WithEcsHttpContext(httpAccessor)
-    .WriteTo.Async(a => a.Console(new EcsTextFormatter()));
+    config
+        .ReadFrom.Configuration(ctx.Configuration)
+        .Enrich.WithEcsHttpContext(httpAccessor)
+        .WriteTo.Async(a => a.Console(new EcsTextFormatter()));
 })
 ```
 
-The `WithEcsHttpContext` ensures logs will be enriched with `HttpContext` data.
+The `WithEcsHttpContext` enricher adds information from the current `HttpContext` to log events, enriching them with relevant ECS fields.
 
-An example of the output is given below:
+### Example Output
+
+The following is an example of the JSON output produced by the formatter (formatted for readability):
 
 ```json
 {
@@ -93,16 +99,13 @@ An example of the output is given below:
 
 | Option                        | Description                                                                            |
 |-------------------------------|----------------------------------------------------------------------------------------|
-| `MapCurrentThead`             | `true` map `ecs.process` by looking up the `Process` from the current thread           |                                              |
-| `MapHttpAdapter`              | `null` a way to map `HttpContextAccessor` to ECS fields.                               | 
-| `LogEventsPropertiesToFilter` | A `Set<string>` of properties that should not be emitted as `labels.*` or `metadata.*` |
-| `MapCustom`                   | A Func that allows you to mutate the EcsDocument before its fully converted.           |
-
+| `MapHttpAdapter` | Allows you to map an `HttpContextAccessor` to ECS fields. Defaults to `null`.                       |
+| `LogEventsPropertiesToFilter` | A `Set<string>` containing property names that should be excluded from `labels.*` and `metadata.*` in the resulting JSON document. |
+| `MapCustom` | A `Func` that allows you to modify the `EcsDocument` before it is serialized.                            |
 
 ### ECS Aware Message Templates
 
-This formatter also allows you to set ECS fields directly from the message template using properties that adhere to the
-https://messagetemplates.org/ format. 
+This formatter also allows you to set ECS fields directly through message templates using properties that follow the [Message Templates](https://messagetemplates.org/) format.
 
 The available ECS message template properties are listed under `LogTemplateProperties.*` e.g `LogTemplateProperties.TraceId`
 
@@ -110,7 +113,7 @@ The available ECS message template properties are listed under `LogTemplatePrope
 Log.Information("The time is {TraceId}", "my-trace-id");
 ```
 
-Will override `trace.id` on the resulting ECS json document. 
+This overrides `trace.id` in the resulting ECS JSON document.
 
 ## Copyright and License
 

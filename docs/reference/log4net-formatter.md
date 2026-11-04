@@ -8,7 +8,7 @@ mapped_pages:
 
 # log4net [log4net-formatter]
 
-This Layout implementation formats a log4net event into a JSON representation that adheres to the Elastic Common Schema specification.
+This log4net Layout implementation formats log4net events as JSON documents adhering to the Elastic Common Schema (ECS) specification.
 
 ## Installation [_installation_4]
 
@@ -23,7 +23,7 @@ Add a reference to the [Elastic.CommonSchema.Log4net](http://nuget.org/packages/
 
 ### Setup using configuration [_setup_using_configuration]
 
-Specify layout type in appender’s configuration:
+Specify the layout type in the appender configuration:
 
 ```xml
 <log4net>
@@ -48,56 +48,46 @@ hierarchy.Root.Level = Level.All;
 hierarchy.Configured = true;
 ```
 
-The `Layout = new EcsLayout()` line then instructs log4net to use ECS layout. The sample above uses the console appender, but you are free to use any appender of your choice, perhaps consider using a filesystem target and [Elastic Filebeat](https://www.elastic.co/downloads/beats/filebeat) for durable and reliable ingestion.
+Setting `Layout = new EcsLayout()` instructs log4net to use the ECS layout.
 
+The example above uses the console appender, but you can use any appender of your choice.
 
+For durable and reliable log ingestion, consider using a file appender together with [Elastic Filebeat](https://www.elastic.co/downloads/beats/filebeat) to ship the resulting log files.
 
 ## ECS Aware Properties [_ecs_aware_properties]
 
-Any valid ECS log template properties that is available under `LogTemplateProperties.*` e.g `LogTemplateProperties.TraceId` is supported and will directly set the appropriate ECS field.
+The layout supports valid ECS message template properties listed under `LogTemplateProperties.*`, such as `LogTemplateProperties.TraceId`.
 
+These properties allow you to set ECS fields directly through log messages.
 
 ## Output [_output]
 
-Apart from [mandatory fields](ecs://reference/ecs-guidelines.md#_general_guidelines), the output contains additional data:
+In addition to the [mandatory ECS fields](https://www.elastic.co/guide/en/ecs/current/ecs-guidelines.html#_general_guidelines), the output contains the following information:
 
-* `log.origin.file.name` is taken from `LocationInformation`
-* `log.origin.file.line` is taken from `LocationInformation`
-* `log.origin.function` is taken from `LocationInformation`
-* `event.created` is taken from timestamp
-* `event.timezone` is equal to local timezone
-* `host.hostname` is taken from `HostName` property
-* `process.thread.id` is taken from `ThreadName` if it has numeric value
-* `process.thread.name` is taken from `ThreadName` if it doesn’t have numeric value
-* `service.name` is taken from entry or calling assembly
-* `service.version` is taken from entry or calling assembly
-* `error.message` is taken from `ExceptionObject`
-* `error.type` is taken from `ExceptionObject`
-* `error.stacktrace` is taken from `ExceptionObject`
-* `metadata` is taken from properties. It also contains message template and arguments in case a formatted message was logged
+* `labels` - Populated from `metadata` (string and boolean properties).
+* `log.origin.file.name` - Populated from `LocationInformation`.
+* `log.origin.file.line` - Populated from `LocationInformation`.
+* `log.origin.function` - Populated from `LocationInformation`.
+* `event.created` - Populated from the log event timestamp.
+* `event.timezone` - Set to the local time zone.
+* `host.hostname` - Populated from the `HostName` property.
+* `process.thread.id` - Populated from `ThreadName` if its value is numeric.
+* `process.thread.name` - Populated from `ThreadName` if its value is non-numeric.
+* `service.name` - Populated from the entry assembly or calling assembly.
+* `service.version` - Populated from the entry assembly or calling assembly.
+* `error.message` - Populated from `ExceptionObject`.
+* `error.type` - Populated from `ExceptionObject`.
+* `error.stacktrace` - Populated from `ExceptionObject`.
+* `metadata` - Populated from log event properties. It also contains the message template and its arguments when a formatted message is logged.
 
-Sample log event output (formatted for readability):
+The following is an example of a log event formatted as JSON (formatted for readability):
 
 ```json
 {
     "@timestamp": "2022-08-28T14:06:28.5121651+02:00",
     "log.level": "INFO",
     "message": "Hi! Welcome to example!",
-    "metadata": {
-        "global_property": "Example",
-        "message_template": "{0}! Welcome to example!"
-        "0": "Hi"
-    },
-    "ecs": {
-        "version": "8.3.1"
-    },
-    "event": {
-        "timezone": "Central European Time",
-        "created": "2022-08-28T14:06:28.5121651+02:00"
-    },
-    "host": {
-        "hostname": "HGU780D3"
-    },
+    "ecs.version": "9.0.0",
     "log": {
         "logger": "Elastic.CommonSchema.Log4net.Example.Program",
         "original": null,
@@ -109,16 +99,47 @@ Sample log event output (formatted for readability):
             "function": "Main"
         }
     },
+    "labels": {
+        "MessageTemplate": "{0}! Welcome to example!",
+        "0": "Hi"
+    },
+    "agent": {
+        "type": "Elastic.CommonSchema.Log4net.Example",
+        "version": "1.0.0.0"
+    },
+    "event": {
+        "created": "2024-04-02T17:43:55.3829964+02:00",
+        "timezone": "W. Europe Standard Time"
+    },
+    "host": {
+        "os": {
+            "full": "Microsoft Windows 10.0.22631",
+            "platform": "Win32NT",
+            "version": "10.0.22631.0"
+        },
+        "architecture": "X64",
+        "hostname": "HGU780D3",
+        "name": "HGU780D3"
+    },
     "process": {
-        "thread": {
-            "id": 1
-        }
+        "name": "Elastic.CommonSchema.Log4net.Example",
+        "pid": 39652,
+        "thread.id": 17,
+        "thread.name": ".NET Long Running Task",
+        "title": ""
     },
     "service": {
         "name": "Elastic.CommonSchema.Log4net.Example",
+        "type": "dotnet",
         "version": "1.0.0.0"
+    },
+    "user": {
+        "domain": "company",
+        "name": "user"
+    },
+    "metadata": {
+        "GlobalAmountProperty": 3.14
     }
 }
 ```
-
 
