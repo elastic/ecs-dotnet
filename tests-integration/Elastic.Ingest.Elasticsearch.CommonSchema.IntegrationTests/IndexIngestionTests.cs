@@ -53,9 +53,9 @@ public class IndexIngestionTests : IntegrationTestBase
 		if (!slim.WaitHandle.WaitOne(TimeSpan.FromSeconds(10)))
 			throw new Exception($"No flush occurred in 10 seconds: {channel.DiagnosticsListener}", channel.DiagnosticsListener?.ObservedException);
 
-		var refreshResult = await Client.Indices.RefreshAsync(indexName);
-		refreshResult.IsValidResponse.Should().BeTrue("{0}", refreshResult.DebugInformation);
-		var searchResult = await Client.SearchAsync<CatalogDocument>(s => s.Indices(indexName));
+		// Wait for the document to become searchable.
+		var searchResult = await WaitForDocumentAsync<CatalogDocument>(indexName, TimeSpan.FromSeconds(10));
+		searchResult.Should().NotBeNull();
 		searchResult.Total.Should().Be(1);
 
 		var storedDocument = searchResult.Documents.First();
@@ -116,10 +116,9 @@ public class IndexIngestionTests : IntegrationTestBase
 		if (!slim.WaitHandle.WaitOne(TimeSpan.FromSeconds(10)))
 			throw new Exception($"No flush occurred in 10 seconds: {channel.DiagnosticsListener}", channel.DiagnosticsListener?.ObservedException);
 
-		var refreshResult = await Client.Indices.RefreshAsync(indexName);
-		refreshResult.IsValidResponse.Should().BeTrue("{0}", refreshResult.DebugInformation);
-
-		var searchResult = await Client.SearchAsync<JsonDocument>(s => s.Indices(indexName));
+		// Wait for the document to become searchable.
+		var searchResult = await WaitForDocumentAsync<JsonDocument>(indexName, TimeSpan.FromSeconds(10));
+		searchResult.Should().NotBeNull();
 		searchResult.Total.Should().Be(1);
 
 		var root = searchResult.Documents.First().RootElement;
@@ -127,5 +126,24 @@ public class IndexIngestionTests : IntegrationTestBase
 		root.GetProperty("title").GetString().Should().Be("Hello World!");
 		root.GetProperty("id").GetString().Should().Be("hello-world");
 		root.GetProperty("metadata").GetProperty("MyEnum").GetString().Should().Be("Two");
+	}
+
+	private async Task<Clients.Elasticsearch.SearchResponse<T>?> WaitForDocumentAsync<T>(string indexName, TimeSpan timeout)
+	{
+		var stopwatch = System.Diagnostics.Stopwatch.StartNew();
+		
+		while (stopwatch.Elapsed < timeout)
+		{
+			var refreshResult = await Client.Indices.RefreshAsync(indexName);
+			refreshResult.IsValidResponse.Should().BeTrue("{0}", refreshResult.DebugInformation);
+
+			var searchResult = await Client.SearchAsync<T>(s => s.Indices(indexName));
+			if (searchResult.Total != 0)
+				return searchResult;
+
+			await Task.Delay(200);
+		}
+
+		return null;    // Failed to find document within the timeout period.
 	}
 }
