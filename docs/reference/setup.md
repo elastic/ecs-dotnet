@@ -35,13 +35,28 @@ If you are using the Elastic APM .NET agent, [log correlation can be configured]
 By default the ECS logging integrations will read tracing information from [System.Diagnostics.Activity](https://learn.microsoft.com/en-us/dotnet/api/system.diagnostics.activity?view=net-7.0) if the APM logging corrolation libraries are not installed.
 
 
-## Step 3: Configure Filebeat (optional) [setup-step-3]
+## Step 3: Ship your logs (optional) [setup-step-3]
+
+If you use one of the supported log formatters, you can ship the Elastic Common Schema (ECS) JSON logs to Elastic with {{agent}} or {{filebeat}}.
+
+### Option 1: {{agent}} [setup-step-3-agent]
+
+Use the Custom Logs integration to collect the ECS JSON logs your application writes and manage collection centrally with {{fleet}}. When you configure the integration, set the following JSON parsing options so that the integration parses the ECS fields correctly:
+
+* `overwrite_keys: true`
+* `add_error_key: true`
+* `expand_keys: true`
+* `keys_under_root: true`
+
+For the full procedure and an annotated configuration, refer to [Ingest logs with {{agent}}](docs-content://solutions/observability/logs/ecs-formatted-application-logs.md#ingest-ecs-logs-with-agent).
+
+### Option 2: {{filebeat}} [setup-step-3-filebeat]
 
 ```{applies_to}
 serverless: unavailable
 ```
 
-If you are using one of our log formatters you can use the following methods to ship these logs to Elastic.
+Use one of the following methods to ship your logs with {{filebeat}}:
 
 :::::::{tab-set}
 
