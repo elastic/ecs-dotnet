@@ -41,14 +41,17 @@ If you use one of the supported log formatters, you can ship the Elastic Common 
 
 ### Option 1: {{agent}} [setup-step-3-agent]
 
-Use the Custom Logs integration to collect the ECS JSON logs your application writes and manage collection centrally with {{fleet}}. When you configure the integration, set the following JSON parsing options so that the integration parses the ECS fields correctly:
+Use the Custom Logs integration to collect the ECS JSON logs your application writes and manage collection centrally with {{fleet}}. When you configure the integration, open **Advanced options** and add the following under **Custom configurations** so that the integration parses the ECS fields correctly. Keep the options nested under `json`:
 
-* `overwrite_keys: true`
-* `add_error_key: true`
-* `expand_keys: true`
-* `keys_under_root: true`
+```yaml
+json:
+  overwrite_keys: true
+  add_error_key: true
+  expand_keys: true
+  keys_under_root: true
+```
 
-For the full procedure and an annotated configuration, refer to [Ingest logs with {{agent}}](docs-content://solutions/observability/logs/ecs-formatted-application-logs.md#ingest-ecs-logs-with-agent).
+For the full procedure, including the processors and the other custom configuration settings, refer to [Ingest logs with {{agent}}](docs-content://solutions/observability/logs/ecs-formatted-application-logs.md#ingest-ecs-logs-with-agent).
 
 ### Option 2: {{filebeat}} [setup-step-3-filebeat]
 
