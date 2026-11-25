@@ -14,3 +14,5 @@ subs:
   stack:   "Elastic Stack"
   es:   "Elasticsearch"
   filebeat:   "Filebeat"
+  agent:   "Elastic Agent"
+  fleet:   "Fleet"
